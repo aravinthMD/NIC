@@ -1,0 +1,89 @@
+<div class="main">
+  <h1 class ="h3 mb-0 text-gray-800">Dashboard</h1>
+    <div class="dashboard">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="example-form-field">
+            <mat-label>Search...</mat-label>
+            <input matInput type="text">
+            <button mat-button  matSuffix mat-icon-button aria-label="Clear">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="col-5">
+
+        </div>
+        <div class="col-1">
+          <button mat-button  matSuffix mat-icon-button aria-label="Clear" (click) = "addUser()">
+            <span>New User</span> 
+            <mat-icon>person_add</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>Department</th>
+                    <th>State</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <!-- <tfoot>
+                  <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Mobile Number</th>
+                    <th>Status</th>
+                  </tr>
+                </tfoot> -->
+                <tbody>
+                    <tr class="rowClass" *ngFor = "let user of userList">
+                      <td>
+                        <a [routerLink] = "['/users/userInfo',{id:user.id}]">{{user.userId}}</a>
+                      </td>
+                      <td>
+                        {{ user.department }}
+                      </td>
+                      <td>
+                        {{ user.state }}
+                      </td>
+                      <td>
+                        {{ user.status }}
+                      </td>
+    
+                    </tr>
+                  <!-- <tr>
+                    <td>12001</td>
+                    <td><a [routerLink] = "['/users/userInfo']">NA</a></td>
+                    <td>NA</td>
+                    <td>Active</td>
+                  </tr>
+                  <tr>
+                    <td>12002</td>
+                    <td>NA</td>
+                    <td>NA</td>
+                    <td>Active</td>
+                  </tr>
+                  <tr>
+                    <td>12003</td>
+                    <td>NA</td>
+                    <td>NA</td>
+                    <td>NA</td>
+                  </tr> -->
+                </tbody>   
+               </table>
+              </div>
+      
+    
+            </div>
+          </div>
+
+
+
+  
