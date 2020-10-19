@@ -34,6 +34,7 @@
               "src/assets/datatables/dataTables.bootstrap4.min.css"
             ],
             "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js",
               "src/assets/datatables/jquery.dataTables.min.js",
               "src/assets/datatables/dataTables.bootstrap4.min.js",

@@ -1,7 +1,8 @@
 .page-container {
-    position: relative;
+    // position: relative;
     min-height: 100vh;
-    background-color: #f8f9fc;
+	background-color: #eff6fd;
+	display:flex;
   }
 
 
@@ -50,11 +51,15 @@
 .sidebar .nav-item .nav-link .img-profile,
 .topbar .nav-item .nav-link .img-profile {
 	height: 2rem;
-	width: 2rem
+	width: 2rem;
+
 }
 
 .topbar {
-	height: 4.375rem
+	height: 3.5rem;
+	width: 86rem;
+	position: absolute;
+    z-index: 1;
 }
 
 .topbar #sidebarToggleTop {
@@ -206,13 +211,22 @@
 }
 .dropdown-toggle::after {display:none;}
 .badge-danger {
-    color: #fff;
+	color: #fff;
     background-color: #dc3545;
-    width: 30px !important;
-    height: 30px !important;
-    padding: 9px !important;
+    width: 23px !important;
+    height: 23px !important;
+    padding: 5px !important;
+    border-radius: 50% !important;
+}
+span.badge.badge-danger.badge-counter.envelope {
+	color: #fff;
+    background-color: #dc3545;
+    width: 23px !important;
+    height: 23px !important;
+    padding: 5px !important;
     border-radius: 50% !important;
 }
 i.fa.fa-bell {
-    font-size: 23px;
+	font-size: 20px;
+	margin-right:-4px;
 }

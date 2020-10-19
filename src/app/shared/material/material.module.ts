@@ -6,6 +6,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const materialComponents = [
   MatExpansionModule,
@@ -14,7 +15,8 @@ const materialComponents = [
   MatFormFieldModule,
   MatTabsModule,
   MatInputModule,
-  MatTableModule
+  MatTableModule,
+  MatPaginatorModule
 ]
 
 @NgModule({
