@@ -1,6 +1,6 @@
-import { Component, OnInit,ViewChild ,Input} from '@angular/core';
-import {MatAccordion} from '@angular/material/expansion';
-
+import { Component, OnInit,ViewChild ,Input,AfterViewInit} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-process-details',
@@ -8,78 +8,30 @@ import {MatAccordion} from '@angular/material/expansion';
   styleUrls: ['./process-details.component.scss'],
   
 })
-export class ProcessDetailsComponent implements OnInit {
+export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
-  @ViewChild(MatAccordion,{ static: true }) accordion: MatAccordion; 
+  @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
-  expandflag : boolean  = false
+  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks']
 
-   ELEMENT_DATA: any[] = [
-    {
-      invoiceNo: 2192,
-      projectNumber: '76545',
-      piAmt: 1.0079,
-      emailAddress: 'aravinth@gmail.xom',
-      remarks: 'nothing'
-    }, {
-      invoiceNo: 21921,
-      projectNumber: '76545',
-      piAmt: 1.0079,
-      emailAddress: 'aravinth@gmail.xom',
-      remarks: 'nothing' }, 
-      , {
-      invoiceNo: 21922,
-      projectNumber: '76545',
-      piAmt: 1.0079,
-      emailAddress: 'aravinth@gmail.xom',
-      remarks: 'nothing' }, 
-      {
-        invoiceNo: 21923,
-        projectNumber: '76545',
-        piAmt: 1.0079,
-        emailAddress: 'aravinth@gmail.xom',
-        remarks: 'nothing' },
-         {
-          invoiceNo: 21924,
-          projectNumber: '76545',
-          piAmt: 1.0079,
-          emailAddress: 'aravinth@gmail.xom',
-          remarks: 'nothing' },
-           {
-            invoiceNo: 21925,
-            projectNumber: '76545',
-            piAmt: 1.0079,
-            emailAddress: 'aravinth@gmail.xom',
-            remarks: 'nothing' },
-              {
-      
-                invoiceNo: 21926,
-                projectNumber: '76545',
-                piAmt: 1.0079,
-                emailAddress: 'aravinth@gmail.xom',
-                remarks: 'nothing' }, 
-                {
-                  invoiceNo: 21927,
-                  projectNumber: '76545',
-                  piAmt: 1.0079,
-                  emailAddress: 'aravinth@gmail.xom',
-                  remarks: 'nothing' 
-                },
+
+  userList : any[] =   [
+    {invoiceNo : 4355,projectNumber : 4534,piAmt:25000,remarks:'credited'},
+    {invoiceNo : 2313,projectNumber : 6756,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 6574,projectNumber : 3453,piAmt:25000,remarks:'credited'}
   ];
 
-  dataSource = this.ELEMENT_DATA;
-  // columnsToDisplay = ['name1', 'weight', 'symbol', 'position'];
-  columnsToDisplay = [
-    {header : 'INVOICE NUMBER',arrayKey : 'invoiceNo'},
-    {header : 'PROJECT NUMBER',arrayKey : 'projectNumber'},
-    {header : 'REMARKS',arrayKey : 'remarks'}
-  ]
-  expandedElement: any | null;
+  dataSource = new MatTableDataSource<any>(this.userList);
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(){
+    this.dataSource.paginator = this.paginator;
+
   }
 
 

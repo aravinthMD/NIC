@@ -5,13 +5,14 @@
 
 .tax-invoice{
     
-        margin-top: 62px;
+        margin-top: 32px;
         overflow-x: hidden;
 }
 
 th{
-    font-size: 17px;
-    font-weight: 500;
+  font-size: 16px;
+  font-weight: 500;
+  color: #0e4d92;
 }
 .form-control {
     display: block;
@@ -27,14 +28,19 @@ th{
     border: 1px solid #d1d3e2;
     border-radius: .35rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out}
-    label{
-      display: inline-block;
-      margin-bottom: 0.5rem;
-      color: #858796 !important;
-      font-size:16px !important;
-      height:67px !important;
+  //   label{
+  //     display: inline-block;
+  //     margin-bottom: 0.5rem;
+  //     color: #858796 !important;
+  //     font-size:16px !important;
+  //     height:67px !important;
+  // }
+  // button.btn.btn-primary {
+  //   background-color: #4268d6 !important;
+  //   border: 1px solid #4268d6!important;
+  // }
+
+  table {
+    width: 100%;
   }
-  button.btn.btn-primary {
-    background-color: #4268d6 !important;
-    border: 1px solid #4268d6!important;
-  }
+  tr:nth-child(even) {background-color:#f5f4f4;}

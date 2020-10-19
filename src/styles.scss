@@ -1,16 +1,16 @@
-.login input {
-  border: 1px solid #6c757d;
-  background-color: #ffffff;
-  color: #1e2126;
-  font-size: 14px;
-}
+// .login input {
+//   border: 1px solid #6c757d;
+//   background-color: #ffffff;
+//   color: #1e2126;
+//   font-size: 14px;
+// }
 
 .login {
-    width: 30%;
+    // width: 30%;
     margin: auto;
     background: #ffffff;
-    border: 1px solid #6c757d;
-    box-shadow: 2px 2px #ded9d9;
+    // border: 1px solid #6c757d;
+    // box-shadow: 2px 2px #ded9d9;
   }
 
   .login p {
@@ -30,7 +30,7 @@
     top: 0px;
     bottom: 0;
     left: 0;
-    background-color:#4268d6;
+    background-color:#0E4D92;
     overflow-x: hidden;
     padding-top: 20px;
   }
@@ -70,13 +70,18 @@
 
   
   .main {
-    margin-left: 182px;
-    /* Same as the width of the sidenav */
+    margin-left: 225px;
     font-size: 20px;
     /* Increased text to enable scrolling */
     padding: 10px;
+    display: flex;
     padding-right: 2.5rem;
     padding-left: 2.5rem;
+    position: absolute;
+    top: 52px;
+    z-index: 0;
+    background: #eff6fd !important;
+    margin-bottom:50px;
   }
 
   @media screen and (max-height: 450px) {
@@ -132,7 +137,7 @@
   }
 
   footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -148,4 +153,13 @@
     margin-top: 20px;
   }
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;line-height:12px; }
+label{font-size:13px !important;color:#414141 !important;}
+.form-control{font-size: 13px !important;}
+button.btn.btn-primary {
+  float: right;
+  background-color: #0e4d92 !important;
+  border: 1px solid #0e4d92 !important;
+  font-size: 13px;
+
+}
