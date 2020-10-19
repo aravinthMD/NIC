@@ -14,6 +14,7 @@ export class UserInfoComponent implements OnInit {
   @Input('userObj') user : any;
 
   form : FormGroup
+  existingUserFlag : boolean = false;;
 
   constructor(private formBuilder : FormBuilder) {
 
@@ -37,7 +38,8 @@ export class UserInfoComponent implements OnInit {
       creditAdded : [null],
       creditApproved : [null],
       creditDate : [null],
-      creditAddedAgainstPi : [null]
+      creditAddedAgainstPi : [null],
+      
     });
 
    }
@@ -49,6 +51,8 @@ export class UserInfoComponent implements OnInit {
 
 
   setFormValues(){
+    debugger
+    this.existingUserFlag = true;
     this.form.patchValue({
       name : 'Aravinth.auth',
       departmentName : [null],
@@ -64,12 +68,14 @@ export class UserInfoComponent implements OnInit {
       state : 'maharastra',
       pinCode : '641008',
       smsTariffMonthWise : '3453',
-      piDuration : '6',
+      piDuration : null,
       projectNo : '8776',
       creditAdded : '1002',
       creditApproved : '222',
       creditDate : [null],
-      creditAddedAgainstPi : [null]
+      creditAddedAgainstPi : [null],
+      
+
     })
   }
 

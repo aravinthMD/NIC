@@ -12,14 +12,14 @@
         <div class="col-1">
             <div class="form-group">
                 <label for="projectNo">Project Number</label>
-                <input type="email" class="form-control" id="projectNo" aria-describedby="projectNoHelp">
+                <input type="text" class="form-control" id="projectNo" aria-describedby="projectNoHelp">
                 <small id="projectNoHelp" class="form-text text-muted"></small>
               </div>
         </div>
         <div class="col-1">
             <div class="form-group">
                 <label for="projectName">Project Name</label>
-                <input type="email" class="form-control" id="projectName" aria-describedby="projectNameHelp">
+                <input type="text" class="form-control" id="projectName" aria-describedby="projectNameHelp">
                 <small id="projectNameHelp" class="form-text text-muted"></small>
               </div>
         </div>
@@ -48,34 +48,73 @@
         </div>
        
         <div class="col-1">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="poStatus">PO Status</label>
                 <input type="text" class="form-control" id="poStatus" aria-describedby="poStatusHelp">
                 <small id="poStatusHelp" class="form-text text-muted"></small>
-              </div>
+              </div> -->
+              <div class="form-group">
+                <label for="poStatus">PO Status</label>
+                <select 
+                    name="poStatus" 
+                    id="poStatus" 
+                    class="form-control">
+                    <option>Received</option>
+                    <option>Approved</option>
+                    <option>Pending</option>
+                    <option>Rejected</option>
+                    <option>On hold</option>
+                </select>
+            </div>
+              
         </div>
         <div class="col-1">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="piStatus">PI Status</label>
                 <input type="text" class="form-control" id="piStatus" aria-describedby="piStatusHelp">
                 <small id="piStatusHelp" class="form-text text-muted"></small>
-              </div>
+              </div> -->
+              <div class="form-group">
+                <label for="piStatus">PI Status</label>
+                <select 
+                    name="piStatus" 
+                    id="piStatus" 
+                    class="form-control">
+                    <option>Received</option>
+                    <option>Approved</option>
+                    <option>Pending</option>
+                    <option>Rejected</option>
+                    <option>On hold</option>
+                </select>
+            </div>
         </div>
         
 
       <div class="col-1">
-          <div class="form-group">
-              <label for="PiReceived">PI Received in</label>
-              <input type="date" class="form-control" id="PiReceived" aria-describedby="PiReceivedHelp">
-              <small id="PiReceivedHelp" class="form-text text-muted"></small>
-            </div>
+         
+            <div class="form-group">
+              <label for="PiReceived">PI PiReceived</label>
+              <select 
+                  name="PiReceived" 
+                  id="PiReceived" 
+                  class="form-control">
+                  <option>full</option>
+                  <option>Partial</option>
+              </select>
+          </div>
       </div>
       <div class="col-1">
-          <div class="form-group">
+            <div class="form-group">
               <label for="paymentStatus">Payment Status</label>
-              <input type="text" class="form-control" id="paymentStatus" aria-describedby="paymentStatusHelp">
-              <small id="paymentStatusHelp" class="form-text text-muted"></small>
-            </div>
+              <select 
+                  name="paymentStatus" 
+                  id="paymentStatus" 
+                  class="form-control">
+                  <option>Received</option>
+                  <option>Pending</option>
+                  <option>On hold</option>
+              </select>
+          </div>
       </div>
       <div class="col-1">
           <div class="form-group">
@@ -97,6 +136,11 @@
               <input type="text" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
               <small id="poBillableHelp" class="form-text text-muted"></small>
             </div>
+      </div>
+      <div class="col-1">
+        <div class="form-group">
+          <label>Pdf Upload</label> <input type="file" name="imagefile" accept="image/jpeg, image/png">
+        </div>
       </div>
     </div>
 

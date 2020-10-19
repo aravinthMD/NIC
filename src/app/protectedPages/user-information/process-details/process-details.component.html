@@ -13,7 +13,7 @@
       <div class="col-1">
           <div class="form-group">
               <label for="invoiceDate">Invoice Date</label>
-              <input type="email" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
+              <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
               <small id="invoiceDateHelp" class="form-text text-muted"></small>
             </div>
       </div>
@@ -26,25 +26,24 @@
       </div>
       
       <div class="col-1">
-        <!-- <div class="form-group">
+        <div class="form-group">
             <label for="poNumber">PO Number</label>
             <input type="email" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
             <small id="poNumberHelp" class="form-text text-muted"></small>
-          </div> -->
-          <div class="form-group">
+          </div>
+          <!-- <div class="form-group">
             <label for="poNumber">PO Number</label>
             <select 
                 name="poNumber" 
                 id="poNumber" 
                 class="form-control">
-                <!-- <option *ngFor="let method of contactMethods" [value]="method.id">{{ method.label }}</option> -->
                 <option>Rejected</option>
                 <option>Approved</option>
                 <option>Pending</option>
                 <option>Rejected</option>
                 <option>OnHold</option>
             </select>
-        </div>
+        </div> -->
     </div>
     <div class="col-1">
       <div class="form-group">
@@ -82,19 +81,44 @@
           </div>
     </div>
     <div class="col-1">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="piStatus">PI Status</label>
             <input type="text" class="form-control" id="piStatus" aria-describedby="piStatusHelp">
             <small id="piStatusHelp" class="form-text text-muted"></small>
-          </div>
+          </div> -->
+          <div class="form-group">
+            <label for="piStatus">PO Number</label>
+            <select 
+                name="piStatus" 
+                id="piStatus" 
+                class="form-control">
+                <option>Rejected</option>
+                <option>Approved</option>
+                <option>Pending</option>
+                <option>Rejected</option>
+                <option>OnHold</option>
+            </select>
+        </div>
     </div>
     
     <div class="col-1">
-      <div class="form-group">
+      <!-- <div class="form-group">
           <label for="payMentStatus">Payment Status</label>
           <input type="text" class="form-control" id="payMentStatus" aria-describedby="payMentStatusHelp">
           <small id="payMentStatusHelp" class="form-text text-muted"></small>
+        </div> -->
+        <div class="form-group">
+            <label for="payMentStatus">Payment Status</label>
+            <select 
+                name="payMentStatus" 
+                id="payMentStatus" 
+                class="form-control">
+                <option>Received</option>
+                <option>Pending</option>
+                <option>On hold</option>
+            </select>
         </div>
+        
   </div>
   <div class="col-1">
       <div class="form-group">
@@ -102,6 +126,11 @@
           <input type="email" class="form-control" id="remark" aria-describedby="remarkHelp">
           <small id="remarkHelp" class="form-text text-muted"></small>
         </div>
+  </div>
+  <div class="col-1">
+    <div class="form-group">
+      <label>Pdf Upload</label> <input type="file" class = "input-group" name="imagefile" accept="image/jpeg, image/png">
+    </div>
   </div>
   </div>
 

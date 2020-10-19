@@ -11,13 +11,31 @@
                   </div>
 
             </div>
-            <div class="col-4">
+            <!-- <div class="col-4">
                 <div class="form-group">
                     <label for="department">Department Name</label>
                     <input type="text" class="form-control" formControlName = "departmentName"  id="department" aria-describedby="emailHelp">
                     <small id="emailHelp" class="form-text text-muted"></small>
                   </div>
+            </div> -->
+
+            <div class="col-4">
+            <div class="form-group">
+              <label for="department">Department</label>
+              <select 
+              formControlName = "departmentName" 
+                  id="department" 
+                  class="form-control" aria-describedby="emailHelp">
+                  <!-- <option *ngFor="let method of contactMethods" [value]="method.id">{{ method.label }}</option> -->
+                  <option default>Department of Sainik Welfare</option>
+                  <option>Minstry of minority affairs</option>
+                  <option>Vishakhapatnam port Trust </option>
+                  <option>minstry of trible affairs</option>
+                  <option>Bureasu of Naviks.Mumbai</option>
+              </select>
+              <small id="emailHelp" class="form-text text-muted"></small>
             </div>
+          </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="designation">Designation</label>
@@ -45,7 +63,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="mobileNumber">Mobile Number</label>
-                    <input type="number" class="form-control" formControlName = "mobileNo"  id="mobileNumber" aria-describedby="mobileNumberHelp">
+                    <input type="text" class="form-control" formControlName = "mobileNo"  id="mobileNumber" aria-describedby="mobileNumberHelp">
                     <small id="mobileNumberHelp" class="form-text text-muted"></small>
                   </div>
             </div>
@@ -57,7 +75,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="telPhno">Telephone Number(Office)</label>
-                    <input type="number" class="form-control" formControlName = "telPhno"  id="telPhno" aria-describedby="telPhnoHelp">
+                    <input type="text" class="form-control" formControlName = "telPhno"  id="telPhno" aria-describedby="telPhnoHelp">
                     <small id="telPhnoHelp" class="form-text text-muted"></small>
                   </div>
             </div>
@@ -122,10 +140,11 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="piDuration">PI duration / Period</label>
-                    <input type="text" class="form-control" formControlName = "piDuration" id="piDuration" aria-describedby="piDurationHelp">
+                    <input type="date" class="form-control" formControlName = "piDuration" id="piDuration" aria-describedby="piDurationHelp">
                     <small id="piDurationHelp" class="form-text text-muted"></small>
                   </div>
             </div>
+            
             <div class="col-4">
                 <div class="form-group">
                     <label for="projectNumber">Project No.</label>
@@ -134,6 +153,39 @@
                   </div>
             </div>
         </div>
+
+          <ng-template [ngIf] = "existingUserFlag">
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group">
+                <label for="creditAdded">Credit added</label>
+                <input type="text" class="form-control" formControlName = "creditAdded" id="creditAdded" aria-describedby="creditAddedHelp">
+                <small id="creditAddedHelp" class="form-text text-muted"></small>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+              <label for="creditApproved">Credit approver</label>
+              <input type="text" class="form-control" formControlName = "creditApproved" id="creditApproved" aria-describedby="creditApprovedHelp">
+              <small id="creditApprovedHelp" class="form-text text-muted"></small>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+            <label for="creditDate">Credit date</label>
+            <input type="date" class="form-control" formControlName = "creditDate" id="creditDate" aria-describedby="creditDateHelp">
+            <small id="creditDateHelp" class="form-text text-muted"></small>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+          <label for="creditAddedAgainstPi">Credit added against the PI #</label>
+          <input type="date" class="form-control" formControlName = "creditAddedAgainstPi" id="creditAddedAgainstPi" aria-describedby="creditAddedAgainstPiHelp">
+          <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small>
+        </div>
+      </div>
+            </div>
+          </ng-template>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
