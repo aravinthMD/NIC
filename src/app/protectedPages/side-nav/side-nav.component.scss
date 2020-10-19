@@ -7,11 +7,19 @@
     font-weight: 700;
     color: #fff;
     padding: 0px;
+    width:14rem;
+    position: fixed;
+    height: 100%;
+    z-index:2;
+
 }
 a.logo_nic {
     font-size: 1.4rem;
     text-transform: uppercase;
     font-weight: 800;
+}
+img.nic_logo {
+    width: 141px;
 }
 // .list-group-item{
 //     padding:0px !important;

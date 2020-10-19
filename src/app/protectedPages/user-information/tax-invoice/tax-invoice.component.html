@@ -1,88 +1,94 @@
 <div class="tax-invoice">
 <form>
     <!--FIRST ROW-->
+    <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
+      <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
+      <button  class="btn btn-primary pr-2" type="submit">PDF Upload</button>
+    </div>  -->
     <div class="row">
-         <div class="col-1">
+         <div class="col-4">
             <div class="form-group">
                 <label for="InvoiceNumber">Invoice Number</label>
                 <input type="email" class="form-control" id="InvoiceNumber" aria-describedby="InvoiceNumberHelp">
                 <small id="InvoiceNumberHelp" class="form-text text-muted"></small>
               </div>
         </div>
-         <div class="col-1">
+         <div class="col-4">
             <div class="form-group">
                 <label for="InvoiceDate">Invoice Date</label>
                 <input type="date" class="form-control" id="InvoiceDate" aria-describedby="InvoiceDateHelp">
                 <small id="InvoiceDateHelp" class="form-text text-muted"></small>
               </div>
         </div>
-         <div class="col-1">
+         <div class="col-4">
             <div class="form-group">
                 <label for="projectNumber">Project Number</label>
                 <input type="email" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
                 <small id="projectNumberHelp" class="form-text text-muted"></small>
               </div>
         </div>
-         <div class="col-1">
+         <div class="col-4">
             <div class="form-group">
                 <label for="poNumber">PO Number</label>
                 <input type="number" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
                 <small id="poNumberHelp" class="form-text text-muted"></small>
               </div>
         </div>
-         <div class="col-1">
+         <div class="col-4">
             <div class="form-group">
                 <label for="poDate">PO Date</label>
                 <input type="email" class="form-control" id="poDate" aria-describedby="poDateHelp">
                 <small id="poDateHelp" class="form-text text-muted"></small>
               </div>
         </div>
-         <div class="col-1">
+         <div class="col-4">
             <div class="form-group">
                 <label for="fromDate">From Period</label>
                 <input type="date" class="form-control" id="fromDate" aria-describedby="fromDateHelp">
                 <small id="fromDateHelp" class="form-text text-muted"></small>
               </div>
         </div>
-         <div class="col-1">
+         <div class="col-4">
             <div class="form-group">
                 <label for="toDate">To Period</label>
                 <input type="date" class="form-control" id="toDate" aria-describedby="toDateHelp">
                 <small id="toDateHelp" class="form-text text-muted"></small>
               </div>
         </div>
-       <div class="col-1">
+       <div class="col-4">
           <div class="form-group">
               <label for="invoiceAmount">Invoice Amount</label>
               <input type="number" class="form-control" id="invoiceAmount" aria-describedby="invoiceAmountHelp">
               <small id="invoiceAmountHelp" class="form-text text-muted"></small>
             </div>
       </div>
-       <div class="col-1">
+       <div class="col-4">
           <div class="form-group">
               <label for="payStaus">Payment Status</label>
               <input type="text" class="form-control" id="payStaus" aria-describedby="payStausHelp">
               <small id="payStausHelp" class="form-text text-muted"></small>
             </div>
       </div>
-       <div class="col-1">
+       <div class="col-4">
           <div class="form-group">
               <label for="remark">Remark</label>
               <input type="remark" class="form-control" id="remark" aria-describedby="remarkHelp">
               <small id="remarkHelp" class="form-text text-muted"></small>
             </div>
       </div>
-       <div class="col-1">
+       <div class="col-4">
           <div class="form-group">
               <label for="billableClaim">Billable claim</label>
               <input type="text" class="form-control" id="billableClaim" aria-describedby="billableClaimHelp">
               <small id="billableClaimHelp" class="form-text text-muted"></small>
             </div>
       </div>
-      <div class="col-1">
-        <div class="form-group">
-          <label>Pdf Upload</label> <input type="file" name="imagefile" accept="image/jpeg, image/png">
-        </div>
+      <div class="col-4">
+          <div class="form-group">
+              <label for="poBillable">Upload Document</label>
+              <input type="file" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
+              <small id="poBillableHelp" class="form-text text-muted"></small>
+            </div>
       </div>
     </div>
    
@@ -92,12 +98,45 @@
        
     </div>
     <!--Second Row End-->
-
-
-
-<button type="submit" class="btn btn-primary">Submit</button>
+    <div class="row pt-3 pb-3 m-0">
+      <button  class="btn btn-primary" type="submit">Submit</button>
+    </div> 
 </form>
 
 
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
 
+    <!-- Position Column -->
+    <ng-container matColumnDef="InvoiceNo">
+      <th mat-header-cell *matHeaderCellDef>Invoice No </th>
+      <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="projectNo">
+      <th mat-header-cell *matHeaderCellDef> Project No </th>
+      <td mat-cell *matCellDef="let element"> {{element.projectNumber}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="piAmt">
+      <th mat-header-cell *matHeaderCellDef> PI Amount </th>
+      <td mat-cell *matCellDef="let element"> {{element.piAmt}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="remarks">
+      <th mat-header-cell *matHeaderCellDef> Remarks </th>
+      <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+<!--Material Table End-->
+<div class="m-5"></div>
 </div>

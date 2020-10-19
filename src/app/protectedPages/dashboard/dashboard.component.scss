@@ -66,3 +66,28 @@ table {
     color: #5a5c69!important;
 }
 
+table {
+    width: 100%;
+  }
+  th{
+    font-size: 16px;
+    font-weight: 500;
+    color: #0e4d92;
+  }
+  tr:nth-child(even) {background-color:#f5f4f4;}
+//   .col-md-12.d-flex.justify-content-end:hover{
+//       pointer-events: none;
+//   }
+.font-size{font-size:14px !important;font-weight:500;}
+.border-left-primary {
+  border-left: .25rem solid #4e73df !important;
+}
+.border-left-success {
+  border-left: .25rem solid #1cc88a !important;
+}
+.border-left-info {
+  border-left: .25rem solid #36b9cc !important;
+}
+.border-left-warning {
+  border-left: .25rem solid #f6c23e !important;
+}

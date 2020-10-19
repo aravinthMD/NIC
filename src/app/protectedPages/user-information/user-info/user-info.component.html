@@ -1,7 +1,8 @@
       <div class="userForm">
-        <h2>View Customer Profile</h2>
+        <!-- <h2>View Customer Profile</h2> -->
       <form [formGroup] = "form">
         <!--FIRST ROW-->
+        
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
@@ -153,40 +154,9 @@
                   </div>
             </div>
         </div>
-
-          <ng-template [ngIf] = "existingUserFlag">
-            <div class="row">
-              <div class="col-4">
-                <div class="form-group">
-                <label for="creditAdded">Credit added</label>
-                <input type="text" class="form-control" formControlName = "creditAdded" id="creditAdded" aria-describedby="creditAddedHelp">
-                <small id="creditAddedHelp" class="form-text text-muted"></small>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="form-group">
-              <label for="creditApproved">Credit approver</label>
-              <input type="text" class="form-control" formControlName = "creditApproved" id="creditApproved" aria-describedby="creditApprovedHelp">
-              <small id="creditApprovedHelp" class="form-text text-muted"></small>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="form-group">
-            <label for="creditDate">Credit date</label>
-            <input type="date" class="form-control" formControlName = "creditDate" id="creditDate" aria-describedby="creditDateHelp">
-            <small id="creditDateHelp" class="form-text text-muted"></small>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="form-group">
-          <label for="creditAddedAgainstPi">Credit added against the PI #</label>
-          <input type="date" class="form-control" formControlName = "creditAddedAgainstPi" id="creditAddedAgainstPi" aria-describedby="creditAddedAgainstPiHelp">
-          <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small>
-        </div>
-      </div>
-            </div>
-          </ng-template>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="row pt-3 pb-3 m-0">
+          <button  class="btn btn-primary" type="submit">Submit</button>
+        </div> 
       </form>
     </div>
-    
+    <div class="m-5"></div>

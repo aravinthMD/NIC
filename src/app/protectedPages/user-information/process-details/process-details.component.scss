@@ -28,6 +28,9 @@ table {
   width: 100%;
 }
 
+//Angular material Expandable tabel stylings
+
+
 tr.example-detail-row {
   height: 0;
 }
@@ -79,7 +82,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .proforma-invoice{
-  margin-top: 62px;
+  margin-top: 32px;
   overflow-x: hidden;
 }
 .form-control {
@@ -96,18 +99,20 @@ tr.example-element-row:not(.example-expanded-row):active {
   border: 1px solid #d1d3e2;
   border-radius: .35rem;
   transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out}
-  label{
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    color: #858796 !important;
-    font-size:16px !important;
-    height:48px !important;
+//   label{
+//     display: inline-block;
+//     margin-bottom: 0.5rem;
+//     color: #858796 !important;
+//     font-size:16px !important;
+//     height:48px !important;
+// }
+// button.btn.btn-primary {
+//   background-color: #4268d6 !important;
+//   border: 1px solid #4268d6!important;
+// }
+th{
+  font-size: 16px;
+  font-weight: 500;
+  color: #0e4d92;
 }
-button.btn.btn-primary {
-  background-color: #4268d6 !important;
-  border: 1px solid #4268d6!important;
-}
-
-.input-group{
-  display: table-row;
-}
+tr:nth-child(even) {background-color:#f5f4f4;}
