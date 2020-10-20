@@ -14,7 +14,20 @@ export class UserInfoComponent implements OnInit {
   @Input('userObj') user : any;
 
   form : FormGroup
-  existingUserFlag : boolean = false;;
+  existingUserFlag : boolean = false;
+  buttonName : any = "Submit";
+  propertyFlag : boolean;
+
+
+  // deparmentList : any[] = ['','Department of Sainik Welfare',
+  //  'Minstry of minority affairs',
+  //   'Vishakhapatnam port Trust' ,
+  //   'minstry of trible affairs',
+  //   'Bureasu of Naviks.Mumbai'];
+
+    deparmentList : any[] = [{key:'Department of Sainik Welfare',value:0},{key:'Minstry of minority affairs',value:1},{key:'Vishakhapatnam port Trust',value:2},
+    {key:'minstry of trible affairs',value:2},{key:'Bureasu of Naviks.Mumbai',value:3}
+  ];
 
   constructor(private formBuilder : FormBuilder) {
 
@@ -45,38 +58,47 @@ export class UserInfoComponent implements OnInit {
    }
 
   ngOnInit() {
-    if(this.user)
+    if(this.user){
     this.setFormValues();
+    this.buttonName = 'Edit';
+    this.propertyFlag = true
+    }
+
   }
 
 
   setFormValues(){
-    debugger
+    
     this.existingUserFlag = true;
     this.form.patchValue({
       name : 'Aravinth.auth',
-      departmentName : [null],
+      departmentName : this.deparmentList[1].value,
       designation : 'Senior Engineer',
       employeeCode : '12008',
       email : 'authregister@nic.com',
       mobileNo : '8754809950',
       telPhno : '0422-225007',
-      offAddress1 : 'sdssdsf',
-      offAddress2 : [null],
-      offAddress3 : [null],
+      offAddress1 : '235/bhandup,Mumbai',
+      offAddress2 : ['235,bhandup mumbai'],
+      offAddress3 : ['235,bhandup,mumbai'],
       city : 'mumbai',
       state : 'maharastra',
       pinCode : '641008',
       smsTariffMonthWise : '3453',
-      piDuration : null,
+      piDuration : '6',
       projectNo : '8776',
       creditAdded : '1002',
-      creditApproved : '222',
-      creditDate : [null],
+      creditApproved : '235',
+      creditDate : new Date(2019,10,10),
       creditAddedAgainstPi : [null],
       
 
     })
+  }
+
+  Onsubmit(){
+    this.propertyFlag = false;
+    this.buttonName = 'Update';
   }
 
 }

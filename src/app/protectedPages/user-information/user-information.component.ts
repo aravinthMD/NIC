@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router'; 
 
@@ -7,6 +7,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   selector: 'app-user-information',
   templateUrl: './user-information.component.html',
   styleUrls: ['./user-information.component.scss']
+  // encapsulation: ViewEncapsulation.None
 })
 export class UserInformationComponent implements OnInit {
   
