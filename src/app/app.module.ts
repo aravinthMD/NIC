@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { PurchaseOrderComponent } from './protectedPages/user-information/purchase-order/purchase-order.component';
 import { TaxInvoiceComponent } from './protectedPages/user-information/tax-invoice/tax-invoice.component'
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TaxInvoiceComponent } from './protectedPages/user-information/tax-invoi
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    ScrollingModule
+    ScrollingModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

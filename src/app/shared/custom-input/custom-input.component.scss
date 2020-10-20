@@ -1,0 +1,57 @@
+.custom-input-component  input {
+    background: 0 0;
+    border: 0;
+    border-bottom: 1px solid #bbb;
+    border-radius: 0;
+    width: 100%;
+    font-size: 5vw;
+    line-height: 12.5vw;
+    color: #999;
+    font-family: zurich-light;
+    padding: 0;
+}
+
+.custom-input-component label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateY(0);
+    color: rgba(153, 153, 153, 0.4);
+    font-family: zurich-light;
+    font-size: 5vw;
+    line-height: 12.5vw;
+    transition: transform 0.4s ease-in;
+    transform-origin: left;
+    width: 100%;
+    right: 0;
+    display: block;
+}
+
+@media screen and (min-width: 600px) {
+    .custom-input-component label {
+        font-size: 3.13vw;
+        line-height: 7.81vw;
+    }
+}
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+  }
+
+ 
+
+  .error-feedback{
+    font-size: 1.25vw;
+    font-family: zurich-bold;
+    letter-spacing: .5px;
+    color: red;
+    padding-top: 0.5vw;
+  }
