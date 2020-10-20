@@ -113,6 +113,37 @@ tr.example-element-row:not(.example-expanded-row):active {
 th{
   font-size: 16px;
   font-weight: 500;
-  color: #0e4d92;
+  background-color: #0e4d92;
+    color: #fff;
 }
 tr:nth-child(even) {background-color:#f5f4f4;}
+
+
+// .material-icons{
+//   font-size: 25px;
+//   line-height: 0.5;
+//   padding-right: 28px;
+
+// }
+
+.material-icons{
+  padding-right: 32px;
+}
+
+.mat-expansion-panel-header {
+  line-height: 24px;
+  margin-bottom: 10px;
+  background-color: #dfdfdf !important;
+  font-weight: 500 !important;
+
+}
+
+.mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
+
+  background-color: #dfdfdf !important;
+}
+
+// .mat-expansion-panel-header:active #mat-expansion-panel-header-0{
+//   height: 64px;
+//   margin-bottom: 20px;
+// }

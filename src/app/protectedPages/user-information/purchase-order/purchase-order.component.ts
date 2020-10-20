@@ -17,12 +17,12 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks']
 
   userList : any[] =   [
-    {purchaseNo : 114,projectNumber : 5345,piAmt:24250,remarks:'credited'},
-    {purchaseNo : 197,projectNumber : 5465,piAmt:25000,remarks:'credited'},
-    {purchaseNo : 767,projectNumber : 2344,piAmt:45000,remarks:'credited'},
-    {purchaseNo : 678,projectNumber : 2367,piAmt:24250,remarks:'credited'},
-    {purchaseNo : 114,projectNumber : 5654,piAmt:28000,remarks:'credited'},
-    {purchaseNo : 114,projectNumber : 5345,piAmt:34000,remarks:'credited'},
+    {purchaseNo : 114,projectNumber : 5345,piAmt:24250,remarks:''},
+    {purchaseNo : 197,projectNumber : 5465,piAmt:25000,remarks:''},
+    {purchaseNo : 767,projectNumber : 2344,piAmt:45000,remarks:''},
+    {purchaseNo : 678,projectNumber : 2367,piAmt:24250,remarks:''},
+    {purchaseNo : 114,projectNumber : 5654,piAmt:28000,remarks:''},
+    {purchaseNo : 114,projectNumber : 5345,piAmt:34000,remarks:''},
   ];
   dataSource = new MatTableDataSource<any>(this.userList);
 
