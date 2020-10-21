@@ -24,8 +24,48 @@
 
 }
 
-#mat-tab-label-0-1{
-    margin-left: 250px;
 
+.mat-tab-label.mat-tab-label-active {
+  background-color: #e3e7e8 !important;
 }
 
+
+    /* Styles for tab labels */
+    ::ng-deep .mat-tab-label {
+      min-width: 25px !important;
+      padding: 5px;
+      background-color: transparent;
+      font-weight: 700;
+  }
+  
+  /* Styles for the active tab label */
+  ::ng-deep .mat-tab-label-active {
+    background-color: #0E4D92 !important;
+    color: #fff;
+    opacity: 1 !important;
+    border-color: #0672e7 !important ;
+
+      // background-color: ;
+  }
+  
+  /* Styles for the ink bar */
+  ::ng-deep .mat-ink-bar {
+    background-color: #0E4D92 !important;
+  }
+  
+//   ::ng-deep .activeTab{
+//   opacity: 1 !important;
+// }
+
+// :host ::ng-deep .mat-tab-label {
+//   border-style: ridge;
+//   // border-color: #c0cad4 !important;
+//   background-color: #c0cad4 !important;
+//   // border-radius: 8px;
+// }
+
+:host ::ng-deep .mat-tab-label{
+  border-radius: 2px;
+ border-style: ridge;
+
+}

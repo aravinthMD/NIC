@@ -7,6 +7,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const materialComponents = [
   MatExpansionModule,
@@ -16,7 +17,8 @@ const materialComponents = [
   MatTabsModule,
   MatInputModule,
   MatTableModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDialogModule
 ]
 
 @NgModule({
@@ -24,6 +26,7 @@ const materialComponents = [
   imports: [
     materialComponents
   ],
-  exports: [materialComponents]
+  exports: [materialComponents],
+  entryComponents : []
 })
 export class MaterialModule { }

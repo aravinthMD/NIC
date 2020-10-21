@@ -72,9 +72,10 @@ table {
   th{
     font-size: 16px;
     font-weight: 500;
-    color: #0e4d92;
+    background-color: #0e4d92;
+    color: #fff;
   }
-  tr:nth-child(even) {background-color:#f5f4f4;}
+  // tr:nth-child(even) {background-color:#f5f4f4;}
 //   .col-md-12.d-flex.justify-content-end:hover{
 //       pointer-events: none;
 //   }
@@ -90,4 +91,8 @@ table {
 }
 .border-left-warning {
   border-left: .25rem solid #f6c23e !important;
+}
+
+tr.example-element-row:hover {
+  background: whitesmoke;
 }
