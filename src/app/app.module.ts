@@ -16,7 +16,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { PurchaseOrderComponent } from './protectedPages/user-information/purchase-order/purchase-order.component';
 import { TaxInvoiceComponent } from './protectedPages/user-information/tax-invoice/tax-invoice.component';
-import { ProformaInvoiceDialogFormComponent } from './protectedPages/user-information/process-details/proforma-invoice-dialog-form/proforma-invoice-dialog-form.component'
+import { ProformaInvoiceDialogFormComponent } from './protectedPages/user-information/process-details/proforma-invoice-dialog-form/proforma-invoice-dialog-form.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ReportsComponent } from './protectedPages/reports/reports.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ProformaInvoiceDialogFormComponent } from './protectedPages/user-inform
     ProcessDetailsComponent,
     PurchaseOrderComponent,
     TaxInvoiceComponent,
-    ProformaInvoiceDialogFormComponent
+    ProformaInvoiceDialogFormComponent,
+    ResetPasswordComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,

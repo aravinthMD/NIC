@@ -43,6 +43,7 @@
     background-color: #0E4D92 !important;
     color: #fff;
     opacity: 1 !important;
+    border-color: #0672e7 !important ;
 
       // background-color: ;
   }
@@ -55,3 +56,16 @@
 //   ::ng-deep .activeTab{
 //   opacity: 1 !important;
 // }
+
+// :host ::ng-deep .mat-tab-label {
+//   border-style: ridge;
+//   // border-color: #c0cad4 !important;
+//   background-color: #c0cad4 !important;
+//   // border-radius: 8px;
+// }
+
+:host ::ng-deep .mat-tab-label{
+  border-radius: 2px;
+ border-style: ridge;
+
+}
