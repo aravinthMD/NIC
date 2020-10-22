@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatRippleModule} from '@angular/material/core';
 
 const materialComponents = [
   MatExpansionModule,
@@ -18,7 +19,8 @@ const materialComponents = [
   MatInputModule,
   MatTableModule,
   MatPaginatorModule,
-  MatDialogModule
+  MatDialogModule,
+  MatRippleModule
 ]
 
 @NgModule({
