@@ -6,7 +6,8 @@ import {
   EventEmitter,
   AfterViewInit,
   ViewChild,
-  ElementRef
+  ElementRef,
+  HostListener
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
@@ -63,6 +64,8 @@ export class CustomInputComponent
   @Input() inputClass: string;
 
   @Input() dynamicDataBinding: boolean;
+
+  @Input() isDisabledInp: boolean;
 
   htmlInputElement: any;
 
@@ -203,5 +206,32 @@ export class CustomInputComponent
 
   setDisabledState(disabled: boolean) {
     this.isDisabled = disabled;
+  }
+
+
+  valuePatternCheck(event, pattern) {
+    const initialValue = event.target.value;
+    this.inputValue = initialValue.replace(pattern, '');
+   }
+
+  @HostListener('input', ['$event']) onInputChange(event) {
+    switch (this.type) {
+      case 'number':
+        this.valuePatternCheck(event, /[^0-9]*/g);
+        // this.allowNumberOnly(event);
+        break;
+      case 'alpha-numeric':
+        this.valuePatternCheck(event, /[^a-zA-Z0-9 ]/g);
+        // this.allowAlphaNumericOnly(event);
+        break;
+      case 'alpha':
+        this.valuePatternCheck(event, /[^a-zA-Z ]/g);
+        // this.allowAlphaOnly(event);
+        break;
+
+    }
+
+    this.checkValidation(this.inputValue);
+    this.propagateChange(this.inputValue);
   }
 }

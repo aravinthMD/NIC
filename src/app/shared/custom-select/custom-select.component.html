@@ -1,0 +1,30 @@
+<select
+  [class]="className"
+  [(ngModel)]="selectedOption"
+  [disabled]="isDisabled"
+  (blur)="onBlurMethod($event)"
+>
+  <option value="{{ defaultOption.key }}" [disabled]="isDefaultDisabled">{{
+    defaultOption.value
+  }}</option>
+  <option value="{{ option[keyField] }}" *ngFor="let option of values">{{
+    option[valueField]
+  }}</option>
+</select>
+<div class="invalid-feedback" *ngIf="inputError">
+  <div>
+    {{ isRequired }}
+  </div>
+</div>
+
+
+
+                  <!-- <label for="payMentStatus">Payment Status</label>
+                  <select 
+                      name="payMentStatus" 
+                      id="payMentStatus" 
+                      class="form-control">
+                      <option>Received</option>
+                      <option>Pending</option>
+                      <option>On hold</option>
+                  </select> -->
