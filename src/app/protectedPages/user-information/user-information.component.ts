@@ -14,11 +14,15 @@ export class UserInformationComponent implements OnInit {
   userId : any;
   user : any;
   flag : boolean = false;
-  constructor(private activateRoute : ActivatedRoute) {
+  
+
+  constructor(private activateRoute : ActivatedRoute,) {
 
    }
 
   ngOnInit() {
+
+    
 
     this.activateRoute.paramMap.subscribe((params : ParamMap) => {
       this.userId = params.get("id");

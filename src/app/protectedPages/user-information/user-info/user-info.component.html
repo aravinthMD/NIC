@@ -6,9 +6,11 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="Name">Name</label>
+                    <!-- <label for="Name">Name</label>
                     <input  type="text" class="form-control" [readonly]  = "propertyFlag" formControlName = "name"  id="Name" aria-describedby="nameHelp">
-                    <small id="nameHelp" class="form-text text-muted"></small>
+                    <small id="nameHelp" class="form-text text-muted"></small> -->
+
+                    <app-custom-input formControlName = "name" [labelName]="labels?.Name" [type]="'text'" [id]="'name'" [isRequired]="'Name is mandatory'"></app-custom-input>
                   </div>
 
             </div>
@@ -39,9 +41,12 @@
           </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="designation">Designation</label>
+                    <!-- <label for="designation">Designation</label>
                     <input type="text" formControlName = "designation" [readonly]  = "propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
-                    <small id="designationHelp" class="form-text text-muted"></small>
+                    <small id="designationHelp" class="form-text text-muted"></small> -->
+
+                    <app-custom-input formControlName = "designation" [labelName]="labels?.Designation" [type]="'text'" [id]="'designation'" [isRequired]="'Designation is mandatory'"></app-custom-input>
+                 
                   </div>
             </div>
             </div>

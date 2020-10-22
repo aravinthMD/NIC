@@ -1,6 +1,7 @@
 import { Component, OnInit ,ViewChild,Input} from '@angular/core';
 // import {MatAccordion} from '@angular/material/expansion';
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
+import { LabelsService } from '../../../services/labels.service'
 
 @Component({
   selector: 'app-user-info',
@@ -17,6 +18,7 @@ export class UserInfoComponent implements OnInit {
   existingUserFlag : boolean = false;
   buttonName : any = "Submit";
   propertyFlag : boolean;
+  labels: any = {};
 
 
   // deparmentList : any[] = ['','Department of Sainik Welfare',
@@ -29,7 +31,8 @@ export class UserInfoComponent implements OnInit {
     {key:'minstry of trible affairs',value:2},{key:'Bureasu of Naviks.Mumbai',value:3}
   ];
 
-  constructor(private formBuilder : FormBuilder) {
+
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService) {
 
     this.form =this.formBuilder.group({
       name : [null],
@@ -58,6 +61,11 @@ export class UserInfoComponent implements OnInit {
    }
 
   ngOnInit() {
+
+    this.labelsService.getLabelsData().subscribe((values)=> {
+      this.labels = values;
+    })
+
     if(this.user){
     this.setFormValues();
     this.buttonName = 'Edit';
@@ -99,6 +107,8 @@ export class UserInfoComponent implements OnInit {
   Onsubmit(){
     this.propertyFlag = false;
     this.buttonName = 'Update';
+
+    console.log(this.form.value)
   }
 
 }

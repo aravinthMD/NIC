@@ -29,6 +29,12 @@
   background-color: #e3e7e8 !important;
 }
 
+::ng-deep .mat-tab-label {
+  border-style: ridge;
+  border-color: #c0cad4 !important;
+  border-radius: 8px;
+}
+
 
     /* Styles for tab labels */
     ::ng-deep .mat-tab-label {
