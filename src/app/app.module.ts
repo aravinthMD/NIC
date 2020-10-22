@@ -18,7 +18,10 @@ import { PurchaseOrderComponent } from './protectedPages/user-information/purcha
 import { TaxInvoiceComponent } from './protectedPages/user-information/tax-invoice/tax-invoice.component';
 import { ProformaInvoiceDialogFormComponent } from './protectedPages/user-information/process-details/proforma-invoice-dialog-form/proforma-invoice-dialog-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ReportsComponent } from './protectedPages/reports/reports.component'
+import { ReportsComponent } from './protectedPages/reports/reports.component';
+import { AdminComponent } from './protectedPages/admin/admin.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { CreateUserComponent } from './protectedPages/admin/create-user/create-user.component'
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { ReportsComponent } from './protectedPages/reports/reports.component'
     TaxInvoiceComponent,
     ProformaInvoiceDialogFormComponent,
     ResetPasswordComponent,
-    ReportsComponent
+    ReportsComponent,
+    AdminComponent,
+    HeaderComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,

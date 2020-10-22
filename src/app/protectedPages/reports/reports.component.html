@@ -5,11 +5,15 @@
         <!--Reports Tag Start-->
         <h1 class="h3  text-gray-800 mb-2">Reports</h1>
         <mat-accordion>
-            <mat-expansion-panel hideToggle>
-                <mat-expansion-panel-header>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header matRipple>
                     <mat-panel-title>
-                        <mat-icon>add_circle</mat-icon><span class="panel-title">Filter Report</span>
+                        <mat-icon>filter_alt</mat-icon><span class="panel-title">Filter Report</span>
                     </mat-panel-title>
+                    <mat-panel-description>
+                        {{filterTabButtonName}}
+                        <!-- <mat-icon>filter_alt</mat-icon> -->
+                      </mat-panel-description>
                 </mat-expansion-panel-header>
                 <form>
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
@@ -82,7 +86,8 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-primary mr-3" (click) = "OnFilter()" type="submit">Filter</button>
+                        <button class="btn btn-primary" (click) = "filterTabButtonName = ''" type="submit">Clear</button>
                     </div>
                 </form>
 

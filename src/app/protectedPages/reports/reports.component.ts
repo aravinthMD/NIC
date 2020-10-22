@@ -1,12 +1,18 @@
 import { AfterViewInit, Component, OnInit,ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import {MatAccordion} from '@angular/material/expansion';
+
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit,AfterViewInit {
+
+  filterTabButtonName :  string  = null
+
+  @ViewChild(MatAccordion,{static:true}) accordion: MatAccordion;
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
   displayedColumns: string[] = ['UserID', 'Department', 'po', 'pi','invoiceRaised','paymentStatus']; 
@@ -29,6 +35,13 @@ export class ReportsComponent implements OnInit,AfterViewInit {
   }
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
+  }
+
+
+
+  OnFilter(){
+    this.filterTabButtonName = "Filter Applied";
+    this.accordion.closeAll
   }
 
 }
