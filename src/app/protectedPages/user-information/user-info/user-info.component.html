@@ -1,17 +1,15 @@
-      <div class="userForm">
-        <!-- <h2>View Customer Profile</h2> -->
-      <form [formGroup] = "form">
+<div class="userForm">
+    <!-- <h2>View Customer Profile</h2> -->
+    <form [formGroup]="form">
         <!--FIRST ROW-->
-        
+
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="Name">Name</label>
-                    <input  type="text" class="form-control" [readonly]  = "propertyFlag" formControlName = "name"  id="Name" aria-describedby="nameHelp">
-                    <small id="nameHelp" class="form-text text-muted"></small> -->
-
-                    <app-custom-input formControlName = "name" [labelName]="labels?.Name" [type]="'text'" [id]="'name'" [isRequired]="'Name is mandatory'"></app-custom-input>
-                  </div>
+                    <label for="Name">Name</label>
+                    <input type="text" class="form-control" [readonly]="propertyFlag" formControlName="name" id="Name" aria-describedby="nameHelp">
+                    <small id="nameHelp" class="form-text text-muted"></small>
+                </div>
 
             </div>
             <!-- <div class="col-4">
@@ -23,12 +21,9 @@
             </div> -->
 
             <div class="col-4">
-            <div  class="form-group">
-              <label for="department">Department</label>
-              <select 
-              formControlName = "departmentName" 
-                  id="department" 
-                  class="form-control"  aria-describedby="emailHelp">
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select formControlName="departmentName" id="department" class="form-control" aria-describedby="emailHelp">
                   <option [value]="list.value" *ngFor = "let list of deparmentList">{{list.key}}</option>
                   <!-- <option>Department of Sainik Welfare</option>
                   <option>Minstry of minority affairs</option>
@@ -36,44 +31,41 @@
                   <option>minstry of trible affairs</option>
                   <option>Bureasu of Naviks.Mumbai</option> -->
               </select>
-              <small id="emailHelp" class="form-text text-muted"></small>
+                    <small id="emailHelp" class="form-text text-muted"></small>
+                </div>
             </div>
-          </div>
             <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="designation">Designation</label>
-                    <input type="text" formControlName = "designation" [readonly]  = "propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
-                    <small id="designationHelp" class="form-text text-muted"></small> -->
-
-                    <app-custom-input formControlName = "designation" [labelName]="labels?.Designation" [type]="'text'" [id]="'designation'" [isRequired]="'Designation is mandatory'"></app-custom-input>
-                 
-                  </div>
+                    <label for="designation">Designation</label>
+                    <input type="text" formControlName="designation" [readonly]="propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
+                    <small id="designationHelp" class="form-text text-muted"></small>
+                </div>
             </div>
-            </div>
+        </div>
         <!--SECOND ROW-->
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
                     <label for="empCode">Employee Code</label>
-                    <input type="text" class="form-control" formControlName = "employeeCode" [readonly]  = "propertyFlag"  id="empCode" aria-describedby="empCodeHelp">
+                    <input type="text" class="form-control" formControlName="employeeCode" [readonly]="propertyFlag" id="empCode" aria-describedby="empCodeHelp">
                     <small id="empCodeHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="emailAddress">Email address</label>
-                    <input type="email" class="form-control" formControlName = "email" [readonly]  = "propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
+                    <input type="email" class="form-control" formControlName="email" [readonly]="propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
                     <small id="emailAddressHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="mobileNumber">Mobile Number</label>
-                    <input type="text" class="form-control" formControlName = "mobileNo" [readonly]  = "propertyFlag"  id="mobileNumber" aria-describedby="mobileNumberHelp">
+                    <input type="text" class="form-control" formControlName="mobileNo" [readonly]="propertyFlag" id="mobileNumber" aria-describedby="mobileNumberHelp">
                     <small id="mobileNumberHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
-          
+
         </div>
 
         <!--THIRD ROW-->
@@ -81,25 +73,25 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="telPhno">Telephone Number(Office)</label>
-                    <input type="text" class="form-control" formControlName = "telPhno" [readonly]  = "propertyFlag"  id="telPhno" aria-describedby="telPhnoHelp">
+                    <input type="text" class="form-control" formControlName="telPhno" [readonly]="propertyFlag" id="telPhno" aria-describedby="telPhnoHelp">
                     <small id="telPhnoHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="offcAddressLine1">Official Address line 1</label>
-                    <input type="text" class="form-control" formControlName = "offAddress1" [readonly]  = "propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
+                    <input type="text" class="form-control" formControlName="offAddress1" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
                     <small id="offcAddressLineHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="offcAddressLine2">Official Address line 2</label>
-                    <input type="text" class="form-control" formControlName = "offAddress2" [readonly]  = "propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
+                    <input type="text" class="form-control" formControlName="offAddress2" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
                     <small id="offcAddressLine2Help" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
-           
+
         </div>
 
         <!--FOURTH ROW-->
@@ -107,102 +99,102 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="offcAddressLine3">Official Address line 3</label>
-                    <input type="text" class="form-control" formControlName = "offAddress3" [readonly]  = "propertyFlag" id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
+                    <input type="text" class="form-control" formControlName="offAddress3" [readonly]="propertyFlag" id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
                     <small id="offcAddressLine3Help" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control" formControlName = "city" [readonly]  = "propertyFlag" id="city" aria-describedby="cityHelp">
+                    <input type="text" class="form-control" formControlName="city" [readonly]="propertyFlag" id="city" aria-describedby="cityHelp">
                     <small id="cityHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="State">State</label>
-                    <input type="text" class="form-control" formControlName = "state" [readonly]  = "propertyFlag" id="State" aria-describedby="StateHelp">
+                    <input type="text" class="form-control" formControlName="state" [readonly]="propertyFlag" id="State" aria-describedby="StateHelp">
                     <small id="StateHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
-           
+
         </div>
 
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
                     <label for="PinCode">Pin Code</label>
-                    <input type="text" class="form-control" formControlName = "pinCode" [readonly]  = "propertyFlag" id="PinCode" aria-describedby="PinCodeHelp">
+                    <input type="text" class="form-control" formControlName="pinCode" [readonly]="propertyFlag" id="PinCode" aria-describedby="PinCodeHelp">
                     <small id="PinCodeHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="sms">SMS Traffic Month wise</label>
-                    <input type="text" class="form-control" formControlName = "smsTariffMonthWise" [readonly]  = "propertyFlag" id="sms" aria-describedby="smsHelp">
+                    <input type="text" class="form-control" formControlName="smsTariffMonthWise" [readonly]="propertyFlag" id="sms" aria-describedby="smsHelp">
                     <small id="smsHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label for="piDuration">PI duration / Period</label>
-                    <input type="date" class="form-control" formControlName = "piDuration" [readonly]  = "propertyFlag" id="piDuration" aria-describedby="piDurationHelp">
+                    <input type="date" class="form-control" formControlName="piDuration" [readonly]="propertyFlag" id="piDuration" aria-describedby="piDurationHelp">
                     <small id="piDurationHelp" class="form-text text-muted"></small>
-                  </div>
+                </div>
             </div>
-            
+
             <div class="col-4">
                 <div class="form-group">
                     <label for="projectNumber">Project No.</label>
-                    <input type="text" class="form-control" formControlName = "projectNo" [readonly]  = "propertyFlag" id="projectNumber" aria-describedby="projectNumberHelp">
+                    <input type="text" class="form-control" formControlName="projectNo" [readonly]="propertyFlag" id="projectNumber" aria-describedby="projectNumberHelp">
                     <small id="projectNumberHelp" class="form-text text-muted"></small>
-                  </div>
-            </div>
-            <div class="col-4">
-              <div class="form-group">
-                  <label for="poBillable">Upload Document</label>
-                  <input type="file" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
-                  <small id="poBillableHelp" class="form-text text-muted"></small>
                 </div>
-          </div>
-        </div>
-        <ng-template [ngIf] = "existingUserFlag">
-          <div class="row">
-            <div class="col-4">
-              <div class="form-group">
-              <label for="creditAdded">Credit added</label>
-              <input type="text" class="form-control" formControlName = "creditAdded" [readonly]  = "propertyFlag" id="creditAdded" aria-describedby="creditAddedHelp">
-              <small id="creditAddedHelp" class="form-text text-muted"></small>
             </div>
-          </div>
-          <div class="col-4">
-            <div class="form-group">
-            <label for="creditApproved">Credit approver</label>
-            <input type="text" class="form-control" formControlName = "creditApproved" [readonly]  = "propertyFlag" id="creditApproved" aria-describedby="creditApprovedHelp">
-            <small id="creditApprovedHelp" class="form-text text-muted"></small>
-          </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="poBillable">Upload Document</label>
+                    <input type="file" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
+                    <small id="poBillableHelp" class="form-text text-muted"></small>
+                </div>
+            </div>
         </div>
-        <div class="col-4">
-          <div class="form-group">
-          <label for="creditDate">Credit date</label>
-          <input type="date" class="form-control" formControlName = "creditDate"  [readonly]  = "propertyFlag" id="creditDate" aria-describedby="creditDateHelp">
-          <small id="creditDateHelp" class="form-text text-muted"></small>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="form-group">
-        <label for="creditAddedAgainstPi">Credit added against the PI</label>
-        <input type="date" class="form-control" formControlName = "creditAddedAgainstPi" [readonly]  = "propertyFlag" id="creditAddedAgainstPi" aria-describedby="creditAddedAgainstPiHelp">
-        <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small>
-      </div>
-    </div>
+        <ng-template [ngIf]="existingUserFlag">
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="creditAdded">Credit added</label>
+                        <input type="text" class="form-control" formControlName="creditAdded" [readonly]="propertyFlag" id="creditAdded" aria-describedby="creditAddedHelp">
+                        <small id="creditAddedHelp" class="form-text text-muted"></small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="creditApproved">Credit approver</label>
+                        <input type="text" class="form-control" formControlName="creditApproved" [readonly]="propertyFlag" id="creditApproved" aria-describedby="creditApprovedHelp">
+                        <small id="creditApprovedHelp" class="form-text text-muted"></small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="creditDate">Credit date</label>
+                        <input type="date" class="form-control" formControlName="creditDate" [readonly]="propertyFlag" id="creditDate" aria-describedby="creditDateHelp">
+                        <small id="creditDateHelp" class="form-text text-muted"></small>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="creditAddedAgainstPi">Credit added against the PI</label>
+                        <input type="date" class="form-control" formControlName="creditAddedAgainstPi" [readonly]="propertyFlag" id="creditAddedAgainstPi" aria-describedby="creditAddedAgainstPiHelp">
+                        <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small>
+                    </div>
+                </div>
 
-   
-          </div>
+
+            </div>
         </ng-template>
         <div class="row pt-3 pb-3 m-0">
-          <button  class="btn btn-primary" type="submit" (click) = "Onsubmit()">{{buttonName}}</button>
-        </div> 
-      </form>
-    </div>
-    <div class="m-5"></div>
+            <button class="btn btn-primary" matRipple type="submit" (click)="Onsubmit()">{{buttonName}}</button>
+        </div>
+    </form>
+</div>
+<div class="m-5"></div>

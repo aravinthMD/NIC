@@ -75,7 +75,7 @@ table {
     background-color: #0e4d92;
     color: #fff;
   }
-  tr:nth-child(even) {background-color:#f5f4f4;}
+  // tr:nth-child(even) {background-color:#f5f4f4;}
 //   .col-md-12.d-flex.justify-content-end:hover{
 //       pointer-events: none;
 //   }
@@ -93,10 +93,6 @@ table {
   border-left: .25rem solid #f6c23e !important;
 }
 
-// :host ::ng-deep  .mat-tab-header {
-
-// }
-
-th.mat-tab-header {
-  background: grey !important
+tr.example-element-row:hover {
+  background: whitesmoke;
 }

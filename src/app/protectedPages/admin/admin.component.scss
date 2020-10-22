@@ -230,3 +230,9 @@ i.fa.fa-bell {
 	font-size: 20px;
 	margin-right:-4px;
 }
+.page-container {
+    // position: relative;
+    min-height: 100vh;
+	background-color: #eff6fd;
+	display:flex;
+  }
