@@ -21,7 +21,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ReportsComponent } from './protectedPages/reports/reports.component';
 import { AdminComponent } from './protectedPages/admin/admin.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { CreateUserComponent } from './protectedPages/admin/create-user/create-user.component'
+import { CreateUserComponent } from './protectedPages/admin/create-user/create-user.component';
+import { ManageUsersComponent } from './protectedPages/admin/manage-users/manage-users.component'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { CreateUserComponent } from './protectedPages/admin/create-user/create-u
     ReportsComponent,
     AdminComponent,
     HeaderComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,
