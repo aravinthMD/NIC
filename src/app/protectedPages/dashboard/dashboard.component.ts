@@ -1,4 +1,3 @@
-import { createAotUrlResolver } from '@angular/compiler';
 import { Component, OnInit,AfterViewInit,ViewChild } from '@angular/core';
 import { Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
