@@ -9,11 +9,12 @@ import { ProtectedComponent } from './protectedPages/protected/protected.compone
 import { ReportsComponent } from './protectedPages/reports/reports.component';
 import { UserInformationComponent } from './protectedPages/user-information/user-information.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
-
+import { GenerateOtpComponent } from './generate-otp/generate-otp.component'
 
 const routes: Routes = [
   {path:"",component :LoginComponent},
   {path:"resetpassword",component : ResetPasswordComponent},
+  {path:"verifyotp",component:GenerateOtpComponent},
   {path : "users",component : ProtectedComponent,
   children : [
     { path : "Dashboard" , component : DashboardComponent },

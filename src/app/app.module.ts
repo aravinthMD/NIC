@@ -23,7 +23,8 @@ import { ReportsComponent } from './protectedPages/reports/reports.component';
 import { AdminComponent } from './protectedPages/admin/admin.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { CreateUserComponent } from './protectedPages/admin/create-user/create-user.component';
-import { ManageUsersComponent } from './protectedPages/admin/manage-users/manage-users.component'
+import { ManageUsersComponent } from './protectedPages/admin/manage-users/manage-users.component';
+import { GenerateOtpComponent } from './generate-otp/generate-otp.component'
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ManageUsersComponent } from './protectedPages/admin/manage-users/manage
     AdminComponent,
     HeaderComponent,
     CreateUserComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    GenerateOtpComponent
   ],
   imports: [
     BrowserModule,

@@ -7,20 +7,20 @@
             </div>
             <div class="col-md-10 mx-auto">
                 <div class="col-md-10 mx-auto">
-                    <label>Create New Password</label>
+                    <label>Please enter your received OTP here !</label>
                 </div>
                 <div class="form-group">
                     <!-- <label for="exampleInputEmail1">Email address</label> -->
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="New Password">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your OTP">
                     <!-- <small id="emailHelp" class="form-text text-muted">Enter Valid Email</small> -->
                 </div>
-                <div class="form-group">
-                    <!-- <label for="exampleInputEmail1">Email address</label> -->
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="confirm Password">
-                    <!-- <small id="emailHelp" class="form-text text-muted">Enter Valid Email</small> -->
-                </div>
-                <div class="col-md-12 d-flex justify-content-center mt-3">
-                    <button type="submit" (click)="login()" matRipple class="col-md-4 btn btn-primary">Generate Password</button>
+                <div class="col-md-8 row p-0 mx-auto">
+                    <div class="col-md-6 d-flex justify-content-center mt-3 pr-0">
+                        <button type="submit" (click)="login()" matRipple class="btn btn-primary" routerLink="/resetpassword">Verify</button>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center mt-3">
+                        <button type="submit" (click)="login()" matRipple class="btn btn-primary">Resend OTP</button>
+                    </div>
                 </div>
             </div>
         </form>
