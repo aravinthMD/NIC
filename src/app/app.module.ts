@@ -24,7 +24,8 @@ import { AdminComponent } from './protectedPages/admin/admin.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { CreateUserComponent } from './protectedPages/admin/create-user/create-user.component';
 import { ManageUsersComponent } from './protectedPages/admin/manage-users/manage-users.component';
-import { GenerateOtpComponent } from './generate-otp/generate-otp.component'
+import { GenerateOtpComponent } from './generate-otp/generate-otp.component';
+import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage-admin.component'
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { GenerateOtpComponent } from './generate-otp/generate-otp.component'
     HeaderComponent,
     CreateUserComponent,
     ManageUsersComponent,
-    GenerateOtpComponent
+    GenerateOtpComponent,
+    ManageAdminComponent
   ],
   imports: [
     BrowserModule,

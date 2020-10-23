@@ -1,4 +1,4 @@
-import { Component, OnInit,AfterViewInit,ViewChild } from '@angular/core';
+import { Component, OnInit,AfterViewInit,ViewChild,Input } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -10,6 +10,8 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./manage-users.component.scss']
 })
 export class ManageUsersComponent implements OnInit ,AfterViewInit {
+
+  @Input('userObj') user : any;
 
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;

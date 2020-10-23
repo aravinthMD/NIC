@@ -1,0 +1,77 @@
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+  
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  .mat-tab-label-content {
+    font-size: 20px !important;
+}
+
+.mat-tab-label mat-ripple ng-star-inserted{
+    margin-left: 202px;
+
+}
+
+
+.mat-tab-label.mat-tab-label-active {
+  background-color: #e3e7e8 !important;
+}
+
+::ng-deep .mat-tab-label {
+  border-style: ridge;
+  border-color: #c0cad4 !important;
+  border-radius: 8px;
+}
+
+
+    /* Styles for tab labels */
+    ::ng-deep .mat-tab-label {
+      min-width: 25px !important;
+      padding: 5px;
+      background-color: transparent;
+      font-weight: 700;
+  }
+  
+  /* Styles for the active tab label */
+  ::ng-deep .mat-tab-label-active {
+    background-color: #0E4D92 !important;
+    color: #fff;
+    opacity: 1 !important;
+    border-color: #0672e7 !important ;
+
+      // background-color: ;
+  }
+  
+  /* Styles for the ink bar */
+  ::ng-deep .mat-ink-bar {
+    background-color: #0E4D92 !important;
+  }
+  
+//   ::ng-deep .activeTab{
+//   opacity: 1 !important;
+// }
+
+// :host ::ng-deep .mat-tab-label {
+//   border-style: ridge;
+//   // border-color: #c0cad4 !important;
+//   background-color: #c0cad4 !important;
+//   // border-radius: 8px;
+// }
+
+:host ::ng-deep .mat-tab-label{
+  border-radius: 2px;
+ border-style: ridge;
+
+}

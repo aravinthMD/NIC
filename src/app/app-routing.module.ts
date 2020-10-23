@@ -9,7 +9,8 @@ import { ProtectedComponent } from './protectedPages/protected/protected.compone
 import { ReportsComponent } from './protectedPages/reports/reports.component';
 import { UserInformationComponent } from './protectedPages/user-information/user-information.component';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
-import { GenerateOtpComponent } from './generate-otp/generate-otp.component'
+import { GenerateOtpComponent } from './generate-otp/generate-otp.component';
+import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage-admin.component'
 
 const routes: Routes = [
   {path:"",component :LoginComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
 },
   {path:"admin",component : AdminComponent,
   children : [
+    {path: "manageAdmin", component: ManageAdminComponent},
     { path : "createuser",component : CreateUserComponent},
     { path : "manage/users",component : ManageUsersComponent}
   ]},
