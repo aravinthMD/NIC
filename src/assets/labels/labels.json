@@ -18,6 +18,9 @@
     "projectNo": "Project No",
     "uploadDoc": "Upload Document",
     "mobileNumber": "Mobile Number",
+    "Credit added": "Credit added",
+           
+
     "validationData": {
         "name": {
             "maxLength": {
