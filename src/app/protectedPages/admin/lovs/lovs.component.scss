@@ -1,0 +1,79 @@
+.userForm {
+    overflow-x: hidden;
+    padding-top: 55px;
+    // box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    border-radius: 16px !important;
+    margin-top: 20px;
+    overflow-y: hidden;
+}
+
+h1.h3.text-gray-800.mb-2 {
+    color: #0e4d92;
+    font-size: 20px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e707e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d1d3e2;
+    border-radius: .35rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    // color: #858796 !important;
+}
+
+h2 {
+    color: #5a5c69!important;
+    font-weight: 400;
+    font-size: 1.75rem;
+    line-height: 1.2;
+}
+
+button.btn.btn-primary {
+    float: right;
+    background-color: #0e4d92 !important;
+    border: 1px solid #0e4d92 !important;
+    font-size: 13px;
+}
+
+label {
+    font-size: 16px;
+}
+
+.mat-tab-group {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+}
+
+h2 {
+    color: #5a5c69 !important;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.2px !important;
+    margin-bottom: 20px !important;
+}
+
+.h3 {
+    font-size: 1.75rem;
+    margin-bottom: .5rem;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.pad-row {
+    padding: 2vw;
+
+}

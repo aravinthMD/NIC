@@ -25,7 +25,9 @@ import { HeaderComponent } from './shared/header/header.component';
 import { CreateUserComponent } from './protectedPages/admin/create-user/create-user.component';
 import { ManageUsersComponent } from './protectedPages/admin/manage-users/manage-users.component';
 import { GenerateOtpComponent } from './generate-otp/generate-otp.component';
-import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage-admin.component'
+import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage-admin.component';
+import { ManageUserDialogComponent } from './protectedPages/admin/manage-user-dialog/manage-user-dialog.component';
+import { LovsComponent } from './protectedPages/admin/lovs/lovs.component'
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage
     CreateUserComponent,
     ManageUsersComponent,
     GenerateOtpComponent,
-    ManageAdminComponent
+    ManageAdminComponent,
+    ManageUserDialogComponent,
+    LovsComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +65,6 @@ import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[ProformaInvoiceDialogFormComponent]
+  entryComponents:[ProformaInvoiceDialogFormComponent, ManageUserDialogComponent]
 })
 export class AppModule { }

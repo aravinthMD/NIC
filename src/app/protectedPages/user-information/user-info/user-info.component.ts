@@ -1,14 +1,16 @@
-import { Component, OnInit ,ViewChild,Input} from '@angular/core';
+import { Component, OnInit ,ViewChild,Input, OnChanges} from '@angular/core';
 // import {MatAccordion} from '@angular/material/expansion';
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
-import { LabelsService } from '../../../services/labels.service'
+import { LabelsService } from '../../../services/labels.service';
+
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit,OnChanges {
 
 
   // @ViewChild(MatAccordion,{ static: true }) accordion: MatAccordion; 
@@ -32,7 +34,7 @@ export class UserInfoComponent implements OnInit {
   ];
 
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location) {
 
     this.form =this.formBuilder.group({
       name : [null],
@@ -66,12 +68,21 @@ export class UserInfoComponent implements OnInit {
       this.labels = values;
     })
 
-    if(this.user){
-    this.setFormValues();
-    this.buttonName = 'Edit';
-    this.propertyFlag = true
-    }
+      if(this.user){
+        this.setFormValues();
+        this.buttonName = 'Edit';
+        this.propertyFlag = true
+        }
 
+  }
+
+  ngOnChanges() {
+
+    let path = this.location.path();
+
+    if(!path.includes('userInfo/')) {
+      this.form.reset()
+    }
   }
 
 
