@@ -1,4 +1,4 @@
-.login{
+.login {
     font-size: 0.8rem;
     border-radius: 1rem;
     padding: 1.5rem 1rem;
@@ -8,7 +8,7 @@
     justify-content: center;
 }
 
-.log{
+.log {
     overflow: hidden;
     overflow-y: hidden;
 }
@@ -17,19 +17,21 @@
     padding-top: 85px;
 }
 
-
 .container {
-
     height: 100%;
-
 }
 
-
-  .container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-  }
-  .log {
+}
+
+.log {
     background-image: url('src/img/NIC_BG_2.jpg');
     min-height: 380px;
     background-position: center;
@@ -37,8 +39,9 @@
     background-size: cover;
     position: relative;
     height: 100vh;
-  }
-.form-control{
+}
+
+.form-control {
     display: block;
     width: 80%;
     height: calc(3em + .75rem + 2px);
@@ -55,7 +58,8 @@
     border-radius: 25PX;
     margin: 0 auto;
 }
-.form-check-input{
+
+.form-check-input {
     position: absolute;
     // top: .25rem;
     // left: -1.5rem;
@@ -63,23 +67,26 @@
     width: 1rem;
     height: 1rem;
     background-color: #fff;
-    border:1px solid #b7b9cc;
-    opacity:0.2;
-    top:-5px;
-}
-.form-check-label{
-    color: #b7b9cc;
-    padding-left:10px;
-}
-button.btn.btn-primary {
-padding: .75rem 1rem;
-width: 100%;
-border-radius: 25px;
-}
-.form-group.form-check{
-    margin-left:73px;
+    border: 1px solid #b7b9cc;
+    opacity: 0.2;
+    top: -5px;
 }
 
-a{
+.form-check-label {
+    color: #b7b9cc;
+    padding-left: 10px;
+}
+
+button.btn.btn-primary {
+    padding: .75rem 1rem;
+    width: 100%;
+    border-radius: 25px;
+}
+
+.form-group.form-check {
+    margin-left: 73px;
+}
+
+a {
     padding-left: 78px;
 }
