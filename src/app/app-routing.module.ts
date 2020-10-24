@@ -20,6 +20,7 @@ const routes: Routes = [
   {path : "users",component : ProtectedComponent,
   children : [
     { path : "Dashboard" , component : DashboardComponent },
+    { path : "userInfo/:id" , component : UserInformationComponent },
     { path : "userInfo" , component : UserInformationComponent },
     { path : "reports" , component : ReportsComponent},
     {path: "email", component : EmailComponent}
