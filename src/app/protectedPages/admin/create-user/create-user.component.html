@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="Name">Name</label>
+                        <label for="Name">Name<span style="color:red">*</span></label>
                         <input type="text" class="form-control" [readonly]="propertyFlag"  id="Name" aria-describedby="nameHelp">
                         <small id="nameHelp" class="form-text text-muted"></small>
                     </div>
@@ -25,7 +25,7 @@
     
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="department">Department</label>
+                        <label for="department">Department<span style="color:red">*</span></label>
                         <select  id="department" class="form-control" aria-describedby="emailHelp">
                       <option [value]="list.value" *ngFor = "let list of deparmentList">{{list.key}}</option>
                       <!-- <option>Department of Sainik Welfare</option>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="designation">Designation</label>
+                        <label for="designation">Designation<span style="color:red">*</span></label>
                         <input type="text" [readonly]="propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
                         <small id="designationHelp" class="form-text text-muted"></small>
                     </div>
@@ -49,21 +49,21 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="empCode">Employee Code</label>
+                        <label for="empCode">Employee Code<span style="color:red">*</span></label>
                         <input type="text" class="form-control" [readonly]="propertyFlag" id="empCode" aria-describedby="empCodeHelp">
                         <small id="empCodeHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="emailAddress">Email address</label>
+                        <label for="emailAddress">Email address<span style="color:red">*</span></label>
                         <input type="email" class="form-control"  [readonly]="propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
                         <small id="emailAddressHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="mobileNumber">Mobile Number</label>
+                        <label for="mobileNumber">Mobile Number<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  [readonly]="propertyFlag" id="mobileNumber" aria-describedby="mobileNumberHelp">
                         <small id="mobileNumberHelp" class="form-text text-muted"></small>
                     </div>
@@ -75,21 +75,21 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="telPhno">Telephone Number(Office)</label>
+                        <label for="telPhno">Telephone Number(Office)<span style="color:blue">*</span></label>
                         <input type="text" class="form-control"   id="telPhno" aria-describedby="telPhnoHelp">
                         <small id="telPhnoHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="offcAddressLine1">Official Address line 1</label>
+                        <label for="offcAddressLine1">Official Address line 1<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
                         <small id="offcAddressLineHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="offcAddressLine2">Official Address line 2</label>
+                        <label for="offcAddressLine2">Official Address line 2<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
                         <small id="offcAddressLine2Help" class="form-text text-muted"></small>
                     </div>
@@ -101,21 +101,21 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="offcAddressLine3">Official Address line 3</label>
+                        <label for="offcAddressLine3">Official Address line 3<span style="color:red">*</span></label>
                         <input type="text" class="form-control"   id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
                         <small id="offcAddressLine3Help" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="city">City</label>
+                        <label for="city">City<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="city" aria-describedby="cityHelp">
                         <small id="cityHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="State">State</label>
+                        <label for="State">State<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="State" aria-describedby="StateHelp">
                         <small id="StateHelp" class="form-text text-muted"></small>
                     </div>
@@ -126,33 +126,12 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="PinCode">Pin Code</label>
+                        <label for="PinCode">Pin Code<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="PinCode" aria-describedby="PinCodeHelp">
                         <small id="PinCodeHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label for="sms">SMS Traffic Month wise</label>
-                        <input type="text" class="form-control"  id="sms" aria-describedby="smsHelp">
-                        <small id="smsHelp" class="form-text text-muted"></small>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="form-group">
-                        <label for="piDuration">PI duration / Period</label>
-                        <input type="date" class="form-control"  id="piDuration" aria-describedby="piDurationHelp">
-                        <small id="piDurationHelp" class="form-text text-muted"></small>
-                    </div>
-                </div>
-    
-                <div class="col-4">
-                    <div class="form-group">
-                        <label for="projectNumber">Project No.</label>
-                        <input type="text" class="form-control"  id="projectNumber" aria-describedby="projectNumberHelp">
-                        <small id="projectNumberHelp" class="form-text text-muted"></small>
-                    </div>
-                </div>
+               
                 <!-- <div class="col-4">
                     <div class="form-group">
                         <label for="poBillable">Upload Document</label>
