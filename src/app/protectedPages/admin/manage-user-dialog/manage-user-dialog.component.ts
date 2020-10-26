@@ -10,9 +10,8 @@ export class ManageUserDialogComponent implements OnInit {
   buttonName : any = 'Edit'
   enableflag :boolean = true
 
-  deparmentList : any[] = [{key:'Department of Sainik Welfare',value:0},{key:'Minstry of minority affairs',value:1},{key:'Vishakhapatnam port Trust',value:2},
-  {key:'minstry of trible affairs',value:2},{key:'Bureasu of Naviks.Mumbai',value:3}
-];
+  deparmentList : any[] = [{key:'Admin User',value:0},{key:'Operation user',value:1},{key:'Finance User',value:2}];
+
 
 
 today: any;
