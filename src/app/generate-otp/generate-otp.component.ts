@@ -12,4 +12,6 @@ export class GenerateOtpComponent implements OnInit {
   ngOnInit() {
   }
 
+
+
 }

@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
   displayedColumns: string[] = ['UserID', 'Department', 'State', 'Status']; 
 
   userList : any[] = [
-    {userId : "arul.auth",department : "Finance Department Uttarakhnad",state : "Uttarakhnad",status :"Active",id:1},
+    {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",status :"Active",id:1},
     {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",status :"InActive",id:2},
     {userId : "Jain.auth",department : "Election Department , Manipur",state : "Manipur",status :"InActive",id:3},
     {userId : "Jain.auth",department : "Director of emloyment and ceo",state : "Delhi",status :"Active",id:3},
@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
   dataSource = new MatTableDataSource<any>(this.userList);
 
   constructor(private route:Router) { }
-
+  
   ngOnInit() {
   }
 

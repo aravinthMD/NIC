@@ -10,6 +10,8 @@ export class CreateUserComponent implements OnInit {
 
   @Input('userObj') user : any;
 
+  propertyFlag: boolean;
+
   deparmentList : any[] = [{key:'Admin User',value:0},{key:'Operation user',value:1},{key:'Finance User',value:2}];
 
   constructor() { }

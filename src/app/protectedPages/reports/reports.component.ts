@@ -18,7 +18,7 @@ export class ReportsComponent implements OnInit,AfterViewInit {
   displayedColumns: string[] = ['UserID', 'Department', 'po', 'pi','invoiceRaised','paymentStatus']; 
 
   userList : any[] = [
-    {userId : "arul.auth",department : "Finance Department Uttarakhnad",state : "Uttarakhnad",status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved'},
+    {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved'},
     {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",status :"InActive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved'},
     {userId : "Jain.auth",department : "Election Department , Manipur",state : "Manipur",status :"InActive",id:3,po:'Raised',pi:'',invoiceRaised:'True',paymentStatus:'Approved'},
     {userId : "Jain.auth",department : "Director of emloyment and ceo",state : "Delhi",status :"Active",id:3,po:'Raised',pi:'pending',invoiceRaised:'True',paymentStatus:'Approved'},

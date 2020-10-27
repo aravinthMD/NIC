@@ -1,0 +1,62 @@
+{
+
+    "name": "Name",
+    "department":"Department",
+    "designation": "Designation",
+    "employeeCode": "EmployeeCode",
+    "email": "Email",
+    "mobileNo": "Mobile Number",
+    "teleNumber": "Telephone Number(Office",
+    "officialAdd1": "Official Address Line 1",
+    "officialAdd2": "Official Address Line 2",
+    "officialAdd3": "Official Address Line 3",
+    "city": "City",
+    "state": "State",
+    "pincode": "Pin Code",
+    "smsTraffic": "SMS Traffic Month wise",
+    "piDuration": "PI duration / Period",
+    "projectNo": "Project No",
+    "uploadDoc": "Upload Document",
+    "mobileNumber": "Mobile Number",
+    "Credit added": "Credit added",
+           
+
+    "validationData": {
+        "name": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "mobile": {
+            "maxLength": {
+                "rule": 10,
+                "msg": "Should be 10 Digits"
+            },
+            "type": "number",
+            "patternCheck": {
+                "rule": "^[6-9][0-9]*$",
+                "msg": "Invalid Mobile Number"
+            }
+        },
+        "designation": {
+            "maxLength": {
+                "rule": 25
+            }
+        },
+        "employeeCode": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "email": {
+            "maxLength": {
+                "rule": 50
+            },
+            "patternCheck": {
+                "rule": "^\\w+([.-]?\\w+)@\\w+([.-]?\\w+)(\\.\\w{2,10})+$",
+                "msg": "Invalid email"
+            }
+        }
+
+    }
+}
