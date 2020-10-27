@@ -17,7 +17,7 @@
         <div class="row">
              <div class="col-4">
                 <div class="form-group">
-                    <label for="InvoiceNumber">Invoice Number</label>
+                    <label for="InvoiceNumber">Tax Invoice Number</label>
                     <input type="email" class="form-control" id="InvoiceNumber" aria-describedby="InvoiceNumberHelp">
                     <small id="InvoiceNumberHelp" class="form-text text-muted"></small>
                   </div>
@@ -128,7 +128,7 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="InvoiceNo">
-      <th mat-header-cell *matHeaderCellDef>Invoice No </th>
+      <th mat-header-cell *matHeaderCellDef>Tax Invoice No </th>
       <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
     </ng-container>
 

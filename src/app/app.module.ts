@@ -28,7 +28,9 @@ import { GenerateOtpComponent } from './generate-otp/generate-otp.component';
 import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage-admin.component';
 import { EmailComponent } from './protectedPages/email/email.component'
 import { ManageUserDialogComponent } from './protectedPages/admin/manage-user-dialog/manage-user-dialog.component';
-import { LovsComponent } from './protectedPages/admin/lovs/lovs.component'
+import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +65,11 @@ import { LovsComponent } from './protectedPages/admin/lovs/lovs.component'
     FormsModule,
     ReactiveFormsModule,
     ScrollingModule,
-    SharedModule
+    SharedModule,
+    MatAutocompleteModule
+  ],
+  exports: [
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent],

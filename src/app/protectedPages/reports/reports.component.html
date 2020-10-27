@@ -23,6 +23,79 @@
 
                         <div class="col-4">
                             <div class="form-group">
+                                <label for="mobile">Reports</label>
+                                <select class="form-control" (change)="onSelect($event)">
+                                <option  value = '0' disabled>--select--</option>
+                                <option value="1">Proforma Invoice Raised</option>
+                                <option value="2">Purchase Order Raised</option>
+                                <option value="3">Invoice Raised</option>
+                                <option value="4">Payment Status</option>
+                                <option value="5">All</option>
+                              </select>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="mobile">Status</label>
+                                <select class="form-control">
+                                <option value = '0' disabled>--select--</option>
+                                <option *ngFor="let val of optionValue">
+                                    {{val.key}}
+                                </option>
+                                
+                              </select>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="mobile">Report Filter</label>
+                                <select class="form-control" (change)="onRepFilter($event)">
+                                <option  value = '0' disabled>--select--</option>
+                                <option value="1">User Id</option>
+                                <option value="2">Department</option>
+                                <option value="3">Status</option>
+                              </select>
+                            </div>
+                        </div>
+
+                        <div class="col-4" *ngIf="isDepartment">
+                            <div class="form-group">
+
+                                <label for="mobile">State</label>
+                                <select class="form-control">
+                                <option value = '0' disabled>--select--</option>
+                                <option *ngFor="let val of states">
+                                    {{val.key}}
+                                </option>
+                                
+                              </select>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+
+                            <mat-form-field class="example-full-width auto-mrg-top">
+                                <input type="text"
+                                       [placeholder]="placeholderData"
+                                       aria-label="Number"
+                                       matInput
+                                       [formControl]="myControl"
+                                       [matAutocomplete]="auto">
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                    {{option}}
+                                  </mat-option>
+                                </mat-autocomplete>
+                              </mat-form-field>
+
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
                                 <label for="invoiceDate">From Date</label>
                                 <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small>
@@ -35,7 +108,7 @@
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Profoma Report</label>
                                 <select class="form-control">
@@ -47,11 +120,7 @@
                         </div>
 
                         <div class="col-4">
-                            <!-- <div class="form-group">
-                        <label for="poNumber">PO Number</label>
-                        <input type="email" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
-                        <small id="poNumberHelp" class="form-text text-muted"></small>
-                      </div>-->
+                          
                             <div class="form-group">
                                 <label for="mobile">Purchase Order Report</label>
                                 <select class="form-control">
@@ -80,7 +149,7 @@
                                 <option>Recieved</option>
                               </select>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
 
@@ -114,29 +183,24 @@
                 </ng-container>
 
                 <!-- Weight Column -->
-                <ng-container matColumnDef="pi">
-                    <th mat-header-cell *matHeaderCellDef> PI </th>
-                    <td mat-cell *matCellDef="let element"> {{element.pi}} </td>
+                <ng-container matColumnDef="state">
+                    <th mat-header-cell *matHeaderCellDef> State </th>
+                    <td mat-cell *matCellDef="let element"> {{element.state}} </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="po">
-                    <th mat-header-cell *matHeaderCellDef> PO </th>
-                    <td mat-cell *matCellDef="let element"> {{element.po}} </td>
+                <ng-container matColumnDef="piNumber">
+                    <th mat-header-cell *matHeaderCellDef> PI Number </th>
+                    <td mat-cell *matCellDef="let element"> {{element.piNumber}} </td>
                 </ng-container>
 
 
                 <!--Invoice raised-->
-                <ng-container matColumnDef="invoiceRaised">
-                    <th mat-header-cell *matHeaderCellDef> Invoice Raised </th>
-                    <td mat-cell *matCellDef="let element"> {{element.invoiceRaised}} </td>
+                <ng-container matColumnDef="piDate">
+                    <th mat-header-cell *matHeaderCellDef> PI Date </th>
+                    <td mat-cell *matCellDef="let element"> {{element.piDate}} </td>
                 </ng-container>
 
-                <!--Payment Status-->
-                <ng-container matColumnDef="paymentStatus">
-                    <th mat-header-cell *matHeaderCellDef> Payment Status </th>
-                    <td mat-cell *matCellDef="let element"> {{element.paymentStatus}} </td>
-                </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
