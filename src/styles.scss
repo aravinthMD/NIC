@@ -36,7 +36,7 @@
   }
 
   .sidenav a {
-    padding:12px;
+    padding: 1.50rem 1.25rem;
     text-decoration: none;
     // font-size: 1.25rem;
     font-size: 14px;
@@ -155,10 +155,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;line-height:12px; }
 label{
-  font-size:16px !important;color:#414141 !important;
+  font-size:14px !important;color:#414141 !important;
   font-weight: 400px !important;
 }
-.form-control{font-size: 15px !important;}
+.form-control{font-size: 14px !important;}
 button.btn.btn-primary {
   float: right;
   background-color: #0e4d92 !important;
@@ -176,4 +176,7 @@ button.btn.btn-primary {
 .font-paginator{
   font-size: 16px;
   font-weight: bold;
+}
+mat-form-field{
+  width: 100%;
 }

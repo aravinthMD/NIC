@@ -90,3 +90,7 @@ tr:nth-child(even) {
   ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
       padding: 10px !important;
   }
+
+  mat-form-field{
+    margin-top: -0.4vw;
+}

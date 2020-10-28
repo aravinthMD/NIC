@@ -23,9 +23,16 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="invoiceDate">Invoice Date</label>
-                    <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
-                    <small id="invoiceDateHelp" class="form-text text-muted"></small>
+                     <label for="invoiceDate">Invoice Date</label>
+                  <!--  <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
+                    <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+
+                    <mat-form-field>
+                      <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="invoiceDate">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+
                   </div>
             </div>
             <div class="col-4">
@@ -62,22 +69,41 @@
           <div class="col-4">
             <div class="form-group">
                 <label for="poDate">PO Date</label>
-                <input type="date" class="form-control" id="poDate" aria-describedby="poDateHelp">
-                <small id="poDateHelp" class="form-text text-muted"></small>
+                <!--<input type="date" class="form-control" id="poDate" aria-describedby="poDateHelp">
+                <small id="poDateHelp" class="form-text text-muted"></small> -->
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker2"  (dateInput)="formDateFunc($event.value)" [formControl]="poDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
               </div>
         </div>
         <div class="col-4">
             <div class="form-group">
-                <label for="Fromperiod">From Date</label>
-                <input type="date" class="form-control" id="Fromperiod" aria-describedby="FromperiodHelp">
-                <small id="FromperiodHelp" class="form-text text-muted"></small>
+               <label for="Fromperiod">From Date</label>
+                <!--  <input type="date" class="form-control" id="Fromperiod" aria-describedby="FromperiodHelp">
+                <small id="FromperiodHelp" class="form-text text-muted"></small> -->
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker3" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate">
+                  <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                  <mat-datepicker #picker3></mat-datepicker>
+                </mat-form-field>
+
               </div>
         </div>
         <div class="col-4">
           <div class="form-group">
-              <label for="Toperiod">To Date</label>
-              <input type="date" class="form-control" id="Toperiod" aria-describedby="ToperiodHelp">
-              <small id="ToperiodHelp" class="form-text text-muted"></small>
+               <label for="Toperiod">To Date</label>
+             <!-- <input type="date" class="form-control" id="Toperiod" aria-describedby="ToperiodHelp">
+              <small id="ToperiodHelp" class="form-text text-muted"></small> -->
+
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker4" [formControl]="toDate">
+                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <mat-datepicker #picker4></mat-datepicker>
+              </mat-form-field>
+              
             </div>
       </div>
           <div class="col-4">
@@ -159,7 +185,7 @@
       
         
         <div class="row pt-3 pb-3 m-0">
-          <button  class="btn btn-primary" type="submit">Submit</button>
+          <button  class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
         </div> 
       </form>
       
@@ -200,7 +226,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator class="font-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator class="font-paginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 <!--Material Table End-->
 <div class="m-5"></div>

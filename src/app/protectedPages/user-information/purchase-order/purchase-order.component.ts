@@ -1,6 +1,8 @@
 import { Component, OnInit,Input, AfterViewInit,ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
+import { LabelsService } from '../../../services/labels.service';
 
 
 @Component({
@@ -26,14 +28,27 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   ];
   dataSource = new MatTableDataSource<any>(this.userList);
 
-  constructor() { }
+  date = new FormControl();
+
+  labels: any = {};
+
+  constructor(private labelsService: LabelsService) { }
 
   ngOnInit() {
+
+    this.labelsService.getLabelsData().subscribe((values)=> {
+      this.labels = values;
+    })
+    
   }
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
+  }
+
+  formDateFunc(event) {
+    
   }
 
 }

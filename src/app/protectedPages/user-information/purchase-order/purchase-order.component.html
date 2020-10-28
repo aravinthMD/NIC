@@ -15,28 +15,28 @@
           <div class="row">
               <div class="col-4">
                   <div class="form-group">
-                      <label for="purchaseOrder">Purchase Order Number</label>
+                      <label for="purchaseOrder">{{labels.purchaseON}}</label>
                       <input type="text" class="form-control" id="purchaseOrder" aria-describedby="purchaseOrderHelp">
                       <small id="purchaseOrderHelp" class="form-text text-muted"></small>
                     </div>
               </div>
               <div class="col-4">
                   <div class="form-group">
-                      <label for="projectNo">Project Number</label>
+                      <label for="projectNo">{{labels.projectNo}}</label>
                       <input type="text" class="form-control" id="projectNo" aria-describedby="projectNoHelp">
                       <small id="projectNoHelp" class="form-text text-muted"></small>
                     </div>
               </div>
               <div class="col-4">
                   <div class="form-group">
-                      <label for="projectName">Project Name</label>
+                      <label for="projectName">{{labels.projectName}}</label>
                       <input type="text" class="form-control" id="projectName" aria-describedby="projectNameHelp">
                       <small id="projectNameHelp" class="form-text text-muted"></small>
                     </div>
               </div>
               <div class="col-4">
                   <div class="form-group">
-                      <label for="userId">User ID</label>
+                      <label for="userId">{{labels.userId}}</label>
                       <input type="text" class="form-control" id="userId" aria-describedby="userIdHelp">
                       <small id="userIdHelp" class="form-text text-muted"></small>
                     </div>
@@ -45,14 +45,22 @@
       
               <div class="col-4">
                   <div class="form-group">
-                      <label for="dateFor">Date</label>
-                      <input type="date" class="form-control" id="dateFor" aria-describedby="dateHelp">
-                      <small id="dateHelp" class="form-text text-muted"></small>
+                      <label for="dateFor">{{labels.date}}</label>
+                      <!-- <input type="date" class="form-control" id="dateFor" aria-describedby="dateHelp">
+                      <small id="dateHelp" class="form-text text-muted"></small> -->
+
+                      <mat-form-field>
+                        <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+
+
                     </div>
               </div>
               <div class="col-4">
                   <div class="form-group">
-                      <label for="poAmount">PO Amount</label>
+                      <label for="poAmount">{{labels.poAmount}}</label>
                       <input type="text" class="form-control" id="poAmount" aria-describedby="poAmountHelp">
                       <small id="poAmountHelp" class="form-text text-muted"></small>
                     </div>
@@ -65,7 +73,7 @@
                       <small id="poStatusHelp" class="form-text text-muted"></small>
                     </div> -->
                     <div class="form-group">
-                      <label for="poStatus">PO Status</label>
+                      <label for="poStatus">{{labels.poStatus}}</label>
                       <select 
                           name="poStatus" 
                           id="poStatus" 
@@ -86,7 +94,7 @@
                       <small id="piStatusHelp" class="form-text text-muted"></small>
                     </div> -->
                     <div class="form-group">
-                      <label for="piStatus">PI Status</label>
+                      <label for="piStatus">{{labels.piStatus}}</label>
                       <select 
                           name="piStatus" 
                           id="piStatus" 
@@ -103,7 +111,7 @@
       
             <div class="col-4">
                 <div class="form-group">
-                    <label for="PiReceived">PI Received In</label>
+                    <label for="PiReceived">{{labels.piReceivedIn}}</label>
                     <select 
                           name="piReceivedIn" 
                           id="piReceivedIn" 
@@ -115,7 +123,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="paymentStatus">Payment Status</label>
+                    <label for="paymentStatus">{{labels.paymentStatus}}</label>
                     <select 
                         name="paymentStatus" 
                         id="paymentStatus" 
@@ -128,28 +136,28 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="remark">Remark</label>
+                    <label for="remark">{{labels.remark}}</label>
                     <input type="text" class="form-control" id="remark" aria-describedby="remarkHelp">
                     <small id="remarkHelp" class="form-text text-muted"></small>
                   </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="piBillable">PI Billable </label>
+                    <label for="piBillable">{{labels.piBillable}} </label>
                     <input type="text" class="form-control" id="piBillable" aria-describedby="piBillableHelp">
                     <small id="piBillableHelp" class="form-text text-muted"></small>
                   </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="poBillable">PO Billable </label>
+                    <label for="poBillable">{{labels.poBillable}} </label>
                     <input type="text" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
                     <small id="poBillableHelp" class="form-text text-muted"></small>
                   </div>
             </div>
             <div class="col-4">
               <div class="form-group">
-                  <label for="poBillable">Upload Document</label>
+                  <label for="poBillable">{{labels.uploadDoc}}</label>
                   <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
                   <small id="poBillableHelp" class="form-text text-muted"></small>
                 </div>

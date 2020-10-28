@@ -1,6 +1,7 @@
 import { Component, OnInit,Input,ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 
 
 @Component({
@@ -25,6 +26,10 @@ export class TaxInvoiceComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource<any>(this.userList);
+  invoiceDate = new FormControl()
+  fromDate = new FormControl()
+
+  toDate = new FormControl()
 
 
   constructor() { }
@@ -35,6 +40,10 @@ export class TaxInvoiceComponent implements OnInit {
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
+  }
+
+  formDateFunc(event) {
+    
   }
 
 }

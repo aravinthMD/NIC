@@ -97,15 +97,28 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="invoiceDate">From Date</label>
-                                <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
-                                <small id="invoiceDateHelp" class="form-text text-muted"></small>
+                                <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
+                                <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                  </mat-form-field>
+
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="invoiceDate">To Date</label>
-                                <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
-                                <small id="invoiceDateHelp" class="form-text text-muted"></small>
+                                <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
+                                <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker2" (dateInput)="formDateFunc($event.value)" [formControl]="toDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                  </mat-form-field>
+
                             </div>
                         </div>
                         <!-- <div class="col-4">

@@ -1,26 +1,48 @@
 {
-
     "name": "Name",
-    "department":"Department",
+    "department": "Department",
     "designation": "Designation",
-    "employeeCode": "EmployeeCode",
-    "email": "Email",
+    "employeeCode": "Employee Code",
+    "email": "Email Address",
     "mobileNo": "Mobile Number",
-    "teleNumber": "Telephone Number(Office",
+    "teleNumber": "Telephone Number(Office)",
     "officialAdd1": "Official Address Line 1",
     "officialAdd2": "Official Address Line 2",
     "officialAdd3": "Official Address Line 3",
     "city": "City",
     "state": "State",
     "pincode": "Pin Code",
-    "smsTraffic": "SMS Traffic Month wise",
-    "piDuration": "PI duration / Period",
-    "projectNo": "Project No",
+    "smsTraffic": "SMS Traffic Month Wise",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "projectNo": "Project Number",
     "uploadDoc": "Upload Document",
-    "mobileNumber": "Mobile Number",
-    "Credit added": "Credit added",
-           
-
+    "creditAdded": "Credit added",
+    "creditApprover": "Credit Approver",
+    "creditDate": "Credit Date",
+    "creditPI": "Credit Added Against The PI",
+    "proformaIN": "Proforma Invoice Number",
+    "invoiceDate": "Invoice Date",
+    "poNumber": "PO Number",
+    "poDate": "PO Date",
+    "piAmount": "PI Amount",
+    "piStatus": "PI Status",
+    "paymentStatus": "Payment Status",
+    "remark": "Remark",
+    "piBillable": "PI Billable",
+    "poBillable": "PO Billable",
+    "purchaseON": "Purchase Order Number",
+    "projectName": "Project Name",
+    "userId": "User ID",
+    "date": "Date",
+    "poAmount": "PO Amount",
+    "poStatus": "PO Status",
+    "piReceivedIn": "PI Received In",
+    "taxIN": "Tax Invoice Number",
+    "invoiceAmount": "Invoice Amount",
+    "billClaim": "Billable Claim",
+    "reports": "Reports",
+    "status": "Status",
     "validationData": {
         "name": {
             "maxLength": {
@@ -57,6 +79,5 @@
                 "msg": "Invalid email"
             }
         }
-
     }
 }

@@ -37,6 +37,8 @@ export class ReportsComponent implements OnInit,AfterViewInit {
   filteredOptions: Observable<string[]>;
   myControl = new FormControl();
 
+  fromDate = new FormControl();
+  toDate = new FormControl();
   placeholderData: string = 'Please filter data...';
 
   states: any[];
@@ -166,6 +168,10 @@ export class ReportsComponent implements OnInit,AfterViewInit {
 
       this.options = ['Active','Inactive']
     }
+
+  }
+
+  formDateFunc(event) {
 
   }
 

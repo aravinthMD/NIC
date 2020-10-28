@@ -1,6 +1,8 @@
 .list-group-item {
     background-color: initial !important;
     border-bottom: 1px solid #fff !important;
+    // padding:.75rem 1.25rem;
+    padding:0px !important;
 }
 .sidenav{
     font-size: 1.25rem;
@@ -10,7 +12,7 @@
     width:14rem;
     position: fixed;
     height: 100%;
-    z-index:2;
+    z-index:2;  
 
 }
 a.logo_nic {
@@ -19,7 +21,10 @@ a.logo_nic {
     font-weight: 800;
 }
 img.nic_logo {
-    width: 141px;
+    width: 146px;
+    
+    margin: 14px 13px 10px 17px;
+   
 }
 // .list-group-item{
 //     padding:0px !important;
@@ -28,6 +33,14 @@ img.nic_logo {
 // .active-link {
 //     background-color: yellow;
 //   }
+
+// .list-group-item > a{
+//     padding-top:12px;padding-bottom:12px;margin:.75rem 1.25rem
+// }
+
+
+
+
 
 .version{
 
@@ -44,3 +57,8 @@ img.nic_logo {
     font-size: 18px;
     font-weight: 400;
 }
+
+.side-menu{
+    background: #2ca2b9;
+}
+

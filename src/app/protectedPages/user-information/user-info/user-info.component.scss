@@ -16,10 +16,21 @@
     margin-left: 8px;
   }
 
-  .userForm{
-      overflow-x: hidden;
-      padding-top: 20px;
-  }
+  // .userForm{
+  //     overflow-x: hidden;
+  //     padding-top: 20px;
+  // }
+
+  .userForm {
+    overflow-x: hidden;
+    padding-top: 55px;
+    // box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    border-radius: 16px !important;
+    margin-top: 20px;
+    overflow-y: hidden;
+}
+
+
 
   .form-control {
     display: block;
@@ -92,4 +103,18 @@ div#mat-tab-label-0-0 {
   background-color: #7cdcd2;
 }
 
+mat-form-field{
+  margin-top: -1.2vw;
+}
 
+
+::ng-deep input.mat-input-element {
+  color: #424242;
+  font-size: 14px;
+}
+
+::ng-deep .inp-date,.mat-form-field-flex{
+
+  pointer-events: none;
+
+}

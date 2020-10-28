@@ -14,3 +14,10 @@ button.mat-button.mat-button-base {
     padding: 10px;
     color: white;
 }
+
+
+::ng-deep .inp-date,.mat-form-field-flex{
+
+     pointer-events: none;
+
+}

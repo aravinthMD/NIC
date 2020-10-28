@@ -1,9 +1,12 @@
 import { Component, OnInit ,ViewChild,Input, OnChanges} from '@angular/core';
 // import {MatAccordion} from '@angular/material/expansion';
-import { Validators, FormBuilder, FormGroup } from "@angular/forms";
+import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 
 import { Location } from '@angular/common';
+
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-user-info',
@@ -33,8 +36,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:'minstry of trible affairs',value:2},{key:'Bureasu of Naviks.Mumbai',value:3}
   ];
 
+  fromDate = new FormControl();
+  toDate = new FormControl();
+  creditDate = new FormControl();
+  creditAddedAgainstPi = new FormControl();
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe) {
 
     this.form =this.formBuilder.group({
       name : [null],
@@ -82,6 +89,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
     let path = this.location.path();
 
     if(!path.includes('userInfo/')) {
+      this.fromDate = new FormControl();
+      this.toDate = new FormControl();
+      this.creditDate = new FormControl();
+      this.creditAddedAgainstPi = new FormControl();
       this.form.reset()
     }
   }
@@ -90,6 +101,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
   setFormValues(){
     
     this.existingUserFlag = true;
+    this.fromDate = new FormControl(new Date());
+    this.toDate = new FormControl(new Date());
+    this.creditDate = new FormControl(new Date());
+    this.creditAddedAgainstPi = new FormControl(new Date());
     this.form.patchValue({
       name : 'Aravinth.auth',
       departmentName : this.deparmentList[1].value,
@@ -116,10 +131,16 @@ export class UserInfoComponent implements OnInit,OnChanges {
     })
   }
 
+  formDateFunc(date) {
+   const value =  this.datePipe.transform(date, 'MM-dd-yyyy');
+    console.log('DTAE ******',value)
+  }
+
   Onsubmit(){
     this.propertyFlag = false;
     this.buttonName = 'Update';
 
+    console.log(this.fromDate)
     console.log(this.form.value)
   }
 

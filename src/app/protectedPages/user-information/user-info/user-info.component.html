@@ -1,4 +1,5 @@
-<div class="userForm">
+<!-- <div class="userForm"> -->
+    <div class="col-md-12 userForm shadow p-3 mb-5 bg-white rounded">
     <!-- <h2>View Customer Profile</h2> -->
     <form [formGroup]="form">
         <!--FIRST ROW-->
@@ -6,7 +7,7 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="Name">Name</label>
+                    <label for="Name">{{labels.name}}</label>
                     <input type="text" class="form-control" [readonly]="propertyFlag" formControlName="name" id="Name" aria-describedby="nameHelp">
                     <small id="nameHelp" class="form-text text-muted"></small>
                 </div>
@@ -22,7 +23,7 @@
 
             <div class="col-4">
                 <div class="form-group">
-                    <label for="department">Department</label>
+                    <label for="department">{{labels.department}}</label>
                     <select formControlName="departmentName" id="department" class="form-control" aria-describedby="emailHelp">
                   <option [value]="list.value" *ngFor = "let list of deparmentList">{{list.key}}</option>
                   <!-- <option>Department of Sainik Welfare</option>
@@ -36,7 +37,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="designation">Designation</label>
+                    <label for="designation">{{labels.designation}}</label>
                     <input type="text" formControlName="designation" [readonly]="propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
                     <small id="designationHelp" class="form-text text-muted"></small>
                 </div>
@@ -46,21 +47,21 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="empCode">Employee Code</label>
+                    <label for="empCode">{{labels.employeeCode}}</label>
                     <input type="text" class="form-control" formControlName="employeeCode" [readonly]="propertyFlag" id="empCode" aria-describedby="empCodeHelp">
                     <small id="empCodeHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="emailAddress">Email Address</label>
+                    <label for="emailAddress">{{labels.email}}</label>
                     <input type="email" class="form-control" formControlName="email" [readonly]="propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
                     <small id="emailAddressHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="mobileNumber">Mobile Number</label>
+                    <label for="mobileNumber">{{labels.mobileNo}}</label>
                     <input type="text" class="form-control" formControlName="mobileNo" [readonly]="propertyFlag" id="mobileNumber" aria-describedby="mobileNumberHelp">
                     <small id="mobileNumberHelp" class="form-text text-muted"></small>
                 </div>
@@ -72,21 +73,21 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="telPhno">Telephone Number(Office)</label>
+                    <label for="telPhno">{{labels.teleNumber}}</label>
                     <input type="text" class="form-control" formControlName="telPhno" [readonly]="propertyFlag" id="telPhno" aria-describedby="telPhnoHelp">
                     <small id="telPhnoHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="offcAddressLine1">Official Address Line 1</label>
+                    <label for="offcAddressLine1">{{labels.officialAdd1}}</label>
                     <input type="text" class="form-control" formControlName="offAddress1" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
                     <small id="offcAddressLineHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="offcAddressLine2">Official Address Line 2</label>
+                    <label for="offcAddressLine2">{{labels.officialAdd2}}</label>
                     <input type="text" class="form-control" formControlName="offAddress2" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
                     <small id="offcAddressLine2Help" class="form-text text-muted"></small>
                 </div>
@@ -98,21 +99,21 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="offcAddressLine3">Official Address Line 3</label>
+                    <label for="offcAddressLine3">{{labels.officialAdd3}}</label>
                     <input type="text" class="form-control" formControlName="offAddress3" [readonly]="propertyFlag" id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
                     <small id="offcAddressLine3Help" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="city">City</label>
+                    <label for="city">{{labels.city}}</label>
                     <input type="text" class="form-control" formControlName="city" [readonly]="propertyFlag" id="city" aria-describedby="cityHelp">
                     <small id="cityHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="State">State</label>
+                    <label for="State">{{labels.state}}</label>
                     <input type="text" class="form-control" formControlName="state" [readonly]="propertyFlag" id="State" aria-describedby="StateHelp">
                     <small id="StateHelp" class="form-text text-muted"></small>
                 </div>
@@ -123,44 +124,59 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="PinCode">Pin Code</label>
+                    <label for="PinCode">{{labels.pincode}}</label>
                     <input type="text" class="form-control" formControlName="pinCode" [readonly]="propertyFlag" id="PinCode" aria-describedby="PinCodeHelp">
                     <small id="PinCodeHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="sms">SMS Traffic Month Wise</label>
+                    <label for="sms">{{labels.smsTraffic}}</label>
                     <input type="text" class="form-control" formControlName="smsTariffMonthWise" [readonly]="propertyFlag" id="sms" aria-describedby="smsHelp">
                     <small id="smsHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="fromDate">From Date</label>
-                    <input type="date" class="form-control" formControlName="fromDate" [readonly]="propertyFlag" id="fromDate" aria-describedby="fromDateHelp">
-                    <small id="fromDateHelp" class="form-text text-muted"></small>
+                   <label for="fromDate">{{labels.fromDate}}</label>
+                  <!--    <input type="date" class="form-control" formControlName="fromDate" [readonly]="propertyFlag" id="fromDate" aria-describedby="fromDateHelp">
+                    <small id="fromDateHelp" class="form-text text-muted"></small> -->
+
+                    <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
+                        <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                      
+
                 </div>
             </div>
 
             <div class="col-4">
                 <div class="form-group">
-                    <label for="toDate">To Date</label>
-                    <input type="date" class="form-control" formControlName="toDate" [readonly]="propertyFlag" id="toDate" aria-describedby="toDateHelp">
-                    <small id="toDateHelp" class="form-text text-muted"></small>
+                    <label for="toDate">{{labels.toDate}}</label>
+                   <!--  <input type="date" class="form-control" formControlName="toDate" [readonly]="propertyFlag" id="toDate" aria-describedby="toDateHelp">
+                    <small id="toDateHelp" class="form-text text-muted"></small> -->
+
+                    <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
+                        <input matInput [matDatepicker]="picker2" [formControl]="toDate">
+                        <mat-datepicker-toggle matSuffix  [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker  #picker2></mat-datepicker>
+                      </mat-form-field>
+
                 </div>
             </div>
 
             <div class="col-4">
                 <div class="form-group">
-                    <label for="projectNumber">Project No.</label>
+                    <label for="projectNumber">{{labels.projectNo}}</label>
                     <input type="text" class="form-control" formControlName="projectNo" [readonly]="propertyFlag" id="projectNumber" aria-describedby="projectNumberHelp">
                     <small id="projectNumberHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="poBillable">Upload Document</label>
+                    <label for="poBillable">{{labels.uploadDoc}}</label>
                     <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
                     <small id="poBillableHelp" class="form-text text-muted"></small>
                 </div>
@@ -170,30 +186,45 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditAdded">Credit Added</label>
+                        <label for="creditAdded">{{labels.creditAdded}}</label>
                         <input type="text" class="form-control" formControlName="creditAdded" [readonly]="propertyFlag" id="creditAdded" aria-describedby="creditAddedHelp">
                         <small id="creditAddedHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditApproved">Credit Approver</label>
+                        <label for="creditApproved">{{labels.creditApprover}}</label>
                         <input type="text" class="form-control" formControlName="creditApproved" [readonly]="propertyFlag" id="creditApproved" aria-describedby="creditApprovedHelp">
                         <small id="creditApprovedHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditDate">Credit Date</label>
-                        <input type="date" class="form-control" formControlName="creditDate" [readonly]="propertyFlag" id="creditDate" aria-describedby="creditDateHelp">
-                        <small id="creditDateHelp" class="form-text text-muted"></small>
+                         <label for="creditDate">{{labels.creditDate}}</label>
+                      <!--  <input type="date" class="form-control" formControlName="creditDate" [readonly]="propertyFlag" id="creditDate" aria-describedby="creditDateHelp">
+                        <small id="creditDateHelp" class="form-text text-muted"></small> -->
+
+                        <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
+                            <input matInput [matDatepicker]="picker3" [formControl]="creditDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                            <mat-datepicker #picker3></mat-datepicker>
+                          </mat-form-field>
+
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditAddedAgainstPi">Credit Added Against The PI</label>
-                        <input type="date" class="form-control" formControlName="creditAddedAgainstPi" [readonly]="propertyFlag" id="creditAddedAgainstPi" aria-describedby="creditAddedAgainstPiHelp">
-                        <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small>
+                         <label for="creditAddedAgainstPi">{{labels.creditPI}}</label>
+                       <!-- <input type="date" class="form-control" formControlName="creditAddedAgainstPi" [readonly]="propertyFlag" id="creditAddedAgainstPi" aria-describedby="creditAddedAgainstPiHelp">
+                        <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small> -->
+
+                        <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
+                            <input matInput [matDatepicker]="picker4" [formControl]="creditAddedAgainstPi">
+                            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                            <mat-datepicker #picker4></mat-datepicker>
+                          </mat-form-field>
+
                     </div>
                 </div>
 

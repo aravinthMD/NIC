@@ -3,7 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form/proforma-invoice-dialog-form.component'
-
+import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -26,9 +26,17 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
+  fromDate = new FormControl();
+  toDate = new FormControl();
+  invoiceDate = new FormControl();
+  poDate = new FormControl();
+
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
+
+  
+
   }
 
   ngAfterViewInit(){
@@ -37,7 +45,32 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   }
 
   OnEdit(formObj : any){
-    const dialogRef = this.dialog.open(ProformaInvoiceDialogFormComponent);
+    const dialogRef = this.dialog.open(ProformaInvoiceDialogFormComponent,{
+      data: {
+        value:'testing'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+    });
+
+  }
+
+  onSubmit() {
+
+    // this.userList.push({invoiceNo : 8787,projectNumber : 4552,piAmt:50000,remarks:'credited'})
+
+    // this.dataSource = new MatTableDataSource<any>(this.userList);
+
+    // this.dataSource.paginator = this.paginator;
+
+
+
+  }
+
+  formDateFunc(event) {
+    
   }
 
 
