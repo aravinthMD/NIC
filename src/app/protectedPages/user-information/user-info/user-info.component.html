@@ -53,7 +53,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="emailAddress">Email address</label>
+                    <label for="emailAddress">Email Address</label>
                     <input type="email" class="form-control" formControlName="email" [readonly]="propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
                     <small id="emailAddressHelp" class="form-text text-muted"></small>
                 </div>
@@ -79,14 +79,14 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="offcAddressLine1">Official Address line 1</label>
+                    <label for="offcAddressLine1">Official Address Line 1</label>
                     <input type="text" class="form-control" formControlName="offAddress1" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
                     <small id="offcAddressLineHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="offcAddressLine2">Official Address line 2</label>
+                    <label for="offcAddressLine2">Official Address Line 2</label>
                     <input type="text" class="form-control" formControlName="offAddress2" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
                     <small id="offcAddressLine2Help" class="form-text text-muted"></small>
                 </div>
@@ -98,7 +98,7 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="offcAddressLine3">Official Address line 3</label>
+                    <label for="offcAddressLine3">Official Address Line 3</label>
                     <input type="text" class="form-control" formControlName="offAddress3" [readonly]="propertyFlag" id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
                     <small id="offcAddressLine3Help" class="form-text text-muted"></small>
                 </div>
@@ -130,16 +130,24 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="sms">SMS Traffic Month wise</label>
+                    <label for="sms">SMS Traffic Month Wise</label>
                     <input type="text" class="form-control" formControlName="smsTariffMonthWise" [readonly]="propertyFlag" id="sms" aria-describedby="smsHelp">
                     <small id="smsHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="piDuration">PI duration / Period</label>
-                    <input type="date" class="form-control" formControlName="piDuration" [readonly]="propertyFlag" id="piDuration" aria-describedby="piDurationHelp">
-                    <small id="piDurationHelp" class="form-text text-muted"></small>
+                    <label for="fromDate">From Date</label>
+                    <input type="date" class="form-control" formControlName="fromDate" [readonly]="propertyFlag" id="fromDate" aria-describedby="fromDateHelp">
+                    <small id="fromDateHelp" class="form-text text-muted"></small>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="toDate">To Date</label>
+                    <input type="date" class="form-control" formControlName="toDate" [readonly]="propertyFlag" id="toDate" aria-describedby="toDateHelp">
+                    <small id="toDateHelp" class="form-text text-muted"></small>
                 </div>
             </div>
 
@@ -153,7 +161,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="poBillable">Upload Document</label>
-                    <input type="file" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
+                    <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
                     <small id="poBillableHelp" class="form-text text-muted"></small>
                 </div>
             </div>
@@ -162,28 +170,28 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditAdded">Credit added</label>
+                        <label for="creditAdded">Credit Added</label>
                         <input type="text" class="form-control" formControlName="creditAdded" [readonly]="propertyFlag" id="creditAdded" aria-describedby="creditAddedHelp">
                         <small id="creditAddedHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditApproved">Credit approver</label>
+                        <label for="creditApproved">Credit Approver</label>
                         <input type="text" class="form-control" formControlName="creditApproved" [readonly]="propertyFlag" id="creditApproved" aria-describedby="creditApprovedHelp">
                         <small id="creditApprovedHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditDate">Credit date</label>
+                        <label for="creditDate">Credit Date</label>
                         <input type="date" class="form-control" formControlName="creditDate" [readonly]="propertyFlag" id="creditDate" aria-describedby="creditDateHelp">
                         <small id="creditDateHelp" class="form-text text-muted"></small>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditAddedAgainstPi">Credit added against the PI</label>
+                        <label for="creditAddedAgainstPi">Credit Added Against The PI</label>
                         <input type="date" class="form-control" formControlName="creditAddedAgainstPi" [readonly]="propertyFlag" id="creditAddedAgainstPi" aria-describedby="creditAddedAgainstPiHelp">
                         <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small>
                     </div>

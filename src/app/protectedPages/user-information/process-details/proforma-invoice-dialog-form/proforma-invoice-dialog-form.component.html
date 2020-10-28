@@ -35,13 +35,10 @@
             </div>-->
                 <div class="form-group">
                     <label for="poNumber">PO Number</label>
-                    <select name="poNumber" id="poNumber" class="form-control">
-                  <option>Rejected</option>
-                  <option>Approved</option>
-                  <option>Pending</option>
-                  <option>Rejected</option>
-                  <option>OnHold</option>
-              </select>
+                  <input type="poNumber" value="5678" [disabled]="enableflag" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
+
+                  
+             
                 </div>
             </div>
             <div class="col-4">
@@ -53,14 +50,14 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="Fromperiod">From Period</label>
+                    <label for="Fromperiod">From Date</label>
                     <input type="date" class="form-control" [disabled]="enableflag" id="Fromperiod" aria-describedby="FromperiodHelp">
                     <small id="FromperiodHelp" class="form-text text-muted"></small>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="Toperiod">To Period</label>
+                    <label for="Toperiod">To Date</label>
                     <input type="date" class="form-control" [disabled]="enableflag" id="Toperiod" aria-describedby="ToperiodHelp">
                     <small id="ToperiodHelp" class="form-text text-muted"></small>
                 </div>
@@ -74,7 +71,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
+                    <label for="exampleInputEmail1">Email Address</label>
                     <input type="email" value="guru.auth@nic.com" [disabled]="enableflag" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <small id="emailHelp" class="form-text text-muted"></small>
                 </div>
@@ -86,7 +83,7 @@
               <small id="piStatusHelp" class="form-text text-muted"></small>
             </div> -->
                 <div class="form-group">
-                    <label for="piStatus">PO Number</label>
+                    <label for="piStatus">PI Status</label>
                     <select name="piStatus" id="piStatus" [disabled]="enableflag" class="form-control">
                   <option>Rejected</option>
                   <option>Approved</option>

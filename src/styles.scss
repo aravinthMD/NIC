@@ -155,14 +155,25 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;line-height:12px; }
 label{
-  font-size:14px !important;color:#414141 !important;
+  font-size:16px !important;color:#414141 !important;
   font-weight: 400px !important;
 }
-.form-control{font-size: 13px !important;}
+.form-control{font-size: 15px !important;}
 button.btn.btn-primary {
   float: right;
   background-color: #0e4d92 !important;
   border: 1px solid #0e4d92 !important;
   font-size: 13px;
 
+}
+
+
+.value-bold{
+  font-size:16px;
+  font-weight: 400;
+}
+
+.font-paginator{
+  font-size: 16px;
+  font-weight: bold;
 }

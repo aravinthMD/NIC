@@ -57,7 +57,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       creditApproved : [null],
       creditDate : [null],
       creditAddedAgainstPi : [null],
-      
+      fromDate: [null],
+      toDate: [null]      
     });
 
    }

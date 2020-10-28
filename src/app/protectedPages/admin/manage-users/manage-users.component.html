@@ -50,7 +50,7 @@
                   
                       <!-- Symbol Column -->
                       <ng-container matColumnDef="Action">
-                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                        <th mat-header-cell *matHeaderCellDef class="pad-left"> Action </th>
                         <td mat-cell *matCellDef="let element"> 
                             <button class="btn btn-primary mr-1" (click)="edit()" matRipple>Edit</button>
                             <button class="btn btn-primary" matRipple>Disable</button>                                 
@@ -61,7 +61,7 @@
                       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row" ></tr>
                     </table>
                   
-                    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator class="font-paginator" [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
                   </div>
                   <!--Material Table End-->
 

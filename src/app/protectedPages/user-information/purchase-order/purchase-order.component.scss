@@ -59,3 +59,17 @@
   
     background-color: #dfdfdf !important;
   }
+
+  .upload-choose-pad{
+    padding:3px;
+  }
+
+  ::ng-deep .mat-select-value {
+    font-size: 15px !important;
+  }
+
+  ::ng-deep .mat-option-text {
+    font-size: 15px !important;
+  }
+
+  

@@ -69,3 +69,24 @@ tr:nth-child(even) {
   .auto-mrg-top {
       margin-top: 1vw;
   }
+
+  .download-pad {
+    
+    margin: 1vw 2vw;
+  }
+
+  .mrg-lft{
+      margin: 2vw;
+  }
+
+  ::ng-deep .mat-select-value {
+    font-size: 15px !important;
+  }
+
+  ::ng-deep .mat-option-text {
+    font-size: 15px !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+      padding: 10px !important;
+  }
