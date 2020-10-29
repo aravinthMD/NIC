@@ -35,7 +35,24 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   labels: any;
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService) { }
+  form : FormGroup
+
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder) { 
+
+
+    this.form =this.formBuilder.group({
+      invoiceNumber : [null],
+      projectNumber : [null],
+      poNumber: [null],
+      piAmount: [null],
+      emailAddress: [null],
+      remark: [null],
+      piBillable: [null]
+
+    })
+
+
+  }
 
   ngOnInit() {
 

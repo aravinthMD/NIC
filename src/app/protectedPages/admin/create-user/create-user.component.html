@@ -3,15 +3,20 @@
     <div class="col-md-12 userForm shadow p-3 mb-5 bg-white rounded">
         <h1 class="h3  text-gray-800 mb-2">User Creation</h1>
 
-        <form class="pt-4">
+        <form class="pt-4" [formGroup]="form">
             <!--FIRST ROW-->
     
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="Name">Name<span style="color:red">*</span></label>
+                        <!-- <label for="Name">Name<span style="color:red">*</span></label>
                         <input type="text" class="form-control" [readonly]="propertyFlag"  id="Name" aria-describedby="nameHelp">
-                        <small id="nameHelp" class="form-text text-muted"></small>
+                        <small id="nameHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="name" [labelName]="labels.name" [mandatoryField]="true" [id]="'Name'" [isRequired]="'Name is mandatory'" [maxLength]="labels?.validationData.name.maxLength"></app-custom-input>
+                      
+
+
                     </div>
     
                 </div>
@@ -26,22 +31,25 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label for="department">Department<span style="color:red">*</span></label>
-                        <select  id="department" class="form-control" aria-describedby="emailHelp">
-                      <option [value]="list.value" *ngFor = "let list of deparmentList">{{list.key}}</option>
-                      <!-- <option>Department of Sainik Welfare</option>
-                      <option>Minstry of minority affairs</option>
-                      <option>Vishakhapatnam port Trust </option>
-                      <option>minstry of trible affairs</option>
-                      <option>Bureasu of Naviks.Mumbai</option> -->
-                  </select>
-                        <small id="emailHelp" class="form-text text-muted"></small>
+                        <!-- <select  id="department" class="form-control" aria-describedby="emailHelp">
+                      <option [value]="list.value" *ngFor = "let list of deparmentList">{{list.key}}</option> -->
+
+                      <app-vf-custom-select formControlName="departmentName" [values]="deparmentList"
+                 [isRequired]="'Please Select Department'"></app-vf-custom-select>
+                        
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="designation">Designation<span style="color:red">*</span></label>
+                        <!-- <label for="designation">Designation<span style="color:red">*</span></label>
                         <input type="text" [readonly]="propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
-                        <small id="designationHelp" class="form-text text-muted"></small>
+                        <small id="designationHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="designation" [labelName]="labels.designation" [mandatoryField]="true" [id]="'designation'" [isRequired]="'Designation is mandatory'" [maxLength]="labels?.validationData.designation.maxLength">
+
+                        </app-custom-input>
+
+
                     </div>
                 </div>
             </div>
@@ -49,23 +57,40 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="empCode">Employee Code<span style="color:red">*</span></label>
+                        <!-- <label for="empCode">Employee Code<span style="color:red">*</span></label>
                         <input type="text" class="form-control" [readonly]="propertyFlag" id="empCode" aria-describedby="empCodeHelp">
-                        <small id="empCodeHelp" class="form-text text-muted"></small>
+                        <small id="empCodeHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" [id]="'employeeCode'" [isRequired]="'Employee code is mandatory'" [maxLength]="labels?.validationData.employeeCode.maxLength" [mandatoryField]="true" >
+
+                        </app-custom-input>
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="emailAddress">Email Address<span style="color:red">*</span></label>
+                        <!-- <label for="emailAddress">Email Address<span style="color:red">*</span></label>
                         <input type="email" class="form-control"  [readonly]="propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
-                        <small id="emailAddressHelp" class="form-text text-muted"></small>
+                        <small id="emailAddressHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="email" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [mandatoryField]="true">
+
+                        </app-custom-input>
+
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="mobileNumber">Mobile Number<span style="color:red">*</span></label>
+                        <!-- <label for="mobileNumber">Mobile Number<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  [readonly]="propertyFlag" id="mobileNumber" aria-describedby="mobileNumberHelp">
-                        <small id="mobileNumberHelp" class="form-text text-muted"></small>
+                        <small id="mobileNumberHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="mobileNo" [labelName]="labels.mobileNo" [id]="'mobileNo'" [isRequired]="'Mobile number is mandatory'" [type]="labels?.validationData.mobile.type" [patternCheck]="labels?.validationData.mobile.patternCheck" [maxLength]="labels?.validationData.mobile.maxLength" [mandatoryField]="true">
+
+                        </app-custom-input>
+
+
                     </div>
                 </div>
     
@@ -75,23 +100,38 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="telPhno">Telephone Number(Office)<span style="color:blue">*</span></label>
+                        <!-- <label for="telPhno">Telephone Number(Office)<span style="color:blue">*</span></label>
                         <input type="text" class="form-control"   id="telPhno" aria-describedby="telPhnoHelp">
-                        <small id="telPhnoHelp" class="form-text text-muted"></small>
+                        <small id="telPhnoHelp" class="form-text text-muted"></small> -->
+                        <app-custom-input formControlName="telPhno" [labelName]="labels.teleNumber" [id]="'telPhno'" [isRequired]="'Telephone number is mandatory'" [type]="labels?.validationData.telephoneNumber.type" [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" [maxLength]="labels?.validationData.telephoneNumber.maxLength" [mandatoryField]="true">
+
+                        </app-custom-input>
+
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="offcAddressLine1">Official Address Line 1<span style="color:red">*</span></label>
+                        <!-- <label for="offcAddressLine1">Official Address Line 1<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
-                        <small id="offcAddressLineHelp" class="form-text text-muted"></small>
+                        <small id="offcAddressLineHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="offAddress1" [labelName]="labels.officialAdd1" [id]="'offcAddressLine1'" [isRequired]="'Office AddressLine1 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true">
+
+                        </app-custom-input>
+
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="offcAddressLine2">Official Address Line 2<span style="color:red">*</span></label>
+                        <!-- <label for="offcAddressLine2">Official Address Line 2<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
-                        <small id="offcAddressLine2Help" class="form-text text-muted"></small>
+                        <small id="offcAddressLine2Help" class="form-text text-muted"></small> -->
+                        <app-custom-input formControlName="offAddress2" [labelName]="labels.officialAdd2" [id]="'offcAddressLine2'" [isRequired]="'Office AddressLine2 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true">
+
+                        </app-custom-input>
+
                     </div>
                 </div>
     
@@ -101,23 +141,38 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="offcAddressLine3">Official Address Line 3<span style="color:red">*</span></label>
+                        <!-- <label for="offcAddressLine3">Official Address Line 3<span style="color:red">*</span></label>
                         <input type="text" class="form-control"   id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
-                        <small id="offcAddressLine3Help" class="form-text text-muted"></small>
+                        <small id="offcAddressLine3Help" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3" [id]="'offcAddressLine3'" [isRequired]="'Office AddressLine3 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true">
+
+                        </app-custom-input>
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="city">City<span style="color:red">*</span></label>
+                        <!-- <label for="city">City<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="city" aria-describedby="cityHelp">
-                        <small id="cityHelp" class="form-text text-muted"></small>
+                        <small id="cityHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="city" [labelName]="labels.city" [id]="'city'" [isRequired]="'City is mandatory'" [maxLength]="labels?.validationData.city.maxLength" [mandatoryField]="true">
+
+                        </app-custom-input>
+
+
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="State">State<span style="color:red">*</span></label>
+                        <!-- <label for="State">State<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="State" aria-describedby="StateHelp">
-                        <small id="StateHelp" class="form-text text-muted"></small>
+                        <small id="StateHelp" class="form-text text-muted"></small> -->
+                        <app-custom-input formControlName="state" [labelName]="labels.state" [id]="'state'" [isRequired]="'State is mandatory'" [maxLength]="labels?.validationData.state.maxLength"  [mandatoryField]="true">
+
+                        </app-custom-input>
+
                     </div>
                 </div>
     
@@ -126,9 +181,15 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="PinCode">Pin Code<span style="color:red">*</span></label>
+                        <!-- <label for="PinCode">Pin Code<span style="color:red">*</span></label>
                         <input type="text" class="form-control"  id="PinCode" aria-describedby="PinCodeHelp">
-                        <small id="PinCodeHelp" class="form-text text-muted"></small>
+                        <small id="PinCodeHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="pinCode" [labelName]="labels.pincode" [id]="'pincode'" [isRequired]="'Pincode is mandatory'" [maxLength]="labels?.validationData.pincode.maxLength" [type]="labels?.validationData.pincode.type" [mandatoryField]="true">
+
+                        </app-custom-input>
+
+
                     </div>
                 </div>
                

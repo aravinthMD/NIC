@@ -32,8 +32,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   //   'minstry of trible affairs',
   //   'Bureasu of Naviks.Mumbai'];
 
-    deparmentList : any[] = [{key:'Department of Sainik Welfare',value:0},{key:'Minstry of minority affairs',value:1},{key:'Vishakhapatnam port Trust',value:2},
-    {key:'minstry of trible affairs',value:2},{key:'Bureasu of Naviks.Mumbai',value:3}
+    deparmentList : any[] = [{value:'Department of Sainik Welfare',key:0},{value:'Minstry of minority affairs',key:1},{value:'Vishakhapatnam port Trust',key:2},
+    {value:'minstry of trible affairs',key:2},{value:'Bureasu of Naviks.Mumbai',key:3}
   ];
 
   fromDate = new FormControl();
@@ -45,7 +45,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     this.form =this.formBuilder.group({
       name : [null],
-      departmentName : [null],
+      departmentName : [''],
       designation : [null],
       employeeCode : [null],
       email : [null],
@@ -107,7 +107,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.creditAddedAgainstPi = new FormControl(new Date());
     this.form.patchValue({
       name : 'Aravinth.auth',
-      departmentName : this.deparmentList[1].value,
+      departmentName : '1',
       designation : 'Senior Engineer',
       employeeCode : '12008',
       email : 'authregister@nic.com',
@@ -132,8 +132,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
   formDateFunc(date) {
-   const value =  this.datePipe.transform(date, 'MM-dd-yyyy');
-    console.log('DTAE ******',value)
+  //  const value =  this.datePipe.transform(date, 'dd-MM-yyyy');
+  //   console.log('DTAE ******',value)
   }
 
   Onsubmit(){

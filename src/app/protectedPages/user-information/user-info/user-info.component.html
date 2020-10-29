@@ -27,15 +27,20 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="department">{{labels.department}}</label>
-                    <select formControlName="departmentName" id="department" class="form-control" aria-describedby="emailHelp">
-                  <option [value]="list.value" *ngFor = "let list of deparmentList">{{list.key}}</option>
+                    <!-- <select formControlName="departmentName" id="department" class="form-control" aria-describedby="emailHelp">
+                  <option [value]="list.value" *ngFor = "let list of deparmentList">{{list.key}}</option> -->
                   <!-- <option>Department of Sainik Welfare</option>
                   <option>Minstry of minority affairs</option>
                   <option>Vishakhapatnam port Trust </option>
                   <option>minstry of trible affairs</option>
                   <option>Bureasu of Naviks.Mumbai</option> -->
-              </select>
-                    <small id="emailHelp" class="form-text text-muted"></small>
+              <!-- </select>
+                    <small id="emailHelp" class="form-text text-muted"></small> -->
+
+                    <app-vf-custom-select formControlName="departmentName" [values]="deparmentList"
+                    [isRequired]="'Please Select Department'" [isDisabled]="propertyFlag"></app-vf-custom-select>
+
+
                 </div>
             </div>
             <div class="col-4">

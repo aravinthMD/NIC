@@ -19,7 +19,11 @@
     <ng-content></ng-content>
 </div> -->
 <div class="form-group" [ngClass]="{'typ-optional': optional, focused: isNonEmpty}" [class]="className" >
-    <label for="id">{{ labelName }}</label>
+    <label for="id">
+        {{ labelName }}
+        <span *ngIf="mandatoryField" style="color:red">*</span>
+        <span *ngIf="optionalField" style="color:blue">*</span>
+    </label>
     <input type="type" #customInput  name="input" class="form-control" [id]="id" [(ngModel)]="inputValue" appFiledFill appPreventAction (ngModelChange)="updateChanges()" [minLength]="minLength?.rule" [maxlength]="maxLength?.rule" [disabled]="isDisabledInp" autocomplete="off" aria-describedby="id">
     <small id="id" class="form-text text-muted"></small>
     <div class="error-feedback" *ngIf="inputError">
