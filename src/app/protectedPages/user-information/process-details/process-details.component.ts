@@ -4,6 +4,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form/proforma-invoice-dialog-form.component'
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
+import { LabelsService } from '../../../services/labels.service';
+
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -31,11 +33,32 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   invoiceDate = new FormControl();
   poDate = new FormControl();
 
-  constructor(private dialog: MatDialog) { }
+  labels: any;
+
+  form : FormGroup
+
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder) { 
+
+
+    this.form =this.formBuilder.group({
+      invoiceNumber : [null],
+      projectNumber : [null],
+      poNumber: [null],
+      piAmount: [null],
+      emailAddress: [null],
+      remark: [null],
+      piBillable: [null]
+
+    })
+
+
+  }
 
   ngOnInit() {
 
-  
+    this.labelsService.getLabelsData().subscribe((values)=> {
+      this.labels = values;
+    })
 
   }
 

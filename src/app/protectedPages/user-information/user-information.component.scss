@@ -46,17 +46,17 @@
   
   /* Styles for the active tab label */
   ::ng-deep .mat-tab-label-active {
-    background-color: #0E4D92 !important;
+    background-color: #2ca2b9 !important;
     color: #fff;
     opacity: 1 !important;
-    border-color: #0672e7 !important ;
+    border-color: #fff !important ;
 
       // background-color: ;
   }
   
   /* Styles for the ink bar */
   ::ng-deep .mat-ink-bar {
-    background-color: #0E4D92 !important;
+    background-color:  #2ca2b9 !important;
   }
   
 //   ::ng-deep .activeTab{
@@ -73,5 +73,8 @@
 :host ::ng-deep .mat-tab-label{
   border-radius: 2px;
  border-style: ridge;
+ background-color: #0e4d92;
+    opacity: 1 !important;
+    color: white;
 
 }

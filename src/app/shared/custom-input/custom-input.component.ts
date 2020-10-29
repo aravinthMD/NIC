@@ -67,6 +67,10 @@ export class CustomInputComponent
 
   @Input() isDisabledInp: boolean;
 
+  @Input() mandatoryField: boolean;
+
+  @Input() optionalField: boolean;
+
   htmlInputElement: any;
 
   @ViewChild('customInput', {static:false}) customInput: ElementRef;

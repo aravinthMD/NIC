@@ -1,4 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
+import { LabelsService } from '../../../services/labels.service';
+import { FormGroup,FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-create-user',
@@ -12,11 +14,39 @@ export class CreateUserComponent implements OnInit {
 
   propertyFlag: boolean;
 
-  deparmentList : any[] = [{key:'Admin User',value:0},{key:'Operation user',value:1},{key:'Finance User',value:2}];
+  labels: any = {};
 
-  constructor() { }
+  form: FormGroup;
+
+  deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
+
+  constructor(private labelsService: LabelsService,private formBuilder:FormBuilder) {
+
+    this.form =this.formBuilder.group({
+      name : [null],
+      departmentName : [''],
+      designation : [null],
+      employeeCode : [null],
+      email : [null],
+      mobileNo : [null],
+      telPhno : [null],
+      offAddress1 : [null],
+      offAddress2 : [null],
+      offAddress3 : [null],
+      city : [null],
+      state : [null],
+      pinCode : [null]
+    });
+
+   }
 
   ngOnInit() {
+
+
+    this.labelsService.getLabelsData().subscribe((values)=> {
+      this.labels = values;
+    })
+
   }
 
 }

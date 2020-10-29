@@ -1,15 +1,20 @@
 <h2 mat-dialog-title>Proforma Invoice</h2>
 <mat-dialog-content class="mat-typography">
-    <form>
+    <form [formGroup]="form">
         <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="invoiceNumber">Invoice Number</label>
+                    <!-- <label for="invoiceNumber">Invoice Number</label>
                     <input type="email" [disabled]="enableflag" value="3434" class="form-control" id="invoiceNumber" aria-describedby="invoiceNumberHelp">
-                    <small id="invoiceNumberHelp" class="form-text text-muted"></small>
+                    <small id="invoiceNumberHelp" class="form-text text-muted"></small> -->
+
+                    <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDisabledInp]="enableflag">
+
+                    </app-custom-input>
+
                 </div>
             </div>
             <div class="col-4">
@@ -29,9 +34,14 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Project Number</label>
+                    <!-- <label for="exampleInputEmail1">Project Number</label>
                     <input type="projectNumber" value="4355" [disabled]="enableflag" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
-                    <small id="projectNumberHelp" class="form-text text-muted"></small>
+                    <small id="projectNumberHelp" class="form-text text-muted"></small> -->
+
+                    <app-custom-input formControlName="projectNumber" [labelName]="labels.projectNo" [id]="'projectNumber'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.proformaPN.maxLength" [isDisabledInp]="enableflag">
+
+                    </app-custom-input>
+
                 </div>
             </div>
 
@@ -42,8 +52,13 @@
               <small id="poNumberHelp" class="form-text text-muted"></small>
             </div>-->
                 <div class="form-group">
-                    <label for="poNumber">PO Number</label>
-                  <input type="poNumber" value="5678" [disabled]="enableflag" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
+                    <!-- <label for="poNumber">PO Number</label>
+                  <input type="poNumber" value="5678" [disabled]="enableflag" class="form-control" id="poNumber" aria-describedby="poNumberHelp"> -->
+
+                  <app-custom-input formControlName="poNumber" [labelName]="labels.poNumber" [id]="'poNumber'" [isRequired]="'PO number is mandatory'" [maxLength]="labels?.validationData.poNumber.maxLength" [isDisabledInp]="enableflag">
+
+                </app-custom-input>
+
 
                   
              
@@ -88,16 +103,25 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="piAmount">PI Amount</label>
+                    <!-- <label for="piAmount">PI Amount</label>
                     <input type="number" value="54500" [disabled]="enableflag" class="form-control" id="piAmount" aria-describedby="piAmountHelp">
-                    <small id="piAmountHelp" class="form-text text-muted"></small>
+                    <small id="piAmountHelp" class="form-text text-muted"></small> -->
+                    <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'PI amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDisabledInp]="enableflag">
+
+                    </app-custom-input>
+
+                    
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email Address</label>
+                    <!-- <label for="exampleInputEmail1">Email Address</label>
                     <input type="email" value="guru.auth@nic.com" [disabled]="enableflag" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <small id="emailHelp" class="form-text text-muted"></small>
+                    <small id="emailHelp" class="form-text text-muted"></small> -->
+                    <app-custom-input formControlName="emailAddress" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email address is mandatory'" [maxLength]="labels?.validationData.email.maxLength" [patternCheck]="labels?.validationData.email.patternCheck" [isDisabledInp]="enableflag">
+
+                    </app-custom-input>
+
                 </div>
             </div>
             <div class="col-4">
@@ -136,15 +160,23 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="remark">Remark</label>
+                    <!-- <label for="remark">Remark</label>
                     <input type="email" class="form-control" [disabled]="enableflag" id="remark" aria-describedby="remarkHelp">
-                    <small id="remarkHelp" class="form-text text-muted"></small>
+                    <small id="remarkHelp" class="form-text text-muted"></small> -->
+                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is mandatory'" [maxLength]="labels?.validationData.remark.maxLength" [isDisabledInp]="enableflag">
+
+                    </app-custom-input>
+
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="piBillable">PI Billable</label>
-                    <input type="text" class="form-control" [disabled]="enableflag" id="piBillable" aria-describedby="remarkHelp">
+                    <!-- <label for="piBillable">PI Billable</label>
+                    <input type="text" class="form-control" [disabled]="enableflag" id="piBillable" aria-describedby="remarkHelp"> -->
+                    <app-custom-input formControlName="piBillable" [labelName]="labels.piBillable" [id]="'piBillable'" [isRequired]="'PI billable is mandatory'" [isDisabledInp]="enableflag">
+
+                    </app-custom-input>
+
                 </div>
             </div>
             <!-- <div class="col-4">
