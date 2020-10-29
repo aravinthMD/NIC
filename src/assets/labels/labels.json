@@ -78,6 +78,76 @@
                 "rule": "^\\w+([.-]?\\w+)@\\w+([.-]?\\w+)(\\.\\w{2,10})+$",
                 "msg": "Invalid email"
             }
+        },
+        "telephoneNumber": {
+            "maxLength": {
+                "rule": 10
+            },
+            "type": "number",
+            "patternCheck": {
+                "rule": "^[0-9]{10}",
+                "msg": "Invalid telephone number"
+            }
+        },
+        "officeAddress": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "city": {
+            "maxLength": {
+                "rule": 25
+            }
+        },
+        "state": {
+            "maxLength": {
+                "rule": 25
+            }
+        },
+        "pincode": {
+            "maxLength": {
+                "rule": 6,
+                "msg": "Should be 6 Digits"
+            },
+            "type":"number"
+        },
+        "smsTraffic": {
+            "maxLength": {
+                "rule": 6,
+                "msg": "Should be 6 Digits"
+            },
+            "type":"number"
+        },
+        "projectNo": {
+            "maxLength": {
+                "rule": 25
+            }
+        },
+        "proformaIN": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "proformaPN": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "poNumber": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "piAmount": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type":"number"
+        },
+        "remark": {
+            "maxLength": {
+                "rule": 150
+            }
         }
     }
 }
