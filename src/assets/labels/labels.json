@@ -54,7 +54,7 @@
                 "rule": 10
             }
         },
-        "projectNo": {
+        "projectNum": {
             "maxLength": {
                 "rule": 15
             }
@@ -110,9 +110,6 @@
                 "msg": "Invalid email"
             }
         },
-<<<<<<< HEAD
-        "invoiceNo": {
-=======
         "telephoneNumber": {
             "maxLength": {
                 "rule": 10
@@ -158,27 +155,15 @@
             }
         },
         "proformaIN": {
->>>>>>> 0b2f361880860b4f3b8662706859b782b91dde18
             "maxLength": {
                 "rule": 15
             }
         },
-<<<<<<< HEAD
-        "poNo": {
-=======
         "proformaPN": {
->>>>>>> 0b2f361880860b4f3b8662706859b782b91dde18
             "maxLength": {
                 "rule": 15
             }
         },
-<<<<<<< HEAD
-        "invoiceAmt": {
-            "maxLength": {
-                "rule": 12
-            },
-            "type": "number"
-=======
         "poNumber": {
             "maxLength": {
                 "rule": 15
@@ -189,12 +174,7 @@
                 "rule": 12
             },
             "type":"number"
-        },
-        "remark": {
-            "maxLength": {
-                "rule": 150
-            }
->>>>>>> 0b2f361880860b4f3b8662706859b782b91dde18
         }
+        
     }
 }
