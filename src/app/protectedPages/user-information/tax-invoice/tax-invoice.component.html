@@ -8,7 +8,7 @@
           <mat-icon>add_circle</mat-icon> Add New Tax Invoice
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <form>
+      <form (submit)="taxInForm()" [formGroup]="taxInvoiceForm">
         <!--FIRST ROW-->
         <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
           <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
@@ -17,18 +17,20 @@
         <div class="row">
              <div class="col-4">
                 <div class="form-group">
-                    <label for="InvoiceNumber">Tax Invoice Number</label>
-                    <input type="email" class="form-control" id="InvoiceNumber" aria-describedby="InvoiceNumberHelp">
-                    <small id="InvoiceNumberHelp" class="form-text text-muted"></small>
+                    <!-- <label for="InvoiceNumber">{{labels?.taxIN}}</label> -->
+                    <app-custom-input formControlName="taxIN" [isRequired]="'Tax Invoice Number is Mandatory'" [labelName]="labels?.taxIN" [maxLength]="labels?.validationData?.invoiceNo?.maxLength">
+                    </app-custom-input> 
+                    <!-- <input type="email" class="form-control" id="InvoiceNumber" aria-describedby="InvoiceNumberHelp">
+                    <small id="InvoiceNumberHelp" class="form-text text-muted"></small> -->
                   </div>
             </div>
              <div class="col-4">
                 <div class="form-group">
-                    <label for="InvoiceDate">Invoice Date</label>
+                    <label for="InvoiceDate">{{labels?.invoiceDate}}</label>
                     <!-- <input type="date" class="form-control" id="InvoiceDate" aria-describedby="InvoiceDateHelp">
                     <small id="InvoiceDateHelp" class="form-text text-muted"></small> -->
                     <mat-form-field>
-                      <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="invoiceDate">
+                      <input matInput formControlName="invoiceDate" [matDatepicker]="picker1" >
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
@@ -37,32 +39,41 @@
             </div>
              <div class="col-4">
                 <div class="form-group">
-                    <label for="projectNumber">Project Number</label>
-                    <input type="email" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
-                    <small id="projectNumberHelp" class="form-text text-muted"></small>
+                    <!-- <label for="projectNumber">{{labels?.projectNo}}</label> -->
+                    <app-custom-input formControlName="projectNo" [isRequired]="'Project Number is Mandatory'" [labelName]="labels?.projectNo" [maxLength]="labels?.validationData?.projectNo?.maxLength">
+                    </app-custom-input> 
+                    <!-- <input type="email" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
+                    <small id="projectNumberHelp" class="form-text text-muted"></small> -->
                   </div>
             </div>
              <div class="col-4">
                 <div class="form-group">
-                    <label for="poNumber">PO Number</label>
-                    <input type="text" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
-                    <small id="poNumberHelp" class="form-text text-muted"></small>
+                    <!-- <label for="poNumber">{{labels?.poNumber}}</label> -->
+                    <app-custom-input formControlName="poNumber" [isRequired]="'PO Number is Mandatory'" [labelName]="labels?.poNumber" [maxLength]="labels?.validationData?.poNo?.maxLength">
+                    </app-custom-input> 
+                    <!-- <input type="text" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
+                    <small id="poNumberHelp" class="form-text text-muted"></small> -->
                   </div>
             </div>
              <div class="col-4">
                 <div class="form-group">
-                    <label for="poDate">PO Date</label>
-                    <input type="email" class="form-control" id="poDate" aria-describedby="poDateHelp">
-                    <small id="poDateHelp" class="form-text text-muted"></small>
+                    <label for="poDate">{{labels?.poDate}}</label>
+                    <mat-form-field>
+                      <input matInput formControlName="poDate" [matDatepicker]="picker4">
+                      <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                      <mat-datepicker #picker4></mat-datepicker>
+                    </mat-form-field>
+                    <!-- <input type="email" class="form-control" id="poDate" aria-describedby="poDateHelp">
+                    <small id="poDateHelp" class="form-text text-muted"></small> -->
                   </div>
             </div>
              <div class="col-4">
                 <div class="form-group">
-                    <label for="fromDate">From Date</label>
+                    <label for="fromDate">{{labels?.fromDate}}</label>
                     <!-- <input type="date" class="form-control" id="fromDate" aria-describedby="fromDateHelp">
                     <small id="fromDateHelp" class="form-text text-muted"></small> -->
                     <mat-form-field>
-                      <input matInput [matDatepicker]="picker2" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate">
+                      <input matInput  formControlName="fromDate" [matDatepicker]="picker2" >
                       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
@@ -71,11 +82,11 @@
             </div>
              <div class="col-4">
                 <div class="form-group">
-                    <label for="toDate">To Date</label>
+                    <label for="toDate">{{labels?.toDate}}</label>
                     <!-- <input type="date" class="form-control" id="toDate" aria-describedby="toDateHelp">
                     <small id="toDateHelp" class="form-text text-muted"></small> -->
                     <mat-form-field>
-                      <input matInput [matDatepicker]="picker3" (dateInput)="formDateFunc($event.value)" [formControl]="toDate">
+                      <input matInput formControlName="toDate" [matDatepicker]="picker3">
                       <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                       <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
@@ -84,14 +95,16 @@
             </div>
            <div class="col-4">
               <div class="form-group">
-                  <label for="invoiceAmount">Invoice Amount</label>
-                  <input type="number" class="form-control" id="invoiceAmount" aria-describedby="invoiceAmountHelp">
-                  <small id="invoiceAmountHelp" class="form-text text-muted"></small>
+                  <!-- <label for="invoiceAmount">{{labels?.invoiceAmount}}</label> -->
+                  <app-custom-input formControlName="invoiceAmount" [isRequired]="'Invoice Amount is Mandatory'" [labelName]="labels?.invoiceAmount" [type]="labels?.validationData?.invoiceAmt?.type"[maxLength]="labels?.validationData?.invoiceAmt?.maxLength">
+                  </app-custom-input> 
+                  <!-- <input type="number" class="form-control" id="invoiceAmount" aria-describedby="invoiceAmountHelp">
+                  <small id="invoiceAmountHelp" class="form-text text-muted"></small> -->
                 </div>
           </div>
            <div class="col-4">
               <div class="form-group">
-                <label for="paymentStatus">Payment Status</label>
+                <label for="paymentStatus">{{labels?.paymentStatus}}</label>
                 <select 
                     name="paymentStatus" 
                     id="paymentStatus" 
@@ -104,21 +117,25 @@
           </div>
            <div class="col-4">
               <div class="form-group">
-                  <label for="remark">Remark</label>
-                  <input type="remark" class="form-control" id="remark" aria-describedby="remarkHelp">
-                  <small id="remarkHelp" class="form-text text-muted"></small>
+                  <!-- <label for="remark">{{labels?.remark}}</label> -->
+                  <app-custom-input formControlName="remark" [isRequired]="'Remarks is Mandatory'" [labelName]="labels?.remark" [maxLength]="labels?.validationData?.remark?.maxLength">
+                  </app-custom-input> 
+                  <!-- <input type="remark" class="form-control" id="remark" aria-describedby="remarkHelp">
+                  <small id="remarkHelp" class="form-text text-muted"></small> -->
                 </div>
           </div>
            <div class="col-4">
               <div class="form-group">
-                  <label for="billableClaim">Billable Claim</label>
-                  <input type="text" class="form-control" id="billableClaim" aria-describedby="billableClaimHelp">
-                  <small id="billableClaimHelp" class="form-text text-muted"></small>
+                  <!-- <label for="billableClaim">{{labels?.billClaim}}</label> -->
+                  <app-custom-input  formControlName="billClaim" [isRequired]="'Bill Claim is Mandatory'" [labelName]="labels?.billClaim">
+                  </app-custom-input> 
+                  <!-- <input type="text" class="form-control" id="billableClaim" aria-describedby="billableClaimHelp">
+                  <small id="billableClaimHelp" class="form-text text-muted"></small> -->
                 </div>
           </div>
           <div class="col-4">
               <div class="form-group">
-                  <label for="poBillable">Upload Document</label>
+                  <label for="poBillable">{{labels?.uploadDoc}}</label>
                   <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
                   <small id="poBillableHelp" class="form-text text-muted"></small>
                 </div>

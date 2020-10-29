@@ -49,6 +49,37 @@
                 "rule": 50
             }
         },
+        "purchaseON": {
+            "maxLength": {
+                "rule": 10
+            }
+        },
+        "projectNo": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "projectName": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "userId": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "poAmount": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "remark": {
+            "maxLength": {
+                "rule": 150
+            }
+        },
         "mobile": {
             "maxLength": {
                 "rule": 10,
@@ -78,6 +109,22 @@
                 "rule": "^\\w+([.-]?\\w+)@\\w+([.-]?\\w+)(\\.\\w{2,10})+$",
                 "msg": "Invalid email"
             }
+        },
+        "invoiceNo": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "poNo": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "invoiceAmt": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
         }
     }
 }
