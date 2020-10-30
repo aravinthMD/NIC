@@ -1,8 +1,9 @@
-import { Component, OnInit,Input,ViewChild } from '@angular/core';
+import { Component, OnInit,Input,ViewChild,AfterViewInit } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
-
+import { LabelsService } from 'src/app/services/labels.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-tax-invoice',
@@ -26,24 +27,43 @@ export class TaxInvoiceComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource<any>(this.userList);
-  invoiceDate = new FormControl()
-  fromDate = new FormControl()
-
-  toDate = new FormControl()
+  taxInvoiceForm:FormGroup
+  labels: any ={};
 
 
-  constructor() { }
+  constructor(private labelsService: LabelsService,
+    private Datepipe:DatePipe) { }
 
   ngOnInit() {
+    this.labelsService.getLabelsData().subscribe((values)=> {
+      this.labels = values;
+    });
+    this.taxInvoiceForm=new FormGroup({
+      taxIN:new FormControl(null),
+      invoiceDate:new FormControl(null),
+      projectNo:new FormControl(null),
+      poNumber:new FormControl(null),
+      poDate:new FormControl(null),
+      fromDate:new FormControl(null),
+      toDate:new FormControl(null),
+      invoiceAmount:new FormControl(null),
+      remark:new FormControl(null),
+      billClaim:new FormControl(null),
+      uploadDoc:new FormControl(null),
+    })
   }
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
   }
-
-  formDateFunc(event) {
-    
+  taxInForm(){
+    this.taxInvoiceForm.value['fromDate']=this.Datepipe.transform(this.taxInvoiceForm.value['fromDate'],'dd/MM/yyyy')
+    this.taxInvoiceForm.value['toDate']=this.Datepipe.transform(this.taxInvoiceForm.value['toDate'],'dd/MM/yyyy')
+    this.taxInvoiceForm.value['poDate']=this.Datepipe.transform(this.taxInvoiceForm.value['poDate'],'dd/MM/yyyy')
+    this.taxInvoiceForm.value['invoiceDate']=this.Datepipe.transform(this.taxInvoiceForm.value['invoiceDate'],'dd/MM/yyyy')
+    console.log(this.taxInvoiceForm.value)
+    this.taxInvoiceForm.reset()
   }
 
 }

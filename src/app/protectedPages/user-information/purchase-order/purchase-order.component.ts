@@ -3,6 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
+import {DatePipe} from '@angular/common';
 
 
 @Component({
@@ -29,26 +30,48 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   dataSource = new MatTableDataSource<any>(this.userList);
 
   date = new FormControl();
-
+  PurchaseOrderForm:FormGroup;
   labels: any = {};
 
-  constructor(private labelsService: LabelsService) { }
+  constructor(
+    private labelsService: LabelsService,
+    private DatePipe:DatePipe
+    ) { }
 
   ngOnInit() {
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
+      console.log('label',this.labels)
+    })
+    this.PurchaseOrderForm = new FormGroup({
+      purchaseON:new FormControl(null),
+      projectNo:new FormControl(null),
+      projectName:new FormControl(null),
+      userId:new FormControl(null),
+      date:new FormControl(null),
+      poAmount:new FormControl(null),
+      poStatus:new FormControl(null),
+      piStatus:new FormControl(null),
+      piReceivedIn:new FormControl(null),
+      paymentStatus:new FormControl(null),
+      remark:new FormControl(null),
+      piBillable:new FormControl(null),
+      poBillable:new FormControl(null),
+      uploadDoc:new FormControl(null),
+
     })
     
   }
-
+  POForm(){
+    this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
+   console.log(this.PurchaseOrderForm.value)
+   this.PurchaseOrderForm.reset();
+  }
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
   }
 
-  formDateFunc(event) {
-    
-  }
 
 }
