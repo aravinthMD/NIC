@@ -33,10 +33,17 @@
                     <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field>
-                      <input matInput [matDatepicker]="picker1" formControlName="invoiceDate">
+                      <input matInput [matDatepicker]="picker1" formControlName="invoiceDate" required>
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
+
+                    <div class="date-picker-error"  *ngIf="
+                      isDirty &&
+                      form.get('invoiceDate').errors?.required
+                    ">
+                        Please select date
+                  </div>
 
                   </div>
             </div>
@@ -89,10 +96,17 @@
                 <!--<input type="date" class="form-control" id="poDate" aria-describedby="poDateHelp">
                 <small id="poDateHelp" class="form-text text-muted"></small> -->
                 <mat-form-field>
-                  <input matInput [matDatepicker]="picker2" formControlName="poDate">
+                  <input matInput [matDatepicker]="picker2" formControlName="poDate" required>
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
+
+                <div class="date-picker-error"  *ngIf="
+                isDirty &&
+                form.get('poDate').errors?.required
+              ">
+                  Please select date
+            </div>
 
               </div>
         </div>
@@ -102,10 +116,17 @@
                 <!--  <input type="date" class="form-control" id="Fromperiod" aria-describedby="FromperiodHelp">
                 <small id="FromperiodHelp" class="form-text text-muted"></small> -->
                 <mat-form-field>
-                  <input matInput [matDatepicker]="picker3" formControlName="fromDate">
+                  <input matInput [matDatepicker]="picker3" formControlName="fromDate" required>
                   <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                   <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
+
+                <div class="date-picker-error"  *ngIf="
+                isDirty &&
+                form.get('fromDate').errors?.required
+              ">
+                  Please select date
+            </div>
 
               </div>
         </div>
@@ -116,10 +137,17 @@
               <small id="ToperiodHelp" class="form-text text-muted"></small> -->
 
               <mat-form-field>
-                <input matInput [matDatepicker]="picker4" formControlName="toDate">
+                <input matInput [matDatepicker]="picker4" formControlName="toDate" required>
                 <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                 <mat-datepicker #picker4></mat-datepicker>
               </mat-form-field>
+
+              <div class="date-picker-error"  *ngIf="
+              isDirty &&
+              form.get('toDate').errors?.required
+            ">
+                Please select date
+          </div>
               
             </div>
       </div>

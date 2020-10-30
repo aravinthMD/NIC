@@ -2,7 +2,7 @@ import { Component, OnInit ,ViewChild,Input, OnChanges} from '@angular/core';
 // import {MatAccordion} from '@angular/material/expansion';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
-
+import { UtilService } from '../../../services/util.service';
 import { Location } from '@angular/common';
 
 import { DatePipe } from '@angular/common';
@@ -43,7 +43,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   ];
   
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService) {
 
     this.form =this.formBuilder.group({
       name : [null],
@@ -83,6 +83,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
         this.buttonName = 'Edit';
         this.propertyFlag = true
         }
+         
 
   }
 
@@ -136,7 +137,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
   Onsubmit(){
 
     if(this.form.invalid) {
+     
       this.isDirty = true;
+
+      return
     }
     this.propertyFlag = false;
     this.buttonName = 'Update';

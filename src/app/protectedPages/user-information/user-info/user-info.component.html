@@ -1,4 +1,5 @@
 <!-- <div class="userForm"> -->
+    
     <div class="col-md-12 userForm shadow p-3 mb-5 bg-white rounded">
     <!-- <h2>View Customer Profile</h2> -->
     <form [formGroup]="form">
@@ -204,11 +205,16 @@
                     <small id="fromDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                        <input matInput [matDatepicker]="picker1" formControlName="fromDate">
+                        <input matInput [matDatepicker]="picker1" formControlName="fromDate" required>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                       </mat-form-field>
-                      
+                      <div class="date-picker-error"  *ngIf="
+                      isDirty &&
+                      form.get('fromDate').errors?.required
+                    ">
+                        Please select date
+                  </div>
 
                 </div>
             </div>
@@ -220,10 +226,17 @@
                     <small id="toDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                        <input matInput [matDatepicker]="picker2" formControlName="toDate">
+                        <input matInput [matDatepicker]="picker2" formControlName="toDate" required>
                         <mat-datepicker-toggle matSuffix  [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker  #picker2></mat-datepicker>
                       </mat-form-field>
+                      
+                      <div class="date-picker-error"  *ngIf="
+                      isDirty &&
+                      form.get('toDate').errors?.required
+                    ">
+                        Please select date
+                  </div>
 
                 </div>
             </div>
@@ -280,11 +293,18 @@
                         <small id="creditDateHelp" class="form-text text-muted"></small> -->
 
                         <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                            <input matInput [matDatepicker]="picker3" formControlName="creditDate">
+                            <input matInput [matDatepicker]="picker3" formControlName="creditDate" required>
                             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                             <mat-datepicker #picker3></mat-datepicker>
                           </mat-form-field>
 
+                          <div class="date-picker-error"  *ngIf="
+                          isDirty &&
+                          form.get('creditDate').errors?.required
+                        ">
+                            Please select date
+                      </div>
+                          
 
                     </div>
                 </div>
@@ -295,10 +315,17 @@
                         <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small> -->
 
                         <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                            <input matInput [matDatepicker]="picker4" formControlName="creditAddedAgainstPi">
+                            <input matInput [matDatepicker]="picker4" formControlName="creditAddedAgainstPi" required>
                             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                             <mat-datepicker #picker4></mat-datepicker>
                           </mat-form-field>
+
+                          <div class="date-picker-error"  *ngIf="
+                          isDirty &&
+                          form.get('creditAddedAgainstPi').errors?.required
+                        ">
+                            Please select date
+                      </div>
 
                     </div>
                 </div>
@@ -312,3 +339,4 @@
     </form>
 </div>
 <div class="m-5"></div>
+

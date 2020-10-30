@@ -12,6 +12,12 @@ export class UtilService {
         this.detectSidNav$.next(data)
     }
 
+    clearDirty$: BehaviorSubject<string> = new BehaviorSubject('');
+    
+    setClearDirty(data) {
+        this.clearDirty$.next(data)
+    }
+
 
 
   constructor() { }
