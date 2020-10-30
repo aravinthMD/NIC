@@ -49,6 +49,37 @@
                 "rule": 50
             }
         },
+        "purchaseON": {
+            "maxLength": {
+                "rule": 10
+            }
+        },
+        "projectNum": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "projectName": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "userId": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "poAmount": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "remark": {
+            "maxLength": {
+                "rule": 150
+            }
+        },
         "mobile": {
             "maxLength": {
                 "rule": 10,
@@ -143,21 +174,7 @@
                 "rule": 12
             },
             "type":"number"
-        },
-        "remark": {
-            "maxLength": {
-                "rule": 150
-            }
-        },
-        "creditAdded": {
-            "maxLength": {
-                "rule": 6
-            }
-        },
-        "creditApprover": {
-            "maxLength": {
-                "rule": 50
-            }
         }
+        
     }
 }
