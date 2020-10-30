@@ -105,14 +105,16 @@
            <div class="col-4">
               <div class="form-group">
                 <label for="paymentStatus">{{labels?.paymentStatus}}</label>
-                <select 
+                <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatus"
+                [isRequired]="'Please Select Payment Status'"></app-vf-custom-select>
+                <!-- <select 
                     name="paymentStatus" 
                     id="paymentStatus" 
                     class="form-control">
                     <option>Received</option>
                     <option>Pending</option>
                     <option>On hold</option>
-                </select>
+                </select> -->
                 </div>
           </div>
            <div class="col-4">
