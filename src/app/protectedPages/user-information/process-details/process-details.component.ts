@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form/proforma-invoice-dialog-form.component'
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-process-details',
@@ -26,18 +27,20 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     {invoiceNo : 6574,projectNumber : 3453,piAmt:25000,remarks:'credited'}
   ];
 
+  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
+
+  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
+
   dataSource = new MatTableDataSource<any>(this.userList);
 
-  fromDate = new FormControl();
-  toDate = new FormControl();
-  invoiceDate = new FormControl();
-  poDate = new FormControl();
 
   labels: any;
 
-  form : FormGroup
+  form : FormGroup;
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder) { 
+  isDirty: boolean;
+
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe) { 
 
 
     this.form =this.formBuilder.group({
@@ -47,7 +50,13 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       piAmount: [null],
       emailAddress: [null],
       remark: [null],
-      piBillable: [null]
+      piBillable: [null],
+      fromDate:[null],
+      toDate:[null],
+      invoiceDate:[null],
+      poDate:[null],
+      piStatus: [''],
+      paymentStatus:['']
 
     })
 
@@ -88,12 +97,19 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
     // this.dataSource.paginator = this.paginator;
 
+    if(this.form.invalid) {
+      this.isDirty = true;
+    }
 
 
-  }
+    this.form.value['fromDate'] = this.datePipe.transform(this.form.value['fromDate'], 'dd/MM/yyyy')
+    this.form.value['toDate'] = this.datePipe.transform(this.form.value['toDate'], 'dd/MM/yyyy')
+    this.form.value['invoiceDate'] = this.datePipe.transform(this.form.value['invoiceDate'], 'dd/MM/yyyy')
+    this.form.value['poDate'] = this.datePipe.transform(this.form.value['poDate'], 'dd/MM/yyyy')
 
-  formDateFunc(event) {
-    
+    console.log(this.form.value)
+
+
   }
 
 

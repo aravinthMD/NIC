@@ -2,6 +2,7 @@ import { Component, OnInit,AfterViewInit,ViewChild } from '@angular/core';
 import { Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { UtilService } from '../../services/util.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
-  constructor(private route:Router) { }
+  constructor(private route:Router,private utilService: UtilService) { }
   
   ngOnInit() {
   }
@@ -36,6 +37,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
 
 
   addUser(){
+    this.utilService.setCurrentUrl('newuser')
     this.route.navigate(['/users/userInfo']);
 
   }

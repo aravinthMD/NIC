@@ -2,6 +2,7 @@ import { Component, OnInit,Optional, Inject } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LabelsService } from '../../../../services/labels.service';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-proforma-invoice-dialog-form',
@@ -13,18 +14,22 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   buttonName : any = 'Edit'
   enableflag :boolean = true;
 
-  fromDate = new FormControl(new Date());
-  toDate = new FormControl(new Date());
-  invoiceDate = new FormControl(new Date());
-  poDate = new FormControl(new Date());
+  
 
   labels: any;
 
-  form : FormGroup
+  form : FormGroup;
+
+  isDirty: boolean;
+
+  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
+
+  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
+
 
   constructor( public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
     
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private labelsService: LabelsService,private formBuilder : FormBuilder) { 
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe) { 
 
     console.log(data)
 
@@ -35,7 +40,14 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       piAmount: ['54500'],
       emailAddress: ['guru.auth@nic.com'],
       remark: ['remarks'],
-      piBillable: ['pibillable']
+      piBillable: ['pibillable'],
+      fromDate : new Date(),
+      toDate : new Date(),
+      invoiceDate : new Date(),
+      poDate : new Date(),
+      piStatus: '1',
+      paymentStatus:'1'
+
     })
   }
 
@@ -49,7 +61,19 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   OnUpdate(){
     this.buttonName = 'Update';
-    this.enableflag = false
+    this.enableflag = false;
+
+    if(this.form.invalid) {
+      this.isDirty = true;
+    }
+
+    this.form.value['fromDate'] = this.datePipe.transform(this.form.value['fromDate'], 'dd/MM/yyyy')
+    this.form.value['toDate'] = this.datePipe.transform(this.form.value['toDate'], 'dd/MM/yyyy')
+    this.form.value['invoiceDate'] = this.datePipe.transform(this.form.value['invoiceDate'], 'dd/MM/yyyy')
+    this.form.value['poDate'] = this.datePipe.transform(this.form.value['poDate'], 'dd/MM/yyyy')
+
+    console.log(this.form.value)
+
   }
 
   formDateFunc(event) {

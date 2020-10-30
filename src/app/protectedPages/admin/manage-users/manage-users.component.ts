@@ -54,8 +54,12 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   }
 
-  edit() {
-    const dialogRef = this.dialog.open(ManageUserDialogComponent);
+  edit(element) {
+
+    console.log(element)
+    const dialogRef = this.dialog.open(ManageUserDialogComponent,{
+      data: element
+    });
   }
 
 }

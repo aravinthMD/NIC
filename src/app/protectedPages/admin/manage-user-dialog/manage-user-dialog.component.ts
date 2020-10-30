@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Optional, Inject } from '@angular/core';
+import { LabelsService } from '../../../services/labels.service';
+import { FormGroup,FormBuilder} from '@angular/forms';
+
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-manage-user-dialog',
@@ -10,15 +15,41 @@ export class ManageUserDialogComponent implements OnInit {
   buttonName : any = 'Edit'
   enableflag :boolean = true
 
-  deparmentList : any[] = [{key:'Admin User',value:0},{key:'Operation user',value:1},{key:'Finance User',value:2}];
-
 
 
 today: any;
+form: FormGroup;
+labels: any = {};
 
-  constructor() { }
+deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
+
+  constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<ManageUserDialogComponent>,
+    
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
+
+
+    this.form =this.formBuilder.group({
+      name : [`${data.userName}`],
+      departmentName : ['1'],
+      designation : ['desigation'],
+      employeeCode : [`${data.employeeCode}`],
+      email : ['emailcheck@nic.in'],
+      mobileNo : ['9867666444'],
+      telPhno : ['0446565555'],
+      offAddress1 : ['tiruvanmaiyur'],
+      offAddress2 : ['solinganallur'],
+      offAddress3 : ['perungudi'],
+      city : ['chennai'],
+      state : ['tamilnadu'],
+      pinCode : ['600026']
+    });
+   }
 
   ngOnInit() {
+
+    this.labelsService.getLabelsData().subscribe((values)=> {
+      this.labels = values;
+    })
 
     
   }

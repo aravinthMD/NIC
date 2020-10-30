@@ -20,7 +20,7 @@
                     <!-- <label for="invoiceNumber">Proforma Invoice Number</label>
                     <input type="email" class="form-control" id="invoiceNumber" aria-describedby="invoiceNumberHelp">
                     <small id="invoiceNumberHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength">
+                    <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -33,7 +33,7 @@
                     <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field>
-                      <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="invoiceDate">
+                      <input matInput [matDatepicker]="picker1" formControlName="invoiceDate">
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
@@ -46,7 +46,7 @@
                     <input type="projectNumber" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
                     <small id="projectNumberHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="projectNumber" [labelName]="labels.projectNo" [id]="'projectNumber'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.proformaPN.maxLength">
+                    <app-custom-input formControlName="projectNumber" [labelName]="labels.projectNo" [id]="'projectNumber'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.proformaPN.maxLength" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -66,7 +66,7 @@
                   <input type="poNumber" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
                   <small id="poNumberHelp" class="form-text text-muted"></small> -->
 
-                  <app-custom-input formControlName="poNumber" [labelName]="labels.poNumber" [id]="'poNumber'" [isRequired]="'PO number is mandatory'" [maxLength]="labels?.validationData.poNumber.maxLength">
+                  <app-custom-input formControlName="poNumber" [labelName]="labels.poNumber" [id]="'poNumber'" [isRequired]="'PO number is mandatory'" [maxLength]="labels?.validationData.poNumber.maxLength" [isDirty]="isDirty">
 
                   </app-custom-input>
 
@@ -89,7 +89,7 @@
                 <!--<input type="date" class="form-control" id="poDate" aria-describedby="poDateHelp">
                 <small id="poDateHelp" class="form-text text-muted"></small> -->
                 <mat-form-field>
-                  <input matInput [matDatepicker]="picker2"  (dateInput)="formDateFunc($event.value)" [formControl]="poDate">
+                  <input matInput [matDatepicker]="picker2" formControlName="poDate">
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                   <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -102,7 +102,7 @@
                 <!--  <input type="date" class="form-control" id="Fromperiod" aria-describedby="FromperiodHelp">
                 <small id="FromperiodHelp" class="form-text text-muted"></small> -->
                 <mat-form-field>
-                  <input matInput [matDatepicker]="picker3" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate">
+                  <input matInput [matDatepicker]="picker3" formControlName="fromDate">
                   <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                   <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
@@ -116,7 +116,7 @@
               <small id="ToperiodHelp" class="form-text text-muted"></small> -->
 
               <mat-form-field>
-                <input matInput [matDatepicker]="picker4" [formControl]="toDate">
+                <input matInput [matDatepicker]="picker4" formControlName="toDate">
                 <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                 <mat-datepicker #picker4></mat-datepicker>
               </mat-form-field>
@@ -129,7 +129,7 @@
                   <input type="text" class="form-control" id="piAmount" aria-describedby="piAmountHelp">
                   <small id="piAmountHelp" class="form-text text-muted"></small> -->
 
-                  <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'PI amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type">
+                  <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'PI amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
 
                   </app-custom-input>
 
@@ -142,7 +142,7 @@
                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   <small id="emailHelp" class="form-text text-muted"></small> -->
 
-                  <app-custom-input formControlName="emailAddress" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email address is mandatory'" [maxLength]="labels?.validationData.email.maxLength" [patternCheck]="labels?.validationData.email.patternCheck">
+                  <app-custom-input formControlName="emailAddress" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email address is mandatory'" [maxLength]="labels?.validationData.email.maxLength" [patternCheck]="labels?.validationData.email.patternCheck" [isDirty]="isDirty">
 
                   </app-custom-input>
 
@@ -157,7 +157,7 @@
                 </div> -->
                 <div class="form-group">
                   <label for="piStatus">PI Status</label>
-                  <select 
+                  <!-- <select 
                       name="piStatus" 
                       id="piStatus" 
                       class="form-control">
@@ -166,7 +166,11 @@
                       <option>Pending</option>
                       <option>Rejected</option>
                       <option>OnHold</option>
-                  </select>
+                  </select> -->
+
+                  <app-vf-custom-select formControlName="piStatus" [values]="piStatusData"
+                  [isRequired]="'Please Select PI Status'" [isDirty]="isDirty"></app-vf-custom-select>
+
               </div>
           </div>
           
@@ -178,14 +182,17 @@
               </div> -->
               <div class="form-group">
                   <label for="payMentStatus">Payment Status</label>
-                  <select 
+                  <!-- <select 
                       name="payMentStatus" 
                       id="payMentStatus" 
                       class="form-control">
                       <option>Received</option>
                       <option>Pending</option>
                       <option>On hold</option>
-                  </select>
+                  </select> -->
+                  <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData"
+                  [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty"></app-vf-custom-select>
+
               </div>
               
         </div>
@@ -195,7 +202,7 @@
                 <input type="email" class="form-control" id="remark" aria-describedby="remarkHelp">
                 <small id="remarkHelp" class="form-text text-muted"></small> -->
 
-                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is mandatory'" [maxLength]="labels?.validationData.remark.maxLength">
+                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is mandatory'" [maxLength]="labels?.validationData.remark.maxLength" [isDirty]="isDirty">
 
                 </app-custom-input>
 
@@ -207,7 +214,7 @@
               <!-- <label for="piBillable">PI Billable</label>
               <input type="text" class="form-control" id="piBillable" aria-describedby="remarkHelp"> -->
 
-              <app-custom-input formControlName="piBillable" [labelName]="labels.piBillable" [id]="'piBillable'" [isRequired]="'PI billable is mandatory'">
+              <app-custom-input formControlName="piBillable" [labelName]="labels.piBillable" [id]="'piBillable'" [isRequired]="'PI billable is mandatory'" [isDirty]="isDirty">
 
               </app-custom-input>
 

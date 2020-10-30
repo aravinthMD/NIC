@@ -25,6 +25,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   propertyFlag : boolean;
   labels: any = {};
 
+  isDirty: boolean;
+
 
   // deparmentList : any[] = ['','Department of Sainik Welfare',
   //  'Minstry of minority affairs',
@@ -32,20 +34,20 @@ export class UserInfoComponent implements OnInit,OnChanges {
   //   'minstry of trible affairs',
   //   'Bureasu of Naviks.Mumbai'];
 
-    deparmentList : any[] = [{value:'Department of Sainik Welfare',key:0},{value:'Minstry of minority affairs',key:1},{value:'Vishakhapatnam port Trust',key:2},
-    {value:'minstry of trible affairs',key:2},{value:'Bureasu of Naviks.Mumbai',key:3}
+  departmentListData = [
+      {key:0,value:'Department of Sainik Welfare'},
+      {key:1,value:'Minstry of minority affairs'},
+      {key:2,value:'Vishakhapatnam port Trust'},
+      {key:3,value:'Ministry of trible affairs'},
+      {key:4,value:'Bureasu of Naviks.Mumbai'}
   ];
-
-  fromDate = new FormControl();
-  toDate = new FormControl();
-  creditDate = new FormControl();
-  creditAddedAgainstPi = new FormControl();
+  
 
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe) {
 
     this.form =this.formBuilder.group({
       name : [null],
-      departmentName : [''],
+      departmentName : [null],
       designation : [null],
       employeeCode : [null],
       email : [null],
@@ -61,7 +63,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       piDuration : [null],
       projectNo : [null],
       creditAdded : [null],
-      creditApproved : [null],
+      creditApprover : [null],
       creditDate : [null],
       creditAddedAgainstPi : [null],
       fromDate: [null],
@@ -89,10 +91,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
     let path = this.location.path();
 
     if(!path.includes('userInfo/')) {
-      this.fromDate = new FormControl();
-      this.toDate = new FormControl();
-      this.creditDate = new FormControl();
-      this.creditAddedAgainstPi = new FormControl();
       this.form.reset()
     }
   }
@@ -101,10 +99,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   setFormValues(){
     
     this.existingUserFlag = true;
-    this.fromDate = new FormControl(new Date());
-    this.toDate = new FormControl(new Date());
-    this.creditDate = new FormControl(new Date());
-    this.creditAddedAgainstPi = new FormControl(new Date());
+    
     this.form.patchValue({
       name : 'Aravinth.auth',
       departmentName : '1',
@@ -123,9 +118,11 @@ export class UserInfoComponent implements OnInit,OnChanges {
       piDuration : '6',
       projectNo : '8776',
       creditAdded : '1002',
-      creditApproved : '235',
-      creditDate : new Date(2019,10,10),
-      creditAddedAgainstPi : [null],
+      creditApprover : '235',
+      fromDate: new Date(),
+      toDate: new Date(),
+      creditDate : new Date(),
+      creditAddedAgainstPi : new Date(),
       
 
     })
@@ -137,10 +134,18 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
   Onsubmit(){
+
+    if(this.form.invalid) {
+      this.isDirty = true;
+    }
     this.propertyFlag = false;
     this.buttonName = 'Update';
 
-    console.log(this.fromDate)
+    this.form.value['fromDate'] = this.datePipe.transform(this.form.value['fromDate'], 'dd/MM/yyyy')
+    this.form.value['toDate'] = this.datePipe.transform(this.form.value['toDate'], 'dd/MM/yyyy')
+    this.form.value['creditDate'] = this.datePipe.transform(this.form.value['creditDate'], 'dd/MM/yyyy')
+    this.form.value['creditAddedAgainstPi'] = this.datePipe.transform(this.form.value['creditAddedAgainstPi'], 'dd/MM/yyyy')
+    // console.log(this.fromDate)
     console.log(this.form.value)
   }
 

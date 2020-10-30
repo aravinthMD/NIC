@@ -73,6 +73,14 @@ export class CustomInputComponent
 
   htmlInputElement: any;
 
+  @Input() set isDirty(value) {
+    if (value) {
+      this.checkIsFirst = false;
+      this.checkValidation(this.data);
+      //this.propagateChange(this.data);
+    }
+  }
+
   @ViewChild('customInput', {static:false}) customInput: ElementRef;
 
   errorMsg: string;
@@ -81,7 +89,7 @@ export class CustomInputComponent
   isNonEmpty: boolean;
   private data: any;
 
-  private checkIsFirst: boolean;
+  private checkIsFirst = true;
   private propagateChange = event => {
     // this.change.emit(event);
   };
@@ -138,12 +146,20 @@ export class CustomInputComponent
       this.inputError = false;
       return;
     }
-    if (!newValue && this.isRequired) {
-      this.displayError(!this.checkIsFirst ? '' : this.isRequired);
-      this.checkIsFirst = true;
+
+    if ((newValue === null || newValue == undefined || newValue === "") && this.isRequired) {
+      this.displayError(this.checkIsFirst ? '' : this.isRequired);
+      this.checkIsFirst = false;
       return;
     }
-    this.isNonEmpty = true;
+
+
+    // if (!newValue && this.isRequired) {
+    //   this.displayError(!this.checkIsFirst ? '' : this.isRequired);
+    //   this.checkIsFirst = true;
+    //   return;
+    // }
+    // this.isNonEmpty = true;
 
     if (this.patternCheck) {
       let toLower = String(newValue);

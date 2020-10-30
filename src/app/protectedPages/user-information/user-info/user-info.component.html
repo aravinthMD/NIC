@@ -10,7 +10,7 @@
                     <!-- <label for="Name">{{labels.name}}</label>
                     <input type="text" class="form-control" [readonly]="propertyFlag" formControlName="name" id="Name" aria-describedby="nameHelp">
                     <small id="nameHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="name" [labelName]="labels.name" [id]="'Name'" [isRequired]="'Name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="name" [labelName]="labels.name" [id]="'Name'" [isRequired]="'Name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
                 </div>
@@ -37,8 +37,8 @@
               <!-- </select>
                     <small id="emailHelp" class="form-text text-muted"></small> -->
 
-                    <app-vf-custom-select formControlName="departmentName" [values]="deparmentList"
-                    [isRequired]="'Please Select Department'" [isDisabled]="propertyFlag"></app-vf-custom-select>
+                    <app-vf-custom-select formControlName="departmentName" [values]="departmentListData"
+                    [isRequired]="'Please Select Department'" [isDisabled]="propertyFlag" [isDirty]="isDirty"></app-vf-custom-select>
 
 
                 </div>
@@ -49,7 +49,7 @@
                     <input type="text" formControlName="designation" [readonly]="propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
                     <small id="designationHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="designation" [labelName]="labels.designation" [id]="'designation'" [isRequired]="'Designation is mandatory'" [maxLength]="labels?.validationData.designation.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="designation" [labelName]="labels.designation" [id]="'designation'" [isRequired]="'Designation is mandatory'" [maxLength]="labels?.validationData.designation.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -63,7 +63,7 @@
                     <!-- <label for="empCode">{{labels.employeeCode}}</label>
                     <input type="text" class="form-control" formControlName="employeeCode" [readonly]="propertyFlag" id="empCode" aria-describedby="empCodeHelp">
                     <small id="empCodeHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" [id]="'employeeCode'" [isRequired]="'Employee code is mandatory'" [maxLength]="labels?.validationData.employeeCode.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" [id]="'employeeCode'" [isRequired]="'Employee code is mandatory'" [maxLength]="labels?.validationData.employeeCode.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -74,7 +74,7 @@
                     <!-- <label for="emailAddress">{{labels.email}}</label>
                     <input type="email" class="form-control" formControlName="email" [readonly]="propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
                     <small id="emailAddressHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="email" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="email" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -86,7 +86,7 @@
                     <input type="text" class="form-control" formControlName="mobileNo" [readonly]="propertyFlag" id="mobileNumber" aria-describedby="mobileNumberHelp">
                     <small id="mobileNumberHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="mobileNo" [labelName]="labels.mobileNo" [id]="'mobileNo'" [isRequired]="'Mobile number is mandatory'" [type]="labels?.validationData.mobile.type" [patternCheck]="labels?.validationData.mobile.patternCheck" [maxLength]="labels?.validationData.mobile.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="mobileNo" [labelName]="labels.mobileNo" [id]="'mobileNo'" [isRequired]="'Mobile number is mandatory'" [type]="labels?.validationData.mobile.type" [patternCheck]="labels?.validationData.mobile.patternCheck" [maxLength]="labels?.validationData.mobile.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -102,7 +102,7 @@
                     <!-- <label for="telPhno">{{labels.teleNumber}}</label>
                     <input type="text" class="form-control" formControlName="telPhno" [readonly]="propertyFlag" id="telPhno" aria-describedby="telPhnoHelp">
                     <small id="telPhnoHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="telPhno" [labelName]="labels.teleNumber" [id]="'telPhno'" [isRequired]="'Telephone number is mandatory'" [type]="labels?.validationData.telephoneNumber.type" [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" [maxLength]="labels?.validationData.telephoneNumber.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="telPhno" [labelName]="labels.teleNumber" [id]="'telPhno'" [isRequired]="'Telephone number is mandatory'" [type]="labels?.validationData.telephoneNumber.type" [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" [maxLength]="labels?.validationData.telephoneNumber.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -114,7 +114,7 @@
                     <input type="text" class="form-control" formControlName="offAddress1" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
                     <small id="offcAddressLineHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="offAddress1" [labelName]="labels.officialAdd1" [id]="'offcAddressLine1'" [isRequired]="'Office AddressLine1 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="offAddress1" [labelName]="labels.officialAdd1" [id]="'offcAddressLine1'" [isRequired]="'Office AddressLine1 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -125,7 +125,7 @@
                     <!-- <label for="offcAddressLine2">{{labels.officialAdd2}}</label>
                     <input type="text" class="form-control" formControlName="offAddress2" [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
                     <small id="offcAddressLine2Help" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="offAddress2" [labelName]="labels.officialAdd2" [id]="'offcAddressLine2'" [isRequired]="'Office AddressLine2 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="offAddress2" [labelName]="labels.officialAdd2" [id]="'offcAddressLine2'" [isRequired]="'Office AddressLine2 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -141,7 +141,7 @@
                     <!-- <label for="offcAddressLine3">{{labels.officialAdd3}}</label>
                     <input type="text" class="form-control" formControlName="offAddress3" [readonly]="propertyFlag" id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
                     <small id="offcAddressLine3Help" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3" [id]="'offcAddressLine3'" [isRequired]="'Office AddressLine3 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3" [id]="'offcAddressLine3'" [isRequired]="'Office AddressLine3 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -152,7 +152,7 @@
                     <!-- <label for="city">{{labels.city}}</label>
                     <input type="text" class="form-control" formControlName="city" [readonly]="propertyFlag" id="city" aria-describedby="cityHelp">
                     <small id="cityHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="city" [labelName]="labels.city" [id]="'city'" [isRequired]="'City is mandatory'" [maxLength]="labels?.validationData.city.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="city" [labelName]="labels.city" [id]="'city'" [isRequired]="'City is mandatory'" [maxLength]="labels?.validationData.city.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -164,7 +164,7 @@
                     <input type="text" class="form-control" formControlName="state" [readonly]="propertyFlag" id="State" aria-describedby="StateHelp">
                     <small id="StateHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="state" [labelName]="labels.state" [id]="'state'" [isRequired]="'State is mandatory'" [maxLength]="labels?.validationData.state.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="state" [labelName]="labels.state" [id]="'state'" [isRequired]="'State is mandatory'" [maxLength]="labels?.validationData.state.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -180,7 +180,7 @@
                     <!-- <label for="PinCode">{{labels.pincode}}</label>
                     <input type="text" class="form-control" formControlName="pinCode" [readonly]="propertyFlag" id="PinCode" aria-describedby="PinCodeHelp">
                     <small id="PinCodeHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="pinCode" [labelName]="labels.pincode" [id]="'pincode'" [isRequired]="'Pincode is mandatory'" [maxLength]="labels?.validationData.pincode.maxLength" [type]="labels?.validationData.pincode.type" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="pinCode" [labelName]="labels.pincode" [id]="'pincode'" [isRequired]="'Pincode is mandatory'" [maxLength]="labels?.validationData.pincode.maxLength" [type]="labels?.validationData.pincode.type" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -191,7 +191,7 @@
                     <!-- <label for="sms">{{labels.smsTraffic}}</label>
                     <input type="text" class="form-control" formControlName="smsTariffMonthWise" [readonly]="propertyFlag" id="sms" aria-describedby="smsHelp">
                     <small id="smsHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="smsTariffMonthWise" [labelName]="labels.smsTraffic" [id]="'smsTraffic'" [isRequired]="'Sms traffic month wise is mandatory'" [maxLength]="labels?.validationData.smsTraffic.maxLength" [type]="labels?.validationData.smsTraffic.type" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="smsTariffMonthWise" [labelName]="labels.smsTraffic" [id]="'smsTraffic'" [isRequired]="'Sms traffic month wise is mandatory'" [maxLength]="labels?.validationData.smsTraffic.maxLength" [type]="labels?.validationData.smsTraffic.type" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -204,7 +204,7 @@
                     <small id="fromDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                        <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate" formControlName="fromDate">
+                        <input matInput [matDatepicker]="picker1" formControlName="fromDate">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                       </mat-form-field>
@@ -220,7 +220,7 @@
                     <small id="toDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                        <input matInput [matDatepicker]="picker2" [formControl]="toDate">
+                        <input matInput [matDatepicker]="picker2" formControlName="toDate">
                         <mat-datepicker-toggle matSuffix  [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker  #picker2></mat-datepicker>
                       </mat-form-field>
@@ -233,7 +233,7 @@
                     <!-- <label for="projectNumber">{{labels.projectNo}}</label>
                     <input type="text" class="form-control" formControlName="projectNo" [readonly]="propertyFlag" id="projectNumber" aria-describedby="projectNumberHelp">
                     <small id="projectNumberHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" [id]="'projectNo'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" [id]="'projectNo'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -251,16 +251,26 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditAdded">{{labels.creditAdded}}</label>
+                        <!-- <label for="creditAdded">{{labels.creditAdded}}</label>
                         <input type="text" class="form-control" formControlName="creditAdded" [readonly]="propertyFlag" id="creditAdded" aria-describedby="creditAddedHelp">
-                        <small id="creditAddedHelp" class="form-text text-muted"></small>
+                        <small id="creditAddedHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="creditAdded" [labelName]="labels.creditAdded" [id]="'creditAdded'" [isRequired]="'CreditAdded is mandatory'" [maxLength]="labels?.validationData.creditAdded.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+
+
+                        </app-custom-input>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label for="creditApproved">{{labels.creditApprover}}</label>
+                        <!-- <label for="creditApproved">{{labels.creditApprover}}</label>
                         <input type="text" class="form-control" formControlName="creditApproved" [readonly]="propertyFlag" id="creditApproved" aria-describedby="creditApprovedHelp">
-                        <small id="creditApprovedHelp" class="form-text text-muted"></small>
+                        <small id="creditApprovedHelp" class="form-text text-muted"></small> -->
+
+                        <app-custom-input formControlName="creditApprover" [labelName]="labels.creditApprover" [id]="'creditApprover'" [isRequired]="'CreditApprover is mandatory'" [maxLength]="labels?.validationData.creditApprover.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+
+
+                        </app-custom-input>
                     </div>
                 </div>
                 <div class="col-4">
@@ -270,7 +280,7 @@
                         <small id="creditDateHelp" class="form-text text-muted"></small> -->
 
                         <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                            <input matInput [matDatepicker]="picker3" [formControl]="creditDate">
+                            <input matInput [matDatepicker]="picker3" formControlName="creditDate">
                             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                             <mat-datepicker #picker3></mat-datepicker>
                           </mat-form-field>
@@ -285,7 +295,7 @@
                         <small id="creditAddedAgainstPiHelp" class="form-text text-muted"></small> -->
 
                         <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                            <input matInput [matDatepicker]="picker4" [formControl]="creditAddedAgainstPi">
+                            <input matInput [matDatepicker]="picker4" formControlName="creditAddedAgainstPi">
                             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                             <mat-datepicker #picker4></mat-datepicker>
                           </mat-form-field>

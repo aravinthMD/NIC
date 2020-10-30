@@ -35,6 +35,8 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import { DatePipe } from '@angular/common';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.service';
 
 
 @NgModule({
@@ -83,8 +85,14 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MatNativeDateModule,
     MatInputModule
   ],
-  providers: [DatePipe,{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    DatePipe,
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ],
   bootstrap: [AppComponent],
   entryComponents:[ProformaInvoiceDialogFormComponent, ManageUserDialogComponent]
 })
 export class AppModule { }
+

@@ -148,6 +148,16 @@
             "maxLength": {
                 "rule": 150
             }
+        },
+        "creditAdded": {
+            "maxLength": {
+                "rule": 6
+            }
+        },
+        "creditApprover": {
+            "maxLength": {
+                "rule": 50
+            }
         }
     }
 }
