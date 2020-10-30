@@ -18,6 +18,8 @@ export class CreateUserComponent implements OnInit {
 
   form: FormGroup;
 
+  isDirty: boolean;
+
   deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
 
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder) {
@@ -47,6 +49,13 @@ export class CreateUserComponent implements OnInit {
       this.labels = values;
     })
 
+  }
+
+  onSubmit(){
+
+    if(this.form.invalid) {
+      this.isDirty = true;
+    }
   }
 
 }
