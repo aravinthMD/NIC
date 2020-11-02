@@ -38,6 +38,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.service';
 import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '@services/auth.interceptor.service';
+
 
 
 @NgModule({
@@ -67,6 +70,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -90,6 +94,11 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   providers: [
     DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}

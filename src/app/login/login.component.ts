@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import {FormGroup,FormBuilder} from '@angular/forms';
-import { ToasterService } from '@services/toaster.service'
+import { ToasterService } from '@services/toaster.service';
+import { LoginService } from '@services/login.service'
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
 
 
-  constructor(private router : Router,private formBuilder: FormBuilder,private toasterService: ToasterService) {
+  constructor(private router : Router,private formBuilder: FormBuilder,private toasterService: ToasterService,private loginService: LoginService) {
 
     this.form = this.formBuilder.group({
       userName: [null],
@@ -33,7 +34,18 @@ export class LoginComponent implements OnInit {
     }else if(!this.form.value.password){
       this.toasterService.showError('Please enter the password','')
     }else {
-      this.router.navigate(["users/Dashboard/"]);
+
+      const data = {
+        username: this.form.value.userName,
+        password: this.form.value.password
+      }
+
+      this.loginService.getLogin(data).subscribe((response)=> {
+
+          console.log(response)
+      })
+
+      // this.router.navigate(["users/Dashboard/"]);
 
     }
     
