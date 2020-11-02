@@ -7,7 +7,9 @@ import { Location } from '@angular/common';
 
 import { DatePipe } from '@angular/common';
 
-import {ToasterService} from '@services/toaster.service'
+import {ToasterService} from '@services/toaster.service';
+
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -45,7 +47,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   ];
   
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router) {
 
     this.form =this.formBuilder.group({
       name : [null],
@@ -83,7 +85,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       if(this.user){
         this.setFormValues();
         this.buttonName = 'Edit';
-        this.propertyFlag = true
+        this.propertyFlag = true;
+
         }
          
 
@@ -154,6 +157,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.form.value['creditAddedAgainstPi'] = this.datePipe.transform(this.form.value['creditAddedAgainstPi'], 'dd/MM/yyyy')
     // console.log(this.fromDate)
     console.log(this.form.value)
+  }
+
+  back() {
+
+    this.utilService.setCurrentUrl('dashboard')
+    this.router.navigate(['/users/Dashboard'])
   }
 
 }
