@@ -16,14 +16,23 @@
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="purchaseOrder">{{labels?.purchaseON}}</label> -->
-              <app-custom-input formControlName="purchaseON" [isRequired]="'Purchase Order is Mandatory'" [labelName]="labels.purchaseON" [maxLength]="labels?.validationData?.purchaseON?.maxLength">
+              <app-custom-input formControlName="purchaseON" 
+              [isRequired]="'Purchase Order is Mandatory'" 
+              [labelName]="labels.purchaseON" 
+              [maxLength]="labels?.validationData?.purchaseON?.maxLength"
+              [isDirty]="isDirty">
               </app-custom-input>
               </div>
           </div>
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="projectNo">{{labels?.projectNum}}</label> -->
-              <app-custom-input formControlName="projectNo" [isRequired]="'Project Number is Mandatory'" [labelName]="labels.projectNo" [maxLength]="labels?.validationData?.projectNo?.maxLength">
+              <app-custom-input 
+              formControlName="projectNo" 
+              [isRequired]="'Project Number is Mandatory'" 
+              [labelName]="labels.projectNo" 
+              [maxLength]="labels?.validationData?.projectNo?.maxLength"
+              [isDirty]="isDirty">
               </app-custom-input>
               <!-- <input type="text" class="form-control" id="projectNo" aria-describedby="projectNoHelp">
               <small id="projectNoHelp" class="form-text text-muted"></small> -->
@@ -32,7 +41,11 @@
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="projectName">{{labels?.projectName}}</label> -->
-              <app-custom-input formControlName="projectName"[isRequired]="'Project Name is Mandatory'" [labelName]="labels.projectName" [maxLength]="labels?.validationData?.projectName?.maxLength">
+              <app-custom-input formControlName="projectName" 
+              [isRequired]="'Project Name is Mandatory'" 
+              [labelName]="labels.projectName" 
+              [maxLength]="labels?.validationData?.projectName?.maxLength"
+              [isDirty]="isDirty">
               </app-custom-input>
               <!-- <input type="text" class="form-control" id="projectName" aria-describedby="projectNameHelp">
               <small id="projectNameHelp" class="form-text text-muted"></small> -->
@@ -41,7 +54,12 @@
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="userId">{{labels.userId}}</label> -->
-              <app-custom-input formControlName="userId" [isRequired]="'User ID is Mandatory'" [labelName]="labels.userId" [maxLength]="labels?.validationData?.userId?.maxLength">
+              <app-custom-input 
+              formControlName="userId" 
+              [isRequired]="'User ID is Mandatory'" 
+              [labelName]="labels.userId" 
+              [maxLength]="labels?.validationData?.userId?.maxLength"
+              [isDirty]="isDirty">
               </app-custom-input>
               <!-- <input type="text" class="form-control" id="userId" aria-describedby="userIdHelp">
               <small id="userIdHelp" class="form-text text-muted"></small> -->
@@ -56,18 +74,31 @@
                       <small id="dateHelp" class="form-text text-muted"></small> -->
 
               <mat-form-field>
-                <input matInput formControlName="date" [matDatepicker]="picker1">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <input matInput required formControlName="date" 
+                [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1" 
+                ></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
-
+              <div class="date-picker-error"  *ngIf="
+              isDirty &&
+              PurchaseOrderForm.get('date').errors?.required
+            ">
+                Please select date
+          </div>
 
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="poAmount">{{labels?.poAmount}}</label> -->
-              <app-custom-input formControlName="poAmount" [isRequired]="'PO Amount is Mandatory'" [labelName]="labels.poAmount" [type]="labels?.validationData?.poAmount?.type" [maxLength]="labels?.validationData?.poAmount?.maxLength">
+              <app-custom-input 
+              formControlName="poAmount" 
+              [isRequired]="'PO Amount is Mandatory'" 
+              [labelName]="labels.poAmount" 
+              [type]="labels?.validationData?.poAmount?.type" 
+              [maxLength]="labels?.validationData?.poAmount?.maxLength"
+              [isDirty]="isDirty">
               </app-custom-input>
               <!-- <input type="text" class="form-control" id="poAmount" aria-describedby="poAmountHelp">
               <small id="poAmountHelp" class="form-text text-muted"></small> -->
@@ -82,13 +113,19 @@
                     </div> -->
             <div class="form-group">
               <label for="poStatus">{{labels.poStatus}}</label>
-              <select name="poStatus" id="poStatus" class="form-control" formControlName="poStatus">
+              <app-vf-custom-select 
+              formControlName="poStatus" 
+              [values]="poStatus"
+              [isRequired]="'Please Select PO Status'"
+              [isDirty]="isDirty">
+            </app-vf-custom-select>
+              <!-- <select name="poStatus" id="poStatus" class="form-control" formControlName="poStatus">
                 <option>Received</option>
                 <option>Approved</option>
                 <option>Pending</option>
                 <option>Rejected</option>
                 <option>On hold</option>
-              </select>
+              </select> -->
             </div>
 
           </div>
@@ -100,13 +137,19 @@
                     </div> -->
             <div class="form-group">
               <label for="piStatus">{{labels.piStatus}}</label>
-              <select name="piStatus" id="piStatus" class="form-control" formControlName="piStatus">
+              <app-vf-custom-select 
+              formControlName="piStatus" 
+              [values]="piStatus"
+              [isRequired]="'Please Select PI Status'"
+              [isDirty]="isDirty">
+              </app-vf-custom-select>
+              <!-- <select name="piStatus" id="piStatus" class="form-control" formControlName="piStatus">
                 <option>Received</option>
                 <option>Approved</option>
                 <option>Pending</option>
                 <option>Rejected</option>
                 <option>On hold</option>
-              </select>
+              </select> -->
             </div>
           </div>
 
@@ -114,26 +157,40 @@
           <div class="col-4">
             <div class="form-group">
               <label for="PiReceived">{{labels.piReceivedIn}}</label>
-              <select name="piReceivedIn" id="piReceivedIn" class="form-control" formControlName="piReceivedIn">
+              <app-vf-custom-select 
+              formControlName="piReceivedIn" 
+              [values]="piReceivedIn"
+              [isRequired]="'Please Select PI ReceivedIn'"
+              [isDirty]="isDirty"></app-vf-custom-select>
+              <!-- <select name="piReceivedIn" id="piReceivedIn" class="form-control" formControlName="piReceivedIn">
                 <option>Full</option>
                 <option>Partial</option>
-              </select>
+              </select> -->
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
               <label for="paymentStatus">{{labels.paymentStatus}}</label>
-              <select name="paymentStatus" id="paymentStatus" class="form-control" formControlName="paymentStatus">
+              <app-vf-custom-select 
+              formControlName="paymentStatus" 
+              [values]="paymentStatus"
+              [isRequired]="'Please Select Payment Status'"
+              [isDirty]="isDirty"></app-vf-custom-select>
+              <!-- <select name="paymentStatus" id="paymentStatus" class="form-control" formControlName="paymentStatus">
                 <option>Received</option>
                 <option>Pending</option>
                 <option>On hold</option>
-              </select>
+              </select> -->
             </div>
           </div>
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="remark">{{labels?.remark}}</label> -->
-              <app-custom-input formControlName="remark" [isRequired]="'Remarks is Mandatory'" [labelName]="labels.remark" [maxLength]="labels?.validationData?.remark?.maxLength">
+              <app-custom-input formControlName="remark" 
+              [isRequired]="'Remarks is Mandatory'" 
+              [labelName]="labels.remark" 
+              [maxLength]="labels?.validationData?.remark?.maxLength"
+              [isDirty]="isDirty">
               </app-custom-input>              
               <!-- <input type="text" class="form-control" id="remark" aria-describedby="remarkHelp">
               <small id="remarkHelp" class="form-text text-muted"></small> -->
@@ -142,7 +199,10 @@
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="piBillable">{{labels?.piBillable}} </label> -->
-              <app-custom-input formControlName="piBillable" [isRequired]="'PI Billable is Mandatory'" [labelName]="labels.piBillable">
+              <app-custom-input formControlName="piBillable" 
+              [isRequired]="'PI Billable is Mandatory'" 
+              [labelName]="labels.piBillable"
+              [isDirty]="isDirty">
               </app-custom-input> 
               <!-- <input type="text" class="form-control" id="piBillable" aria-describedby="piBillableHelp">
               <small id="piBillableHelp" class="form-text text-muted"></small> -->
@@ -151,7 +211,10 @@
           <div class="col-4">
             <div class="form-group">
               <!-- <label for="poBillable">{{labels?.poBillable}} </label> -->
-              <app-custom-input formControlName="poBillable" [isRequired]="'PO Billable is Mandatory'" [labelName]="labels.poBillable">
+              <app-custom-input formControlName="poBillable" 
+              [isRequired]="'PO Billable is Mandatory'" 
+              [labelName]="labels.poBillable"
+              [isDirty]="isDirty">
               </app-custom-input>
               <!-- <input type="text" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
               <small id="poBillableHelp" class="form-text text-muted"></small> -->

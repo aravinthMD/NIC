@@ -25,11 +25,15 @@ export class TaxInvoiceComponent implements OnInit {
     {invoiceNo : 7687,projectNumber : 3424,piAmt:23450,remarks:''}
 
   ];
-
+  paymentStatus: any[] = [
+    { key: 0, value: 'Pending' },
+    { key: 1, value: 'Received' },
+    { key: 2, value: 'On Hold' }]
   dataSource = new MatTableDataSource<any>(this.userList);
   taxInvoiceForm:FormGroup
   labels: any ={};
-
+  isDirty: boolean;
+  toDate =new Date()
 
   constructor(private labelsService: LabelsService,
     private Datepipe:DatePipe) { }
@@ -37,6 +41,7 @@ export class TaxInvoiceComponent implements OnInit {
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
+
     });
     this.taxInvoiceForm=new FormGroup({
       taxIN:new FormControl(null),
@@ -50,6 +55,7 @@ export class TaxInvoiceComponent implements OnInit {
       remark:new FormControl(null),
       billClaim:new FormControl(null),
       uploadDoc:new FormControl(null),
+      paymentStatus:new FormControl(null),
     })
   }
 
@@ -58,6 +64,12 @@ export class TaxInvoiceComponent implements OnInit {
 
   }
   taxInForm(){
+    if(this.taxInvoiceForm.invalid) {
+     
+      this.isDirty = true;
+
+      return
+    }
     this.taxInvoiceForm.value['fromDate']=this.Datepipe.transform(this.taxInvoiceForm.value['fromDate'],'dd/MM/yyyy')
     this.taxInvoiceForm.value['toDate']=this.Datepipe.transform(this.taxInvoiceForm.value['toDate'],'dd/MM/yyyy')
     this.taxInvoiceForm.value['poDate']=this.Datepipe.transform(this.taxInvoiceForm.value['poDate'],'dd/MM/yyyy')
