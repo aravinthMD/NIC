@@ -18,7 +18,11 @@
              <div class="col-4">
                 <div class="form-group">
                     <!-- <label for="InvoiceNumber">{{labels?.taxIN}}</label> -->
-                    <app-custom-input formControlName="taxIN" [isRequired]="'Tax Invoice Number is Mandatory'" [labelName]="labels?.taxIN" [maxLength]="labels?.validationData?.invoiceNo?.maxLength">
+                    <app-custom-input formControlName="taxIN" 
+                    [isRequired]="'Tax Invoice Number is Mandatory'" 
+                    [labelName]="labels?.taxIN" 
+                    [maxLength]="labels?.validationData?.invoiceNo?.maxLength"
+                    [isDirty]="isDirty">
                     </app-custom-input> 
                     <!-- <input type="email" class="form-control" id="InvoiceNumber" aria-describedby="InvoiceNumberHelp">
                     <small id="InvoiceNumberHelp" class="form-text text-muted"></small> -->
@@ -30,17 +34,26 @@
                     <!-- <input type="date" class="form-control" id="InvoiceDate" aria-describedby="InvoiceDateHelp">
                     <small id="InvoiceDateHelp" class="form-text text-muted"></small> -->
                     <mat-form-field>
-                      <input matInput formControlName="invoiceDate" [matDatepicker]="picker1" >
+                      <input matInput formControlName="invoiceDate" required [matDatepicker]="picker1" >
                       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                       <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
-
+                    <div class="date-picker-error"  *ngIf="
+                    isDirty &&
+                    taxInvoiceForm.get('invoiceDate').errors?.required
+                  ">
+                      Please select PO Date
+                </div>
                   </div>
             </div>
              <div class="col-4">
                 <div class="form-group">
                     <!-- <label for="projectNumber">{{labels?.projectNo}}</label> -->
-                    <app-custom-input formControlName="projectNo" [isRequired]="'Project Number is Mandatory'" [labelName]="labels?.projectNo" [maxLength]="labels?.validationData?.projectNo?.maxLength">
+                    <app-custom-input formControlName="projectNo" 
+                    [isRequired]="'Project Number is Mandatory'" 
+                    [labelName]="labels?.projectNo" 
+                    [maxLength]="labels?.validationData?.projectNo?.maxLength"
+                    [isDirty]="isDirty">
                     </app-custom-input> 
                     <!-- <input type="email" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
                     <small id="projectNumberHelp" class="form-text text-muted"></small> -->
@@ -49,7 +62,11 @@
              <div class="col-4">
                 <div class="form-group">
                     <!-- <label for="poNumber">{{labels?.poNumber}}</label> -->
-                    <app-custom-input formControlName="poNumber" [isRequired]="'PO Number is Mandatory'" [labelName]="labels?.poNumber" [maxLength]="labels?.validationData?.poNo?.maxLength">
+                    <app-custom-input formControlName="poNumber" 
+                    [isRequired]="'PO Number is Mandatory'" 
+                    [labelName]="labels?.poNumber" 
+                    [maxLength]="labels?.validationData?.poNo?.maxLength"
+                    [isDirty]="isDirty">
                     </app-custom-input> 
                     <!-- <input type="text" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
                     <small id="poNumberHelp" class="form-text text-muted"></small> -->
@@ -59,10 +76,16 @@
                 <div class="form-group">
                     <label for="poDate">{{labels?.poDate}}</label>
                     <mat-form-field>
-                      <input matInput formControlName="poDate" [matDatepicker]="picker4">
+                      <input matInput formControlName="poDate" required [matDatepicker]="picker4">
                       <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                       <mat-datepicker #picker4></mat-datepicker>
                     </mat-form-field>
+                    <div class="date-picker-error"  *ngIf="
+              isDirty &&
+              taxInvoiceForm.get('poDate').errors?.required
+            ">
+                Please select PO Date
+          </div>
                     <!-- <input type="email" class="form-control" id="poDate" aria-describedby="poDateHelp">
                     <small id="poDateHelp" class="form-text text-muted"></small> -->
                   </div>
@@ -73,10 +96,16 @@
                     <!-- <input type="date" class="form-control" id="fromDate" aria-describedby="fromDateHelp">
                     <small id="fromDateHelp" class="form-text text-muted"></small> -->
                     <mat-form-field>
-                      <input matInput  formControlName="fromDate" [matDatepicker]="picker2" >
+                      <input matInput  formControlName="fromDate" required [matDatepicker]="picker2" >
                       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                       <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
+                    <div class="date-picker-error"  *ngIf="
+              isDirty &&
+              taxInvoiceForm.get('fromDate').errors?.required
+            ">
+                Please select From date
+          </div>
 
                   </div>
             </div>
@@ -85,18 +114,27 @@
                     <label for="toDate">{{labels?.toDate}}</label>
                     <!-- <input type="date" class="form-control" id="toDate" aria-describedby="toDateHelp">
                     <small id="toDateHelp" class="form-text text-muted"></small> -->
-                    <mat-form-field>
-                      <input matInput formControlName="toDate" [matDatepicker]="picker3">
+                    <mat-form-field >
+                      <input matInput formControlName="toDate" required  [matDatepicker]="picker3"
+                      [min]= "taxInvoiceForm.get('fromDate').value">
                       <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                       <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
-
+                    <div class="date-picker-error"  
+                    *ngIf="isDirty && taxInvoiceForm.get('toDate').errors?.required">
+                      Please select To Date
+                </div>  
                   </div>
             </div>
            <div class="col-4">
               <div class="form-group">
                   <!-- <label for="invoiceAmount">{{labels?.invoiceAmount}}</label> -->
-                  <app-custom-input formControlName="invoiceAmount" [isRequired]="'Invoice Amount is Mandatory'" [labelName]="labels?.invoiceAmount" [type]="labels?.validationData?.invoiceAmt?.type"[maxLength]="labels?.validationData?.invoiceAmt?.maxLength">
+                  <app-custom-input formControlName="invoiceAmount" 
+                  [isRequired]="'Invoice Amount is Mandatory'" 
+                  [labelName]="labels?.invoiceAmount" 
+                  [type]="labels?.validationData?.invoiceAmt?.type"
+                  [maxLength]="labels?.validationData?.invoiceAmt?.maxLength"
+                  [isDirty]="isDirty">
                   </app-custom-input> 
                   <!-- <input type="number" class="form-control" id="invoiceAmount" aria-describedby="invoiceAmountHelp">
                   <small id="invoiceAmountHelp" class="form-text text-muted"></small> -->
@@ -105,20 +143,28 @@
            <div class="col-4">
               <div class="form-group">
                 <label for="paymentStatus">{{labels?.paymentStatus}}</label>
-                <select 
+                <app-vf-custom-select formControlName="paymentStatus" 
+                [values]="paymentStatus"
+                [isRequired]="'Please Select Payment Status'"
+                [isDirty]="isDirty"></app-vf-custom-select>
+                <!-- <select 
                     name="paymentStatus" 
                     id="paymentStatus" 
                     class="form-control">
                     <option>Received</option>
                     <option>Pending</option>
                     <option>On hold</option>
-                </select>
+                </select> -->
                 </div>
           </div>
            <div class="col-4">
               <div class="form-group">
                   <!-- <label for="remark">{{labels?.remark}}</label> -->
-                  <app-custom-input formControlName="remark" [isRequired]="'Remarks is Mandatory'" [labelName]="labels?.remark" [maxLength]="labels?.validationData?.remark?.maxLength">
+                  <app-custom-input formControlName="remark" 
+                  [isRequired]="'Remarks is Mandatory'" 
+                  [labelName]="labels?.remark" 
+                  [maxLength]="labels?.validationData?.remark?.maxLength"
+                  [isDirty]="isDirty">
                   </app-custom-input> 
                   <!-- <input type="remark" class="form-control" id="remark" aria-describedby="remarkHelp">
                   <small id="remarkHelp" class="form-text text-muted"></small> -->
@@ -127,7 +173,10 @@
            <div class="col-4">
               <div class="form-group">
                   <!-- <label for="billableClaim">{{labels?.billClaim}}</label> -->
-                  <app-custom-input  formControlName="billClaim" [isRequired]="'Bill Claim is Mandatory'" [labelName]="labels?.billClaim">
+                  <app-custom-input  formControlName="billClaim" 
+                  [isRequired]="'Bill Claim is Mandatory'" 
+                  [labelName]="labels?.billClaim"
+                  [isDirty]="isDirty">
                   </app-custom-input> 
                   <!-- <input type="text" class="form-control" id="billableClaim" aria-describedby="billableClaimHelp">
                   <small id="billableClaimHelp" class="form-text text-muted"></small> -->
@@ -141,7 +190,7 @@
                 </div>
           </div>
         </div>
-       
+      
         <!--Second Row-->
         
         <div class="row">

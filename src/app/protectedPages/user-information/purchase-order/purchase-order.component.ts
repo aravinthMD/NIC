@@ -27,11 +27,33 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
     {purchaseNo : 114,projectNumber : 5654,piAmt:28000,remarks:''},
     {purchaseNo : 114,projectNumber : 5345,piAmt:34000,remarks:''},
   ];
+  poStatus: any[] = [
+    { key: 0, value: 'Received' },
+    { key: 1, value: 'Pending' },
+    { key: 2, value: 'Approved' },
+    { key: 3, value: 'Rejected' },
+    { key: 4, value: 'On Hold' }]
+  piStatus: any[] = [
+    { key: 0, value: 'Received' },
+    { key: 1, value: 'Pending' },
+    { key: 2, value: 'Approved' },
+    { key: 3, value: 'Rejected' },
+    { key: 4, value: 'On Hold' }]
+    piReceivedIn: any[] = [
+      { key: 0, value: 'Full' },
+      { key: 1, value: 'Partial' }]
+  
+    paymentStatus: any[] = [
+      { key: 0, value: 'Pending' },
+      { key: 1, value: 'Received' },
+      { key: 2, value: 'On Hold' }]
+      
   dataSource = new MatTableDataSource<any>(this.userList);
 
   date = new FormControl();
   PurchaseOrderForm:FormGroup;
   labels: any = {};
+  isDirty: boolean;
 
   constructor(
     private labelsService: LabelsService,
@@ -64,6 +86,12 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
     
   }
   POForm(){
+    if(this.PurchaseOrderForm.invalid) {
+     
+      this.isDirty = true;
+
+      return
+    }
     this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
    console.log(this.PurchaseOrderForm.value)
    this.PurchaseOrderForm.reset();
