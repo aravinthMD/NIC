@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 
+import { ToasterService } from '@services/toaster.service';
+import { Router } from '@angular/router'
+
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -16,10 +19,13 @@ export class ResetPasswordComponent implements OnInit {
 
   form : FormGroup;
 
-  constructor(private formBuilder : FormBuilder) {
-    this.form = this.formBuilder.group({
-      password : [null,[Validators.required,Validators.pattern(this.pwdPattern)]]
+  newValidPattern: boolean;
+  confirmValidPattern: boolean;
 
+  constructor(private formBuilder : FormBuilder,private toasterService: ToasterService,private router: Router) {
+    this.form = this.formBuilder.group({
+      newPassword : [null],
+      confirmPassword: [null]
       
     })
    }
@@ -31,6 +37,51 @@ export class ResetPasswordComponent implements OnInit {
 
   get password(){
     return this.form.get('password');
+  }
+
+
+  checkPattern(event) {
+
+    const id = event.target.id;
+    const passwordVal = event.target.value;
+
+    const checkSpecial = /[*@!#$%&()^~{}]+/.test(passwordVal);
+    const checkNumber = /[0-9]+/.test(passwordVal)
+    const minValLen = passwordVal.length;
+
+      if(checkSpecial && checkNumber && minValLen >= 6) {
+           if(id == 'newPasswordId') {
+            this.newValidPattern = false;
+           }else {
+             this.confirmValidPattern = false;
+           }
+          
+      }else {
+        if(id == 'newPasswordId') {
+          this.newValidPattern = true;
+         }else {
+           this.confirmValidPattern = true;
+         }
+      }
+
+
+  }
+
+  onSubmit() {
+
+    const newPassword = this.form.value.newPassword;
+    const confirmPassword = this.form.value.confirmPassword;
+
+    if(!newPassword) {
+      this.toasterService.showError('Please enter new password','')
+    }else if(!confirmPassword) {
+      this.toasterService.showError('Please enter confirm password','')
+    }else if(newPassword !== confirmPassword) {
+      this.toasterService.showError('Your new password and confirmation password is mis-matched.','')
+    }else {
+      this.toasterService.showSuccess('New Password Updated Successfully.','')
+      this.router.navigate(['/']);
+    }
   }
 
 
