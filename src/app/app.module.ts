@@ -37,6 +37,7 @@ import { DatePipe } from '@angular/common';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.service';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -76,8 +77,11 @@ import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.s
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule, 
-    MatInputModule
-    
+    MatInputModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      preventDuplicates: true,
+    }),
   ],
   exports: [
     MatAutocompleteModule,
