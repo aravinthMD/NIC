@@ -40,4 +40,14 @@ export class LoginComponent implements OnInit {
    
   }
 
+  forgotPassword() {
+
+    if(!this.form.value.userName){
+      this.toasterService.showError('Please enter the useranme to reset password','')
+    }else {
+    this.router.navigate(['/verifyotp'])
+
+    }
+  }
+
 }

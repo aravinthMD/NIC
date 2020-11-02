@@ -79,7 +79,6 @@ import { ToastrModule } from 'ngx-toastr';
     MatNativeDateModule, 
     MatInputModule,
     ToastrModule.forRoot({
-      timeOut: 2000,
       preventDuplicates: true,
     }),
   ],
