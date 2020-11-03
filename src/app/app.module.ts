@@ -90,6 +90,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 };
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
