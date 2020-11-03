@@ -41,6 +41,53 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '@services/auth.interceptor.service';
 
+import {
+  NgxUiLoaderModule,
+  NgxUiLoaderConfig,
+  SPINNER,
+  POSITION,
+  PB_DIRECTION,
+} from 'ngx-ui-loader';
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  // bgsColor: 'red',
+  // fgsColor: '#fa6745',
+  // bgsPosition: POSITION.bottomCenter,
+  // bgsSize: 100,
+  // bgsType: SPINNER.cubeGrid, // background spinner type
+  // fgsType: SPINNER.cubeGrid, // foreground spinner type
+  // pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
+  // pbThickness: 5, // progress bar thickness
+
+  "bgsColor": "#0e4d92",
+  "bgsOpacity": 0.5,
+  "bgsPosition": "bottom-right",
+  "bgsSize": 60,
+  "bgsType": "ball-spin-clockwise",
+  "blur": 5,
+  "delay": 0,
+  "fastFadeOut": true,
+  "fgsColor": "#0e4d92",
+  "fgsPosition": "center-center",
+  "fgsSize": 60,
+  "fgsType": "ball-spin-clockwise",
+  "gap": 24,
+  "logoPosition": "center-center",
+  "logoSize": 120,
+  "logoUrl": "",
+  "masterLoaderId": "master",
+  "overlayBorderRadius": "0",
+  "overlayColor": "rgba(40, 40, 40, 0.8)",
+  "pbColor": "#0e4d92",
+  "pbDirection": "ltr",
+  "pbThickness": 3,
+  "hasProgressBar": true,
+  "text": "",
+  "textColor": "#FFFFFF",
+  "textPosition": "center-center",
+  "maxTime": -1,
+  "minTime": 300
+};
 
 
 @NgModule({
@@ -85,6 +132,7 @@ import { AuthInterceptor } from '@services/auth.interceptor.service';
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   exports: [
     MatAutocompleteModule,

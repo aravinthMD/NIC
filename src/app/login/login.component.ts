@@ -42,6 +42,15 @@ export class LoginComponent implements OnInit {
 
       this.loginService.getLogin(data).subscribe((response)=> {
 
+        if(response['ProcessVariables']['count'] === '0'){
+          this.toasterService.showError('Invalid Login','');
+        } 
+        else {
+          if(response['ProcessVariables']['count'] === '1')
+          this.toasterService.showSuccess('Login Successfully','');
+          this.router.navigate(['/users/Dashboard'])
+        }
+
           console.log(response)
       })
 

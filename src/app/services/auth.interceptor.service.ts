@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import {
   HttpInterceptor,
@@ -19,12 +20,18 @@ import { ToasterService } from '@services/toaster.service'
 })
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private toasterService: ToasterService) { }
+  apiCount: number = 0;
+
+  constructor(private toasterService: ToasterService,private ngxUiLoaderService:NgxUiLoaderService) { }
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
+    this.ngxUiLoaderService.start();
+    this.apiCount++;
+
 
     console.log(req.method)
     const httpMethod = req.method
@@ -77,6 +84,7 @@ export class AuthInterceptor implements HttpInterceptor {
       map(
         (event: HttpEvent<any>) => {
           let res;
+          this.apiCount--;
           if (event instanceof HttpResponse) {
             if (event.headers.get('content-type') == 'text/plain') {
               event = event.clone({
@@ -98,6 +106,7 @@ export class AuthInterceptor implements HttpInterceptor {
               alert(res['ErrorMessage']);
             }
             // this.ngxUiLoaderService.stop();
+            this.checkApiCount();
            
             return event;
           } else {
@@ -113,6 +122,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     );
 
+      }
+    }
+
+    checkApiCount() {
+      if (this.apiCount <= 0) {
+        console.log('this.apiCount', this.apiCount)
+        this.ngxUiLoaderService.stop();
       }
     }
 }
