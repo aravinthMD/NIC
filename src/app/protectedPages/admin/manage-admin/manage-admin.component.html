@@ -1,8 +1,20 @@
 <div class="col-md-10 main">
     <mat-tab-group  mat-stretch-tabs style="width:100%;">
-      <mat-tab label="Create User" class="activeTab"><app-create-user></app-create-user></mat-tab>
-      <mat-tab label="Manage User"><app-manage-users></app-manage-users></mat-tab>
-      <mat-tab label="LOVS"><app-lovs></app-lovs></mat-tab>
+      <mat-tab label="Create User" class="activeTab">
+        <ng-template matTabContent>
+        <app-create-user></app-create-user>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Manage User">
+        <ng-template matTabContent>
+        <app-manage-users></app-manage-users>
+      </ng-template>
+      </mat-tab>
+      <mat-tab label="LOVS">
+        <ng-template matTabContent>
+        <app-lovs></app-lovs>
+      </ng-template>
+      </mat-tab>
     </mat-tab-group>
     <!-- <button>bulk upload</button> -->
 </div>

@@ -58,6 +58,36 @@ export class LoginService {
     return this.httpService.post(url,formData);
   }
 
+
+  fetchManageUsers(){
+      const processId = this.apiService.api.getManageUsers.processId;
+      const workflowId = this.apiService.api.getManageUsers.workflowId;
+      const projectId = this.apiService.api.getManageUsers.projectId;
+
+      const data = {
+          id : 0
+      }
+
+      const requestEntity: any = {
+        processId,
+        ProcessVariables: data,
+        workflowId,
+        projectId,
+      };
+  
+      const body = {
+        processVariables: JSON.stringify(requestEntity),
+      };
+  
+      const formData = this.transform(body);
+  
+      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+      return this.httpService.post(url,formData);
+
+
+  }
+
   
   transform(data: any) {
     return new HttpParams({ fromObject: data });
