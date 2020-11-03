@@ -5,28 +5,29 @@
 
         <form class="pt-4" [formGroup]="form">
             <!--FIRST ROW-->
-    
+
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="Name">Name<span style="color:red">*</span></label>
-                        <input type="text" class="form-control" [readonly]="propertyFlag"  id="Name" aria-describedby="nameHelp">
-                        <small id="nameHelp" class="form-text text-muted"></small> -->
+                        <app-custom-input formControlName="userName" [labelName]="labels.userName" [mandatoryField]="true" [id]="'UserName'" [isRequired]="'User name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty"></app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="password" [labelName]="labels.password" [mandatoryField]="true" [id]="'Password'" [isRequired]="'Password is mandatory'" [custom]="passwordValidation" [isDirty]="isDirty"></app-custom-input>
+                    </div>
+                </div>
 
+                <div class="col-4">
+                    <div class="form-group">
                         <app-custom-input formControlName="name" [labelName]="labels.name" [mandatoryField]="true" [id]="'Name'" [isRequired]="'Name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty"></app-custom-input>
-                      
-
-
                     </div>
     
                 </div>
-                <!-- <div class="col-4">
-                    <div class="form-group">
-                        <label for="department">Department Name</label>
-                        <input type="text" class="form-control" formControlName = "departmentName"  id="department" aria-describedby="emailHelp">
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                      </div>
-                </div> -->
+
+            </div>
+    
+            <div class="row">
     
                 <div class="col-4">
                     <div class="form-group">
@@ -41,10 +42,6 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="designation">Designation<span style="color:red">*</span></label>
-                        <input type="text" [readonly]="propertyFlag" class="form-control" id="designation" aria-describedby="designationHelp">
-                        <small id="designationHelp" class="form-text text-muted"></small> -->
-
                         <app-custom-input formControlName="designation" [labelName]="labels.designation" [mandatoryField]="true" [id]="'designation'" [isRequired]="'Designation is mandatory'" [maxLength]="labels?.validationData.designation.maxLength" [isDirty]="isDirty">
 
                         </app-custom-input>
@@ -52,14 +49,9 @@
 
                     </div>
                 </div>
-            </div>
-            <!--SECOND ROW-->
-            <div class="row">
+
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="empCode">Employee Code<span style="color:red">*</span></label>
-                        <input type="text" class="form-control" [readonly]="propertyFlag" id="empCode" aria-describedby="empCodeHelp">
-                        <small id="empCodeHelp" class="form-text text-muted"></small> -->
 
                         <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" [id]="'employeeCode'" [isRequired]="'Employee code is mandatory'" [maxLength]="labels?.validationData.employeeCode.maxLength" [mandatoryField]="true" [isDirty]="isDirty" >
 
@@ -67,25 +59,22 @@
 
                     </div>
                 </div>
+
+
+            </div>
+            <!--SECOND ROW-->
+            <div class="row">
+                
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="emailAddress">Email Address<span style="color:red">*</span></label>
-                        <input type="email" class="form-control"  [readonly]="propertyFlag" id="emailAddress" aria-describedby="emailAddressHelp">
-                        <small id="emailAddressHelp" class="form-text text-muted"></small> -->
-
                         <app-custom-input formControlName="email" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
 
                         </app-custom-input>
-
-
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="mobileNumber">Mobile Number<span style="color:red">*</span></label>
-                        <input type="text" class="form-control"  [readonly]="propertyFlag" id="mobileNumber" aria-describedby="mobileNumberHelp">
-                        <small id="mobileNumberHelp" class="form-text text-muted"></small> -->
-
+                    
                         <app-custom-input formControlName="mobileNo" [labelName]="labels.mobileNo" [id]="'mobileNo'" [isRequired]="'Mobile number is mandatory'" [type]="labels?.validationData.mobile.type" [patternCheck]="labels?.validationData.mobile.patternCheck" [maxLength]="labels?.validationData.mobile.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
 
                         </app-custom-input>
@@ -93,16 +82,10 @@
 
                     </div>
                 </div>
-    
-            </div>
-    
-            <!--THIRD ROW-->
-            <div class="row">
+
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="telPhno">Telephone Number(Office)<span style="color:blue">*</span></label>
-                        <input type="text" class="form-control"   id="telPhno" aria-describedby="telPhnoHelp">
-                        <small id="telPhnoHelp" class="form-text text-muted"></small> -->
+                       
                         <app-custom-input formControlName="telPhno" [labelName]="labels.teleNumber" [id]="'telPhno'" [isRequired]="'Telephone number is mandatory'" [type]="labels?.validationData.telephoneNumber.type" [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" [maxLength]="labels?.validationData.telephoneNumber.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
 
                         </app-custom-input>
@@ -110,11 +93,15 @@
 
                     </div>
                 </div>
+
+    
+            </div>
+    
+            <!--THIRD ROW-->
+            <div class="row">
+                
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="offcAddressLine1">Official Address Line 1<span style="color:red">*</span></label>
-                        <input type="text" class="form-control"  [readonly]="propertyFlag" id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
-                        <small id="offcAddressLineHelp" class="form-text text-muted"></small> -->
 
                         <app-custom-input formControlName="offAddress1" [labelName]="labels.officialAdd1" [id]="'offcAddressLine1'" [isRequired]="'Office AddressLine1 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
 
@@ -134,29 +121,25 @@
 
                     </div>
                 </div>
-    
-            </div>
-    
-            <!--FOURTH ROW-->
-            <div class="row">
+
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="offcAddressLine3">Official Address Line 3<span style="color:red">*</span></label>
-                        <input type="text" class="form-control"   id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
-                        <small id="offcAddressLine3Help" class="form-text text-muted"></small> -->
-
+                       
                         <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3" [id]="'offcAddressLine3'" [isRequired]="'Office AddressLine3 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
 
                         </app-custom-input>
 
                     </div>
                 </div>
+    
+            </div>
+    
+            <!--FOURTH ROW-->
+            <div class="row">
+               
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="city">City<span style="color:red">*</span></label>
-                        <input type="text" class="form-control"  id="city" aria-describedby="cityHelp">
-                        <small id="cityHelp" class="form-text text-muted"></small> -->
-
+                       
                         <app-custom-input formControlName="city" [labelName]="labels.city" [id]="'city'" [isRequired]="'City is mandatory'" [maxLength]="labels?.validationData.city.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
 
                         </app-custom-input>
@@ -166,24 +149,16 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="State">State<span style="color:red">*</span></label>
-                        <input type="text" class="form-control"  id="State" aria-describedby="StateHelp">
-                        <small id="StateHelp" class="form-text text-muted"></small> -->
+                       
                         <app-custom-input formControlName="state" [labelName]="labels.state" [id]="'state'" [isRequired]="'State is mandatory'" [maxLength]="labels?.validationData.state.maxLength"  [mandatoryField]="true" [isDirty]="isDirty">
 
                         </app-custom-input>
 
                     </div>
                 </div>
-    
-            </div>
-    
-            <div class="row">
+
                 <div class="col-4">
                     <div class="form-group">
-                        <!-- <label for="PinCode">Pin Code<span style="color:red">*</span></label>
-                        <input type="text" class="form-control"  id="PinCode" aria-describedby="PinCodeHelp">
-                        <small id="PinCodeHelp" class="form-text text-muted"></small> -->
 
                         <app-custom-input formControlName="pinCode" [labelName]="labels.pincode" [id]="'pincode'" [isRequired]="'Pincode is mandatory'" [maxLength]="labels?.validationData.pincode.maxLength" [type]="labels?.validationData.pincode.type" [mandatoryField]="true" [isDirty]="isDirty">
 
@@ -192,15 +167,9 @@
 
                     </div>
                 </div>
-               
-                <!-- <div class="col-4">
-                    <div class="form-group">
-                        <label for="poBillable">Upload Document</label>
-                        <input type="file" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
-                        <small id="poBillableHelp" class="form-text text-muted"></small>
-                    </div>
-                </div> -->
+    
             </div>
+    
             <!-- <ng-template [ngIf]="existingUserFlag">
                 <div class="row">
                     <div class="col-4">
