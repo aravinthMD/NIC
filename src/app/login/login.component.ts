@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
 
+  errroMsg: string;
+
 
   constructor(private router : Router,private formBuilder: FormBuilder,private toasterService: ToasterService,private loginService: LoginService) {
 
@@ -30,9 +32,9 @@ export class LoginComponent implements OnInit {
 
     console.log(this.form.value)
     if(!this.form.value.userName){
-      this.toasterService.showError('Please enter the user name','')
+      this.errroMsg = 'Please enter the user name';
     }else if(!this.form.value.password){
-      this.toasterService.showError('Please enter the password','')
+      this.errroMsg = 'Please enter the password';
     }else {
 
       const data = {
@@ -42,20 +44,23 @@ export class LoginComponent implements OnInit {
 
       this.loginService.getLogin(data).subscribe((response)=> {
 
-        if(response['ProcessVariables']['count'] === '0'){
-          this.toasterService.showError('Invalid Login','');
-        } 
-        else {
-          if(response['ProcessVariables']['count'] === '1')
-          this.toasterService.showSuccess('Login Successfully','');
-          this.router.navigate(['/users/Dashboard'])
+        if(response['ProcessVariables']['countUser'] === ''){
+          this.errroMsg = response['ProcessVariables']['response']
+        } else if(response['ProcessVariables']['countUser'] === '0'){
+          this.errroMsg = response['ProcessVariables']['response']
         }
+        else if(response['ProcessVariables']['countUser'] === '1') {
+
+          this.toasterService.showSuccess(response['ProcessVariables']['response'],'')
+          this.router.navigate(["users/Dashboard/"]);
+
+
+       }
 
           console.log(response)
       })
 
-      // this.router.navigate(["users/Dashboard/"]);
-
+      
     }
     
    
