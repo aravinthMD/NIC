@@ -36,6 +36,9 @@ export class GenerateOtpComponent implements OnInit {
 
    verifyOTP() {
 
+    const username = localStorage.getItem('userName');
+
+    console.log(username)
     if(!this.form.value.otpValue) {
 
       this.toasterService.showError('Please enter the OTP to verify','')

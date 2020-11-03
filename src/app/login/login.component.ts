@@ -42,6 +42,8 @@ export class LoginComponent implements OnInit {
         password: this.form.value.password
       }
 
+      localStorage.setItem('userName',data.username)
+
       this.loginService.getLogin(data).subscribe((response)=> {
 
         if(response['ProcessVariables']['countUser'] === ''){
@@ -68,9 +70,12 @@ export class LoginComponent implements OnInit {
 
   forgotPassword() {
 
+
     if(!this.form.value.userName){
-      this.toasterService.showError('Please enter the useranme to reset password','')
+      this.errroMsg = 'Please enter the useranme to reset password'
+      // this.toasterService.showError('Please enter the useranme to reset password','')
     }else {
+    localStorage.setItem('userName',this.form.value.userName)
     this.router.navigate(['/verifyotp'])
 
     }

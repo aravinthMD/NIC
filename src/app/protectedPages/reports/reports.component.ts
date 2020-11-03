@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatAccordion} from '@angular/material/expansion';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-reports',
@@ -44,10 +44,61 @@ export class ReportsComponent implements OnInit,AfterViewInit {
   states: any[];
 
   isDepartment: boolean;
+
+  form: FormGroup;
+
+  reportsList = [{
+    key: 1,
+    value:'Proforma Invoice Raised'
+  },
+  {
+    key: 2,
+    value:'Purchase Order Raised'
+  },
+  {
+    key: 3,
+    value:'Invoice Raised'
+  },
+  {
+    key: 4,
+    value:'Payment Status'
+  },
+  {
+    key: 5,
+    value:'All'
+  }
+
+];
+
+reportFilter = [
+  {
+    key: '1',
+    value:'User Id'
+  },
+  {
+    key:'2',
+    value:'Department'
+  },
+  {
+    key:'3',
+    value:'Status'
+  }
+]
   
 
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {
+
+    this.form = this.formBuilder.group({
+      reports: [''],
+      status:[''],
+      reportFilter:[''],
+      state:[''],
+      fromDate:[null],
+      toDate:[null]
+    })
+
+   }
 
   ngOnInit() {
 
@@ -73,6 +124,10 @@ export class ReportsComponent implements OnInit,AfterViewInit {
 
 
   OnFilter(){
+
+    console.log(this.form.value)
+
+    console.log(this.myControl.value)
     this.filterTabButtonName = "Filter Applied";
     this.accordion.closeAll
   }
@@ -83,41 +138,41 @@ export class ReportsComponent implements OnInit,AfterViewInit {
 
     if(data == '1') {
       this.optionValue = [
-        {key:'Valid',value:'1'},
-        {key:'Invalid',value:'2'},
-        {key:'Paid',value:'3'},
-        {key:'Unpaid',value:'4'},
-        {key:'PO generated ',value:'5'},
-        {key:'PO not generated',value:'6'}
+        {value:'Valid',key:'1'},
+        {value:'Invalid',key:'2'},
+        {value:'Paid',key:'3'},
+        {value:'Unpaid',key:'4'},
+        {value:'PO generated ',key:'5'},
+        {value:'PO not generated',key:'6'}
       ]
 
     }else if(data == '2') {
       this.optionValue = [
-        {key:'Valid',value:'1'},
-        {key:'Invalid',value:'2'},
-        {key:'Invoice Raised',value:'3'},
-        {key:'Not Raised',value:'4'},
-        {key:'PO Claim Full',value:'5'},
-        {key:'PO Claim Partially',value:'6'},
-        {key:'PO need to amend',value:'7'},
-        {key: 'PO need cancelled',value:'8'}
+        {value:'Valid',key:'1'},
+        {value:'Invalid',key:'2'},
+        {value:'Invoice Raised',key:'3'},
+        {value:'Not Raised',key:'4'},
+        {value:'PO Claim Full',key:'5'},
+        {value:'PO Claim Partially',key:'6'},
+        {value:'PO need to amend',key:'7'},
+        {value: 'PO need cancelled',key:'8'}
       ]
 
     }else if(data == '3') {
       this.optionValue = [
-        {key:'Validated',value:'1'},
-        {key:'Pending for Validation',value:'2'},
-        {key:'on Hold',value:'3'},
-        {key:'Submitted to NIICSI',value:'4'},
-        {key:'Not Submitted to NICSI',value:'5'},
-        {key:'Paid',value:'6'},
-        {key:'Unpaid',value:'7'}
+        {value:'Validated',key:'1'},
+        {value:'Pending for Validation',key:'2'},
+        {value:'on Hold',key:'3'},
+        {value:'Submitted to NIICSI',key:'4'},
+        {value:'Not Submitted to NICSI',key:'5'},
+        {value:'Paid',key:'6'},
+        {value:'Unpaid',key:'7'}
       ]
 
     }else if(data == '4') {
       this.optionValue = [
-        {key:'Received',value:'1'},
-        {key:'Pending',value:'2'}
+        {value:'Received',key:'1'},
+        {value:'Pending',key:'2'}
       ]
     }else if(data == '5'){
       this.optionValue = []
@@ -142,20 +197,16 @@ export class ReportsComponent implements OnInit,AfterViewInit {
     }else if(data == '2') {
       this.isDepartment = true;
       this.states = [{
-        key:'Uttarakhand',
-        value:'1'
+        value:'Uttarakhand',key:'1'
       },
       {
-        key:'Delhi',
-        value:'1'
+        value:'Delhi',key:'2'
       },
       {
-        key:'Manipur',
-        value:'1'
+        value:'Manipur',key:'3'
       },
       {
-        key:'Tripura',
-        value:'1'
+        value:'Tripura',key:'4'
       }]
 
 

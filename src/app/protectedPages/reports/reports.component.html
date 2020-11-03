@@ -15,7 +15,7 @@
                         <!-- <mat-icon>filter_alt</mat-icon> -->
                       </mat-panel-description>
                 </mat-expansion-panel-header>
-                <form>
+                <form [formGroup]="form">
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                 <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
               </div>  -->
@@ -24,39 +24,49 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Reports</label>
-                                <select class="form-control" (change)="onSelect($event)">
+                                <!-- <select class="form-control" (change)="onSelect($event)">
                                 <option  value = '0' disabled>--select--</option>
                                 <option value="1">Proforma Invoice Raised</option>
                                 <option value="2">Purchase Order Raised</option>
                                 <option value="3">Invoice Raised</option>
                                 <option value="4">Payment Status</option>
                                 <option value="5">All</option>
-                              </select>
+                              </select> -->
+
+                              <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList"
+                    [isRequired]="'Please Select Reports'"></app-vf-custom-select>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Status</label>
-                                <select class="form-control">
+                                <!-- <select class="form-control">
                                 <option value = '0' disabled>--select--</option>
                                 <option *ngFor="let val of optionValue">
                                     {{val.key}}
                                 </option>
                                 
-                              </select>
+                              </select> -->
+
+                              <app-vf-custom-select formControlName="status" [values]="optionValue"
+                              [isRequired]="'Please Select Status'"></app-vf-custom-select>
+
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Report Filter</label>
-                                <select class="form-control" (change)="onRepFilter($event)">
+                                <!-- <select class="form-control" (change)="onRepFilter($event)">
                                 <option  value = '0' disabled>--select--</option>
                                 <option value="1">User Id</option>
                                 <option value="2">Department</option>
-                                <option value="3">Status</option>
-                              </select>
+                                <option value="3">Status</option> -->
+                            <!-- </select> -->
+                                <app-vf-custom-select formControlName="reportFilter"  (change)="onRepFilter($event)" [values]="reportFilter"
+                              [isRequired]="'Please Select ReportFilter'"></app-vf-custom-select>
+                             
                             </div>
                         </div>
 
@@ -64,13 +74,16 @@
                             <div class="form-group">
 
                                 <label for="mobile">State</label>
-                                <select class="form-control">
+                                <!-- <select class="form-control">
                                 <option value = '0' disabled>--select--</option>
                                 <option *ngFor="let val of states">
                                     {{val.key}}
                                 </option>
                                 
-                              </select>
+                              </select> -->
+
+                              <app-vf-custom-select formControlName="state" [values]="states"
+                              [isRequired]="'Please Select State'"></app-vf-custom-select>
 
 
                             </div>
@@ -101,7 +114,7 @@
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate">
+                                    <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" formControlName="fromDate" [max]= "form.get('toDate').value">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                   </mat-form-field>
@@ -114,7 +127,7 @@
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker2" (dateInput)="formDateFunc($event.value)" [formControl]="toDate">
+                                    <input matInput [matDatepicker]="picker2" (dateInput)="formDateFunc($event.value)" [min]= "form.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                   </mat-form-field>

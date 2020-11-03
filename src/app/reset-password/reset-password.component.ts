@@ -19,6 +19,8 @@ export class ResetPasswordComponent implements OnInit {
 
   form : FormGroup;
 
+  errorMsg: string;
+
   newValidPattern: boolean;
   confirmValidPattern: boolean;
 
@@ -73,11 +75,14 @@ export class ResetPasswordComponent implements OnInit {
     const confirmPassword = this.form.value.confirmPassword;
 
     if(!newPassword) {
-      this.toasterService.showError('Please enter new password','')
+      // this.toasterService.showError('Please enter new password','')
+      this.errorMsg = 'Please enter new password'
     }else if(!confirmPassword) {
-      this.toasterService.showError('Please enter confirm password','')
+      // this.toasterService.showError('Please enter confirm password','')
+      this.errorMsg = 'Please enter confirm password'
     }else if(newPassword !== confirmPassword) {
-      this.toasterService.showError('Your new password and confirmation password is mis-matched.','')
+      // this.toasterService.showError('Your new password and confirmation password is mis-matched.','')
+      this.errorMsg = 'Your new password and confirmation password is mis-matched.'
     }else {
       this.toasterService.showSuccess('New Password Updated Successfully.','')
       this.router.navigate(['/']);
