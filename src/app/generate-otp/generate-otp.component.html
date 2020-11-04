@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-10 mx-auto">
                 <div class="col-md-10 mx-auto">
-                    <label>Please enter the OTP sent your registered email id and mobile number</label>
+                    <label>Please enter the OTP sent your registered Email ID and Mobile Number</label>
                 </div>
                 <div class="form-group">
                     <!-- <label for="exampleInputEmail1">Email address</label> -->
@@ -16,10 +16,10 @@
                 </div>
                 <div class="col-md-8 row p-0 mx-auto">
                     <div class="col-md-6 d-flex justify-content-center mt-3 pr-0">
-                        <button type="submit" matRipple class="btn btn-primary" (click)="verifyOTP()">Verify</button>
+                        <button type="submit" matRipple class="btn btn-primary" [disabled]="isReachMaxCount" (click)="verifyOTP()">Verify</button>
                     </div>
                     <div class="col-md-6 d-flex justify-content-center mt-3">
-                        <button type="submit"  matRipple class="btn btn-primary">Resend OTP</button>
+                        <button type="submit"  matRipple class="btn btn-primary" (click)="resendOTP()">Resend OTP</button>
                     </div>
                 </div>
             </div>

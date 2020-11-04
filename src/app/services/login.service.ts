@@ -88,6 +88,103 @@ export class LoginService {
 
   }
 
+
+  forgotPassword(username: string) {
+
+    const processId = this.apiService.api.forgotPassword.processId;
+    const workflowId = this.apiService.api.forgotPassword.workflowId;
+    const projectId = this.apiService.api.forgotPassword.projectId;
+
+    const data = {
+      name : username
+  }
+
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+
+    const formData = this.transform(body);
+
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+    return this.httpService.post(url,formData);
+
+
+
+  }
+
+  verifyOTP(request: any) {
+
+    const processId = this.apiService.api.verifyOTP.processId;
+    const workflowId = this.apiService.api.verifyOTP.workflowId;
+    const projectId = this.apiService.api.verifyOTP.projectId;
+
+    const data = {
+      otp: request['otp'],
+      username: request['username']
+  }
+
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+
+    const formData = this.transform(body);
+
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+    return this.httpService.post(url,formData);
+
+
+
+  }
+
+  resetPassword(request: any) {
+
+    const processId = this.apiService.api.changePassword.processId;
+    const workflowId = this.apiService.api.changePassword.workflowId;
+    const projectId = this.apiService.api.changePassword.projectId;
+
+    const data = {
+      username: request['username'],
+      password: request['password'],
+      verifyOTP: true
+  }
+
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+
+    const formData = this.transform(body);
+
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+    return this.httpService.post(url,formData);
+
+
+
+  }
+
   
   transform(data: any) {
     return new HttpParams({ fromObject: data });
