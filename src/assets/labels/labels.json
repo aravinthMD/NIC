@@ -1,6 +1,7 @@
 {
     "name": "Name",
     "department": "Department",
+    "departmentKey": "Department Key",
     "departmentVal": "Department Value", 
     "designation": "Designation",
     "employeeCode": "Employee Code",
@@ -38,6 +39,7 @@
     "date": "Date",
     "poAmount": "PO Amount",
     "poStatus": "PO Status",
+    "poStatusKey": "PO Status Key",
     "poStatusVal":"PO Status Value",
     "paymentStatusVal":"Payment Status Val",
     "piReceivedIn": "PI Received In",
