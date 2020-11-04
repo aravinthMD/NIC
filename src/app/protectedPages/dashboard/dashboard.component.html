@@ -13,11 +13,11 @@
           </mat-form-field>
         </div>
        
-        <div class="col-6 float-right d-flex justify-content-end">
+        <!-- <div class="col-6 float-right d-flex justify-content-end">
           <button class="col-md-2 d-flex justify-content-end"  mat-button  matSuffix mat-icon-button aria-label="Clear" (click) = "addUser()">
             <i class="fa fa-user pr-2"></i>New User
           </button>
-        </div>
+        </div> -->
       </div>
 
       
@@ -165,7 +165,7 @@
           
               <!-- Position Column -->
               <ng-container matColumnDef="UserID">
-                <th mat-header-cell *matHeaderCellDef> User ID </th>
+                <th mat-header-cell *matHeaderCellDef> Account Name </th>
                 <td mat-cell *matCellDef="let element"> <a [routerLink] = "['/users/userInfo/'+element.id]">{{element.userId}}</a> </td>
               </ng-container>
           
