@@ -57,7 +57,12 @@ label {
     flex-direction: column;
     width: 100% !important;
 }
-
+.dis-block {
+    display: block;
+  }
+  .modal{
+      margin-top: 50px !important;
+  }
 h2 {
     color: #5a5c69 !important;
     font-weight: 400;

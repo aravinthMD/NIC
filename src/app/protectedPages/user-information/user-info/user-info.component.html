@@ -205,7 +205,7 @@
                     <small id="fromDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                        <input matInput [matDatepicker]="picker1" formControlName="fromDate" required>
+                        <input matInput [matDatepicker]="picker1" formControlName="fromDate" [max]= "form.get('toDate').value" required>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                       </mat-form-field>
@@ -226,7 +226,7 @@
                     <small id="toDateHelp" class="form-text text-muted"></small> -->
 
                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                        <input matInput [matDatepicker]="picker2" formControlName="toDate" required>
+                        <input matInput [matDatepicker]="picker2" formControlName="toDate" [min]= "form.get('fromDate').value" required>
                         <mat-datepicker-toggle matSuffix  [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker  #picker2></mat-datepicker>
                       </mat-form-field>

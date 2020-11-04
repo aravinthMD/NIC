@@ -34,7 +34,7 @@ deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user
       designation : ['desigation'],
       employeeCode : ['NIC004533'],
       email : [`${data.email}`],
-      mobileNo : ['9867666444'],
+      mobileNo : [`${data.mobile_no}`],
       telPhno : ['0446565555'],
       offAddress1 : ['tiruvanmaiyur'],
       offAddress2 : ['solinganallur'],
