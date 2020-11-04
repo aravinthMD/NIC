@@ -29,11 +29,11 @@ deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user
 
 
     this.form =this.formBuilder.group({
-      name : [`${data.userName}`],
+      name : [`${data.username}`],
       departmentName : ['1'],
       designation : ['desigation'],
-      employeeCode : [`${data.employeeCode}`],
-      email : ['emailcheck@nic.in'],
+      employeeCode : ['NIC004533'],
+      email : [`${data.email}`],
       mobileNo : ['9867666444'],
       telPhno : ['0446565555'],
       offAddress1 : ['tiruvanmaiyur'],
