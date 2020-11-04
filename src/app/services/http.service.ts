@@ -12,23 +12,23 @@ export class HttpService {
     return this.http.get(url, params);
   }
 
-  post(
-    url: string,
-    requestEntity: any,
-    showLoader: boolean = true,
-    headers?: any
-  ) {
+  // post(
+  //   url: string,
+  //   requestEntity: any,
+  //   showLoader: boolean = true,
+  //   headers?: any
+  // ) {
 
-    if (headers) {
-      return this.http.post(url, requestEntity, {
-        headers: headers,
-      });
-    }
-    // const body = new HttpParams({ "fromObject": requestEntity});
-    const body = JSON.stringify(requestEntity);
-    return this.http.post(url, body);
+  //   if (headers) {
+  //     return this.http.post(url, requestEntity, {
+  //       headers: headers,
+  //     });
+  //   }
+  //   // const body = new HttpParams({ "fromObject": requestEntity});
+  //   const body = JSON.stringify(requestEntity);
+  //   return this.http.post(url, body);
 
-  }
+  // }
 
 
 }

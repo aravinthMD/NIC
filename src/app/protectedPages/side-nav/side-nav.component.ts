@@ -21,6 +21,8 @@ export class SideNavComponent implements OnInit,OnChanges {
       console.log('DETECT SIDE NAV ********',user)
       if(user == 'newuser') {
         this.isLocation = '1'
+      }else if(user == 'dashboard') {
+        this.isLocation = '0'
       }
     })
 

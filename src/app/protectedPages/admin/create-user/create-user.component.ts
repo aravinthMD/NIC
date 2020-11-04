@@ -20,11 +20,19 @@ export class CreateUserComponent implements OnInit {
 
   isDirty: boolean;
 
+  passwordValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
+  
+
   deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
 
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder) {
 
     this.form =this.formBuilder.group({
+      userName: [null],
+      password:[null],
       name : [null],
       departmentName : [''],
       designation : [null],
@@ -49,7 +57,29 @@ export class CreateUserComponent implements OnInit {
       this.labels = values;
     })
 
+    this.passwordValidation = this.passwordValidationCheck()
+
   }
+
+  passwordValidationCheck() {
+
+    const password = [
+      {
+        rule: (val) => {
+
+          const checkSpecial = /[*@!#$%&()^~{}]+/.test(val);
+          const checkNumber = /[0-9]+/.test(val)
+          const minValLen = val.length;
+
+          return !checkSpecial || !checkNumber || minValLen < 6;
+        },
+        msg: 'Password must contain atleast 6 characters with atleast one symbol and one numeric',
+      }
+    ];
+    return password;
+  }
+
+
 
   onSubmit(){
 
