@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 
 import { ToasterService } from '@services/toaster.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import { LoginService } from '@services/login.service'
 
 @Component({
   selector: 'app-reset-password',
@@ -26,7 +27,7 @@ export class ResetPasswordComponent implements OnInit {
 
   isError: boolean;
 
-  constructor(private formBuilder : FormBuilder,private toasterService: ToasterService,private router: Router) {
+  constructor(private formBuilder : FormBuilder,private toasterService: ToasterService,private router: Router,private loginService: LoginService) {
     this.form = this.formBuilder.group({
       newPassword : [null],
       confirmPassword: [null]
@@ -99,8 +100,24 @@ export class ResetPasswordComponent implements OnInit {
       this.errorMsg = 'Your new password and confirmation password is mis-matched.'
     }else {
       this.isError = false;
-      this.toasterService.showSuccess('New Password Updated Successfully.','')
-      this.router.navigate(['/']);
+
+      const request = {
+        username: localStorage.getItem('userName'),
+        password: confirmPassword
+      }
+
+      this.loginService.resetPassword(request).subscribe((response)=> {
+
+        let message = response['ProcessVariables']['response'];
+        if(response['ProcessVariables']['SameAsOld']) {
+          this.toasterService.showError(message,'')
+        }else if(!response['ProcessVariables']['SameAsOld']){
+          this.toasterService.showSuccess(message,'')
+          this.router.navigate(['/']);
+        }
+        
+      })
+      
     }
   }
 

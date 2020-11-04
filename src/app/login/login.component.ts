@@ -75,8 +75,23 @@ export class LoginComponent implements OnInit {
       this.errroMsg = 'Please enter the useranme to reset password'
       // this.toasterService.showError('Please enter the useranme to reset password','')
     }else {
-    localStorage.setItem('userName',this.form.value.userName)
-    this.router.navigate(['/verifyotp'])
+
+      const username = this.form.value.userName;
+
+      localStorage.setItem('userName',this.form.value.userName)
+
+      this.loginService.forgotPassword(username).subscribe((response)=> {
+
+        if(response['Error'] == 0 && response['ProcessVariables']['otp']) {
+          this.toasterService.showSuccess('OTP Sent Successfully','')
+          this.router.navigate(['/verifyotp'])
+        }else {
+          this.toasterService.showError('Invalid Username','')
+        }
+             
+      })
+
+    
 
     }
   }
