@@ -1,0 +1,164 @@
+<div class="technical_admin">
+    <form (submit)="onSubmit()" [formGroup]="technicaladminform">
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="name" 
+                        [labelName]="labels.name" [id]="'Name'" 
+                        [isRequired]="'Name is mandatory'" 
+                        [mandatoryField]="true"
+                        [maxLength]="labels?.validationData.name.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="email" 
+                        [labelName]="labels.email" [id]="'email'" 
+                        [isRequired]="'Email is mandatory'" 
+                        [mandatoryField]="true"
+                        [patternCheck]="labels?.validationData.email.patternCheck" 
+                        [maxLength]="labels?.validationData.email.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="department">{{labels.department}}</label>
+                        <app-vf-custom-select formControlName="departmentName" 
+                        [values]="departmentListData"
+                        [isRequired]="'Please Select Department'" 
+                        [isDirty]="isDirty"></app-vf-custom-select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input 
+                        formControlName="designation" 
+                        [labelName]="labels.designation" 
+                        [id]="'designation'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'Designation is mandatory'" 
+                        [maxLength]="labels?.validationData.designation.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="employeeCode" 
+                        [labelName]="labels.employeeCode" 
+                        [id]="'employeeCode'" 
+                        [maxLength]="labels?.validationData.employeeCode.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="mobileNo" 
+                        [labelName]="labels.mobileNo" 
+                        [id]="'mobileNo'" 
+                        [type]="labels?.validationData.mobile.type" 
+                        [patternCheck]="labels?.validationData.mobile.patternCheck" 
+                        [maxLength]="labels?.validationData.mobile.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="telPhno" 
+                        [labelName]="labels.teleNumber" 
+                        [id]="'telPhno'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'Telephone number is mandatory'" 
+                        [type]="labels?.validationData.telephoneNumber.type" 
+                        [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" 
+                        [maxLength]="labels?.validationData.telephoneNumber.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="offAddress1" 
+                        [labelName]="labels.officialAdd1" 
+                        [id]="'offcAddressLine1'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'Office AddressLine1 is mandatory'" 
+                        [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="offAddress2" 
+                        [labelName]="labels.officialAdd2" 
+                        [id]="'offcAddressLine2'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'Office AddressLine2 is mandatory'" 
+                        [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="offAddress3" 
+                        [labelName]="labels.officialAdd3" 
+                        [id]="'offcAddressLine3'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'Office AddressLine3 is mandatory'" 
+                        [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="city" 
+                        [labelName]="labels.city" 
+                        [id]="'city'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'City is mandatory'" 
+                        [maxLength]="labels?.validationData.city.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="state" 
+                        [labelName]="labels.state" 
+                        [id]="'state'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'State is mandatory'" 
+                        [maxLength]="labels?.validationData.state.maxLength" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="pinCode" 
+                        [labelName]="labels.pincode" 
+                        [id]="'pincode'" 
+                        [mandatoryField]="true"
+                        [isRequired]="'Pincode is mandatory'" 
+                        [maxLength]="labels?.validationData.pincode.maxLength" 
+                        [type]="labels?.validationData.pincode.type" 
+                        [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <div class="row pt-3 pb-3 m-0">
+                <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" >{{'Submit'}}</button>
+                <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
+            </div>
+        </div>
