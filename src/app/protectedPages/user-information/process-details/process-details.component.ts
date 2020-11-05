@@ -63,6 +63,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   isDirty: boolean;
 
+  searchForm: FormGroup;
+
   constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe) { 
 
 
@@ -80,6 +82,12 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       piStatus: [''],
       paymentStatus:['']
 
+    })
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
     })
 
 
@@ -134,5 +142,18 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   }
 
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
+  }
 
 }

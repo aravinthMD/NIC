@@ -64,6 +64,8 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   labels: any = {};
   isDirty: boolean;
 
+  searchForm: FormGroup;
+
   constructor(
     private labelsService: LabelsService,
     private DatePipe:DatePipe
@@ -97,6 +99,12 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
     
 
     })
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
+    })
     
   }
   POForm(){
@@ -113,6 +121,20 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
+  }
+
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
   }
 
 

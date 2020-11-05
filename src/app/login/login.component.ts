@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
 
 
     if(!this.form.value.userName){
-      this.errroMsg = 'Please enter the useranme to reset password'
+      this.errroMsg = 'Please enter the username to reset password'
       // this.toasterService.showError('Please enter the useranme to reset password','')
     }else {
 
@@ -86,7 +86,8 @@ export class LoginComponent implements OnInit {
           this.toasterService.showSuccess('OTP Sent Successfully','')
           this.router.navigate(['/verifyotp'])
         }else {
-          this.toasterService.showError('Invalid Username','')
+          // this.toasterService.showError('Invalid Username','')
+          this.errroMsg = 'Invalid username'
         }
              
       })
