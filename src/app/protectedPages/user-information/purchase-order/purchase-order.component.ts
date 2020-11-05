@@ -17,15 +17,15 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   @Input('userObj') user : any
 
-  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks']
+  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','reminder']
 
   userList : any[] =   [
-    {purchaseNo : 114,projectNumber : 5345,piAmt:24250,remarks:''},
-    {purchaseNo : 197,projectNumber : 5465,piAmt:25000,remarks:''},
-    {purchaseNo : 767,projectNumber : 2344,piAmt:45000,remarks:''},
-    {purchaseNo : 678,projectNumber : 2367,piAmt:24250,remarks:''},
-    {purchaseNo : 114,projectNumber : 5654,piAmt:28000,remarks:''},
-    {purchaseNo : 114,projectNumber : 5345,piAmt:34000,remarks:''},
+    {purchaseNo : 114,projectNumber : 5345,piAmt:24250,reminder:'Send Reminder'},
+    {purchaseNo : 197,projectNumber : 5465,piAmt:25000,reminder:'Send Reminder'},
+    {purchaseNo : 767,projectNumber : 2344,piAmt:45000,reminder:'Send Reminder'},
+    {purchaseNo : 678,projectNumber : 2367,piAmt:24250,reminder:'Send Reminder'},
+    {purchaseNo : 114,projectNumber : 5654,piAmt:28000,reminder:'Send Reminder'},
+    {purchaseNo : 114,projectNumber : 5345,piAmt:34000,reminder:'Send Reminder'},
   ];
   poStatus: any[] = [
     { key: 0, value: 'Received' },
@@ -47,6 +47,15 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
       { key: 0, value: 'Pending' },
       { key: 1, value: 'Received' },
       { key: 2, value: 'On Hold' }]
+
+      departmentListData = [
+        {key:0,value:'Department of Sainik Welfare'},
+        {key:1,value:'Minstry of minority affairs'},
+        {key:2,value:'Vishakhapatnam port Trust'},
+        {key:3,value:'Ministry of trible affairs'},
+        {key:4,value:'Bureasu of Naviks.Mumbai'}
+    ];
+    
       
   dataSource = new MatTableDataSource<any>(this.userList);
 
@@ -67,20 +76,25 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
       console.log('label',this.labels)
     })
     this.PurchaseOrderForm = new FormGroup({
-      purchaseON:new FormControl(null),
-      projectNo:new FormControl(null),
+      userName: new FormControl(null),
+    
+      piNumber: new FormControl(null),
+      poNumber: new FormControl(null),
+      smsApproved: new FormControl(null),
       projectName:new FormControl(null),
-      userId:new FormControl(null),
       date:new FormControl(null),
-      poAmount:new FormControl(null),
-      poStatus:new FormControl(null),
-      piStatus:new FormControl(null),
-      piReceivedIn:new FormControl(null),
-      paymentStatus:new FormControl(null),
-      remark:new FormControl(null),
-      piBillable:new FormControl(null),
-      poBillable:new FormControl(null),
+      withoutTax: new FormControl(null),
+      poStatus:new FormControl(''),
+      startDate: new FormControl(null),
+      endDate: new FormControl(null),
+      userEmail:new FormControl(null),
+      poManagerEmail: new FormControl(null),
+      projectNo:new FormControl(null),
+      poAmountWithTax: new FormControl(null),
+      departmentName: new FormControl(''),
+      paymentStatus:new FormControl(''),
       uploadDoc:new FormControl(null),
+    
 
     })
     

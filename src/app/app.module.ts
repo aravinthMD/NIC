@@ -40,6 +40,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.s
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '@services/auth.interceptor.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import {
   NgxUiLoaderModule,
@@ -130,6 +131,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatDatepickerModule,
     MatNativeDateModule, 
     MatInputModule,
+    MatCheckboxModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),
