@@ -16,10 +16,10 @@
     margin-left: 8px;
   }
 
-  // .userForm{
-  //     overflow-x: hidden;
-  //     padding-top: 20px;
-  // }
+  .customer_details{
+      overflow-x: hidden;
+      padding-top: 10px;
+  }
 
   .userForm {
     overflow-x: hidden;
@@ -128,4 +128,23 @@ mat-form-field{
 
 .back-btn {
   margin-left:2vw
+}
+
+.material-icons{
+  padding-right: 32px;
+}
+mat-expansion-panel{  
+   margin-top: 20px;
+   margin-bottom: 10px;
+  
+}
+.mat-expansion-panel-header {
+  line-height: 24px;
+  
+  background-color: #dfdfdf !important;
+  font-weight: 500 !important;
+}
+
+.mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
+  background-color: #dfdfdf !important;
 }

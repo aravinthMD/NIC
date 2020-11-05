@@ -28,9 +28,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   buttonName : any = "Submit";
   propertyFlag : boolean;
   labels: any = {};
-
+  panelOpenState = false;
   isDirty: boolean;
-
 
   // deparmentList : any[] = ['','Department of Sainik Welfare',
   //  'Minstry of minority affairs',
@@ -45,17 +44,23 @@ export class UserInfoComponent implements OnInit,OnChanges {
       {key:3,value:'Ministry of trible affairs'},
       {key:4,value:'Bureasu of Naviks.Mumbai'}
   ];
-  
+  smsServiceReqd=[
+    {key:0,value:'Prepaid'},
+    {key:1,value:'Post-Paid'}
+  ]
 
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router) {
 
     this.form =this.formBuilder.group({
       name : [null],
-      departmentName : [null],
+      departmentName : [''],
       designation : [null],
       employeeCode : [null],
       email : [null],
       mobileNo : [null],
+      OfficerName:[null],
+      OfficerEmail:[null],
+      OfficerMobile:[null],
       telPhno : [null],
       offAddress1 : [null],
       offAddress2 : [null],
@@ -63,7 +68,23 @@ export class UserInfoComponent implements OnInit,OnChanges {
       city : [null],
       state : [null],
       pinCode : [null],
+      smsServiceReqd: [''],
+      creditsSMSQuota: [null],
       smsTariffMonthWise : [null],
+      availableCredit: [null],
+      nameOfTheApplication: [null],
+      applicationUrl: [null],
+      serverLocation: [null],
+      purpOfTheApplication: [null],
+      smsGatewayAccess: [null],
+      ipServReqd: [null],
+      domMonSmsTraffic: [null],
+      intMonSmsTraffic: [null],
+      appSecurAudClear: [null],
+      auditDate:[null],
+      traiSenderId: [null],
+      userId: [null],
+      password: [null],
       piDuration : [null],
       projectNo : [null],
       creditAdded : [null],
@@ -151,10 +172,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.propertyFlag = false;
     this.buttonName = 'Update';
 
-    this.form.value['fromDate'] = this.datePipe.transform(this.form.value['fromDate'], 'dd/MM/yyyy')
-    this.form.value['toDate'] = this.datePipe.transform(this.form.value['toDate'], 'dd/MM/yyyy')
     this.form.value['creditDate'] = this.datePipe.transform(this.form.value['creditDate'], 'dd/MM/yyyy')
     this.form.value['creditAddedAgainstPi'] = this.datePipe.transform(this.form.value['creditAddedAgainstPi'], 'dd/MM/yyyy')
+    this.form.value['auditDate'] = this.datePipe.transform(this.form.value['auditDate'], 'dd/MM/yyyy')
     // console.log(this.fromDate)
     console.log(this.form.value)
   }

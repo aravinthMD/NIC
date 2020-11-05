@@ -1,10 +1,30 @@
 {
     "userName": "User Name",
-    "password":"Password",
+    "applicantName": "Applicant Name",
+    "applicantEmail": "Applicant Email",
+    "applicantMobile": "Applicant Mobile",
+    "OfficerName": "Reporting/Nodal/Forwarding Officer Name",
+    "OfficerEmail": "Reporting/Nodal/Forwarding Officer Email",
+    "OfficerMobile": "Reporting/Nodal/Forwarding Officer Mobile",
+    "smsServiceReqd": "SMS Service Required",
+    "credits_SMSQuota": "Credits (SMS Quota)",
+    "availableCredit": "Available Credit",
+    "nameOfTheApplication": "Name of the Application",
+    "applicationUrl": "Application URL",
+    "serverLocation": "Server Location",
+    "password": "Password",
+    "purpOfTheApplication": "Purpose of the Application",
+    "ipformwhichSmsGatewaywillbeaccess": "IP Form which SMS Gateway will be access",
+    "ipofStagingServReqdforTesting": "IP of Staging Server Required for Testing",
+    "projectedDomesticMonthlySMStraffic": "Projected Domestic Monthly SMS traffic",
+    "projectedInternationalMonthlySMStraffic": "Projected International Monthly SMS traffic",
+    "applicationsecurAuditCleared": "Application security audit cleared",
+    "auditDatebyWhenItWillBeCleared": "Audit Date by when it will be cleared",
+    "doYouHaveTRAIexemptedSenderId": "Do you have TRAI exempted Sender Id",
     "name": "Name",
     "department": "Department",
     "departmentKey": "Department Key",
-    "departmentVal": "Department Value", 
+    "departmentVal": "Department Value",
     "designation": "Designation",
     "employeeCode": "Employee Code",
     "email": "Email Address",
@@ -42,14 +62,14 @@
     "poAmount": "PO Amount",
     "poStatus": "PO Status",
     "poStatusKey": "PO Status Key",
-    "poStatusVal":"PO Status Value",
-    "paymentStatusVal":"Payment Status Val",
+    "poStatusVal": "PO Status Value",
+    "paymentStatusVal": "Payment Status Val",
     "piReceivedIn": "PI Received In",
-    "piReceivedKey":"PI Received In Key",
-    "piReceivedVal":"PI Received In Value",
-    "paymentStatusKey":"Payment Status Key",
-    "piStatusKey":"PI Status Key",
-    "piStatusVal":"PI Status Value",
+    "piReceivedKey": "PI Received In Key",
+    "piReceivedVal": "PI Received In Value",
+    "paymentStatusKey": "Payment Status Key",
+    "piStatusKey": "PI Status Key",
+    "piStatusVal": "PI Status Value",
     "taxIN": "Tax Invoice Number",
     "invoiceAmount": "Invoice Amount",
     "billClaim": "Billable Claim",
@@ -132,6 +152,12 @@
                 "msg": "Invalid telephone number"
             }
         },
+        "creditsSMSQuota": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
         "officeAddress": {
             "maxLength": {
                 "rule": 50
@@ -152,14 +178,14 @@
                 "rule": 6,
                 "msg": "Should be 6 Digits"
             },
-            "type":"number"
+            "type": "number"
         },
         "smsTraffic": {
             "maxLength": {
                 "rule": 6,
                 "msg": "Should be 6 Digits"
             },
-            "type":"number"
+            "type": "number"
         },
         "projectNo": {
             "maxLength": {
@@ -185,7 +211,7 @@
             "maxLength": {
                 "rule": 12
             },
-            "type":"number"
+            "type": "number"
         },
         "creditAdded": {
             "maxLength": {
@@ -197,6 +223,5 @@
                 "rule": 50
             }
         }
-        
     }
 }

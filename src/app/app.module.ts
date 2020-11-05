@@ -48,6 +48,8 @@ import {
   POSITION,
   PB_DIRECTION,
 } from 'ngx-ui-loader';
+import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
+import { BillingOwnerDetailsComponent } from './protectedPages/user-information/user-info/billing-owner-details/billing-owner-details.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -115,6 +117,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmailComponent,
     ManageUserDialogComponent,
     LovsComponent,
+    TechnicalAdminDetailsComponent,
+    BillingOwnerDetailsComponent,
   ],
   imports: [
     BrowserModule,
