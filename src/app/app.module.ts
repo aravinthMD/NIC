@@ -49,6 +49,7 @@ import {
   POSITION,
   PB_DIRECTION,
 } from 'ngx-ui-loader';
+import { PurchaseEntryComponent } from './protectedPages/user-information/purchase-entry/purchase-entry.component';
 import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
 import { BillingOwnerDetailsComponent } from './protectedPages/user-information/user-info/billing-owner-details/billing-owner-details.component';
 
@@ -118,6 +119,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmailComponent,
     ManageUserDialogComponent,
     LovsComponent,
+    PurchaseEntryComponent,
     TechnicalAdminDetailsComponent,
     BillingOwnerDetailsComponent,
   ],

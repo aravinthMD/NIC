@@ -84,6 +84,16 @@
     "userEmail": "User Email ID",
     "poManagerEmail": "Manager Email ID",
     "poAmountWithTax":"Amount With Tax",
+    "documentNo" : "Document Number",
+    "modeOfPayment" : "Mode of Payment",
+    "bankName" : "Bank Name/Branch",
+    "amountGiven": "Amount Given",
+    "tds" : "TDS",
+    "nicsiProjectNumber" : "NICSI Project Number",
+    "invoiceStatus" : "Invoice Status",
+    "invoiceAmountPaid" : "Invoice Amount Paid",
+    "penalty" : "Penalty is Mandatory",
+    "shortPay" : "Short Pay is Mandatory",
     "validationData": {
         "name": {
             "maxLength": {
@@ -266,6 +276,52 @@
                 "rule": 15
             },
             "type": "number"
+        },
+        "documentNo": {
+            "maxLength" : {
+                "rule" : 20
+            }
+        },
+        "bankName" : {
+            "maxLength" : {
+                "rule" : 60
+            }
+        },
+        "amountGiven" : {
+            "maxLength" : {
+                "rule" : 12
+            },
+            "type" : "number"
+        },
+        "tds" : {
+            "maxLength" : {
+                "rule" : 50
+            }
+        },
+        "nicsiProjectNumber" : {
+            "maxLength" : {
+                "rule" : 10
+            },
+            "type" : "number"
+        },
+        "invoiceAmountPaid" : {
+            "maxLength" : {
+                "rule" : "10"
+            },
+            "type" : "number"
+        },
+        "penalty" : {
+            "maxLength" : {
+                "rule" : "10"
+            },
+            "type" : "number"
+        },
+        "shortPay" : {
+            "maxLength" : {
+                "rule" : "6"
+            },
+            "type" : "number"
         }
+       
     }
 }
