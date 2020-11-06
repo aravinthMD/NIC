@@ -5,6 +5,7 @@ import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
 
+
 @Component({
   selector: 'app-tax-invoice',
   templateUrl: './tax-invoice.component.html',
@@ -16,7 +17,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks']
+  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks',"remainder"]
 
   userList : any[] =   [
    
@@ -29,8 +30,17 @@ export class TaxInvoiceComponent implements OnInit {
     { key: 0, value: 'Pending' },
     { key: 1, value: 'Received' },
     { key: 2, value: 'On Hold' }]
+
+    invoiceStatusList :  any[] = [
+      {key : 0,value : 'Pending'},
+      {key : 1,value : 'Paid'},
+      {key : 2,value : 'Partially Paid'},
+      {kwy : 3,value : 'Return by NICSI'}
+    ]
+
   dataSource = new MatTableDataSource<any>(this.userList);
-  taxInvoiceForm:FormGroup
+  taxInvoiceForm:FormGroup;
+  searchForm : FormGroup;
   labels: any ={};
   isDirty: boolean;
   toDate =new Date()
@@ -44,6 +54,8 @@ export class TaxInvoiceComponent implements OnInit {
 
     });
     this.taxInvoiceForm=new FormGroup({
+      userName: new FormControl(null),
+      purchaseON:new FormControl(null),
       taxIN:new FormControl(null),
       invoiceDate:new FormControl(null),
       projectNo:new FormControl(null),
@@ -56,7 +68,19 @@ export class TaxInvoiceComponent implements OnInit {
       billClaim:new FormControl(null),
       uploadDoc:new FormControl(null),
       paymentStatus:new FormControl(null),
+      invoiceStatus : new FormControl(null),
+      invoiceAmountPaid : new FormControl(null),
+      tds :  new FormControl(null),
+      penalty :  new FormControl(null),
+      shortPay : new FormControl(null)
     })
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
+    })
+
   }
 
   ngAfterViewInit(){
@@ -76,6 +100,20 @@ export class TaxInvoiceComponent implements OnInit {
     this.taxInvoiceForm.value['invoiceDate']=this.Datepipe.transform(this.taxInvoiceForm.value['invoiceDate'],'dd/MM/yyyy')
     console.log(this.taxInvoiceForm.value)
     this.taxInvoiceForm.reset()
+  }
+
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
   }
 
 }

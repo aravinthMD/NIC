@@ -53,6 +53,7 @@ import {
   POSITION,
   PB_DIRECTION,
 } from 'ngx-ui-loader';
+import { PurchaseEntryComponent } from './protectedPages/user-information/purchase-entry/purchase-entry.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -120,6 +121,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmailComponent,
     ManageUserDialogComponent,
     LovsComponent,
+    PurchaseEntryComponent,
     TechnicalAdminDetailsComponent,
     BillingOwnerDetailsComponent,
     SmsCreditAllocationComponent,
