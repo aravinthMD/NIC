@@ -14,7 +14,9 @@ export class AccountManageComponent implements OnInit,AfterViewInit {
 
   displayedColumns:any[]=['s.no','userId','department','action','status']
 
-  buttonName='Active'
+  buttonName='Active';
+
+  modalMsg: string;
 
   userList  = [
     {userId : "arul.auth",department : "Finance Department Uttarakhand",status :"Active"},
@@ -22,6 +24,12 @@ export class AccountManageComponent implements OnInit,AfterViewInit {
     {userId : "Jain.auth",department : "Election Department , Manipur",status :"InActive"},
     {userId : "Jain.auth",department : "Director of emloyment and ceo",status :"Active"},
     {userId : "Jain.auth",department : "revenue Department, tripura ",status :"Active"},
+    {userId : "Jain.auth",department : "Land records and settlement ",status :"Active"},
+    {userId : "Jain.auth",department : "Land records and settlement ",status :"Active"},
+    {userId : "Jain.auth",department : "Land records and settlement ",status :"Active"},
+    {userId : "Jain.auth",department : "Land records and settlement ",status :"Active"},
+    {userId : "Jain.auth",department : "Land records and settlement ",status :"Active"},
+    {userId : "Jain.auth",department : "Land records and settlement ",status :"Active"},
     {userId : "Jain.auth",department : "Land records and settlement ",status :"Active"},
   ]
   showModal:boolean=false;
@@ -34,6 +42,11 @@ ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
   }
   status(index,value){
+    if(value == 'InActive') {
+      this.modalMsg = 'Are you sure you want to activate this user ?'
+    }else {
+      this.modalMsg = 'Are you sure you want to deactivate this user ?'
+    }
     this.showModal = true;
   }
   onCancel() {

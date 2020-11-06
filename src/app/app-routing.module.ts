@@ -11,7 +11,8 @@ import { UserInformationComponent } from './protectedPages/user-information/user
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import { GenerateOtpComponent } from './generate-otp/generate-otp.component';
 import { ManageAdminComponent } from './protectedPages/admin/manage-admin/manage-admin.component';
-import { EmailComponent } from './protectedPages/email/email.component'
+import { EmailComponent } from './protectedPages/email/email.component';
+import { AccountManageComponent } from './protectedPages/admin/account-manage/account-manage.component'
 
 const routes: Routes = [
   {path:"",component :LoginComponent},
@@ -28,9 +29,9 @@ const routes: Routes = [
 },
   {path:"admin",component : AdminComponent,
   children : [
-    {path: "manageAdmin", component: ManageAdminComponent},
+    {path: "manageUser", component: ManageAdminComponent},
     { path : "createuser",component : CreateUserComponent},
-    { path : "manage/users",component : ManageUsersComponent}
+    { path : "manageAccount",component : AccountManageComponent}
   ]},
 ];
 
