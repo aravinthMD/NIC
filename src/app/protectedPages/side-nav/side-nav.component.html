@@ -4,20 +4,28 @@
             <a class="logo_nic p-0"><img src="assets/images/dashboard_nic_logo_1-1.png" class="nic_logo"></a>
         </li>
         <li class="list-group-item">
-            <a routerLink="/users/Dashboard" (click) ="navigation('0')" [ngClass]="{'side-menu': (isLocation == '0')}" routerLinkActive="active-link" class=""><i class="fa fa-tachometer pr-2" aria-hidden="true"></i>Dashboard</a>
+            <a routerLink="/users/Dashboard" (click)="navigation('0')" [ngClass]="{'side-menu': (isLocation == '0')}" routerLinkActive="active-link" class=""><i class="fa fa-tachometer pr-2" aria-hidden="true"></i>Dashboard</a>
         </li>
 
         <li class="list-group-item">
-            <a routerLink="/users/userInfo" (click) ="navigation('1')" [ngClass]="{'side-menu': (isLocation == '1')}"  routerLinkActive="active-link" class=""><i class="fa fa-user-plus pr-2" aria-hidden="true"></i>New Account</a>
+            <a routerLink="/users/userInfo" (click)="navigation('1')" [ngClass]="{'side-menu': (isLocation == '1')}" routerLinkActive="active-link" class=""><i class="fa fa-user-plus pr-2" aria-hidden="true"></i>New Account</a>
         </li>
 
 
         <li class="list-group-item">
-            <a routerLink="/admin/manageAdmin" (click) ="navigation('2')" [ngClass]="{'side-menu': (isLocation == '2')}"  routerLinkActive="active-link" class=""><i class="fa fa-user pr-2"></i>Admin</a>
+            <a href="#submenu1" data-toggle="collapse" aria-expanded="false"><span class=""><i class="fa fa-user pr-2"></i>Admin</span><i class="fa fa-chevron-down" aria-hidden="true"></i></a>
         </li>
 
+        <div id='submenu1' class="collapse sidebar-submenu">
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="menu-collapsed"><i class="fa fa-user pr-2"></i>User</div>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+                <div class="menu-collapsed"><i class="fa fa-user pr-2"></i>Account</div>
+            </a>
+        </div>
         <li class="list-group-item">
-            <a routerLink="/users/reports" (click) ="navigation('3')" [ngClass]="{'side-menu': (isLocation == '3')}"  routerLinkActive="active-link" class=""><i class="fa fa-area-chart pr-2" aria-hidden="true"></i>Reports</a>
+            <a routerLink="/users/reports" (click)="navigation('3')" [ngClass]="{'side-menu': (isLocation == '3')}" routerLinkActive="active-link" class=""><i class="fa fa-area-chart pr-2" aria-hidden="true"></i>Reports</a>
         </li>
 
         <!-- <li class="list-group-item">
@@ -25,7 +33,7 @@
         </li> -->
 
         <li class="list-group-item">
-            <a routerLink="/users/email" (click) ="navigation('4')" [ngClass]="{'side-menu': (isLocation == '4')}"  routerLinkActive="active-link" class=""><i class="fa fa-envelope pr-2" aria-hidden="true"></i>Email</a>
+            <a routerLink="/users/email" (click)="navigation('4')" [ngClass]="{'side-menu': (isLocation == '4')}" routerLinkActive="active-link" class=""><i class="fa fa-envelope pr-2" aria-hidden="true"></i>Email</a>
         </li>
 
     </ul>
