@@ -40,6 +40,11 @@ import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.s
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '@services/auth.interceptor.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
+import { BillingOwnerDetailsComponent } from './protectedPages/user-information/user-info/billing-owner-details/billing-owner-details.component';
+import { SmsCreditAllocationComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-allocation.component';
+import { AccountManageComponent } from './protectedPages/admin/account-manage/account-manage.component';
 
 import {
   NgxUiLoaderModule,
@@ -48,8 +53,6 @@ import {
   POSITION,
   PB_DIRECTION,
 } from 'ngx-ui-loader';
-import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
-import { BillingOwnerDetailsComponent } from './protectedPages/user-information/user-info/billing-owner-details/billing-owner-details.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -119,6 +122,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     LovsComponent,
     TechnicalAdminDetailsComponent,
     BillingOwnerDetailsComponent,
+    SmsCreditAllocationComponent,
+    AccountManageComponent,
   ],
   imports: [
     BrowserModule,
@@ -133,6 +138,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule, 
+    MatSlideToggleModule,
     MatInputModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
