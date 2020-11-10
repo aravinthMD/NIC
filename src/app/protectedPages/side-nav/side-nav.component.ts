@@ -33,12 +33,14 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.isLocation = '0'
     }else if(path.includes('users/userInfo')) {
       this.isLocation = '1'
-    }else if(path.includes('admin/manageAdmin')) {
-      this.isLocation = '2'
     }else if(path.includes('users/reports')){
       this.isLocation = '3'
     }else if(path.includes('users/email')) {
       this.isLocation = '4'
+    }else if(path.includes('account/manageUser')) {
+      this.isLocation = '2.1';
+    }else if(path.includes('account/manageAdmin')) {
+      this.isLocation = '2.2';
     }
 
    
