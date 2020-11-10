@@ -13,7 +13,9 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   isLocation: string;
 
-  adminLocation: string;
+  parentLocation: string;
+
+  accountInfoNav: string;
 
   constructor(private location: Location,private utilService: UtilService) { }
 
@@ -33,8 +35,23 @@ export class SideNavComponent implements OnInit,OnChanges {
 
     if(path.includes('users/Dashboard')){
       this.isLocation = '0'
-    }else if(path.includes('users/userInfo')) {
-      this.isLocation = '1'
+    }else if(path.includes('users/proformaInvoice')){
+      this.isLocation = '1.2'
+    }else if(path.includes('users/projectExecution')){
+      this.isLocation = '1.3'
+    }else if(path.includes('users/purchaseOrder')){
+      this.isLocation = '1.4'
+    }else if(path.includes('users/taxInvoice')){
+      this.isLocation = '1.5'
+    }else if(path.includes('users/techAdmin')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.2'
+    }else if(path.includes('users/billingAdmin')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.3'
+    }else if(path.includes('users/smsCredit')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.4'
     }else if(path.includes('users/reports')){
       this.isLocation = '3'
     }else if(path.includes('users/email')) {
@@ -45,11 +62,12 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.isLocation = '2.2';
     }
 
-
-    if(path.includes('admin/')) {
-      this.adminLocation = '2'
+    if(path.includes('users/')) {
+      this.parentLocation = '1'
+    }else if(path.includes('admin/')) {
+      this.parentLocation = '2'
     }else {
-      this.adminLocation = ''
+      this.parentLocation = ''
     }
 
    
@@ -64,6 +82,21 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   navigation(route: string) {
   this.isLocation = route;
+
+  if(route.includes('1.1.')){
+    this.accountInfoNav = '1.1'
+  }else {
+    this.accountInfoNav = ''
+  }
+
+  if(route.includes('2.')) {
+      this.parentLocation = '2'
+  }else if(route.includes('1.')){
+    this.parentLocation = '1'
+  }else {
+    this.parentLocation = ''
+  }
+
   }
 
 }

@@ -1,4 +1,8 @@
+<div class="col-md-10 main"> 
+    <mat-card>
 <div class="sms_credit_allocation">
+    <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">SMS Credit Allocation</h1>
+
     <form (submit)="onSubmit()" [formGroup]="smsCreditAllocation">
             <div class="row">
                 <div class="col-4">
@@ -91,6 +95,7 @@
         <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
     </div>
 </div>
+
     <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header matRipple>
@@ -125,3 +130,5 @@
         </div>
     </mat-expansion-panel>
 </mat-accordion>
+</mat-card>
+</div>
