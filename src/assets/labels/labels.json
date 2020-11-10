@@ -52,9 +52,9 @@
     "creditPI": "Credit Added Against The PI",
     "proformaIN": "Proforma Invoice Number",
     "invoiceDate": "Invoice Date",
-    "poNumber": "PO Number",
+    "poNumber": "Purchase Order Number",
     "poDate": "PO Date",
-    "piAmount": "PI Amount",
+    "piAmount": "Amount",
     "piStatus": "PI Status",
     "paymentStatus": "Payment Status",
     "remark": "Remark",
@@ -65,7 +65,7 @@
     "userId": "User ID",
     "date": "Date",
     "poAmount": "PO Amount",
-    "poStatus": "PO Status",
+    "poStatus": "Status",
     "poStatusKey": "PO Status Key",
     "poStatusVal": "PO Status Value",
     "paymentStatusVal": "Payment Status Val",
@@ -80,6 +80,15 @@
     "billClaim": "Billable Claim",
     "reports": "Reports",
     "status": "Status",
+    "accountName": "Account Name",
+    "refNo": "Reference Number",
+    "piOwner": "Owner",
+    "piTraffic": "Traffic",
+    "piNumber": "Proforma Invoice Number",
+    "withoutTax": "Without Tax",
+    "userEmail": "User Email ID",
+    "poManagerEmail": "Manager Email ID",
+    "poAmountWithTax":"Amount With Tax",
     "documentNo" : "Document Number",
     "modeOfPayment" : "Mode of Payment",
     "bankName" : "Bank Name/Branch",
@@ -220,7 +229,8 @@
         "poNumber": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type": "number"
         },
         "piAmount": {
             "maxLength": {
@@ -237,6 +247,40 @@
             "maxLength": {
                 "rule": 50
             }
+        },
+        "refNo": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "piOwner": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "piTraffic": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "number"
+        },
+        "piNumber": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "number"
+        },
+        "withoutTax": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "number"
+        },
+        "poAmountWithTax": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "number"
         },
         "documentNo": {
             "maxLength" : {
@@ -284,7 +328,5 @@
             "type" : "number"
         }
        
-        
-        
     }
 }

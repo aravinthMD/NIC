@@ -18,18 +18,41 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','Action',"remainder"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','piAmt','Action',"remainder"]
 
 
   userList : any[] =   [
-    {invoiceNo : 4355,projectNumber : 4534,piAmt:25000,remarks:'credited'},
-    {invoiceNo : 2313,projectNumber : 6756,piAmt:56000,remarks:'credited'},
-    {invoiceNo : 6574,projectNumber : 3453,piAmt:25000,remarks:'credited'}
+    {invoiceNo : 4355,accountName : 'RajeshK',piAmt:25000,remarks:'credited'},
+    {invoiceNo : 2313,accountName : 'Suresh Agarwal',piAmt:56000,remarks:'credited'},
+    {invoiceNo : 6574,accountName : "Sharma",piAmt:25000,remarks:'credited'}
   ];
 
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
 
   paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
+
+  nicsiData = [
+    {
+      key: '1',
+      value: 'ukjena@nic.in'
+    },
+    {
+      key: '2',
+      value: 'vinod.agrawal@nic.in'
+    },
+    {
+      key: '3',
+      value: 'rk.raina@nic.in'
+    },
+    {
+      key: '4',
+      value: 'sshanker@nic.in'
+    },
+    {
+      key: '5',
+      value: 'Deepak.saxena@nic.in'
+    }
+  ]
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
@@ -40,24 +63,31 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   isDirty: boolean;
 
+  searchForm: FormGroup;
+
   constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe) { 
 
 
     this.form =this.formBuilder.group({
+      accountName: [null],
       invoiceNumber : [null],
-      projectNumber : [null],
-      poNumber: [null],
+      refNumber: [null],
+      piTraffic: [null],
+      piOwner: [null],
+      date: [null],
+      nicsiManager: [''],
       piAmount: [null],
-      emailAddress: [null],
-      remark: [null],
-      piBillable: [null],
-      fromDate:[null],
-      toDate:[null],
-      invoiceDate:[null],
-      poDate:[null],
+      startDate:[null],
+      endDate:[null],
       piStatus: [''],
       paymentStatus:['']
 
+    })
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
     })
 
 
@@ -112,5 +142,18 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   }
 
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
+  }
 
 }

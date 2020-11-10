@@ -27,6 +27,29 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
 
 
+  nicsiData = [
+    {
+      key: '1',
+      value: 'ukjena@nic.in'
+    },
+    {
+      key: '2',
+      value: 'vinod.agrawal@nic.in'
+    },
+    {
+      key: '3',
+      value: 'rk.raina@nic.in'
+    },
+    {
+      key: '4',
+      value: 'sshanker@nic.in'
+    },
+    {
+      key: '5',
+      value: 'Deepak.saxena@nic.in'
+    }
+  ]
+  
   constructor( public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
     
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe) { 
@@ -34,19 +57,19 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     console.log(data)
 
     this.form =this.formBuilder.group({
+    
+      accountName: ['Suresh'],
       invoiceNumber : ['3456'],
-      projectNumber : ['4568'],
-      poNumber: ['5678'],
-      piAmount: ['54500'],
-      emailAddress: ['guru.auth@nic.com'],
-      remark: ['remarks'],
-      piBillable: ['pibillable'],
-      fromDate : new Date(),
-      toDate : new Date(),
-      invoiceDate : new Date(),
-      poDate : new Date(),
-      piStatus: '1',
-      paymentStatus:'1'
+      refNumber: ['43434'],
+      piTraffic: ['5678'],
+      piOwner: ['Raja'],
+      date: new Date(),
+      nicsiManager: ['2'],
+      piAmount: ['50000'],
+      startDate:new Date(),
+      endDate:new Date(),
+      piStatus: ['2'],
+      paymentStatus:['2']
 
     })
   }

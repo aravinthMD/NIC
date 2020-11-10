@@ -16,6 +16,10 @@ export class GenerateOtpComponent implements OnInit {
 
   isReachMaxCount: boolean;
 
+  isError: boolean;
+
+  errorMsg: string;
+
   constructor(private formBuilder: FormBuilder,private router: Router,private toasterService: ToasterService, private loginService: LoginService) { 
 
     this.form = this.formBuilder.group({
@@ -43,7 +47,9 @@ export class GenerateOtpComponent implements OnInit {
     console.log(username)
     if(!this.form.value.otpValue) {
 
-      this.toasterService.showError('Please enter the OTP to verify','')
+      // this.toasterService.showError('Please enter the OTP to verify','')
+      this.isError = true;
+      this.errorMsg = 'Please enter the OTP to verify'
     }else {
 
 
@@ -54,14 +60,22 @@ export class GenerateOtpComponent implements OnInit {
       }
       this.loginService.verifyOTP(request).subscribe((response)=> {
 
-        let retryCount = response['ProcessVariables']['userList']['retryCount']
+        let retryCount = response['ProcessVariables']['userList']['retryCount'];
+        this.form.patchValue({
+          otpValue: ''
+        })
         if(!response['ProcessVariables']['verifyOTP'] && Number(retryCount) >= 2) {
 
             this.isReachMaxCount = true;
-            this.toasterService.showError('You have reached maximum number of attempts, please re-generate the OTP','')
+            
+            this.isError = true;
+            this.errorMsg = 'You have reached maximum number of attempts, please re-generate the OTP'
         }else if(!response['ProcessVariables']['verifyOTP']) {
-          this.toasterService.showError('Your OTP is Incorrect','')
+         
+          this.isError = true;
+          this.errorMsg = 'Your OTP is Incorrect'
         }else if(response['ProcessVariables']['verifyOTP']){
+          this.isError = false;
           this.toasterService.showSuccess('OTP verified successfully','')
           this.router.navigate(['/resetpassword'])
   
@@ -83,10 +97,12 @@ export class GenerateOtpComponent implements OnInit {
     this.loginService.forgotPassword(username).subscribe((response)=> {
 
       if(response['Error'] == 0 && response['ProcessVariables']['otp']) {
+        this.isError = false;
         this.isReachMaxCount = false;
         this.toasterService.showSuccess('OTP Sent Successfully','')
       }else {
-        this.toasterService.showError('Please provide valid username to send OTP','')
+        this.isError = true;
+        this.errorMsg = 'Please provide valid username to send OTP'
       }
            
     })
