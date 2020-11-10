@@ -43,6 +43,9 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.isLocation = '1.4'
     }else if(path.includes('users/taxInvoice')){
       this.isLocation = '1.5'
+    }else if(path.includes('users/customerDetails')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.1'
     }else if(path.includes('users/techAdmin')){
       this.accountInfoNav = '1.1'
       this.isLocation = '1.1.2'

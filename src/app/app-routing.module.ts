@@ -26,6 +26,8 @@ import  { BillingOwnerDetailsComponent } from './protectedPages/user-information
 
 import  { SmsCreditAllocationComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-allocation.component'
 
+import  { UserInfoComponent } from './protectedPages/user-information/user-info/user-info.component'
+
 const routes: Routes = [
   {path:"",component :LoginComponent},
   {path:"resetpassword",component : ResetPasswordComponent},
@@ -36,11 +38,11 @@ const routes: Routes = [
     { path : "userInfo/:id" , component : UserInformationComponent },
     { path : "userInfo" , component : UserInformationComponent },
     { path : "reports" , component : ReportsComponent},
-
+    {path: 'customerDetails',component: UserInfoComponent},
     {path: 'techAdmin',component: TechnicalAdminDetailsComponent},
     {path: 'billingAdmin',component: BillingOwnerDetailsComponent},
     {path: 'smsCredit',component: SmsCreditAllocationComponent},
-    
+
     {path:'proformaInvoice', component: ProcessDetailsComponent},
     {path:'projectExecution', component: PurchaseEntryComponent},
     {path:'purchaseOrder', component: PurchaseOrderComponent},

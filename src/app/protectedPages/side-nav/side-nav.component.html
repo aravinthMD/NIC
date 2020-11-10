@@ -19,7 +19,7 @@
                         <a class="nav-link collapsed" id="downbutton" href="#newaccountinfo" data-toggle="collapse" [ngClass]="{'side-menu-acc-info': (accountInfoNav == '1.1')}" data-target="#newaccountinfo"><span><i class="fa fa-caret-down"></i><i class="fa fa-info-circle pr-1" aria-hidden="true"></i>Account Info</span></a>
                         <div class="collapse" id="newaccountinfo" aria-expanded="false">
                             <ul class="flex-column nav">
-                                <li class="nav-item border-0">
+                                <li class="nav-item border-0" routerLink="/users/customerDetails" (click)="navigation('1.1.1')" style="cursor: pointer;" [ngClass]="{'side-menu': (isLocation == '1.1.1')}">
                                     <a class="nav-link p-1">
                                         <i class="fa fa-user-circle pr-2" aria-hidden="true"></i>Customer Details</a>
                                 </li>
