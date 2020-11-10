@@ -13,6 +13,8 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   isLocation: string;
 
+  adminLocation: string;
+
   constructor(private location: Location,private utilService: UtilService) { }
 
   ngOnInit() {
@@ -37,10 +39,17 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.isLocation = '3'
     }else if(path.includes('users/email')) {
       this.isLocation = '4'
-    }else if(path.includes('account/manageUser')) {
+    }else if(path.includes('admin/manageUser')) {
       this.isLocation = '2.1';
-    }else if(path.includes('account/manageAdmin')) {
+    }else if(path.includes('admin/manageAccount')) {
       this.isLocation = '2.2';
+    }
+
+
+    if(path.includes('admin/')) {
+      this.adminLocation = '2'
+    }else {
+      this.adminLocation = ''
     }
 
    

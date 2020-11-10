@@ -13,15 +13,15 @@
 
 
         <li class="list-group-item">
-            <a href="#submenu1" data-toggle="collapse" aria-expanded="false"><span class=""><i class="fa fa-user pr-2"></i>Admin</span><i class="fa fa-chevron-down" aria-hidden="false"></i></a>
+            <a href="#submenu1" data-toggle="collapse" [ngClass]="{'side-menu': (adminLocation == '2')}" aria-expanded="false"><span class=""><i class="fa fa-user pr-2"></i>Admin</span><i class="fa fa-chevron-down" aria-hidden="false"></i></a>
         </li>
 
         <div id='submenu1' class="collapse sidebar-submenu">
             <a routerLink="/admin/manageUser" (click)="navigation('2.1')" class="list-group-item list-group-item-action">
-                <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.1')}"><i class="fa fa-user pr-2"></i>User</div>
+                <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.1')}"><i class="fa fa-user pr-2"></i>User Management</div>
             </a>
             <a routerLink="/admin/manageAccount" (click)="navigation('2.2')"  class="list-group-item list-group-item-action">
-                <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.2')}"><i class="fa fa-user pr-2"></i>Account</div>
+                <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.2')}"><i class="fa fa-user pr-2"></i>Account Management</div>
             </a>
         </div>
         <li class="list-group-item">
