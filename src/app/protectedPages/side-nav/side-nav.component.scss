@@ -71,3 +71,80 @@ img.nic_logo {
 .list-group-item.list-group-item-action {
     border-bottom: 1px solid #404040 !important;
 }
+
+.nav-link.py-1.collapsed {
+    padding: 1.5rem 1.25rem !important;
+    color: #0e4d92;
+}
+
+.nav-link.p-1 {
+    padding: 10px !important;
+    font-size: 12px;
+}
+
+// .nav-link {
+//     background: #0e4d92;
+// }
+.flex-column.nav {
+    background-color: #0e4d92;
+    color: #f9f9f9;
+}
+
+.nav-item {
+    border-bottom: 1px solid #fff;
+}
+
+// .nav-item {
+//     border-bottom: 1px solid #404040 !important;
+// }
+.nav-link.p-1 {
+    color: #858585;
+}
+
+.nav-item>a {
+    color: #fcfcfc;
+}
+
+// .nav-link.p-1 {
+//     color: #717171de !important;
+// }
+#forarrow {
+    position: relative;
+}
+
+#forarrow::after {
+    content: "\f078";
+    color: #fdfdfd;
+    top: 24px;
+    right: 0px;
+    position: absolute;
+    font-family: "FontAwesome";
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    left: 171px;
+}
+
+#forarrow[aria-expanded="true"]::after {
+    content: "\f077";
+}
+
+// #downbutton::after {
+//     content: "\f0d7";
+//     color: #fdfdfd;
+//     // top: 85px;
+//     right: 0px;
+//     position: absolute;
+//     font-family: "FontAwesome";
+//     display: block;
+//     font-size: 14px;
+//     font-weight: 600;
+//     left: 171px;
+// }
+// #downbutton::after {
+//     content: "\f0d8";
+// }
+.fa.fa-caret-down {
+    font-size: 20px;
+    padding-right: 10px;
+}

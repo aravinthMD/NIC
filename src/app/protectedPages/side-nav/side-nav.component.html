@@ -7,23 +7,116 @@
             <a routerLink="/users/Dashboard" (click)="navigation('0')" [ngClass]="{'side-menu': (isLocation == '0')}" routerLinkActive="active-link" class=""><i class="fa fa-tachometer pr-2" aria-hidden="true"></i>Dashboard</a>
         </li>
 
-        <li class="list-group-item">
+        <!-- <li class="list-group-item">
             <a routerLink="/users/userInfo" (click)="navigation('1')" [ngClass]="{'side-menu': (isLocation == '1')}" routerLinkActive="active-link" class=""><i class="fa fa-user-plus pr-2" aria-hidden="true"></i>New Account</a>
-        </li>
-
-
+        </li> -->
         <li class="list-group-item">
-            <a href="#submenu1" data-toggle="collapse" aria-expanded="false"><span class=""><i class="fa fa-user pr-2"></i>Admin</span><i class="fa fa-chevron-down" aria-hidden="false"></i></a>
-        </li>
+            <a class="" id="forarrow" href="#newaccount" data-toggle="collapse" data-target="#newaccount" routerLink="/users/userInfo" (click)="navigation('1')" [ngClass]="{'side-menu': (isLocation == '1')}" routerLinkActive="active-link"><i class="fa fa-user-plus pr-2" aria-hidden="true"></i>New Account</a>
+            <!-- <a><i class="fa fa-table"></i> <span class="d-none d-sm-inline">NewAccount</span><i _ngcontent-xbm-c3="" aria-hidden="false" class="fa fa-chevron-down"></i></a> -->
+            <div class="collapse" id="newaccount" aria-expanded="false">
+                <ul class="flex-column  nav">
+                    <li class="nav-item pl-4">
+                        <a class="nav-link collapsed" id="downbutton" href="#newaccountinfo" data-toggle="collapse" data-target="#newaccountinfo"><span><i class="fa fa-caret-down"></i>Account Info</span></a>
+                        <div class="collapse" id="newaccountinfo" aria-expanded="false">
+                            <ul class="flex-column nav">
+                                <li class="nav-item border-0">
+                                    <a class="nav-link p-1" href="#">
+                                     Customer Details</a>
+                                </li>
+                                <li class="nav-item border-0">
+                                    <a class="nav-link p-1" href="#">
+                                         Technical Admin Details</a>
+                                </li>
+                                <li class="nav-item border-0">
+                                    <a class="nav-link p-1" href="#">
+                                        Billing Admin Details</a>
+                                </li>
+                                <li class="nav-item border-0">
+                                    <a class="nav-link p-1" href="#">
+                                         SMS Credit Allocation</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item pl-4">
+                        <a class="nav-link  collapsed " href="#newaccountprofoma" data-toggle="collapse" data-target="#newaccountprofoma"><span>Profoma Invoice</span></a>
+                        <!-- <div class="collapse" id="newaccountprofoma" aria-expanded="false">
+                            <ul class="flex-column nav pl-2">
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-clock-o"></i> Add New Profoma Invoice </a>
+                                </li>
 
-        <div id='submenu1' class="collapse sidebar-submenu">
-            <a routerLink="/admin/manageUser" (click)="navigation('2.1')" class="list-group-item list-group-item-action">
-                <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.1')}"><i class="fa fa-user pr-2"></i>User</div>
-            </a>
-            <a routerLink="/admin/manageAccount" (click)="navigation('2.2')"  class="list-group-item list-group-item-action">
-                <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.2')}"><i class="fa fa-user pr-2"></i>Account</div>
-            </a>
-        </div>
+                            </ul>
+                        </div> -->
+                    </li>
+                    <li class="nav-item pl-4">
+                        <a class="nav-link  collapsed " href="#newaccountpurchase" data-toggle="collapse" data-target="#newaccountpurchase"><span>Purchase Entry</span></a>
+                        <!-- <div class="collapse" id="newaccountpurchase" aria-expanded="false">
+                            <ul class="flex-column nav pl-2">
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-clock-o"></i> Add New Purchase Entry </a>
+                                </li>
+
+                            </ul>
+                        </div> -->
+                    </li>
+                    <li class="nav-item pl-4">
+                        <a class="nav-link  collapsed " href="#newaccountpurorder" data-toggle="collapse" data-target="#newaccountpurorder"><span>Purchase Order</span></a>
+                        <!-- <div class="collapse" id="newaccountpurorder" aria-expanded="false">
+                            <ul class="flex-column nav pl-2">
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-clock-o"></i> Add New Purchase Order </a>
+                                </li>
+
+                            </ul>
+                        </div> -->
+                    </li>
+                    <li class="nav-item pl-4">
+                        <a class="nav-link  collapsed " href="#newaccounttax" data-toggle="collapse" data-target="#newaccounttax"><span>Tax Invoice</span></a>
+                        <!-- <div class="collapse" id="newaccounttax" aria-expanded="false">
+                            <ul class="flex-column nav pl-2">
+                                <li class="nav-item">
+                                    <a class="nav-link p-1" href="#">
+                                        <i class="fa fa-fw fa-clock-o"></i> Add New Tax Invoice </a>
+                                </li>
+                            </ul>
+                        </div> -->
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <a class="nav-link p-1 collapsed" id="forarrow" href="#submenu1" data-toggle="collapse" data-target="#submenu1" routerLink="/users/userInfo" (click)="navigation('1')" [ngClass]="{'side-menu': (isLocation == '1')}" class=""><i class="fa fa-user pr-2" aria-hidden="true"></i>Admin</a>
+            <!-- <a><i class="fa fa-table"></i> <span class="d-none d-sm-inline">NewAccount</span><i _ngcontent-xbm-c3="" aria-hidden="false" class="fa fa-chevron-down"></i></a> -->
+            <div class="collapse" id="submenu1" aria-expanded="false">
+                <ul class="flex-column nav">
+                    <li class="nav-item pl-4">
+                        <a class="nav-link  collapsed " routerLink="/admin/manageUser" (click)="navigation('2.1')" href="#submenu1user" [ngClass]="{'side-menu': (isLocation == '3')}" routerLinkActive="active-link" data-toggle="collapse" data-target="#submenu1user"><span>Users</span></a>
+
+                    </li>
+                    <li class="nav-item pl-4">
+                        <a class="nav-link  collapsed " routerLink="/admin/manageAccount" (click)="navigation('2.2')" href="#submenu1acct" [ngClass]="{'side-menu': (isLocation == '4')}" routerLinkActive="active-link" data-toggle="collapse" data-target="#submenu1acct"><span>Account</span></a>
+
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <!-- <li class="list-group-item">
+            <a href="#submenu1" data-toggle="collapse" aria-expanded="false"><span class=""><i class="fa fa-user pr-2"></i>Admin</span><i class="fa fa-chevron-down" aria-hidden="false"></i></a>
+
+
+            <div id='submenu1' class="collapse sidebar-submenu">
+                <a routerLink="/admin/manageUser" (click)="navigation('2.1')" class="list-group-item list-group-item-action">
+                    <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.1')}"><i class="fa fa-user pr-2"></i>User</div>
+                </a>
+                <a routerLink="/admin/manageAccount" (click)="navigation('2.2')" class="list-group-item list-group-item-action">
+                    <div class="menu-collapsed" [ngClass]="{'side-menu': (isLocation == '2.2')}"><i class="fa fa-user pr-2"></i>Account</div>
+                </a>
+            </div>
+        </li> -->
         <li class="list-group-item">
             <a routerLink="/users/reports" (click)="navigation('3')" [ngClass]="{'side-menu': (isLocation == '3')}" routerLinkActive="active-link" class=""><i class="fa fa-area-chart pr-2" aria-hidden="true"></i>Reports</a>
         </li>
