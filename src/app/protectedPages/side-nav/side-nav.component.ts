@@ -23,13 +23,14 @@ export class SideNavComponent implements OnInit,OnChanges {
 
     this.utilService.detectSidNav$.subscribe((user)=> {
       console.log('DETECT SIDE NAV ********',user)
-      this.accountInfoNav = ''
-      this.parentLocation= ''
+
       if(user == 'newuser') {
         this.isLocation = '1'
       }else if(user == 'dashboard') {
+        this.parentLocation= ''
         this.isLocation = '0'
       }else if(user.includes('users/customerDetails')){
+        this.parentLocation= '1'
         this.accountInfoNav = '1.1'
         this.isLocation = '1.1.1'
       }else if(user.includes('users/techAdmin')){
