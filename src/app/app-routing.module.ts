@@ -35,9 +35,8 @@ const routes: Routes = [
   {path : "users",component : ProtectedComponent,
   children : [
     { path : "Dashboard" , component : DashboardComponent },
-    { path : "userInfo/:id" , component : UserInformationComponent },
     { path : "userInfo" , component : UserInformationComponent },
-    { path : "reports" , component : ReportsComponent},
+    { path : "customerDetails/:id" , component : UserInfoComponent },
     {path: 'customerDetails',component: UserInfoComponent},
     {path: 'techAdmin',component: TechnicalAdminDetailsComponent},
     {path: 'billingAdmin',component: BillingOwnerDetailsComponent},
@@ -49,7 +48,7 @@ const routes: Routes = [
     {path:'taxInvoice', component: TaxInvoiceComponent},
 
 
-
+    { path : "reports" , component : ReportsComponent},
     {path: "email", component : EmailComponent}
   ],
 },

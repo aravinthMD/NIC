@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 
 import {ToasterService} from '@services/toaster.service';
 
-import { Router } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router'
 
 
 @Component({
@@ -49,7 +49,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:1,value:'Post-Paid'}
   ]
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
       name : [null],
@@ -103,10 +103,17 @@ export class UserInfoComponent implements OnInit,OnChanges {
       this.labels = values;
     })
 
+    this.user = '';
+    
+    this.activatedRoute.params.subscribe((value)=> {
+        this.user = value.id;
+    });
+
+    console.log(this.activatedRoute)
       if(this.user){
         this.setFormValues();
         this.buttonName = 'Edit';
-        this.propertyFlag = true;
+        this.propertyFlag = false;
 
         }
          
@@ -117,7 +124,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     let path = this.location.path();
 
-    if(!path.includes('userInfo/')) {
+    if(!path.includes('customerDetails/')) {
       this.form.reset()
     }
   }
@@ -183,6 +190,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     this.utilService.setCurrentUrl('dashboard')
     this.router.navigate(['/users/Dashboard'])
+  }
+
+  next(){
+
+    this.utilService.setCurrentUrl('users/techAdmin')
+    this.router.navigate(['/users/techAdmin'])
   }
 
 }

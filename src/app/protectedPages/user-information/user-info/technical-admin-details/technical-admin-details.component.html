@@ -1,7 +1,7 @@
 <div class="col-md-10 main"> 
     <mat-card>
 <div class="technical_admin">
-    <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Techincal Admin Details</h1>
+    <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Technical Admin Details</h1>
 
     <form (submit)="onSubmit()" [formGroup]="technicaladminform">
             <div class="row">
@@ -163,6 +163,9 @@
             </form>
             <div class="row pt-3 pb-3 m-0">
                 <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" >{{'Submit'}}</button>
+
+                <button class="btn btn-primary back-btn" matRipple (click)="next()">Next</button>
+
                 <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
             </div>
         </div>

@@ -23,10 +23,24 @@ export class SideNavComponent implements OnInit,OnChanges {
 
     this.utilService.detectSidNav$.subscribe((user)=> {
       console.log('DETECT SIDE NAV ********',user)
+      this.accountInfoNav = ''
+      this.parentLocation= ''
       if(user == 'newuser') {
         this.isLocation = '1'
       }else if(user == 'dashboard') {
         this.isLocation = '0'
+      }else if(user.includes('users/customerDetails')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.1.1'
+      }else if(user.includes('users/techAdmin')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.1.2'
+      }else if(user.includes('users/billingAdmin')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.1.3'
+      }else if(user.includes('users/smsCredit')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.1.4'
       }
     })
 
@@ -65,7 +79,7 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.isLocation = '2.2';
     }
 
-    if(path.includes('users/')) {
+    if(path.includes('users/') && !path.includes('users/Dashboard') && !path.includes('users/reports') && !path.includes('users/email')) {
       this.parentLocation = '1'
     }else if(path.includes('admin/')) {
       this.parentLocation = '2'
