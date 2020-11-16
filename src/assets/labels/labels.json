@@ -1,4 +1,5 @@
 {
+    "name": "Name",
     "userName": "User Name",
     "applicantName": "Applicant Name",
     "applicantEmail": "Applicant Email",
@@ -102,6 +103,12 @@
     "submittedDate" : "Submitted Date",
     "nicsiManager": "NICSI Manager",
     "validationData": {
+        "name": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type" : "alpha"
+        },
         "userName": {
             "maxLength": {
                 "rule": 50
