@@ -29,8 +29,9 @@
                   <!-- <label for="purchaseOrder">{{labels?.purchaseON}}</label> -->
                   <app-custom-input formControlName="userName" 
                   [isRequired]="'UserName is Mandatory'" 
-                  [labelName]="labels.name" 
+                  [labelName]="labels.userName" 
                   [maxLength]="labels?.validationData?.name?.maxLength"
+                  [type]="labels?.validationData?.name?.type"
                   [isDirty]="isDirty">
                   </app-custom-input>
                   </div>
@@ -42,6 +43,7 @@
                  [isRequired] = "'PI Number is Mandatory'"
                  [labelName] ="labels.proformaIN"
                  [maxLength] ="labels?.validationData?.proformaIN?.maxLength"
+                 [type] ="labels?.validationData?.proformaIN?.type"
                  [isDirty] ="isDirty">
                  </app-custom-input>
                 </div>
@@ -89,6 +91,7 @@
                       [isRequired] = "'Purchase Invoice Number is Mandatory'"
                       [labelName] = "labels.piAmount"
                       [maxLength] = "labels?.validationData?.piAmount.maxLength"
+                      [type] = "labels?.validationData?.piAmount.type"
                       [isDirty] = "isDirty">
                     </app-custom-input>
                   </div>
@@ -106,6 +109,7 @@
                       [isRequired] = "'Document Number is Mandatory'"
                       [labelName] = "labels.documentNo"
                       [maxLength] = "labels?.validationData?.documentNo.maxLength"
+                      [type] = "labels?.validationData?.documentNo.type"
                       [isDirty] = "isDirty">
                     </app-custom-input>
                   </div>
@@ -140,6 +144,7 @@
                     [isRequired] = "'Bank Name/Branch is Mandatory'"
                     [labelName] = "labels.bankName"
                     [maxLength] = "labels?.validationData?.bankName.maxLength"
+                    [type] = "labels?.validationData?.bankName.type"
                     [isDirty] = "isDirty">
                  </app-custom-input>
                   </div>
@@ -148,11 +153,11 @@
               <div class="col-4">
                   <div class="form-group">
                       <app-custom-input 
-                      formControlName = "amountGiven"
+                      formControlName = "amountReceived"
                       [isRequired] = "'Amount Received is Required'"
-                      [labelName] = "labels.amountGiven"
-                      [maxLength] = "labels?.validationData?.amountGiven.maxLength"
-                      [type] = "labels?.validationData?.amountGiven.type"
+                      [labelName] = "labels.amountReceived"
+                      [maxLength] = "labels?.validationData?.amountReceived.maxLength"
+                      [type] = "labels?.validationData?.amountReceived.type"
                       [isDirty] = "isDirty">
                       </app-custom-input>
                   </div>
@@ -164,6 +169,7 @@
                       [isRequired] = "'TDS is Required'"
                       [labelName] = "labels?.tds"
                       [maxLength] = "labels?.validationData?.tds.maxLength"
+                      [type] = "labels?.validationData?.tds.type"
                       [isDirty] = "isDirty">
                       </app-custom-input>
                   </div>

@@ -91,7 +91,7 @@
     "documentNo" : "Document Number",
     "modeOfPayment" : "Mode of Payment",
     "bankName" : "Bank Name/Branch",
-    "amountGiven": "Amount Given",
+    "amountReceived": "Amount Received",
     "tds" : "TDS",
     "nicsiProjectNumber" : "NICSI Project Number",
     "invoiceStatus" : "Invoice Status",
@@ -100,6 +100,7 @@
     "shortPay" : "Short Pay",
     "smsApproved":"SMS Approved",
     "submittedDate" : "Submitted Date",
+    "nicsiManager": "NICSI Manager",
     "validationData": {
         "userName": {
             "maxLength": {
@@ -221,7 +222,8 @@
         "proformaIN": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type":"alpha-numeric"
         },
         "proformaPN": {
             "maxLength": {
@@ -253,12 +255,14 @@
         "refNo": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type": "alpha-numeric"
         },
         "piOwner": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha"
         },
         "piTraffic": {
             "maxLength": {
@@ -286,15 +290,17 @@
         },
         "documentNo": {
             "maxLength" : {
-                "rule" : 20
-            }
+                "rule" : 10
+            },
+            "type": "number"
         },
         "bankName" : {
             "maxLength" : {
-                "rule" : 60
-            }
+                "rule" : 50
+            },
+            "type": "alpha"
         },
-        "amountGiven" : {
+        "amountReceived" : {
             "maxLength" : {
                 "rule" : 12
             },
@@ -308,9 +314,9 @@
         },
         "nicsiProjectNumber" : {
             "maxLength" : {
-                "rule" : 10
+                "rule" : 15
             },
-            "type" : "number"
+            "type" : "alpha-numeric"
         },
         "invoiceAmountPaid" : {
             "maxLength" : {
@@ -352,9 +358,13 @@
             "maxLength" : {
                 "rule" : 15
             }
+        },
+        "nicsiManager": {
+            "maxLength" : {
+                "rule" : "50"
+            },
+            "type" : "alpha"
         }
-
-
        
     }
 }
