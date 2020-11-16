@@ -10,7 +10,7 @@ import { LabelsService } from '@services/labels.service';
 export class LovsComponent implements OnInit {
  LovsControl: FormGroup;
   selectedValue:any[];
-  labels: any[]
+  labels: any;
   showModal:boolean=false;
   propertyFlag: boolean = false;
   isDisabledInp: boolean=true;
@@ -131,19 +131,22 @@ if(this.selectedLovs=='0'){
 
 }
 
-addField(value){
+addField(){
 
 }
 editField(){
   this.showButton=true
 }
-deleteField(value){
+deleteField(){
   this.showModal = true;
 }
-clearField(value){
+clearField(){
 
 }
 onCancel() {
   this.showModal = false;
+}
+updateField() {
+
 }
 } 

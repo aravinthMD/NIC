@@ -24,8 +24,10 @@
                     </div>
                     <div class="col-4 pb-0">
                         <div class="form-group">
-                            <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'"
-                                [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty">
+                            <app-custom-input formControlName="credit" 
+                            [labelName]="labels.credit" 
+                            [id]="'credit'"
+                            [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div> 
@@ -48,35 +50,49 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="onApprovalOf" [labelName]="labels.onApprovalOf"
-                                [id]="'onApprovalOf'" [maxLength]="labels?.validationData.name.maxLength"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="onApprovalOf" 
+                            [labelName]="labels.onApprovalOf"
+                            [id]="'onApprovalOf'" 
+                            [maxLength]="labels?.validationData.userName.maxLength"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
-                                [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty">
+                            <app-custom-input formControlName="remark" 
+                            [labelName]="labels.remark" 
+                            [id]="'remark'"
+                            [maxLength]="labels?.validationData.userName.maxLength" 
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="statusChangedBy" [labelName]="labels.statusChangedBy"
-                                [id]="'statusChangedBy'" [maxLength]="labels?.validationData.name.maxLength"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="statusChangedBy" 
+                            [labelName]="labels.statusChangedBy"
+                            [id]="'statusChangedBy'" 
+                            [maxLength]="labels?.validationData.userName.maxLength"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="timeStamp" 
+<<<<<<< HEAD
                             [labelName]="labels.timeStamp"
                             [id]="'timeStamp'" 
                             [maxLength]="labels?.validationData.name.maxLength"
                             [isDirty]="isDirty"
                             [isDisabledInp]="isDisabledInp">
+=======
+                            [labelName]="labels?.timeStamp"
+                            [id]="'timeStamp'" 
+                            [maxLength]="labels?.validationData.userName.maxLength"
+                            [isDirty]="isDirty">
+>>>>>>> b845133d95ca7c98b5430d3fa3daac949e9f4ebd
                             </app-custom-input>
                         </div>
                     </div>

@@ -28,7 +28,8 @@
               <app-custom-input formControlName="userName" 
               [isRequired]="'User name is Mandatory'" 
               [labelName]="labels.userName" 
-              [maxLength]="labels?.validationData?.name?.maxLength"
+              [maxLength]="labels?.validationData?.userName?.maxLength"
+              [type] = "labels?.validationData?.userName?.type"
               [isDirty]="isDirty">
               </app-custom-input>
 
@@ -66,12 +67,20 @@
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="smsApproved">SMS Approved</label>
+              <!-- <label for="smsApproved">SMS Approved</label>
               <section class="example-section">
                 <mat-checkbox class="example-margin" formControlName="smsApproved" >Yes</mat-checkbox>
 
-                </section>
-
+                </section> -->
+              
+                <app-custom-input formControlName = "smsApproved"
+                [isRequired] = "'SMS Approved is Mandatory'"
+                [labelName] = "labels.smsApproved"
+                [maxLength] = "labels?.validationData?.smsApproved.maxLength"
+                [type] = "labels?.validationData?.smsApproved.type"
+                [isDirty] = "isDirty"
+                >
+                </app-custom-input>
              
             </div>
           </div>
@@ -182,7 +191,14 @@
           <div class="col-4">
             <div class="form-group">
 
-              <app-custom-input formControlName="userEmail" [labelName]="labels.userEmail" [id]="'email'" [isRequired]="'User email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+              <app-custom-input formControlName="userEmail" 
+              [labelName]="labels.userEmail" 
+              [id]="'email'"
+             [isRequired]="'User email is mandatory'" 
+             [patternCheck]="labels?.validationData.email.patternCheck" 
+             [maxLength]="labels?.validationData.email.maxLength" 
+             [isDisabledInp]="propertyFlag" 
+             [isDirty]="isDirty">
 
               </app-custom-input>
 
@@ -192,8 +208,14 @@
            <div class="col-4">
             <div class="form-group">
 
-              <app-custom-input formControlName="poManagerEmail" [labelName]="labels.poManagerEmail" [id]="'email'" [isRequired]="'Manager email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
-
+              <app-custom-input formControlName="poManagerEmail" 
+              [labelName]="labels.poManagerEmail" 
+              [id]="'email'" 
+              [isRequired]="'Manager email is mandatory'" 
+              [patternCheck]="labels?.validationData.email.patternCheck" 
+              [maxLength]="labels?.validationData.email.maxLength" 
+              [isDisabledInp]="propertyFlag" 
+              [isDirty]="isDirty">
               </app-custom-input>
 
 
@@ -204,7 +226,14 @@
           <div class="col-4">
             <div class="form-group">
 
-              <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" [id]="'projectNo'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty"></app-custom-input>
+              <app-custom-input formControlName="projectNo" 
+              [labelName]="labels.projectNo" 
+              [id]="'projectNo'" 
+              [isRequired]="'Project number is mandatory'" 
+              [maxLength]="labels?.validationData.projectNo.maxLength" 
+              [isDisabledInp]="propertyFlag" 
+              [isDirty]="isDirty">
+            </app-custom-input>
 
               </div>
           </div>

@@ -12,7 +12,7 @@ import { UtilService } from '@services/util.service';
 })
 export class BillingOwnerDetailsComponent implements OnInit {
 
-  labels:any[];
+  labels:any;
   billOwnerForm:FormGroup;
   isDirty: boolean;
 

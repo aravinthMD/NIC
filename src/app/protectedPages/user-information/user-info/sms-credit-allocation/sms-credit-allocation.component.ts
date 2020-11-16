@@ -20,7 +20,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     {key:3,value:'On Hold'},
     {key:4,value:'Raised'}
 ];
-labels:any[]=[];
+labels: any = {};
 smsCreditAllocation:FormGroup;
 panelOpenState=false;
 displayedColumns:any[]=['s.no','credit','expiryDate','remark']
@@ -41,6 +41,11 @@ smsQuotaMetrix:any[]=[
 ];
 dataSource = new MatTableDataSource<any>(this.history)
 isDisabledInp=true;
+
+isDirty: boolean;
+
+propertyFlag: boolean;
+
   constructor(
     private labelsService :LabelsService,
     private utilService:UtilService,
@@ -67,5 +72,8 @@ isDisabledInp=true;
     this.utilService.setCurrentUrl('dashboard')
     this.router.navigate(['/users/Dashboard'])
   
+  }
+  onSubmit() {
+
   }
 }
