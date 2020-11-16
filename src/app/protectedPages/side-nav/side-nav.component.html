@@ -38,30 +38,18 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item pl-4" (click)="navigation('1.2')" [ngClass]="{'side-menu': (isLocation == '1.2')}">
-                        <a class="nav-link  collapsed" routerLink="/users/proformaInvoice" data-toggle="collapse"><span><i class="fa fa-file pr-2" aria-hidden="true"></i>Profoma Invoice</span></a>
-                        <!-- <div class="collapse" id="newaccountprofoma" aria-expanded="false">
-                            <ul class="flex-column nav pl-2">
-                                <li class="nav-item">
-                                    <a class="nav-link p-1" href="#">
-                                        <i class="fa fa-fw fa-clock-o"></i> Add New Profoma Invoice </a>
-                                </li>
-
-                            </ul>
-                        </div> -->
-                    </li>
+                   
                     <li class="nav-item pl-4" (click)="navigation('1.3')" [ngClass]="{'side-menu': (isLocation == '1.3')}">
                         <a class="nav-link  collapsed " routerLink="/users/projectExecution" routerLinkActive="active-link"    data-toggle="collapse"><span><i class="fa fa-bar-chart pr-2" aria-hidden="true"></i>Project Execution</span></a>
-                        <!-- <div class="collapse" id="newaccountpurchase" aria-expanded="false">
-                            <ul class="flex-column nav pl-2">
-                                <li class="nav-item">
-                                    <a class="nav-link p-1" href="#">
-                                        <i class="fa fa-fw fa-clock-o"></i> Add New Purchase Entry </a>
-                                </li>
-
-                            </ul>
-                        </div> -->
+                       
                     </li>
+
+                    <li class="nav-item pl-4" (click)="navigation('1.2')" [ngClass]="{'side-menu': (isLocation == '1.2')}">
+                        <a class="nav-link  collapsed" routerLink="/users/proformaInvoice" data-toggle="collapse"><span><i class="fa fa-file pr-2" aria-hidden="true"></i>Profoma Invoice</span></a>
+                       
+                    </li>
+
+                    
                     <li class="nav-item pl-4" (click)="navigation('1.4')" [ngClass]="{'side-menu': (isLocation == '1.4')}">
                         <a class="nav-link  collapsed " routerLink="/users/purchaseOrder" routerLinkActive="active-link"   data-toggle="collapse"><span><i class="fa fa-shopping-cart pr-2" aria-hidden="true"></i>Purchase Order</span></a>
                         <!-- <div class="collapse" id="newaccountpurorder" aria-expanded="false">

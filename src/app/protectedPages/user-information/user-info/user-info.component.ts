@@ -25,7 +25,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   form : FormGroup
   existingUserFlag : boolean = false;
-  buttonName : any = "Submit";
+  buttonName : any = "Save";
   propertyFlag : boolean;
   labels: any = {};
   panelOpenState = false;

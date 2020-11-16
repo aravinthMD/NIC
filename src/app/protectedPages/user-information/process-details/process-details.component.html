@@ -1,8 +1,15 @@
 
 <div class="col-md-10 main"> 
 <div class="proforma-invoice">
-  <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Proforma Invoice</h1>
+  <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Proforma Invoice
+  
+    <div style="text-align: right;color:grey;font-size:20px">
+      <span>username: arul.auth</span>
+    </div>
+  </h1>
 
+ 
+ 
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header matRipple>
@@ -328,6 +335,11 @@
     <ng-container matColumnDef="accountName">
       <th mat-header-cell *matHeaderCellDef> Account Name </th>
       <td mat-cell *matCellDef="let element" class="value-bold"> {{element.accountName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="projectNumber">
+      <th mat-header-cell *matHeaderCellDef> Project Number </th>
+      <td mat-cell *matCellDef="let element" class="value-bold"> {{element.projectNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="piAmt">

@@ -17,7 +17,7 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   @Input('userObj') user : any
 
-  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks','remainder']
+  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks']
 
   userList : any[] =   [
     {purchaseNo : 114,projectNumber : 5345,piAmt:24250,reminder:'Send Reminder'},

@@ -1,7 +1,13 @@
 <div class="col-md-10 main"> 
 <div class="tax-invoice">
 
-  <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Tax Invoice</h1>
+  <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Tax Invoice
+  
+    <div style="text-align: right;color:grey;font-size:20px">
+      <span>username: arul.auth</span>
+    </div>
+  
+  </h1>
 
 
   <!--Mat Expansion Panel -->
@@ -347,10 +353,10 @@
       <td mat-cell *matCellDef="let element" class="value-bold"> {{element.remarks}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="remainder">
+    <!-- <ng-container matColumnDef="remainder">
       <th mat-header-cell *matHeaderCellDef> Remainder </th>
       <td mat-cell *matCellDef="let element" class="value-bold"> <button>Send</button> </td>
-    </ng-container>
+    </ng-container> -->
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

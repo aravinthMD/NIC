@@ -17,7 +17,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks',"remainder"]
+  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks']
 
   userList : any[] =   [
    
