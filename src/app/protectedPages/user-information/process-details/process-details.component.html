@@ -24,7 +24,7 @@
             <div class="col-4">
                 <div class="form-group">
                     
-                    <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty">
+                    <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [type]="labels?.validationData.name.type" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -52,7 +52,7 @@
                         Please select date
                   </div> -->
 
-                  <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
+                  <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [type]="labels?.validationData.proformaIN.type" [isDirty]="isDirty">
 
                   </app-custom-input>
 
@@ -64,7 +64,7 @@
                 <div class="form-group">
                    
 
-                    <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [isDirty]="isDirty">
+                    <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [type]="labels?.validationData.refNo.type" [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -76,7 +76,7 @@
              
                  <div class="form-group">
                   
-                  <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [isDirty]="isDirty">
+                  <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [type]="labels?.validationData.piOwner.type" [isDirty]="isDirty">
 
                   </app-custom-input>
 
@@ -147,13 +147,16 @@
           <div class="form-group">
 
 
-            <label for="nicsiManager">NICSI Manager</label>
+            <!-- <label for="nicsiManager">NICSI Manager</label> -->
                  
-            <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
-            [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select>
+            <!-- <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
+            [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select> -->
 
+            <app-custom-input formControlName="nicsiManager" [labelName]="labels.nicsiManager" [id]="'nicsiManager'" [isRequired]="'NICSI Manager is mandatory'" [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type" [isDirty]="isDirty">
 
+            </app-custom-input>
 
+            <!-- [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type"  -->
           </div>
         </div>
         <div class="col-4">
