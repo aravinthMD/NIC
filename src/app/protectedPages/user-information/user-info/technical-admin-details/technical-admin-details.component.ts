@@ -13,7 +13,7 @@ import { UtilService } from '@services/util.service';
 export class TechnicalAdminDetailsComponent implements OnInit {
 
  
-  labels:any[];
+  labels:any ;
   technicaladminform:FormGroup;
   isDirty: boolean;
   departmentListData = [

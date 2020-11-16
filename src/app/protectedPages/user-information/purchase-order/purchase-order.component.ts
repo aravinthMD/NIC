@@ -67,6 +67,8 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   searchForm: FormGroup;
 
+  propertyFlag: boolean;
+
   constructor(
     private labelsService: LabelsService,
     private DatePipe:DatePipe
