@@ -55,7 +55,6 @@ export class TaxInvoiceComponent implements OnInit {
     });
     this.taxInvoiceForm=new FormGroup({
       userName: new FormControl(null),
-      purchaseON:new FormControl(null),
       taxIN:new FormControl(null),
       invoiceDate:new FormControl(null),
       projectNo:new FormControl(null),
@@ -65,14 +64,15 @@ export class TaxInvoiceComponent implements OnInit {
       toDate:new FormControl(null),
       invoiceAmount:new FormControl(null),
       remark:new FormControl(null),
-      billClaim:new FormControl(null),
       uploadDoc:new FormControl(null),
       paymentStatus:new FormControl(null),
       invoiceStatus : new FormControl(null),
       invoiceAmountPaid : new FormControl(null),
       tds :  new FormControl(null),
       penalty :  new FormControl(null),
-      shortPay : new FormControl(null)
+      shortPay : new FormControl(null),
+      submittedOn : new FormControl(null),
+      poBillable : new FormControl(null)
     })
 
     this.searchForm = new FormGroup({
@@ -98,6 +98,7 @@ export class TaxInvoiceComponent implements OnInit {
     this.taxInvoiceForm.value['toDate']=this.Datepipe.transform(this.taxInvoiceForm.value['toDate'],'dd/MM/yyyy')
     this.taxInvoiceForm.value['poDate']=this.Datepipe.transform(this.taxInvoiceForm.value['poDate'],'dd/MM/yyyy')
     this.taxInvoiceForm.value['invoiceDate']=this.Datepipe.transform(this.taxInvoiceForm.value['invoiceDate'],'dd/MM/yyyy')
+    this.taxInvoiceForm.value['submittedOn'] = this.Datepipe.transform(this.taxInvoiceForm.value['submittedOn'],'dd/MM/yyyy')
     console.log(this.taxInvoiceForm.value)
     this.taxInvoiceForm.reset()
   }

@@ -25,7 +25,6 @@
     "applicationsecurAuditCleared": "Application security audit cleared",
     "auditDatebyWhenItWillBeCleared": "Audit Date by when it will be cleared",
     "doYouHaveTRAIexemptedSenderId": "Do you have TRAI exempted Sender Id",
-    "name": "Name",
     "department": "Department",
     "departmentKey": "Department Key",
     "departmentVal": "Department Value",
@@ -53,13 +52,13 @@
     "proformaIN": "Proforma Invoice Number",
     "invoiceDate": "Invoice Date",
     "poNumber": "Purchase Order Number",
-    "poDate": "PO Date",
+    "poDate": "Purchase Order Date",
     "piAmount": "Amount",
     "piStatus": "PI Status",
     "paymentStatus": "Payment Status",
     "remark": "Remark",
     "piBillable": "PI Billable",
-    "poBillable": "PO Billable",
+    "poBillable": "Billable Amount",
     "purchaseON": "Purchase Order Number",
     "projectName": "Project Name",
     "userId": "User ID",
@@ -97,15 +96,17 @@
     "nicsiProjectNumber" : "NICSI Project Number",
     "invoiceStatus" : "Invoice Status",
     "invoiceAmountPaid" : "Invoice Amount Paid",
-    "penalty" : "Penalty is Mandatory",
-    "shortPay" : "Short Pay is Mandatory",
+    "penalty" : "Penalty",
+    "shortPay" : "Short Pay",
+    "smsApproved":"SMS Approved",
+    "submittedDate" : "Submitted Date",
     "nicsiManager": "NICSI Manager",
     "validationData": {
-        "name": {
+        "userName": {
             "maxLength": {
                 "rule": 50
             },
-            "type":"alpha"
+            "type" : "alpha"
         },
         "purchaseON": {
             "maxLength": {
@@ -119,7 +120,7 @@
         },
         "projectName": {
             "maxLength": {
-                "rule": 50
+                "rule": 25
             }
         },
         "userId": {
@@ -215,7 +216,7 @@
         },
         "projectNo": {
             "maxLength": {
-                "rule": 25
+                "rule": 12
             }
         },
         "proformaIN": {
@@ -233,7 +234,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "piAmount": {
             "maxLength": {
@@ -273,17 +274,17 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "withoutTax": {
             "maxLength": {
-                "rule": 15
+                "rule": 12
             },
             "type": "number"
         },
         "poAmountWithTax": {
             "maxLength": {
-                "rule": 15
+                "rule": 12
             },
             "type": "number"
         },
@@ -309,7 +310,7 @@
             "maxLength" : {
                 "rule" : 12
             },
-            "type":"number"
+            "type" : "number"
         },
         "nicsiProjectNumber" : {
             "maxLength" : {
@@ -319,21 +320,44 @@
         },
         "invoiceAmountPaid" : {
             "maxLength" : {
-                "rule" : "10"
+                "rule" : "12"
             },
             "type" : "number"
         },
         "penalty" : {
             "maxLength" : {
-                "rule" : "10"
+                "rule" : "12"
             },
             "type" : "number"
         },
         "shortPay" : {
             "maxLength" : {
-                "rule" : "6"
+                "rule" : "12"
             },
             "type" : "number"
+        },
+        "smsApproved" : {
+            "maxLength" : {
+                "rule" : "10"
+            },
+            "type" : "number"
+        },
+        "poBillable": {
+            "maxLength" : {
+                "rule" : "10"
+            },
+            "type" : "number"
+        },
+        "invoiceAmount" : {
+            "maxLength": {
+                "rule" :"12"
+            },
+            "type" : "number"
+        } ,
+        "taxIN" : {
+            "maxLength" : {
+                "rule" : 15
+            }
         },
         "nicsiManager": {
             "maxLength" : {
