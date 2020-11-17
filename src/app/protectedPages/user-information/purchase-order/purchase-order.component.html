@@ -1,4 +1,13 @@
+<div class="col-md-10 main"> 
 <div class="purchase-order">
+  <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Purchase Order
+  
+    <div style="text-align: right;color:grey;font-size:20px">
+      <span>username: arul.auth</span>
+    </div>
+  
+  </h1>
+
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header matRipple>
@@ -19,7 +28,8 @@
               <app-custom-input formControlName="userName" 
               [isRequired]="'User name is Mandatory'" 
               [labelName]="labels.userName" 
-              [maxLength]="labels?.validationData?.name?.maxLength"
+              [maxLength]="labels?.validationData?.userName?.maxLength"
+              [type] = "labels?.validationData?.userName?.type"
               [isDirty]="isDirty">
               </app-custom-input>
 
@@ -57,12 +67,20 @@
           </div>
           <div class="col-4">
             <div class="form-group">
-              <label for="smsApproved">SMS Approved</label>
+              <!-- <label for="smsApproved">SMS Approved</label>
               <section class="example-section">
                 <mat-checkbox class="example-margin" formControlName="smsApproved" >Yes</mat-checkbox>
 
-                </section>
-
+                </section> -->
+              
+                <app-custom-input formControlName = "smsApproved"
+                [isRequired] = "'SMS Approved is Mandatory'"
+                [labelName] = "labels.smsApproved"
+                [maxLength] = "labels?.validationData?.smsApproved.maxLength"
+                [type] = "labels?.validationData?.smsApproved.type"
+                [isDirty] = "isDirty"
+                >
+                </app-custom-input>
              
             </div>
           </div>
@@ -173,7 +191,14 @@
           <div class="col-4">
             <div class="form-group">
 
-              <app-custom-input formControlName="userEmail" [labelName]="labels.userEmail" [id]="'email'" [isRequired]="'User email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+              <app-custom-input formControlName="userEmail" 
+              [labelName]="labels.userEmail" 
+              [id]="'email'"
+             [isRequired]="'User email is mandatory'" 
+             [patternCheck]="labels?.validationData.email.patternCheck" 
+             [maxLength]="labels?.validationData.email.maxLength" 
+             [isDisabledInp]="propertyFlag" 
+             [isDirty]="isDirty">
 
               </app-custom-input>
 
@@ -183,8 +208,14 @@
            <div class="col-4">
             <div class="form-group">
 
-              <app-custom-input formControlName="poManagerEmail" [labelName]="labels.poManagerEmail" [id]="'email'" [isRequired]="'Manager email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
-
+              <app-custom-input formControlName="poManagerEmail" 
+              [labelName]="labels.poManagerEmail" 
+              [id]="'email'" 
+              [isRequired]="'Manager email is mandatory'" 
+              [patternCheck]="labels?.validationData.email.patternCheck" 
+              [maxLength]="labels?.validationData.email.maxLength" 
+              [isDisabledInp]="propertyFlag" 
+              [isDirty]="isDirty">
               </app-custom-input>
 
 
@@ -195,7 +226,14 @@
           <div class="col-4">
             <div class="form-group">
 
-              <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" [id]="'projectNo'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty"></app-custom-input>
+              <app-custom-input formControlName="projectNo" 
+              [labelName]="labels.projectNo" 
+              [id]="'projectNo'" 
+              [isRequired]="'Project number is mandatory'" 
+              [maxLength]="labels?.validationData.projectNo.maxLength" 
+              [isDisabledInp]="propertyFlag" 
+              [isDirty]="isDirty">
+            </app-custom-input>
 
               </div>
           </div>
@@ -376,10 +414,10 @@
         <td mat-cell *matCellDef="let element" class="value-bold"> {{element.remarks}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="remainder">
+      <!-- <ng-container matColumnDef="remainder">
         <th mat-header-cell *matHeaderCellDef> Remainder </th>
         <td mat-cell *matCellDef="let element" class="value-bold"> <button>Send</button> </td>
-      </ng-container>
+      </ng-container> -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -390,5 +428,7 @@
 
   <!--Materail Table End-->
   <div class="m-5"></div>
+
+</div>
 
 </div>

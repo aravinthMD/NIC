@@ -1,4 +1,5 @@
 {
+    "name": "Name",
     "userName": "User Name",
     "applicantName": "Applicant Name",
     "applicantEmail": "Applicant Email",
@@ -13,10 +14,10 @@
     "applicationUrl": "Application URL",
     "serverLocation": "Server Location",
     "password": "Password",
-    "credit":"Credit",
-    "onApprovalOf":"On Approval Of",
-    "statusChangedBy":"Status Changed By",
-    "timeStamp":"Time Stamp",
+    "credit": "Credit",
+    "onApprovalOf": "On Approval Of",
+    "statusChangedBy": "Status Changed By",
+    "timeStamp": "Time Stamp",
     "purpOfTheApplication": "Purpose of the Application",
     "ipformwhichSmsGatewaywillbeaccess": "IP Form which SMS Gateway will be access",
     "ipofStagingServReqdforTesting": "IP of Staging Server Required for Testing",
@@ -25,7 +26,6 @@
     "applicationsecurAuditCleared": "Application security audit cleared",
     "auditDatebyWhenItWillBeCleared": "Audit Date by when it will be cleared",
     "doYouHaveTRAIexemptedSenderId": "Do you have TRAI exempted Sender Id",
-    "name": "Name",
     "department": "Department",
     "departmentKey": "Department Key",
     "departmentVal": "Department Value",
@@ -48,18 +48,18 @@
     "creditAdded": "Credit added",
     "creditApprover": "Credit Approver",
     "creditDate": "Credit Date",
-    "smsQuotaMetrix":"SMS Quota Approval Metrix",
+    "smsQuotaMetrix": "SMS Quota Approval Metrix",
     "creditPI": "Credit Added Against The PI",
     "proformaIN": "Proforma Invoice Number",
     "invoiceDate": "Invoice Date",
     "poNumber": "Purchase Order Number",
-    "poDate": "PO Date",
+    "poDate": "Purchase Order Date",
     "piAmount": "Amount",
     "piStatus": "PI Status",
     "paymentStatus": "Payment Status",
     "remark": "Remark",
     "piBillable": "PI Billable",
-    "poBillable": "PO Billable",
+    "poBillable": "Billable Amount",
     "purchaseON": "Purchase Order Number",
     "projectName": "Project Name",
     "userId": "User ID",
@@ -88,19 +88,74 @@
     "withoutTax": "Without Tax",
     "userEmail": "User Email ID",
     "poManagerEmail": "Manager Email ID",
-    "poAmountWithTax":"Amount With Tax",
-    "documentNo" : "Document Number",
-    "modeOfPayment" : "Mode of Payment",
-    "bankName" : "Bank Name/Branch",
-    "amountGiven": "Amount Given",
-    "tds" : "TDS",
-    "nicsiProjectNumber" : "NICSI Project Number",
-    "invoiceStatus" : "Invoice Status",
-    "invoiceAmountPaid" : "Invoice Amount Paid",
-    "penalty" : "Penalty is Mandatory",
-    "shortPay" : "Short Pay is Mandatory",
+    "poAmountWithTax": "Amount With Tax",
+    "documentNo": "Document Number",
+    "modeOfPayment": "Mode of Payment",
+    "bankName": "Bank Name/Branch",
+    "amountReceived": "Amount Received",
+    "tds": "TDS",
+    "nicsiProjectNumber": "NICSI Project Number",
+    "invoiceStatus": "Invoice Status",
+    "invoiceAmountPaid": "Invoice Amount Paid",
+    "penalty": "Penalty",
+    "shortPay": "Short Pay",
+    "smsApproved": "SMS Approved",
+    "submittedDate": "Submitted Date",
+    "nicsiManager": "NICSI Manager",
     "validationData": {
         "name": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type": "alpha"
+        },
+        "userName": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type": "alpha"
+        },
+        "applicantName": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "serverLocation": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "smsGatewayAccess": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "ipServReqd": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "domMonSmsTraffic": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "intMonSmsTraffic": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "officerName": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "appSecurAudClear": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "traiSenderId": {
             "maxLength": {
                 "rule": 50
             }
@@ -117,7 +172,7 @@
         },
         "projectName": {
             "maxLength": {
-                "rule": 50
+                "rule": 25
             }
         },
         "userId": {
@@ -149,12 +204,12 @@
         },
         "designation": {
             "maxLength": {
-                "rule": 25
+                "rule": 50
             }
         },
         "employeeCode": {
             "maxLength": {
-                "rule": 15
+                "rule": 20
             }
         },
         "email": {
@@ -175,6 +230,12 @@
                 "rule": "^[0-9]{10}",
                 "msg": "Invalid telephone number"
             }
+        },
+        "availableCredit": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
         },
         "creditsSMSQuota": {
             "maxLength": {
@@ -206,20 +267,22 @@
         },
         "smsTraffic": {
             "maxLength": {
-                "rule": 6,
-                "msg": "Should be 6 Digits"
+                "rule": 12,
+                "msg": "Should be 12 Digits"
             },
             "type": "number"
         },
         "projectNo": {
             "maxLength": {
-                "rule": 25
-            }
+                "rule": 15
+            },
+            "type": "alpha-numeric"
         },
         "proformaIN": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type": "alpha-numeric"
         },
         "proformaPN": {
             "maxLength": {
@@ -230,7 +293,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "piAmount": {
             "maxLength": {
@@ -251,12 +314,14 @@
         "refNo": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type": "alpha-numeric"
         },
         "piOwner": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha"
         },
         "piTraffic": {
             "maxLength": {
@@ -268,65 +333,96 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "withoutTax": {
             "maxLength": {
-                "rule": 15
+                "rule": 12
             },
             "type": "number"
         },
         "poAmountWithTax": {
             "maxLength": {
-                "rule": 15
+                "rule": 12
             },
             "type": "number"
         },
         "documentNo": {
-            "maxLength" : {
-                "rule" : 20
+            "maxLength": {
+                "rule": 10
+            },
+            "type": "number"
+        },
+        "bankName": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type": "alpha"
+        },
+        "amountReceived": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "tds": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "nicsiProjectNumber": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "alpha-numeric"
+        },
+        "invoiceAmountPaid": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "penalty": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "shortPay": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "smsApproved": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "poBillable": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "invoiceAmount": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "taxIN": {
+            "maxLength": {
+                "rule": 15
             }
         },
-        "bankName" : {
-            "maxLength" : {
-                "rule" : 60
-            }
-        },
-        "amountGiven" : {
-            "maxLength" : {
-                "rule" : 12
+        "nicsiManager": {
+            "maxLength": {
+                "rule": "50"
             },
-            "type" : "number"
-        },
-        "tds" : {
-            "maxLength" : {
-                "rule" : 50
-            }
-        },
-        "nicsiProjectNumber" : {
-            "maxLength" : {
-                "rule" : 10
-            },
-            "type" : "number"
-        },
-        "invoiceAmountPaid" : {
-            "maxLength" : {
-                "rule" : "10"
-            },
-            "type" : "number"
-        },
-        "penalty" : {
-            "maxLength" : {
-                "rule" : "10"
-            },
-            "type" : "number"
-        },
-        "shortPay" : {
-            "maxLength" : {
-                "rule" : "6"
-            },
-            "type" : "number"
+            "type": "alpha"
         }
-       
     }
 }

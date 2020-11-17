@@ -70,6 +70,7 @@
 
   
   .main {
+    margin-top: 1vw;
     margin-left: 225px;
     font-size: 20px;
     /* Increased text to enable scrolling */
@@ -190,3 +191,7 @@ mat-form-field{
   margin-top: -0.7vw;
   
   }
+
+.text-gray-800{
+  color: #5a5c69 !important;
+}

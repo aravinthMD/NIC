@@ -13,7 +13,7 @@ import { UtilService } from '@services/util.service';
 export class TechnicalAdminDetailsComponent implements OnInit {
 
  
-  labels:any[];
+  labels:any ;
   technicaladminform:FormGroup;
   isDirty: boolean;
   departmentListData = [
@@ -61,7 +61,12 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   }
   back() {
 
-    this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['/users/Dashboard'])
+    this.utilService.setCurrentUrl('users/customerDetails')
+    this.router.navigate(['/users/customerDetails'])
+  }
+
+  next() {
+    this.utilService.setCurrentUrl('users/billingAdmin')
+    this.router.navigate(['/users/billingAdmin'])
   }
 }

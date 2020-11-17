@@ -17,7 +17,7 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   @Input('userObj') user : any
 
-  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks','remainder']
+  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks']
 
   userList : any[] =   [
     {purchaseNo : 114,projectNumber : 5345,piAmt:24250,reminder:'Send Reminder'},
@@ -28,11 +28,12 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
     {purchaseNo : 114,projectNumber : 5345,piAmt:34000,reminder:'Send Reminder'},
   ];
   poStatus: any[] = [
-    { key: 0, value: 'Received' },
-    { key: 1, value: 'Pending' },
-    { key: 2, value: 'Approved' },
-    { key: 3, value: 'Rejected' },
-    { key: 4, value: 'On Hold' }]
+    { key :0, value: 'Received' },
+    { key :1,value : 'Not Received'},
+    { key :2,value : 'Raised'},
+    { key: 3, value: 'Pending' },
+    { key: 4, value: 'Rejected' },
+    { key: 5, value: 'On Hold' }]
   piStatus: any[] = [
     { key: 0, value: 'Received' },
     { key: 1, value: 'Pending' },
@@ -65,6 +66,8 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   isDirty: boolean;
 
   searchForm: FormGroup;
+
+  propertyFlag: boolean;
 
   constructor(
     private labelsService: LabelsService,

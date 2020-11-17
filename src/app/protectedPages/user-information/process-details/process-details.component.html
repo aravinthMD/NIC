@@ -1,7 +1,15 @@
 
-
+<div class="col-md-10 main"> 
 <div class="proforma-invoice">
+  <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Proforma Invoice
+  
+    <div style="text-align: right;color:grey;font-size:20px">
+      <span>username: arul.auth</span>
+    </div>
+  </h1>
 
+ 
+ 
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header matRipple>
@@ -16,8 +24,13 @@
             <div class="col-4">
                 <div class="form-group">
                     
-                    <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty">
-
+                    <app-custom-input formControlName="accountName" 
+                    [labelName]="labels.accountName" 
+                    [id]="'accountName'" 
+                    [isRequired]="'Account name is mandatory'" 
+                    [maxLength]="labels?.validationData.userName.maxLength" 
+                    [type]="labels?.validationData.userName.type" 
+                    [isDirty]="isDirty">
                     </app-custom-input>
 
                     <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
@@ -44,19 +57,27 @@
                         Please select date
                   </div> -->
 
-                  <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
-
+                  <app-custom-input formControlName="invoiceNumber" 
+                  [labelName]="labels.proformaIN" 
+                  [id]="'invoiceNumber'" 
+                  [isRequired]="'Invoice number is mandatory'" 
+                  [maxLength]="labels?.validationData.proformaIN.maxLength" 
+                  [type]="labels?.validationData.proformaIN.type" 
+                  [isDirty]="isDirty">
                   </app-custom-input>
-
-
-
                   </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                    
 
-                    <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [isDirty]="isDirty">
+                    <app-custom-input formControlName="refNumber" 
+                    [labelName]="labels.refNo" 
+                    [id]="'refNo'" 
+                    [isRequired]="'Reference number is mandatory'" 
+                    [maxLength]="labels?.validationData.refNo.maxLength" 
+                    [type]="labels?.validationData.refNo.type" 
+                    [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -68,7 +89,13 @@
              
                  <div class="form-group">
                   
-                  <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [isDirty]="isDirty">
+                  <app-custom-input formControlName="piOwner" 
+                  [labelName]="labels.piOwner" 
+                  [id]="'piOwner'" 
+                  [isRequired]="'Owner is mandatory'" 
+                  [maxLength]="labels?.validationData.piOwner.maxLength" 
+                  [type]="labels?.validationData.piOwner.type" 
+                  [isDirty]="isDirty">
 
                   </app-custom-input>
 
@@ -93,7 +120,13 @@
                   Please select date
             </div> -->
 
-            <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'Amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
+            <app-custom-input formControlName="piAmount" 
+            [labelName]="labels.piAmount" 
+            [id]="'piAmount'" 
+            [isRequired]="'Amount is mandatory'" 
+            [maxLength]="labels?.validationData.piAmount.maxLength" 
+            [type]="labels?.validationData.piAmount.type" 
+            [isDirty]="isDirty">
 
             </app-custom-input>
 
@@ -102,7 +135,13 @@
         <div class="col-4">
           <div class="form-group">
 
-            <app-custom-input formControlName="piTraffic" [labelName]="labels.piTraffic" [id]="'piTraffic'" [isRequired]="'Traffic is mandatory'" [maxLength]="labels?.validationData.piTraffic.maxLength" [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty">
+            <app-custom-input formControlName="piTraffic" 
+            [labelName]="labels.piTraffic" 
+            [id]="'piTraffic'" 
+            [isRequired]="'Traffic is mandatory'" 
+            [maxLength]="labels?.validationData.piTraffic.maxLength" 
+            [type]="labels?.validationData.piTraffic.type" 
+            [isDirty]="isDirty">
 
             </app-custom-input>
 
@@ -139,13 +178,16 @@
           <div class="form-group">
 
 
-            <label for="nicsiManager">NICSI Manager</label>
+            <!-- <label for="nicsiManager">NICSI Manager</label> -->
                  
-            <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
-            [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select>
+            <!-- <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
+            [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select> -->
 
+            <app-custom-input formControlName="nicsiManager" [labelName]="labels.nicsiManager" [id]="'nicsiManager'" [isRequired]="'NICSI Manager is mandatory'" [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type" [isDirty]="isDirty">
 
+            </app-custom-input>
 
+            <!-- [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type"  -->
           </div>
         </div>
         <div class="col-4">
@@ -153,7 +195,9 @@
                <label for="Fromperiod">Start Date</label>
                 
                 <mat-form-field>
-                  <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]= "form.get('endDate').value" required>
+                  <input matInput [matDatepicker]="picker3" 
+                  formControlName="startDate" 
+                  [max]= "form.get('endDate').value" required>
                   <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                   <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
@@ -204,8 +248,11 @@
               <div class="form-group">
                   <label for="payMentStatus">Payment Status</label>
                  
-                  <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData"
-                  [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty"></app-vf-custom-select>
+                  <app-vf-custom-select formControlName="paymentStatus" 
+                  [values]="paymentStatusData"
+                  [isRequired]="'Please Select Payment Status'" 
+                  [isDirty]="isDirty">
+                </app-vf-custom-select>
 
               </div>
               
@@ -329,6 +376,11 @@
       <td mat-cell *matCellDef="let element" class="value-bold"> {{element.accountName}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="projectNumber">
+      <th mat-header-cell *matHeaderCellDef> Project Number </th>
+      <td mat-cell *matCellDef="let element" class="value-bold"> {{element.projectNumber}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="piAmt">
       <th mat-header-cell *matHeaderCellDef> PI Amount </th>
       <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piAmt}} </td>
@@ -357,4 +409,6 @@
 </div>
 <!--Material Table End-->
 <div class="m-5"></div>
+</div>
+
 </div>

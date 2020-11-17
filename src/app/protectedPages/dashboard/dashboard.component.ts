@@ -42,4 +42,10 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
 
   }
 
+  navigateToUser(element) {
+
+    this.utilService.setCurrentUrl('users/customerDetails')
+    this.route.navigate(['/users/customerDetails/'+element.id])
+  }
+
 }

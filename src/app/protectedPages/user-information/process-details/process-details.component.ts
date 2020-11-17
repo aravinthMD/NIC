@@ -18,13 +18,13 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','accountName','piAmt','Action',"remainder"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"remainder"]
 
 
   userList : any[] =   [
-    {invoiceNo : 4355,accountName : 'RajeshK',piAmt:25000,remarks:'credited'},
-    {invoiceNo : 2313,accountName : 'Suresh Agarwal',piAmt:56000,remarks:'credited'},
-    {invoiceNo : 6574,accountName : "Sharma",piAmt:25000,remarks:'credited'}
+    {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: 4535,piAmt:25000,remarks:'credited'},
+    {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: 6534,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 6574,accountName : "Sharma",projectNumber: 7644,piAmt:25000,remarks:'credited'}
   ];
 
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]

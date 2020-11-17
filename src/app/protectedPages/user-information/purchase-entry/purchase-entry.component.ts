@@ -37,9 +37,9 @@ export class PurchaseEntryComponent implements OnInit,AfterViewInit {
 
   modeOfPaymentList = [
     {key : 0 ,value : 'DD'},
-    {key : 1 ,value : "Chq"},
+    {key : 1 ,value : "Cheque"},
     {key : 2 , value : "RTGS"},
-    {key : 3 ,value : "NEFT"}
+    {key : 3 ,value : "IMPS"}
   ]
 
 
@@ -61,7 +61,7 @@ export class PurchaseEntryComponent implements OnInit,AfterViewInit {
       documentNo :  new FormControl(null),
       dateOfTransaction :  new FormControl(null),
       bankName : new FormControl(null),
-      amountGiven : new FormControl(null),
+      amountReceived : new FormControl(null),
       tds : new FormControl(null),
       NICSIProjectNo : new FormControl(null),
       invoiceDate :  new FormControl(null),
