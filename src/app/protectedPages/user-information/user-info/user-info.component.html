@@ -11,48 +11,65 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="department">{{labels.department}}</label>
-                            <app-vf-custom-select formControlName="departmentName" [values]="departmentListData"
-                                [isRequired]="'Please Select Department'" [isDisabled]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-vf-custom-select formControlName="departmentName" 
+                            [values]="departmentListData"
+                            [isRequired]="'Please Select Department'" 
+                            [isDisabled]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-vf-custom-select>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="name" [labelName]="labels.applicantName" [id]="'Name'"
-                                [isRequired]="'Applicant Name is mandatory'" [mandatoryField]="true"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="applicantName" 
+                            [labelName]="labels.applicantName" [id]="'applicantName'"
+                            [isRequired]="'Applicant Name is mandatory'" 
+                            [mandatoryField]="true"
+                            [maxLength]="labels?.validationData.applicantName.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="email" [labelName]="labels.applicantEmail" [id]="'email'"
-                                [isRequired]="'Applicant Email Id is mandatory'" [mandatoryField]="true"
-                                [patternCheck]="labels?.validationData.email.patternCheck"
-                                [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="email" 
+                            [labelName]="labels.applicantEmail" 
+                            [id]="'email'"
+                            [isRequired]="'Applicant Email Id is mandatory'" 
+                            [mandatoryField]="true"
+                            [patternCheck]="labels?.validationData.email.patternCheck"
+                            [maxLength]="labels?.validationData.email.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="mobileNo" [labelName]="labels.applicantMobile"
-                                [id]="'mobileNo'" [isRequired]="'Applicant Mobile number is mandatory'"
-                                [mandatoryField]="true" [type]="labels?.validationData.mobile.type"
-                                [patternCheck]="labels?.validationData.mobile.patternCheck"
-                                [maxLength]="labels?.validationData.mobile.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="mobileNo" 
+                            [labelName]="labels.applicantMobile"
+                            [id]="'mobileNo'" 
+                            [isRequired]="'Applicant Mobile number is mandatory'"
+                            [mandatoryField]="true" 
+                            [type]="labels?.validationData.mobile.type"
+                            [patternCheck]="labels?.validationData.mobile.patternCheck"
+                            [maxLength]="labels?.validationData.mobile.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="OfficerName" [labelName]="labels.OfficerName"
-                                [id]="'rep/Nod/ForOfficerName'" [isRequired]="'Officer Name is mandatory'"
-                                [mandatoryField]="true" [maxLength]="labels?.validationData.userName.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            <app-custom-input formControlName="OfficerName" 
+                            [labelName]="labels.OfficerName"
+                            [id]="'rep/Nod/ForOfficerName'" 
+                            [isRequired]="'Officer Name is mandatory'"
+                            [mandatoryField]="true" 
+                            [maxLength]="labels?.validationData.officerName.maxLength"
+                            [isDisabledInp]="propertyFlag" 
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
@@ -79,10 +96,14 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="designation" [labelName]="labels.designation"
-                                [id]="'designation'" [isRequired]="'Designation is mandatory'" [mandatoryField]="true"
-                                [maxLength]="labels?.validationData.designation.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            <app-custom-input formControlName="designation" 
+                            [labelName]="labels.designation"
+                            [id]="'designation'" 
+                            [isRequired]="'Designation is mandatory'" 
+                            [mandatoryField]="true"
+                            [maxLength]="labels?.validationData.designation.maxLength"
+                            [isDisabledInp]="propertyFlag" 
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
@@ -120,32 +141,36 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="telPhno" [labelName]="labels.teleNumber" [id]="'telPhno'"
-                                [isRequired]="'Telephone number is mandatory'" [mandatoryField]="true"
-                                [type]="labels?.validationData.telephoneNumber.type"
-                                [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
-                                [maxLength]="labels?.validationData.telephoneNumber.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            <app-custom-input formControlName="telPhno" 
+                            [labelName]="labels.teleNumber" [id]="'telPhno'"
+                            [isRequired]="'Telephone number is mandatory'" 
+                            [mandatoryField]="true"
+                            [type]="labels?.validationData.telephoneNumber.type"
+                            [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
+                            [maxLength]="labels?.validationData.telephoneNumber.maxLength"
+                            [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="offAddress1" [labelName]="labels.officialAdd1"
-                                [id]="'offcAddressLine1'" [mandatoryField]="true"
-                                [isRequired]="'Office AddressLine1 is mandatory'"
-                                [maxLength]="labels?.validationData.officeAddress.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            <app-custom-input formControlName="offAddress1" 
+                            [labelName]="labels.officialAdd1"
+                            [id]="'offcAddressLine1'" [mandatoryField]="true"
+                            [isRequired]="'Office AddressLine1 is mandatory'"
+                            [maxLength]="labels?.validationData.officeAddress.maxLength"
+                            [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="offAddress2" [labelName]="labels.officialAdd2"
-                                [id]="'offcAddressLine2'" [mandatoryField]="true"
-                                [isRequired]="'Office AddressLine2 is mandatory'"
-                                [maxLength]="labels?.validationData.officeAddress.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            <app-custom-input formControlName="offAddress2" 
+                            [labelName]="labels.officialAdd2"
+                            [id]="'offcAddressLine2'" [mandatoryField]="true"
+                            [isRequired]="'Office AddressLine2 is mandatory'"
+                            [maxLength]="labels?.validationData.officeAddress.maxLength"
+                            [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
@@ -155,19 +180,22 @@
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3"
-                                [id]="'offcAddressLine3'" [mandatoryField]="true"
-                                [isRequired]="'Office AddressLine3 is mandatory'"
-                                [maxLength]="labels?.validationData.officeAddress.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            [id]="'offcAddressLine3'" [mandatoryField]="true"
+                            [isRequired]="'Office AddressLine3 is mandatory'"
+                            [maxLength]="labels?.validationData.officeAddress.maxLength"
+                            [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="city" [labelName]="labels.city" [id]="'city'"
-                                [mandatoryField]="true" [isRequired]="'City is mandatory'"
-                                [maxLength]="labels?.validationData.city.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="city" 
+                            [labelName]="labels.city" [id]="'city'"
+                            [mandatoryField]="true" 
+                            [isRequired]="'City is mandatory'"
+                            [maxLength]="labels?.validationData.city.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
@@ -195,9 +223,11 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="department">{{labels.smsServiceReqd}}</label>
-                            <app-vf-custom-select formControlName="smsServiceReqd" [values]="smsServiceReqd"
-                                [isRequired]="'Please Select SMS Service'" [isDisabled]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-vf-custom-select formControlName="smsServiceReqd" 
+                            [values]="smsServiceReqd"
+                            [isRequired]="'Please Select SMS Service'" 
+                            [isDisabled]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-vf-custom-select>
                         </div>
                     </div>
@@ -214,11 +244,13 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="smsTariffMonthWise" [labelName]="labels.smsTraffic"
-                                [id]="'smsTraffic'" [mandatoryField]="true"
-                                [maxLength]="labels?.validationData.smsTraffic.maxLength"
-                                [type]="labels?.validationData.smsTraffic.type" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="smsTariffMonthWise" 
+                            [labelName]="labels.smsTraffic"
+                            [id]="'smsTraffic'" [mandatoryField]="true"
+                            [maxLength]="labels?.validationData.smsTraffic.maxLength"
+                            [type]="labels?.validationData.smsTraffic.type" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
@@ -261,96 +293,119 @@
                     </div> -->
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="availableCredit" [labelName]="labels.availableCredit"
-                                [id]="'availableCredit'" [type]="labels?.validationData.creditsSMSQuota.type"
-                                [maxLength]="labels?.validationData.creditsSMSQuota.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            <app-custom-input formControlName="availableCredit" 
+                            [labelName]="labels.availableCredit"
+                            [id]="'availableCredit'" 
+                            [type]="labels?.validationData.availableCredit.type"
+                            [maxLength]="labels?.validationData.availableCredit.maxLength"
+                            [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="nameOfTheApplication"
-                                [labelName]="labels.nameOfTheApplication" [id]="'nameOfTheApplication'"
-                                [mandatoryField]="true" [isRequired]="'Name of the Applicationis mandatory'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            [labelName]="labels.nameOfTheApplication" 
+                            [id]="'nameOfTheApplication'"
+                            [mandatoryField]="true" 
+                            [isRequired]="'Name of the Applicationis mandatory'"
+                            [maxLength]="labels?.validationData.applicantName.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="applicationUrl" [labelName]="labels.applicationUrl"
-                                [id]="'applicationUrl'" [mandatoryField]="true"
-                                [isRequired]="'Application URL mandatory'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="applicationUrl" 
+                            [labelName]="labels.applicationUrl"
+                            [id]="'applicationUrl'" [mandatoryField]="true"
+                            [isRequired]="'Application URL mandatory'"
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="serverLocation" [labelName]="labels.serverLocation"
-                                [id]="'serverLocation'" [mandatoryField]="true"
-                                [isRequired]="'Server Location mandatory'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="serverLocation" 
+                            [labelName]="labels.serverLocation"
+                            [id]="'serverLocation'" [mandatoryField]="true"
+                            [isRequired]="'Server Location mandatory'"
+                            [maxLength]="labels?.validationData.serverLocation.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="purpOfTheApplication"
-                                [labelName]="labels.purpOfTheApplication" [id]="'purpOfTheApplication'"
-                                [maxLength]="labels?.validationData?.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            [labelName]="labels.purpOfTheApplication" 
+                            [id]="'purpOfTheApplication'"
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="smsGatewayAccess"
-                                [labelName]="labels.ipformwhichSmsGatewaywillbeaccess" [id]="'smsGatewayAccess'"
-                                [mandatoryField]="true" [isRequired]="'This Field is mandatory'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            [labelName]="labels.ipformwhichSmsGatewaywillbeaccess" 
+                            [id]="'smsGatewayAccess'"
+                            [mandatoryField]="true" 
+                            [isRequired]="'This Field is mandatory'"
+                            [maxLength]="labels?.validationData.smsGatewayAccess.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="ipServReqd"
-                                [labelName]="labels.ipofStagingServReqdforTesting" [id]="'ipServReqd'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            [labelName]="labels.ipofStagingServReqdforTesting" 
+                            [id]="'ipServReqd'"
+                            [maxLength]="labels?.validationData.ipServReqd.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="domMonSmsTraffic"
-                                [labelName]="labels.projectedDomesticMonthlySMStraffic" [id]="'domMonSmsTraffic'"
-                                [mandatoryField]="true" [maxLength]="labels?.validationData.userName.maxLength"
-                                [isDisabledInp]="propertyFlag" [isRequired]="'This Field is mandatory'"
-                                [isDirty]="isDirty">
+                            [labelName]="labels.projectedDomesticMonthlySMStraffic" 
+                            [id]="'domMonSmsTraffic'"
+                            [mandatoryField]="true" 
+                            [maxLength]="labels?.validationData.domMonSmsTraffic.maxLength"
+                            [isDisabledInp]="propertyFlag" 
+                            [isRequired]="'This Field is mandatory'"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="intMonSmsTraffic"
-                                [labelName]="labels.projectedInternationalMonthlySMStraffic" [id]="'intMonSmsTraffic'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            [labelName]="labels.projectedInternationalMonthlySMStraffic" 
+                            [id]="'intMonSmsTraffic'"
+                            [maxLength]="labels?.validationData.intMonSmsTraffic.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="appSecurAudClear"
-                                [labelName]="labels.applicationsecurAuditCleared" [id]="'appSecurAudClear'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [mandatoryField]="true" [isRequired]="'This Field is mandatory'" [isDirty]="isDirty">
+                            [labelName]="labels.applicationsecurAuditCleared" 
+                            [id]="'appSecurAudClear'"
+                            [maxLength]="labels?.validationData.appSecurAudClear.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [mandatoryField]="true" 
+                            [isRequired]="'This Field is mandatory'" 
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
@@ -373,17 +428,25 @@
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="traiSenderId"
-                                [labelName]="labels.doYouHaveTRAIexemptedSenderId" [id]="'traiSenderId'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [mandatoryField]="true" [isRequired]="'This Field is mandatory'" [isDirty]="isDirty">
+                            [labelName]="labels.doYouHaveTRAIexemptedSenderId" 
+                            [id]="'traiSenderId'"
+                            [maxLength]="labels?.validationData.traiSenderId.maxLength" 
+                            [isDisabledInp]="propertyFlag"
+                            [mandatoryField]="true" 
+                            [isRequired]="'This Field is mandatory'" 
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo"
-                                [id]="'projectNo'" [maxLength]="labels?.validationData.projectNo.maxLength"
-                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                            <app-custom-input formControlName="projectNo" 
+                            [labelName]="labels.projectNo"
+                            [id]="'projectNo'" 
+                            [maxLength]="labels?.validationData.projectNo.maxLength"
+                            [type]="labels?.validationData.projectNo.type"
+                            [isDisabledInp]="propertyFlag" 
+                            [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>

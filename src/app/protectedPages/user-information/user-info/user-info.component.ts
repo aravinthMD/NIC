@@ -52,7 +52,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
-      name : [null],
+      applicantName : [null],
       departmentName : [''],
       designation : [null],
       employeeCode : [null],
@@ -135,7 +135,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.existingUserFlag = true;
     
     this.form.patchValue({
-      name : 'Aravinth.auth',
+      applicantName : 'Aravinth.auth',
       departmentName : '1',
       designation : 'Senior Engineer',
       employeeCode : '12008',

@@ -25,7 +25,7 @@ smsCreditAllocation:FormGroup;
 panelOpenState=false;
 displayedColumns:any[]=['s.no','credit','expiryDate','remark']
 
-currentDate:string;
+currentDate:any;
 
 history:any[]=[
   {credit:1000,expiryDate:'1/10/2020',remark:'credited'},
