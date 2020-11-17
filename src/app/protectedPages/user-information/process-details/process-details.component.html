@@ -1,7 +1,15 @@
 
-
+<div class="col-md-10 main"> 
 <div class="proforma-invoice">
+  <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Proforma Invoice
+  
+    <div style="text-align: right;color:grey;font-size:20px">
+      <span>username: arul.auth</span>
+    </div>
+  </h1>
 
+ 
+ 
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header matRipple>
@@ -10,27 +18,31 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <form [formGroup]="form">
-        <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
-          <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
-        </div>  -->
+        
 
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="invoiceNumber">Proforma Invoice Number</label>
-                    <input type="email" class="form-control" id="invoiceNumber" aria-describedby="invoiceNumberHelp">
-                    <small id="invoiceNumberHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
-
+                    
+                    <app-custom-input formControlName="accountName" 
+                    [labelName]="labels.accountName" 
+                    [id]="'accountName'" 
+                    [isRequired]="'Account name is mandatory'" 
+                    [maxLength]="labels?.validationData.userName.maxLength" 
+                    [type]="labels?.validationData.userName.type" 
+                    [isDirty]="isDirty">
                     </app-custom-input>
+
+                    <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
+
+                    </app-custom-input> -->
 
                   </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                     <label for="invoiceDate">Invoice Date</label>
-                  <!--  <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
-                    <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+                     <!-- <label for="invoiceDate">Invoice Date</label>
+                  
 
                     <mat-form-field>
                       <input matInput [matDatepicker]="picker1" formControlName="invoiceDate" required>
@@ -43,17 +55,29 @@
                       form.get('invoiceDate').errors?.required
                     ">
                         Please select date
-                  </div>
+                  </div> -->
 
+                  <app-custom-input formControlName="invoiceNumber" 
+                  [labelName]="labels.proformaIN" 
+                  [id]="'invoiceNumber'" 
+                  [isRequired]="'Invoice number is mandatory'" 
+                  [maxLength]="labels?.validationData.proformaIN.maxLength" 
+                  [type]="labels?.validationData.proformaIN.type" 
+                  [isDirty]="isDirty">
+                  </app-custom-input>
                   </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="exampleInputEmail1">Project Number</label>
-                    <input type="projectNumber" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
-                    <small id="projectNumberHelp" class="form-text text-muted"></small> -->
+                   
 
-                    <app-custom-input formControlName="projectNumber" [labelName]="labels.projectNo" [id]="'projectNumber'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.proformaPN.maxLength" [isDirty]="isDirty">
+                    <app-custom-input formControlName="refNumber" 
+                    [labelName]="labels.refNo" 
+                    [id]="'refNo'" 
+                    [isRequired]="'Reference number is mandatory'" 
+                    [maxLength]="labels?.validationData.refNo.maxLength" 
+                    [type]="labels?.validationData.refNo.type" 
+                    [isDirty]="isDirty">
 
                     </app-custom-input>
 
@@ -62,39 +86,27 @@
             </div>
             
             <div class="col-4">
-              <!-- <div class="form-group">
-                  <label for="poNumber">PO Number</label>
-                  <input type="email" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
-                  <small id="poNumberHelp" class="form-text text-muted"></small>
-                </div>-->
+             
                  <div class="form-group">
-                  <!-- <label for="poNumber">PO Number</label>
-
-                  <input type="poNumber" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
-                  <small id="poNumberHelp" class="form-text text-muted"></small> -->
-
-                  <app-custom-input formControlName="poNumber" [labelName]="labels.poNumber" [id]="'poNumber'" [isRequired]="'PO number is mandatory'" [maxLength]="labels?.validationData.poNumber.maxLength" [isDirty]="isDirty">
+                  
+                  <app-custom-input formControlName="piOwner" 
+                  [labelName]="labels.piOwner" 
+                  [id]="'piOwner'" 
+                  [isRequired]="'Owner is mandatory'" 
+                  [maxLength]="labels?.validationData.piOwner.maxLength" 
+                  [type]="labels?.validationData.piOwner.type" 
+                  [isDirty]="isDirty">
 
                   </app-custom-input>
 
 
-                  <!-- <select 
-                      name="poNumber" 
-                      id="poNumber" 
-                      class="form-control">
-                      <option>Rejected</option>
-                      <option>Approved</option>
-                      <option>Pending</option>
-                      <option>Rejected</option>
-                      <option>OnHold</option>
-                  </select> -->
+                 
               </div> 
           </div>
           <div class="col-4">
             <div class="form-group">
-                <label for="poDate">PO Date</label>
-                <!--<input type="date" class="form-control" id="poDate" aria-describedby="poDateHelp">
-                <small id="poDateHelp" class="form-text text-muted"></small> -->
+                <!-- <label for="poDate">PO Date</label>
+               
                 <mat-form-field>
                   <input matInput [matDatepicker]="picker2" formControlName="poDate" required>
                   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -106,24 +118,93 @@
                 form.get('poDate').errors?.required
               ">
                   Please select date
-            </div>
+            </div> -->
+
+            <app-custom-input formControlName="piAmount" 
+            [labelName]="labels.piAmount" 
+            [id]="'piAmount'" 
+            [isRequired]="'Amount is mandatory'" 
+            [maxLength]="labels?.validationData.piAmount.maxLength" 
+            [type]="labels?.validationData.piAmount.type" 
+            [isDirty]="isDirty">
+
+            </app-custom-input>
 
               </div>
         </div>
         <div class="col-4">
+          <div class="form-group">
+
+            <app-custom-input formControlName="piTraffic" 
+            [labelName]="labels.piTraffic" 
+            [id]="'piTraffic'" 
+            [isRequired]="'Traffic is mandatory'" 
+            [maxLength]="labels?.validationData.piTraffic.maxLength" 
+            [type]="labels?.validationData.piTraffic.type" 
+            [isDirty]="isDirty">
+
+            </app-custom-input>
+
+
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+
+           
+            <label for="dateFor">{{labels?.date}}</label>
+            <!-- <input type="date" class="form-control" id="dateFor" aria-describedby="dateHelp">
+                    <small id="dateHelp" class="form-text text-muted"></small> -->
+
+            <mat-form-field>
+              <input matInput required formControlName="date" 
+              [matDatepicker]="picker1">
+              <mat-datepicker-toggle matSuffix [for]="picker1" 
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <div class="date-picker-error"  *ngIf="
+            isDirty &&
+            form.get('date').errors?.required
+          ">
+              Please select date
+        </div>
+
+
+
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+
+
+            <!-- <label for="nicsiManager">NICSI Manager</label> -->
+                 
+            <!-- <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
+            [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select> -->
+
+            <app-custom-input formControlName="nicsiManager" [labelName]="labels.nicsiManager" [id]="'nicsiManager'" [isRequired]="'NICSI Manager is mandatory'" [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type" [isDirty]="isDirty">
+
+            </app-custom-input>
+
+            <!-- [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type"  -->
+          </div>
+        </div>
+        <div class="col-4">
             <div class="form-group">
-               <label for="Fromperiod">From Date</label>
-                <!--  <input type="date" class="form-control" id="Fromperiod" aria-describedby="FromperiodHelp">
-                <small id="FromperiodHelp" class="form-text text-muted"></small> -->
+               <label for="Fromperiod">Start Date</label>
+                
                 <mat-form-field>
-                  <input matInput [matDatepicker]="picker3" formControlName="fromDate" [max]= "form.get('toDate').value" required>
+                  <input matInput [matDatepicker]="picker3" 
+                  formControlName="startDate" 
+                  [max]= "form.get('endDate').value" required>
                   <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                   <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
 
                 <div class="date-picker-error"  *ngIf="
                 isDirty &&
-                form.get('fromDate').errors?.required
+                form.get('startDate').errors?.required
               ">
                   Please select date
             </div>
@@ -132,70 +213,30 @@
         </div>
         <div class="col-4">
           <div class="form-group">
-               <label for="Toperiod">To Date</label>
-             <!-- <input type="date" class="form-control" id="Toperiod" aria-describedby="ToperiodHelp">
-              <small id="ToperiodHelp" class="form-text text-muted"></small> -->
-
+               <label for="Toperiod">End Date</label>
+            
               <mat-form-field>
-                <input matInput [matDatepicker]="picker4" [min]= "form.get('fromDate').value" formControlName="toDate" required>
+                <input matInput [matDatepicker]="picker4" [min]= "form.get('startDate').value" formControlName="endDate" required>
                 <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                 <mat-datepicker #picker4></mat-datepicker>
               </mat-form-field>
 
               <div class="date-picker-error"  *ngIf="
               isDirty &&
-              form.get('toDate').errors?.required
+              form.get('endDate').errors?.required
             ">
                 Please select date
           </div>
               
             </div>
       </div>
+         
+         
           <div class="col-4">
-              <div class="form-group">
-                  <!-- <label for="piAmount">PI Amount</label>
-                  <input type="text" class="form-control" id="piAmount" aria-describedby="piAmountHelp">
-                  <small id="piAmountHelp" class="form-text text-muted"></small> -->
-
-                  <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'PI amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
-
-                  </app-custom-input>
-
-
-                </div>
-          </div>
-          <div class="col-4">
-              <div class="form-group">
-                  <!-- <label for="exampleInputEmail1">Email Address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  <small id="emailHelp" class="form-text text-muted"></small> -->
-
-                  <app-custom-input formControlName="emailAddress" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email address is mandatory'" [maxLength]="labels?.validationData.email.maxLength" [patternCheck]="labels?.validationData.email.patternCheck" [isDirty]="isDirty">
-
-                  </app-custom-input>
-
-
-                </div>
-          </div>
-          <div class="col-4">
-              <!--<div class="form-group">
-                  <label for="piStatus">PI Status</label>
-                  <input type="text" class="form-control" id="piStatus" aria-describedby="piStatusHelp">
-                  <small id="piStatusHelp" class="form-text text-muted"></small>
-                </div> -->
+             
                 <div class="form-group">
                   <label for="piStatus">PI Status</label>
-                  <!-- <select 
-                      name="piStatus" 
-                      id="piStatus" 
-                      class="form-control">
-                      <option>Rejected</option>
-                      <option>Approved</option>
-                      <option>Pending</option>
-                      <option>Rejected</option>
-                      <option>OnHold</option>
-                  </select> -->
-
+                 
                   <app-vf-custom-select formControlName="piStatus" [values]="piStatusData"
                   [isRequired]="'Please Select PI Status'" [isDirty]="isDirty"></app-vf-custom-select>
 
@@ -203,51 +244,20 @@
           </div>
           
           <div class="col-4">
-           <!-- <div class="form-group">
-                <label for="payMentStatus">Payment Status</label>
-                <input type="text" class="form-control" id="payMentStatus" aria-describedby="payMentStatusHelp">
-                <small id="payMentStatusHelp" class="form-text text-muted"></small>
-              </div> -->
+           
               <div class="form-group">
                   <label for="payMentStatus">Payment Status</label>
-                  <!-- <select 
-                      name="payMentStatus" 
-                      id="payMentStatus" 
-                      class="form-control">
-                      <option>Received</option>
-                      <option>Pending</option>
-                      <option>On hold</option>
-                  </select> -->
-                  <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData"
-                  [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty"></app-vf-custom-select>
+                 
+                  <app-vf-custom-select formControlName="paymentStatus" 
+                  [values]="paymentStatusData"
+                  [isRequired]="'Please Select Payment Status'" 
+                  [isDirty]="isDirty">
+                </app-vf-custom-select>
 
               </div>
               
         </div>
-        <div class="col-4">
-            <div class="form-group">
-                <!-- <label for="remark">Remark</label>
-                <input type="email" class="form-control" id="remark" aria-describedby="remarkHelp">
-                <small id="remarkHelp" class="form-text text-muted"></small> -->
-
-                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is mandatory'" [maxLength]="labels?.validationData.remark.maxLength" [isDirty]="isDirty">
-
-                </app-custom-input>
-
-
-              </div>
-        </div>
-        <div class="col-4">
-          <div class="form-group">
-              <!-- <label for="piBillable">PI Billable</label>
-              <input type="text" class="form-control" id="piBillable" aria-describedby="remarkHelp"> -->
-
-              <app-custom-input formControlName="piBillable" [labelName]="labels.piBillable" [id]="'piBillable'" [isRequired]="'PI billable is mandatory'" [isDirty]="isDirty">
-
-              </app-custom-input>
-
-            </div>
-      </div>
+      
         <div class="col-4">
           <div class="form-group">
               <label for="poBillable">Upload Document</label>
@@ -267,6 +277,86 @@
     </mat-expansion-panel>
   </mat-accordion>
 
+  <mat-card>
+   <form [formGroup]="searchForm">
+    <div class="row">
+      <div class="col-3">
+          <div class="form-group searching">
+
+            <mat-form-field class="example-form-field p-0">
+              <mat-label>Search...</mat-label>
+              <input matInput type="text" formControlName="searchData">
+              <button mat-button  matSuffix mat-icon-button aria-label="Clear">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+          
+
+            </div>
+        </div>
+
+
+        <div class="col-3">
+          <div class="form-group">
+
+           
+            <label for="dateFor">From Date</label>
+            
+            <mat-form-field>
+              <input matInput 
+              [matDatepicker]="picker6" formControlName="searchFrom">
+              <mat-datepicker-toggle matSuffix [for]="picker6" 
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker6></mat-datepicker>
+            </mat-form-field>
+            
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="form-group">
+
+           
+            <label for="dateFor">To Date</label>
+            
+            <mat-form-field>
+              <input matInput  
+              [matDatepicker]="picker7" formControlName="searchTo">
+              <mat-datepicker-toggle matSuffix [for]="picker7" 
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker7></mat-datepicker>
+            </mat-form-field>
+            
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="form-group">
+
+            <div class="row pt-3 pb-3 m-0">
+              <button  class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
+              </div>
+              
+        </div> 
+
+      </div>
+
+      <div class="col-1" style="margin-left:-8vw">
+        <div class="form-group">
+
+          <div class="row pt-3 pb-3 m-0">
+            <button  class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
+            </div>
+            
+      </div> 
+
+    </div>
+
+        
+    </div>
+  </form>
+  </mat-card>
+   
 
 <!--Material Table-->
 
@@ -280,8 +370,14 @@
       <td mat-cell *matCellDef="let element" class="value-bold"> {{element.invoiceNo}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="projectNo">
-      <th mat-header-cell *matHeaderCellDef> Project No </th>
+    <!-- Name Column -->
+    <ng-container matColumnDef="accountName">
+      <th mat-header-cell *matHeaderCellDef> Account Name </th>
+      <td mat-cell *matCellDef="let element" class="value-bold"> {{element.accountName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="projectNumber">
+      <th mat-header-cell *matHeaderCellDef> Project Number </th>
       <td mat-cell *matCellDef="let element" class="value-bold"> {{element.projectNumber}} </td>
     </ng-container>
 
@@ -300,6 +396,11 @@
       <td mat-cell *matCellDef="let element" class="value-bold"> <button>Send</button> </td>
     </ng-container>
 
+    <ng-container matColumnDef="Reminder">
+      <th mat-header-cell *matHeaderCellDef> Reminder </th>
+      <td mat-cell *matCellDef="let element" class="value-bold"> <button mat-button>Send Reminder</button> </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
@@ -308,4 +409,6 @@
 </div>
 <!--Material Table End-->
 <div class="m-5"></div>
+</div>
+
 </div>

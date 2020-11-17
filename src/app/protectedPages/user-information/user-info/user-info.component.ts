@@ -9,7 +9,7 @@ import { DatePipe } from '@angular/common';
 
 import {ToasterService} from '@services/toaster.service';
 
-import { Router } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router'
 
 
 @Component({
@@ -25,7 +25,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   form : FormGroup
   existingUserFlag : boolean = false;
-  buttonName : any = "Submit";
+  buttonName : any = "Save";
   propertyFlag : boolean;
   labels: any = {};
   panelOpenState = false;
@@ -49,14 +49,21 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:1,value:'Post-Paid'}
   ]
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router) {
+  countryCodeValues = [
+    {key:0,value:'+91'},
+    {key:1,value:'+60'},
+    {key:2,value:'+65'}
+  ]
+
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
-      name : [null],
+      applicantName : [null],
       departmentName : [''],
       designation : [null],
       employeeCode : [null],
       email : [null],
+      countryCode: [null],
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
@@ -103,10 +110,17 @@ export class UserInfoComponent implements OnInit,OnChanges {
       this.labels = values;
     })
 
+    this.user = '';
+    
+    this.activatedRoute.params.subscribe((value)=> {
+        this.user = value.id;
+    });
+
+    console.log(this.activatedRoute)
       if(this.user){
         this.setFormValues();
         this.buttonName = 'Edit';
-        this.propertyFlag = true;
+        this.propertyFlag = false;
 
         }
          
@@ -117,7 +131,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     let path = this.location.path();
 
-    if(!path.includes('userInfo/')) {
+    if(!path.includes('customerDetails/')) {
       this.form.reset()
     }
   }
@@ -128,7 +142,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.existingUserFlag = true;
     
     this.form.patchValue({
-      name : 'Aravinth.auth',
+      applicantName : 'Aravinth.auth',
       departmentName : '1',
       designation : 'Senior Engineer',
       employeeCode : '12008',
@@ -183,6 +197,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     this.utilService.setCurrentUrl('dashboard')
     this.router.navigate(['/users/Dashboard'])
+  }
+
+  next(){
+
+    this.utilService.setCurrentUrl('users/techAdmin')
+    this.router.navigate(['/users/techAdmin'])
   }
 
 }

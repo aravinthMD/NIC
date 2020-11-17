@@ -1,30 +1,149 @@
 {
-
     "name": "Name",
-    "department":"Department",
+    "userName": "User Name",
+    "applicantName": "Applicant Name",
+    "applicantEmail": "Applicant Email",
+    "applicantMobile": "Applicant Mobile",
+    "OfficerName": "Reporting/Nodal/Forwarding Officer Name",
+    "OfficerEmail": "Reporting/Nodal/Forwarding Officer Email",
+    "OfficerMobile": "Reporting/Nodal/Forwarding Officer Mobile",
+    "smsServiceReqd": "SMS Service Required",
+    "credits_SMSQuota": "Credits (SMS Quota)",
+    "availableCredit": "Available Credit",
+    "nameOfTheApplication": "Name of the Application",
+    "applicationUrl": "Application URL",
+    "serverLocation": "Server Location",
+    "password": "Password",
+    "credit":"Credit",
+    "onApprovalOf":"On Approval Of",
+    "statusChangedBy":"Status Changed By",
+    "timeStamp":"Time Stamp",
+    "purpOfTheApplication": "Purpose of the Application",
+    "ipformwhichSmsGatewaywillbeaccess": "IP Form which SMS Gateway will be access",
+    "ipofStagingServReqdforTesting": "IP of Staging Server Required for Testing",
+    "projectedDomesticMonthlySMStraffic": "Projected Domestic Monthly SMS traffic",
+    "projectedInternationalMonthlySMStraffic": "Projected International Monthly SMS traffic",
+    "applicationsecurAuditCleared": "Application security audit cleared",
+    "auditDatebyWhenItWillBeCleared": "Audit Date by when it will be cleared",
+    "doYouHaveTRAIexemptedSenderId": "Do you have TRAI exempted Sender Id",
+    "department": "Department",
+    "departmentKey": "Department Key",
+    "departmentVal": "Department Value",
     "designation": "Designation",
-    "employeeCode": "EmployeeCode",
-    "email": "Email",
+    "employeeCode": "Employee Code",
+    "email": "Email Address",
     "mobileNo": "Mobile Number",
-    "teleNumber": "Telephone Number(Office",
+    "teleNumber": "Telephone Number(Office)",
     "officialAdd1": "Official Address Line 1",
     "officialAdd2": "Official Address Line 2",
     "officialAdd3": "Official Address Line 3",
     "city": "City",
     "state": "State",
     "pincode": "Pin Code",
-    "smsTraffic": "SMS Traffic Month wise",
-    "piDuration": "PI duration / Period",
-    "projectNo": "Project No",
+    "smsTraffic": "SMS Traffic Month Wise",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "projectNo": "Project Number",
     "uploadDoc": "Upload Document",
-    "mobileNumber": "Mobile Number",
-    "Credit added": "Credit added",
-           
-
+    "creditAdded": "Credit added",
+    "creditApprover": "Credit Approver",
+    "creditDate": "Credit Date",
+    "smsQuotaMetrix":"SMS Quota Approval Metrix",
+    "creditPI": "Credit Added Against The PI",
+    "proformaIN": "Proforma Invoice Number",
+    "invoiceDate": "Invoice Date",
+    "poNumber": "Purchase Order Number",
+    "poDate": "Purchase Order Date",
+    "piAmount": "Amount",
+    "piStatus": "PI Status",
+    "paymentStatus": "Payment Status",
+    "remark": "Remark",
+    "piBillable": "PI Billable",
+    "poBillable": "Billable Amount",
+    "purchaseON": "Purchase Order Number",
+    "projectName": "Project Name",
+    "userId": "User ID",
+    "date": "Date",
+    "poAmount": "PO Amount",
+    "poStatus": "Status",
+    "poStatusKey": "PO Status Key",
+    "poStatusVal": "PO Status Value",
+    "paymentStatusVal": "Payment Status Val",
+    "piReceivedIn": "PI Received In",
+    "piReceivedKey": "PI Received In Key",
+    "piReceivedVal": "PI Received In Value",
+    "paymentStatusKey": "Payment Status Key",
+    "piStatusKey": "PI Status Key",
+    "piStatusVal": "PI Status Value",
+    "taxIN": "Tax Invoice Number",
+    "invoiceAmount": "Invoice Amount",
+    "billClaim": "Billable Claim",
+    "reports": "Reports",
+    "status": "Status",
+    "accountName": "Account Name",
+    "refNo": "Reference Number",
+    "piOwner": "Owner",
+    "piTraffic": "Traffic",
+    "piNumber": "Proforma Invoice Number",
+    "withoutTax": "Without Tax",
+    "userEmail": "User Email ID",
+    "poManagerEmail": "Manager Email ID",
+    "poAmountWithTax":"Amount With Tax",
+    "documentNo" : "Document Number",
+    "modeOfPayment" : "Mode of Payment",
+    "bankName" : "Bank Name/Branch",
+    "amountReceived": "Amount Received",
+    "tds" : "TDS",
+    "nicsiProjectNumber" : "NICSI Project Number",
+    "invoiceStatus" : "Invoice Status",
+    "invoiceAmountPaid" : "Invoice Amount Paid",
+    "penalty" : "Penalty",
+    "shortPay" : "Short Pay",
+    "smsApproved":"SMS Approved",
+    "submittedDate" : "Submitted Date",
+    "nicsiManager": "NICSI Manager",
     "validationData": {
         "name": {
             "maxLength": {
                 "rule": 50
+            },
+            "type" : "alpha"
+        },
+        "userName": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type" : "alpha"
+        },
+        "purchaseON": {
+            "maxLength": {
+                "rule": 10
+            }
+        },
+        "projectNum": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "projectName": {
+            "maxLength": {
+                "rule": 25
+            }
+        },
+        "userId": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "poAmount": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "remark": {
+            "maxLength": {
+                "rule": 150
             }
         },
         "mobile": {
@@ -56,7 +175,203 @@
                 "rule": "^\\w+([.-]?\\w+)@\\w+([.-]?\\w+)(\\.\\w{2,10})+$",
                 "msg": "Invalid email"
             }
+        },
+        "telephoneNumber": {
+            "maxLength": {
+                "rule": 10
+            },
+            "type": "number",
+            "patternCheck": {
+                "rule": "^[0-9]{10}",
+                "msg": "Invalid telephone number"
+            }
+        },
+        "creditsSMSQuota": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "officeAddress": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "city": {
+            "maxLength": {
+                "rule": 25
+            }
+        },
+        "state": {
+            "maxLength": {
+                "rule": 25
+            }
+        },
+        "pincode": {
+            "maxLength": {
+                "rule": 6,
+                "msg": "Should be 6 Digits"
+            },
+            "type": "number"
+        },
+        "smsTraffic": {
+            "maxLength": {
+                "rule": 6,
+                "msg": "Should be 6 Digits"
+            },
+            "type": "number"
+        },
+        "projectNo": {
+            "maxLength": {
+                "rule": 12
+            }
+        },
+        "proformaIN": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type":"alpha-numeric"
+        },
+        "proformaPN": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "poNumber": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "alpha-numeric"
+        },
+        "piAmount": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "creditAdded": {
+            "maxLength": {
+                "rule": 6
+            }
+        },
+        "creditApprover": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "refNo": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "alpha-numeric"
+        },
+        "piOwner": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type": "alpha"
+        },
+        "piTraffic": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "number"
+        },
+        "piNumber": {
+            "maxLength": {
+                "rule": 15
+            },
+            "type": "alpha-numeric"
+        },
+        "withoutTax": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "poAmountWithTax": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "documentNo": {
+            "maxLength" : {
+                "rule" : 10
+            },
+            "type": "number"
+        },
+        "bankName" : {
+            "maxLength" : {
+                "rule" : 50
+            },
+            "type": "alpha"
+        },
+        "amountReceived" : {
+            "maxLength" : {
+                "rule" : 12
+            },
+            "type" : "number"
+        },
+        "tds" : {
+            "maxLength" : {
+                "rule" : 12
+            },
+            "type" : "number"
+        },
+        "nicsiProjectNumber" : {
+            "maxLength" : {
+                "rule" : 15
+            },
+            "type" : "alpha-numeric"
+        },
+        "invoiceAmountPaid" : {
+            "maxLength" : {
+                "rule" : "12"
+            },
+            "type" : "number"
+        },
+        "penalty" : {
+            "maxLength" : {
+                "rule" : "12"
+            },
+            "type" : "number"
+        },
+        "shortPay" : {
+            "maxLength" : {
+                "rule" : "12"
+            },
+            "type" : "number"
+        },
+        "smsApproved" : {
+            "maxLength" : {
+                "rule" : "10"
+            },
+            "type" : "number"
+        },
+        "poBillable": {
+            "maxLength" : {
+                "rule" : "10"
+            },
+            "type" : "number"
+        },
+        "invoiceAmount" : {
+            "maxLength": {
+                "rule" :"12"
+            },
+            "type" : "number"
+        } ,
+        "taxIN" : {
+            "maxLength" : {
+                "rule" : 15
+            }
+        },
+        "nicsiManager": {
+            "maxLength" : {
+                "rule" : "50"
+            },
+            "type" : "alpha"
         }
-
+       
     }
 }

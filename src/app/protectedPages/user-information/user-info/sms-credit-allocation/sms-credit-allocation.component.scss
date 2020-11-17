@@ -1,5 +1,6 @@
+
 .sms_credit_allocation{
-    margin-top: 10px;
+    margin-top: 15px;
     overflow-x: hidden;
 }
 button.btn.btn-primary {
@@ -38,37 +39,22 @@ button.btn.btn-primary {
 
 table {
     margin-bottom: 0rem !important;
-    // border-radius: 5px;
-    // border-style: solid;
-    // border-color: #D9DDDF;
-    // margin-top: 27px;
-  }
-
-//   .table-responsive{
-//       border-radius: 5px;
-//       border-radius: 10px;
-//     border-style: solid;
-//     border-color: #D9DDDF;
+}
+//   .example-form-field {
+//     // width: 200px;
+//     color: black;
 //   }
 
-  .example-form-field {
-    // width: 200px;
-    color: black;
-  }
-
-.example-form-field .label {
-    color: black;
+// .example-form-field .label {
+//     color: black;
      
-}
-
+// }
 
 .h3, h3 {
     font-size: 1.75rem;
     margin-bottom: .5rem;
     font-weight: 400;
     line-height: 1.2;
-
-
 
 }
 
@@ -89,10 +75,6 @@ table {
     background-color: #0e4d92;
     color: #fff;
   }
-  // tr:nth-child(even) {background-color:#f5f4f4;}
-//   .col-md-12.d-flex.justify-content-end:hover{
-//       pointer-events: none;
-//   }
 .font-size{font-size:14px !important;font-weight:500;}
 .border-left-primary {
   border-left: .25rem solid #4e73df !important;
@@ -106,29 +88,24 @@ table {
 .border-left-warning {
   border-left: .25rem solid #f6c23e !important;
 }
-
 tr.example-element-row:hover {
   background: whitesmoke;
 }
-
 ::ng-deep .mat-select-value {
   font-size: 15px !important;
 }
-
 ::ng-deep .mat-option-text {
   font-size: 15px !important;
 }
-
 ::ng-deep .mat-option-text {
   font-size: 15px !important;
-}
-
-mat-form-field{
-  width: 40%;
+ }
+.mat-form-field{
+margin-top: -20px;
+padding: 0;
 }
 .mat-expansion-panel-header {
-  line-height: 24px;
-  
+  line-height: 24px; 
   background-color: #dfdfdf !important;
   font-weight: 500 !important;
 }

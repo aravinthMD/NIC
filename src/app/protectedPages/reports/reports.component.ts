@@ -18,15 +18,15 @@ export class ReportsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatAccordion,{static:true}) accordion: MatAccordion;
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
-  displayedColumns: string[] = ['UserID', 'Department', 'state', 'piNumber','piDate']; 
+  displayedColumns: string[] = ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate']; 
 
   userList : any[] = [
-    {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/05/2020'},
-    {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",status :"InActive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
-    {userId : "Jain.auth",department : "Election Department , Manipur",state : "Manipur",status :"InActive",id:3,po:'Raised',pi:'',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/04/2020'},
-    {userId : "Jain.auth",department : "Director of emloyment and ceo",state : "Delhi",status :"Active",id:3,po:'Raised',pi:'pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6789',piDate:'21/07/2020'},
-    {userId : "Jain.auth",department : "revenue Department, tripura ",state : "tripura",status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/04/2020'},
-    {userId : "Jain.auth",department : "Land records and settlement ",state : "delhi",status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/06/2020'},
+    {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",projectNumber: '2356',status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/05/2020'},
+    {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",projectNumber: '4532',status :"InActive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
+    {userId : "Jain.auth",department : "Election Department , Manipur",state : "Manipur",projectNumber: '6445',status :"InActive",id:3,po:'Raised',pi:'',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/04/2020'},
+    {userId : "Jain.auth",department : "Director of emloyment and ceo",state : "Delhi",projectNumber: '5454',status :"Active",id:3,po:'Raised',pi:'pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6789',piDate:'21/07/2020'},
+    {userId : "Jain.auth",department : "revenue Department, tripura ",state : "tripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/04/2020'},
+    {userId : "Jain.auth",department : "Land records and settlement ",state : "delhi",projectNumber: '7554',status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/06/2020'},
   ]
 
   dataSource = new MatTableDataSource<any>(this.userList);
@@ -82,6 +82,10 @@ reportFilter = [
   {
     key:'3',
     value:'Status'
+  },
+  {
+    key:'4',
+    value:'ProjectNo'
   }
 ]
   
@@ -218,6 +222,11 @@ reportFilter = [
       this.placeholderData = 'Please Filter Status...'
 
       this.options = ['Active','Inactive']
+    }else if(data == '4') {
+      this.placeholderData = 'Please Filter ProjectNo...';
+
+      this.options = ['2356','4532','6445','5454','6453','7554']
+
     }
 
   }

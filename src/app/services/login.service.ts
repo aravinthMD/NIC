@@ -13,6 +13,18 @@ export class LoginService {
 
   constructor(private apiService: ApiService,private httpService: HttpClient) { }
 
+  getLoginCredentials(data) {
+    const url =
+      environment.host + 'account/'+ environment.apiVersion.login +'login';
+    let body = {
+      email : data.email,
+      password : data.password,
+      useADAuth: false
+    };
+    return this.httpService.post(url, body);
+  }
+
+
   getLogin(data?) {
     const processId = this.apiService.api.getLogin.processId;
     const workflowId = this.apiService.api.getLogin.workflowId;

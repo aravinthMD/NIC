@@ -30,7 +30,7 @@ import { EmailComponent } from './protectedPages/email/email.component'
 import { ManageUserDialogComponent } from './protectedPages/admin/manage-user-dialog/manage-user-dialog.component';
 import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatDatepickerModule} from '@angular/material';
+import {MatDatepickerModule,MatCardModule} from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import { DatePipe } from '@angular/common';
@@ -40,6 +40,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.s
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '@services/auth.interceptor.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
 import { BillingOwnerDetailsComponent } from './protectedPages/user-information/user-info/billing-owner-details/billing-owner-details.component';
@@ -142,6 +143,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatNativeDateModule, 
     MatSlideToggleModule,
     MatInputModule,
+    MatCheckboxModule,
+    MatCardModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),

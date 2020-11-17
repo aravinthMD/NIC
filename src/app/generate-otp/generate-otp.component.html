@@ -14,6 +14,14 @@
                     <input type="text" class="form-control" id="otp" aria-describedby="otp" formControlName="otpValue" (input)="valuePatternCheck($event)" [maxlength]="4" placeholder="Enter Your OTP">
                     <!-- <small id="emailHelp" class="form-text text-muted">Enter Valid Email</small> -->
                 </div>
+
+                <div class="form-group" *ngIf="isError">
+
+                  <mat-error>
+                    {{errorMsg}}
+                  </mat-error>
+
+                </div>
                 <div class="col-md-8 row p-0 mx-auto">
                     <div class="col-md-6 d-flex justify-content-center mt-3 pr-0">
                         <button type="submit" matRipple class="btn btn-primary" [disabled]="isReachMaxCount" (click)="verifyOTP()">Verify</button>

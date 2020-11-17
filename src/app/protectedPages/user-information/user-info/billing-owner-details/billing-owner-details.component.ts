@@ -12,7 +12,7 @@ import { UtilService } from '@services/util.service';
 })
 export class BillingOwnerDetailsComponent implements OnInit {
 
-  labels:any[];
+  labels:any;
   billOwnerForm:FormGroup;
   isDirty: boolean;
 
@@ -53,8 +53,13 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
   back() {
 
-    this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['/users/Dashboard'])
+    this.utilService.setCurrentUrl('users/techAdmin')
+    this.router.navigate(['/users/techAdmin'])
+  }
+
+  next() {
+    this.utilService.setCurrentUrl('users/smsCredit')
+    this.router.navigate(['/users/smsCredit'])
   }
 
 }
