@@ -49,6 +49,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:1,value:'Post-Paid'}
   ]
 
+  countryCodeValues = [
+    {key:0,value:'+91'},
+    {key:1,value:'+60'},
+    {key:2,value:'+65'}
+  ]
+
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
@@ -57,6 +63,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       designation : [null],
       employeeCode : [null],
       email : [null],
+      countryCode: [null],
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
