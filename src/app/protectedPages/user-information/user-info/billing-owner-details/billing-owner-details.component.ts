@@ -15,6 +15,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
   labels:any;
   billOwnerForm:FormGroup;
   isDirty: boolean;
+  propertyFlag : boolean;
+
+  countryCodeValues = [
+    {key:0,value:'+91'},
+    {key:1,value:'+60'},
+    {key:2,value:'+65'}
+  ]
+
 
   constructor(
     private labelsService:LabelsService,
@@ -33,6 +41,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
+      countryCode: new FormControl(null),
       mobileNo :new FormControl (''),
       telPhno : new FormControl (''),
       offAddress1 : new FormControl ([null]),
