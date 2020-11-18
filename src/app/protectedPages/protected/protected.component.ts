@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router} from '@angular/router';
+import {UtilService} from '@services/util.service'
 
 @Component({
   selector: 'app-protected',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProtectedComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router :Router,private utilService:UtilService) { }
 
   ngOnInit() {
+  }
+
+  newUserMethod(){
+    this.utilService.setCurrentUrl('users/customerDetails');
+    this.router.navigate(['/users/customerDetails']);
   }
 
 }

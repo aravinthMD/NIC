@@ -60,7 +60,21 @@
                         </app-custom-input>
                     </div>
                 </div>
-                <div class="col-4">
+
+                <div class="col-1 pr-2">
+                    <div class="form-group">
+                        <label for="">Code<span style="color: red;">*</span></label>
+                        <app-vf-custom-select formControlName = "countryCode"
+                        [values] = "countryCodeValues"
+                        [isRequired] = "'Select Code'"
+                        [isDisabled] = "propertyFlag"
+                        [isDirty] = "isDirty">
+                    </app-vf-custom-select>
+                    </div>
+                </div>
+
+
+                <div class="col-3">
                     <div class="form-group">
                         <app-custom-input formControlName="mobileNo" 
                         [labelName]="labels.mobileNo" 
