@@ -16,6 +16,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   labels:any ;
   technicaladminform:FormGroup;
   isDirty: boolean;
+  propertyFlag : boolean;
+
   departmentListData = [
     {key:0,value:'Department of Sainik Welfare'},
     {key:1,value:'Minstry of minority affairs'},
@@ -23,6 +25,13 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     {key:3,value:'Ministry of trible affairs'},
     {key:4,value:'Bureasu of Naviks.Mumbai'}
 ];
+
+countryCodeValues = [
+  {key:0,value:'+91'},
+  {key:1,value:'+60'},
+  {key:2,value:'+65'}
+]
+
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
@@ -40,6 +49,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
+      countryCode : new FormControl(null),
       mobileNo :new FormControl (''),
       telPhno : new FormControl (''),
       offAddress1 : new FormControl ([null]),

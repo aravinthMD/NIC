@@ -20,7 +20,7 @@ export class SideNavComponent implements OnInit,OnChanges {
   constructor(private location: Location,private utilService: UtilService) { }
 
   ngOnInit() {
-
+    debugger;
     this.utilService.detectSidNav$.subscribe((user)=> {
       console.log('DETECT SIDE NAV ********',user)
 

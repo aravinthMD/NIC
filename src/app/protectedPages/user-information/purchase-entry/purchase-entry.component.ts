@@ -1,33 +1,14 @@
-import { AfterViewInit, Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
+import { from } from 'rxjs';
 import {LabelsService} from '../../../services/labels.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-purchase-entry',
   templateUrl: './purchase-entry.component.html',
   styleUrls: ['./purchase-entry.component.scss']
 })
-export class PurchaseEntryComponent implements OnInit,AfterViewInit {
-
-  @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
-
-
-  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks','remainder']
-
-
-  userList : any[] =   [
-    {purchaseNo : 114,projectNumber : 5345,piAmt:24250,remarks:''},
-    {purchaseNo : 197,projectNumber : 5465,piAmt:25000,remarks:''},
-    {purchaseNo : 767,projectNumber : 2344,piAmt:45000,remarks:''},
-    {purchaseNo : 678,projectNumber : 2367,piAmt:24250,remarks:''},
-    {purchaseNo : 114,projectNumber : 5654,piAmt:28000,remarks:''},
-    {purchaseNo : 114,projectNumber : 5345,piAmt:34000,remarks:''},
-  ];
-
-
-  dataSource = new MatTableDataSource<any>(this.userList);
+export class PurchaseEntryComponent implements OnInit {
 
 
   PurchaseEntryForm : FormGroup;
@@ -78,13 +59,6 @@ export class PurchaseEntryComponent implements OnInit,AfterViewInit {
     this.PurchaseEntryForm.reset();
 
   }
-
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-
-  }
-
-
 
   }
 
