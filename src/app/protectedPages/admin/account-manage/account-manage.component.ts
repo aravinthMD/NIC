@@ -45,7 +45,7 @@ ngAfterViewInit(){
     if(value == 'InActive') {
       this.modalMsg = 'Are you sure you want to activate this user ?'
     }else {
-      this.modalMsg = 'Are you sure you want to deactivate this user ?'
+      this.modalMsg = 'Are you sure you want to inactivate this user ?'
     }
     this.showModal = true;
   }

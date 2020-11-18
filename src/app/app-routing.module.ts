@@ -39,8 +39,11 @@ const routes: Routes = [
     { path : "customerDetails/:id" , component : UserInfoComponent },
     {path: 'customerDetails',component: UserInfoComponent},
     {path: 'techAdmin',component: TechnicalAdminDetailsComponent},
+    {path: 'techAdmin/:id',component: TechnicalAdminDetailsComponent},
     {path: 'billingAdmin',component: BillingOwnerDetailsComponent},
+    {path: 'billingAdmin/:id',component: BillingOwnerDetailsComponent},
     {path: 'smsCredit',component: SmsCreditAllocationComponent},
+    {path: 'smsCredit/:id',component: SmsCreditAllocationComponent},
 
     {path:'proformaInvoice', component: ProcessDetailsComponent},
     {path:'projectExecution', component: PurchaseEntryComponent},

@@ -53,6 +53,7 @@ import {
   SPINNER,
   POSITION,
   PB_DIRECTION,
+  NgxUiLoaderService
 } from 'ngx-ui-loader';
 import { PurchaseEntryComponent } from './protectedPages/user-information/purchase-entry/purchase-entry.component';
 
@@ -165,7 +166,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
+    NgxUiLoaderService
   ],
   bootstrap: [AppComponent],
   entryComponents:[ProformaInvoiceDialogFormComponent, ManageUserDialogComponent]

@@ -13,7 +13,9 @@
                                 <app-vf-custom-select 
                                 formControlName="smsQuotaMetrix" 
                                 [values]="smsQuotaMetrix" 
-                                [isDirty]="isDirty">
+                                [isDirty]="isDirty"
+                                [isDisabled]="propertyFlag"
+                                >
                                 </app-vf-custom-select>
                             </div>
                             <!-- <app-custom-input formControlName="smsQuotaMetrix" [labelName]="labels.smsQuotaMetrix"
@@ -27,7 +29,9 @@
                             <app-custom-input formControlName="credit" 
                             [labelName]="labels.credit" 
                             [id]="'credit'"
-                            [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty">
+                            [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty"
+                            [isDisabledInp]="propertyFlag"
+                            >
                             </app-custom-input>
                         </div>
                     </div> 
@@ -44,7 +48,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="status">{{labels.status}}</label>
-                            <app-vf-custom-select formControlName="status" [values]="status" [isDirty]="isDirty">
+                            <app-vf-custom-select formControlName="status" [values]="status" [isDirty]="isDirty" [isDisabled]="propertyFlag">
                             </app-vf-custom-select>
                         </div>
                     </div>
@@ -54,7 +58,7 @@
                             [labelName]="labels.onApprovalOf"
                             [id]="'onApprovalOf'" 
                             [maxLength]="labels?.validationData.userName.maxLength"
-                            [isDirty]="isDirty">
+                            [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -64,7 +68,7 @@
                             [labelName]="labels.remark" 
                             [id]="'remark'"
                             [maxLength]="labels?.validationData.userName.maxLength" 
-                            [isDirty]="isDirty">
+                            [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -74,7 +78,7 @@
                             [labelName]="labels.statusChangedBy"
                             [id]="'statusChangedBy'" 
                             [maxLength]="labels?.validationData.userName.maxLength"
-                            [isDirty]="isDirty">
+                            [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -85,7 +89,7 @@
                             [id]="'timeStamp'" 
                             [maxLength]="labels?.validationData.name.maxLength"
                             [isDirty]="isDirty"
-                            [isDisabledInp]="isDisabledInp">
+                            [isDisabledInp]="isDisabledInp" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -93,6 +97,8 @@
             </form>
             <div class="row pt-3 pb-3 m-0">
                 <button class="btn btn-primary" matRipple type="submit">{{'Submit'}}</button>
+                <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+
                 <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
             </div>
         <mat-accordion> 

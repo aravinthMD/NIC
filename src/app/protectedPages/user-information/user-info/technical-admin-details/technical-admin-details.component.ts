@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
@@ -32,17 +32,23 @@ countryCodeValues = [
   {key:2,value:'+65'}
 ]
 
+user: string;
+
+
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
     private router:Router,
-    private utilService:UtilService
+    private utilService:UtilService,
+    private activatedRoute: ActivatedRoute
     ) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
+
+    
     this.technicaladminform=new FormGroup({
       name : new FormControl ([null]),
       departmentName : new FormControl ([null]),
@@ -59,6 +65,45 @@ countryCodeValues = [
       state : new FormControl ([null]),
       pinCode : new FormControl (''),
     })
+
+    this.user = ''
+    this.activatedRoute.params.subscribe((value)=> {
+      this.user = value.id;
+  });
+
+  console.log(this.activatedRoute)
+    if(this.user){
+      this.setFormValues();
+      this.propertyFlag = true;
+
+      }
+
+
+  }
+
+  editData() {
+    this.propertyFlag = false;
+  }
+
+  setFormValues() {
+
+    this.technicaladminform.patchValue({
+      name : 'prakash',
+      departmentName : '1',
+      designation :'chennai',
+      employeeCode : '23232',
+      email : 'tect@nic.in',
+      countryCode : '0',
+      mobileNo :'9867655433',
+      telPhno : '977664433432',
+      offAddress1 : 'address1',
+      offAddress2 : 'add2',
+      offAddress3 : 'add3',
+      city : 'chennai',
+      state : 'tamilnadu',
+      pinCode : '600028',
+    })
+
   }
   onSubmit(){
     if(this.technicaladminform.invalid) {
@@ -72,11 +117,23 @@ countryCodeValues = [
   back() {
 
     this.utilService.setCurrentUrl('users/customerDetails')
-    this.router.navigate(['/users/customerDetails'])
+    if(this.user) {
+      this.router.navigate(['/users/customerDetails/1'])
+    }else {
+      this.router.navigate(['/users/customerDetails'])
+    }
   }
 
   next() {
+
+    
     this.utilService.setCurrentUrl('users/billingAdmin')
-    this.router.navigate(['/users/billingAdmin'])
+
+    if(this.user) {
+      this.router.navigate(['/users/billingAdmin/1'])
+    }else {
+      this.router.navigate(['/users/billingAdmin'])
+    }
+   
   }
 }

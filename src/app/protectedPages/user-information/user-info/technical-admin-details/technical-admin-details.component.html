@@ -12,7 +12,9 @@
                         [isRequired]="'Name is mandatory'" 
                         [mandatoryField]="true"
                         [maxLength]="labels?.validationData.name.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -24,7 +26,9 @@
                         [mandatoryField]="true"
                         [patternCheck]="labels?.validationData.email.patternCheck" 
                         [maxLength]="labels?.validationData.email.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -34,7 +38,9 @@
                         <app-vf-custom-select formControlName="departmentName" 
                         [values]="departmentListData"
                         [isRequired]="'Please Select Department'" 
-                        [isDirty]="isDirty"></app-vf-custom-select>
+                        [isDirty]="isDirty"
+                        [isDisabled]="propertyFlag"
+                        ></app-vf-custom-select>
                     </div>
                 </div>
                 <div class="col-4">
@@ -46,7 +52,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Designation is mandatory'" 
                         [maxLength]="labels?.validationData.designation.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -56,7 +64,9 @@
                         [labelName]="labels.employeeCode" 
                         [id]="'employeeCode'" 
                         [maxLength]="labels?.validationData.employeeCode.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -68,7 +78,9 @@
                         [values] = "countryCodeValues"
                         [isRequired] = "'Select Code'"
                         [isDisabled] = "propertyFlag"
-                        [isDirty] = "isDirty">
+                        [isDirty] = "isDirty"
+                        [isDisabled]="propertyFlag"
+                        >
                     </app-vf-custom-select>
                     </div>
                 </div>
@@ -83,7 +95,9 @@
                         [type]="labels?.validationData.mobile.type" 
                         [patternCheck]="labels?.validationData.mobile.patternCheck" 
                         [maxLength]="labels?.validationData.mobile.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -97,7 +111,9 @@
                         [type]="labels?.validationData.telephoneNumber.type" 
                         [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" 
                         [maxLength]="labels?.validationData.telephoneNumber.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -109,7 +125,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine1 is mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -121,7 +139,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine2 is mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -133,7 +153,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine3 is mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -145,7 +167,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'City is mandatory'" 
                         [maxLength]="labels?.validationData.city.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -157,7 +181,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'State is mandatory'" 
                         [maxLength]="labels?.validationData.state.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -170,7 +196,9 @@
                         [isRequired]="'Pincode is mandatory'" 
                         [maxLength]="labels?.validationData.pincode.maxLength" 
                         [type]="labels?.validationData.pincode.type" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -178,6 +206,9 @@
             </form>
             <div class="row pt-3 pb-3 m-0">
                 <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" >Save</button>
+
+                <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+
 
                 <button class="btn btn-primary back-btn" matRipple (click)="next()">Next</button>
 

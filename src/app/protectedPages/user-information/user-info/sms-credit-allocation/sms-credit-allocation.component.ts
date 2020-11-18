@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { LabelsService } from '@services/labels.service';
 import { UtilService } from '@services/util.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 import { format } from 'url';
 
@@ -46,10 +46,13 @@ isDirty: boolean;
 
 propertyFlag: boolean;
 
+user: string;
+
   constructor(
     private labelsService :LabelsService,
     private utilService:UtilService,
     private router:Router,
+    private activatedRoute: ActivatedRoute,
     private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -67,10 +70,50 @@ propertyFlag: boolean;
       statusChangedBy: new FormControl ([null]),
       timeStamp: new FormControl ([this.currentDate]),
     })
+
+    this.user = ''
+    this.activatedRoute.params.subscribe((value)=> {
+      this.user = value.id;
+  });
+
+  console.log(this.activatedRoute)
+    if(this.user){
+      this.setFormValues();
+      this.propertyFlag = true;
+
+      }
+
+
   }
+
+  editData() {
+    this.propertyFlag = false;
+  }
+
+
+  setFormValues() {
+   
+    this.smsCreditAllocation.patchValue({
+      smsQuotaMetrix: '1',
+      credit: '50000',
+      date: new Date(),
+      status: '2',
+      onApprovalOf: 'approval',
+      remark: 'remarks',
+      statusChangedBy: 'changed by',
+      timeStamp: this.currentDate,
+    })
+  }
+
   back(){
-    this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['/users/Dashboard'])
+    this.utilService.setCurrentUrl('users/billingAdmin')
+
+    if(this.user){
+      this.router.navigate(['/users/billingAdmin/1'])
+    }else {
+      this.router.navigate(['/users/billingAdmin'])
+
+    }
   
   }
   onSubmit() {

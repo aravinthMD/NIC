@@ -168,6 +168,11 @@
                 <th mat-header-cell *matHeaderCellDef> Account Name </th>
                 <td mat-cell *matCellDef="let element"> <a (click)="navigateToUser(element)">{{element.userId}}</a> </td>
               </ng-container>
+
+              <ng-container matColumnDef="projectNo">
+                <th mat-header-cell *matHeaderCellDef> Project No </th>
+                <td mat-cell *matCellDef="let element"> {{element.projectNo}} </td>
+              </ng-container>
           
               <!-- Name Column -->
               <ng-container matColumnDef="Department">

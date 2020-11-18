@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-
+  version: '0.0.1',
   projectIds: {
     projectId: '2efbdc721cc311ebb6c0727d5ac274b2'
   },

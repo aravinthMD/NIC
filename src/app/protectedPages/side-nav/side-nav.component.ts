@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 
 import { UtilService } from '../../services/util.service'
 
-
+import { environment } from '../../../environments/environment'
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
@@ -17,10 +17,16 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   accountInfoNav: string;
 
-  constructor(private location: Location,private utilService: UtilService) { }
+  version: string;
+
+  constructor(private location: Location,private utilService: UtilService) { 
+
+    this.version = environment.version;
+
+  }
 
   ngOnInit() {
-    debugger;
+
     this.utilService.detectSidNav$.subscribe((user)=> {
       console.log('DETECT SIDE NAV ********',user)
 

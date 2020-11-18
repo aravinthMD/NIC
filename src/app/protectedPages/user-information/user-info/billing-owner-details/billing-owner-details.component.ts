@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
@@ -23,12 +23,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
     {key:2,value:'+65'}
   ]
 
+  user: string;
 
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
     private router:Router,
-    private utilService:UtilService
+    private utilService:UtilService,
+    private activatedRoute: ActivatedRoute
     ) { }
 
   ngOnInit() {
@@ -51,7 +53,48 @@ export class BillingOwnerDetailsComponent implements OnInit {
       state : new FormControl ([null]),
       pinCode : new FormControl (''),
     })
+
+    this.user = ''
+    this.activatedRoute.params.subscribe((value)=> {
+      this.user = value.id;
+  });
+
+  console.log(this.activatedRoute)
+    if(this.user){
+      this.setFormValues();
+      this.propertyFlag = true;
+
+      }
+
+
+
   }
+
+  setFormValues() {
+
+    this.billOwnerForm.patchValue({
+      name : 'sasi',
+      departmentName : '1',
+      designation : 'chennai',
+      employeeCode : '54534',
+      email : 'test@gmail.com',
+      countryCode: '0',
+      mobileNo : '9754544445',
+      telPhno : '8667756765',
+      offAddress1 : 'add1',
+      offAddress2 : 'add2',
+      offAddress3 : 'add3',
+      city : 'chennai',
+      state : 'tamilnadu',
+      pinCode : '600025',
+
+    })
+  }
+
+  editData() {
+    this.propertyFlag = false;
+  }
+
   onSubmit(){
     if(this.billOwnerForm.invalid) {
       this.isDirty = true;
@@ -63,12 +106,25 @@ export class BillingOwnerDetailsComponent implements OnInit {
   back() {
 
     this.utilService.setCurrentUrl('users/techAdmin')
-    this.router.navigate(['/users/techAdmin'])
+
+    if(this.user) {
+      this.router.navigate(['/users/techAdmin/1'])
+    }else {
+      this.router.navigate(['/users/techAdmin'])
+    }
+    
   }
 
   next() {
     this.utilService.setCurrentUrl('users/smsCredit')
+
+    if(this.user) {
+    this.router.navigate(['/users/smsCredit/1'])
+
+    }else {
     this.router.navigate(['/users/smsCredit'])
+
+    }
   }
 
 }

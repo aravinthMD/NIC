@@ -50,7 +50,7 @@
                 <th mat-header-cell *matHeaderCellDef class="pad-left"> Action </th>
                 <td mat-cell *matCellDef="let element; let i = index;">
                     <button class="btn-size-primary" [ngClass]="element.status == 'InActive'?'btn btn-primary':'btn btn-primary'" 
-                        (click)="status(i,element.status)">{{(element.status == 'Active'?'Deactivate':'Activate')}}</button>
+                        (click)="status(i,element.status)">{{(element.status == 'Active'?'InActive':'Activate')}}</button>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">

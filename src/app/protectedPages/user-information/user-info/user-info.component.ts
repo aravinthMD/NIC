@@ -120,11 +120,15 @@ export class UserInfoComponent implements OnInit,OnChanges {
       if(this.user){
         this.setFormValues();
         this.buttonName = 'Edit';
-        this.propertyFlag = false;
+        this.propertyFlag = true;
 
         }
          
 
+  }
+
+  editData() {
+    this.propertyFlag = false;
   }
 
   ngOnChanges() {
@@ -155,7 +159,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       city : 'mumbai',
       state : 'maharastra',
       pinCode : '641008',
-      smsTariffMonthWise : '345377',
+      smsTariffMonthWise : '978555322422',
       piDuration : '6',
       projectNo : '8776',
       creditAdded : '1002',
@@ -164,6 +168,30 @@ export class UserInfoComponent implements OnInit,OnChanges {
       toDate: new Date(),
       creditDate : new Date(),
       creditAddedAgainstPi : new Date(),
+      countryCode: '0',
+      
+      OfficerName:'Tech Info',
+      OfficerEmail:'techinfo@gmail.com',
+      OfficerMobile:'9768674555',
+     
+      smsServiceReqd: '1',
+      creditsSMSQuota: '4000',
+     
+      availableCredit: '5000',
+      nameOfTheApplication: 'sathish',
+      applicationUrl: 'www.applicant.com',
+      serverLocation: 'chennai',
+      purpOfTheApplication: 'check',
+      smsGatewayAccess: '175.43.34.344',
+      ipServReqd: 'yes',
+      domMonSmsTraffic: 'dom',
+      intMonSmsTraffic: 'smstraffic',
+      appSecurAudClear: 'secure',
+      auditDate:new Date(),
+      traiSenderId: '333',
+      userId: 'test',
+      password: 'nic@123'
+      
       
 
     })
@@ -201,8 +229,17 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   next(){
 
-    this.utilService.setCurrentUrl('users/techAdmin')
-    this.router.navigate(['/users/techAdmin'])
+    console.log(this.user)
+
+    if(this.user) {
+      this.utilService.setCurrentUrl('users/techAdmin')
+      this.router.navigate(['/users/techAdmin/1'])
+    }else {
+      this.utilService.setCurrentUrl('users/techAdmin')
+      this.router.navigate(['/users/techAdmin'])
+    }
+    
+    
   }
 
 }
