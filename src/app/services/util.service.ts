@@ -18,6 +18,19 @@ export class UtilService {
         this.clearDirty$.next(data)
     }
 
+    projectNumber$: BehaviorSubject<string> = new BehaviorSubject('');
+    
+    setProjectNumber(data) {
+        this.projectNumber$.next(data)
+    }
+
+    userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
+    
+    setUserDetails(data) {
+        this.userDetails$.next(data)
+    }
+
+
 
 
   constructor() { }

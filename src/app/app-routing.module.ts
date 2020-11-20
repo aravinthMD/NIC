@@ -46,9 +46,12 @@ const routes: Routes = [
     {path: 'smsCredit/:id',component: SmsCreditAllocationComponent},
 
     {path:'proformaInvoice', component: ProcessDetailsComponent},
+    {path:'proformaInvoice/:projectNo', component: ProcessDetailsComponent},
     {path:'projectExecution', component: PurchaseEntryComponent},
     {path:'purchaseOrder', component: PurchaseOrderComponent},
+    {path:'purchaseOrder/:projectNo', component: PurchaseOrderComponent},
     {path:'taxInvoice', component: TaxInvoiceComponent},
+    {path:'taxInvoice/:projectNo', component: TaxInvoiceComponent},
 
 
     { path : "reports" , component : ReportsComponent},

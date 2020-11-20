@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
+import { ActivatedRoute } from '@angular/router'
 
 
 @Component({
@@ -21,9 +22,9 @@ export class TaxInvoiceComponent implements OnInit {
 
   userList : any[] =   [
    
-    {invoiceNo : 1343,projectNumber : 4355,piAmt:24250,remarks:''},
-    {invoiceNo : 5464,projectNumber : 5655,piAmt:35000,remarks:''},
-    {invoiceNo : 7687,projectNumber : 3424,piAmt:23450,remarks:''}
+    {invoiceNo : 1343,projectNumber : 4535,piAmt:24250,remarks:''},
+    {invoiceNo : 5464,projectNumber : 4535,piAmt:35000,remarks:''},
+    {invoiceNo : 7687,projectNumber : 4535,piAmt:23450,remarks:''}
 
   ];
   paymentStatus: any[] = [
@@ -46,7 +47,7 @@ export class TaxInvoiceComponent implements OnInit {
   toDate =new Date()
 
   constructor(private labelsService: LabelsService,
-    private Datepipe:DatePipe) { }
+    private Datepipe:DatePipe,private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -80,6 +81,20 @@ export class TaxInvoiceComponent implements OnInit {
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
     })
+
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.userList =   [
+   
+        {invoiceNo : 1343,projectNumber : value.projectNo || 4535,piAmt:24250,remarks:''},
+        {invoiceNo : 5464,projectNumber : value.projectNo || 4535,piAmt:35000,remarks:''},
+        {invoiceNo : 7687,projectNumber : value.projectNo || 4535,piAmt:23450,remarks:''}
+    
+      ];
+
+    })
+
+    this.dataSource = new MatTableDataSource<any>(this.userList);
 
   }
 

@@ -6,6 +6,8 @@ import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router'
+import { UtilService } from '@services/util.service'
 
 @Component({
   selector: 'app-process-details',
@@ -64,8 +66,10 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   isDirty: boolean;
 
   searchForm: FormGroup;
+  accountName: string;
+  status: string;
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe) { 
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
 
 
     this.form =this.formBuilder.group({
@@ -98,6 +102,22 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     })
+
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val['userId'] || '';
+      this.status = val['status'] || '';
+    })
+
+    this.activatedRoute.params.subscribe((value)=> {
+      this.userList =   [
+        {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
+        {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: value.projectNo || 4535,piAmt:56000,remarks:'credited'},
+        {invoiceNo : 6574,accountName : "Sharma",projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'}
+      ];
+
+      this.dataSource = new MatTableDataSource<any>(this.userList);
+  });
 
   }
 

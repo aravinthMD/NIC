@@ -6,12 +6,12 @@
     <div style="text-align: right;color:grey;font-size:20px">
       <span>
         <span style="color: #0d4d92;">Account Name:</span> 
-        <span>arul.auth</span></span>
+        <span>{{ accountName || 'arul.auth'}}</span></span>
         
         <span style="padding:10px;">
           
           <span style="color: #0d4d92;"> Status: </span> 
-          <span>Active</span>
+          <span>{{ status || 'Active'}}</span>
         </span>
     </div>
   </h1>

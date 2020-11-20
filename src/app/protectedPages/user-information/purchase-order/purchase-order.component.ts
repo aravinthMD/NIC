@@ -4,6 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
+import { ActivatedRoute } from '@angular/router'
 
 
 @Component({
@@ -20,12 +21,12 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks']
 
   userList : any[] =   [
-    {purchaseNo : 114,projectNumber : 5345,piAmt:24250,reminder:'Send Reminder'},
-    {purchaseNo : 197,projectNumber : 5465,piAmt:25000,reminder:'Send Reminder'},
-    {purchaseNo : 767,projectNumber : 2344,piAmt:45000,reminder:'Send Reminder'},
-    {purchaseNo : 678,projectNumber : 2367,piAmt:24250,reminder:'Send Reminder'},
-    {purchaseNo : 114,projectNumber : 5654,piAmt:28000,reminder:'Send Reminder'},
-    {purchaseNo : 114,projectNumber : 5345,piAmt:34000,reminder:'Send Reminder'},
+    {purchaseNo : 114,projectNumber : 4535,piAmt:24250,reminder:'Send Reminder'},
+    {purchaseNo : 197,projectNumber : 4535,piAmt:25000,reminder:'Send Reminder'},
+    {purchaseNo : 767,projectNumber : 4535,piAmt:45000,reminder:'Send Reminder'},
+    {purchaseNo : 678,projectNumber : 4535,piAmt:24250,reminder:'Send Reminder'},
+    {purchaseNo : 114,projectNumber : 4535,piAmt:28000,reminder:'Send Reminder'},
+    {purchaseNo : 114,projectNumber : 4535,piAmt:34000,reminder:'Send Reminder'},
   ];
   poStatus: any[] = [
     { key :0, value: 'Received' },
@@ -71,7 +72,8 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   constructor(
     private labelsService: LabelsService,
-    private DatePipe:DatePipe
+    private DatePipe:DatePipe,
+    private activatedRoute: ActivatedRoute
     ) { }
 
   ngOnInit() {
@@ -108,6 +110,19 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
     })
+
+    this.activatedRoute.params.subscribe((value)=> {
+      this.userList =   [
+        {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:24250,reminder:'Send Reminder'},
+        {purchaseNo : 197,projectNumber : value.projectNo || 4535,piAmt:25000,reminder:'Send Reminder'},
+        {purchaseNo : 767,projectNumber : value.projectNo || 4535,piAmt:45000,reminder:'Send Reminder'},
+        {purchaseNo : 678,projectNumber : value.projectNo || 4535,piAmt:24250,reminder:'Send Reminder'},
+        {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:28000,reminder:'Send Reminder'},
+        {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:34000,reminder:'Send Reminder'},
+      ];
+
+      this.dataSource = new MatTableDataSource<any>(this.userList);
+  });
     
   }
   POForm(){

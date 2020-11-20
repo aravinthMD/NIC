@@ -3,7 +3,9 @@ import { Location } from '@angular/common';
 
 import { UtilService } from '../../services/util.service'
 
-import { environment } from '../../../environments/environment'
+import { environment } from '../../../environments/environment';
+
+import { Router } from '@angular/router'
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
@@ -19,7 +21,7 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   version: string;
 
-  constructor(private location: Location,private utilService: UtilService) { 
+  constructor(private location: Location,private utilService: UtilService,private router: Router) { 
 
     this.version = environment.version;
 
@@ -102,6 +104,20 @@ export class SideNavComponent implements OnInit,OnChanges {
 
     
 
+  }
+
+  navigateRoute(route: string) {
+
+    let projectNo = ''
+      this.utilService.projectNumber$.subscribe((pno)=> {
+          projectNo = pno;
+      })
+      if(projectNo) {
+        this.router.navigate([`${route}/${projectNo}`])
+      }else{
+      this.router.navigate([route])
+      }
+    
   }
 
   navigation(route: string) {
