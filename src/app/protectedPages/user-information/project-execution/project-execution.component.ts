@@ -5,11 +5,11 @@ import {LabelsService} from '../../../services/labels.service';
 import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
-  selector: 'app-purchase-entry',
-  templateUrl: './purchase-entry.component.html',
-  styleUrls: ['./purchase-entry.component.scss']
+  selector: 'app-project-execution',
+  templateUrl: './project-execution.component.html',
+  styleUrls: ['./project-execution.component.scss']
 })
-export class PurchaseEntryComponent implements OnInit {
+export class ProjectExecutionComponent implements OnInit {
 
 
   PurchaseEntryForm : FormGroup;

@@ -15,7 +15,7 @@ import { EmailComponent } from './protectedPages/email/email.component';
 import { AccountManageComponent } from './protectedPages/admin/account-manage/account-manage.component'
 import { ProcessDetailsComponent } from './protectedPages/user-information/process-details/process-details.component';
 
-import { PurchaseEntryComponent } from './protectedPages/user-information/purchase-entry/purchase-entry.component';
+import { ProjectExecutionComponent } from './protectedPages/user-information/project-execution/project-execution.component';
 import { PurchaseOrderComponent } from './protectedPages/user-information/purchase-order/purchase-order.component';
 import { TaxInvoiceComponent } from './protectedPages/user-information/tax-invoice/tax-invoice.component';
 
@@ -48,7 +48,7 @@ const routes: Routes = [
 
     {path:'proformaInvoice', component: ProcessDetailsComponent},
     {path:'proformaInvoice/:projectNo', component: ProcessDetailsComponent},
-    {path:'projectExecution', component: PurchaseEntryComponent},
+    {path:'projectExecution', component: ProjectExecutionComponent},
     {path:'purchaseOrder', component: PurchaseOrderComponent},
     {path:'purchaseOrder/:projectNo', component: PurchaseOrderComponent},
     {path:'taxInvoice', component: TaxInvoiceComponent},

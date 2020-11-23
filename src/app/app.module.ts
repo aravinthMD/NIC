@@ -57,7 +57,7 @@ import {
   PB_DIRECTION,
   NgxUiLoaderService
 } from 'ngx-ui-loader';
-import { PurchaseEntryComponent } from './protectedPages/user-information/purchase-entry/purchase-entry.component';
+import { ProjectExecutionComponent } from './protectedPages/user-information/project-execution/project-execution.component';
 import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -126,7 +126,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmailComponent,
     ManageUserDialogComponent,
     LovsComponent,
-    PurchaseEntryComponent,
+    ProjectExecutionComponent,
     TechnicalAdminDetailsComponent,
     BillingOwnerDetailsComponent,
     SmsCreditAllocationComponent,
