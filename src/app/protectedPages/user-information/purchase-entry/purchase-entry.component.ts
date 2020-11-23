@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { from } from 'rxjs';
 import {LabelsService} from '../../../services/labels.service';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-purchase-entry',
@@ -33,8 +34,31 @@ export class PurchaseEntryComponent implements OnInit {
     {key : 3 ,value : "IMPS"}
   ]
 
+  userList : any[] =   [
+    {projectNo:4535, invoiceNumber: 4355, invoiceDate: '12/04/2017', amount: 50000},
+    {projectNo:4535, invoiceNumber: 2313, invoiceDate: '15/06/2018', amount: 45900},
+    {projectNo:4535, invoiceNumber: 6574, invoiceDate: '21/08/2019', amount: 23000}
 
-  constructor(private labelsService : LabelsService) { }
+  ]
+
+  dataSource = new MatTableDataSource<any>(this.userList);
+
+  displayedColumns : string[] = ["ProjectNo","InvoiceNo","InvoiceDate","Amount"]
+
+  searchForm: FormGroup;
+
+
+  constructor(private labelsService : LabelsService) { 
+
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
+    })
+
+
+  }
 
   ngOnInit() {
 
@@ -59,6 +83,9 @@ export class PurchaseEntryComponent implements OnInit {
       transactionDate : new FormControl(null),
       piPaid: new FormControl('')
     });
+
+
+    this.dataSource = new MatTableDataSource<any>(this.userList);
   }
 
   PEForm(){
@@ -69,6 +96,20 @@ export class PurchaseEntryComponent implements OnInit {
 
     this.PurchaseEntryForm.reset();
 
+  }
+
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
   }
 
   }

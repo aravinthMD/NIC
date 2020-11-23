@@ -53,3 +53,43 @@
     ::ng-deep .mat-option-text {
       font-size: 15px !important;
     }
+
+
+
+    table {
+      width: 100%;
+    }
+    th{
+      font-size: 16px;
+      font-weight: 500;
+      background-color: #0e4d92;
+      color: #fff;
+    }
+    tr:nth-child(even) {background-color:#f5f4f4;}
+  
+    .material-icons{
+      padding-right: 32px;
+    }
+    
+    .mat-expansion-panel-header {
+      line-height: 24px;
+      margin-bottom: 10px;
+      background-color: #dfdfdf !important;
+      font-weight: 500 !important;
+    }
+    
+    .mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
+    
+      background-color: #dfdfdf !important;
+    }
+
+    .searching{
+      margin-top: 1.1vw;
+    }
+
+    mat-card{
+      margin-bottom: 4px;
+      margin-top: 8px;
+    }
+  
+    
