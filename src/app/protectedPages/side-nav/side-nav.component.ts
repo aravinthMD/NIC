@@ -20,7 +20,6 @@ export class SideNavComponent implements OnInit,OnChanges {
   constructor(private location: Location,private utilService: UtilService) { }
 
   ngOnInit() {
-    debugger;
     this.utilService.detectSidNav$.subscribe((user)=> {
       console.log('DETECT SIDE NAV ********',user)
 
@@ -72,18 +71,24 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.isLocation = '1.1.4'
     }else if(path.includes('users/reports')){
       this.isLocation = '3'
-    }else if(path.includes('users/email')) {
-      this.isLocation = '4'
+    }else if(path.includes('users/sendemail')) {
+      this.parentLocation='4'
+      this.isLocation = '4.1'
+    }else if(path.includes('users/managegroup')) {
+      this.parentLocation='4'
+        this.isLocation = '4.2'
     }else if(path.includes('admin/manageUser')) {
       this.isLocation = '2.1';
     }else if(path.includes('admin/manageAccount')) {
       this.isLocation = '2.2';
     }
 
-    if(path.includes('users/') && !path.includes('users/Dashboard') && !path.includes('users/reports') && !path.includes('users/email')) {
+    if(path.includes('users/') && !path.includes('users/Dashboard') && !path.includes('users/reports') &&!path.includes('users/sendemail') &&!path.includes('users/managegroup')) {
       this.parentLocation = '1'
     }else if(path.includes('admin/')) {
-      this.parentLocation = '2'
+      this.parentLocation = '2' 
+    }else if(path.includes('/sendemail')||path.includes('/managegroup')){
+        this.parentLocation = '4'
     }else {
       this.parentLocation = ''
     }
@@ -111,9 +116,12 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.parentLocation = '2'
   }else if(route.includes('1.')){
     this.parentLocation = '1'
+  }else if(route.includes('4.')){
+    this.parentLocation='4'
   }else {
     this.parentLocation = ''
   }
+  
 
   }
 

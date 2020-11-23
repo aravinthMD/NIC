@@ -27,6 +27,7 @@ import  { BillingOwnerDetailsComponent } from './protectedPages/user-information
 import  { SmsCreditAllocationComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-allocation.component'
 
 import  { UserInfoComponent } from './protectedPages/user-information/user-info/user-info.component'
+import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
 
 const routes: Routes = [
   {path:"",component :LoginComponent},
@@ -49,7 +50,8 @@ const routes: Routes = [
 
 
     { path : "reports" , component : ReportsComponent},
-    {path: "email", component : EmailComponent}
+    {path: "sendemail", component : EmailComponent},
+    {path: "managegroup", component : ManageGroupComponent}
   ],
 },
   {path:"admin",component : AdminComponent,

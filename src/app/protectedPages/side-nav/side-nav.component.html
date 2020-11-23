@@ -77,12 +77,17 @@
             </div>
         </li>
         <li class="list-group-item">
-            <a class="nav-link p-1 collapsed" id="forarrow" href="#submenu1" data-toggle="collapse" data-target="#submenu1" routerLink="/users/userInfo" [ngClass]="{'side-menu': (parentLocation == '2')}" class=""><i class="fa fa-user pr-2" aria-hidden="true"></i>Admin</a>
+            <a class="nav-link p-1 collapsed" id="forarrow" href="#submenu1" 
+            data-toggle="collapse" data-target="#submenu1" routerLink="/users/userInfo" 
+            [ngClass]="{'side-menu': (parentLocation == '2')}" class="">
+            <i class="fa fa-user pr-2" aria-hidden="true"></i>Admin</a>
             <!-- <a><i class="fa fa-table"></i> <span class="d-none d-sm-inline">NewAccount</span><i _ngcontent-xbm-c3="" aria-hidden="false" class="fa fa-chevron-down"></i></a> -->
             <div class="collapse" id="submenu1" aria-expanded="false">
                 <ul class="flex-column nav">
                     <li class="nav-item pl-4" [ngClass]="{'side-menu': (isLocation == '2.1')}">
-                        <a class="nav-link  collapsed " routerLink="/admin/manageUser" (click)="navigation('2.1')"   routerLinkActive="active-link" data-toggle="collapse"><span><i class="fa fa-users" aria-hidden="true"></i>
+                        <a class="nav-link  collapsed " routerLink="/admin/manageUser" 
+                        (click)="navigation('2.1')"   routerLinkActive="active-link" 
+                        data-toggle="collapse"><span><i class="fa fa-users" aria-hidden="true"></i>
                             Users</span></a>
 
                     </li>
@@ -110,13 +115,33 @@
         <li class="list-group-item">
             <a routerLink="/users/reports" (click)="navigation('3')" [ngClass]="{'side-menu': (isLocation == '3')}" routerLinkActive="active-link" class=""><i class="fa fa-area-chart pr-2" aria-hidden="true"></i>Reports</a>
         </li>
-
         <!-- <li class="list-group-item">
             <a routerLink = "/admin/manage/users" routerLinkActive="active-link"  class=""><i class="fa fa-users pr-2" aria-hidden="true"></i>Manage Users</a>
         </li> -->
-
         <li class="list-group-item">
-            <a routerLink="/users/email" (click)="navigation('4')" [ngClass]="{'side-menu': (isLocation == '4')}" routerLinkActive="active-link" class=""><i class="fa fa-envelope pr-2" aria-hidden="true"></i>Email</a>
+            <a class="nav-link p-1 collapsed" id="forarrow" href="#submenu3"
+            data-toggle="collapse" data-target="#submenu3" routerLink="/users/sendemail"
+            [ngClass]="{'side-menu': (parentLocation == '4')}"class="">
+            <i class="fa fa-envelope pr-2" aria-hidden="true"></i>Email</a>
+            <div class="collapse" id="submenu3" aria-expanded="false">
+                <ul class="flex-column nav">
+                    <li class="nav-item pl-4" [ngClass]="{'side-menu': (isLocation == '4.1')}">
+                        <a class="nav-link  collapsed " routerLink="/users/sendemail" 
+                        (click)="navigation('4.1')"   
+                        routerLinkActive="active-link" data-toggle="collapse"><span>
+                            <i class="fa fa-envelope pr-2" 
+                            aria-hidden="true"></i>
+                            Compose Email</span></a>
+                    </li>
+                    <li class="nav-item pl-4" [ngClass]="{'side-menu': (isLocation == '4.2')}">
+                        <a class="nav-link  collapsed " routerLink="/users/managegroup" 
+                        (click)="navigation('4.2')"  routerLinkActive="active-link" 
+                        data-toggle="collapse" ><span><i class="fa fa-user" aria-hidden="true">
+                        </i>  Manage Group</span></a>
+
+                    </li>
+                </ul>
+            </div>
         </li>
 
     </ul>

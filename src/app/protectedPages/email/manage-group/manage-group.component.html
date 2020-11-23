@@ -1,0 +1,188 @@
+<div class="col-md-10 main">
+
+    <div class="col-md-12  p-0">
+
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header matRipple>
+                    <mat-panel-title>
+                        <span class="panel-title pb-2">Manage Group</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form  [formGroup]="groupControl">
+                    <div class="col-6">
+                        <mat-form-field class="example-form-field p-0">
+                            <mat-label>Search...</mat-label>
+                            <input matInput type="text">
+                            <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource" class=" ">
+
+                            <ng-container matColumnDef="s.no">
+                                <th mat-header-cell *matHeaderCellDef>S.No</th>
+                                <td mat-cell *matCellDef="let element;let i = index" class="value-bold"> {{i+1}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="groupName">
+                                <th mat-header-cell *matHeaderCellDef>Group Name</th>
+                                <td mat-cell *matCellDef="let element" class="value-bold"> {{element.value}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="userCount">
+                                <th mat-header-cell *matHeaderCellDef>User Count</th>
+                                <td mat-cell *matCellDef="let element" class="value-bold"> {{element.count}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                <td mat-cell *matCellDef="let element" >
+                                    <button class="btn btn-primary" (click)="OnView(element)">View</button></td>
+                            </ng-container>
+                            <ng-container matColumnDef="delete">
+                                <th mat-header-cell *matHeaderCellDef> Delete </th>
+                                <td mat-cell *matCellDef="let element" >
+                                    <button class="btn btn-primary" (click)="OnDelete(element)">Delete</button></td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+                        <mat-paginator class="font-paginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+                            showFirstLastButtons></mat-paginator>
+                    </div>
+                    <mat-card class="mt-4">
+                        <div class="d-flex justify-content-start button mr-3 pb-3">
+                            <button matRipple *ngIf="hideBtn" [disabled]="disbaledBtn" (click)="Creategroup()"
+                                class=" btn btn-primary">Create Group</button>
+                        </div>
+                        <div *ngIf="show">
+                            <div class="row pad-row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <app-custom-input [labelName]="'Group Name'" [isDisabledInp]="isDisabledInp"
+                                            formControlName="groupName">
+                                        </app-custom-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label class="ml-1" for="">Add User</label>
+                                    <input class="form-control" 
+                                    [disabled]="groupControl.get('groupName').value== ''"
+                                    placeholder="  Enter Email Address" [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur" 
+                                    (matChipInputTokenEnd)="add($event)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <mat-card>
+                                    <span>
+                                        <mat-chip-list #chipList aria-label="user selection">
+                                            <mat-chip *ngFor="let user of userList" [selectable]="selectable"
+                                                [removable]="removable" (removed)="remove(user)">
+                                                {{user.email}}
+                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                            </mat-chip>
+                                        </mat-chip-list>
+                                    </span>
+                                </mat-card>
+                            </div>
+                            <div *ngIf="hideBtn" class="row ml-2 pt-3">
+                                <div class="d-flex justify-content-start button mr-3 pb-3">
+                                    <button (click)="onSubmit()"
+                                        [disabled]="userList.length==0 || groupControl.get('groupName').value== ''"
+                                        matRipple class=" btn btn-primary">Submit</button>
+                                </div>
+                                <div class="d-flex justify-content-start button mr-3 pb-3">
+                                    <button matRipple (click)="close()" class="btn btn-primary">Close</button>
+                                </div>
+                            </div>
+                            <div *ngIf="!hideBtn" class="row ml-2 pt-3">     
+                                <div class="d-flex justify-content-start button mr-3 pb-3">
+                                    <button matRipple (click)="update()" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="d-flex justify-content-start button mr-3 pb-3">
+                                    <button matRipple (click)="close()" class="btn btn-primary">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card>
+                    <!-- <div class="row pad-row">
+
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="department">Group List</label>
+                                <app-vf-custom-select [values]="groupList" (change)="onChange($event)">
+                                </app-vf-custom-select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <app-custom-input [labelName]="'Add Group'" [isDisabledInp]="isDisabledInp">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        <div class="row ml-3">
+                            <h4 class="col-12"></h4>
+                            <div class="d-flex justify-content-start button mr-3">
+                                <button type="submit" matRipple class=" btn btn-primary">Create Group</button>
+                            </div>
+                            <div class="d-flex justify-content-start button mr-3">
+                                <button type="submit" matRipple class=" btn btn-primary">Edit Group</button>
+                            </div>
+                            <div class="d-flex justify-content-start button mr-3">
+                                <button type="submit" matRipple class=" btn btn-primary">Delete Group</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <app-custom-input [labelName]="'Group Name'" [isDisabledInp]="!isDisabledInp">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="user">Search User</label>
+                                <div class="form-control">
+                                   <input type="text" 
+                                   placeholder="Enter User" 
+                                   aria-label="Number" 
+                                    matInput 
+                                   [formControl]="myControl"
+                                   [matAutocomplete]="auto">
+                              <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredOptions | async" 
+                            [value]="option.value">
+                                {{option.value}}
+                            </mat-option>
+                        </mat-autocomplete></div>
+                            </div>
+                        </div>
+                        <div class="row ml-3">
+                            <div class="p-2">
+                                <button class="btn btn-primary">Add</button>
+                            </div>
+                            <div class="p-2">
+                                <button class="btn btn-primary">Remove</button>
+                            </div>
+                        </div>
+                    </div> -->
+                </form>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+
+    </div>
+
+</div>

@@ -46,6 +46,8 @@ import { TechnicalAdminDetailsComponent } from './protectedPages/user-informatio
 import { BillingOwnerDetailsComponent } from './protectedPages/user-information/user-info/billing-owner-details/billing-owner-details.component';
 import { SmsCreditAllocationComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-allocation.component';
 import { AccountManageComponent } from './protectedPages/admin/account-manage/account-manage.component';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 import {
   NgxUiLoaderModule,
@@ -55,6 +57,7 @@ import {
   PB_DIRECTION,
 } from 'ngx-ui-loader';
 import { PurchaseEntryComponent } from './protectedPages/user-information/purchase-entry/purchase-entry.component';
+import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -127,6 +130,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     BillingOwnerDetailsComponent,
     SmsCreditAllocationComponent,
     AccountManageComponent,
+    ManageGroupComponent,
   ],
   imports: [
     BrowserModule,
@@ -145,6 +149,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatInputModule,
     MatCheckboxModule,
     MatCardModule,
+    MatChipsModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),
