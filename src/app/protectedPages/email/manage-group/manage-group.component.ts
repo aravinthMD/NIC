@@ -115,5 +115,9 @@ export class ManageGroupComponent implements OnInit {
   }
   }
 
+  update() {
+    
+  }
+
 }
 
