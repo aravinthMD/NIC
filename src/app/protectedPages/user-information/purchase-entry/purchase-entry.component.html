@@ -194,6 +194,14 @@
                         </app-custom-input>
                     </div>
                 </div>
+
+                <div class="col-4">
+                  <div class="form-group">
+                    <label for="modeOfPayment">PI paid</label>
+                     <app-vf-custom-select formControlName ="piPaid" [values] = "piPaidValues"
+                     [isRequired] = "'Please Select the PI paid'" [isDirty] = "isDirty"></app-vf-custom-select>
+                  </div>
+              </div>
   
                 <div class="col-4">
                   <div class="form-group">

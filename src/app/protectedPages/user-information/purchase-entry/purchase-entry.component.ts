@@ -15,6 +15,16 @@ export class PurchaseEntryComponent implements OnInit {
   isDirty: boolean;
   labels :  any;
 
+  piPaidValues = [
+    {
+    key: 0, 
+    value: 'Full Payment'
+  },
+  {
+    key: 1, 
+    value: 'Partial Payment'
+  }]
+
 
   modeOfPaymentList = [
     {key : 0 ,value : 'DD'},
@@ -38,7 +48,7 @@ export class PurchaseEntryComponent implements OnInit {
       piNumber : new FormControl(null),
       piDate : new FormControl(null),
       piAmount : new FormControl(null),
-      modeOfPayment : new FormControl(null),
+      modeOfPayment : new FormControl(''),
       documentNo :  new FormControl(null),
       dateOfTransaction :  new FormControl(null),
       bankName : new FormControl(null),
@@ -46,7 +56,8 @@ export class PurchaseEntryComponent implements OnInit {
       tds : new FormControl(null),
       NICSIProjectNo : new FormControl(null),
       invoiceDate :  new FormControl(null),
-      transactionDate : new FormControl(null)
+      transactionDate : new FormControl(null),
+      piPaid: new FormControl('')
     });
   }
 

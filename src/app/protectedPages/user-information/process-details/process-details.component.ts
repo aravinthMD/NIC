@@ -20,7 +20,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"remainder"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"remainder","Escalation"]
 
 
   userList : any[] =   [
