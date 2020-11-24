@@ -5,6 +5,8 @@ import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
 import { ActivatedRoute } from '@angular/router'
+import { MatDialog } from '@angular/material';
+import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
 
 
 @Component({
@@ -18,7 +20,7 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   @Input('userObj') user : any
 
-  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks']
+  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks',"Action"]
 
   userList : any[] =   [
     {purchaseNo : 114,projectNumber : 4535,piAmt:24250,reminder:'Send Reminder'},
@@ -73,7 +75,8 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   constructor(
     private labelsService: LabelsService,
     private DatePipe:DatePipe,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dialog : MatDialog
     ) { }
 
   ngOnInit() {
@@ -153,6 +156,21 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
       searchFrom:null,
       searchTo:null
     })
+  }
+
+  OnEdit(fromObj :  any){
+
+    const dialogRef = this.dialog.open(PurchaseOrderDialogComponent,{
+      data : {
+        value : 'testing'
+      }
+    })
+
+    dialogRef.afterClosed().subscribe((result) =>{
+      console.log('The dialog was closed', result);
+
+    })
+
   }
 
 

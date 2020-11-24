@@ -3,6 +3,8 @@ import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { from } from 'rxjs';
 import {LabelsService} from '../../../services/labels.service';
 import {MatTableDataSource} from '@angular/material/table';
+import { MatDialog } from '@angular/material';
+import { ProjectExcecutionDialogComponent } from './project-excecution-dialog/project-excecution-dialog.component';
 
 @Component({
   selector: 'app-project-execution',
@@ -43,12 +45,12 @@ export class ProjectExecutionComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
-  displayedColumns : string[] = ["ProjectNo","InvoiceNo","InvoiceDate","Amount"]
+  displayedColumns : string[] = ["ProjectNo","InvoiceNo","InvoiceDate","Amount","Action"]
 
   searchForm: FormGroup;
 
 
-  constructor(private labelsService : LabelsService) { 
+  constructor(private labelsService : LabelsService,private dialog : MatDialog) { 
 
 
     this.searchForm = new FormGroup({
@@ -109,6 +111,19 @@ export class ProjectExecutionComponent implements OnInit {
       searchData: null,
       searchFrom:null,
       searchTo:null
+    })
+  }
+
+
+  OnEdit(formObj : any){
+    const dialogRef = this.dialog.open(ProjectExcecutionDialogComponent,{
+      data : {
+        value : 'testing'
+      }
+    })
+
+    dialogRef.afterClosed().subscribe(result =>{
+      console.log('The dialog was Closed',result);
     })
   }
 
