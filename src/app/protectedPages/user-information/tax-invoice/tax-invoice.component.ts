@@ -5,6 +5,8 @@ import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
 import { ActivatedRoute } from '@angular/router'
+import { MatDialog } from '@angular/material';
+import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
 
 
 @Component({
@@ -18,7 +20,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks']
+  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks','Active']
 
   userList : any[] =   [
    
@@ -47,7 +49,8 @@ export class TaxInvoiceComponent implements OnInit {
   toDate =new Date()
 
   constructor(private labelsService: LabelsService,
-    private Datepipe:DatePipe,private activatedRoute: ActivatedRoute) { }
+    private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,
+    private dialog : MatDialog) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -129,6 +132,19 @@ export class TaxInvoiceComponent implements OnInit {
       searchData: null,
       searchFrom:null,
       searchTo:null
+    })
+  }
+
+  OnEdit(fromObj :  any){
+    const dialogRef = this.dialog.open(TaxInvoiceDialogComponent, {
+      data : {
+        value : 'testing'
+      }
+    })
+
+    dialogRef.afterClosed().subscribe((result) =>{
+      console.log('The dialog was closed', result);
+
     })
   }
 

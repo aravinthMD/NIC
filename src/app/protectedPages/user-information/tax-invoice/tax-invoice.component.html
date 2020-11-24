@@ -386,6 +386,11 @@
       <td mat-cell *matCellDef="let element" class="value-bold"> {{element.remarks}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="Active">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element" class="value-bold"> <button (click) = "OnEdit(element)">View/Edit</button> </td>
+    </ng-container>
+
     <!-- <ng-container matColumnDef="remainder">
       <th mat-header-cell *matHeaderCellDef> Remainder </th>
       <td mat-cell *matCellDef="let element" class="value-bold"> <button>Send</button> </td>
@@ -395,7 +400,9 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
+  <button class="btn btn-primary download download-pad" type="submit">ExportAsCSV</button>
   <mat-paginator class="font-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
 </div>
 <!--Material Table End-->
 

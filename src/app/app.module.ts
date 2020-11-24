@@ -47,6 +47,7 @@ import { BillingOwnerDetailsComponent } from './protectedPages/user-information/
 import { SmsCreditAllocationComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-allocation.component';
 import { AccountManageComponent } from './protectedPages/admin/account-manage/account-manage.component';
 import {MatChipsModule} from '@angular/material/chips';
+import {TaxInvoiceDialogComponent} from './protectedPages/user-information/tax-invoice/tax-invoice-dialog/tax-invoice-dialog.component'
 
 
 import {
@@ -59,6 +60,8 @@ import {
 } from 'ngx-ui-loader';
 import { ProjectExecutionComponent } from './protectedPages/user-information/project-execution/project-execution.component';
 import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
+import { ProjectExcecutionDialogComponent } from './protectedPages/user-information/project-execution/project-excecution-dialog/project-excecution-dialog.component';
+import { PurchaseOrderDialogComponent } from './protectedPages/user-information/purchase-order/purchase-order-dialog/purchase-order-dialog.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -132,6 +135,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SmsCreditAllocationComponent,
     AccountManageComponent,
     ManageGroupComponent,
+    ProjectExcecutionDialogComponent,
+    PurchaseOrderDialogComponent,
+    TaxInvoiceDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -175,7 +181,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderService
   ],
   bootstrap: [AppComponent],
-  entryComponents:[ProformaInvoiceDialogFormComponent, ManageUserDialogComponent]
+  entryComponents:[ProformaInvoiceDialogFormComponent,
+     ManageUserDialogComponent,
+     ProjectExcecutionDialogComponent,
+    TaxInvoiceDialogComponent,
+  PurchaseOrderDialogComponent]
 })
 export class AppModule { }
 
