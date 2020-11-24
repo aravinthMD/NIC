@@ -58,7 +58,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   imageUrl: string;
   fileSize: string;
-  fileName: string;
+  fileName: string = 'invoice.pdf';
   fileType: string;
 
 
