@@ -185,27 +185,28 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
 
 
-  sendReminder() {
+  sendReminder(element) {
     this.showEmailModal = true;
 
     this.modalData =  {
       title: 'Send Reminder Email',
       request: {
-        from: 'reminder_from_nic@nic.in',
-        to: 'reminder_to_nic@nic.in'
+        from: 'akshaya@appiyo.com',
+        to: 'arul.auth@nic.in',
+        subject: `Test Email: ${element.invoiceNo}`
       }
     }
   }
 
-  sendEscalation() {
+  sendEscalation(element) {
     this.showEmailModal = true;
 
     this.modalData =  {
       title: 'Send Escalation Email',
       request: {
-        from: 'escalation_from_nic@nic.in',
-        to: 'escalation_to_nic@nic.in',
-        subject: 'RE: [##201##] RE: NIC'
+        from: 'akshaya@appiyo.com',
+        to: 'escalation@nic.in',
+        subject: `Test Email: ${element.invoiceNo} RE: [##201##] RE: NIC`
       }
     }
 
