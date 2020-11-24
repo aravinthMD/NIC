@@ -20,7 +20,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"remainder","Escalation"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"reminder","Escalation"]
 
 
   userList : any[] =   [
@@ -68,6 +68,13 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   searchForm: FormGroup;
   accountName: string;
   status: string;
+
+  showEmailModal: boolean;
+
+  modalData: {
+    title: string;
+    request: any
+  }
 
   constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
 
@@ -174,6 +181,42 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       searchFrom:null,
       searchTo:null
     })
+  }
+
+
+
+  sendReminder() {
+    this.showEmailModal = true;
+
+    this.modalData =  {
+      title: 'Send Reminder Email',
+      request: {
+        from: 'reminder_from_nic@nic.in',
+        to: 'reminder_to_nic@nic.in'
+      }
+    }
+  }
+
+  sendEscalation() {
+    this.showEmailModal = true;
+
+    this.modalData =  {
+      title: 'Send Escalation Email',
+      request: {
+        from: 'escalation_from_nic@nic.in',
+        to: 'escalation_to_nic@nic.in',
+        subject: 'RE: [##201##] RE: NIC'
+      }
+    }
+
+  }
+
+  onOkay() {
+    this.showEmailModal = false;
+  }
+
+  onCancel() {
+    this.showEmailModal = false;
   }
 
 }

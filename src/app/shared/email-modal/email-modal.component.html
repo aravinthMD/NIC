@@ -1,0 +1,53 @@
+<div style="width:80%">
+<div class="modal" id="emailModal" [ngClass]="{ 'dis-block': showModal }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">{{ data.title || 'Send Email' }}</h4>
+            </div>
+            <div class="modal-body">
+
+            <form [formGroup]="emailForm">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="">From</label>
+                            <input type="text" class="form-control" formControlName="from" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="">To</label>
+                            <input type="text" class="form-control" formControlName="to" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                    <div class="form-group">
+                        <label for="">Subject</label>
+                        <input type="text" class="form-control" formControlName="subject">
+                    </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group compose-height">
+                            <label for="">Compose</label>
+                            <textarea type="text" class="form-control" formControlName="compose"></textarea>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="send()"> Send</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="close()"> Close</button>
+                </div>
+
+            </form>
+            </div>
+        </div>
+    </div>
+
+</div>
