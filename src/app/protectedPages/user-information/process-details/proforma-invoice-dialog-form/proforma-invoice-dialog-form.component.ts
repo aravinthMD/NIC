@@ -72,7 +72,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     this.form =this.formBuilder.group({
     
       accountName: ['Suresh'],
-      invoiceNumber : ['3456'],
+      invoiceNumber : ['4355'],
       refNumber: ['43434'],
       piTraffic: ['5678'],
       piOwner: ['Raja'],
