@@ -39,11 +39,14 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   showUploadModal: boolean;
 
+  showDeleteModal: boolean;
+
   imageUrl: string;
   fileSize: string = 'Size - 109.4 KB';
   fileName: string = 'invoice.pdf';;
   fileType: string;
 
+  showPdfModal: boolean;
 
   constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
     private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>) {
@@ -203,6 +206,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
     return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
   }
 
-  
+  showPDF() {
+    this.showUploadModal = false;
+    this.showPdfModal = true;
+  }
+
 
 }

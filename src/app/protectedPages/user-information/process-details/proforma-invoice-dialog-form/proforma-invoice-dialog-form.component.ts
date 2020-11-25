@@ -27,6 +27,10 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   selectedPdf: any;
 
+  showPdfModal: boolean;
+
+  showDeleteModal: boolean;
+
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
 
   paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
@@ -252,6 +256,11 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 //   }
 download(){
   
+}
+
+showPDF() {
+  this.showUploadModal = false;
+  this.showPdfModal = true;
 }
 
 }

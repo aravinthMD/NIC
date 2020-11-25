@@ -321,7 +321,7 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="form-group">
+            <div class="form-group" style="cursor: pointer;" (click)="showPDF()">
 
               <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'"
                 height="80px" width="80px" />
@@ -340,7 +340,7 @@
                 <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="download()">Download</button>
               </div>
               <div class="pr-2">
-                <button matRipple class=" btn btn-primary" style="font-size: 10px;">Remove</button>
+                <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
               </div>
             </div>
           </div>
@@ -386,3 +386,65 @@
       </div>
     </div>
   </div>
+
+
+  <div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width:800px">
+        <div class="modal-header text-center">
+          <h4 class="modal-title">View PDF</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
+        </div>
+        <div class="modal-body" style="height:800px">
+  
+        </div>
+  </div>
+  </div>
+  </div>
+
+
+  <div
+class="modal"
+id="deleteModal"
+[ngClass]="{ 'dis-block': showDeleteModal }"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header text-center">
+      <h4 class="modal-title"></h4>
+      <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+      <p id="">
+          Are you sure you want to remove this pdf ?
+      </p>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer text-center">
+      <button
+        type="button"
+        class="btn btn-success"
+        data-dismiss="modal"
+        id="ucic_lead"
+
+      >
+        <!-- (click)="checkNegativeList()" -->
+
+        Yes
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-dismiss="modal"
+        (click)="showDeleteModal = false"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+</div>

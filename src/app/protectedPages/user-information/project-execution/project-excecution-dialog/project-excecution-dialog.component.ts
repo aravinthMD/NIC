@@ -15,6 +15,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   labels :  any;
   buttonName : any = 'Edit';
   enableflag :boolean = true;
+  showDeleteModal: boolean;
 
   modeOfPaymentList = [
     {key : 0 ,value : 'DD'},
@@ -48,6 +49,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   fileName: string = 'invoice.pdf';;
   fileType: string;
 
+  showPdfModal:boolean;
 
 
 
@@ -224,7 +226,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
   }
 
-  
+  showPDF() {
+    this.showUploadModal = false;
+    this.showPdfModal = true;
+  }
 
 
 }

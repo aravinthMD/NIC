@@ -23,6 +23,9 @@ export class TaxInvoiceDialogComponent implements OnInit {
   fileName: string = 'invoice.pdf';;
   fileType: string;
 
+  showPdfModal: boolean;
+
+  showDeleteModal: boolean;
 
   constructor(private formBuilder : FormBuilder,private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
     private labelService : LabelsService) {
@@ -192,6 +195,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
       return bytes + ' ' + sizes[i];
     }
     return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
+  }
+
+  showPDF() {
+    this.showUploadModal = false;
+    this.showPdfModal = true;
   }
 
 
