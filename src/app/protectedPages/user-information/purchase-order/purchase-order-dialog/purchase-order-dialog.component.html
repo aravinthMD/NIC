@@ -268,7 +268,7 @@
           </div>
         </div>
        
-        <div class="col-4">
+        <!-- <div class="col-4">
           <div class="form-group">
             <label for="poBillable">{{labels.uploadDoc}}</label>
             <input type="file" class="form-control upload-choose-pad" id="poBillable"
@@ -276,7 +276,27 @@
               >
             <small id="poBillableHelp" class="form-text text-muted"></small>
           </div>
+        </div> -->
+
+
+
+        <div class="col-4">
+
+          <div class="form-group">
+            <label for="document">Document</label>
+            <div class="pd-2">
+              <span> {{'invoice.pdf'}} </span>
+  
+              <button class="btn btn-primary" [disabled]="enableFlag" style="position: absolute;left: 8vw;bottom: 1.2vw;"  (click)="viewDoc()">View</button>
+            </div>
+  
+  
+  
+          </div>
         </div>
+
+
+
       </div>
 
 
@@ -287,3 +307,81 @@
 
     </form>
 </mat-dialog-content>
+
+
+
+<div class="modal" id="uploadModal" [ngClass]="{ 'dis-block': showUploadModal }" *ngIf="showUploadModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">Upload Document</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="showUploadModal = false">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+
+              <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'"
+                height="180px" width="160px" />
+            </div>
+          </div>
+          <div class="col-12 small pr-2">
+            <div class="form-group">
+              {{fileName}}
+            </div>
+            <div class="form-group">
+              {{fileSize}}
+            </div>
+          </div>
+
+          <!-- <div class="col-12">
+
+                <div class="form-group"> -->
+
+
+          <!-- <mat-card class="col-sm-12" style="padding:4px">
+                    <div style="display: flex;align-items: center;justify-content: center;"> -->
+          <!-- <img [src]="selectedPdf" class="img-responsive img" /></div> -->
+
+          <!-- <embed width="100%" height="100%" src="'data:application/pdf;base64,' + selectedPdf" type="application/pdf" /> -->
+
+          <!-- </div>
+                    </mat-card> -->
+
+
+          <!-- <embed width="100%" height="100%" [src]="selectedPdf" type="application/pdf" />
+
+                  </div>
+                
+
+              </div> -->
+
+          <div class="col-12">
+
+            <div class="form-group row" style="float: right;">
+              
+              <div class="pr-2">
+                <button matRipple class=" btn btn-primary">Save</button>
+              </div>
+              <div class="pr-2">
+                <button matRipple class=" btn btn-primary" (click)="download()">Download</button>
+              </div>
+            </div>
+              <div class="pd-3">
+                <button matRipple type="button" class="btn btn-primary" style="float: left;"
+                  (click)="fileInput.click()">Choose Document</button>
+              </div>
+
+              <!-- <button type="button" class="btn btn-primary" style="float: left;">Save</button>
+                  <button type="button" class="btn btn-primary" style="float: left;"  (click)="fileInput.click()"> Choose Upload</button> -->
+            </div>
+          </div>
+          <input #fileInput type="file" style="display: none;"  (input)="onFileSelect($event)" />
+
+        </div>
+
+      </div>
+    </div>
+  </div>

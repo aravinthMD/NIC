@@ -57,8 +57,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
 
   imageUrl: string;
-  fileSize: string;
-  fileName: string;
+  fileSize: string = 'Size - 109.4 KB';
+  fileName: string = 'invoice.pdf';
   fileType: string;
 
 
@@ -141,11 +141,12 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
         
         
         // this.selectedPdf = this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + reader.result.toString())
-        
+        // target.files[0]
 
-        this.selectedPdf = ''
-
-        console.log(this.selectedPdf)
+       // this.selectedPdf = ''
+        this.fileSize = `Size - ${this.bytesToSize(files.size)}`
+        this.fileName = files.name;  
+        console.log('fileSize',this.fileSize)
         
       });
 
@@ -249,6 +250,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 //       this.caption = event.target.files[0].name;
 //     }
 //   }
-
+download(){
+  
+}
 
 }

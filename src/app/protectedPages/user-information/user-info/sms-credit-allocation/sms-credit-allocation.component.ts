@@ -67,7 +67,7 @@ user: string;
       status: new FormControl ([null]),
       onApprovalOf: new FormControl ([null]),
       remark: new FormControl ([null]),
-      statusChangedBy: new FormControl ([null]),
+      statusChangedBy: new FormControl (['akshaya']),
       timeStamp: new FormControl ([this.currentDate]),
     })
 

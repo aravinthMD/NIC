@@ -21,6 +21,8 @@ export class EmailComponent implements OnInit {
   
   emailIdList: Email[] = [];
 
+  isInvalidEmail: boolean;
+
   constructor() { }
 
   ngOnInit() {
@@ -29,7 +31,13 @@ export class EmailComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-
+    if (!RegExp('^\\w+([.-]?\\w+)@\\w+([.-]?\\w+)(\\.\\w{2,10})+$').test(value) && value != '') {
+        this.isInvalidEmail = true;
+        return;
+    }else {
+      this.isInvalidEmail = false;
+    }
+    
     if ((value || '').trim()) {
       this.emailIdList.push({name: value.trim()});
     }

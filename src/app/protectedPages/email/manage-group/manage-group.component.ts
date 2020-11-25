@@ -47,6 +47,8 @@ export class ManageGroupComponent implements OnInit {
   hideBtn:boolean=true;
   disbaledBtn=false;
   dataSource = new MatTableDataSource<any>(this.groupList);
+  showModal: boolean;
+  groupName: string;
   constructor() { }
   displayedColumns : string[] = ['s.no','groupName','userCount','action','delete']
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
@@ -103,13 +105,18 @@ export class ManageGroupComponent implements OnInit {
     this.groupControl.reset();
   }
   OnDelete(val){
-
+    this.showModal= true;
+    this.groupName = val.value || ''
+  }
+  onCancel() {
+    this.showModal = false;
   }
   OnView(val){
     const data=val
     this.show=true
     this.hideBtn=false
     this.groupControl.patchValue({groupName:data.value})
+    this.userList = []
     for(let i in this.group1){
        this.userList.push({email:this.group1[i].value})
   }

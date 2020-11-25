@@ -33,6 +33,7 @@ export class EmailModalComponent implements OnInit, OnChanges {
     this.emailForm = new FormGroup({
       from: new FormControl(''),
       to: new FormControl(''),
+      cc: new FormControl(''),
       subject: new FormControl(''),
       compose: new FormControl('')
     })
