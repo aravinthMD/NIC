@@ -206,7 +206,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       request: {
         from: 'akshaya@appiyo.com',
         to: 'escalation@nic.in',
-        subject: `Test Email: ${element.invoiceNo} RE: [##201##] RE: NIC`
+        subject: `Test Email: [##201##]_PI REF: ${element.invoiceNo}`
       }
     }
 

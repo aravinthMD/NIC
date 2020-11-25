@@ -159,7 +159,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       city : 'mumbai',
       state : 'maharastra',
       pinCode : '641008',
-      smsTariffMonthWise : '978555322422',
+      smsTariffMonthWise : '1000',
       piDuration : '6',
       projectNo : '8776',
       creditAdded : '1002',
@@ -177,7 +177,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       smsServiceReqd: '1',
       creditsSMSQuota: '4000',
      
-      availableCredit: '5000',
+      availableCredit: '3000',
       nameOfTheApplication: 'sathish',
       applicationUrl: 'www.applicant.com',
       serverLocation: 'chennai',
