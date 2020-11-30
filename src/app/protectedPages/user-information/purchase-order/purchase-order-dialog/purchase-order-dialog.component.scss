@@ -4,8 +4,8 @@ button.mat-button.mat-button-base {
     color: white;
     border: 1px solid #0e4d92 !important;
     font-size: 13px;
-    
 }
+
 .mat-dialog-title {
     margin: 0 0 20px;
     background-color: #0e4d92 !important;
@@ -15,20 +15,11 @@ button.mat-button.mat-button-base {
     color: white;
 }
 
-
-::ng-deep .inp-date,.mat-form-field-flex{
-
-     pointer-events: none;
-
+::ng-deep .inp-date,
+.mat-form-field-flex {
+    pointer-events: none;
 }
 
 .dis-block {
     display: block;
-  }
-
-
-
-
-
-
-  
+}
