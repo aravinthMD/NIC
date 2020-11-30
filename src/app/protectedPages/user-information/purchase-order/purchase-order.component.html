@@ -398,7 +398,7 @@
    </mat-card>
 
   <!--Material Table-->
-
+  <button style="float: right;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
 
@@ -436,7 +436,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+    <!-- <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button> -->
     <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
   </div>
 

@@ -193,7 +193,7 @@
             </mat-expansion-panel>
         </mat-accordion>
         <!--Material Table-->
-
+        <button style="float: right;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
         <div class="mat-elevation-z8">
 
             <div class="row pt-3 pb-3 pr-3 pl-3 float-right m-0">
@@ -250,7 +250,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
             </table>
 
-            <button class="btn btn-primary download download-pad" type="submit">Export As CSV</button>
+            <!-- <button class="btn btn-primary download download-pad" type="submit">Export As CSV</button> -->
             <mat-paginator class="font-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
 
