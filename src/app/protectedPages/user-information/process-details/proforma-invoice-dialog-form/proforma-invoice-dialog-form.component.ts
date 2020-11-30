@@ -28,6 +28,10 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   selectedPdf: any;
 
+  showPdfModal: boolean;
+
+  showDeleteModal: boolean;
+
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
 
   paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
@@ -73,7 +77,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     this.form =this.formBuilder.group({
     
       accountName: ['Suresh'],
-      invoiceNumber : ['3456'],
+      invoiceNumber : ['4355'],
       refNumber: ['43434'],
       piTraffic: ['5678'],
       piOwner: ['Raja'],
@@ -254,11 +258,9 @@ download(){
   
 }
 
-remove(file){
-  
-  console.log('working',file)
-  
-  this.imageUrl=''
+showPDF() {
+  this.showUploadModal = false;
+  this.showPdfModal = true;
 }
 
 }
