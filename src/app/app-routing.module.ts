@@ -49,6 +49,7 @@ const routes: Routes = [
     {path:'proformaInvoice', component: ProcessDetailsComponent},
     {path:'proformaInvoice/:projectNo', component: ProcessDetailsComponent},
     {path:'projectExecution', component: ProjectExecutionComponent},
+    {path:'projectExecution/:projectNo', component: ProjectExecutionComponent},
     {path:'purchaseOrder', component: PurchaseOrderComponent},
     {path:'purchaseOrder/:projectNo', component: PurchaseOrderComponent},
     {path:'taxInvoice', component: TaxInvoiceComponent},

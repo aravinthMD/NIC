@@ -91,7 +91,19 @@ export class TaxInvoiceComponent implements OnInit {
    
         {invoiceNo : 1343,projectNumber : value.projectNo || 4535,piAmt:24250,remarks:''},
         {invoiceNo : 5464,projectNumber : value.projectNo || 4535,piAmt:35000,remarks:''},
-        {invoiceNo : 7687,projectNumber : value.projectNo || 4535,piAmt:23450,remarks:''}
+        {invoiceNo : 7687,projectNumber : value.projectNo || 4535,piAmt:23450,remarks:''},
+        {invoiceNo : 9867,projectNumber : value.projectNo || 4535,piAmt:13000,remarks:''},
+        {invoiceNo : 6563,projectNumber : value.projectNo || 4535,piAmt:1000,remarks:''},
+        {invoiceNo : 5535,projectNumber : value.projectNo || 4535,piAmt:9000,remarks:''},
+        {invoiceNo : 5435,projectNumber : value.projectNo || 4535,piAmt:6600,remarks:''},
+        {invoiceNo : 8887,projectNumber : value.projectNo || 4535,piAmt:6767,remarks:''},
+        {invoiceNo : 6555,projectNumber : value.projectNo || 4535,piAmt:6774,remarks:''},
+        {invoiceNo : 5445,projectNumber : value.projectNo || 4535,piAmt:5666,remarks:''},
+        {invoiceNo : 7766,projectNumber : value.projectNo || 4535,piAmt:8787,remarks:''},
+        {invoiceNo : 5443,projectNumber : value.projectNo || 4535,piAmt:5465,remarks:''},
+        {invoiceNo : 9088,projectNumber : value.projectNo || 4535,piAmt:6566,remarks:''},
+        {invoiceNo : 7756,projectNumber : value.projectNo || 4535,piAmt:5566,remarks:''},
+        {invoiceNo : 9787,projectNumber : value.projectNo || 4535,piAmt:6555,remarks:''}
     
       ];
 
