@@ -251,24 +251,27 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-
-              <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'"
-                height="180px" width="160px" />
+              <button mat-icon-button *ngIf="removable" (click)="remove()">cancel</button>
+               <div>
+              <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl :'assets/images/upload-icon.png'"
+              style="border: 1px  gray dotted;"    
+              height="120px" width="100px"/>
+              </div>
+ 
             </div>
           </div>
-          <div class="col-12 small pr-2">
+          <div class="col-12  pr-2">
             <div class="form-group">
               {{fileName}}
             </div>
-            <div class="form-group">
+            <div class="form-group small">
               {{fileSize}}
             </div>
-          </div>
 
+          </div>
           <!-- <div class="col-12">
 
                 <div class="form-group"> -->
-
 
           <!-- <mat-card class="col-sm-12" style="padding:4px">
                     <div style="display: flex;align-items: center;justify-content: center;"> -->
@@ -290,10 +293,6 @@
           <div class="col-12">
 
             <div class="form-group row" style="float: right;">
-              
-              <div class="pr-2">
-                <button matRipple class=" btn btn-primary">Save</button>
-              </div>
               <div class="pr-2">
                 <button matRipple class=" btn btn-primary" (click)="download()">Download</button>
               </div>
