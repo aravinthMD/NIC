@@ -369,7 +369,8 @@
 <!--Material Table-->
 
 
-
+<button style="float: right;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+     
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" class=" ">
 
@@ -401,19 +402,19 @@
 
     <ng-container matColumnDef="reminder">
       <th mat-header-cell *matHeaderCellDef> Reminder </th>
-      <td mat-cell *matCellDef="let element" class="value-bold"> <button mat-button (click)="sendReminder(element)">Send</button> </td>
+      <td mat-cell *matCellDef="let element" class="value-bold"> <button  (click)="sendReminder(element)">Send</button> </td>
     </ng-container>
 
     <ng-container matColumnDef="Escalation">
       <th mat-header-cell *matHeaderCellDef> Escalation </th>
-      <td mat-cell *matCellDef="let element" class="value-bold"> <button mat-button (click)="sendEscalation(element)">Escalation</button> </td>
+      <td mat-cell *matCellDef="let element" class="value-bold"> <button (click)="sendEscalation(element)">Escalation</button> </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+  <!-- <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button> -->
   <mat-paginator class="font-paginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 <!--Material Table End-->
