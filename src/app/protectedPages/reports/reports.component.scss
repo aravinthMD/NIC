@@ -60,37 +60,41 @@ tr:nth-child(even) {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
-  }
-  
-  .example-full-width {
+}
+
+.example-full-width {
     width: 100%;
-  }
+}
 
-  .auto-mrg-top {
-      margin-top: 1vw;
-  }
+.auto-mrg-top {
+    margin-top: 1vw;
+}
 
-  .download-pad {
-    
+.download-pad {
     margin: 1vw 2vw;
-  }
+}
 
-  .mrg-lft{
-      margin: 2vw;
-  }
+.mrg-lft {
+    margin: 2vw;
+}
 
-  ::ng-deep .mat-select-value {
+ ::ng-deep .mat-select-value {
     font-size: 15px !important;
-  }
+}
 
-  ::ng-deep .mat-option-text {
+ ::ng-deep .mat-option-text {
     font-size: 15px !important;
-  }
+}
 
-  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-      padding: 10px !important;
-  }
+ ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 10px !important;
+}
 
-  mat-form-field{
+mat-form-field {
     margin-top: -0.4vw;
+}
+
+.mat-paginator {
+    display: block;
+    margin-bottom: 50px !important;
 }
