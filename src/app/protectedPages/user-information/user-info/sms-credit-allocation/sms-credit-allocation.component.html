@@ -10,12 +10,7 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="smsQuotaMetrix">{{labels.smsQuotaMetrix}}</label>
-                                <app-vf-custom-select 
-                                formControlName="smsQuotaMetrix" 
-                                [values]="smsQuotaMetrix" 
-                                [isDirty]="isDirty"
-                                [isDisabled]="propertyFlag"
-                                >
+                                <app-vf-custom-select formControlName="smsQuotaMetrix" [values]="smsQuotaMetrix" [isDirty]="isDirty" [isDisabled]="propertyFlag">
                                 </app-vf-custom-select>
                             </div>
                             <!-- <app-custom-input formControlName="smsQuotaMetrix" [labelName]="labels.smsQuotaMetrix"
@@ -26,15 +21,10 @@
                     </div>
                     <div class="col-4 pb-0">
                         <div class="form-group">
-                            <app-custom-input formControlName="credit" 
-                            [labelName]="labels.credit" 
-                            [id]="'credit'"
-                            [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty"
-                            [isDisabledInp]="propertyFlag"
-                            >
+                            <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="creditDate">{{labels.date}}</label>
@@ -44,7 +34,7 @@
                                 <mat-datepicker #picker3></mat-datepicker>
                             </mat-form-field>
                         </div>
-                    </div>            
+                    </div>
                     <div class="col-4">
                         <div class="form-group">
                             <label for="status">{{labels.status}}</label>
@@ -54,42 +44,25 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="onApprovalOf" 
-                            [labelName]="labels.onApprovalOf"
-                            [id]="'onApprovalOf'" 
-                            [maxLength]="labels?.validationData.userName.maxLength"
-                            [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="onApprovalOf" [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="remark" 
-                            [labelName]="labels.remark" 
-                            [id]="'remark'"
-                            [maxLength]="labels?.validationData.userName.maxLength" 
-                            [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="statusChangedBy" 
-                            [labelName]="labels.statusChangedBy"
-                            [id]="'statusChangedBy'" 
-                            [maxLength]="labels?.validationData.userName.maxLength"
-                            [isDirty]="isDirty" [isDisabledInp]="isDisabledInp"  [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="statusChangedBy" [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="timeStamp" 
-                            [labelName]="labels.timeStamp"
-                            [id]="'timeStamp'" 
-                            [maxLength]="labels?.validationData.name.maxLength"
-                            [isDirty]="isDirty"
-                            [isDisabledInp]="isDisabledInp" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="timeStamp" [labelName]="labels.timeStamp" [id]="'timeStamp'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -101,40 +74,40 @@
 
                 <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
             </div>
-        <mat-accordion> 
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                <mat-expansion-panel-header matRipple>
-                    <mat-panel-title>
-                    History
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource">
+            <mat-accordion>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="p-0">
+                    <mat-expansion-panel-header matRipple>
+                        <mat-panel-title>
+                            History
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="mat-elevation-z8" class="p-0">
+                        <table mat-table [dataSource]="dataSource">
 
-                        <ng-container matColumnDef="s.no">
-                            <th mat-header-cell *matHeaderCellDef> S.No </th>
-                            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
-                        </ng-container>
+                            <ng-container matColumnDef="s.no">
+                                <th mat-header-cell *matHeaderCellDef> S.No </th>
+                                <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
+                            </ng-container>
 
-                        <ng-container matColumnDef="credit">
-                            <th mat-header-cell *matHeaderCellDef>Credit</th>
-                            <td mat-cell *matCellDef="let element"> {{element.credit}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="expiryDate">
-                            <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
-                            <td mat-cell *matCellDef="let element"> {{element.expiryDate}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="remark">
-                            <th mat-header-cell *matHeaderCellDef>Remark</th>
-                            <td mat-cell *matCellDef="let element"> {{element.remark}} </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns:displayedColumns;" class="example-element-row"></tr>
+                            <ng-container matColumnDef="credit">
+                                <th mat-header-cell *matHeaderCellDef>Credit</th>
+                                <td mat-cell *matCellDef="let element"> {{element.credit}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="expiryDate">
+                                <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+                                <td mat-cell *matCellDef="let element"> {{element.expiryDate}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="remark">
+                                <th mat-header-cell *matHeaderCellDef>Remark</th>
+                                <td mat-cell *matCellDef="let element"> {{element.remark}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns:displayedColumns;" class="example-element-row"></tr>
 
-                    </table>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion> 
+                        </table>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
         </div>
     </mat-card>
 </div>
