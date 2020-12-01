@@ -104,3 +104,22 @@ mat-form-field {
 }
 
 
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: .4375em 0 13px 0px !important;
+  }
+  
+  th.mat-header-cell {
+    flex: 0 16% !important;
+    width: 16% !important;
+    line-height: 20px !important;
+    text-align: center;
+  }
+  
+  td.mat-cell {
+    line-height: 24px !important;
+    text-align: center;
+    flex: 0 16% !important;
+    width: 16% !important;
+    line-height: 20px !important;
+    word-break: break-all;
+  }
