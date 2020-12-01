@@ -102,3 +102,11 @@ mat-form-field {
 ::ng-deep .mat-form-field-flex {
     margin-top: -24px !important;
 }
+
+
+::ng-deep .mat-paginator-page-size {
+    display: flex;
+    align-items: baseline;
+    margin-right: 8px;
+    margin-top: 20px;
+}

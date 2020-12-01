@@ -131,3 +131,11 @@ tr:nth-child(even) {
 .mat-form-field-infix {
     margin-bottom: 10px;
 }
+
+
+.mat-paginator-page-size {
+    display: flex;
+    align-items: baseline;
+    margin-right: 8px;
+    margin-top: 20px;
+}
