@@ -98,3 +98,7 @@ mat-form-field {
     display: block;
     margin-bottom: 50px !important;
 }
+
+::ng-deep .mat-form-field-flex {
+    margin-top: -24px !important;
+}

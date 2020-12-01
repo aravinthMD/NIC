@@ -18,6 +18,7 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
 
+  
   @Input('userObj') user : any
 
   displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks',"Action"]
@@ -71,6 +72,11 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   searchForm: FormGroup;
 
   propertyFlag: boolean;
+
+  accountName: string;
+
+status: string;
+
 
   constructor(
     private labelsService: LabelsService,
