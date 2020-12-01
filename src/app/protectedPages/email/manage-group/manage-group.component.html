@@ -9,7 +9,7 @@
                         <span class="panel-title pb-2">Manage Group</span>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <form  [formGroup]="groupControl">
+                <form [formGroup]="groupControl">
                     <div class="col-6">
                         <mat-form-field class="example-form-field p-0">
                             <mat-label>Search...</mat-label>
@@ -41,32 +41,29 @@
 
                             <ng-container matColumnDef="action">
                                 <th mat-header-cell *matHeaderCellDef>Action</th>
-                                <td mat-cell *matCellDef="let element" >
+                                <td mat-cell *matCellDef="let element">
                                     <button class="btn btn-primary" style="float:left" (click)="OnView(element)">View</button></td>
                             </ng-container>
                             <ng-container matColumnDef="delete">
                                 <th mat-header-cell *matHeaderCellDef> Delete </th>
-                                <td mat-cell *matCellDef="let element" >
+                                <td mat-cell *matCellDef="let element">
                                     <button class="btn btn-primary" style="float:left" (click)="OnDelete(element)">Delete</button></td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
 
-                        <mat-paginator class="font-paginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
-                            showFirstLastButtons></mat-paginator>
+                        <mat-paginator class="font-paginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                     </div>
                     <mat-card class="mt-4">
                         <div class="d-flex justify-content-start button mr-3 pb-3">
-                            <button matRipple *ngIf="hideBtn" [disabled]="disbaledBtn" (click)="Creategroup()"
-                                class=" btn btn-primary">Create Group</button>
+                            <button matRipple *ngIf="hideBtn" [disabled]="disbaledBtn" (click)="Creategroup()" class=" btn btn-primary">Create Group</button>
                         </div>
                         <div *ngIf="show">
                             <div class="row pad-row">
                                 <div class="col-3">
                                     <div class="form-group">
-                                        <app-custom-input [labelName]="'Group Name'" [isDisabledInp]="isDisabledInp"
-                                            formControlName="groupName">
+                                        <app-custom-input [labelName]="'Group Name'" [isDisabledInp]="isDisabledInp" formControlName="groupName">
                                         </app-custom-input>
                                     </div>
                                 </div>
@@ -74,12 +71,7 @@
                             <div>
                                 <div class="form-group">
                                     <label class="ml-1" for="">Add User</label>
-                                    <input class="form-control" 
-                                    [disabled]="groupControl.get('groupName').value== ''"
-                                    placeholder="  Enter Email Address" [matChipInputFor]="chipList"
-                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                    [matChipInputAddOnBlur]="addOnBlur" 
-                                    (matChipInputTokenEnd)="add($event)">
+                                    <input class="form-control" [disabled]="groupControl.get('groupName').value== ''" placeholder="  Enter Email Address" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -97,15 +89,13 @@
                             </div>
                             <div *ngIf="hideBtn" class="row ml-2 pt-3">
                                 <div class="d-flex justify-content-start button mr-3 pb-3">
-                                    <button (click)="onSubmit()"
-                                        [disabled]="userList.length==0 || groupControl.get('groupName').value== ''"
-                                        matRipple class=" btn btn-primary">Submit</button>
+                                    <button (click)="onSubmit()" [disabled]="userList.length==0 || groupControl.get('groupName').value== ''" matRipple class=" btn btn-primary">Submit</button>
                                 </div>
                                 <div class="d-flex justify-content-start button mr-3 pb-3">
                                     <button matRipple (click)="close()" class="btn btn-primary">Close</button>
                                 </div>
                             </div>
-                            <div *ngIf="!hideBtn" class="row ml-2 pt-3">     
+                            <div *ngIf="!hideBtn" class="row ml-2 pt-3">
                                 <div class="d-flex justify-content-start button mr-3 pb-3">
                                     <button matRipple (click)="update()" class="btn btn-primary">Update</button>
                                 </div>
@@ -189,48 +179,33 @@
 </div>
 
 
-<div
-class="modal"
-id="ucicModel2"
-[ngClass]="{ 'dis-block': showModal }"
->
-<div class="modal-dialog">
-  <div class="modal-content">
-    <!-- Modal Header -->
-    <div class="modal-header text-center">
-      <h4 class="modal-title"></h4>
-      <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
-    </div>
+<div class="modal" id="ucicModel2" [ngClass]="{ 'dis-block': showModal }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <h4 class="modal-title"></h4>
+                <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
+            </div>
 
-    <!-- Modal body -->
-    <div class="modal-body">
-      <p id="">
-          Are you sure you want to delete the {{groupName}} group ?
-      </p>
-    </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="">
+                    Are you sure you want to delete the {{groupName}} group ?
+                </p>
+            </div>
 
-    <!-- Modal footer -->
-    <div class="modal-footer text-center">
-      <button
-        type="button"
-        class="btn btn-success"
-        data-dismiss="modal"
-        id="ucic_lead"
-
-      >
+            <!-- Modal footer -->
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="ucic_lead">
         <!-- (click)="checkNegativeList()" -->
 
         Yes
       </button>
-      <button
-        type="button"
-        class="btn btn-danger"
-        data-dismiss="modal"
-        (click)="onCancel()"
-      >
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onCancel()">
         Cancel
       </button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </div>

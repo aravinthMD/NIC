@@ -477,18 +477,11 @@
                             </app-custom-input>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <label for="poBillable">{{labels.uploadDoc}}</label>
-                            <input type="file" class="form-control upload-choose-pad" id="poBillable"
-                                aria-describedby="poBillableHelp">
-                            <small id="poBillableHelp" class="form-text text-muted"></small>
-                        </div>
-                    </div>
+                    
                 </div>
-                <ng-template [ngIf]="existingUserFlag">
+              
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-4" *ngIf="existingUserFlag">
                             <div class="form-group">
                                 <app-custom-input formControlName="creditAdded" [labelName]="labels.creditAdded"
                                     [id]="'creditAdded'" [isRequired]="'CreditAdded is mandatory'"
@@ -497,7 +490,7 @@
                                 </app-custom-input>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4" *ngIf="existingUserFlag">
                             <div class="form-group">
                                 <app-custom-input formControlName="creditApprover" [labelName]="labels.creditApprover"
                                     [id]="'creditApprover'" [isRequired]="'CreditApprover is mandatory'"
@@ -506,7 +499,7 @@
                                 </app-custom-input>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4" *ngIf="existingUserFlag">
                             <div class="form-group">
                                 <label for="creditDate">{{labels.creditDate}}</label>
                                 <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
@@ -525,7 +518,7 @@
 
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-4" *ngIf="existingUserFlag">
                             <div class="form-group">
                                 <label for="creditAddedAgainstPi">{{labels.creditPI}}</label>
                                 <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
@@ -545,9 +538,19 @@
                             </div>
                         </div>
 
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="poBillable">{{labels.uploadDoc}}</label>
+                                <input type="file" class="form-control upload-choose-pad" id="poBillable"
+                                    aria-describedby="poBillableHelp">
+                                <small id="poBillableHelp" class="form-text text-muted"></small>
+                            </div>
+                        </div>
+
 
                     </div>
-                </ng-template>
+               
+              
                 <div class="row pt-3 pb-3 m-0">
                     <button class="btn btn-primary" matRipple type="submit" [disabled]="form.invalid"
                         (click)="Onsubmit()">Save</button>
