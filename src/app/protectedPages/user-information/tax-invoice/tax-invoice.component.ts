@@ -46,7 +46,10 @@ export class TaxInvoiceComponent implements OnInit {
   searchForm : FormGroup;
   labels: any ={};
   isDirty: boolean;
-  toDate =new Date()
+  toDate =new Date();
+  accountName: string;
+
+  status: string;
 
   constructor(private labelsService: LabelsService,
     private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,
