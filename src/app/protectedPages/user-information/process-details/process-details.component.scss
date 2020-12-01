@@ -159,7 +159,7 @@ mat-form-field {
 }
 
 .searching {
-    margin-top: 39px;
+    margin-top: 16px;
 }
 
 mat-card {
@@ -202,3 +202,22 @@ mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
     color: #0e4d92 !important;
 }
 
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: .4375em 0 13px 0px !important;
+}
+
+th.mat-header-cell {
+    flex: 0 14% !important;
+    width: 14% !important;
+    line-height: 20px !important;
+    text-align: center;
+}
+
+td.mat-cell {
+    line-height: 24px !important;
+    text-align: center;
+    flex: 0 14% !important;
+    width: 14% !important;
+    line-height: 20px !important;
+    word-break: break-all;
+}
