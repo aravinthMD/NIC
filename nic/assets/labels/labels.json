@@ -267,8 +267,7 @@
         },
         "smsTraffic": {
             "maxLength": {
-                "rule": 12,
-                "msg": "Should be 12 Digits"
+                "rule": 12
             },
             "type": "number"
         },
