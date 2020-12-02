@@ -48,6 +48,7 @@ import { SmsCreditAllocationComponent } from './protectedPages/user-information/
 import { AccountManageComponent } from './protectedPages/admin/account-manage/account-manage.component';
 import {MatChipsModule} from '@angular/material/chips';
 import {TaxInvoiceDialogComponent} from './protectedPages/user-information/tax-invoice/tax-invoice-dialog/tax-invoice-dialog.component'
+import {MatIconModule} from '@angular/material/icon';
 
 
 import {
@@ -157,6 +158,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatCheckboxModule,
     MatCardModule,
     MatChipsModule,
+    MatIconModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
     }),

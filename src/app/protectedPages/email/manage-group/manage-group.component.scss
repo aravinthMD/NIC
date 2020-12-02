@@ -1,6 +1,7 @@
 .panel-title {
     margin-top: 6px;
 }
+
 .cdk-text-field-autofill-monitored:not(:-webkit-autofill) {
     margin-left: -12px;
     -webkit-animation-name: cdk-text-field-autofill-end;
@@ -11,19 +12,22 @@
     outline: none;
     border: none;
 }
-input.mat-chip-input{
+
+input.mat-chip-input {
     width: 260px;
 }
-.searching{
+
+.searching {
     margin-top: 1.1vw;
-  }
-  .topbar .navbar-search {
-	width: 25rem
+}
+
+.topbar .navbar-search {
+    width: 25rem
 }
 
 .topbar .navbar-search input {
-	font-size: .85rem;
-	height: auto;
+    font-size: .85rem;
+    height: auto;
 }
 
 table {
@@ -108,7 +112,6 @@ tr.example-element-row:not(.example-expanded-row):active {
 //     font-size:16px !important;
 //     height:48px !important;
 // }
-
 th {
     font-size: 16px;
     font-weight: 500;
@@ -123,3 +126,10 @@ tr:nth-child(even) {
 .dis-block {
     display: block;
   }
+
+
+.mat-form-field-infix {
+    margin-bottom: 10px;
+}
+
+

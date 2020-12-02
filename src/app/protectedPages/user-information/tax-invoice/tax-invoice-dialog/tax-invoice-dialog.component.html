@@ -276,7 +276,7 @@
             <div class="pd-2">
               <span> {{'invoice.pdf'}} </span>
   
-              <button class="btn btn-primary" [disabled]="enableFlag" style="position: absolute;left: 8vw;bottom: 1.2vw;"  (click)="viewDoc()">View</button>
+              <button class="btn btn-primary" style="position: absolute;left: 8vw;bottom: 0.5vw;"  (click)="viewDoc()">View</button>
             </div>
   
   
@@ -310,18 +310,27 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="form-group">
+            <div class="form-group" style="cursor: pointer;" (click)="showPDF()">
 
               <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'"
-                height="180px" width="160px" />
+                height="80px" width="80px" />
             </div>
           </div>
-          <div class="col-12 small pr-2">
-            <div class="form-group">
+          <div class="col-12 pt-3">
+            <div class="form-group ">
               {{fileName}}
             </div>
-            <div class="form-group">
+            <div class="form-group small pt-2 pb-3">
               {{fileSize}}
+            </div>
+            <div class="form-group row" style="margin-left: 5px">
+              
+              <div class="pt-2 pr-2 pb-3">
+                <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="download()">Download</button>
+              </div>
+              <div class="pt-2 pb-3">
+                <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
+              </div>
             </div>
           </div>
 
@@ -349,16 +358,7 @@
 
           <div class="col-12">
 
-            <div class="form-group row" style="float: right;">
-              
-              <div class="pr-2">
-                <button matRipple class=" btn btn-primary">Save</button>
-              </div>
-              <div class="pr-2">
-                <button matRipple class=" btn btn-primary" (click)="download()">Download</button>
-              </div>
-            </div>
-              <div class="pd-3">
+              <div class="pd-3 pb-3 pt-3">
                 <button matRipple type="button" class="btn btn-primary" style="float: left;"
                   (click)="fileInput.click()">Choose Document</button>
               </div>
@@ -374,3 +374,64 @@
       </div>
     </div>
   </div>
+
+
+  <div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width:800px">
+        <div class="modal-header text-center">
+          <h4 class="modal-title">View PDF</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
+        </div>
+        <div class="modal-body" style="height:800px">
+  
+        </div>
+  </div>
+  </div>
+  </div>
+
+  <div
+class="modal"
+id="deleteModal"
+[ngClass]="{ 'dis-block': showDeleteModal }"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header text-center">
+      <h4 class="modal-title"></h4>
+      <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+      <p id="">
+          Are you sure you want to remove this pdf ?
+      </p>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer text-center">
+      <button
+        type="button"
+        class="btn btn-success"
+        data-dismiss="modal"
+        id="ucic_lead"
+
+      >
+        <!-- (click)="checkNegativeList()" -->
+
+        Yes
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-dismiss="modal"
+        (click)="showDeleteModal = false"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+</div>

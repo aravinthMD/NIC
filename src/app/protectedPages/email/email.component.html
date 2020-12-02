@@ -26,8 +26,7 @@
                                 <label for="">To</label>
                                 <div class="ml-4">
                                     <mat-chip-list #chipList aria-label="email selection">
-                                        <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable"
-                                            [removable]="removable" (removed)="remove(email)">
+                                        <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable" [removable]="removable" (removed)="remove(email)">
                                             {{email.name}}
                                             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                                         </mat-chip>
@@ -36,11 +35,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Enter Email Address"
-                                    [matChipInputFor]="chipList" 
-                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                    [matChipInputAddOnBlur]="addOnBlur" 
-                                    (matChipInputTokenEnd)="add($event)">
+                                <input class="form-control" placeholder="Enter Email Address" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
                                 <mat-error *ngIf="isInvalidEmail">
                                     Please enter valid email id
                                 </mat-error>
@@ -88,12 +83,11 @@
             </mat-expansion-panel>
         </mat-accordion>
 
-
+        <div class="mt-5"></div>
+        <div class="mt-3"></div>
     </div>
     <!--Reports Tag close-->
 
 
 </div>
 <!--Main tag close-->
-<div class="mt-5"></div>
-<div class="mt-3"></div>
