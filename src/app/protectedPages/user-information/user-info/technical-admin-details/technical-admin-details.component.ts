@@ -34,6 +34,9 @@ countryCodeValues = [
 
 user: string;
 
+accountName: string;
+status: string;
+
 
   constructor(
     private labelsService:LabelsService,
@@ -73,6 +76,14 @@ user: string;
 
   console.log(this.activatedRoute)
     if(this.user){
+
+      this.utilService.userDetails$.subscribe((val)=> {
+
+        this.accountName = val['userId'] || '';
+        this.status = val['status'] || '';
+      })
+
+
       this.setFormValues();
       this.propertyFlag = true;
 

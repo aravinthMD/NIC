@@ -55,6 +55,21 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:2,value:'+65'}
   ]
 
+  statusList= [
+    {
+      key:0,value: 'Active',
+    },
+    {
+      key:1,value:'Inactive'
+    }
+  ]
+
+  showStatusModal: boolean;
+  modalMsg: string;
+
+  accountName: string;
+  status:string;
+
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
@@ -99,7 +114,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       creditDate : [null],
       creditAddedAgainstPi : [null],
       fromDate: [null],
-      toDate: [null]      
+      toDate: [null],
+      status:[null]     
     });
 
    }
@@ -118,6 +134,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     console.log(this.activatedRoute)
       if(this.user){
+
+        this.utilService.userDetails$.subscribe((val)=> {
+
+          this.accountName = val['userId'] || '';
+          this.status = val['status'] || '';
+        })
+
         this.setFormValues();
         this.buttonName = 'Edit';
         this.propertyFlag = true;
@@ -190,7 +213,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       auditDate:new Date(),
       traiSenderId: '333',
       userId: 'test',
-      password: 'nic@123'
+      password: 'nic@123',
+      status: (this.status == 'Active')?'0':'1'
       
       
 
@@ -240,6 +264,39 @@ export class UserInfoComponent implements OnInit,OnChanges {
     }
     
     
+  }
+
+  statusChange(event){
+
+    this.showStatusModal = true;
+    if(event.value == 'Active') {
+      this.modalMsg = 'Are you sure you want to activate this user ?'
+    }else {
+      this.modalMsg = 'Are you sure you want to inactivate this user ?'
+    }
+  }
+
+  onStatusCancel() {
+    this.showStatusModal = false;
+    if(this.modalMsg == 'Are you sure you want to activate this user ?') {
+      this.form.patchValue({
+        status: '1'
+      })
+    }else {
+      this.form.patchValue({
+        status: '0'
+      })
+    }
+  }
+
+  onStatusYes() {
+    this.showStatusModal = false;
+    this.toasterService.showSuccess('Status updated successfully', '')
+    if(this.modalMsg == 'Are you sure you want to activate this user ?') {
+      this.status = 'Active'
+    }else{
+      this.status = 'InActive'
+    }
   }
 
 }

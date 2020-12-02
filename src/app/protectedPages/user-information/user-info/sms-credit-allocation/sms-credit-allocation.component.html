@@ -1,8 +1,10 @@
 <div class="col-md-10 main">
     <mat-card>
         <div class="sms_credit_allocation">
-            <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">
-                SMS Credit Allocation</h1>
+            <!-- <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">
+                SMS Credit Allocation</h1> -->
+
+            <app-account-header [title]="'SMS Credit Allocation'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
             <form (submit)="onSubmit()" [formGroup]="smsCreditAllocation">
                 <div class="row">
@@ -38,7 +40,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <label for="status">{{labels.status}}</label>
-                            <app-vf-custom-select formControlName="status" [values]="status" [isDirty]="isDirty" [isDisabled]="propertyFlag">
+                            <app-vf-custom-select formControlName="status" [values]="statusList" [isDirty]="isDirty" [isDisabled]="propertyFlag">
                             </app-vf-custom-select>
                         </div>
                     </div>
@@ -69,7 +71,7 @@
                 </div>
             </form>
             <div class="row pt-3 pb-3 m-0">
-                <button class="btn btn-primary" matRipple type="submit">{{'Submit'}}</button>
+                <button class="btn btn-primary" matRipple type="submit" *ngIf="!propertyFlag">{{'Submit'}}</button>
                 <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
                 <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
