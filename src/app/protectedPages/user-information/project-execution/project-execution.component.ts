@@ -6,7 +6,9 @@ import {LabelsService} from '../../../services/labels.service';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material';
 import { ProjectExcecutionDialogComponent } from './project-excecution-dialog/project-excecution-dialog.component';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute } from '@angular/router';
+import { UtilService } from '@services/util.service'
+
 @Component({
   selector: 'app-project-execution',
   templateUrl: './project-execution.component.html',
@@ -64,8 +66,11 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
   searchForm: FormGroup;
 
+  accountName: string;
+  status: string;
 
-  constructor(private labelsService : LabelsService,private dialog : MatDialog,private activatedRoute: ActivatedRoute) { 
+
+  constructor(private labelsService : LabelsService,private dialog : MatDialog,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
 
 
     this.searchForm = new FormGroup({
@@ -101,6 +106,11 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
       piPaid: new FormControl('')
     });
 
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val['userId'] || '';
+      this.status = val['status'] || '';
+    })
 
     this.activatedRoute.params.subscribe((value)=> {
 

@@ -7,7 +7,7 @@ import {DatePipe} from '@angular/common';
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
-
+import { UtilService } from '@services/util.service'
 
 @Component({
   selector: 'app-tax-invoice',
@@ -53,7 +53,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   constructor(private labelsService: LabelsService,
     private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,
-    private dialog : MatDialog) { }
+    private dialog : MatDialog, private utilService: UtilService) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -86,6 +86,12 @@ export class TaxInvoiceComponent implements OnInit {
       searchData: new FormControl(null),
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
+    })
+
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val['userId'] || '';
+      this.status = val['status'] || '';
     })
 
     this.activatedRoute.params.subscribe((value)=> {
