@@ -55,6 +55,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:2,value:'+65'}
   ]
 
+  teleCodeValues = [
+    {key:0,value:'+044'},
+    {key:1,value:'+040'},
+    {key:2,value:'+080'}
+  ]
+
   statusList= [
     {
       key:0,value: 'Active',
@@ -94,6 +100,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       OfficerEmail:[null],
       OfficerMobile:[null],
       telPhno : [null],
+      teleCode: [null],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
@@ -185,12 +192,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
       employeeCode : '12008',
       email : 'authregister@nic.com',
       mobileNo : '8754809950',
-      telPhno : '0422225007',
+      telPhno : '9801756',
+      teleCode: '0',
       offAddress1 : '235/bhandup,Mumbai',
-      offAddress2 : ['235,bhandup mumbai'],
-      offAddress3 : ['235,bhandup,mumbai'],
-      city : 'mumbai',
-      state : 'maharastra',
+      offAddress2 : ['235,bhandup Mumbai'],
+      offAddress3 : ['235,bhandup,Mumbai'],
+      city : 'Mumbai',
+      state : 'Maharastra',
       pinCode : '641008',
       smsTariffMonthWise : '1000',
       piDuration : '6',
@@ -203,23 +211,23 @@ export class UserInfoComponent implements OnInit,OnChanges {
       creditAddedAgainstPi : new Date(),
       countryCode: '0',
       
-      OfficerName:'Tech Info',
-      OfficerEmail:'techinfo@gmail.com',
+      OfficerName:'Sri Ram',
+      OfficerEmail:'sriram@gmail.com',
       OfficerMobile:'9768674555',
      
       smsServiceReqd: '1',
       creditsSMSQuota: '4000',
      
       availableCredit: '3000',
-      nameOfTheApplication: 'sathish',
+      nameOfTheApplication: 'Sathish',
       applicationUrl: 'www.applicant.com',
-      serverLocation: 'chennai',
-      purpOfTheApplication: 'check',
+      serverLocation: 'Chennai',
+      purpOfTheApplication: 'Test application',
       smsGatewayAccess: '175.43.34.344',
-      ipServReqd: 'yes',
-      domMonSmsTraffic: 'dom',
-      intMonSmsTraffic: 'smstraffic',
-      appSecurAudClear: 'secure',
+      ipServReqd: 'Yes',
+      domMonSmsTraffic: '5000',
+      intMonSmsTraffic: '6000',
+      appSecurAudClear: 'Secure',
       auditDate:new Date(),
       traiSenderId: '333',
       userId: 'test',
