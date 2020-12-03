@@ -83,6 +83,88 @@
                             History
                         </mat-panel-title>
                     </mat-expansion-panel-header>
+
+
+
+
+                    <mat-card class="search-card">
+                        <form [formGroup]="searchForm">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
+                                        <mat-form-field class="example-form-field p-0 search-label">
+                                            <mat-label>Search...</mat-label>
+                                            <input matInput type="text" formControlName="searchData">
+                                            <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                                   <mat-icon>search</mat-icon>
+                                 </button>
+                                        </mat-form-field>
+            
+            
+                                    </div>
+                                </div>
+            
+            
+                                <div class="col-3">
+                                    <div class="form-group">
+            
+            
+                                        <label for="dateFor">From Date</label>
+            
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="picker6" formControlName="searchFrom">
+                                            <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker6></mat-datepicker>
+                                        </mat-form-field>
+            
+                                    </div>
+                                </div>
+            
+                                <div class="col-3">
+                                    <div class="form-group">
+            
+            
+                                        <label for="dateFor">To Date</label>
+            
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="picker7" formControlName="searchTo">
+                                            <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker7></mat-datepicker>
+                                        </mat-form-field>
+            
+                                    </div>
+                                </div>
+            
+                                <div class="row m-0 col-3">
+                                    <div class="col-md-4 form-group">
+            
+                                        <div class="row mt-4 pt-2">
+                                            <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
+                                        </div>
+            
+                                    </div>
+            
+            
+                                    <div class="col-md-6 form-group">
+            
+                                        <div class="row mt-4 pt-2">
+                                            <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
+                                        </div>
+            
+                                    </div>
+            
+            
+                                </div>
+            
+            
+            
+                            </div>
+                        </form>
+                    </mat-card>
+
+
+
                     <button style="float: right;margin-bottom: 1vw;margin-right: 1vw;margin-top: 1vw;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
                     <div class="mat-elevation-z8" class="p-0">
                         <table mat-table [dataSource]="dataSource">
@@ -108,6 +190,8 @@
                             <tr mat-row *matRowDef="let row; columns:displayedColumns;" class="example-element-row"></tr>
 
                         </table>
+
+                        <mat-paginator class="font-paginator" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>

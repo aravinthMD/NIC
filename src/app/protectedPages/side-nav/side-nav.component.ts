@@ -136,6 +136,7 @@ export class SideNavComponent implements OnInit,OnChanges {
   if(route.includes('1.')){
     this.accountInfoNav = '1.1'
   }else {
+    this.utilService.setProjectNumber(null)
     this.accountInfoNav = ''
   }
 

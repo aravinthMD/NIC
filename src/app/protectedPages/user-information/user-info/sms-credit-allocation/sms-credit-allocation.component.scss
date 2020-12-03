@@ -154,3 +154,20 @@ mat-expansion-panel-header#mat-expansion-panel-header-0 {
     line-height: 20px !important;
     word-break: break-all;
   }
+
+  mat-card .search-card {
+    margin-bottom: -5px !important;
+  }
+
+  button {
+    height: 30px;
+    border-radius: 5px;
+    color: #ffffff !important;
+    background-color: #0e4d92 !important;
+    border-style: none;
+    font-weight: 400;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: .4375em 0 13px 0px !important;
+}

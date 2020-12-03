@@ -58,6 +58,8 @@ user: string;
 accountName: string;
 status: string;
 
+searchForm: FormGroup;
+
 
   constructor(
     private labelsService :LabelsService,
@@ -81,6 +83,13 @@ status: string;
       statusChangedBy: new FormControl (['akshaya']),
       timeStamp: new FormControl ([this.currentDate]),
     })
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
+    })
+
 
     this.user = ''
     this.activatedRoute.params.subscribe((value)=> {
@@ -138,6 +147,22 @@ status: string;
   onSubmit() {
 
   }
+
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
+  }
+
+  
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
   }
