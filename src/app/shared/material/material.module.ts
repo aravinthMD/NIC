@@ -11,6 +11,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatRippleModule} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 const materialComponents = [
@@ -25,7 +26,8 @@ const materialComponents = [
   MatDialogModule,
   MatRippleModule,
   MatCardModule,
-  MatDividerModule
+  MatDividerModule,
+  MatTooltipModule
 ]
 
 @NgModule({

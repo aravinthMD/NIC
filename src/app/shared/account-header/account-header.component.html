@@ -6,6 +6,14 @@
 
     <div class="col-md-6 d-flex justify-content-end mt-1 account-info"
         *ngIf="user || user == 'invoice'">
+       <!-- <a (click) = "openAuditTrailDialog()"> <span  data-toggle="tooltip" title="Audit trail for {{'arul.auth'}}" class="material-icons mr-3">
+            history
+            </span>
+        </a> -->
+        <div>
+            <button class="mat-button" matTooltip="Audit Trail for {{'arul.auth'}}" aria-label="Example icon button with a home icon" matTooltipPosition="above" mat-icon-button (click)="openAuditTrailDialog()"><mat-icon  color="accent" class="icons">history</mat-icon></button>
+        </div>
+
         <span class="mr-4">
             <span class="label-color">Account Name :&nbsp; </span>
             <span>{{ accountName || 'arul.auth'}}</span></span>
