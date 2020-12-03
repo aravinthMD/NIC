@@ -7,7 +7,7 @@ import {DatePipe} from '@angular/common';
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
-
+import { UtilService } from '@services/util.service'
 
 @Component({
   selector: 'app-purchase-order',
@@ -82,7 +82,8 @@ status: string;
     private labelsService: LabelsService,
     private DatePipe:DatePipe,
     private activatedRoute: ActivatedRoute,
-    private dialog : MatDialog
+    private dialog : MatDialog,
+    private utilService: UtilService
     ) { }
 
   ngOnInit() {
@@ -118,6 +119,12 @@ status: string;
       searchData: new FormControl(null),
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
+    })
+
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val['userId'] || '';
+      this.status = val['status'] || '';
     })
 
     this.activatedRoute.params.subscribe((value)=> {

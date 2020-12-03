@@ -55,6 +55,31 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:2,value:'+65'}
   ]
 
+  statusList= [
+    {
+      key:0,value: 'Active',
+    },
+    {
+      key:1,value:'Inactive'
+    }
+  ]
+
+  showStatusModal: boolean;
+  modalMsg: string;
+
+  accountName: string;
+  status:string;
+
+  showUploadModal: boolean;
+  showPdfModal: boolean;
+  showDeleteModal: boolean;
+
+  imageUrl: string;
+  fileSize: string = 'Size - 109.4 KB';
+  fileName: string = 'invoice.pdf';;
+  fileType: string;
+
+
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
@@ -99,7 +124,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       creditDate : [null],
       creditAddedAgainstPi : [null],
       fromDate: [null],
-      toDate: [null]      
+      toDate: [null],
+      status:[null]     
     });
 
    }
@@ -118,6 +144,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     console.log(this.activatedRoute)
       if(this.user){
+
+        this.utilService.userDetails$.subscribe((val)=> {
+
+          this.accountName = val['userId'] || '';
+          this.status = val['status'] || '';
+        })
+
         this.setFormValues();
         this.buttonName = 'Edit';
         this.propertyFlag = true;
@@ -190,7 +223,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       auditDate:new Date(),
       traiSenderId: '333',
       userId: 'test',
-      password: 'nic@123'
+      password: 'nic@123',
+      status: (this.status == 'Active')?'0':'1'
       
       
 
@@ -241,5 +275,167 @@ export class UserInfoComponent implements OnInit,OnChanges {
     
     
   }
+
+  statusChange(event){
+
+    this.showStatusModal = true;
+    if(event.value == 'Active') {
+      this.modalMsg = 'Are you sure you want to activate this user ?'
+    }else {
+      this.modalMsg = 'Are you sure you want to inactivate this user ?'
+    }
+  }
+
+  onStatusCancel() {
+    this.showStatusModal = false;
+    if(this.modalMsg == 'Are you sure you want to activate this user ?') {
+      this.form.patchValue({
+        status: '1'
+      })
+    }else {
+      this.form.patchValue({
+        status: '0'
+      })
+    }
+  }
+
+  onStatusYes() {
+    this.showStatusModal = false;
+    this.toasterService.showSuccess('Status updated successfully', '')
+    if(this.modalMsg == 'Are you sure you want to activate this user ?') {
+
+      this.utilService.setUserDetails({
+        userId: this.accountName,
+        status: 'Active'
+      })
+      this.status = 'Active'
+    }else{
+      this.utilService.setUserDetails({
+        userId: this.accountName,
+        status: 'InActive'
+      })
+      this.status = 'InActive'
+    }
+  }
+
+  viewDoc() {
+
+    this.showUploadModal = true;
+  }
+
+
+  async onFileSelect(event) {
+
+    // alert('Success')
+    const files: File = event.target.files[0];
+
+
+    if(files.type == 'application/pdf') {
+
+      const reader = new FileReader();
+      reader.readAsDataURL(files);
+      reader.onload = ((e)=> {
+        
+        
+        // this.selectedPdf = this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + reader.result.toString())
+        // target.files[0]
+
+       // this.selectedPdf = ''
+        this.fileSize = `Size - ${this.bytesToSize(files.size)}`
+        this.fileName = files.name;  
+        console.log('fileSize',this.fileSize)
+        
+      });
+
+    }else {
+
+      const base64: any = await this.toBase64(event);
+      this.imageUrl = base64;
+      this.fileSize = this.bytesToSize(files.size);
+      this.fileName = files.name;
+
+    }
+   
+  }
+
+
+  toBase64(evt) {
+    return new Promise((resolve, reject) => {
+      // const reader = new FileReader();
+      // reader.readAsDataURL(file);
+      // reader.onload = (function(theFile) {
+      //   return function(e) {
+      //     const binaryData = e.target.result;
+      //     const base64String = window.btoa(binaryData);
+      //     console.log('base64String', base64String);
+      //     resolve(base64String)
+      //   };
+      // })(file);
+      var f = evt.target.files[0]; // FileList object
+      var reader = new FileReader();
+      // Closure to capture the file information.
+      reader.onload = (function (theFile) {
+        return function (e) {
+          var binaryData = e.target.result;
+          //Converting Binary Data to base 64
+          var base64String = window.btoa(binaryData);
+          console.log('base64String', base64String);
+          resolve(base64String)
+          //showing file converted to base64
+          // document.getElementById('base64').value = base64String;
+          // alert('File converted to base64 successfuly!\nCheck in Textarea');
+        };
+      })(f);
+      // Read in the image file as a data URL.
+      reader.readAsBinaryString(f);
+      // Read in the image file as a data URL.
+      // reader.readAsBinaryString(file);
+      // reader.onloadend = () => {
+      //   let result = '';
+
+      //   if (this.fileType === 'jpeg' || this.fileType === 'png') {
+      //     result = reader.result
+      //       .toString()
+      //       .replace(/^data:image\/[a-z]+;base64,/, '');
+      //   } else if (this.fileType === 'pdf') {
+      //     result = reader.result
+      //       .toString()
+      //       .replace(/^data:application\/[a-z]+;base64,/, '');
+      //   } else if (this.fileType.includes('xls')) {
+      //     result = reader.result.toString().split(',')[1];
+      //   } else if (this.fileType === 'docx') {
+      //     result = reader.result.toString().split(',')[1];
+      //   } else {
+      //     result = reader.result.toString();
+      //   }
+      //   resolve(result);
+      // };
+
+      // reader.onerror = (error) => reject(error);
+    });
+  }
+
+  private bytesToSize(bytes) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) {
+      return 'n/a';
+    }
+    const i = Number(Math.floor(Math.log(bytes) / Math.log(1024)));
+    if (i === 0) {
+      return bytes + ' ' + sizes[i];
+    }
+    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
+  }
+
+
+  showPDF() {
+    this.showUploadModal = false;
+    this.showPdfModal = true;
+  }
+
+  download() {
+
+  }
+
 
 }

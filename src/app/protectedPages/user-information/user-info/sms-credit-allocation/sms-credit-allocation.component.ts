@@ -15,7 +15,7 @@ import {MatPaginator} from '@angular/material/paginator';
   styleUrls: ['./sms-credit-allocation.component.scss']
 })
 export class SmsCreditAllocationComponent implements OnInit {
-  status=[
+  statusList=[
     {key:0,value:'Approved'},
     {key:1,value:'Reject'},
     {key:2,value:'Pending'},
@@ -55,6 +55,12 @@ propertyFlag: boolean;
 
 user: string;
 
+accountName: string;
+status: string;
+
+searchForm: FormGroup;
+
+
   constructor(
     private labelsService :LabelsService,
     private utilService:UtilService,
@@ -78,6 +84,13 @@ user: string;
       timeStamp: new FormControl ([this.currentDate]),
     })
 
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
+    })
+
+
     this.user = ''
     this.activatedRoute.params.subscribe((value)=> {
       this.user = value.id;
@@ -85,6 +98,14 @@ user: string;
 
   console.log(this.activatedRoute)
     if(this.user){
+
+      this.utilService.userDetails$.subscribe((val)=> {
+
+        this.accountName = val['userId'] || '';
+        this.status = val['status'] || '';
+      })
+
+
       this.setFormValues();
       this.propertyFlag = true;
 
@@ -126,6 +147,22 @@ user: string;
   onSubmit() {
 
   }
+
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
+  }
+
+  
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
   }

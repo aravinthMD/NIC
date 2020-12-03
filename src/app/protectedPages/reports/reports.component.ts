@@ -5,6 +5,8 @@ import {MatAccordion} from '@angular/material/expansion';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 
 @Component({
   selector: 'app-reports',
@@ -19,6 +21,8 @@ export class ReportsComponent implements OnInit,AfterViewInit {
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
   displayedColumns: string[] = ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate']; 
+  dropdownSettings : IDropdownSettings = {};
+
 
   userList : any[] = [
     {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",projectNumber: '2356',status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/05/2020'},
@@ -33,7 +37,20 @@ export class ReportsComponent implements OnInit,AfterViewInit {
 
   optionValue: any[];
 
-  options: string[] = [];
+  options: string[] = ['arul.auth','kumar.auth','gonnade.auth','Rajesh.auth','swapnil.parab.auth','abijith.auth','ankit.auth','ketan.auth'];
+  projectNoDropDownList : string[] = ['2356','4532','6445','5454','6453','7554','8857','9568'];
+  departMentDropDownList :  string[] = ['Finance Department Uttarakhand','Department of School Education','Election Department','Director of emloyment and ceo','revenue Department'];
+  stateDropDownList : string[] = ['TamilNadu','Kerala','AndhraPradesh','Karnataka','Mizoram','Maharastra','Gujarat','Punjab','MadhyaPradesh','NagaLand']
+
+  
+
+ accountFilterFlag : boolean;
+ projectNoFilterFlag :boolean; 
+ departMentFilterFlag :  boolean;
+ stateFilterFlag : boolean;
+
+
+
   filteredOptions: Observable<string[]>;
   myControl = new FormControl();
 
@@ -46,6 +63,8 @@ export class ReportsComponent implements OnInit,AfterViewInit {
   isDepartment: boolean;
 
   form: FormGroup;
+
+  
 
   reportsList = [{
     key: 1,
@@ -73,20 +92,26 @@ export class ReportsComponent implements OnInit,AfterViewInit {
 reportFilter = [
   {
     key: '1',
-    value:'User Id'
+    value:'Account'
   },
   {
     key:'2',
-    value:'Department'
+    value:'ProjectNo'
   },
   {
     key:'3',
-    value:'Status'
-  },
+     value:'Department'
+   },
   {
     key:'4',
-    value:'ProjectNo'
+    value:'State'
   }
+]
+
+userStatus  = [
+  {"key":'1',"value" :"ALL"},
+  {"key":"2","value":"Active"},
+  {"key":"3","value":"InActive"}
 ]
   
 
@@ -99,12 +124,29 @@ reportFilter = [
       reportFilter:[''],
       state:[''],
       fromDate:[null],
-      toDate:[null]
+      toDate:[null],
+      accountFilter : [''],
+      projectNoFilter : [''],
+      departMentFilter : [''],
+      stateFilter : [''],
+      userStatus : ['']
     })
 
    }
 
   ngOnInit() {
+
+    this.dropdownSettings  = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+      enableCheckAll : true,
+      clearSearchFilter : true,
+      itemsShowLimit:2
+    };
+
+
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -123,6 +165,22 @@ reportFilter = [
     const filterValue = (value)?value.toLowerCase():'';
 
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  onSelectAll(id ?: any){
+    debugger;
+    if(id == '1'){
+      this.projectNoFilterFlag = true;
+    this.departMentFilterFlag = true;
+    this.stateFilterFlag = true;
+    }
+    if(id == '2'){
+      this.departMentFilterFlag = true;
+    this.stateFilterFlag = true;
+    }
+    if(id == '3'){
+    this.stateFilterFlag = true;
+    }
   }
 
 
@@ -183,7 +241,12 @@ reportFilter = [
     }
   }
 
+
+
+
+
   onRepFilter(event) {
+    debugger;
     const data = event.target.value;
 
     console.log(this.myControl.value)
@@ -194,41 +257,57 @@ reportFilter = [
 
     this.isDepartment = false;
     if(data == '1') {
-
-      this.placeholderData = 'Please Filter User Id...'
-
-      this.options = ['arul.auth','kumar.auth','Jain.auth'];
+      this.dropDownFlagFunc('1')
     }else if(data == '2') {
-      this.isDepartment = true;
-      this.states = [{
-        value:'Uttarakhand',key:'1'
-      },
-      {
-        value:'Delhi',key:'2'
-      },
-      {
-        value:'Manipur',key:'3'
-      },
-      {
-        value:'Tripura',key:'4'
-      }]
-
-
-      this.placeholderData = 'Please Filter Department...'
-
-      this.options = ['Finance Department Uttarakhand','Department of School Education','	Election Department , Manipur','Director of emloyment and ceo','revenue Department, tripura']
+      this.dropDownFlagFunc('2')
     }else if(data == '3') {
-      
-      this.placeholderData = 'Please Filter Status...'
-
-      this.options = ['Active','Inactive']
+      this.dropDownFlagFunc('3')
     }else if(data == '4') {
-      this.placeholderData = 'Please Filter ProjectNo...';
+      this.dropDownFlagFunc('4')
+     }
+     this.reset();
 
-      this.options = ['2356','4532','6445','5454','6453','7554']
+  }
 
+  reset(){
+    this.form.controls['accountFilter'].reset();
+    this.form.controls['projectNoFilter'].reset();
+    this.form.controls['departMentFilter'].reset()
+    this.form.controls['stateFilter'].reset();
+  }
+
+  dropDownFlagFunc(id ? :string){
+    this.accountFilterFlag = id === '1' ? true : false;
+    this.projectNoFilterFlag = id === '2' ? true : false;
+    this.departMentFilterFlag = id === '3' ? true : false;
+    this.stateFilterFlag = id === '4' ? true : false
+  }
+
+
+  onItemDeSelect(id ? : string){
+    debugger;
+    const filter = this.form.controls['reportFilter'].value
+    if(id == '2' && filter == '2'){
+      this.departMentFilterFlag = false;
+      this.form.controls['departMentFilter'].reset();
+      this.stateFilterFlag = false;
+      this.form.controls['stateFilterFlag'].reset();
     }
 
+    if(id == '1' && filter == '1'){
+      this.projectNoFilterFlag = false;
+      this.form.controls['projectNoFilter'].reset();
+      this.departMentFilterFlag = false;
+      this.form.controls['departMentFilter'].reset();
+      this.stateFilterFlag = false;
+      this.form.controls['stateFilter'].reset();
+    }
+
+    if(id == '3' && filter == '3'){
+      this.stateFilterFlag  = false;
+      this.form.controls['stateFilter'].reset();
+      
+    }
   }
 
   formDateFunc(event) {

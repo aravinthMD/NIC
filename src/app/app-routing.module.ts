@@ -29,45 +29,133 @@ import  { SmsCreditAllocationComponent } from './protectedPages/user-information
 import  { UserInfoComponent } from './protectedPages/user-information/user-info/user-info.component'
 import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
 
+import { LoaderService } from '@services/loader.service'
+
 const routes: Routes = [
-  {path:"",component :LoginComponent},
-  {path:"resetpassword",component : ResetPasswordComponent},
-  {path:"verifyotp",component:GenerateOtpComponent},
-  {path : "users",component : ProtectedComponent,
+  {
+    path:"",
+    component :LoginComponent
+  },
+  {
+    path:"resetpassword",
+    component : ResetPasswordComponent
+  },
+  {
+    path:"verifyotp",
+    component:GenerateOtpComponent
+  },
+  {
+    path : "users",
+    component : ProtectedComponent,
+    canActivateChild: [LoaderService],
   children : [
-    { path : "Dashboard" , component : DashboardComponent },
-    { path : "userInfo" , component : UserInformationComponent },
-    { path : "customerDetails/:id" , component : UserInfoComponent },
-    {path: 'customerDetails',component: UserInfoComponent},
-    {path: 'techAdmin',component: TechnicalAdminDetailsComponent},
-    {path: 'techAdmin/:id',component: TechnicalAdminDetailsComponent},
-    {path: 'billingAdmin',component: BillingOwnerDetailsComponent},
-    {path: 'billingAdmin/:id',component: BillingOwnerDetailsComponent},
-    {path: 'smsCredit',component: SmsCreditAllocationComponent},
-    {path: 'smsCredit/:id',component: SmsCreditAllocationComponent},
+    { 
+      path : "Dashboard" ,
+       component : DashboardComponent
+     },
+    { 
+      path : "userInfo" , 
+      component : UserInformationComponent,
+    },
+    { 
+      path : "customerDetails/:id" , 
+      component : UserInfoComponent,
+    },
+    {
+      path: 'customerDetails',
+      component: UserInfoComponent,
+    },
+    {
+      path: 'techAdmin',
+      component: TechnicalAdminDetailsComponent,
+    },
+    {
+      path: 'techAdmin/:id',
+      component: TechnicalAdminDetailsComponent,
+    },
+    {
+      path: 'billingAdmin',
+      component: BillingOwnerDetailsComponent,
+    },
+    {
+      path: 'billingAdmin/:id',
+      component: BillingOwnerDetailsComponent,
+    },
+    {
+      path: 'smsCredit',
+      component: SmsCreditAllocationComponent,
+    },
+    {
+      path: 'smsCredit/:id',
+      component: SmsCreditAllocationComponent,
+    },
 
-    {path:'proformaInvoice', component: ProcessDetailsComponent},
-    {path:'proformaInvoice/:projectNo', component: ProcessDetailsComponent},
-    {path:'projectExecution', component: ProjectExecutionComponent},
-    {path:'projectExecution/:projectNo', component: ProjectExecutionComponent},
-    {path:'purchaseOrder', component: PurchaseOrderComponent},
-    {path:'purchaseOrder/:projectNo', component: PurchaseOrderComponent},
-    {path:'taxInvoice', component: TaxInvoiceComponent},
-    {path:'taxInvoice/:projectNo', component: TaxInvoiceComponent},
+    {
+      path:'proformaInvoice', 
+      component: ProcessDetailsComponent,
+    },
+    {
+      path:'proformaInvoice/:projectNo', 
+      component: ProcessDetailsComponent,
+    },
+    {
+      path:'projectExecution', 
+      component: ProjectExecutionComponent,
+    },
+    {
+      path:'projectExecution/:projectNo', 
+      component: ProjectExecutionComponent,
+    },
+    {
+      path:'purchaseOrder', 
+      component: PurchaseOrderComponent,
+    },
+    {
+      path:'purchaseOrder/:projectNo', 
+      component: PurchaseOrderComponent,
+    },
+    {
+      path:'taxInvoice', 
+      component: TaxInvoiceComponent,
+    },
+    {
+      path:'taxInvoice/:projectNo', 
+      component: TaxInvoiceComponent,
+    },
 
 
-    { path : "reports" , component : ReportsComponent},
-    {path: "sendemail", component : EmailComponent},
-    {path: "managegroup", component : ManageGroupComponent}
+    { path : "reports" , 
+    component : ReportsComponent,
+  },
+    {
+      path: "sendemail", 
+      component : EmailComponent,
+    },
+    {
+      path: "managegroup", 
+      component : ManageGroupComponent,
+    }
   ],
 },
-  {path:"admin",component : AdminComponent,
-  children : [
-    {path: "manageUser", component: ManageAdminComponent},
-    { path : "createuser",component : CreateUserComponent},
-    { path : "manageAccount",component : AccountManageComponent}
-  ]},
-];
+  {
+    path:"admin",
+    component : AdminComponent,
+    canActivateChild: [LoaderService],
+    children : [
+      {
+        path: "manageUser", 
+        component: ManageAdminComponent
+      },
+      { 
+        path : "createuser",
+        component : CreateUserComponent
+      },
+      { 
+        path : "manageAccount",
+        component : AccountManageComponent
+      }
+    ]},
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

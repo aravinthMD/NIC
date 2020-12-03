@@ -59,12 +59,16 @@ export class SideNavComponent implements OnInit,OnChanges {
     if(path.includes('users/Dashboard')){
       this.isLocation = '0'
     }else if(path.includes('users/proformaInvoice')){
+      this.accountInfoNav = '1.1'
       this.isLocation = '1.2'
     }else if(path.includes('users/projectExecution')){
+      this.accountInfoNav = '1.1'
       this.isLocation = '1.3'
     }else if(path.includes('users/purchaseOrder')){
+      this.accountInfoNav = '1.1'
       this.isLocation = '1.4'
     }else if(path.includes('users/taxInvoice')){
+      this.accountInfoNav = '1.1'
       this.isLocation = '1.5'
     }else if(path.includes('users/customerDetails')){
       this.accountInfoNav = '1.1'
@@ -129,9 +133,10 @@ export class SideNavComponent implements OnInit,OnChanges {
   navigation(route: string) {
   this.isLocation = route;
 
-  if(route.includes('1.1.')){
+  if(route.includes('1.')){
     this.accountInfoNav = '1.1'
   }else {
+    this.utilService.setProjectNumber(null)
     this.accountInfoNav = ''
   }
 

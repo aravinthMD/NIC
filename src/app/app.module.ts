@@ -49,6 +49,8 @@ import { AccountManageComponent } from './protectedPages/admin/account-manage/ac
 import {MatChipsModule} from '@angular/material/chips';
 import {TaxInvoiceDialogComponent} from './protectedPages/user-information/tax-invoice/tax-invoice-dialog/tax-invoice-dialog.component'
 import {MatIconModule} from '@angular/material/icon';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 
 import {
@@ -163,6 +165,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
       preventDuplicates: true,
     }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   exports: [
     MatAutocompleteModule,

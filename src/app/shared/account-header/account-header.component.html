@@ -1,0 +1,19 @@
+<div class="row m-0">
+    <div class="col-md-6 p-0">
+        <h1 class="h4 text-gray-100 title" matRipple>{{title || ''}}</h1>
+    </div>
+
+
+    <div class="col-md-6 d-flex justify-content-end mt-1 account-info"
+        *ngIf="user || user == 'invoice'">
+        <span class="mr-4">
+            <span class="label-color">Account Name :&nbsp; </span>
+            <span>{{ accountName || 'arul.auth'}}</span></span>
+
+        <span>
+
+            <span class="label-color"> Status :&nbsp; </span>
+            <span>{{ status || 'Active'}}</span>
+        </span>
+    </div>
+</div>
