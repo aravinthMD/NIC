@@ -10,8 +10,14 @@
             history
             </span>
         </a> -->
-        <div>
-            <button class="mat-button" matTooltip="Audit Trail for {{'arul.auth'}}" aria-label="Example icon button with a home icon" matTooltipPosition="above" mat-icon-button (click)="openAuditTrailDialog()"><mat-icon  color="accent" class="icons">history</mat-icon></button>
+        <div (click)="openAuditTrailDialog()">
+            <!-- <button class="mat-button" matTooltip="Audit Trail for {{'arul.auth'}}" aria-label="Example icon button with a home icon" matTooltipPosition="above" mat-icon-button (click)="openAuditTrailDialog()"><mat-icon  color="accent" class="icons">history</mat-icon></button> -->
+
+            <span class="material-icons" style="margin-top: -5px;
+            margin-right: 5px;
+            cursor: pointer;">
+                history
+                </span>
         </div>
 
         <span class="mr-4">
