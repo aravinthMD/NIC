@@ -19,20 +19,34 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
   displayedColumns: string[] = ['S.NO', 'userId', 'UserName','EmployeeCode','Department','Role', 'CreatedOn','Action']; 
 
-  // userList : any[] = []
+  userList : any[] = [
+    {username : "suchita.auth",name : "Suchita",email : "suchita.patel@nic.com",mobile_no : "7689549827",role:"user",createdOn:"28/10/2020"},
+    {username : "abhijeet.auth",name : "abhijeet",email : "abhijeet.parate@nic.com",mobile_no : "7709865489",role : "user",createdOn : "10/09/2020"},
+    {username : "kumar.auth",name : "kumar",email : "kumar.raja@nic.com",mobile_no : "9889546389",role : "user",createdOn : "14/10/2020"},
+    {username  :"rajesh.auth",name : "rajesh",email : "rajesh.gaud@nic.com",mobile_no : "8754678956",role : "user",createdOn : "10/10/2020"},
+    {username : "guruprasad.auth",name : "guru",email : "guru.prasad@nic.com",mobile_no : "8754895678",role : "user",createdOn  : "18/08/2020"},
+    {username : "ranjith.auth",name : "ranjith",email : "rankth@nic.com",mobile_no : "8754893365",role : "user",createdOn : "10/02/2020"},
+    {username : "ankit.auth",name : "ankit",email : "ankit@nic.com",mobile_no : "8754890954",role : "user",createdOn : "10/10/2020"},
+    {username :  "rajesh.auth",name : "rajesh",email : "rajesh.prasanth@nic.com",mobile_no : "8645789065",role : "user",createdOn : "09/04/2020"},
+    {username  : "ajay.auth",name : "ajay",email : "ajay.gonnade@nic.com",mobile_no : "8876490346",role : "user",createdOn:"09/08/2020"},
+    {username  : "ram.auth",name : "ram",email : "ram.guru@nic.com",mobile_no : "9876348956",role : "user",createdOn : "09/02/2020"},
+    {username :  "krishna.auth",name : "krishna",email  :"krishna.kumar@nic.com",mobile_no : "9845785438",role : "user",createdOn  :"10/08/2020"},
+    {username : "reshmi.auth",name : "reshmi",email : "reshmi.vargese@nic.com",mobile_no : "9865789456",role : "user", createdOn : "02/10/2020"}
+  ]
   
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>(this.userList);
 
   constructor(private dialog: MatDialog,private loginService : LoginService) {
 
    }
 
   ngOnInit() {
-    this.fetchManageUsers();
+    // this.fetchManageUsers();
   }
 
   ngAfterViewInit(){
+    this.dataSource.paginator = this.paginator;
   }
 
   edit(element) {
