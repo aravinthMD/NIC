@@ -85,7 +85,7 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <label for="dateFor" class="" style="visibility:hidden;margin-bottom: 0px;">From Date</label>
                             <mat-form-field class="example-full-width p-0 mt-2" style="margin-top: 12px !important;">
                                 <input type="text" [placeholder]="placeholderData" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
@@ -96,7 +96,75 @@
                                 </mat-autocomplete>
                             </mat-form-field>
 
+                        </div> -->
+
+
+                        <div class="col-4" *ngIf = "accountFilterFlag">
+                            <label for="mobile">Account Name</label>
+                            <div class="form-group">
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Choose Account'"
+                            formControlName ="accountFilter"
+                            [data]="options"
+                            [settings]="dropdownSettings"
+                            (onSelectAll)="onSelectAll('1')"
+                            (onDeSelect) = "onItemDeSelect('1')"
+                            (onFilterChange) =  "onItemDeSelect('1')"
+                            (onDeSelectAll) = "onItemDeSelect('1')"
+                            >
+                            </ng-multiselect-dropdown>
                         </div>
+                        </div>
+
+                        <div class="col-4" *ngIf = "projectNoFilterFlag">
+                            <label for="mobile">Project No</label>
+                            <div class="form-group">
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Choose project no'"
+                            formControlName ="projectNoFilter"
+                            [data]="projectNoDropDownList"
+                            [settings]="dropdownSettings"
+                            (onSelectAll)="onSelectAll('2')"
+                            (onDeSelect) = "onItemDeSelect('2')"
+                            (onDeSelectAll) = "onItemDeSelect('2')"
+                            >
+                            </ng-multiselect-dropdown>
+                        </div>
+                            </div>
+
+
+                        <div class="col-4" *ngIf = "departMentFilterFlag">
+                            <label for="">Department</label>
+                            <div class="form-group">
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Choose Department'"
+                                formControlName ="departMentFilter"
+                                [data]="departMentDropDownList"
+                                [settings]="dropdownSettings"
+                                (onSelectAll)="onSelectAll('3')"
+                                (onDeSelect) = "onItemDeSelect('3')"
+                                (onDeSelectAll) = "onItemDeSelect('3')"
+                                >
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-4" *ngIf = "stateFilterFlag">
+                            <label for="">State</label>
+                            <div class="form-group">
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Choose State'"
+                                formControlName ="stateFilter"
+                                [data]="stateDropDownList"
+                                [settings]="dropdownSettings"
+                                (onSelectAll)="onSelectAll()"
+                                (onDeSelect) = "onItemDeSelect('4')"
+                                (onDeSelectAll) = "onItemDeSelect('4')"
+                                >
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+
 
                         <div class="col-4">
                             <div class="form-group">
@@ -125,6 +193,14 @@
 
                             </div>
                         </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">User Status</label>
+                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the status'"></app-vf-custom-select>
+                            </div>
+                        </div>
+
                         <!-- <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Profoma Report</label>
