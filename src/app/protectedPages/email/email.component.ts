@@ -49,7 +49,7 @@ export class EmailComponent implements OnInit {
   , '18.00', '18.30','19.00', '19.30','20.00', '20.30', '21.00', '21.30',, '22.00', '22.30',
   , '23.00', '23.30'];
   filteredOptions: Observable<string[]>;
-
+today=new Date()
   constructor() { }
 
   ngOnInit() {
@@ -60,7 +60,8 @@ export class EmailComponent implements OnInit {
   subject:new FormControl(''),
   fromtime:new FormControl(),
   totime:new FormControl(),
-  fromDate: new FormControl()
+  fromDate: new FormControl(),
+  toDate: new FormControl()
 })
 this.filteredOptions = this.emailform.get('fromtime').valueChanges
       .pipe(
@@ -127,24 +128,14 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
   editTemplete(){
     this.editTempinp=true;
     this.emailform.patchValue({renameTemplate:this.SelectedVal[0]['value']})
-    this.emailform.get('selectedTemp').disable();
+  
   }
   onChange(event){
     this.SelectedVal=this.TemplateList.filter(obj=>obj.key==event.target.value)
     this.emailform.patchValue({textarea:this.SelectedVal[0]['content']});
     this.emailform.patchValue({subject:this.SelectedVal[0]['subject']});
-    console.log('selectedTemp',this.emailform.get('selectedTemp').value)
-  }
-  Schedule(){
-this.schedule=true
+    this.emailform.patchValue({renameTemplate:this.SelectedVal[0]['value']});
   }
 
-  save() {
-
-  }
-
-  update() {
-
-  }
 
 }
