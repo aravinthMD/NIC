@@ -122,14 +122,14 @@ mat-form-field {
     color: #ff4c07 !important;
 }
 
-th.mat-header-cell {
+:host ::ng-deep th.mat-header-cell {
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;
     text-align: center;
 }
 
-td.mat-cell {
+:host ::ng-deep td.mat-cell {
     line-height: 24px !important;
     text-align: center;
     flex: 0 20% !important;

@@ -7,7 +7,7 @@ import {DatePipe} from '@angular/common';
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
-
+import { UtilService } from '@services/util.service'
 
 @Component({
   selector: 'app-purchase-order',
@@ -82,7 +82,8 @@ status: string;
     private labelsService: LabelsService,
     private DatePipe:DatePipe,
     private activatedRoute: ActivatedRoute,
-    private dialog : MatDialog
+    private dialog : MatDialog,
+    private utilService: UtilService
     ) { }
 
   ngOnInit() {
@@ -120,6 +121,12 @@ status: string;
       searchTo: new FormControl(null)
     })
 
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val['userId'] || '';
+      this.status = val['status'] || '';
+    })
+
     this.activatedRoute.params.subscribe((value)=> {
       this.userList =   [
         {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:24250,reminder:'Send Reminder'},
@@ -127,7 +134,17 @@ status: string;
         {purchaseNo : 767,projectNumber : value.projectNo || 4535,piAmt:45000,reminder:'Send Reminder'},
         {purchaseNo : 678,projectNumber : value.projectNo || 4535,piAmt:24250,reminder:'Send Reminder'},
         {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:28000,reminder:'Send Reminder'},
-        {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:34000,reminder:'Send Reminder'},
+        {purchaseNo : 899,projectNumber : value.projectNo || 4535,piAmt:34000,reminder:'Send Reminder'},
+        {purchaseNo : 333,projectNumber : value.projectNo || 4535,piAmt:23000,reminder:'Send Reminder'},
+        {purchaseNo : 232,projectNumber : value.projectNo || 4535,piAmt:12000,reminder:'Send Reminder'},
+        {purchaseNo : 344,projectNumber : value.projectNo || 4535,piAmt:22000,reminder:'Send Reminder'},
+        {purchaseNo : 333,projectNumber : value.projectNo || 4535,piAmt:44300,reminder:'Send Reminder'},
+        {purchaseNo : 212,projectNumber : value.projectNo || 4535,piAmt:33449,reminder:'Send Reminder'},
+        {purchaseNo : 422,projectNumber : value.projectNo || 4535,piAmt:34433,reminder:'Send Reminder'},
+        {purchaseNo : 224,projectNumber : value.projectNo || 4535,piAmt:53555,reminder:'Send Reminder'},
+        {purchaseNo : 776,projectNumber : value.projectNo || 4535,piAmt:34455,reminder:'Send Reminder'},
+        {purchaseNo : 223,projectNumber : value.projectNo || 4535,piAmt:54556,reminder:'Send Reminder'},
+       
       ];
 
       this.dataSource = new MatTableDataSource<any>(this.userList);

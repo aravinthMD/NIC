@@ -26,7 +26,19 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   userList : any[] =   [
     {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: 4535,piAmt:25000,remarks:'credited'},
     {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: 4535,piAmt:56000,remarks:'credited'},
-    {invoiceNo : 6574,accountName : "Sharma",projectNumber: 4535,piAmt:25000,remarks:'credited'}
+    {invoiceNo : 6574,accountName : "Sharma",projectNumber: 4535,piAmt:25000,remarks:'credited'},
+    {invoiceNo : 7454,accountName : "Sharma",projectNumber: 4535,piAmt:70000,remarks:'credited'},
+    {invoiceNo : 5667,accountName : "Sharma",projectNumber: 4535,piAmt:5000,remarks:'credited'},
+    {invoiceNo : 5663,accountName : "Sharma",projectNumber: 4535,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 5889,accountName : "Sharma",projectNumber: 4535,piAmt:23000,remarks:'credited'},
+    {invoiceNo : 4500,accountName : "Sharma",projectNumber: 4535,piAmt:45000,remarks:'credited'},
+    {invoiceNo : 7800,accountName : "Sharma",projectNumber: 4535,piAmt:34000,remarks:'credited'},
+    {invoiceNo : 7688,accountName : "Sharma",projectNumber: 4535,piAmt:24000,remarks:'credited'},
+    {invoiceNo : 5322,accountName : "Sharma",projectNumber: 4535,piAmt:67000,remarks:'credited'},
+    {invoiceNo : 1332,accountName : "Sharma",projectNumber: 4535,piAmt:54000,remarks:'credited'},
+    {invoiceNo : 5454,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'},
+    {invoiceNo : 6543,accountName : "Sharma",projectNumber: 4535,piAmt:10000,remarks:'credited'},
+    {invoiceNo : 3445,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'}
   ];
 
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
@@ -120,7 +132,19 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       this.userList =   [
         {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
         {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: value.projectNo || 4535,piAmt:56000,remarks:'credited'},
-        {invoiceNo : 6574,accountName : "Sharma",projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'}
+        {invoiceNo : 6574,accountName : "Sharma",projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
+        {invoiceNo : 7454,accountName : "Prakash",projectNumber:  value.projectNo ||4535,piAmt:70000,remarks:'credited'},
+        {invoiceNo : 5667,accountName : "Mani",projectNumber:  value.projectNo ||4535,piAmt:5000,remarks:'credited'},
+        {invoiceNo : 5663,accountName : "Raja",projectNumber:  value.projectNo ||4535,piAmt:56000,remarks:'credited'},
+        {invoiceNo : 5889,accountName : "Karthi",projectNumber:  value.projectNo ||4535,piAmt:23000,remarks:'credited'},
+        {invoiceNo : 4500,accountName : "Saran",projectNumber:  value.projectNo ||4535,piAmt:45000,remarks:'credited'},
+        {invoiceNo : 7800,accountName : "Rebaca",projectNumber:  value.projectNo ||4535,piAmt:34000,remarks:'credited'},
+        {invoiceNo : 7688,accountName : "John",projectNumber:  value.projectNo ||4535,piAmt:24000,remarks:'credited'},
+        {invoiceNo : 5322,accountName : "Selva",projectNumber:  value.projectNo ||4535,piAmt:67000,remarks:'credited'},
+        {invoiceNo : 1332,accountName : "Subash",projectNumber:  value.projectNo ||4535,piAmt:54000,remarks:'credited'},
+        {invoiceNo : 5454,accountName : "Vinoth",projectNumber:  value.projectNo ||4535,piAmt:20000,remarks:'credited'},
+        {invoiceNo : 6543,accountName : "Prem",projectNumber:  value.projectNo ||4535,piAmt:10000,remarks:'credited'},
+        {invoiceNo : 3445,accountName : "Juli",projectNumber:  value.projectNo ||4535,piAmt:20000,remarks:'credited'}
       ];
 
       this.dataSource = new MatTableDataSource<any>(this.userList);

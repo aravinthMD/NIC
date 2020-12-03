@@ -6,6 +6,8 @@ import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
 import { format } from 'url';
+import { ViewChild } from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -13,7 +15,7 @@ import { format } from 'url';
   styleUrls: ['./sms-credit-allocation.component.scss']
 })
 export class SmsCreditAllocationComponent implements OnInit {
-  status=[
+  statusList=[
     {key:0,value:'Approved'},
     {key:1,value:'Reject'},
     {key:2,value:'Pending'},
@@ -31,7 +33,11 @@ history:any[]=[
   {credit:1000,expiryDate:'1/10/2020',remark:'credited'},
   {credit:1500,expiryDate:'2/09/2020',remark:'credited'},
   {credit:2000,expiryDate:'3/08/2020',remark:'credited'},
-  {credit:2500,expiryDate:'4/07/2020',remark:'credited'}
+  {credit:2500,expiryDate:'4/07/2020',remark:'credited'},
+  {credit:500,expiryDate:'19/05/2020',remark:'credited'},
+  {credit:20,expiryDate:'13/04/2020',remark:'credited'},
+  {credit:12500,expiryDate:'24/03/2020',remark:'credited'},
+  {credit:7500,expiryDate:'22/02/2020',remark:'credited'}
 ]
 smsQuotaMetrix:any[]=[
   {key:0,value:'Aravinth'},
@@ -40,6 +46,7 @@ smsQuotaMetrix:any[]=[
   {key:3,value:'Raja'}
 ];
 dataSource = new MatTableDataSource<any>(this.history)
+@ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
 isDisabledInp=true;
 
 isDirty: boolean;
@@ -47,6 +54,10 @@ isDirty: boolean;
 propertyFlag: boolean;
 
 user: string;
+
+accountName: string;
+status: string;
+
 
   constructor(
     private labelsService :LabelsService,
@@ -78,6 +89,14 @@ user: string;
 
   console.log(this.activatedRoute)
     if(this.user){
+
+      this.utilService.userDetails$.subscribe((val)=> {
+
+        this.accountName = val['userId'] || '';
+        this.status = val['status'] || '';
+      })
+
+
       this.setFormValues();
       this.propertyFlag = true;
 
@@ -118,5 +137,8 @@ user: string;
   }
   onSubmit() {
 
+  }
+  ngAfterViewInit(){
+    this.dataSource.paginator = this.paginator;
   }
 }

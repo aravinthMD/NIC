@@ -16,6 +16,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   enableflag :boolean = true;
 
   
+  removable = false;;
 
   labels: any;
 
@@ -129,18 +130,17 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     this.showUploadModal = true;
   }
 
- 
+  files:File;
 
  async onFileSelect(event) {
 
     // alert('Success')
-    const files: File = event.target.files[0];
-
-
-    if(files.type == 'application/pdf') {
+    this.files = event.target.files[0];
+       this.removable=true;
+    if(this.files['type'] == 'application/pdf') {
 
       const reader = new FileReader();
-      reader.readAsDataURL(files);
+       reader.readAsDataURL(this.files);
       reader.onload = ((e)=> {
         
         
@@ -148,8 +148,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
         // target.files[0]
 
        // this.selectedPdf = ''
-        this.fileSize = `Size - ${this.bytesToSize(files.size)}`
-        this.fileName = files.name;  
+        this.fileSize = `Size - ${this.bytesToSize(this.files['size'])}`
+        this.fileName = this.files['name'];  
         console.log('fileSize',this.fileSize)
         
       });
@@ -158,8 +158,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
       const base64: any = await this.toBase64(event);
       this.imageUrl = base64;
-      this.fileSize = this.bytesToSize(files.size);
-      this.fileName = files.name;
+      this.fileSize = this.bytesToSize(this.files['size']);
+      this.fileName = this.files['name'];
 
     }
    

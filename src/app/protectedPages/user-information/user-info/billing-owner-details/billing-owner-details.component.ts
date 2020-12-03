@@ -25,6 +25,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   user: string;
 
+  accountName: string;
+  status: string;
+
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
@@ -61,6 +64,13 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   console.log(this.activatedRoute)
     if(this.user){
+
+      this.utilService.userDetails$.subscribe((val)=> {
+
+        this.accountName = val['userId'] || '';
+        this.status = val['status'] || '';
+      })
+
       this.setFormValues();
       this.propertyFlag = true;
 

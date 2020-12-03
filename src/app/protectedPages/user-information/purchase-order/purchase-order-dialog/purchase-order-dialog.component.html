@@ -210,7 +210,7 @@
                     <div class="pd-2">
                         <span> {{'invoice.pdf'}} </span>
 
-                        <button class="btn btn-primary" style="position: absolute;left: 8vw;bottom: 1.2vw;" (click)="viewDoc()">View</button>
+                        <button class="btn btn-primary" style="position: absolute;left: 8vw;bottom: 0.5vw;" (click)="viewDoc()">View</button>
                     </div>
 
 
@@ -249,7 +249,24 @@
                             <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'" height="80px" width="80px" />
                         </div>
                     </div>
-                    <div class="col-12 small pr-2">
+                    <div class="col-12 pt-3 ">
+                        <div class="form-group ml-1">
+                          {{fileName}}
+                        </div>
+                        <div class="form-group small ml-1 pt-2 pb-3">
+                          {{fileSize}}
+                        </div>
+                        <div class="form-group row" style="margin-left: 5px">
+                          
+                          <div class="pt-2 pr-2 pb-3">
+                            <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="download()">Download</button>
+                          </div>
+                          <div class="pt-2 pb-3">
+                            <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
+                          </div>
+                        </div>
+                      </div>
+                    <!-- <div class="col-12 small pr-2">
                         <div class="form-group">
                             {{fileName}}
                         </div>
@@ -265,7 +282,7 @@
                                 <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- <div class="col-12">
 
@@ -289,10 +306,8 @@
 
               </div> -->
 
-                    <div class="col-12">
-
-
-                        <div class="pd-3">
+                    <div class="col-12" style="margin-left: 5px;">
+                        <div class="pd-3 pb-3 pt-3">
                             <button matRipple type="button" class="btn btn-primary" style="float: left;" (click)="fileInput.click()">Choose Document</button>
                         </div>
 

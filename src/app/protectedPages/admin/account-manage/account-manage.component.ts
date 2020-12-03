@@ -23,7 +23,7 @@ export class AccountManageComponent implements OnInit,AfterViewInit {
 
   @ViewChild(MatSort,{static:true}) sort: MatSort;
 
-  displayedColumns:any[]=['s.no','userId','department','action','status']
+  displayedColumns:any[]=['userId','department','action','status']
 
   buttonName='Active';
 
