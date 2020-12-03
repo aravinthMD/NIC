@@ -4,6 +4,9 @@ import { FormGroup,FormBuilder} from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import {ToasterService} from '@services/toaster.service';
+
+
 
 @Component({
   selector: 'app-manage-user-dialog',
@@ -21,28 +24,34 @@ today: any;
 form: FormGroup;
 labels: any = {};
 
+isDirty: boolean;
+detectAuditTrialObj: any;
+
 deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
 
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<ManageUserDialogComponent>,
     
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService) {
 
 
     this.form =this.formBuilder.group({
       name : [`${data.username}`],
       departmentName : ['1'],
-      designation : ['desigation'],
+      designation : ['Officer'],
       employeeCode : ['NIC004533'],
       email : [`${data.email}`],
       mobileNo : [`${data.mobile_no}`],
       telPhno : ['0446565555'],
-      offAddress1 : ['tiruvanmaiyur'],
-      offAddress2 : ['solinganallur'],
-      offAddress3 : ['perungudi'],
-      city : ['chennai'],
-      state : ['tamilnadu'],
-      pinCode : ['600026']
+      offAddress1 : ['Tiruvanmaiyur'],
+      offAddress2 : ['Solinganallur'],
+      offAddress3 : ['Perungudi'],
+      city : ['Chennai'],
+      state : ['Tamilnadu'],
+      pinCode : ['600026'],
+      remark:['Pincode changed'] 
     });
+
+    this.detectAuditTrialObj = this.form.value;
    }
 
   ngOnInit() {
@@ -59,11 +68,58 @@ deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user
       this.enableflag = false
       this.buttonName = 'Update';
     }else {
-      this.enableflag = true
-      this.buttonName = 'Edit';
+      // this.enableflag = true
+      // this.buttonName = 'Edit';
+      if(this.form.invalid) {
+     
+        this.isDirty = true;
+        this.toasterService.showError('Please fill all the mandatory fields','')
+  
+        return
+      }
+      this.detectFormChanges()
     }
     
     
+  }
+
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.form.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    this.toasterService.showError('Please enter the remark','')
+    this.form.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
   }
 
 }

@@ -59,7 +59,8 @@ export class CreateUserComponent implements OnInit {
       offAddress3 : [null],
       city : [null],
       state : [null],
-      pinCode : [null]
+      pinCode : [null],
+      remark:[null]    
     });
 
    }
