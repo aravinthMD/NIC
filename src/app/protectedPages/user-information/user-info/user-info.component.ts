@@ -293,8 +293,17 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.showStatusModal = false;
     this.toasterService.showSuccess('Status updated successfully', '')
     if(this.modalMsg == 'Are you sure you want to activate this user ?') {
+
+      this.utilService.setUserDetails({
+        userId: this.accountName,
+        status: 'Active'
+      })
       this.status = 'Active'
     }else{
+      this.utilService.setUserDetails({
+        userId: this.accountName,
+        status: 'InActive'
+      })
       this.status = 'InActive'
     }
   }
