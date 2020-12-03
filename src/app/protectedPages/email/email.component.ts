@@ -59,7 +59,8 @@ export class EmailComponent implements OnInit {
   renameTemplate:new FormControl(''),
   subject:new FormControl(''),
   fromtime:new FormControl(),
-  totime:new FormControl()
+  totime:new FormControl(),
+  fromDate: new FormControl()
 })
 this.filteredOptions = this.emailform.get('fromtime').valueChanges
       .pipe(
@@ -136,6 +137,14 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
   }
   Schedule(){
 this.schedule=true
+  }
+
+  save() {
+
+  }
+
+  update() {
+
   }
 
 }

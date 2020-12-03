@@ -59,9 +59,63 @@
                                 [disabled]="this.emailform.get('selectedTemp').value==''" 
                                 matRipple class=" btn btn-primary">Edit Template</button>
                             </div>
-                            <div class="  d-flex justify-content-start button mr-2">
+                            <div class="d-flex justify-content-start button mr-2">
                                 <button type="submit" (click)="Schedule()" matRipple class=" btn btn-primary">Schedule</button>
                             </div>
+
+
+
+                            <div class="d-flex justify-content-star mr-2" style="width: 15%;">
+                                <mat-form-field class="col-8 form-control" style="margin-left: 66px;border:none">
+                                    <mat-label>From Date</mat-label>
+                                    <input matInput [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </mat-form-field>
+                                </div>
+                            <div class="col-1 form-control">
+                                <mat-form-field >
+                                    <input type="text"
+                                           aria-label="Number"
+                                           matInput
+                                           formControlName="fromtime"
+                                           [matAutocomplete]="auto">
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option}}
+                                      </mat-option>
+                                    </mat-autocomplete>
+                                  </mat-form-field>
+                                </div>
+                                <div class="d-flex justify-content-star mr-2" style="width: 15%;">
+                                    <mat-form-field class="col-8 form-control" style="margin-left: 66px;border:none">
+                                        <mat-label>To Date</mat-label>
+                                        <input matInput [matDatepicker]="picker1">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                    
+                                <div class="col-1 form-control">
+                                    <mat-form-field >
+                                        <input type="text"
+                                               aria-label="Number"
+                                               matInput
+                                               formControlName="totime"
+                                               [matAutocomplete]="auto">
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                          <mat-option *ngFor="let option of filteredOptions | async" 
+                                          [value]="option">
+                                            {{option}}
+                                          </mat-option>
+                                        </mat-autocomplete>
+                                      </mat-form-field>
+                                    </div>
+
+
+
+                                    
+
                             
                         </div>
                         <div *ngIf="showinput"  class="row col-8 ml-1">
@@ -99,52 +153,11 @@
                     <div *ngIf="chooseTemp" style="margin-top: 3.2% !important;margin-left: 0%">
                         <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
                     </div>
-                    <div >
-                    <mat-form-field class="col-8">
-                        <mat-label>From Date</mat-label>
-                        <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                <div class="col-1 form-control">
-                    <mat-form-field >
-                        <input type="text"
-                               aria-label="Number"
-                               matInput
-                               formControlName="fromtime"
-                               [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete">
-                          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            {{option}}
-                          </mat-option>
-                        </mat-autocomplete>
-                      </mat-form-field>
-                    </div>
-                    <div >
-                        <mat-form-field class="col-8">
-                            <mat-label>To Date</mat-label>
-                            <input matInput [matDatepicker]="picker1">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                          </mat-form-field>
-                        </div>
-                        
-                    <div class="col-1 form-control">
-                        <mat-form-field >
-                            <input type="text"
-                                   aria-label="Number"
-                                   matInput
-                                   formControlName="totime"
-                                   [matAutocomplete]="auto">
-                            <mat-autocomplete #auto="matAutocomplete">
-                              <mat-option *ngFor="let option of filteredOptions | async" 
-                              [value]="option">
-                                {{option}}
-                              </mat-option>
-                            </mat-autocomplete>
-                          </mat-form-field>
-                        </div>
+                   
+
+
+
+
                         <div class="col-12">
                             <div class="form-group compose-height">
                                 <label for="">Compose</label>

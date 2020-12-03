@@ -12,3 +12,9 @@ input.mat-chip-input {
     width: 100%;
     margin: 0;
 }   
+
+
+:host ::ng-deep .mat-form-field-infix {
+    // padding: .5em 0;
+     border-top: none !important
+}
