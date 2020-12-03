@@ -68,6 +68,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
       poAmountWithTax : [5000],
       departmentName : ['2'],
       paymentStatus : ['1'],
+      remark:['User Updated'],
       uploadDoc : ['']
     })
 

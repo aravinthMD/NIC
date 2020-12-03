@@ -87,8 +87,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       startDate:new Date(),
       endDate:new Date(),
       piStatus: ['2'],
-      paymentStatus:['2']
-
+      paymentStatus:['2'],
+      remark:['testing']
     })
   }
 
@@ -129,7 +129,6 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
     this.showUploadModal = true;
   }
-
   files:File;
 
  async onFileSelect(event) {

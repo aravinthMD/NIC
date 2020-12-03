@@ -191,6 +191,14 @@
                 </div>
             </div>
 
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="remark" 
+                    [labelName]="labels.remark" [id]="'remark'"
+                    [isDisabledInp]="enableFlag"  [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                    </app-custom-input>
+                </div>
+            </div>
             <!-- <div class="col-4">
           <div class="form-group">
             <label for="poBillable">{{labels.uploadDoc}}</label>

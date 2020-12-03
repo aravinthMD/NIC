@@ -184,7 +184,16 @@
              [isRequired] = "'Please Select the PI paid'" [isDirty] = "isDirty" ></app-vf-custom-select>
           </div>
       </div>
-
+      <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName="remark"
+            [isDisabledInp]="enableflag"
+            [labelName]="labels.remark" [id]="'remark'" 
+            [maxLength]="labels?.validationData.userName.maxLength" 
+            [isDirty]="isDirty">
+            </app-custom-input>
+        </div>
+    </div>
         <!-- <div class="col-4">
           <div class="form-group">
               <label for="poBillable">Upload Document</label>

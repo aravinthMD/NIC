@@ -86,7 +86,9 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       NICSIProjectNo: ['6785'],
       invoiceDate : new Date(),
       transactionDate : new Date(),
-      piPaid : ['1']
+      piPaid : ['1'],
+      remark:['User Updated']
+
     })
 
   }
