@@ -34,6 +34,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
   accountName: string;
   status: string;
 
+  detectAuditTrialObj: any;
+
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
@@ -62,6 +64,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       city : new FormControl ([null]),
       state : new FormControl ([null]),
       pinCode : new FormControl (''),
+      remark: new FormControl('')
     })
 
     this.user = ''
@@ -105,9 +108,52 @@ export class BillingOwnerDetailsComponent implements OnInit {
       city : 'Chennai',
       state : 'Tamilnadu',
       pinCode : '600025',
+      remark: 'Pincode changed'
 
     })
+
+    this.detectAuditTrialObj = this.billOwnerForm.value;
   }
+
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.billOwnerForm.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    this.toasterService.showError('Please enter the remark','')
+    this.billOwnerForm.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
 
   editData() {
     this.propertyFlag = false;
@@ -120,6 +166,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
       return
     }
     console.log('billOwnerForm',this.billOwnerForm.value)
+
+    this.detectFormChanges();
   }
   back() {
 
