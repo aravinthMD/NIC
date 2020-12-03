@@ -42,13 +42,20 @@ export class EmailComponent implements OnInit {
   SelectedVal;
   emailform:FormGroup;
 
-  options: string[] = ['00.00', '00.30', '01.00', '01.30',, '02.00', '02.30',
-  , '03.00', '03.30','04.00', '04.30','05.00', '05.30', '06.00', '06.30',, '07.00', '07.30',
-  , '08.00', '08.30','09.00', '09.30','10.00', '10.30', '11.00', '11.30',, '12.00', '12.30',
-  , '13.00', '13.30','14.00', '14.30','15.00', '15.30', '16.00', '16.30',, '17.00', '17.30',
-  , '18.00', '18.30','19.00', '19.30','20.00', '20.30', '21.00', '21.30',, '22.00', '22.30',
+  options: string[] = ['00.00', '00.30', '01.00', '01.30','02.00', '02.30',
+  , '03.00', '03.30','04.00', '04.30','05.00', '05.30', '06.00', '06.30', '07.00', '07.30',
+  , '08.00', '08.30','09.00', '09.30','10.00', '10.30', '11.00', '11.30', '12.00', '12.30',
+  , '13.00', '13.30','14.00', '14.30','15.00', '15.30', '16.00', '16.30', '17.00', '17.30',
+  , '18.00', '18.30','19.00', '19.30','20.00', '20.30', '21.00', '21.30', '22.00', '22.30',
+  , '23.00', '23.30'];
+  options1: string[] = ['00.00', '00.30', '01.00', '01.30','02.00', '02.30',
+  , '03.00', '03.30','04.00', '04.30','05.00', '05.30', '06.00', '06.30', '07.00', '07.30',
+  , '08.00', '08.30','09.00', '09.30','10.00', '10.30', '11.00', '11.30', '12.00', '12.30',
+  , '13.00', '13.30','14.00', '14.30','15.00', '15.30', '16.00', '16.30', '17.00', '17.30',
+  , '18.00', '18.30','19.00', '19.30','20.00', '20.30', '21.00', '21.30', '22.00', '22.30',
   , '23.00', '23.30'];
   filteredOptions: Observable<string[]>;
+  filteredOptions1: Observable<string[]>;
 today=new Date()
   constructor() { }
 
@@ -68,19 +75,19 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
         startWith(''),
         map(value => this._filter(value))
       );
-      this.filteredOptions = this.emailform.get('totime').valueChanges
+      this.filteredOptions1 = this.emailform.get('totime').valueChanges
       .pipe(
         startWith(''),
-        map(value => this._filter1(value))
+        map(val => this._filter1(val))
       );
   }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
-  private _filter1(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  private _filter1(val: string): string[] {
+    const filterVal = val.toLowerCase();
+    return this.options1.filter(opt => opt.toLowerCase().includes(filterVal));
   }
   add(event: MatChipInputEvent): void {
     const input = event.input;
