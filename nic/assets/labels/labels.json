@@ -223,11 +223,11 @@
         },
         "telephoneNumber": {
             "maxLength": {
-                "rule": 10
+                "rule": 7
             },
             "type": "number",
             "patternCheck": {
-                "rule": "^[0-9]{10}",
+                "rule": "^[0-9]{7}",
                 "msg": "Invalid telephone number"
             }
         },

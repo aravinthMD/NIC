@@ -43,6 +43,8 @@ user: string;
 accountName: string;
 status: string;
 
+detectAuditTrialObj: any;
+
 
   constructor(
     private labelsService:LabelsService,
@@ -74,6 +76,7 @@ status: string;
       city : new FormControl ([null]),
       state : new FormControl ([null]),
       pinCode : new FormControl (''),
+      remark: new FormControl('')
     })
 
     this.user = ''
@@ -121,7 +124,10 @@ status: string;
       city : 'Chennai',
       state : 'Tamilnadu',
       pinCode : '600028',
+      remark: 'Address changed'
     })
+
+    this.detectAuditTrialObj = this.technicaladminform.value;
 
   }
   onSubmit(){
@@ -131,8 +137,51 @@ status: string;
       return
     }
     console.log('billOwnerForm',this.technicaladminform.value)
+
+    this.detectFormChanges()
   
   }
+
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.technicaladminform.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    this.toasterService.showError('Please enter the remark','')
+    this.technicaladminform.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+
   back() {
 
     this.utilService.setCurrentUrl('users/customerDetails')

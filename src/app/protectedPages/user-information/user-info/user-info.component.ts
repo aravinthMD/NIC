@@ -85,6 +85,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   fileName: string = 'invoice.pdf';;
   fileType: string;
 
+  detectAuditTrialObj: any;
+
 
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
@@ -132,7 +134,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       creditAddedAgainstPi : [null],
       fromDate: [null],
       toDate: [null],
-      status:[null]     
+      status:[null],
+      remark:[null]    
     });
 
    }
@@ -165,6 +168,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
         }
          
 
+        this.form.valueChanges.subscribe(data => {
+          console.log('Form changes', data)
+
+         
+                // this.detectFormChanges()
+            });
+
   }
 
   editData() {
@@ -195,8 +205,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       telPhno : '9801756',
       teleCode: '0',
       offAddress1 : '235/bhandup,Mumbai',
-      offAddress2 : ['235,bhandup Mumbai'],
-      offAddress3 : ['235,bhandup,Mumbai'],
+      offAddress2 : '235,bhandup Mumbai',
+      offAddress3 : '235,bhandup,Mumbai',
       city : 'Mumbai',
       state : 'Maharastra',
       pinCode : '641008',
@@ -232,11 +242,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
       traiSenderId: '333',
       userId: 'test',
       password: 'nic@123',
-      status: (this.status == 'Active')?'0':'1'
+      status: (this.status == 'Active')?'0':'1',
+      remark:'User id changed'
       
       
 
     })
+
+    this.detectAuditTrialObj = this.form.value;
   }
 
   formDateFunc(date) {
@@ -245,6 +258,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
   Onsubmit(){
+
+    
 
     if(this.form.invalid) {
      
@@ -256,11 +271,56 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.propertyFlag = false;
     this.buttonName = 'Update';
 
-    this.form.value['creditDate'] = this.datePipe.transform(this.form.value['creditDate'], 'dd/MM/yyyy')
-    this.form.value['creditAddedAgainstPi'] = this.datePipe.transform(this.form.value['creditAddedAgainstPi'], 'dd/MM/yyyy')
-    this.form.value['auditDate'] = this.datePipe.transform(this.form.value['auditDate'], 'dd/MM/yyyy')
+    // this.form.value['creditDate'] = this.datePipe.transform(this.form.value['creditDate'], 'dd/MM/yyyy')
+    // this.form.value['creditAddedAgainstPi'] = this.datePipe.transform(this.form.value['creditAddedAgainstPi'], 'dd/MM/yyyy')
+    // this.form.value['auditDate'] = this.datePipe.transform(this.form.value['auditDate'], 'dd/MM/yyyy')
     // console.log(this.fromDate)
     console.log(this.form.value)
+
+    this.detectFormChanges()
+
+    
+  }
+
+
+
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.form.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    this.toasterService.showError('Please enter the remark','')
+    this.form.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
   }
 
   back() {

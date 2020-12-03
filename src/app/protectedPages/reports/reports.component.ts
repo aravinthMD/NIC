@@ -168,7 +168,6 @@ userStatus  = [
   }
 
   onSelectAll(id ?: any){
-    debugger;
     if(id == '1'){
       this.projectNoFilterFlag = true;
     this.departMentFilterFlag = true;
@@ -246,7 +245,6 @@ userStatus  = [
 
 
   onRepFilter(event) {
-    debugger;
     const data = event.target.value;
 
     console.log(this.myControl.value)
@@ -285,7 +283,6 @@ userStatus  = [
 
 
   onItemDeSelect(id ? : string){
-    debugger;
     const filter = this.form.controls['reportFilter'].value
     if(id == '2' && filter == '2'){
       this.departMentFilterFlag = false;
