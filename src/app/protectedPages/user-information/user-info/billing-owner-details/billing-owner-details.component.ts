@@ -23,6 +23,12 @@ export class BillingOwnerDetailsComponent implements OnInit {
     {key:2,value:'+65'}
   ]
 
+  teleCodeValues = [
+    {key:0,value:'+044'},
+    {key:1,value:'+040'},
+    {key:2,value:'+080'}
+  ]
+
   user: string;
 
   accountName: string;
@@ -49,6 +55,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       countryCode: new FormControl(null),
       mobileNo :new FormControl (''),
       telPhno : new FormControl (''),
+      teleCode: new FormControl(''),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -83,19 +90,20 @@ export class BillingOwnerDetailsComponent implements OnInit {
   setFormValues() {
 
     this.billOwnerForm.patchValue({
-      name : 'sasi',
+      name : 'Sasi',
       departmentName : '1',
-      designation : 'chennai',
+      designation : 'Chennai',
       employeeCode : '54534',
       email : 'test@gmail.com',
       countryCode: '0',
       mobileNo : '9754544445',
-      telPhno : '8667756765',
+      telPhno : '9873422',
+      teleCode:'0',
       offAddress1 : 'add1',
       offAddress2 : 'add2',
       offAddress3 : 'add3',
-      city : 'chennai',
-      state : 'tamilnadu',
+      city : 'Chennai',
+      state : 'Tamilnadu',
       pinCode : '600025',
 
     })

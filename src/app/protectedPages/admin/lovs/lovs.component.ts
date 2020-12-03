@@ -29,7 +29,7 @@ export class LovsComponent implements OnInit {
   btnName:string=''
   lovsList:any[] = [
     { key: 0, value: 'Deparment List' },
-    { key: 1, value: 'Po Status' },
+    { key: 1, value: 'PO Status' },
     { key: 2, value: 'PI Status' },
     { key: 3, value: 'Payment Status' },
     { key: 4, value: 'PI Received In' }]
@@ -38,7 +38,7 @@ export class LovsComponent implements OnInit {
     { value: 'Department of Sainik Welfare', key: 0 },
     { value: 'Minstry of minority affairs', key: 1 },
     { value: 'Vishakhapatnam port Trust', key: 2 },
-    { value: 'minstry of trible affairs', key: 3 },
+    { value: 'Minstry of trible affairs', key: 3 },
     { value: 'Bureasu of Naviks.Mumbai', key: 4 }];
      poStatus: any[] = [
     { key: 0, value: 'Received' },

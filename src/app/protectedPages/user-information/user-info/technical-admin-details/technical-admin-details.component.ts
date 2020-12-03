@@ -32,6 +32,12 @@ countryCodeValues = [
   {key:2,value:'+65'}
 ]
 
+teleCodeValues = [
+  {key:0,value:'+044'},
+  {key:1,value:'+040'},
+  {key:2,value:'+080'}
+]
+
 user: string;
 
 accountName: string;
@@ -61,6 +67,7 @@ status: string;
       countryCode : new FormControl(null),
       mobileNo :new FormControl (''),
       telPhno : new FormControl (''),
+      teleCode: new FormControl(''),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -99,19 +106,20 @@ status: string;
   setFormValues() {
 
     this.technicaladminform.patchValue({
-      name : 'prakash',
+      name : 'Prakash',
       departmentName : '1',
-      designation :'chennai',
+      designation :'Officer',
       employeeCode : '23232',
-      email : 'tect@nic.in',
+      email : 'technical@nic.in',
       countryCode : '0',
       mobileNo :'9867655433',
-      telPhno : '977664433432',
+      telPhno : '9776644',
+      teleCode:'0',
       offAddress1 : 'address1',
-      offAddress2 : 'add2',
-      offAddress3 : 'add3',
-      city : 'chennai',
-      state : 'tamilnadu',
+      offAddress2 : 'address2',
+      offAddress3 : 'address3',
+      city : 'Chennai',
+      state : 'Tamilnadu',
       pinCode : '600028',
     })
 

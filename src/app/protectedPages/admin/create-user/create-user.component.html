@@ -134,7 +134,35 @@
                     </div>
                 </div>
 
-                <div class="col-4">
+
+                <div class="col-1 pr-2 mr-0">
+                    <div class="form-group">
+                       
+                        <label for="department">Code<span style="color:red">*</span></label>
+                        <app-vf-custom-select formControlName="teleCode" [values]="teleCodeValues"
+                        [isRequired]="'Select code'" [isDisabled]="propertyFlag"
+                        [isDirty]="isDirty">
+                    </app-vf-custom-select>
+                    </div>
+                </div>
+                <div class="col-3 pl-2 ml-0">
+                    <div class="form-group">
+                        <app-custom-input formControlName="telPhno" 
+                        [labelName]="labels.teleNumber" [id]="'telPhno'"
+                        [isRequired]="'Telephone number is mandatory'" 
+                        [mandatoryField]="true"
+                        [type]="labels?.validationData.telephoneNumber.type"
+                        [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
+                        [maxLength]="labels?.validationData.telephoneNumber.maxLength"
+                        [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+    
+                </div>
+
+
+
+                <!-- <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="telPhno" 
                         [labelName]="labels.teleNumber" 
@@ -147,7 +175,7 @@
                         [isDirty]="isDirty">
                         </app-custom-input>
                     </div>
-                </div>
+                </div> -->
 
     
             </div>

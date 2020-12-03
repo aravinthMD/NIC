@@ -30,6 +30,12 @@ export class CreateUserComponent implements OnInit {
     {key:1,value:'+60'},
     {key:2,value:'+65'}
   ]
+
+  teleCodeValues = [
+    {key:0,value:'+044'},
+    {key:1,value:'+040'},
+    {key:2,value:'+080'}
+  ]
   
 
   deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
@@ -47,6 +53,7 @@ export class CreateUserComponent implements OnInit {
       countryCode : [null],
       mobileNo : [null],
       telPhno : [null],
+      teleCode: [null],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
