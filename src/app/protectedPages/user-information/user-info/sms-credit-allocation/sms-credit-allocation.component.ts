@@ -15,7 +15,7 @@ import {MatPaginator} from '@angular/material/paginator';
   styleUrls: ['./sms-credit-allocation.component.scss']
 })
 export class SmsCreditAllocationComponent implements OnInit {
-  status=[
+  statusList=[
     {key:0,value:'Approved'},
     {key:1,value:'Reject'},
     {key:2,value:'Pending'},
@@ -55,6 +55,10 @@ propertyFlag: boolean;
 
 user: string;
 
+accountName: string;
+status: string;
+
+
   constructor(
     private labelsService :LabelsService,
     private utilService:UtilService,
@@ -85,6 +89,14 @@ user: string;
 
   console.log(this.activatedRoute)
     if(this.user){
+
+      this.utilService.userDetails$.subscribe((val)=> {
+
+        this.accountName = val['userId'] || '';
+        this.status = val['status'] || '';
+      })
+
+
       this.setFormValues();
       this.propertyFlag = true;
 

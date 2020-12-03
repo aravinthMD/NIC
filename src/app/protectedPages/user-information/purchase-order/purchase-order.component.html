@@ -1,35 +1,8 @@
 <div class="col-md-10 main">
     <div class="purchase-order">
-        <!-- <h1 class="h3 mb-1 mt-1 text-gray-800 mb-3" matRipple style="font-family: arial;">Purchase Order
+       
 
-            <div style="text-align: right;color:grey;font-size:20px">
-                <span>
-        <span style="color: #0d4d92;">Account Name:</span>
-                <span>arul.auth</span></span>
-
-                <span style="padding:10px;">
-          
-          <span style="color: #0d4d92;"> Status: </span>
-                <span>Active</span>
-                </span>
-            </div>
-
-        </h1> -->
-        <div class="row m-0">
-            <h1 class="col-md-6 h3 text-gray-800 mb-3" matRipple style="font-family: arial;">Purchase Order</h1>
-
-            <div class="col-md-6 d-flex justify-content-end mt-1" style="text-align: right;color:grey;font-size:20px">
-                <span class="mr-4">
-      <span style="color: #0d4d92;">Account Name :&nbsp; </span>
-                <span>{{ accountName || 'arul.auth'}}</span></span>
-
-                <span>
-        
-        <span style="color: #0d4d92;"> Status :&nbsp; </span>
-                <span>{{ status || 'Active'}}</span>
-                </span>
-            </div>
-        </div>
+        <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
 
         <mat-accordion>
             <mat-expansion-panel>
@@ -256,7 +229,7 @@
                     </div>
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary" type="submit">Raise Tax Invoice</button>
+                        <button class="btn btn-primary" type="submit">Raise E-Invoice</button>
                     </div>
                 </form>
 

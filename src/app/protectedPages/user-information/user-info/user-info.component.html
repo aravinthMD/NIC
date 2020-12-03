@@ -2,7 +2,8 @@
     <mat-card>
         <div class="customer_details">
 
-            <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Customer Details</h1>
+        <app-account-header [title]="'Customer Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
+
 
             <form [formGroup]="form">
                 <!--FIRST ROW-->
@@ -546,6 +547,18 @@
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
+                        <div class="col-4" *ngIf="existingUserFlag">
+                        <div class="form-group">
+                            <label for="department">{{labels.status}}</label>
+                            <app-vf-custom-select formControlName="status" 
+                            [values]="statusList"
+                            [isRequired]="'Please Select Status'" 
+                            (valueChange)="statusChange($event)"
+                            [isDisabled]="propertyFlag"
+                            [isDirty]="isDirty">
+                            </app-vf-custom-select>
+                        </div>
+                        </div>
 
 
                     </div>
@@ -553,7 +566,7 @@
               
                 <div class="row pt-3 pb-3 m-0">
                     <button class="btn btn-primary" matRipple type="submit" [disabled]="form.invalid"
-                        (click)="Onsubmit()">Save</button>
+                        (click)="Onsubmit()" *ngIf="!propertyFlag">Save</button>
 
                         <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
@@ -565,5 +578,23 @@
             </form>
         </div>
     </mat-card>
+
+
+    <div class="modal" id="statusModal" [ngClass]="{ 'dis-block': showStatusModal }">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">Change User Status</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="">{{modalMsg}}</p>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onStatusYes()"> Yes</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onStatusCancel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
