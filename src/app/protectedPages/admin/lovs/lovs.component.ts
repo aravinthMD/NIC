@@ -29,7 +29,7 @@ export class LovsComponent implements OnInit {
   btnName:string=''
   lovsList:any[] = [
     { key: 0, value: 'Deparment List' },
-    { key: 1, value: 'Po Status' },
+    { key: 1, value: 'PO Status' },
     { key: 2, value: 'PI Status' },
     { key: 3, value: 'Payment Status' },
     { key: 4, value: 'PI Received In' }]

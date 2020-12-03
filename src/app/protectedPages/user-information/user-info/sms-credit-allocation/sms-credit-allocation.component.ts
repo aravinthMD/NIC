@@ -80,7 +80,7 @@ searchForm: FormGroup;
       status: new FormControl ([null]),
       onApprovalOf: new FormControl ([null]),
       remark: new FormControl ([null]),
-      statusChangedBy: new FormControl (['akshaya']),
+      statusChangedBy: new FormControl (['Akshaya']),
       timeStamp: new FormControl ([this.currentDate]),
     })
 
@@ -126,9 +126,9 @@ searchForm: FormGroup;
       credit: '50000',
       date: new Date(),
       status: '2',
-      onApprovalOf: 'approval',
-      remark: 'remarks',
-      statusChangedBy: 'changed by',
+      onApprovalOf: 'Approval',
+      remark: 'Remarks',
+      statusChangedBy: 'Akshaya',
       timeStamp: this.currentDate,
     })
   }
