@@ -69,6 +69,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
   accountName: string;
   status: string;
 
+  propertyFlag: boolean;
 
   constructor(private labelsService : LabelsService,private dialog : MatDialog,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
 
@@ -103,7 +104,8 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
       NICSIProjectNo : new FormControl(null),
       invoiceDate :  new FormControl(null),
       transactionDate : new FormControl(null),
-      piPaid: new FormControl('')
+      piPaid: new FormControl(''),
+      remark:new FormControl('')
     });
 
     this.utilService.userDetails$.subscribe((val)=> {

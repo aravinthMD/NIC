@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import {LabelsService } from '../../../../services/labels.service'
-
+import {ToasterService} from '@services/toaster.service';
 @Component({
   selector: 'app-purchase-order-dialog',
   templateUrl: './purchase-order-dialog.component.html',
@@ -40,6 +40,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
   showUploadModal: boolean;
 
   showDeleteModal: boolean;
+  detectAuditTrialObj:any;
 
   imageUrl: string;
   fileSize: string = 'Size - 109.4 KB';
@@ -47,9 +48,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
   fileType: string;
 
   showPdfModal: boolean;
+  remarkModal:boolean;
 
   constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
-    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>) {
+    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,private toasterService: ToasterService) {
 
     this.PurchaseOrderForm = this.formBuilder.group({
       userName : ['Kumaran'],
@@ -68,9 +70,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
       poAmountWithTax : [5000],
       departmentName : ['2'],
       paymentStatus : ['1'],
+      remark:['User Updated'],
       uploadDoc : ['']
     })
-
+    this.detectAuditTrialObj=this.PurchaseOrderForm.value
    }
 
   ngOnInit() {
@@ -80,6 +83,9 @@ export class PurchaseOrderDialogComponent implements OnInit {
   }
 
   OnUpdate(){
+    if(this.buttonName=='Update'){
+      this.detectFormChanges();
+      }
     this.buttonName = 'Update';
     this.enableFlag = false;
 
@@ -101,6 +107,51 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   download(){
   
+  }
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.PurchaseOrderForm.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.PurchaseOrderForm.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+
+      this.detectAuditTrialObj = this.PurchaseOrderForm.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
   async onFileSelect(event) {

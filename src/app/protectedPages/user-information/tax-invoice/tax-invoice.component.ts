@@ -50,6 +50,7 @@ export class TaxInvoiceComponent implements OnInit {
   accountName: string;
 
   status: string;
+  propertyFlag: boolean;
 
   constructor(private labelsService: LabelsService,
     private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,

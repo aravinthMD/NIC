@@ -28,8 +28,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: 4535,piAmt:56000,remarks:'credited'},
     {invoiceNo : 6574,accountName : "Sharma",projectNumber: 4535,piAmt:25000,remarks:'credited'},
     {invoiceNo : 7454,accountName : "Sharma",projectNumber: 4535,piAmt:70000,remarks:'credited'},
-    {invoiceNo : 5667,accountName : "Sharma",projectNumber: 4535,piAmt:5000,remarks:'credited'},
-    {invoiceNo : 5663,accountName : "Sharma",projectNumber: 4535,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 5667,accountName : "Sharma",propropertyFlagjectNumber: 4535,piAmt:56000,remarks:'credited'},
     {invoiceNo : 5889,accountName : "Sharma",projectNumber: 4535,piAmt:23000,remarks:'credited'},
     {invoiceNo : 4500,accountName : "Sharma",projectNumber: 4535,piAmt:45000,remarks:'credited'},
     {invoiceNo : 7800,accountName : "Sharma",projectNumber: 4535,piAmt:34000,remarks:'credited'},
@@ -83,6 +82,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   showEmailModal: boolean;
 
+  propertyFlag: boolean;
+
   modalData: {
     title: string;
     request: any
@@ -103,7 +104,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       startDate:[null],
       endDate:[null],
       piStatus: [''],
-      paymentStatus:['']
+      paymentStatus:[''],
+      remark:['']
 
     })
 

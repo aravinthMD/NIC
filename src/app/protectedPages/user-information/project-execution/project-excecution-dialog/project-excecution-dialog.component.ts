@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {LabelsService} from '../../../../services/labels.service';
 import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
-
+import {ToasterService} from '@services/toaster.service';
 @Component({
   selector: 'app-project-excecution-dialog',
   templateUrl: './project-excecution-dialog.component.html',
@@ -50,10 +50,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   fileType: string;
 
   showPdfModal:boolean;
+  remarkModal:boolean;
+  detectAuditTrialObj:any;
 
-
-
-  constructor(private labelsService : LabelsService,private dialogRef : MatDialogRef<ProjectExcecutionDialogComponent> ,private formBuilder :  FormBuilder) { 
+  constructor(private labelsService : LabelsService,private toasterService: ToasterService,private dialogRef : MatDialogRef<ProjectExcecutionDialogComponent> ,private formBuilder :  FormBuilder) { 
 
     // this.ProjectExcecutionForm = new FormGroup({
     //   userName : new FormControl(null),
@@ -86,9 +86,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       NICSIProjectNo: ['6785'],
       invoiceDate : new Date(),
       transactionDate : new Date(),
-      piPaid : ['1']
+      piPaid : ['1'],
+      remark:['User Updated']
     })
-
+    this.detectAuditTrialObj=this.ProjectExcecutionForm.value
   }
 
   ngOnInit() {
@@ -100,6 +101,9 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
   OnUpdate(){
+    if(this.buttonName=='Update'){
+      this.detectFormChanges();
+      }
     this.buttonName = 'Update';
     this.enableflag = false;
 
@@ -121,6 +125,52 @@ export class ProjectExcecutionDialogComponent implements OnInit {
 
   download(){
   
+  }
+  
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.ProjectExcecutionForm.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.ProjectExcecutionForm[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.ProjectExcecutionForm.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+
+      this.detectAuditTrialObj = this.ProjectExcecutionForm.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
   async onFileSelect(event) {
