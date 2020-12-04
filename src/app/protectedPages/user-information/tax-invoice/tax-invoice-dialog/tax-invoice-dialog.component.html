@@ -182,7 +182,7 @@
         <div class="col-4">
           <div class="form-group">
             <label for="">{{labels?.invoiceStatus}}</label>
-            <app-vf-custom-select formControlName = "invoiceAmountPaid"
+            <app-vf-custom-select formControlName = "invoiceStatus"
             [values] = "invoiceStatusList"
             [isRequired] = "'Please select the Invoice Status'"
             [isDirty] = "isDirty"
@@ -263,7 +263,11 @@
         <div class="form-group">
             <app-custom-input formControlName="remark"
             [isDisabledInp]="enableFlag" 
-             [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+             [labelName]="labels.remark" [id]="'remark'" 
+             [maxLength]="labels?.validationData.userName.maxLength" 
+             [isDirty]="isDirty" 
+             [isDisabledInp]="propertyFlag"
+             [isRequired]="'Please Enter Remark '">
             </app-custom-input>
         </div>
     </div>
@@ -443,3 +447,7 @@ id="deleteModal"
   </div>
 </div>
 </div>
+
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
+  

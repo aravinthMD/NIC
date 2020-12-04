@@ -214,7 +214,8 @@
             [labelName]="labels.remark" 
             [id]="'remark'" 
             [maxLength]="labels?.validationData.userName.maxLength" 
-            [isDirty]="isDirty">
+            [isDirty]="isDirty"
+            [isRequired]="'Please Enter Remark'">
             </app-custom-input>
         </div>
     </div>
@@ -390,3 +391,5 @@
     </div>
   </div>
 </div>
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

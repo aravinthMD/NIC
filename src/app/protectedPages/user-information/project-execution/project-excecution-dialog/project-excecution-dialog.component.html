@@ -190,7 +190,8 @@
             [isDisabledInp]="enableflag"
             [labelName]="labels.remark" [id]="'remark'" 
             [maxLength]="labels?.validationData.userName.maxLength" 
-            [isDirty]="isDirty">
+            [isDirty]="isDirty"
+            [isRequired] = "'Please Eneter Remark'">
             </app-custom-input>
         </div>
     </div>
@@ -388,3 +389,5 @@ id="deleteModal"
   </div>
 </div>
 </div>
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

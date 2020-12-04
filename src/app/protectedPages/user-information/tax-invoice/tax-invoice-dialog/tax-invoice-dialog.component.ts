@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import {LabelsService} from '../../../../services/labels.service'
-
+import {LabelsService} from '../../../../services/labels.service';
+import {ToasterService} from '@services/toaster.service';
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -28,7 +28,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
   showDeleteModal: boolean;
 
   constructor(private formBuilder : FormBuilder,private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
-    private labelService : LabelsService) {
+    private labelService : LabelsService,private toasterService: ToasterService) {
 
     this.taxInvoiceForm = this.formBuilder.group({
       userName : ['Arun'],
@@ -39,11 +39,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
       poDate : new Date(),
       fromDate : new Date(),
       toDate : new Date(),
-      invoiceAmount : ['10000'],
+      invoiceAmount : ['1000'],
       remark : ['Testing'],
       uploadDoc : [''],
       paymentStatus : ['2'],
-      invoiceStatus : ['1'],
+      invoiceStatus : ['2'],
       invoiceAmountPaid : ['10000'],
       tds : ['10000'],
       penalty : ['10000'],
@@ -51,15 +51,17 @@ export class TaxInvoiceDialogComponent implements OnInit {
       submittedOn : new Date(),
       poBillable : ['1000']
     })
+    this.detectAuditTrialObj=this.taxInvoiceForm.value
    }
 
    invoiceStatusList :  any[] = [
     {key : 0,value : 'Pending'},
     {key : 1,value : 'Paid'},
     {key : 2,value : 'Partially Paid'},
-    {kwy : 3,value : 'Return by NICSI'}
+    {key : 3,value : 'Return by NICSI'}
   ]
-
+  detectAuditTrialObj:any;
+  remarkModal:boolean;
   paymentStatus: any[] = [
     { key: 0, value: 'Pending' },
     { key: 1, value: 'Received' },
@@ -72,6 +74,9 @@ export class TaxInvoiceDialogComponent implements OnInit {
   }
 
   OnUpdate(){
+    if(this.buttonName=='Update'){
+    this.detectFormChanges();
+    }
     this.buttonName  = 'Update';
     this.enableFlag = false;
 
@@ -92,6 +97,51 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   download(){
   
+  }
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.taxInvoiceForm.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.taxInvoiceForm.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+
+      this.detectAuditTrialObj = this.taxInvoiceForm.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
   async onFileSelect(event) {

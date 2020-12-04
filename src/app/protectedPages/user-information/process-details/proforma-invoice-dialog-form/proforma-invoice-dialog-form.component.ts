@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LabelsService } from '../../../../services/labels.service';
 import { DatePipe } from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
+import {ToasterService} from '@services/toaster.service';
 
 @Component({
   selector: 'app-proforma-invoice-dialog-form',
@@ -66,11 +67,12 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   fileName: string = 'invoice.pdf';
   fileType: string;
 
-
+  remarkModal:boolean;
+  detectAuditTrialObj:any;
   
   constructor( public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
     
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private sanitizer: DomSanitizer) { 
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private sanitizer: DomSanitizer) { 
 
     console.log(data)
 
@@ -90,6 +92,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       paymentStatus:['2'],
       remark:['testing']
     })
+    this.detectAuditTrialObj=this.form.value
   }
 
   ngOnInit() {
@@ -101,6 +104,9 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   }
 
   OnUpdate(){
+    if(this.buttonName=='Update'){
+      this.detectFormChanges();
+      }
     this.buttonName = 'Update';
     this.enableflag = false;
 
@@ -129,6 +135,52 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
     this.showUploadModal = true;
   }
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.form.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.form.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+
+      this.detectAuditTrialObj = this.form.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
+  }
+
   files:File;
 
  async onFileSelect(event) {

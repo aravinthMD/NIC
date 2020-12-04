@@ -195,7 +195,10 @@
                 <div class="form-group">
                     <app-custom-input formControlName="remark" 
                     [labelName]="labels.remark" [id]="'remark'"
-                    [isDisabledInp]="enableFlag"  [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                    [isDisabledInp]="enableFlag" 
+                    [isRequired]="'Please Enter Remark '"
+                     [maxLength]="labels?.validationData.userName.maxLength" 
+                     [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                     </app-custom-input>
                 </div>
             </div>
@@ -377,3 +380,4 @@
         </div>
     </div>
 </div>
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

@@ -103,7 +103,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       startDate:[null],
       endDate:[null],
       piStatus: [''],
-      paymentStatus:['']
+      paymentStatus:[''],
+      remark:['']
 
     })
 
