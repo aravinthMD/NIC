@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material';
 import { format } from 'url';
 import { ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -60,13 +61,18 @@ status: string;
 
 searchForm: FormGroup;
 
+detectAuditTrialObj: any;
+
+remarkModal: boolean;
+
 
   constructor(
     private labelsService :LabelsService,
     private utilService:UtilService,
     private router:Router,
     private activatedRoute: ActivatedRoute,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    private toasterService:ToasterService,) { }
 
   ngOnInit() {
     this.currentDate=this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	')
@@ -127,11 +133,57 @@ searchForm: FormGroup;
       date: new Date(),
       status: '2',
       onApprovalOf: 'Approval',
-      remark: 'Remarks',
+      remark: 'Status changed',
       statusChangedBy: 'Akshaya',
       timeStamp: this.currentDate,
     })
+    this.detectAuditTrialObj = this.smsCreditAllocation.value;
   }
+
+   detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.smsCreditAllocation.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.smsCreditAllocation.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+      this.detectAuditTrialObj = this.smsCreditAllocation.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+  remarkOkay() {
+    this.remarkModal = false;
+  }
+
 
   back(){
     this.utilService.setCurrentUrl('users/billingAdmin')
@@ -145,7 +197,13 @@ searchForm: FormGroup;
   
   }
   onSubmit() {
+    if(this.smsCreditAllocation.invalid) {
+      this.isDirty = true;
+      this.toasterService.showError('Please fill all the mandatory fields','')
+      return
+    }
 
+    this.detectFormChanges()
   }
 
   onSearch() {

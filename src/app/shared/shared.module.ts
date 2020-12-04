@@ -8,9 +8,10 @@ import { EmailModalComponent } from './email-modal/email-modal.component';
 import { AccountHeaderComponent } from './account-header/account-header.component';
 import { AuditTrailDialogComponent } from './audit-trail-dialog/audit-trail-dialog.component';
 import {MaterialModule} from './material/material.module'
+import { RemarkModalComponent } from './remark-modal/remark-modal.component';
 
 @NgModule({
-  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent, AuditTrailDialogComponent],
+  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,8 +22,10 @@ import {MaterialModule} from './material/material.module'
     CustomInputComponent,
     CustomSelectComponent,
     EmailModalComponent,
-    AccountHeaderComponent
+    AccountHeaderComponent,
+    RemarkModalComponent
   ],
-  entryComponents : [AuditTrailDialogComponent]
+  entryComponents : [AuditTrailDialogComponent,
+  ]
 })
 export class SharedModule { }

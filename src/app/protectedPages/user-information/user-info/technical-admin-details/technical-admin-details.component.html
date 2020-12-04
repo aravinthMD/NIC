@@ -147,7 +147,7 @@
 
                 </div>
 
-                
+
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="offAddress1" 
@@ -233,10 +233,23 @@
                         </app-custom-input>
                     </div>
                 </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
+                            [maxLength]="labels?.validationData.remark.maxLength" 
+                            [isRequired]="'Remark is mandatory'"
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+
+
             </div>
             </form>
             <div class="row pt-3 pb-3 m-0">
-                <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" *ngIf="!propertyFlag">Save</button>
+                <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button>
 
                 <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
@@ -248,3 +261,7 @@
         </div>
     </mat-card>
         </div>
+
+
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
