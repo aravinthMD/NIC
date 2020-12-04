@@ -147,7 +147,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     });
 
 
-    if(found && formObject['remark'] == this.ProjectExcecutionForm['remark']){
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
       iRemark = true;
     // this.toasterService.showError('Please enter the remark','')
     this.remarkModal = true;

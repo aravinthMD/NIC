@@ -69,6 +69,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
   accountName: string;
   status: string;
 
+  propertyFlag: boolean;
 
   constructor(private labelsService : LabelsService,private dialog : MatDialog,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
 
