@@ -25,7 +25,6 @@ import { RemarkModalComponent } from './remark-modal/remark-modal.component';
     AccountHeaderComponent,
     RemarkModalComponent
   ],
-  entryComponents : [AuditTrailDialogComponent,
-  ]
+  entryComponents : [AuditTrailDialogComponent]
 })
 export class SharedModule { }
