@@ -45,6 +45,8 @@ status: string;
 
 detectAuditTrialObj: any;
 
+remarkModal: boolean;
+
 
   constructor(
     private labelsService:LabelsService,
@@ -164,7 +166,8 @@ detectAuditTrialObj: any;
 
     if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
       iRemark = true;
-    this.toasterService.showError('Please enter the remark','')
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
     this.technicaladminform.patchValue({
       remark: ''
     })
@@ -177,6 +180,7 @@ detectAuditTrialObj: any;
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
+      this.detectAuditTrialObj = this.technicaladminform.value;
       this.toasterService.showSuccess('Data Saved Successfully','')
     }
   }
@@ -203,5 +207,9 @@ detectAuditTrialObj: any;
       this.router.navigate(['/users/billingAdmin'])
     }
    
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 }

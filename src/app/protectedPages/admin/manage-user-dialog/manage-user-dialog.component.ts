@@ -27,6 +27,8 @@ labels: any = {};
 isDirty: boolean;
 detectAuditTrialObj: any;
 
+remarkModal: boolean;
+
 deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
 
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<ManageUserDialogComponent>,
@@ -105,7 +107,8 @@ deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user
 
     if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
       iRemark = true;
-    this.toasterService.showError('Please enter the remark','')
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
     this.form.patchValue({
       remark: ''
     })
@@ -118,8 +121,13 @@ deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
+      this.detectAuditTrialObj = this.form.value;
       this.toasterService.showSuccess('Data Saved Successfully','')
     }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
 }

@@ -226,3 +226,5 @@
 
     </form>
 </mat-dialog-content>
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

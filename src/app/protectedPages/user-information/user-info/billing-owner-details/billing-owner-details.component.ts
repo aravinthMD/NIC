@@ -36,6 +36,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   detectAuditTrialObj: any;
 
+  remarkModal: boolean;
+
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
@@ -137,7 +139,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
     if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
       iRemark = true;
-    this.toasterService.showError('Please enter the remark','')
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
     this.billOwnerForm.patchValue({
       remark: ''
     })
@@ -150,10 +153,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
+      this.detectAuditTrialObj = this.billOwnerForm.value;
       this.toasterService.showSuccess('Data Saved Successfully','')
     }
   }
 
+  remarkOkay() {
+    this.remarkModal = false;
+  }
 
   editData() {
     this.propertyFlag = false;
