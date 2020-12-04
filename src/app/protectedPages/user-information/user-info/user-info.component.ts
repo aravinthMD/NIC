@@ -87,6 +87,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   detectAuditTrialObj: any;
 
+  remarkModal: boolean;
+
 
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
@@ -306,7 +308,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
       iRemark = true;
-    this.toasterService.showError('Please enter the remark','')
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
     this.form.patchValue({
       remark: ''
     })
@@ -319,8 +322,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
+
+      this.detectAuditTrialObj = this.form.value;
       this.toasterService.showSuccess('Data Saved Successfully','')
     }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
   back() {

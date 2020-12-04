@@ -63,6 +63,8 @@ searchForm: FormGroup;
 
 detectAuditTrialObj: any;
 
+remarkModal: boolean;
+
 
   constructor(
     private labelsService :LabelsService,
@@ -160,7 +162,8 @@ detectAuditTrialObj: any;
 
     if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
       iRemark = true;
-    this.toasterService.showError('Please enter the remark','')
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
     this.smsCreditAllocation.patchValue({
       remark: ''
     })
@@ -173,8 +176,12 @@ detectAuditTrialObj: any;
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
+      this.detectAuditTrialObj = this.smsCreditAllocation.value;
       this.toasterService.showSuccess('Data Saved Successfully','')
     }
+  }
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
 

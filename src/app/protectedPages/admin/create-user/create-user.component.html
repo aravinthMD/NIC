@@ -274,6 +274,17 @@
 
                     </div>
                 </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
+                            [maxLength]="labels?.validationData.remark.maxLength" 
+                            [isRequired]="'Remark is mandatory'"
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
     
             </div>
     
