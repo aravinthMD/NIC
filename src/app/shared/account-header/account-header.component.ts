@@ -1,5 +1,5 @@
 import { Component, OnInit,Input,} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 import {AuditTrailDialogComponent} from '../audit-trail-dialog/audit-trail-dialog.component'
 
 @Component({
@@ -23,10 +23,17 @@ export class AccountHeaderComponent implements OnInit {
   }
 
   openAuditTrailDialog(){
-      const MatDialogRef =  this.dialog.open(AuditTrailDialogComponent , {
-        height: '600px',
-        width: '800px',
-      });
+
+      const dialogConfig = new MatDialogConfig();
+      // dialogConfig.position = {
+      //   'top' :'1',
+      //   left : '1',
+      // }
+      dialogConfig.width = '2000px';
+      dialogConfig.height = '600px';
+      dialogConfig.maxWidth = '95vw';
+      const MatDialogRef =  this.dialog.open(AuditTrailDialogComponent ,dialogConfig
+       );
   }
 
 }
