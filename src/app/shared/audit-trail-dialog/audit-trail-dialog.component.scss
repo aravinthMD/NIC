@@ -1,0 +1,30 @@
+table {
+    width: 100%;
+    margin-bottom: 0rem !important;
+
+  }
+
+
+  tr{
+    td{
+
+        vertical-align: middle;
+        font-size: 14px;
+       
+    }
+
+   
+    height: 65px;
+}
+
+tr.example-element-row:hover {
+    background: whitesmoke;
+  }
+
+  th{
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #0e4d92;
+    color: #fff;
+  }
+ 
