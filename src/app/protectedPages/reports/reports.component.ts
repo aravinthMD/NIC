@@ -37,9 +37,9 @@ export class ReportsComponent implements OnInit {
   ]
 
   userListPT :  any[] = [
-    {userName : "arul.auth",projectNumber : "4535",invoiceAmount : "3000",invoiceDate : "03/09/2020",recvDate : "08/10/2020",shortfall : "600"},
-    {userName : "kumar.auth",projectNumber : "6534",invoiceAmount : "5000",invoiceDate : "08/09/2020",recvDate  :"10/09/2020",shortfall  : "400"},
-    {userName : "jain.auth",projectNumber : "7644",invoiceAmount : "3500",invoiceDate  : "09/09/2020",recvDate : "18/09/2020",shortfall : "300"},
+    {userName : "arul.auth",projectNumber : "4535",invoiceNo : "4355",invoiceAmount : "3000",invoiceDate : "03/09/2020",recvDate : "08/10/2020",shortfall : "600"},
+    {userName : "kumar.auth",projectNumber : "6534",invoiceNo : "2313",invoiceAmount : "5000",invoiceDate : "08/09/2020",recvDate  :"10/09/2020",shortfall  : "400"},
+    {userName : "jain.auth",projectNumber : "7644",invoiceNo  : "6574",invoiceAmount : "3500",invoiceDate  : "09/09/2020",recvDate : "18/09/2020",shortfall : "300"},
   ]
 
   userListPR :  any[] = [
@@ -50,8 +50,8 @@ export class ReportsComponent implements OnInit {
 
   userListshort :  any[] = [
     {docRecDate : "07/09/2020",paymentRecDate : "10/10/2020",docNo : "3432",payBMade : "cash",diff : "400",withTdS : ""},
-    {docRecDate : "10/09/2020",paymentRecDate  : "11/10/2020",docNo  : "3450",payBMade : "",diff  :"300",withTdS : ""},
-    {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "",diff :"400",withTdS : ""}
+    {docRecDate : "10/09/2020",paymentRecDate  : "11/10/2020",docNo  : "3450",payBMade : "cash",diff  :"300",withTdS : ""},
+    {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "cash",diff :"400",withTdS : ""}
   ]
 
 
@@ -97,7 +97,7 @@ export class ReportsComponent implements OnInit {
   },
   {
     key : 8,
-    value : "Payments Short"
+    value : "Payments Shortpay"
   },
   {
     key: 1,
@@ -362,6 +362,31 @@ userStatus  = [
 
   formDateFunc(event) {
 
+  }
+
+  exportCSV() {
+
+    const reportVal = this.form.controls['reports'].value;
+
+    if(reportVal >= 1 && reportVal <= 5){
+
+    }
+
+    if(reportVal == 6){
+    
+      //Paymnet Tracking
+    }
+    if(reportVal == 7){
+
+      //Payment Received
+    
+    }
+    if(reportVal == 8){
+
+      //Payment Shortpay
+    
+    }
+    
   }
 
 }

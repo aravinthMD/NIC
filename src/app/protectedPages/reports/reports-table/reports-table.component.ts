@@ -20,7 +20,7 @@ export class ReportsTableComponent implements OnInit,OnChanges {
 
   defaultColumns :  string[] =  ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate'];
 
-  paymentsTrackingColumns :  string[] = ['UserName','projectNumber','InvoiceAmount','InvoiceDate','RecvDate','Shortfall'];
+  paymentsTrackingColumns :  string[] = ['UserName','projectNumber','InvoiceNo','InvoiceAmount','InvoiceDate','Shortfall'];
 
   payMentsRecievedColums : string[] = ['InvoiceNo','InvoiceAmount','TDS','Deduction','ActualPayment'];
 
