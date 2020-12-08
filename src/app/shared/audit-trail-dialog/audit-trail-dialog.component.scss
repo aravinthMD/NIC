@@ -28,3 +28,13 @@ tr.example-element-row:hover {
     color: #fff;
   }
  
+
+  mat-card.mat-card {
+    margin-top: 0px !important;
+    margin-bottom: 8px !important;
+    // border-style: groove;
+    height: 106px;
+    border-top-style: groove;
+
+}
+
