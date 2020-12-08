@@ -38,3 +38,7 @@ tr.example-element-row:hover {
 
 }
 
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: .4375em 0 13px 0px !important;
+}
+
