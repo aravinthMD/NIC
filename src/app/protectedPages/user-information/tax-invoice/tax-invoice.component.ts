@@ -22,6 +22,16 @@ export class TaxInvoiceComponent implements OnInit {
 
   displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks','Active']
 
+  csvSampleData:any[]=[
+    {InvoiceNo:1111,projectNo:1111,piAmt:1000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:2222,projectNo:2222,piAmt:2000,remarks:'nill',Active:'deactive'},
+    {InvoiceNo:3333,projectNo:3333,piAmt:3000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:4444,projectNo:4444,piAmt:4000,remarks:'nill',Active:'deactive'},
+    {InvoiceNo:5555,projectNo:5555,piAmt:5000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:6666,projectNo:6666,piAmt:6000,remarks:'nill',Active:'deactive'},
+    {InvoiceNo:7777,projectNo:7777,piAmt:7000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:8888,projectNo:8888,piAmt:8000,remarks:'nill',Active:'deactive'}]
+
   userList : any[] =   [
    
     {invoiceNo : 1343,projectNumber : 4535,piAmt:24250,remarks:''},
@@ -169,5 +179,9 @@ export class TaxInvoiceComponent implements OnInit {
 
     })
   }
+ getDownloadXls(){
+   this.utilService.getDownloadXlsFile(this.csvSampleData);
+ }
+
 
 }

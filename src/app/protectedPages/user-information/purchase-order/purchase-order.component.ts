@@ -111,7 +111,7 @@ status: string;
       departmentName: new FormControl(''),
       paymentStatus:new FormControl(''),
       uploadDoc:new FormControl(null),
-    
+      remark:new FormControl('')
 
     })
 
@@ -194,7 +194,9 @@ status: string;
 
     })
 
+  } 
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.userList)
   }
-
 
 }
