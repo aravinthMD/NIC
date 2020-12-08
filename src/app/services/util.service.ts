@@ -69,6 +69,10 @@ export class UtilService {
             Remarks:obj.remarks,
            };
        });
+      }else if(type==='Report_Payment_Track'){
+        tabledata = tabledata.map(obj=> {
+          return obj
+       });
       }
     var headers =Object.keys(tabledata[0]);
      const csvrows=[];

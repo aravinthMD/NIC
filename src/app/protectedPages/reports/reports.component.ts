@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { UtilService } from '@services/util.service';
 
 
 @Component({
@@ -117,8 +118,11 @@ export class ReportsComponent implements OnInit {
   form: FormGroup;
 
   reportKey: number
-
-  
+paymnettrackkey:any[]=[
+{  PODATE:'08/12/2020',ProjectNumber:2626,From:'Raja',To:'Arvind',TotalSMS:100,Counts:65,BaseAmount:2100,Tax:15.44,InvoiceAmount:12000,Invoiceno:'65215',InvoiceDate:'07/10/2012',RecvDate:'07/10/2012',BOOK:'Booked',InvoiceSubmission:'07/10/2012',DateEstimated:'05/05/2012',InvoiceRaised:'12/05/2021',invoicestatus:'Approved',InvoiceAmount2:'15000',TDS:'15',BankReceived:'Confirm',Shortfall:'yes',InterestonTDSOtherdeduction:'nill',ReceiptDate:'14/05/2012',Month:'April',Year:'2012'
+},{  PODATE:'05/2/2020',ProjectNumber:1254,From:'Arun',To:'Raja',TotalSMS:30,Counts:265,BaseAmount:55600,Tax:16.44,InvoiceAmount:62000,Invoiceno:'65262',InvoiceDate:'06/6/2061',RecvDate:'07/10/2012',BOOK:'Booked',InvoiceSubmission:'07/10/2012',DateEstimated:'05/05/2012',InvoiceRaised:'12/05/2021',invoicestatus:'Approved',InvoiceAmount2:'15000',TDS:'15',BankReceived:'Confirm',Shortfall:'yes',InterestonTDSOtherdeduction:'nill',ReceiptDate:'14/05/2012',Month:'April',Year:'2012'
+}  
+]
 
   reportsList = [{
     key : 6,
@@ -185,7 +189,7 @@ userStatus  = [
   
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private utilService: UtilService) {
 
     this.form = this.formBuilder.group({
       reports: [''],
@@ -411,7 +415,7 @@ userStatus  = [
 
   }
 
-  exportCSV() {
+  exportCSV(datatable:any[]) {
 
     const reportVal = this.form.controls['reports'].value;
 
@@ -420,8 +424,9 @@ userStatus  = [
     }
 
     if(reportVal == 6){
-    
-      //Paymnet Tracking
+//Paymnet Tracking
+     return this.utilService.getDownloadXlsFile(this.paymnettrackkey,'Report_Payment_Track')
+      
     }
     if(reportVal == 7){
 
@@ -433,7 +438,7 @@ userStatus  = [
       //Payment Shortpay
     
     }
-    
+this.utilService.getDownloadXlsFile(datatable,'Report')
   }
 
 }

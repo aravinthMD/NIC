@@ -259,7 +259,7 @@
 
             </mat-expansion-panel>
         </mat-accordion>
-        <button style="float: right;" class="btn btn-primary download download-pad" type="submit" (click)="exportCSV()">Export as CSV</button>
+        <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         <!--Material Table-->
         <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
 
