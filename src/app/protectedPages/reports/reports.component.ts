@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatAccordion} from '@angular/material/expansion';
@@ -13,14 +13,17 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss']
 })
-export class ReportsComponent implements OnInit,AfterViewInit {
+export class ReportsComponent implements OnInit {
+
+  id :  number = 1;
+  dataList : any[] = [];
 
   filterTabButtonName :  string  = null
 
   @ViewChild(MatAccordion,{static:true}) accordion: MatAccordion;
 
-  @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
-  displayedColumns: string[] = ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate']; 
+
+
   dropdownSettings : IDropdownSettings = {};
 
 
@@ -32,6 +35,25 @@ export class ReportsComponent implements OnInit,AfterViewInit {
     {userId : "Jain.auth",department : "revenue Department, tripura ",state : "tripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/04/2020'},
     {userId : "Jain.auth",department : "Land records and settlement ",state : "delhi",projectNumber: '7554',status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/06/2020'},
   ]
+
+  userListPT :  any[] = [
+    {userName : "arul.auth",projectNumber : "4535",invoiceNo : "4355",invoiceAmount : "3000",invoiceDate : "03/09/2020",recvDate : "08/10/2020",shortfall : "600"},
+    {userName : "kumar.auth",projectNumber : "6534",invoiceNo : "2313",invoiceAmount : "5000",invoiceDate : "08/09/2020",recvDate  :"10/09/2020",shortfall  : "400"},
+    {userName : "jain.auth",projectNumber : "7644",invoiceNo  : "6574",invoiceAmount : "3500",invoiceDate  : "09/09/2020",recvDate : "18/09/2020",shortfall : "300"},
+  ]
+
+  userListPR :  any[] = [
+    {invoiceNo : "4355",invoiceAmount: "3000",tds : "10000",deduction : "2000",actualPayment : "5000"},
+    {invoiceNo : "2313",invoiceAmount : "5000",tds : "2000",deduction  :"2000",actualPayment : "7000"},
+    {invoiceNo  : "6574",invoiceAmount  :"4000",tds : "1500",deduction  :"1500",actualPayment : "5500"}
+  ]
+
+  userListshort :  any[] = [
+    {docRecDate : "07/09/2020",paymentRecDate : "10/10/2020",docNo : "3432",payBMade : "cash",diff : "400",withTdS : ""},
+    {docRecDate : "10/09/2020",paymentRecDate  : "11/10/2020",docNo  : "3450",payBMade : "cash",diff  :"300",withTdS : ""},
+    {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "cash",diff :"400",withTdS : ""}
+  ]
+
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
@@ -67,6 +89,17 @@ export class ReportsComponent implements OnInit,AfterViewInit {
   
 
   reportsList = [{
+    key : 6,
+    value : "Payments Tracking"
+  },{
+    key : 7,
+    value : "Payments Received"
+  },
+  {
+    key : 8,
+    value : "Payments Shortpay"
+  },
+  {
     key: 1,
     value:'Proforma Invoice Raised'
   },
@@ -152,9 +185,8 @@ userStatus  = [
       startWith(''),
       map(value => this._filter(value))
     );
-  }
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
+
+    this.dataList = this.userList;
   }
 
   private _filter(value: string): string[] {
@@ -186,11 +218,31 @@ userStatus  = [
 
   OnFilter(){
 
+    const reportVal = this.form.controls['reports'].value;
+
+    if(reportVal >= 1 && reportVal <= 5){
+      this.dataList = this.userList;
+      this.id = Number(reportVal);
+    }
+    if(reportVal == 6){
+      this.id = Number(reportVal);
+      this.dataList = this.userListPT
+    }
+    if(reportVal == 7){
+      this.id = Number(reportVal)
+      this.dataList = this.userListPR
+    }
+    if(reportVal == 8){
+      this.id = Number(reportVal)
+      this.dataList = this.userListshort;
+    }
+
+
     console.log(this.form.value)
 
     console.log(this.myControl.value)
     this.filterTabButtonName = "Filter Applied";
-    this.accordion.closeAll
+    this.accordion.closeAll()
   }
 
   onSelect(event) {
@@ -231,12 +283,19 @@ userStatus  = [
       ]
 
     }else if(data == '4') {
+
       this.optionValue = [
         {value:'Received',key:'1'},
         {value:'Pending',key:'2'}
       ]
     }else if(data == '5'){
-      this.optionValue = []
+      this.optionValue = [];
+    }else if(data == '6'){
+      this.optionValue = [];
+    }else if(data == '7'){
+      this.optionValue = [];
+    }else if(data == '8'){
+      this.optionValue = [];
     }
   }
 
@@ -309,6 +368,31 @@ userStatus  = [
 
   formDateFunc(event) {
 
+  }
+
+  exportCSV() {
+
+    const reportVal = this.form.controls['reports'].value;
+
+    if(reportVal >= 1 && reportVal <= 5){
+
+    }
+
+    if(reportVal == 6){
+    
+      //Paymnet Tracking
+    }
+    if(reportVal == 7){
+
+      //Payment Received
+    
+    }
+    if(reportVal == 8){
+
+      //Payment Shortpay
+    
+    }
+    
   }
 
 }
