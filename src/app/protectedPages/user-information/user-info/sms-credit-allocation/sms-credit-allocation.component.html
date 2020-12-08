@@ -167,7 +167,7 @@
 
 
 
-                    <button style="float: right;margin-bottom: 1vw;margin-right: 1vw;margin-top: 1vw;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+                    <button style="float: right;margin-bottom: 1vw;margin-right: 1vw;margin-top: 1vw;" class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button>
                     <div class="mat-elevation-z8" class="p-0">
                         <table mat-table [dataSource]="dataSource">
 
