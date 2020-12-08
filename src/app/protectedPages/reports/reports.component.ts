@@ -289,7 +289,13 @@ userStatus  = [
         {value:'Pending',key:'2'}
       ]
     }else if(data == '5'){
-      this.optionValue = ['UserID', 'Department', 'state'];
+      this.optionValue = [];
+    }else if(data == '6'){
+      this.optionValue = [];
+    }else if(data == '7'){
+      this.optionValue = [];
+    }else if(data == '8'){
+      this.optionValue = [];
     }
   }
 
