@@ -37,8 +37,8 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
-                            <div class="form-group">
+                        <div class="col-4" *ngIf="reportKey <= 4">
+                            <div class="form-group" optionValue>
                                 <label for="mobile">Status</label>
                                 <!-- <select class="form-control">
                                 <option value = '0' disabled>--select--</option>
@@ -48,7 +48,7 @@
                                 
                               </select> -->
 
-                                <app-vf-custom-select formControlName="status" [values]="optionValue" [isRequired]="'Please Select Status'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="status" [values]="optionValue" ></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -259,7 +259,7 @@
 
             </mat-expansion-panel>
         </mat-accordion>
-        <button style="float: right;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+        <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         <!--Material Table-->
         <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
 

@@ -247,6 +247,6 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   }
 
   getDownloadXls(){
-    this.utilService.getDownloadXlsFile(this.userList);
+    this.utilService.getDownloadXlsFile(this.userList,'ProformaInvoice');
   }
 }

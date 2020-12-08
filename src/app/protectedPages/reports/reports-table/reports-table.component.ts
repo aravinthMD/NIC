@@ -20,13 +20,15 @@ export class ReportsTableComponent implements OnInit,OnChanges {
 
   defaultColumns :  string[] =  ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate'];
 
-  paymentsTrackingColumns :  string[] = ['UserName','projectNumber','InvoiceAmount','InvoiceDate','RecvDate','Shortfall'];
+  paymentsTrackingColumns :  string[] = ['UserName','projectNumber','InvoiceNo','InvoiceAmount','InvoiceDate'];
 
-  payMentsRecievedColums : string[] = ['InvoiceNo','InvoiceAmount','TDS','Deduction','ActualPayment'];
+  payMentsRecievedColums : string[] = ['InvoiceNo','InvoiceAmount','ActualPayment','ShortPay'];
 
-  shortColumns : string[] = ['DocNo','PayBMade','Diff','DocRecDate','PaymentRecDate','WithTdS']
+  // shortColumns : string[] = ['DocNo','PayBMade','Diff','DocRecDate','PaymentRecDate','WithTdS'];
 
+  shortColumns : string[] = ['InvoiceNo','InvoiceAmount','ShortPay'];
 
+  paidColumns: string[] = ['UserName','projectNumber','InvoiceNo','InvoiceAmount','InvoicePaid','InvoiceUnpaid']
 
   constructor(private ngxUiLoaderService : NgxUiLoaderService) {
    }
@@ -63,6 +65,12 @@ export class ReportsTableComponent implements OnInit,OnChanges {
     this.displayedColumns = this.shortColumns;
     
   }
+
+  if(this.id == 9){
+    this.ngxUiLoaderService.start();
+  this.displayedColumns = this.paidColumns;
+  
+}
 
   this.ngxUiLoaderService.stop();
 

@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { UtilService } from '@services/util.service';
 
 
 @Component({
@@ -37,21 +38,58 @@ export class ReportsComponent implements OnInit {
   ]
 
   userListPT :  any[] = [
-    {userName : "arul.auth",projectNumber : "4535",invoiceAmount : "3000",invoiceDate : "03/09/2020",recvDate : "08/10/2020",shortfall : "600"},
-    {userName : "kumar.auth",projectNumber : "6534",invoiceAmount : "5000",invoiceDate : "08/09/2020",recvDate  :"10/09/2020",shortfall  : "400"},
-    {userName : "jain.auth",projectNumber : "7644",invoiceAmount : "3500",invoiceDate  : "09/09/2020",recvDate : "18/09/2020",shortfall : "300"},
+    {userName : "arul.auth",projectNumber : "4535",invoiceNo : "4355",invoiceAmount : "3000",invoiceDate : "03/09/2020",recvDate : "08/10/2020",shortfall : "600"},
+    {userName : "kumar.auth",projectNumber : "6534",invoiceNo : "2313",invoiceAmount : "5000",invoiceDate : "08/09/2020",recvDate  :"10/09/2020",shortfall  : "400"},
+    {userName : "jain.auth",projectNumber : "7644",invoiceNo  : "6574",invoiceAmount : "4000",invoiceDate  : "09/09/2020",recvDate : "18/09/2020",shortfall : "300"},
   ]
 
   userListPR :  any[] = [
-    {invoiceNo : "4355",invoiceAmount: "3000",tds : "10000",deduction : "2000",actualPayment : "5000"},
-    {invoiceNo : "2313",invoiceAmount : "5000",tds : "2000",deduction  :"2000",actualPayment : "7000"},
-    {invoiceNo  : "6574",invoiceAmount  :"4000",tds : "1500",deduction  :"1500",actualPayment : "5500"}
+    {invoiceNo : "4355",invoiceAmount: "3000",tds : "500",deduction : "1500",actualPayment : "2000",shortPay:'1000'},
+    {invoiceNo : "2313",invoiceAmount : "5000",tds : "1500",deduction  :"2000",actualPayment : "3500",shortPay:'1500'},
+    {invoiceNo  : "6574",invoiceAmount  :"4000",tds : "2000",deduction  :"1200",actualPayment : "3200",shortPay:'800'}
   ]
 
+  // userListshort :  any[] = [
+  //   {docRecDate : "07/09/2020",paymentRecDate : "10/10/2020",docNo : "3432",payBMade : "cash",diff : "400",withTdS : ""},
+  //   {docRecDate : "10/09/2020",paymentRecDate  : "11/10/2020",docNo  : "3450",payBMade : "cash",diff  :"300",withTdS : ""},
+  //   {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "cash",diff :"400",withTdS : ""}
+  // ]
+
   userListshort :  any[] = [
-    {docRecDate : "07/09/2020",paymentRecDate : "10/10/2020",docNo : "3432",payBMade : "cash",diff : "400",withTdS : ""},
-    {docRecDate : "10/09/2020",paymentRecDate  : "11/10/2020",docNo  : "3450",payBMade : "",diff  :"300",withTdS : ""},
-    {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "",diff :"400",withTdS : ""}
+    {invoiceNo : "4355",invoiceAmount: "3000",shortPay:'1000'},
+    {invoiceNo : "2313",invoiceAmount : "5000",shortPay:'1500'},
+    {invoiceNo  : "6574",invoiceAmount  :"4000",shortPay:'800'}
+  ]
+
+
+  userListpaid : any[] = [
+    {
+      userName : "arul.auth",
+      projectNumber : "4535",
+      invoiceNo : "4355",
+      invoiceAmount : "3000",
+      invoiceAmountPaid : "2500",
+      unpaid: "500"
+
+    },
+    {
+      userName : "kumar.auth",
+      projectNumber : "6534",
+      invoiceNo : "2313",
+      invoiceAmount : "5000",
+      invoiceAmountPaid : "4000",
+      unpaid: "1000"
+
+    },
+    {
+      userName : "jain.auth",
+      projectNumber : "7644",
+      invoiceNo : "6574",
+      invoiceAmount : "4000",
+      invoiceAmountPaid : "3200",
+      unpaid: "800"
+
+    }
   ]
 
 
@@ -86,7 +124,12 @@ export class ReportsComponent implements OnInit {
 
   form: FormGroup;
 
-  
+  reportKey: number
+paymnettrackkey:any[]=[
+{  PODATE:'08/12/2020',ProjectNumber:2626,From:'Raja',To:'Arvind',TotalSMS:100,Counts:65,BaseAmount:2100,Tax:15.44,InvoiceAmount:12000,Invoiceno:'65215',InvoiceDate:'07/10/2012',RecvDate:'07/10/2012',BOOK:'Booked',InvoiceSubmission:'07/10/2012',DateEstimated:'05/05/2012',InvoiceRaised:'12/05/2021',invoicestatus:'Approved',InvoiceAmount2:'15000',TDS:'15',BankReceived:'Confirm',Shortfall:'yes',InterestonTDSOtherdeduction:'nill',ReceiptDate:'14/05/2012',Month:'April',Year:'2012'
+},{  PODATE:'05/2/2020',ProjectNumber:1254,From:'Arun',To:'Raja',TotalSMS:30,Counts:265,BaseAmount:55600,Tax:16.44,InvoiceAmount:62000,Invoiceno:'65262',InvoiceDate:'06/6/2061',RecvDate:'07/10/2012',BOOK:'Booked',InvoiceSubmission:'07/10/2012',DateEstimated:'05/05/2012',InvoiceRaised:'12/05/2021',invoicestatus:'Approved',InvoiceAmount2:'15000',TDS:'15',BankReceived:'Confirm',Shortfall:'yes',InterestonTDSOtherdeduction:'nill',ReceiptDate:'14/05/2012',Month:'April',Year:'2012'
+}  
+]
 
   reportsList = [{
     key : 6,
@@ -97,7 +140,11 @@ export class ReportsComponent implements OnInit {
   },
   {
     key : 8,
-    value : "Payments Short"
+    value : "Payments Shortpay"
+  },
+  {
+    key : 9,
+    value : "Paid and Unpaid"
   },
   {
     key: 1,
@@ -149,7 +196,7 @@ userStatus  = [
   
 
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,private utilService: UtilService) {
 
     this.form = this.formBuilder.group({
       reports: [''],
@@ -237,6 +284,11 @@ userStatus  = [
       this.dataList = this.userListshort;
     }
 
+    if(reportVal == 9){
+      this.id = Number(reportVal)
+      this.dataList = this.userListpaid;
+    }
+
 
     console.log(this.form.value)
 
@@ -248,7 +300,7 @@ userStatus  = [
   onSelect(event) {
 
     const data = event.target.value;
-
+    this.reportKey = Number(data);
     if(data == '1') {
       this.optionValue = [
         {value:'Valid',key:'1'},
@@ -289,7 +341,13 @@ userStatus  = [
         {value:'Pending',key:'2'}
       ]
     }else if(data == '5'){
-      this.optionValue = ['UserID', 'Department', 'state'];
+      this.optionValue = [];
+    }else if(data == '6'){
+      this.optionValue = [];
+    }else if(data == '7'){
+      this.optionValue = [];
+    }else if(data == '8'){
+      this.optionValue = [];
     }
   }
 
@@ -362,6 +420,32 @@ userStatus  = [
 
   formDateFunc(event) {
 
+  }
+
+  exportCSV(datatable:any[]) {
+
+    const reportVal = this.form.controls['reports'].value;
+
+    if(reportVal >= 1 && reportVal <= 5){
+
+    }
+
+    if(reportVal == 6){
+//Paymnet Tracking
+     return this.utilService.getDownloadXlsFile(this.paymnettrackkey,'Report_Payment_Track')
+      
+    }
+    if(reportVal == 7){
+
+      //Payment Received
+    
+    }
+    if(reportVal == 8){
+
+      //Payment Shortpay
+    
+    }
+this.utilService.getDownloadXlsFile(datatable,'Report')
   }
 
 }
