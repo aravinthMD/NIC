@@ -30,13 +30,53 @@ export class UtilService {
         this.userDetails$.next(data)
     }
 
-    getDownloadXlsFile(tabledata:any[]){
-      const headers =Object.keys(tabledata[0]);
-    const csvrows=[];
+    getDownloadXlsFile(tabledata:any[],type?:string){
+      
+      if(type==='TaxInvoice'){
+        tabledata = tabledata.map(obj=> {
+          return {
+            TaxInvoiceNo: obj.invoiceNo,
+            TaxInvoiceAmount: obj.piAmt,
+            Remarks:obj.remarks,
+            ProjectNo:obj.projectNumber
+           };
+       });
+      }else if(type==='ProjectExecution'){
+        tabledata = tabledata.map(obj=> {
+          return {       
+            ProjectNo: obj.projectNo,
+            ProformainvoiceNo: obj.invoiceNumber,
+            ProformainvoiceDate:obj.invoiceDate,
+            Amount:obj.amount
+           };
+       });
+        }else if(type==='PurchaseOrder'){
+        tabledata = tabledata.map(obj=> {
+          return {       
+            PurchaseOrderNo: obj.purchaseNo,
+            ProjectNo: obj.projectNumber,
+            PoAmount:obj.piAmt,
+            Reminder:obj.reminder
+           };
+       });
+       }else if(type==='ProformaInvoice'){
+        tabledata = tabledata.map(obj=> {
+          return {       
+            ProformainvoiceNo: obj.invoiceNo,
+            AccountName: obj.accountName,
+            ProjectNo:obj.projectNumber,
+            PiAmount:obj.piAmt,
+            Remarks:obj.remarks,
+           };
+       });
+      }
+    var headers =Object.keys(tabledata[0]);
+     const csvrows=[];
     csvrows.push(headers.join(','));
     
     for(const row of tabledata){
       const val =headers.map(header=>{
+
         const rowdata=(''+row[header]).replace(/"/g,'\\"')
         return `"${rowdata}"`
       });

@@ -184,7 +184,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
   }
 
   getDownloadXls(){
-    this.utilService.getDownloadXlsFile(this.userList);
+    this.utilService.getDownloadXlsFile(this.userList,'ProjectExecution');
   }
   }
 

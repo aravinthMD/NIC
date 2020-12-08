@@ -180,7 +180,7 @@ export class TaxInvoiceComponent implements OnInit {
     })
   }
  getDownloadXls(){
-   this.utilService.getDownloadXlsFile(this.csvSampleData);
+   this.utilService.getDownloadXlsFile(this.userList,"TaxInvoice");
  }
 
 

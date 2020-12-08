@@ -196,7 +196,7 @@ status: string;
 
   } 
   getDownloadXls(){
-    this.utilService.getDownloadXlsFile(this.userList)
+    this.utilService.getDownloadXlsFile(this.userList,'PurchaseOrder')
   }
 
 }
