@@ -44,9 +44,9 @@ export class ReportsComponent implements OnInit {
   ]
 
   userListPR :  any[] = [
-    {invoiceNo : "4355",invoiceAmount: "3000",tds : "10000",deduction : "2000",actualPayment : "2000",shortPay:'1000'},
-    {invoiceNo : "2313",invoiceAmount : "5000",tds : "2000",deduction  :"2000",actualPayment : "3500",shortPay:'1500'},
-    {invoiceNo  : "6574",invoiceAmount  :"4000",tds : "1500",deduction  :"1500",actualPayment : "3200",shortPay:'800'}
+    {invoiceNo : "4355",invoiceAmount: "3000",tds : "500",deduction : "1500",actualPayment : "2000",shortPay:'1000'},
+    {invoiceNo : "2313",invoiceAmount : "5000",tds : "1500",deduction  :"2000",actualPayment : "3500",shortPay:'1500'},
+    {invoiceNo  : "6574",invoiceAmount  :"4000",tds : "2000",deduction  :"1200",actualPayment : "3200",shortPay:'800'}
   ]
 
   // userListshort :  any[] = [
