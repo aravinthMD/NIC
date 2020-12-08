@@ -184,6 +184,17 @@ remarkModal: boolean;
     this.remarkModal = false;
   }
 
+  next() {
+
+    this.utilService.setCurrentUrl('users/projectExecution')
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val;
+    })
+    this.router.navigate(['/users/projectExecution/'+pno])
+
+  }
+
 
   back(){
     this.utilService.setCurrentUrl('users/billingAdmin')

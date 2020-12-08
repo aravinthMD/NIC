@@ -260,7 +260,7 @@
                      <label for="dateFor">To Date</label>
                      
                      <mat-form-field>
-                       <input matInput  
+                       <input matInput  [min]="searchForm.get('searchFrom').value"
                        [matDatepicker]="picker7" formControlName="searchTo">
                        <mat-datepicker-toggle matSuffix [for]="picker7" 
                        ></mat-datepicker-toggle>
@@ -295,7 +295,7 @@
            </form>
            </mat-card>
 
-        <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+        <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="submit">Export as CSV</button>
 
 
         <div class="mat-elevation-z8">

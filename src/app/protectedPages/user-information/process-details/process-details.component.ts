@@ -246,4 +246,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     this.showEmailModal = false;
   }
 
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.userList);
+  }
 }

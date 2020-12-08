@@ -71,7 +71,8 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
   propertyFlag: boolean;
 
-  constructor(private labelsService : LabelsService,private dialog : MatDialog,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
+  constructor(private labelsService : LabelsService,private dialog : MatDialog,
+    private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
 
 
     this.searchForm = new FormGroup({
@@ -182,6 +183,9 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
     })
   }
 
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.userList);
+  }
   }
 
 

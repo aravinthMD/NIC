@@ -74,6 +74,8 @@
                 <button class="btn btn-primary" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">{{'Submit'}}</button>
                 <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
+                <button class="btn btn-primary back-btn" matRipple (click)="next()">Next</button>
+
                 <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
             </div>
             <mat-accordion>
