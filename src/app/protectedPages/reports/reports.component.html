@@ -247,8 +247,9 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Filter</button>
+                        <button  class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Filter</button>
                         <button class="btn btn-primary" (click)="filterTabButtonName = ''" type="submit">Clear</button>
+
 
                         <!-- <button class="btn btn-primary download mrg-lft" type="submit">Download</button> -->
 
@@ -258,68 +259,9 @@
 
             </mat-expansion-panel>
         </mat-accordion>
-        <!--Material Table-->
         <button style="float: right;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
-        <div class="mat-elevation-z8">
-
-            <div class="row  pb-3 pr-3 pl-3 float-right m-0">
-                <!-- <button class="btn btn-primary download mrg-lft" type="submit">Download</button> -->
-            </div>
-
-            <table mat-table [dataSource]="dataSource">
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="UserID">
-                    <th mat-header-cell *matHeaderCellDef> User ID </th>
-                    <td mat-cell *matCellDef="let element"> <a>{{element.userId}}</a> </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="Department">
-                    <th mat-header-cell *matHeaderCellDef> Department </th>
-                    <td mat-cell *matCellDef="let element"> {{element.department}} </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="state">
-                    <th mat-header-cell *matHeaderCellDef> State </th>
-                    <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="projectNumber">
-                    <th mat-header-cell *matHeaderCellDef> Project Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.projectNumber}} </td>
-                </ng-container>
-
-
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="piNumber">
-                    <th mat-header-cell *matHeaderCellDef> PI Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.piNumber}} </td>
-                </ng-container>
-
-
-                <!--Invoice raised-->
-                <ng-container matColumnDef="piDate">
-                    <th mat-header-cell *matHeaderCellDef> PI Date </th>
-                    <td mat-cell *matCellDef="let element"> {{element.piDate}} </td>
-                </ng-container>
-
-                <!-- <ng-container matColumnDef="download">
-                    <th mat-header-cell *matHeaderCellDef> Download </th>
-                   
-                </ng-container> -->
-
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
-            </table>
-
-            <!-- <button class="btn btn-primary download download-pad" type="submit">Export As CSV</button> -->
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
-            <div class="mb-3"></div>
-        </div>
+        <!--Material Table-->
+        <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
 
     </div>
     <!--Reports Tag close-->
