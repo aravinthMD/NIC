@@ -21,6 +21,8 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   version: string;
 
+  isExistingUser: boolean;
+
   constructor(private location: Location,private utilService: UtilService,private router: Router) { 
 
     this.version = environment.version;
@@ -50,6 +52,9 @@ export class SideNavComponent implements OnInit,OnChanges {
       }else if(user.includes('users/smsCredit')){
         this.accountInfoNav = '1.1'
         this.isLocation = '1.1.4'
+      }else if(user.includes('users/projectExecution')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.3'
       }
     })
 
@@ -106,6 +111,14 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.parentLocation = ''
     }
 
+
+    this.utilService.projectNumber$.subscribe((pno)=> {
+      if(pno){
+        this.isExistingUser = true
+      }else {
+        this.isExistingUser = false
+      }
+  })
    
     
   }
