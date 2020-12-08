@@ -235,4 +235,7 @@ remarkModal: boolean;
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
   }
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.history)
+  }
 }
