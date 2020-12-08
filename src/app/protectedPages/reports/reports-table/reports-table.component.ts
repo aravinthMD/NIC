@@ -26,7 +26,7 @@ export class ReportsTableComponent implements OnInit,OnChanges {
 
   shortColumns : string[] = ['DocNo','PayBMade','Diff','DocRecDate','PaymentRecDate','WithTdS']
 
-
+  paidColumns: string[] = ['UserName','projectNumber','InvoiceNo','InvoiceAmount','InvoicePaid','InvoiceUnpaid']
 
   constructor(private ngxUiLoaderService : NgxUiLoaderService) {
    }
@@ -63,6 +63,12 @@ export class ReportsTableComponent implements OnInit,OnChanges {
     this.displayedColumns = this.shortColumns;
     
   }
+
+  if(this.id == 9){
+    this.ngxUiLoaderService.start();
+  this.displayedColumns = this.paidColumns;
+  
+}
 
   this.ngxUiLoaderService.stop();
 

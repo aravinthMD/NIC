@@ -54,6 +54,36 @@ export class ReportsComponent implements OnInit {
     {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "cash",diff :"400",withTdS : ""}
   ]
 
+  userListpaid : any[] = [
+    {
+      userName : "arul.auth",
+      projectNumber : "4535",
+      invoiceNo : "4355",
+      invoiceAmount : "3000",
+      invoiceAmountPaid : "2500",
+      unpaid: "500"
+
+    },
+    {
+      userName : "kumar.auth",
+      projectNumber : "6534",
+      invoiceNo : "2313",
+      invoiceAmount : "5000",
+      invoiceAmountPaid : "4000",
+      unpaid: "1000"
+
+    },
+    {
+      userName : "jain.auth",
+      projectNumber : "7644",
+      invoiceNo : "6574",
+      invoiceAmount : "3500",
+      invoiceAmountPaid : "2700",
+      unpaid: "800"
+
+    }
+  ]
+
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
@@ -86,6 +116,8 @@ export class ReportsComponent implements OnInit {
 
   form: FormGroup;
 
+  reportKey: number
+
   
 
   reportsList = [{
@@ -98,6 +130,10 @@ export class ReportsComponent implements OnInit {
   {
     key : 8,
     value : "Payments Shortpay"
+  },
+  {
+    key : 9,
+    value : "Paid and Unpaid"
   },
   {
     key: 1,
@@ -237,6 +273,11 @@ userStatus  = [
       this.dataList = this.userListshort;
     }
 
+    if(reportVal == 9){
+      this.id = Number(reportVal)
+      this.dataList = this.userListpaid;
+    }
+
 
     console.log(this.form.value)
 
@@ -248,7 +289,7 @@ userStatus  = [
   onSelect(event) {
 
     const data = event.target.value;
-
+    this.reportKey = Number(data);
     if(data == '1') {
       this.optionValue = [
         {value:'Valid',key:'1'},
