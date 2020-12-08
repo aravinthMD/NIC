@@ -40,20 +40,27 @@ export class ReportsComponent implements OnInit {
   userListPT :  any[] = [
     {userName : "arul.auth",projectNumber : "4535",invoiceNo : "4355",invoiceAmount : "3000",invoiceDate : "03/09/2020",recvDate : "08/10/2020",shortfall : "600"},
     {userName : "kumar.auth",projectNumber : "6534",invoiceNo : "2313",invoiceAmount : "5000",invoiceDate : "08/09/2020",recvDate  :"10/09/2020",shortfall  : "400"},
-    {userName : "jain.auth",projectNumber : "7644",invoiceNo  : "6574",invoiceAmount : "3500",invoiceDate  : "09/09/2020",recvDate : "18/09/2020",shortfall : "300"},
+    {userName : "jain.auth",projectNumber : "7644",invoiceNo  : "6574",invoiceAmount : "4000",invoiceDate  : "09/09/2020",recvDate : "18/09/2020",shortfall : "300"},
   ]
 
   userListPR :  any[] = [
-    {invoiceNo : "4355",invoiceAmount: "3000",tds : "10000",deduction : "2000",actualPayment : "5000"},
-    {invoiceNo : "2313",invoiceAmount : "5000",tds : "2000",deduction  :"2000",actualPayment : "7000"},
-    {invoiceNo  : "6574",invoiceAmount  :"4000",tds : "1500",deduction  :"1500",actualPayment : "5500"}
+    {invoiceNo : "4355",invoiceAmount: "3000",tds : "10000",deduction : "2000",actualPayment : "2000",shortPay:'1000'},
+    {invoiceNo : "2313",invoiceAmount : "5000",tds : "2000",deduction  :"2000",actualPayment : "3500",shortPay:'1500'},
+    {invoiceNo  : "6574",invoiceAmount  :"4000",tds : "1500",deduction  :"1500",actualPayment : "3200",shortPay:'800'}
   ]
 
+  // userListshort :  any[] = [
+  //   {docRecDate : "07/09/2020",paymentRecDate : "10/10/2020",docNo : "3432",payBMade : "cash",diff : "400",withTdS : ""},
+  //   {docRecDate : "10/09/2020",paymentRecDate  : "11/10/2020",docNo  : "3450",payBMade : "cash",diff  :"300",withTdS : ""},
+  //   {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "cash",diff :"400",withTdS : ""}
+  // ]
+
   userListshort :  any[] = [
-    {docRecDate : "07/09/2020",paymentRecDate : "10/10/2020",docNo : "3432",payBMade : "cash",diff : "400",withTdS : ""},
-    {docRecDate : "10/09/2020",paymentRecDate  : "11/10/2020",docNo  : "3450",payBMade : "cash",diff  :"300",withTdS : ""},
-    {docRecDate : "11/10/2020",paymentRecDate  :"12/10/2020",docNo : "2356",payBMade : "cash",diff :"400",withTdS : ""}
+    {invoiceNo : "4355",invoiceAmount: "3000",shortPay:'1000'},
+    {invoiceNo : "2313",invoiceAmount : "5000",shortPay:'1500'},
+    {invoiceNo  : "6574",invoiceAmount  :"4000",shortPay:'800'}
   ]
+
 
   userListpaid : any[] = [
     {
@@ -78,8 +85,8 @@ export class ReportsComponent implements OnInit {
       userName : "jain.auth",
       projectNumber : "7644",
       invoiceNo : "6574",
-      invoiceAmount : "3500",
-      invoiceAmountPaid : "2700",
+      invoiceAmount : "4000",
+      invoiceAmountPaid : "3200",
       unpaid: "800"
 
     }
