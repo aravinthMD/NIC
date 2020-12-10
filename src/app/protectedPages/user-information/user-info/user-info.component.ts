@@ -97,6 +97,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   remarkModal: boolean;
 
+  ipValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
+
+
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
@@ -160,6 +166,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
         this.user = value.id;
     });
 
+    this.ipValidation = this.ipAddressValiationCheck()
+
+
     console.log(this.activatedRoute)
       if(this.user){
 
@@ -183,6 +192,18 @@ export class UserInfoComponent implements OnInit,OnChanges {
                 // this.detectFormChanges()
             });
 
+  }
+
+  ipAddressValiationCheck() {
+    const ipAddress = [
+      {
+        rule: (ip) => {
+          return !(/^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$/.test(ip))
+        },
+        msg: 'Invalid IP Address',
+      }
+    ];
+    return ipAddress;
   }
 
   editData() {
@@ -242,12 +263,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
       serverLocation: 'Chennai',
       purpOfTheApplication: 'Test application',
       smsGatewayAccess: '175.43.34.344',
-      ipServReqd: 'Yes',
+      ipServReqd: '192.168.1.101',
       domMonSmsTraffic: '5000',
       intMonSmsTraffic: '6000',
       appSecurAudClear: 'Secure',
       auditDate:new Date(),
-      traiSenderId: '333',
+      traiSenderId: '0',
       userId: 'test',
       password: 'nic@123',
       status: (this.status == 'Active')?'0':'1',
@@ -518,6 +539,32 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   download() {
 
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'creditAddedAgainstPi') {
+  
+      this.form.patchValue({
+        creditAddedAgainstPi: ''
+      })
+      this.toasterService.showError('Please click the creditAddedAgainstPi icon to select date','');
+    }else if(type == 'auditDate') {
+  
+      this.form.patchValue({
+        auditDate: ''
+      })
+      this.toasterService.showError('Please click the auditDate icon to select date','');
+    }else if(type == 'creditDate') {
+  
+      this.form.patchValue({
+        creditDate: ''
+      })
+      this.toasterService.showError('Please click the creditDate icon to select date','');
+    }
+    
   }
 
 }

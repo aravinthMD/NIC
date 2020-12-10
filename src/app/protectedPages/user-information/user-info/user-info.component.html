@@ -50,7 +50,7 @@
                         <div class="form-group">
                 
                             <label for="department">Code<span style="color:red">*</span></label>
-                            <app-vf-custom-select class="code" formControlName="countryCode" [values]="countryCodeValues"
+                            <app-vf-custom-select class="code" formControlName="countryCode" [className]="'form-control mandatory code-pad'" [values]="countryCodeValues"
                             [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                             [isDirty]="isDirty">
                         </app-vf-custom-select>
@@ -157,7 +157,7 @@
                            
                             <label for="department">Code<span style="color:red">*</span></label>
                             <app-vf-custom-select formControlName="teleCode" [values]="teleCodeValues"
-                            [isRequired]="'Select code'" [isDisabled]="propertyFlag"
+                            [isRequired]="'Select code'" [className]="'form-control mandatory code-pad'" [isDisabled]="propertyFlag"
                             [isDirty]="isDirty">
                         </app-vf-custom-select>
                         </div>
@@ -406,6 +406,7 @@
                             <app-custom-input formControlName="ipServReqd"
                             [labelName]="labels.ipofStagingServReqdforTesting" 
                             [id]="'ipServReqd'"
+                            [custom]="ipValidation"
                             [maxLength]="labels?.validationData.ipServReqd.maxLength" 
                             [isDisabledInp]="propertyFlag"
                             [isDirty]="isDirty">
@@ -458,7 +459,7 @@
                         <div class="form-group">
                             <label for="auditDate">{{labels.auditDatebyWhenItWillBeCleared}}</label>
                             <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                                <input matInput [matDatepicker]="picker1" formControlName="auditDate">
+                                <input matInput [matDatepicker]="picker1" formControlName="auditDate" (keyup)="detectDateKeyAction($event,'auditDate')" >
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
                             </mat-form-field>
@@ -547,7 +548,7 @@
                             <div class="form-group">
                                 <label for="creditDate">{{labels.creditDate}}</label>
                                 <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                                    <input matInput [matDatepicker]="picker3" formControlName="creditDate" required>
+                                    <input matInput [matDatepicker]="picker3" formControlName="creditDate" (keyup)="detectDateKeyAction($event,'creditDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                                     <mat-datepicker #picker3></mat-datepicker>
                                 </mat-form-field>
@@ -566,7 +567,7 @@
                             <div class="form-group">
                                 <label for="creditAddedAgainstPi">{{labels.creditPI}}</label>
                                 <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                                    <input matInput [matDatepicker]="picker4" formControlName="creditAddedAgainstPi"
+                                    <input matInput [matDatepicker]="picker4" formControlName="creditAddedAgainstPi" (keyup)="detectDateKeyAction($event,'creditAddedAgainstPi')" 
                                         required>
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
