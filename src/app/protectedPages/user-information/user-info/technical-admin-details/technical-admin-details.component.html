@@ -79,6 +79,7 @@
                         <label for="">Code<span style="color: red;">*</span></label>
                         <app-vf-custom-select formControlName = "countryCode"
                         [values] = "countryCodeValues"
+                        [className]="'form-control mandatory code-pad'"
                         [isRequired] = "'Select Code'"
                         [isDisabled] = "propertyFlag"
                         [isDirty] = "isDirty"
@@ -126,7 +127,7 @@
                     <div class="form-group">
                        
                         <label for="department">Code<span style="color:red">*</span></label>
-                        <app-vf-custom-select formControlName="teleCode" [values]="teleCodeValues"
+                        <app-vf-custom-select formControlName="teleCode" [className]="'form-control mandatory code-pad'" [values]="teleCodeValues"
                         [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                         [isDirty]="isDirty">
                     </app-vf-custom-select>
