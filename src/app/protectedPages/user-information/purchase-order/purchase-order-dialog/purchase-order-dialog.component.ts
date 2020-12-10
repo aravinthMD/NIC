@@ -262,5 +262,31 @@ export class PurchaseOrderDialogComponent implements OnInit {
     this.showPdfModal = true;
   }
 
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'date') {
+
+      this.PurchaseOrderForm.patchValue({
+        date: ''
+      })
+      this.toasterService.showError('Please click the date icon to select date','');
+    }else if(type == 'startDate') {
+
+      this.PurchaseOrderForm.patchValue({
+        startDate: ''
+      })
+      this.toasterService.showError('Please click the valid from icon to select date','');
+    }else if(type == 'endDate') {
+
+      this.PurchaseOrderForm.patchValue({
+        endDate: ''
+      })
+      this.toasterService.showError('Please click the valid upto icon to select date','');
+    }
+    
+  }
+
 
 }

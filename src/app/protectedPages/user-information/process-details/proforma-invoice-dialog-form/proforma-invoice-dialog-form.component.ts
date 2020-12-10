@@ -314,4 +314,30 @@ showPDF() {
   this.showPdfModal = true;
 }
 
+detectDateKeyAction(event,type) {
+
+  console.log(event)
+  
+  if(type == 'date') {
+
+    this.form.patchValue({
+      date: ''
+    })
+    this.toasterService.showError('Please click the date icon to select date','');
+  }else if(type == 'startDate') {
+
+    this.form.patchValue({
+      startDate: ''
+    })
+    this.toasterService.showError('Please click the startDate icon to select date','');
+  }else if(type == 'endDate') {
+
+    this.form.patchValue({
+      endDate: ''
+    })
+    this.toasterService.showError('Please click the endDate icon to select date','');
+  }
+  
+}
+
 }

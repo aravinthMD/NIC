@@ -253,4 +253,36 @@ export class TaxInvoiceDialogComponent implements OnInit {
   }
 
 
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'poDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        poDate: ''
+      })
+      this.toasterService.showError('Please click the PO date icon to select date','');
+    }else if(type == 'fromDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        fromDate: ''
+      })
+      this.toasterService.showError('Please click the fromDate icon to select date','');
+    }else if(type == 'toDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        toDate: ''
+      })
+      this.toasterService.showError('Please click the toDate icon to select date','');
+    }else if(type == 'submittedOn') {
+  
+      this.taxInvoiceForm.patchValue({
+        submittedOn: ''
+      })
+      this.toasterService.showError('Please click the submittedOn icon to select date','');
+    }
+    
+  }
+
 }

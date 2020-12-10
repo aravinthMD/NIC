@@ -46,7 +46,7 @@
                                 <label for="InvoiceDate">{{labels?.poDate}}</label>
 
                                 <mat-form-field>
-                                    <input matInput formControlName="poDate" required [matDatepicker]="poDateId">
+                                    <input matInput formControlName="poDate" required [matDatepicker]="poDateId" (keyup)="detectDateKeyAction($event,'poDate')">
                                     <mat-datepicker-toggle matSuffix [for]="poDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #poDateId></mat-datepicker>
                                 </mat-form-field>
@@ -77,7 +77,7 @@
                             <div class="form-group">
                                 <label for="fromDate">{{labels?.fromDate}}</label>
                                 <mat-form-field>
-                                    <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId">
+                                    <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId" (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="fromDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #fromDateId></mat-datepicker>
                                 </mat-form-field>
@@ -94,7 +94,7 @@
                             <div class="form-group">
                                 <label for="toDate">{{labels?.toDate}}</label>
                                 <mat-form-field>
-                                    <input matInput formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value">
+                                    <input matInput formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #toDateId></mat-datepicker>
                                 </mat-form-field>
@@ -130,7 +130,7 @@
                                 <label for="dateFor">{{labels?.submittedDate}}</label>
 
                                 <mat-form-field>
-                                    <input matInput required formControlName="submittedOn" [matDatepicker]="sumbittedDatePicker">
+                                    <input matInput required formControlName="submittedOn" [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
                                     <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker"></mat-datepicker-toggle>
                                     <mat-datepicker #sumbittedDatePicker></mat-datepicker>
                                 </mat-form-field>
@@ -244,7 +244,7 @@
                      
                      <mat-form-field>
                        <input matInput 
-                       [matDatepicker]="picker6" formControlName="searchFrom">
+                       [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
                        <mat-datepicker-toggle matSuffix [for]="picker6" 
                        ></mat-datepicker-toggle>
                        <mat-datepicker #picker6></mat-datepicker>
@@ -261,7 +261,7 @@
                      
                      <mat-form-field>
                        <input matInput  [min]="searchForm.get('searchFrom').value"
-                       [matDatepicker]="picker7" formControlName="searchTo">
+                       [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                        <mat-datepicker-toggle matSuffix [for]="picker7" 
                        ></mat-datepicker-toggle>
                        <mat-datepicker #picker7></mat-datepicker>

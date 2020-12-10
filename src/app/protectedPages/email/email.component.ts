@@ -4,6 +4,7 @@ import {MatChipInputEvent} from '@angular/material/chips';
 import { Validators, FormGroup,FormControl,ReactiveFormsModule } from "@angular/forms";
 import { Observable } from 'rxjs';
 import {map, startWith } from 'rxjs/operators';
+import { ToasterService } from '@services/toaster.service';
 
 export interface Email {
   name: string;
@@ -57,7 +58,7 @@ export class EmailComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredOptions1: Observable<string[]>;
 today=new Date()
-  constructor() { }
+  constructor(private toasterService: ToasterService) { }
 
   ngOnInit() {
   this.emailform=new FormGroup({
@@ -142,6 +143,22 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
     this.emailform.patchValue({textarea:this.SelectedVal[0]['content']});
     this.emailform.patchValue({subject:this.SelectedVal[0]['subject']});
     this.emailform.patchValue({renameTemplate:this.SelectedVal[0]['value']});
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+   if(type == 'fromDate') {
+      this.emailform.patchValue({
+        fromDate: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'toDate') {
+      this.emailform.patchValue({
+        toDate: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
   }
 
 

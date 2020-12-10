@@ -7,7 +7,8 @@ import {DatePipe} from '@angular/common';
 import { ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
-import { UtilService } from '@services/util.service'
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -83,7 +84,8 @@ status: string;
     private DatePipe:DatePipe,
     private activatedRoute: ActivatedRoute,
     private dialog : MatDialog,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private toasterService: ToasterService
     ) { }
 
   ngOnInit() {
@@ -197,6 +199,42 @@ status: string;
   } 
   getDownloadXls(){
     this.utilService.getDownloadXlsFile(this.userList,'PurchaseOrder')
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'date') {
+
+      this.PurchaseOrderForm.patchValue({
+        date: ''
+      })
+      this.toasterService.showError('Please click the date icon to select date','');
+    }else if(type == 'startDate') {
+
+      this.PurchaseOrderForm.patchValue({
+        startDate: ''
+      })
+      this.toasterService.showError('Please click the valid from icon to select date','');
+    }else if(type == 'endDate') {
+
+      this.PurchaseOrderForm.patchValue({
+        endDate: ''
+      })
+      this.toasterService.showError('Please click the valid upto icon to select date','');
+    }else if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
   }
 
 }

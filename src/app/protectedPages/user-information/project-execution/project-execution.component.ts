@@ -7,7 +7,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material';
 import { ProjectExcecutionDialogComponent } from './project-excecution-dialog/project-excecution-dialog.component';
 import { ActivatedRoute } from '@angular/router';
-import { UtilService } from '@services/util.service'
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-project-execution',
@@ -72,7 +73,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
   propertyFlag: boolean;
 
   constructor(private labelsService : LabelsService,private dialog : MatDialog,
-    private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
+    private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService) { 
 
 
     this.searchForm = new FormGroup({
@@ -186,6 +187,39 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
   getDownloadXls(){
     this.utilService.getDownloadXlsFile(this.userList,'ProjectExecution');
   }
+
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'invoiceDate') {
+
+      this.PurchaseEntryForm.patchValue({
+        invoiceDate: ''
+      })
+      this.toasterService.showError('Please click the PI date icon to select date','');
+    }else if(type == 'transactionDate') {
+
+      this.PurchaseEntryForm.patchValue({
+        transactionDate: ''
+      })
+      this.toasterService.showError('Please click the date of transaction icon to select date','');
+    }else if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
+  }
+
+
   }
 
 

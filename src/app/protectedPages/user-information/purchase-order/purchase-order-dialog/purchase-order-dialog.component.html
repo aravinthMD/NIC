@@ -62,7 +62,7 @@
                     <label for="dateFor">{{labels?.date}}</label>
 
                     <mat-form-field>
-                        <input matInput required formControlName="date" [matDatepicker]="picker1" [disabled]="enableFlag">
+                        <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" [disabled]="enableFlag">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
@@ -102,7 +102,7 @@
                     <label for="Fromperiod">Valid From</label>
 
                     <mat-form-field>
-                        <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="PurchaseOrderForm.get('endDate').value" [disabled]="enableFlag" required>
+                        <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="PurchaseOrderForm.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" [disabled]="enableFlag" required>
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
@@ -121,7 +121,7 @@
                     <label for="Toperiod">Valid Upto</label>
 
                     <mat-form-field>
-                        <input matInput [matDatepicker]="picker4" [min]="PurchaseOrderForm.get('startDate').value" formControlName="endDate" [disabled]="enableFlag" required>
+                        <input matInput [matDatepicker]="picker4" [min]="PurchaseOrderForm.get('startDate').value" formControlName="endDate" (keyup)="detectDateKeyAction($event,'endDate')" [disabled]="enableFlag" required>
                         <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                         <mat-datepicker #picker4></mat-datepicker>
                     </mat-form-field>

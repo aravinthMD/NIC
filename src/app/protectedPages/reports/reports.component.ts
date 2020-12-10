@@ -7,6 +7,7 @@ import {map, startWith} from 'rxjs/operators';
 import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
 
 
 @Component({
@@ -196,7 +197,7 @@ userStatus  = [
   
 
 
-  constructor(private formBuilder: FormBuilder,private utilService: UtilService) {
+  constructor(private formBuilder: FormBuilder,private utilService: UtilService,private toasterService: ToasterService) {
 
     this.form = this.formBuilder.group({
       reports: [''],
@@ -418,8 +419,23 @@ userStatus  = [
     }
   }
 
-  formDateFunc(event) {
+  detectDateKeyAction(event,type) {
 
+    console.log(event)
+  
+    if(type == 'fromDate') {
+
+      this.form.patchValue({
+        fromDate: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'toDate') {
+      this.form.patchValue({
+        toDate: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
   }
 
   exportCSV(datatable:any[]) {

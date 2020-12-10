@@ -12,6 +12,7 @@
                         <app-custom-input formControlName="userName" 
                         [labelName]="labels.userName" 
                         [mandatoryField]="true" 
+                        [patternCheck]="labels?.validationData.userName.patternCheck"
                         [id]="'UserName'" 
                         [isRequired]="'User name is mandatory'" 
                         [maxLength]="labels?.validationData.userName.maxLength" 
@@ -38,6 +39,7 @@
                         [labelName]="labels.name" 
                         [mandatoryField]="true" 
                         [id]="'Name'" 
+                        [patternCheck]="labels?.validationData.name.patternCheck"
                         [isRequired]="'Name is mandatory'" 
                         [maxLength]="labels?.validationData.userName.maxLength" 
                         [isDirty]="isDirty">

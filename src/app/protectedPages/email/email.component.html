@@ -72,7 +72,7 @@
                                 class="col-10 form-control" style="margin-left: 26px;border:none">
                                     <mat-label>From Date</mat-label>
                                     <input matInput [matDatepicker]="picker" formControlName="fromDate" 
-                                    [min]="today">
+                                    [min]="today" (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -96,7 +96,7 @@
                                     <mat-label>To Date</mat-label>
                                     <input matInput formControlName="toDate"
                                     [matDatepicker]="picker1"
-                                    [min]="emailform.get('fromDate').value">
+                                    [min]="emailform.get('fromDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
