@@ -48,9 +48,9 @@
                     </div>
                     <div class="col-1 pr-2 mr-0">
                         <div class="form-group">
-                           
+                
                             <label for="department">Code<span style="color:red">*</span></label>
-                            <app-vf-custom-select formControlName="countryCode" [values]="countryCodeValues"
+                            <app-vf-custom-select class="code" formControlName="countryCode" [values]="countryCodeValues"
                             [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                             [isDirty]="isDirty">
                         </app-vf-custom-select>
@@ -275,7 +275,7 @@
                             <app-custom-input formControlName="creditsSMSQuota" [labelName]="labels.credits_SMSQuota"
                                 [id]="'credits_SMSQuota'" [mandatoryField]="true"
                                 [isRequired]="'credits SMS Quota  is mandatory'"
-                                [type]="labels?.validationData.creditsSMSQuota.type"
+                                [patternCheck]="labels?.validationData.creditsSMSQuota.patternCheck"
                                 [maxLength]="labels?.validationData.creditsSMSQuota.maxLength"
                                 [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                             </app-custom-input>
@@ -286,8 +286,9 @@
                             <app-custom-input formControlName="smsTariffMonthWise" 
                             [labelName]="labels.smsTraffic"
                             [id]="'smsTraffic'" [mandatoryField]="true"
+                            [isRequired]="'SMS Tariff Month Wise is mandatory'"
                             [maxLength]="labels?.validationData.smsTraffic.maxLength"
-                            [type]="labels?.validationData.smsTraffic.type" 
+                            [patternCheck]="labels?.validationData.smsTraffic.patternCheck"
                             [isDisabledInp]="propertyFlag"
                             [isDirty]="isDirty">
                             </app-custom-input>
@@ -409,6 +410,11 @@
                             [isDisabledInp]="propertyFlag"
                             [isDirty]="isDirty">
                             </app-custom-input>
+                            <!-- <div *ngIf="form.get('ipServReqd').errors?.pattern && form.get('ipServReqd').touched" class="error-feedback" >
+                                <div>
+                                    {{'Please Enter Valid IP Address'}}
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="col-4">
@@ -466,7 +472,14 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="traiSenderId"
+                            <label for="department">{{labels.doYouHaveTRAIexemptedSenderId}}</label>
+                            <app-vf-custom-select formControlName="traiSenderId" 
+                            [values]="traiSenderId"
+                            [isRequired]="'Please Select Value'" 
+                            [isDisabled]="propertyFlag"
+                            [isDirty]="isDirty">
+                            </app-vf-custom-select> 
+                            <!-- <app-custom-input formControlName="traiSenderId"
                             [labelName]="labels.doYouHaveTRAIexemptedSenderId" 
                             [id]="'traiSenderId'"
                             [maxLength]="labels?.validationData.traiSenderId.maxLength" 
@@ -474,7 +487,7 @@
                             [mandatoryField]="true" 
                             [isRequired]="'This Field is mandatory'" 
                             [isDirty]="isDirty">
-                            </app-custom-input>
+                            </app-custom-input> -->
                         </div>
                     </div>
                     <div class="col-4">
@@ -491,8 +504,11 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="userId" [labelName]="labels.userId" [id]="'userId'"
-                                [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
+                            <app-custom-input formControlName="userId" 
+                            [labelName]="labels.userId" [id]="'userId'"
+                                [maxLength]="labels?.validationData.UserId.maxLength" 
+                                [type]="labels?.validationData.UserId.type"
+                                [isDisabledInp]="propertyFlag"
                                 [isDirty]="isDirty">
                             </app-custom-input>
                         </div>

@@ -152,6 +152,17 @@ mat-expansion-panel{
 .dis-block {
   display: block;
 }
+.code{
+  padding-left:-1px !important;
+}
+.error-feedback{
+  font-size: 0.9vw;
+  font-family: zurich-bold;
+  letter-spacing: .5px;
+  color: red;
+  padding-top: 0.5vw;
+  line-height: 1.2vw;
+}
 
 
 
