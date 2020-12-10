@@ -257,7 +257,7 @@
         "officeAddress": {
             "maxLength": {
                 "rule": 50
-            }
+         }
         },
         "city": {
             "maxLength": {
