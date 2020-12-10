@@ -7,7 +7,8 @@ import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router'
-import { UtilService } from '@services/util.service'
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-process-details',
@@ -89,7 +90,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     request: any
   }
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService) { 
 
 
     this.form =this.formBuilder.group({
@@ -248,5 +249,41 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   getDownloadXls(){
     this.utilService.getDownloadXlsFile(this.userList,'ProformaInvoice');
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'date') {
+
+      this.form.patchValue({
+        date: ''
+      })
+      this.toasterService.showError('Please click the date icon to select date','');
+    }else if(type == 'startDate') {
+
+      this.form.patchValue({
+        startDate: ''
+      })
+      this.toasterService.showError('Please click the startDate icon to select date','');
+    }else if(type == 'endDate') {
+
+      this.form.patchValue({
+        endDate: ''
+      })
+      this.toasterService.showError('Please click the endDate icon to select date','');
+    }else if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
   }
 }

@@ -9,6 +9,7 @@ import { AccountHeaderComponent } from './account-header/account-header.componen
 import { AuditTrailDialogComponent } from './audit-trail-dialog/audit-trail-dialog.component';
 import {MaterialModule} from './material/material.module'
 import { RemarkModalComponent } from './remark-modal/remark-modal.component';
+import { MatDatepickerModule } from '@angular/material';
 
 @NgModule({
   declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent],
@@ -16,7 +17,9 @@ import { RemarkModalComponent } from './remark-modal/remark-modal.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MatDatepickerModule,
+
   ],
   exports: [
     CustomInputComponent,
@@ -25,6 +28,7 @@ import { RemarkModalComponent } from './remark-modal/remark-modal.component';
     AccountHeaderComponent,
     RemarkModalComponent
   ],
+  providers : [],
   entryComponents : [AuditTrailDialogComponent]
 })
 export class SharedModule { }

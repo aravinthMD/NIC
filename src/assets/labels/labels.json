@@ -107,13 +107,21 @@
             "maxLength": {
                 "rule": 50
             },
-            "type": "alpha"
+            "type": "alpha",
+            "patternCheck":{
+                "rule":"^[a-zA-Z][a-zA-Z\\s]+$",
+                "msg": "Invalid Name"
+            }
         },
         "userName": {
             "maxLength": {
                 "rule": 50
             },
-            "type": "alpha"
+            "type": "alpha",
+            "patternCheck":{
+                "rule":"^[a-zA-Z][a-zA-Z\\s]+$",
+                "msg": "Invalid UserName"
+            }
         },
         "applicantName": {
             "maxLength": {

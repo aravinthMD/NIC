@@ -281,5 +281,25 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     this.showPdfModal = true;
   }
 
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'invoiceDate') {
+
+      this.ProjectExcecutionForm.patchValue({
+        invoiceDate: ''
+      })
+      this.toasterService.showError('Please click the PI date icon to select date','');
+    }else if(type == 'transactionDate') {
+
+      this.ProjectExcecutionForm.patchValue({
+        transactionDate: ''
+      })
+      this.toasterService.showError('Please click the date of transaction icon to select date','');
+    }
+    
+  }
+
 
 }

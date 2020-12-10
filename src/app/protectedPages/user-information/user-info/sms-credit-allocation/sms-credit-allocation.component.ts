@@ -238,4 +238,28 @@ remarkModal: boolean;
   getDownloadXls(){
     this.utilService.getDownloadXlsFile(this.history)
   }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+  
+    if(type == 'date') {
+
+      this.smsCreditAllocation.patchValue({
+        date: ''
+      })
+      this.toasterService.showError('Please click the date icon to select date','');
+    }else if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
+  }
 }

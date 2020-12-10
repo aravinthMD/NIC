@@ -56,7 +56,7 @@
               <label for="InvoiceDate">{{labels?.poDate}}</label>
              
               <mat-form-field>
-                <input matInput formControlName="poDate" required [matDatepicker]="poDateId" [disabled] = "enableFlag" >
+                <input matInput formControlName="poDate" required [matDatepicker]="poDateId" [disabled] = "enableFlag" (keyup)="detectDateKeyAction($event,'poDate')">
                 <mat-datepicker-toggle matSuffix [for]="poDateId"></mat-datepicker-toggle>
                 <mat-datepicker #poDateId></mat-datepicker>
               </mat-form-field>
@@ -87,7 +87,7 @@
       <div class="form-group">
           <label for="fromDate">{{labels?.fromDate}}</label>
           <mat-form-field>
-            <input matInput  formControlName="fromDate" required [matDatepicker]="fromDateId" [disabled] = "enableFlag" >
+            <input matInput  formControlName="fromDate" required [matDatepicker]="fromDateId" [disabled] = "enableFlag" (keyup)="detectDateKeyAction($event,'fromDate')">
             <mat-datepicker-toggle matSuffix [for]="fromDateId"></mat-datepicker-toggle>
             <mat-datepicker #fromDateId></mat-datepicker>
           </mat-form-field>
@@ -104,7 +104,7 @@
       <div class="form-group">
           <label for="toDate">{{labels?.toDate}}</label>
           <mat-form-field >
-            <input matInput formControlName="toDate" required  [matDatepicker]="toDateId" [disabled] = "enableFlag"
+            <input matInput formControlName="toDate" required  [matDatepicker]="toDateId" (keyup)="detectDateKeyAction($event,'toDate')" [disabled] = "enableFlag"
             [min]= "taxInvoiceForm.get('toDate').value">
             <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
             <mat-datepicker #toDateId></mat-datepicker>
@@ -163,7 +163,7 @@
  
   <mat-form-field>
     <input matInput required formControlName="submittedOn" 
-    [matDatepicker]="sumbittedDatePicker" [disabled] = "enableFlag">
+    [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')" [disabled] = "enableFlag">
     <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker" 
     ></mat-datepicker-toggle>
     <mat-datepicker #sumbittedDatePicker></mat-datepicker>
