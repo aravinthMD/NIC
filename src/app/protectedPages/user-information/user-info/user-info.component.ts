@@ -69,6 +69,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
       key:1,value:'Inactive'
     }
   ]
+  traiSenderId= [
+    {
+      key:0,value: 'Yes',
+    },
+    {
+      key:1,value:'No'
+    }
+  ]
 
   showStatusModal: boolean;
   modalMsg: string;
@@ -88,7 +96,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
   detectAuditTrialObj: any;
 
   remarkModal: boolean;
-
 
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
@@ -120,12 +127,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
       serverLocation: [null],
       purpOfTheApplication: [null],
       smsGatewayAccess: [null],
-      ipServReqd: [null],
+      ipServReqd: [null,Validators.pattern("")],
       domMonSmsTraffic: [null],
       intMonSmsTraffic: [null],
       appSecurAudClear: [null],
       auditDate:[null],
-      traiSenderId: [null],
+      traiSenderId: [''],
       userId: [null],
       password: [null],
       piDuration : [null],
@@ -147,7 +154,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     })
-
     this.user = '';
     
     this.activatedRoute.params.subscribe((value)=> {
@@ -513,6 +519,5 @@ export class UserInfoComponent implements OnInit,OnChanges {
   download() {
 
   }
-
 
 }

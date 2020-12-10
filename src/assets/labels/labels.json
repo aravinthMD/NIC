@@ -281,19 +281,29 @@
             "maxLength": {
                 "rule": 12
             },
-            "type": "number"
+            "patternCheck": {
+                "rule": "^[0-9]{12}",
+                "msg": "Should be Digits Only"
+            }
         },
         "projectNo": {
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "proformaIN": {
             "maxLength": {
                 "rule": 15
             },
             "type": "alpha-numeric"
+        },
+        
+        "UserId": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type": "number"
         },
         "proformaPN": {
             "maxLength": {
