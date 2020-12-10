@@ -160,6 +160,11 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
       this.toasterService.showError('Please click the todate icon to select date','');
     }
   }
-
+  save(){
+    this.toasterService.showSuccess('Templete Saved Successfully','');
+  }
+  update(){
+    this.toasterService.showSuccess('Templete Updated','');
+  }
 
 }
