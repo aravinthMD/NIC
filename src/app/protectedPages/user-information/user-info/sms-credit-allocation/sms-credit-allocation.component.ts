@@ -129,7 +129,7 @@ remarkModal: boolean;
    
     this.smsCreditAllocation.patchValue({
       smsQuotaMetrix: '1',
-      credit: '50000',
+      credit: '5000',
       date: new Date(),
       status: '2',
       onApprovalOf: 'Approval',

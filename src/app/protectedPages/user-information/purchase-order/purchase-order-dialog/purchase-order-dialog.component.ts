@@ -25,10 +25,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
     departmentListData = [
       {key:0,value:'Department of Sainik Welfare'},
-      {key:1,value:'Minstry of minority affairs'},
-      {key:2,value:'Vishakhapatnam port Trust'},
-      {key:3,value:'Ministry of trible affairs'},
-      {key:4,value:'Bureasu of Naviks.Mumbai'}
+      {key:1,value:'Ministry of Minority Affairs'},
+      {key:2,value:'Visakhapatnam Port Trust'},
+      {key:3,value:'Ministry of Tribal Affairs'},
+      {key:4,value:'Bureau of Naviks.Mumbai'}
   ];
 
   paymentStatus: any[] = [
