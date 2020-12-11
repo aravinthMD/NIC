@@ -31,7 +31,7 @@
 
                                 <app-custom-input formControlName="piNumber" [isRequired]="'Proforma Invoice Number is Mandatory'" [labelName]="labels.piNumber" [maxLength]="labels?.validationData?.piNumber?.maxLength" [type]="labels?.validationData?.piNumber?.type" [isDirty]="isDirty">
                                 </app-custom-input>
-
+                                
 
                             </div>
                         </div>
@@ -41,8 +41,6 @@
 
                                 <app-custom-input formControlName="poNumber" [isRequired]="'Purchase Order Number is Mandatory'" [labelName]="labels.poNumber" [maxLength]="labels?.validationData?.poNumber?.maxLength" [type]="labels?.validationData?.poNumber?.type" [isDirty]="isDirty">
                                 </app-custom-input>
-
-
                             </div>
                         </div>
                         <div class="col-4">
@@ -174,7 +172,11 @@
 
                                 <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" [id]="'projectNo'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                                 </app-custom-input>
-
+                                <div *ngIf="PurchaseOrderForm.get('projectNo').errors?.pattern" class="error-feedback">
+                                    <div>
+                                        {{'Please Enter Digits'}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
