@@ -31,6 +31,18 @@ remarkModal: boolean;
 
 deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'}];
 
+countryCodeValues = [
+  {key:0,value:'+91'},
+  {key:1,value:'+60'},
+  {key:2,value:'+65'}
+]
+
+teleCodeValues = [
+  {key:0,value:'+044'},
+  {key:1,value:'+040'},
+  {key:2,value:'+080'}
+]
+
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<ManageUserDialogComponent>,
     
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService) {
@@ -41,6 +53,8 @@ deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User
       departmentName : ['1'],
       designation : ['Officer'],
       employeeCode : ['NIC004533'],
+      countryCode: ['0'],
+      teleCode: ['0'],
       email : [`${data.email}`],
       mobileNo : [`${data.mobile_no}`],
       telPhno : ['0446565555'],
