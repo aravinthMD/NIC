@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
     this.utilService.setUserDetails(element);
 
     this.utilService.setCurrentUrl('users/customerDetails')
-    this.route.navigate(['/users/customerDetails/'+element.id])
+    this.route.navigate(['/users/customerDetails/'+element.projectNo])
   }
 
 }

@@ -41,9 +41,9 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     {invoiceNo : 3445,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'}
   ];
 
-  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
+  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
 
-  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
+  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
 
   nicsiData = [
     {
