@@ -76,7 +76,7 @@ export class TaxInvoiceComponent implements OnInit {
       userName: new FormControl(null),
       taxIN:new FormControl(null),
       invoiceDate:new FormControl(null),
-      projectNo:new FormControl(null),
+      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
       poNumber:new FormControl(null),
       poDate:new FormControl(null),
       fromDate:new FormControl(null),

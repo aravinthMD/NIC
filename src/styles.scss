@@ -164,7 +164,14 @@ label {
     color: #414141 !important;
     font-weight: 400px !important;
 }
-
+.error-feedback{
+    font-size: 0.9vw;
+    font-family: zurich-bold;
+    letter-spacing: .5px;
+    color: red;
+    padding-top: 0.5vw;
+    line-height: 1.2vw;
+  }
 .form-control {
     font-size: 14px !important;
 }

@@ -27,6 +27,11 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="projectNo" [isRequired]="'Project Number is Mandatory'" [labelName]="labels.projectNo" [maxLength]="labels?.validationData?.projectNo?.maxLength" [isDirty]="isDirty">
                                 </app-custom-input>
+                                <div *ngIf="taxInvoiceForm.get('projectNo').errors?.pattern" class="error-feedback">
+                                    <div>
+                                        {{'Please Enter Digits'}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
