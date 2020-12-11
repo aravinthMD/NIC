@@ -5,7 +5,7 @@
         <app-account-header [title]="'Customer Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
 
-            <form [formGroup]="form">
+            <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
                 <!--FIRST ROW-->
 
                 <div class="row">

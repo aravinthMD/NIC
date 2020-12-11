@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Proforma Invoice</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="form">
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
