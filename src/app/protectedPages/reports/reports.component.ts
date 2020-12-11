@@ -31,10 +31,10 @@ export class ReportsComponent implements OnInit {
 
   userList : any[] = [
     {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",projectNumber: '2356',status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/05/2020'},
-    {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",projectNumber: '4532',status :"InActive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
-    {userId : "Jain.auth",department : "Election Department , Manipur",state : "Manipur",projectNumber: '6445',status :"InActive",id:3,po:'Raised',pi:'',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/04/2020'},
+    {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",projectNumber: '4532',status :"Inactive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
+    {userId : "Jain.auth",department : "Election Department, Manipur",state : "Manipur",projectNumber: '6445',status :"Inactive",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/04/2020'},
     {userId : "Jain.auth",department : "Director of Emloyment and CEO",state : "Delhi",projectNumber: '5454',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6789',piDate:'21/07/2020'},
-    {userId : "Jain.auth",department : "revenue Department, Tripura ",state : "Rripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/04/2020'},
+    {userId : "Jain.auth",department : "Revenue Department, Tripura ",state : "Tripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/04/2020'},
     {userId : "Jain.auth",department : "Land Records and Settlement ",state : "Delhi",projectNumber: '7554',status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/06/2020'},
   ]
 
@@ -100,7 +100,7 @@ export class ReportsComponent implements OnInit {
 
   options: string[] = ['arul.auth','kumar.auth','gonnade.auth','Rajesh.auth','swapnil.parab.auth','abijith.auth','ankit.auth','ketan.auth'];
   projectNoDropDownList : string[] = ['2356','4532','6445','5454','6453','7554','8857','9568'];
-  departMentDropDownList :  string[] = ['Finance Department Uttarakhand','Department of School Education','Election Department','Director of emloyment and ceo','revenue Department'];
+  departMentDropDownList :  string[] = ['Finance Department Uttarakhand','Department of School Education','Election Department','Director of Emloyment and CEO','Revenue Department'];
   stateDropDownList : string[] = ['TamilNadu','Kerala','AndhraPradesh','Karnataka','Mizoram','Maharastra','Gujarat','Punjab','MadhyaPradesh','NagaLand']
 
   
@@ -177,7 +177,7 @@ reportFilter = [
   },
   {
     key:'2',
-    value:'ProjectNo'
+    value:'Project No'
   },
   {
     key:'3',
@@ -190,9 +190,9 @@ reportFilter = [
 ]
 
 userStatus  = [
-  {"key":'1',"value" :"ALL"},
+  {"key":'1',"value" :"All"},
   {"key":"2","value":"Active"},
-  {"key":"3","value":"InActive"}
+  {"key":"3","value":"Inactive"}
 ]
   
 
@@ -220,7 +220,7 @@ userStatus  = [
     this.dropdownSettings  = {
       singleSelection: false,
       selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      unSelectAllText: 'Unselect All',
       allowSearchFilter: true,
       enableCheckAll : true,
       clearSearchFilter : true,
@@ -320,15 +320,15 @@ userStatus  = [
         {value:'Not Raised',key:'4'},
         {value:'PO Claim Full',key:'5'},
         {value:'PO Claim Partially',key:'6'},
-        {value:'PO need to amend',key:'7'},
-        {value: 'PO need cancelled',key:'8'}
+        {value:'PO Need to Amend',key:'7'},
+        {value:'PO Need Cancelled',key:'8'}
       ]
 
     }else if(data == '3') {
       this.optionValue = [
         {value:'Validated',key:'1'},
         {value:'Pending for Validation',key:'2'},
-        {value:'on Hold',key:'3'},
+        {value:'On Hold',key:'3'},
         {value:'Submitted to NIICSI',key:'4'},
         {value:'Not Submitted to NICSI',key:'5'},
         {value:'Paid',key:'6'},

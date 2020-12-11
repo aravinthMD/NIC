@@ -14,7 +14,7 @@
                         [mandatoryField]="true" 
                         [patternCheck]="labels?.validationData.userName.patternCheck"
                         [id]="'UserName'" 
-                        [isRequired]="'User name is mandatory'" 
+                        [isRequired]="'User name is Mandatory'" 
                         [maxLength]="labels?.validationData.userName.maxLength" 
                         [isDirty]="isDirty">
                     </app-custom-input>
@@ -26,7 +26,7 @@
                         [labelName]="labels.password" 
                         [mandatoryField]="true" 
                         [id]="'Password'" 
-                        [isRequired]="'Password is mandatory'" 
+                        [isRequired]="'Password is Mandatory'" 
                         [custom]="passwordValidation" 
                         [isDirty]="isDirty">
                     </app-custom-input>
@@ -40,7 +40,7 @@
                         [mandatoryField]="true" 
                         [id]="'Name'" 
                         [patternCheck]="labels?.validationData.name.patternCheck"
-                        [isRequired]="'Name is mandatory'" 
+                        [isRequired]="'Name is Mandatory'" 
                         [maxLength]="labels?.validationData.userName.maxLength" 
                         [isDirty]="isDirty">
                     </app-custom-input>
@@ -70,7 +70,7 @@
                         [labelName]="labels.designation" 
                         [mandatoryField]="true" 
                         [id]="'designation'" 
-                        [isRequired]="'Designation is mandatory'" 
+                        [isRequired]="'Designation is Mandatory'" 
                         [maxLength]="labels?.validationData.designation.maxLength" 
                         [isDirty]="isDirty">
                         </app-custom-input>
@@ -82,7 +82,7 @@
                         <app-custom-input formControlName="employeeCode" 
                         [labelName]="labels.employeeCode" 
                         [id]="'employeeCode'" 
-                        [isRequired]="'Employee code is mandatory'" 
+                        [isRequired]="'Employee code is Mandatory'" 
                         [maxLength]="labels?.validationData.employeeCode.maxLength" 
                         [mandatoryField]="true" 
                         [isDirty]="isDirty" >
@@ -100,7 +100,7 @@
                         <app-custom-input formControlName="email" 
                         [labelName]="labels.email" 
                         [id]="'email'" 
-                        [isRequired]="'Email is mandatory'" 
+                        [isRequired]="'Email is Mandatory'" 
                         [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
 
                         </app-custom-input>
@@ -111,7 +111,7 @@
                     <div class="form-group">
                        
                         <label for="department">Code<span style="color:red">*</span></label>
-                        <app-vf-custom-select formControlName="countryCode" [className]="'form-control mandatory code-pad'" [values]="countryCodeValues"
+                        <app-vf-custom-select formControlName="countryCode" [className]="'form-control Mandatory code-pad'" [values]="countryCodeValues"
                         [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                         [isDirty]="isDirty">
                     </app-vf-custom-select>
@@ -124,7 +124,7 @@
                         <app-custom-input formControlName="mobileNo" 
                         [labelName]="labels.mobileNo" 
                         [id]="'mobileNo'" 
-                        [isRequired]="'Mobile number is mandatory'" 
+                        [isRequired]="'Mobile number is Mandatory'" 
                         [type]="labels?.validationData.mobile.type" 
                         [patternCheck]="labels?.validationData.mobile.patternCheck" 
                         [maxLength]="labels?.validationData.mobile.maxLength" 
@@ -141,7 +141,7 @@
                     <div class="form-group">
                        
                         <label for="department">Code<span style="color:red">*</span></label>
-                        <app-vf-custom-select formControlName="teleCode" [className]="'form-control mandatory code-pad'" [values]="teleCodeValues"
+                        <app-vf-custom-select formControlName="teleCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues"
                         [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                         [isDirty]="isDirty">
                     </app-vf-custom-select>
@@ -151,7 +151,7 @@
                     <div class="form-group">
                         <app-custom-input formControlName="telPhno" 
                         [labelName]="labels.teleNumber" [id]="'telPhno'"
-                        [isRequired]="'Telephone number is mandatory'" 
+                        [isRequired]="'Telephone number is Mandatory'" 
                         [mandatoryField]="true"
                         [type]="labels?.validationData.telephoneNumber.type"
                         [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
@@ -169,7 +169,7 @@
                         <app-custom-input formControlName="telPhno" 
                         [labelName]="labels.teleNumber" 
                         [id]="'telPhno'" 
-                        [isRequired]="'Telephone number is mandatory'" 
+                        [isRequired]="'Telephone number is Mandatory'" 
                         [type]="labels?.validationData.telephoneNumber.type" 
                         [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" 
                         [maxLength]="labels?.validationData.telephoneNumber.maxLength" 
@@ -190,7 +190,7 @@
                         <app-custom-input formControlName="offAddress1" 
                         [labelName]="labels.officialAdd1" 
                         [id]="'offcAddressLine1'" 
-                        [isRequired]="'Office AddressLine1 is mandatory'" 
+                        [isRequired]="'Office AddressLine 1 is Mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
                         [mandatoryField]="true" 
                         [isDirty]="isDirty">
@@ -206,7 +206,7 @@
                         <app-custom-input formControlName="offAddress2" 
                         [labelName]="labels.officialAdd2" 
                         [id]="'offcAddressLine2'" 
-                        [isRequired]="'Office AddressLine2 is mandatory'" 
+                        [isRequired]="'Office AddressLine 2 is Mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
                         [mandatoryField]="true" 
                         [isDirty]="isDirty">
@@ -220,7 +220,7 @@
                         <app-custom-input formControlName="offAddress3" 
                         [labelName]="labels.officialAdd3" 
                         [id]="'offcAddressLine3'" 
-                        [isRequired]="'Office AddressLine3 is mandatory'" 
+                        [isRequired]="'Office AddressLine 3 is Mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
                         [mandatoryField]="true" 
                         [isDirty]="isDirty">
@@ -239,7 +239,7 @@
                         <app-custom-input formControlName="city" 
                         [labelName]="labels.city" 
                         [id]="'city'" 
-                        [isRequired]="'City is mandatory'" 
+                        [isRequired]="'City is Mandatory'" 
                         [maxLength]="labels?.validationData.city.maxLength" 
                         [mandatoryField]="true" 
                         [isDirty]="isDirty">
@@ -252,7 +252,7 @@
                         <app-custom-input formControlName="state" 
                         [labelName]="labels.state" 
                         [id]="'state'" 
-                        [isRequired]="'State is mandatory'" 
+                        [isRequired]="'State is Mandatory'" 
                         [maxLength]="labels?.validationData.state.maxLength"  
                         [mandatoryField]="true" 
                         [isDirty]="isDirty">
@@ -266,7 +266,7 @@
                         <app-custom-input formControlName="pinCode" 
                         [labelName]="labels.pincode" 
                         [id]="'pincode'" 
-                        [isRequired]="'Pincode is mandatory'" 
+                        [isRequired]="'Pincode is Mandatory'" 
                         [maxLength]="labels?.validationData.pincode.maxLength" 
                         [type]="labels?.validationData.pincode.type" 
                         [mandatoryField]="true" 
@@ -281,7 +281,7 @@
                     <div class="form-group">
                         <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
                             [maxLength]="labels?.validationData.remark.maxLength" 
-                            [isRequired]="'Remark is mandatory'"
+                            [isRequired]="'Remark is Mandatory'"
                             [isDisabledInp]="propertyFlag"
                             [isDirty]="isDirty">
                         </app-custom-input>

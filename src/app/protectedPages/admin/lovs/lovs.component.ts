@@ -2,6 +2,7 @@ import { NullVisitor } from '@angular/compiler/src/render3/r3_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LabelsService } from '@services/labels.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-lovs',
@@ -39,7 +40,7 @@ export class LovsComponent implements OnInit {
     { value: 'Ministry of Minority Affairs', key: 1 },
     { value: 'Visakhapatnam Port Trust', key: 2 },
     { value: 'Ministry of Tribal Affairs', key: 3 },
-    { value: 'Bureau of Naviks.Mumbai', key: 4 }];
+    { value: 'Bureau of Naviks Mumbai', key: 4 }];
      poStatus: any[] = [
     { key: 0, value: 'Received' },
     { key: 1, value: 'Pending' },
@@ -65,7 +66,7 @@ export class LovsComponent implements OnInit {
       { key: 2, value: 'On Hold' }]
   
      
-  constructor(private labelsService: LabelsService) { }
+  constructor(private labelsService: LabelsService,private toasterService: ToasterService) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values) => {
@@ -155,8 +156,10 @@ updateField() {
 
 }
 click(evn:string){
-  if(evn=='Add'){}
-  else if(evn=='Update'){}
-  
+  if(evn==='Add'){
+    return this.toasterService.showSuccess('Added Successfully','')
+  }
+  else if(evn==='Update'){}
+  return this.toasterService.showSuccess('Updated Successfully','')
 }
 } 

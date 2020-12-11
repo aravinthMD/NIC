@@ -62,7 +62,7 @@
                                 <option value="2">Department</option>
                                 <option value="3">Status</option> -->
                                 <!-- </select> -->
-                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter" [isRequired]="'Please Select ReportFilter'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter" [isRequired]="'Please Select Report Filter'"></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                             <label for="mobile">Project No</label>
                             <div class="form-group">
                             <ng-multiselect-dropdown
-                            [placeholder]="'Choose project no'"
+                            [placeholder]="'Choose Project No'"
                             formControlName ="projectNoFilter"
                             [data]="projectNoDropDownList"
                             [settings]="dropdownSettings"
@@ -196,7 +196,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">User Status</label>
-                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the status'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the Status'"></app-vf-custom-select>
                             </div>
                         </div>
 
