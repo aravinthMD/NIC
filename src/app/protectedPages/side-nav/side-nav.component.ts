@@ -116,7 +116,19 @@ export class SideNavComponent implements OnInit,OnChanges {
       if(pno){
         this.isExistingUser = true
       }else {
+
+        if(path.includes('users/proformaInvoice') || path.includes('users/projectExecution') || path.includes('users/purchaseOrder') || path.includes('users/taxInvoice') || path.includes('users/smsCredit')) {
+
+          let splitVal = path.split('/')[3];
+
+          let projectNumber = (splitVal)?(splitVal): ''
+
+          this.utilService.setProjectNumber(projectNumber)
+          this.isExistingUser = true
+        }else {
         this.isExistingUser = false
+
+        }
       }
   })
    
