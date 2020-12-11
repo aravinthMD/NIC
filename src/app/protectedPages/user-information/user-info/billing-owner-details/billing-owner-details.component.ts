@@ -59,7 +59,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       countryCode: new FormControl(null),
       mobileNo :new FormControl (''),
       telPhno : new FormControl (''),
-      teleCode: new FormControl(''),
+      teleCode: new FormControl(),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
