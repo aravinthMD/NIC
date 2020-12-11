@@ -42,7 +42,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       {key:1,value:'Ministry of Minority Affairs'},
       {key:2,value:'Visakhapatnam Port Trust'},
       {key:3,value:'Ministry of Tribal Affairs'},
-      {key:4,value:'Bureau of Naviks.Mumbai'}
+      {key:4,value:'Bureau of Naviks Mumbai'}
   ];
   smsServiceReqd=[
     {key:0,value:'Prepaid'},

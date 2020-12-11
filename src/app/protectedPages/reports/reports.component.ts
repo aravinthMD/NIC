@@ -30,12 +30,12 @@ export class ReportsComponent implements OnInit {
 
 
   userList : any[] = [
-    {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",projectNumber: '2356',status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/05/2020'},
-    {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",projectNumber: '4532',status :"Inactive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
-    {userId : "Jain.auth",department : "Election Department, Manipur",state : "Manipur",projectNumber: '6445',status :"Inactive",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/04/2020'},
-    {userId : "Jain.auth",department : "Director of Emloyment and CEO",state : "Delhi",projectNumber: '5454',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6789',piDate:'21/07/2020'},
-    {userId : "Jain.auth",department : "Revenue Department, Tripura ",state : "Tripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/04/2020'},
-    {userId : "Jain.auth",department : "Land Records and Settlement ",state : "Delhi",projectNumber: '7554',status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/06/2020'},
+    {userId : "Arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",projectNumber: '2356',status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/07/2020'},
+    {userId : "Kumar.auth",department : "Department of School Education",state : "Delhi",projectNumber: '4532',status :"Inactive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
+    {userId : "Jain.auth",department : "Election Department, Manipur",state : "Manipur",projectNumber: '6445',status :"Inactive",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/05/2020'},
+    {userId : "Jain.auth",department : "Director of Emloyment and CEO",state : "Delhi",projectNumber: '5454',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6789',piDate:'21/04/2020'},
+    {userId : "Jain.auth",department : "Revenue Department, Tripura ",state : "Tripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/03/2020'},
+    {userId : "Jain.auth",department : "Land Records and Settlement ",state : "Delhi",projectNumber: '7554',status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/02/2020'},
   ]
 
   userListPT :  any[] = [

@@ -23,7 +23,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     {key:1,value:'Ministry of Minority Affairs'},
     {key:2,value:'Visakhapatnam Port Trust'},
     {key:3,value:'Ministry of Tribal Affairs'},
-    {key:4,value:'Bureau of Naviks.Mumbai'}
+    {key:4,value:'Bureau of Naviks Mumbai'}
 ];
 
 countryCodeValues = [
@@ -71,7 +71,7 @@ remarkModal: boolean;
       countryCode : new FormControl(null),
       mobileNo :new FormControl (''),
       telPhno : new FormControl (''),
-      teleCode: new FormControl(''),
+      teleCode: new FormControl(),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),

@@ -24,7 +24,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <!-- <label for="purchaseOrder">{{labels?.purchaseON}}</label> -->
-                                <app-custom-input formControlName="userName" [isRequired]="'UserName is Mandatory'" [labelName]="labels.userName" [maxLength]="labels?.validationData?.name?.maxLength" [type]="labels?.validationData?.name?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="userName" [isRequired]="'User Name is Mandatory'" [labelName]="labels.userName" [maxLength]="labels?.validationData?.name?.maxLength" [type]="labels?.validationData?.name?.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         isDirty &&
                         PurchaseEntryForm.get('invoiceDate').errors?.required
                       ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -107,7 +107,7 @@
                         isDirty &&
                         PurchaseEntryForm.get('transactionDate').errors?.required
                       ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -145,7 +145,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="modeOfPayment">PI Paid</label>
-                                <app-vf-custom-select formControlName="piPaid" [values]="piPaidValues" [isRequired]="'Please Select the PI paid'" [isDirty]="isDirty"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="piPaid" [values]="piPaidValues" [isRequired]="'Please Select the PI Paid'" [isDirty]="isDirty"></app-vf-custom-select>
                             </div>
                         </div>
                         <div class="col-4">
