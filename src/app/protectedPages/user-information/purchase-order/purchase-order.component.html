@@ -11,7 +11,7 @@
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Purchase Order
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <form (submit)="POForm()" [formGroup]="PurchaseOrderForm">
+                <form (submit)="POForm()" [formGroup]="PurchaseOrderForm" (keydown.enter)="$event.preventDefault()">
                     <!--FIRST ROW-->
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
             <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
