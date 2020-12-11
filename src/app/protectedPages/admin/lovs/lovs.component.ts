@@ -36,10 +36,10 @@ export class LovsComponent implements OnInit {
 
   deparmentList: any[] = [
     { value: 'Department of Sainik Welfare', key: 0 },
-    { value: 'Minstry of minority affairs', key: 1 },
-    { value: 'Vishakhapatnam port Trust', key: 2 },
-    { value: 'Minstry of trible affairs', key: 3 },
-    { value: 'Bureasu of Naviks.Mumbai', key: 4 }];
+    { value: 'Ministry of Minority Affairs', key: 1 },
+    { value: 'Visakhapatnam Port Trust', key: 2 },
+    { value: 'Ministry of Tribal Affairs', key: 3 },
+    { value: 'Bureau of Naviks.Mumbai', key: 4 }];
      poStatus: any[] = [
     { key: 0, value: 'Received' },
     { key: 1, value: 'Pending' },

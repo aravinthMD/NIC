@@ -39,10 +39,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   departmentListData = [
       {key:0,value:'Department of Sainik Welfare'},
-      {key:1,value:'Minstry of minority affairs'},
-      {key:2,value:'Vishakhapatnam port Trust'},
-      {key:3,value:'Ministry of trible affairs'},
-      {key:4,value:'Bureasu of Naviks.Mumbai'}
+      {key:1,value:'Ministry of Minority Affairs'},
+      {key:2,value:'Visakhapatnam Port Trust'},
+      {key:3,value:'Ministry of Tribal Affairs'},
+      {key:4,value:'Bureau of Naviks.Mumbai'}
   ];
   smsServiceReqd=[
     {key:0,value:'Prepaid'},
@@ -225,7 +225,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.existingUserFlag = true;
     
     this.form.patchValue({
-      applicantName : 'Aravinth.auth',
+      applicantName : this.accountName || 'Arul.auth',
       departmentName : '1',
       designation : 'Senior Engineer',
       employeeCode : '12008',
@@ -233,7 +233,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       mobileNo : '8754809950',
       telPhno : '9801756',
       teleCode: '0',
-      offAddress1 : '235/bhandup,Mumbai',
+      offAddress1 : '235,bhandup,Mumbai',
       offAddress2 : '235,bhandup Mumbai',
       offAddress3 : '235,bhandup,Mumbai',
       city : 'Mumbai',
@@ -242,7 +242,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       smsTariffMonthWise : '1000',
       piDuration : '6',
       projectNo : '8776',
-      creditAdded : '1002',
+      creditAdded : '1000',
       creditApprover : '235',
       fromDate: new Date(),
       toDate: new Date(),
@@ -272,7 +272,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       userId: '1001',
       password: 'nic@123',
       status: (this.status == 'Active')?'0':'1',
-      remark:'User id changed'
+      remark:'Officer Name Changed'
       
       
 

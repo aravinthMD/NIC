@@ -29,7 +29,7 @@ detectAuditTrialObj: any;
 
 remarkModal: boolean;
 
-deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation user'},{key:2,value:'Finance User'}];
+deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'}];
 
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<ManageUserDialogComponent>,
     
