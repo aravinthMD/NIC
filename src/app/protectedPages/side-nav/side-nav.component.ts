@@ -111,6 +111,13 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.parentLocation = ''
     }
 
+    if(path.includes('users/proformaInvoice') || path.includes('users/projectExecution') || path.includes('users/purchaseOrder') || path.includes('users/taxInvoice') || path.includes('users/smsCredit')) {
+
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.1'
+      this.router.navigate(['/users/customerDetails'])
+
+    }
 
     this.utilService.projectNumber$.subscribe((pno)=> {
       if(pno){

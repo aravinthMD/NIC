@@ -269,7 +269,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       appSecurAudClear: 'Secure',
       auditDate:new Date(),
       traiSenderId: '0',
-      userId: 'test',
+      userId: '1001',
       password: 'nic@123',
       status: (this.status == 'Active')?'0':'1',
       remark:'User id changed'
