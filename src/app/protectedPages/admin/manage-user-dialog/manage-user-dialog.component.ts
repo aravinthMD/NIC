@@ -29,7 +29,7 @@ detectAuditTrialObj: any;
 
 remarkModal: boolean;
 
-deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'}];
+deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'},{key:3,value:'Sales User'}];
 
 countryCodeValues = [
   {key:0,value:'+91'},
@@ -57,14 +57,14 @@ teleCodeValues = [
       teleCode: ['0'],
       email : [`${data.email}`],
       mobileNo : [`${data.mobile_no}`],
-      telPhno : ['0446565555'],
+      telPhno : ['2265564'],
       offAddress1 : ['Tiruvanmaiyur'],
       offAddress2 : ['Solinganallur'],
       offAddress3 : ['Perungudi'],
       city : ['Chennai'],
       state : ['Tamilnadu'],
       pinCode : ['600026'],
-      remark:['Pincode changed'] 
+      remark:['Pincode Changed'] 
     });
 
     this.detectAuditTrialObj = this.form.value;

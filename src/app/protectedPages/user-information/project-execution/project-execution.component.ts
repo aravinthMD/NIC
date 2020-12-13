@@ -6,9 +6,10 @@ import {LabelsService} from '../../../services/labels.service';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material';
 import { ProjectExcecutionDialogComponent } from './project-excecution-dialog/project-excecution-dialog.component';
-import { ActivatedRoute } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+
 
 @Component({
   selector: 'app-project-execution',
@@ -72,8 +73,10 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
   propertyFlag: boolean;
 
+  storeProjectNo: string;
+
   constructor(private labelsService : LabelsService,private dialog : MatDialog,
-    private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService) { 
+    private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService,private router: Router) { 
 
 
     this.searchForm = new FormGroup({
@@ -118,6 +121,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
     this.activatedRoute.params.subscribe((value)=> {
 
+      this.storeProjectNo = value.projectNo || 4535
       this.userList =   [
         {projectNo:value.projectNo || 4535, invoiceNumber: 4355, invoiceDate: '12/04/2017', amount: 50000},
         {projectNo:value.projectNo || 4535, invoiceNumber: 2313, invoiceDate: '15/06/2018', amount: 45900},
@@ -217,6 +221,14 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
       this.toasterService.showError('Please click the todate icon to select date','');
     }
     
+  }
+
+  next() {
+
+    this.utilService.setCurrentUrl('users/proformaInvoice')
+
+    this.router.navigate([`/users/proformaInvoice/${this.storeProjectNo}`])
+
   }
 
 

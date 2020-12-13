@@ -102,7 +102,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       email : 'test@gmail.com',
       countryCode: '0',
       mobileNo : '9754544445',
-      telPhno : '9873422',
+      telPhno : '2273422',
       teleCode:'0',
       offAddress1 : 'add1',
       offAddress2 : 'add2',
@@ -110,7 +110,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       city : 'Chennai',
       state : 'Tamilnadu',
       pinCode : '600025',
-      remark: 'Pincode changed'
+      remark: 'Pincode Changed'
 
     })
 

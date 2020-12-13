@@ -518,15 +518,10 @@
                         <div class="form-group">
                             <app-custom-input formControlName="userId" 
                             [labelName]="labels.userId" [id]="'userId'"
-                                [maxLength]="labels?.validationData.UserId.maxLength" 
+                                [maxLength]="labels?.validationData.userName.maxLength" 
                                 [isDisabledInp]="propertyFlag"  
                                 [isDirty]="isDirty">
                             </app-custom-input>
-                            <div *ngIf="form.get('userId').errors?.pattern" class="error-feedback">
-                                <div>
-                                    {{'Please Enter Digits'}}
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-4">

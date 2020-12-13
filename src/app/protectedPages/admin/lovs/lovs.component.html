@@ -1,7 +1,7 @@
 <div class="col-md-12 userForm shadow p-3 mb-5 bg-white rounded">
 
 
-    <h1 class="h3  text-gray-800 mb-2">Manage LOVS</h1>
+    <h1 class="h3  text-gray-800 mb-2">Manage List Of Values</h1>
 
     <form class="pt-4" [formGroup]="LovsControl">
         <!--FIRST ROW-->
@@ -18,7 +18,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <label for="department">{{labelNameDrp?labelNameDrp:'Sub-Lovs'}}</label>
+                    <label for="department">{{labelNameDrp?labelNameDrp:'Sub-LOVs'}}</label>
                     <app-vf-custom-select [values]="lovsList1" 
                     formControlName="labelNameDrp"
                     (change)="onChangeDept($event,lovsList1)"

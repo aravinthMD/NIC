@@ -6,7 +6,7 @@ import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router'
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 
@@ -20,6 +20,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
+
+  storeProjectNo: string;
 
   displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"reminder","Escalation"]
 
@@ -90,7 +92,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     request: any
   }
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService) { 
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService,private router: Router) { 
 
 
     this.form =this.formBuilder.group({
@@ -132,6 +134,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     })
 
     this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
       this.userList =   [
         {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
         {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: value.projectNo || 4535,piAmt:56000,remarks:'credited'},
@@ -285,5 +289,13 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       this.toasterService.showError('Please click the todate icon to select date','');
     }
     
+  }
+
+  next() {
+
+    this.utilService.setCurrentUrl('users/purchaseOrder')
+
+    this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
   }
 }

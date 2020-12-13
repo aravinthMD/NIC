@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
-import { ActivatedRoute } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
 import { UtilService } from '@services/util.service';
@@ -21,6 +21,8 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   
   @Input('userObj') user : any
+
+  storeProjectNo: string;
 
   displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks',"Action"]
 
@@ -85,7 +87,8 @@ status: string;
     private activatedRoute: ActivatedRoute,
     private dialog : MatDialog,
     private utilService: UtilService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private router: Router
     ) { }
 
   ngOnInit() {
@@ -130,6 +133,9 @@ status: string;
     })
 
     this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+
       this.userList =   [
         {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:24250,reminder:'Send Reminder'},
         {purchaseNo : 197,projectNumber : value.projectNo || 4535,piAmt:25000,reminder:'Send Reminder'},
@@ -235,6 +241,14 @@ status: string;
       this.toasterService.showError('Please click the todate icon to select date','');
     }
     
+  }
+
+  next() {
+
+    this.utilService.setCurrentUrl('users/taxInvoice')
+
+    this.router.navigate([`/users/taxInvoice/${this.storeProjectNo}`])
+
   }
 
 }

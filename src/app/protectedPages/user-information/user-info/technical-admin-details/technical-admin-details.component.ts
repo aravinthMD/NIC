@@ -118,7 +118,7 @@ remarkModal: boolean;
       email : 'technical@nic.in',
       countryCode : '0',
       mobileNo :'9867655433',
-      telPhno : '9776644',
+      telPhno : '2276644',
       teleCode:'0',
       offAddress1 : 'address1',
       offAddress2 : 'address2',
@@ -126,7 +126,7 @@ remarkModal: boolean;
       city : 'Chennai',
       state : 'Tamilnadu',
       pinCode : '600028',
-      remark: 'Address changed'
+      remark: 'Address Changed'
     })
 
     this.detectAuditTrialObj = this.technicaladminform.value;

@@ -41,10 +41,10 @@ history:any[]=[
   {credit:7500,expiryDate:'22/02/2020',remark:'credited'}
 ]
 smsQuotaMetrix:any[]=[
-  {key:0,value:'Aravinth'},
-  {key:1,value:'Arunkumar'},
-  {key:2,value:'Bala'},
-  {key:3,value:'Raja'}
+  {key:0,value:'arpita.burman@nic.in'},
+  {key:1,value:'dureja.sk@nic.in'},
+  {key:2,value:'sshanker@nic.in'},
+  {key:3,value:'pradeep.garg@nic.in'}
 ];
 dataSource = new MatTableDataSource<any>(this.history)
 @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
@@ -132,8 +132,8 @@ remarkModal: boolean;
       credit: '5000',
       date: new Date(),
       status: '2',
-      onApprovalOf: 'Approval',
-      remark: 'Status changed',
+      onApprovalOf: 'dureja.sk@nic.in',
+      remark: 'Status Changed',
       statusChangedBy: 'Akshaya',
       timeStamp: this.currentDate,
     })
