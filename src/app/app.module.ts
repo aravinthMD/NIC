@@ -66,6 +66,7 @@ import { ManageGroupComponent } from './protectedPages/email/manage-group/manage
 import { ProjectExcecutionDialogComponent } from './protectedPages/user-information/project-execution/project-excecution-dialog/project-excecution-dialog.component';
 import { PurchaseOrderDialogComponent } from './protectedPages/user-information/purchase-order/purchase-order-dialog/purchase-order-dialog.component';
 import { ReportsTableComponent } from './protectedPages/reports/reports-table/reports-table.component';
+import { SmsCreditDialogComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-dialog/sms-credit-dialog.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -142,7 +143,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProjectExcecutionDialogComponent,
     PurchaseOrderDialogComponent,
     TaxInvoiceDialogComponent,
-    ReportsTableComponent
+    ReportsTableComponent,
+    SmsCreditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -192,7 +194,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
      ManageUserDialogComponent,
      ProjectExcecutionDialogComponent,
     TaxInvoiceDialogComponent,
-  PurchaseOrderDialogComponent]
+  PurchaseOrderDialogComponent,SmsCreditDialogComponent]
 })
 export class AppModule { }
 
