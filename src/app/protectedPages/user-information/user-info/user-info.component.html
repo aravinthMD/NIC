@@ -650,14 +650,16 @@
                
               
                 <div class="row pt-3 pb-3 m-0">
-                    <button class="btn btn-primary" matRipple type="submit" [disabled]="form.invalid"
+
+                    <button class="btn btn-primary float-left" matRipple (click)="back()">Back</button>
+
+                    <button class="btn btn-primary back-btn" matRipple type="submit" [disabled]="form.invalid"
                         (click)="Onsubmit()" *ngIf="!propertyFlag">Save</button>
 
-                        <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+                    <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
-                    <button class="btn btn-primary back-btn" matRipple (click)="next()">Next</button>
+                    <button class="btn btn-primary back-btn float-right" matRipple (click)="next()">Next</button>
 
-                    <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
                 </div>
 
             </form>
@@ -669,8 +671,7 @@
           <button mat-mini-fab color="primary" class="float-right" aria-label="Example icon button with a home icon">
             <mat-icon>arrow_forward_ios</mat-icon>
           </button> -->
-          <button mat-stroked-button class="float-left">Back</button>
-          <button mat-stroked-button  class="float-right">Next</button>
+          
     </mat-card>
 
 
@@ -850,4 +851,4 @@ id="deleteModal"
 </div>
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
-  
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

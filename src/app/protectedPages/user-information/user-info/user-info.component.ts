@@ -23,6 +23,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   // @ViewChild(MatAccordion,{ static: true }) accordion: MatAccordion; 
   @Input('userObj') user : any;
 
+  showDataSaveModal:boolean;
+
   form : FormGroup
   existingUserFlag : boolean = false;
   existingPreviewUserFlag :  boolean;
@@ -32,6 +34,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   panelOpenState = false;
   isDirty: boolean;
   newUserFlag : boolean
+
+  dataValue = {}
 
   // deparmentList : any[] = ['','Department of Sainik Welfare',
   //  'Minstry of minority affairs',
@@ -321,6 +325,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     this.detectFormChanges()
 
+    this.showDataSaveModal = true;
+
+    this.dataValue = {
+      title: "Customer Information Saved Sucessfully",
+      message : "Are you sure you want to proceed to Technical Admin page?"
+    }
+
+    this.toasterService.showSuccess('Data Saved Successfully',"");
     
   }
 
@@ -578,6 +590,19 @@ export class UserInfoComponent implements OnInit,OnChanges {
       this.toasterService.showError('Please click the creditDate icon to select date','');
     }
     
+  }
+
+  saveCancel() {
+    this.showDataSaveModal = false;
+  }
+
+  saveYes(){
+    this.utilService.setCurrentUrl('users/techAdmin')
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val) =>{ 
+      pno  = val;
+    })
+    this.router.navigate(['/users/techAdmin/'+pno])
   }
 
 }

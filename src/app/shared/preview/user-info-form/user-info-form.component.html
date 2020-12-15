@@ -7,8 +7,10 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.department}}</span>
             </div>
-            <input type="text" class="form-control" formControlName="departmentName" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-          </div>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option *ngFor = "let department of departmentListData" [value] = "department.key">{{department.value}}</option>
+            </select>
+              </div>
     </div>
 
     <div class="col-4">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { LabelsService } from '@services/labels.service';
 import { UtilService } from '@services/util.service';
@@ -9,6 +9,8 @@ import { format } from 'url';
 import { ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import { ToasterService } from '@services/toaster.service';
+import { MatDialog } from '@angular/material';
+import { SmsCreditDialogComponent } from './sms-credit-dialog/sms-credit-dialog.component'
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -18,27 +20,25 @@ import { ToasterService } from '@services/toaster.service';
 export class SmsCreditAllocationComponent implements OnInit {
   statusList=[
     {key:0,value:'Approved'},
-    {key:1,value:'Reject'},
-    {key:2,value:'Pending'},
-    {key:3,value:'On Hold'},
-    {key:4,value:'Raised'}
+    {key:1,value:'Rejected'},
+    {key:2,value:'Pending'}
 ];
 labels: any = {};
 smsCreditAllocation:FormGroup;
 panelOpenState=false;
-displayedColumns:any[]=['s.no','credit','expiryDate','remark']
+displayedColumns:any[]=['s.no','credit','expiryDate','status','reminder','remark']
 
 currentDate:any;
 
 history:any[]=[
-  {credit:1000,expiryDate:'1/10/2020',remark:'credited'},
-  {credit:1500,expiryDate:'2/09/2020',remark:'credited'},
-  {credit:2000,expiryDate:'3/08/2020',remark:'credited'},
-  {credit:2500,expiryDate:'4/07/2020',remark:'credited'},
-  {credit:500,expiryDate:'19/05/2020',remark:'credited'},
-  {credit:20,expiryDate:'13/04/2020',remark:'credited'},
-  {credit:12500,expiryDate:'24/03/2020',remark:'credited'},
-  {credit:7500,expiryDate:'22/02/2020',remark:'credited'}
+  {credit:1000,expiryDate:'1/10/2020',status:'Pending',remark:'credited'},
+  {credit:1500,expiryDate:'2/09/2020',status:'Pending',remark:'credited'},
+  {credit:2000,expiryDate:'3/08/2020',status:'Approved',remark:'credited'},
+  {credit:2500,expiryDate:'4/07/2020',status:'Pending',remark:'credited'},
+  {credit:500,expiryDate:'19/05/2020',status:'Rejected',remark:'credited'},
+  {credit:20,expiryDate:'13/04/2020',status:'Rejected',remark:'credited'},
+  {credit:12500,expiryDate:'24/03/2020',status:'Pending',remark:'credited'},
+  {credit:7500,expiryDate:'22/02/2020',status:'Pending',remark:'credited'}
 ]
 smsQuotaMetrix:any[]=[
   {key:0,value:'arpita.burman@nic.in'},
@@ -65,6 +65,22 @@ detectAuditTrialObj: any;
 
 remarkModal: boolean;
 
+showEmailModal: boolean;
+
+modalData: {
+  title: string;
+  request: any
+}
+
+
+showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+
 
   constructor(
     private labelsService :LabelsService,
@@ -72,7 +88,8 @@ remarkModal: boolean;
     private router:Router,
     private activatedRoute: ActivatedRoute,
     private datePipe: DatePipe,
-    private toasterService:ToasterService,) { }
+    private toasterService:ToasterService,
+    private dialog : MatDialog) { }
 
   ngOnInit() {
     this.currentDate=this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	')
@@ -81,7 +98,7 @@ remarkModal: boolean;
     });
     this.smsCreditAllocation=new FormGroup({
       smsQuotaMetrix: new FormControl (['']),
-      credit: new FormControl ([null]),
+      credit: new FormControl ([null,Validators.pattern("^[0-9]{0,12}$")]),
       date: new FormControl ([null]),
       status: new FormControl ([null]),
       onApprovalOf: new FormControl ([null]),
@@ -177,6 +194,13 @@ remarkModal: boolean;
       //   })
       // }
       this.detectAuditTrialObj = this.smsCreditAllocation.value;
+
+      this.showDataSaveModal = true;
+    this.dataValue= {
+      title: 'SMS Credit Saved Successfully',
+      message: 'Are you sure you want proceed to proforma invoice page?'
+    }
+
       this.toasterService.showSuccess('Data Saved Successfully','')
     }
   }
@@ -186,12 +210,12 @@ remarkModal: boolean;
 
   next() {
 
-    this.utilService.setCurrentUrl('users/projectExecution')
+    this.utilService.setCurrentUrl('users/proformaInvoice')
     let pno = '';
     this.utilService.projectNumber$.subscribe((val)=> {
       pno = val;
     })
-    this.router.navigate(['/users/projectExecution/'+pno])
+    this.router.navigate(['/users/proformaInvoice/'+pno])
 
   }
 
@@ -262,4 +286,55 @@ remarkModal: boolean;
     }
     
   }
+
+
+  sendReminder(element) {
+    this.showEmailModal = true;
+
+    this.modalData =  {
+      title: 'Send Reminder Email',
+      request: {
+        from: 'akshaya@appiyo.com',
+        to: 'arul.auth@nic.in',
+        subject: `Test Email: ${element.invoiceNo || 4535}`
+      }
+    }
+  }
+  onOkay() {
+    this.showEmailModal = false;
+  }
+
+  onCancel() {
+    this.showEmailModal = false;
+  }
+
+  newCredit() {
+   
+    const dialogRef = this.dialog.open(SmsCreditDialogComponent, {
+      data : {
+        value : 'testing'
+      }
+    })
+
+    dialogRef.afterClosed().subscribe((result) =>{
+      console.log('The dialog was closed', result);
+
+    })
+    
+  }
+
+  saveYes() {
+    this.utilService.setCurrentUrl('users/proformaInvoice')
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val;
+    })
+
+    this.router.navigate(['/users/proformaInvoice/'+pno])
+  }
+
+  saveCancel() {
+    this.showDataSaveModal = false;
+  }
+
 }

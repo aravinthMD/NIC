@@ -4,7 +4,7 @@
             <!-- <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">
                 SMS Credit Allocation</h1> -->
 
-            <app-account-header [title]="'SMS Credit Allocation'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
+            <app-account-header [title]="'SMS Credit Allocation'" [accountName]="accountName" [status]="status" [user]="'smsCredit'" (addCredit)="newCredit()"></app-account-header>
 
             <form (submit)="onSubmit()" [formGroup]="smsCreditAllocation">
                 <div class="row">
@@ -25,6 +25,11 @@
                         <div class="form-group">
                             <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
+                            <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
+                                <div>
+                                    {{'Please Enter Digits'}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-4">
@@ -184,6 +189,14 @@
                                 <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
                                 <td mat-cell *matCellDef="let element"> {{element.expiryDate}} </td>
                             </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="reminder">
+                                <th mat-header-cell *matHeaderCellDef> Reminder </th>
+                                <td mat-cell *matCellDef="let element" class="value-bold"> <button mat-button (click)="sendReminder(element)" class="background-none"><i class="fa fa-paper-plane mr-2" aria-hidden="true"></i></button> </td>
+                            </ng-container>
                             <ng-container matColumnDef="remark">
                                 <th mat-header-cell *matHeaderCellDef>Remark</th>
                                 <td mat-cell *matCellDef="let element"> {{element.remark}} </td>
@@ -202,3 +215,8 @@
 </div>
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
+
+
+<app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="modalData" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

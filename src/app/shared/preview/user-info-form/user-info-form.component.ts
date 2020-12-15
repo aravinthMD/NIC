@@ -16,6 +16,15 @@ export class UserInfoFormComponent implements OnInit {
   @Output('edit') edit = new EventEmitter<string>();
   formData    = {}
 
+
+  departmentListData = [
+    {key:0,value:'Department of Sainik Welfare'},
+    {key:1,value:'Ministry of Minority Affairs'},
+    {key:2,value:'Visakhapatnam Port Trust'},
+    {key:3,value:'Ministry of Tribal Affairs'},
+    {key:4,value:'Bureau of Naviks Mumbai'}
+];
+
   form : FormGroup;
 
   labels :  any[] = []
@@ -86,7 +95,7 @@ export class UserInfoFormComponent implements OnInit {
   setFormValues(){
     this.form.patchValue({
       applicantName : this.accountName.split('.')[0] || 'Arul',
-      departmentName : '1',
+      departmentName : 0,
       designation : 'Senior Engineer',
       employeeCode : '12008',
       email : 'authregister@nic.com',
@@ -108,7 +117,7 @@ export class UserInfoFormComponent implements OnInit {
       toDate: new Date(),
       creditDate : new Date(),
       creditAddedAgainstPi : new Date(),
-      countryCode: '0',
+      countryCode: '91',
       
       OfficerName:'Sri Ram',
       OfficerEmail:'sriram@gmail.com',
