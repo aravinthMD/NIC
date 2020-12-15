@@ -10,9 +10,10 @@ import { AuditTrailDialogComponent } from './audit-trail-dialog/audit-trail-dial
 import {MaterialModule} from './material/material.module'
 import { RemarkModalComponent } from './remark-modal/remark-modal.component';
 import { MatDatepickerModule } from '@angular/material';
+import { UserInfoFormComponent } from './preview/user-info-form/user-info-form.component';
 
 @NgModule({
-  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent],
+  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent, UserInfoFormComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +27,8 @@ import { MatDatepickerModule } from '@angular/material';
     CustomSelectComponent,
     EmailModalComponent,
     AccountHeaderComponent,
-    RemarkModalComponent
+    RemarkModalComponent,
+    UserInfoFormComponent
   ],
   providers : [],
   entryComponents : [AuditTrailDialogComponent]

@@ -2,9 +2,11 @@
     <mat-card>
         <div class="customer_details">
 
-        <app-account-header [title]="'Customer Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
+        <app-account-header [title]="'Customer Details'" [accountName]="accountName" [status]="status"></app-account-header>
 
+        <app-user-info-preview-form *ngIf = "existingPreviewUserFlag" [accountName] = "accountName" [status] = "status" [user] = "user" (edit) = "editData($event)"></app-user-info-preview-form>
 
+            <ng-container *ngIf = "existingUserFlag || newUserFlag">
             <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
                 <!--FIRST ROW-->
 
@@ -659,7 +661,16 @@
                 </div>
 
             </form>
+        </ng-container>
         </div>
+        <!-- <button mat-mini-fab color="primary" class="float-left" aria-label="Example icon button with a home icon">
+            <mat-icon>arrow_back_ios</mat-icon>
+          </button>
+          <button mat-mini-fab color="primary" class="float-right" aria-label="Example icon button with a home icon">
+            <mat-icon>arrow_forward_ios</mat-icon>
+          </button> -->
+          <button mat-stroked-button class="float-left">Back</button>
+          <button mat-stroked-button  class="float-right">Next</button>
     </mat-card>
 
 

@@ -25,11 +25,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   form : FormGroup
   existingUserFlag : boolean = false;
+  existingPreviewUserFlag :  boolean;
   buttonName : any = "Save";
   propertyFlag : boolean;
   labels: any = {};
   panelOpenState = false;
   isDirty: boolean;
+  newUserFlag : boolean
 
   // deparmentList : any[] = ['','Department of Sainik Welfare',
   //  'Minstry of minority affairs',
@@ -156,6 +158,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
    }
 
   ngOnInit() {
+    debugger;
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -168,6 +171,11 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     this.ipValidation = this.ipAddressValiationCheck()
 
+    if(!this.user){
+      this.newUserFlag = true;
+      this.existingPreviewUserFlag = false;
+
+    }
 
     console.log(this.activatedRoute)
       if(this.user){
@@ -178,7 +186,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
           this.status = val['status'] || '';
         })
 
-        this.setFormValues();
+        // this.setFormValues();
+
+        this.existingPreviewUserFlag = true
         this.buttonName = 'Edit';
         this.propertyFlag = true;
 
@@ -206,8 +216,11 @@ export class UserInfoComponent implements OnInit,OnChanges {
     return ipAddress;
   }
 
-  editData() {
+  editData(value ?: string) {
+    debugger;
     this.propertyFlag = false;
+    this.existingPreviewUserFlag  = false;
+    this.setFormValues();
   }
 
   ngOnChanges() {
