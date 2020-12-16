@@ -37,7 +37,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="poNumber" [isRequired]="'PO Number is Mandatory'" [labelName]="labels?.poNumber" [maxLength]="labels?.validationData?.poNumber?.maxLength" [isDirty]="isDirty">
+                                <app-custom-input formControlName="poNumber" [isRequired]="'PO Number is Mandatory'" [labelName]="labels?.poNumber" [maxLength]="labels?.validationData?.poNumber?.maxLength" [type]="labels?.validationData?.poNumber?.type" [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -125,7 +125,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="taxIN" [isRequired]="'Tax Invoice Number is Mandatory'" [labelName]="labels?.taxIN" [maxLength]="labels?.validationData?.taxIN?.maxLength" [isDirty]="isDirty">
+                                <app-custom-input formControlName="taxIN" [isRequired]="'Tax Invoice Number is Mandatory'" [labelName]="labels?.taxIN" [maxLength]="labels?.validationData?.taxIN?.maxLength" [type]="labels?.validationData?.taxIN?.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -195,7 +195,7 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is Mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>

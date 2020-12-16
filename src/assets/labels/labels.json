@@ -298,7 +298,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         
         "UserId": {
@@ -316,7 +316,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "piAmount": {
             "maxLength": {
@@ -338,7 +338,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "piOwner": {
             "maxLength": {
@@ -356,7 +356,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "withoutTax": {
             "maxLength": {
@@ -439,7 +439,8 @@
         "taxIN": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type" : "number"
         },
         "nicsiManager": {
             "maxLength": {

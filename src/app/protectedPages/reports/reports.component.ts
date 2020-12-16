@@ -93,6 +93,33 @@ export class ReportsComponent implements OnInit {
     }
   ]
 
+  smsCreditList = [
+    {
+      smsQuotaApprovalMetrix: 'dureja.sk@nic.in',
+      credits: "5000",
+      date:'16/12/2020',
+      status: 'Pending'
+    },
+    {
+      smsQuotaApprovalMetrix: 'arpita.burman@nic.in',
+      credits: "6000",
+      date:'14/12/2020',
+      status: 'Approved'
+    },
+    {
+      smsQuotaApprovalMetrix: 'sshanker@nic.in',
+      credits: "4000",
+      date:'13/12/2020',
+      status: 'Pending'
+    },
+    {
+      smsQuotaApprovalMetrix: 'pradeep.garg@nic.in',
+      credits: "3000",
+      date:'12/12/2020',
+      status: 'Rejected'
+    }
+  ]
+
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
@@ -146,6 +173,10 @@ paymnettrackkey:any[]=[
   {
     key : 9,
     value : "Paid and Unpaid"
+  },
+  {
+    key : 10,
+    value : "SMS Credit Allocation"
   },
   {
     key: 1,
@@ -290,6 +321,11 @@ userStatus  = [
       this.dataList = this.userListpaid;
     }
 
+    if(reportVal == 10){
+      this.id = Number(reportVal)
+      this.dataList = this.smsCreditList;
+    }
+
 
     console.log(this.form.value)
 
@@ -340,6 +376,12 @@ userStatus  = [
       this.optionValue = [
         {value:'Received',key:'1'},
         {value:'Pending',key:'2'}
+      ]
+    }else if(data == '10') {
+      this.optionValue = [
+        {value:'Approved',key:'1'},
+        {value:'Rejected',key:'2'},
+        {value:'Pending',key:'3'}
       ]
     }else if(data == '5'){
       this.optionValue = [];
