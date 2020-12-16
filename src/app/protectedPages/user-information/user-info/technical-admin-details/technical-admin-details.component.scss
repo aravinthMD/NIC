@@ -3,8 +3,8 @@
     overflow-x: hidden;
 }
 button.btn.btn-primary {
-    float: right;
-    margin-left:20px;
+    // float: right;
+    // margin-left:20px;
     background-color: #0e4d92 !important;
     border: 1px solid #0e4d92 !important;
     font-size: 13px;
@@ -13,4 +13,6 @@ button.btn.btn-primary {
     padding-bottom: 20px;
   }
 
- 
+  .back-btn {
+    margin-left:1.5vw
+  }
