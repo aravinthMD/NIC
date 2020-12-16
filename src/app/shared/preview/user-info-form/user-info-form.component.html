@@ -7,9 +7,10 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.department}}</span>
             </div>
-            <select class="form-control" id="exampleFormControlSelect1" formControlName = "departmentName">
+            <!-- <select class="form-control not-allowed not-allowed" id="exampleFormControlSelect1" formControlName = "departmentName">
               <option *ngFor = "let department of departmentListData" [ngValue] = "department.key">{{department.value}}</option>
-            </select>
+            </select> -->
+            <input type="text" formControlName="departmentName" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
     </div>
 
@@ -18,7 +19,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicantName}}</span>
             </div>
-            <input type="text" formControlName="applicantName" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="text" formControlName="applicantName" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
         </div>
 
@@ -27,7 +28,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicantEmail}}</span>
                 </div>
-                <input type="text" formControlName="email" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="email" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
 
@@ -37,8 +38,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicantMobile}}</span>
                     </div>
-                    <input type="text" formControlName="countryCode" value="" class="form-control">
-                    <input type="text"  formControlName="mobileNo" class="form-control">
+                    <input type="text" formControlName="countryCode" value="" class="form-control not-allowed">
+                    <input type="text"  formControlName="mobileNo" class="form-control not-allowed">
                   </div>
 
             </div>
@@ -48,7 +49,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.OfficerName}}</span>
                     </div>
-                    <input type="text" formControlName="OfficerName" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" formControlName="OfficerName" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
                 </div>
             
@@ -57,7 +58,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.OfficerEmail}}</span>
                     </div>
-                    <input type="text" formControlName="OfficerEmail" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" formControlName="OfficerEmail" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
 
             </div>
@@ -68,7 +69,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.OfficerMobile}}</span>
                     </div>
-                    <input type="text" formControlName="OfficerMobile" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" formControlName="OfficerMobile" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
 
             </div>
@@ -79,7 +80,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.designation}}</span>
                     </div>
-                    <input type="text"  formControlName="designation" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text"  formControlName="designation" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
 
             </div>
@@ -90,8 +91,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.teleNumber}}</span>
                     </div>
-                    <input type="text" formControlName="teleCode" class="form-control">
-                    <input type="text" formControlName="telPhno"  class="form-control">
+                    <input type="text" formControlName="teleCode" class="form-control not-allowed">
+                    <input type="text" formControlName="telPhno"  class="form-control not-allowed">
                   </div>
 
             </div>
@@ -102,9 +103,9 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">Official Address</span>
                     </div>
-                    <input type="text" formControlName="offAddress1" class="form-control">
-                    <input type="text" formControlName="offAddress2" class="form-control">
-                    <input type="text" formControlName="offAddress3" class="form-control">
+                    <input type="text" formControlName="offAddress1" class="form-control not-allowed">
+                    <input type="text" formControlName="offAddress2" class="form-control not-allowed">
+                    <input type="text" formControlName="offAddress3" class="form-control not-allowed">
                   </div>
 
             </div>
@@ -115,7 +116,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.city}}</span>
                     </div>
-                    <input type="text" formControlName="city" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" formControlName="city" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
 
             </div>
@@ -126,7 +127,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.state}}</span>
                     </div>
-                    <input type="text" formControlName="state" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" formControlName="state" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
 
             </div>
@@ -137,7 +138,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.pincode}}</span>
                     </div>
-                    <input type="text" formControlName="pinCode" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" formControlName="pinCode" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
 
             </div>
@@ -148,9 +149,10 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.smsServiceReqd}}</span>
                     </div>
-                    <select class="form-control" formControlName="smsServiceReqd" id="">
+                    <!-- <select class="form-control not-allowed" formControlName="smsServiceReqd" id="">
                       <option *ngFor = "let item of smsServiceReqd" [ngValue] = "item.key">{{item.value}}</option>
-                    </select>                  
+                    </select>                   -->
+                    <input type="text" formControlName="smsServiceReqd" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                 </div>
 
             </div>
@@ -161,7 +163,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.credits_SMSQuota}}</span>
                     </div>
-                    <input type="text" formControlName="creditsSMSQuota" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" formControlName="creditsSMSQuota" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                   </div>
 
             </div>
@@ -172,7 +174,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.smsTraffic}}</span>
                 </div>
-                <input type="text" formControlName="smsTariffMonthWise" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="smsTariffMonthWise" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -183,7 +185,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.availableCredit}}</span>
                 </div>
-                <input type="text" formControlName="availableCredit" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="availableCredit" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -195,7 +197,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.nameOfTheApplication}}</span>
                 </div>
-                <input type="text" formControlName="nameOfTheApplication" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="nameOfTheApplication" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -206,7 +208,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicationUrl}}</span>
                 </div>
-                <input type="text" formControlName="applicationUrl" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="applicationUrl" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -217,7 +219,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.serverLocation}}</span>
                 </div>
-                <input type="text" formControlName="serverLocation" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="serverLocation" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -228,7 +230,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.purpOfTheApplication}}</span>
                 </div>
-                <input type="text" formControlName="purpOfTheApplication" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="purpOfTheApplication" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -239,7 +241,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.ipformwhichSmsGatewaywillbeaccess}}</span>
                 </div>
-                <input type="text" formControlName="smsGatewayAccess" formControlName="smsGatewayAccess" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="smsGatewayAccess" formControlName="smsGatewayAccess" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -250,7 +252,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.ipofStagingServReqdforTesting}}</span>
                 </div>
-                <input type="text" formControlName="ipServReqd" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="ipServReqd" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -261,7 +263,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.projectedDomesticMonthlySMStraffic}}</span>
                 </div>
-                <input type="text" formControlName="domMonSmsTraffic" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="domMonSmsTraffic" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -272,7 +274,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.projectedInternationalMonthlySMStraffic}}</span>
                 </div>
-                <input type="text" formControlName="intMonSmsTraffic" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="intMonSmsTraffic" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -283,7 +285,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicationsecurAuditCleared}}</span>
                 </div>
-                <input type="text" formControlName="appSecurAudClear" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="appSecurAudClear" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -294,7 +296,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.auditDatebyWhenItWillBeCleared}}</span>
                 </div>
-                <input type="text" formControlName="auditDate" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="auditDate" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -305,7 +307,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.doYouHaveTRAIexemptedSenderId}}</span>
                 </div>
-                <input type="text" formControlName="traiSenderId" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="traiSenderId" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -316,7 +318,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.projectNo}}</span>
                 </div>
-                <input type="text" formControlName="projectNo" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="projectNo" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -328,7 +330,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.userId}}</span>
                 </div>
-                <input type="text" formControlName="userId" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="userId" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -340,7 +342,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.password}}</span>
                 </div>
-                <input type="text" formControlName="password" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="password" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -352,7 +354,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditAdded}}</span>
                 </div>
-                <input type="text" formControlName="creditAdded" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="creditAdded" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -363,7 +365,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditApprover}}</span>
             </div>
-            <input type="text" formControlName="creditApprover" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+            <input type="text" formControlName="creditApprover" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
           </div>
 
         </div>
@@ -374,7 +376,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditDate}}</span>
                 </div>
-                <input type="text" formControlName="creditDate" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="creditDate" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -385,7 +387,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditPI}}</span>
                 </div>
-                <input type="text" formControlName="creditAddedAgainstPi" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="creditAddedAgainstPi" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -396,7 +398,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.uploadDoc}}</span>
                 </div>
-                <input type="file" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName = "document" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -407,9 +409,12 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.status}}</span>
                 </div>
-                <select class="form-control" id="" formControlName = "status">
+                <!-- <select class="form-control not-allowed" id="" formControlName = "status">
                   <option *ngFor = "let statusItem of statusList" [ngValue] = "statusItem.key">{{statusItem.value}}</option>
-                </select>              
+                </select>   
+                          -->
+              <input type="text" formControlName="status" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+
               </div>
 
         </div>
@@ -420,7 +425,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.remark}}</span>
                 </div>
-                <input type="text" formControlName="remark" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="remark" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>

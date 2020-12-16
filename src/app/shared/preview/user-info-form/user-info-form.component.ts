@@ -104,7 +104,9 @@ statusList= [
       fromDate: [null],
       toDate: [null],
       status:[null],
-      remark:[null]    
+      remark:[null]  ,
+      document : ['']
+
     });
 
    }
@@ -122,13 +124,13 @@ statusList= [
   setFormValues(){
     this.form.patchValue({
       applicantName : this.accountName.split('.')[0] || 'Arul',
-      departmentName : this.departmentListData[0],
+      departmentName : 'Ministry of Minority Affairs',
       designation : 'Senior Engineer',
       employeeCode : '12008',
       email : 'authregister@nic.com',
       mobileNo : '8754809950',
       telPhno : '2281756',
-      teleCode: '0',
+      teleCode: '+044',
       offAddress1 : '23, Bhandup West, Mumbai',
       offAddress2 : '23, Bhandup West, Mumbai',
       offAddress3 : '23, Bhandup West, Mumbai',
@@ -150,8 +152,9 @@ statusList= [
       OfficerEmail:'sriram@gmail.com',
       OfficerMobile:'9768674555',
      
-      smsServiceReqd: '1',
+      smsServiceReqd: 'Post-Paid', //1
       creditsSMSQuota: '4000',
+      document : 'Invoice.pdf',
      
       availableCredit: '3000',
       nameOfTheApplication: 'Sathish',
@@ -167,8 +170,8 @@ statusList= [
       traiSenderId: '0',
       userId: this.accountName || 'Arul.auth',
       password: 'nic@123',
-      status: (this.status == 'Active')?'0':'1',
-      remark:'Officer Name Changed'
+      status:  'Active' , //(this.status == 'Active')?'0':'1',
+      remark:'Officer Name Changed',
       
       
 
