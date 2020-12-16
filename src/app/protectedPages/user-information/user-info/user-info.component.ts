@@ -162,7 +162,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
    }
 
   ngOnInit() {
-    debugger;
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -221,7 +220,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
   editData(value ?: string) {
-    debugger;
     this.propertyFlag = false;
     this.existingPreviewUserFlag  = false;
     this.setFormValues();

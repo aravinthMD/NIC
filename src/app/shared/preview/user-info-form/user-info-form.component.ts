@@ -110,7 +110,6 @@ statusList= [
    }
 
   ngOnInit() {
-    debugger;
     this.labelService.getLabelsData().subscribe((values) => {
         this.labels = values
     })
@@ -177,7 +176,6 @@ statusList= [
   }
 
   OnEdit(){
-    debugger;
     this.edit.emit("edit");
   }
 
