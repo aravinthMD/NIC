@@ -4,7 +4,10 @@
 
         <app-account-header [title]="'Customer Details'" [accountName]="accountName" [status]="status"></app-account-header>
 
-        <app-user-info-preview-form *ngIf = "existingPreviewUserFlag" [accountName] = "accountName" [status] = "status" [user] = "user" (edit) = "editData($event)"></app-user-info-preview-form>
+        <app-user-info-preview-form *ngIf = "existingPreviewUserFlag" [accountName] = "accountName" [status] = "status" [user] = "user" (edit) = "editData($event)">
+            <button class="btn btn-primary back-btn float-left" matRipple (click)="back()">Back</button>
+            <button class="btn btn-primary back-btn float-left" matRipple (click)="next()">Next</button>
+        </app-user-info-preview-form>
 
             <ng-container *ngIf = "existingUserFlag || newUserFlag">
             <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
@@ -657,6 +660,9 @@
 
                     <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
+                    <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
+
+                    <button class="btn btn-primary back-btn" matRipple (click)="next()">Next</button>
 
                 </div>
 
@@ -664,12 +670,10 @@
 
         </ng-container>
 
-            <div class="bottom-button">
-            <!-- <button class="btn btn-primary float-left" matRipple (click)="back()">Back</button> -->
-           <button mat-raised-button class="float-left" matRipple style="background-color:#0e4d92;color: #fff;" (click)="back()">Back</button>
-           <button mat-raised-button class="float-right" matRipple style="background-color:#0e4d92;color: #fff;" (click)="next()">Next</button>
-            <!-- <button class="btn btn-primary back-btn float-right" matRipple (click)="next()">Next</button> -->
-        </div>
+            <!-- <div>
+           <button mat-raised-button matRipple style="background-color:#0e4d92;color: #fff;" (click)="back()">Back</button>
+           <button mat-raised-button matRipple style="background-color:#0e4d92;color: #fff;" (click)="next()">Next</button>
+        </div> -->
         </div>
         <!-- <button mat-mini-fab color="primary" class="float-left" aria-label="Example icon button with a home icon">
             <mat-icon>arrow_back_ios</mat-icon>
