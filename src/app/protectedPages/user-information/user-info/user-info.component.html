@@ -462,7 +462,7 @@
                             [maxLength]="labels?.validationData.appSecurAudClear.maxLength" 
                             [isDisabledInp]="propertyFlag"
                             [mandatoryField]="true" 
-                            [isRequired]="'This Field is Mandatory'" 
+                            [isRequired]="'Application Security is Mandatory'" 
                             [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
@@ -524,7 +524,9 @@
                             <app-custom-input formControlName="userId" 
                             [labelName]="labels.userId" [id]="'userId'"
                                 [maxLength]="labels?.validationData.userName.maxLength" 
-                                [isDisabledInp]="propertyFlag"  
+                                [isDisabledInp]="propertyFlag" 
+                                [isRequired]="'User ID is Mandatory'" 
+                                [mandatoryField]="true" 
                                 [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
@@ -532,6 +534,8 @@
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="password" [labelName]="labels.password" [id]="'password'"
+                            [mandatoryField]="true" 
+                            [isRequired]="'Password is Mandatory'" 
                                 [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
                                 [isDirty]="isDirty">
                             </app-custom-input>
@@ -667,7 +671,7 @@
 
                 <div class="row pt-3 pb-3">
                     <div class="col-10">
-                    <button class="btn btn-primary float-left" matRipple type="submit" [disabled]="form.invalid"
+                    <button class="btn btn-primary float-left" matRipple type="submit"
                       (click)="Onsubmit()" *ngIf="!propertyFlag">Save</button>
                     <button class="btn btn-primary back-btn float-left" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
                     </div>

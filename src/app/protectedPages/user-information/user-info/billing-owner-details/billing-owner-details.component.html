@@ -253,7 +253,7 @@
 
             <div class="col-10">
 
-                <button class="btn btn-primary float-left" matRipple type="submit" [disabled]="billOwnerForm.invalid" *ngIf="!propertyFlag" (click)="onSubmit()">{{'Submit'}}</button>
+                <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">{{'Submit'}}</button>
 
                 <button class="btn btn-primary float-left back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
