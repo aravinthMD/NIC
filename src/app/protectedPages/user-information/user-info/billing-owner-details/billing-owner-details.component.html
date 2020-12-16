@@ -240,10 +240,10 @@
             <button class="btn btn-primary" matRipple type="submit" [disabled]="billOwnerForm.invalid" *ngIf="!propertyFlag" (click)="onSubmit()">{{'Submit'}}</button>
 
             <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
-
-            <button class="btn btn-primary back-btn" matRipple (click)="next()" *ngIf="user">Next</button>
             
             <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
+
+            <button class="btn btn-primary back-btn" matRipple (click)="next()" *ngIf="user">Next</button>
         </div>
 <!-- 
         <div class="bottom-button">
