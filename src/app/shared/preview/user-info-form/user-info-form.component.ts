@@ -55,7 +55,7 @@ statusList= [
 
   form : FormGroup;
 
-  labels :  any[] = []
+  labels: any = {};
 
   constructor(private labelService :LabelsService,private formBuilder :  FormBuilder) {
 
