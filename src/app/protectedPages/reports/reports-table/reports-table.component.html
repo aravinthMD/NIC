@@ -142,6 +142,29 @@
         </ng-container> 
 
 
+        <!-- SMS Credit Allocation-->
+
+        <ng-container matColumnDef="smsMetrix">
+            <th mat-header-cell *matHeaderCellDef>SMS Quota Approval Metrix</th>
+            <td mat-cell *matCellDef="let element"> {{element.smsQuotaApprovalMetrix}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="Credits">
+            <th mat-header-cell *matHeaderCellDef>Credits</th>
+            <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+        </ng-container>
+
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
     </table>
