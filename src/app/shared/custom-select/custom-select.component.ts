@@ -52,6 +52,8 @@ export class CustomSelectComponent
   @Input() set isDirty(val) {
     if (val) {
       this.checkValidation();
+    }else {
+      this.inputError = false;
     }
   }
 

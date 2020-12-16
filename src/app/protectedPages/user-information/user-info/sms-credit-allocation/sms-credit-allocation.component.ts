@@ -198,7 +198,7 @@ showDataSaveModal: boolean;
       this.showDataSaveModal = true;
     this.dataValue= {
       title: 'SMS Credit Saved Successfully',
-      message: 'Are you sure you want proceed to proforma invoice page?'
+      message: 'Are you sure you want to proceed proforma invoice page?'
     }
 
       this.toasterService.showSuccess('Data Saved Successfully','')

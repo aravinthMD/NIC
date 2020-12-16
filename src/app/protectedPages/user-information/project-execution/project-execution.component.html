@@ -137,7 +137,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="NICSIProjectNo" [isRequired]="'NICSI Project Number is Required'" [labelName]="labels?.nicsiProjectNumber" [maxLength]="labels?.validationData?.nicsiProjectNumber.maxLength" [type]="labels?.validationData?.nicsiProjectNumber.type">
+                                <app-custom-input formControlName="NICSIProjectNo" [isRequired]="'NICSI Project Number is Required'" [labelName]="labels?.nicsiProjectNumber" [maxLength]="labels?.validationData?.nicsiProjectNumber.maxLength" [type]="labels?.validationData?.nicsiProjectNumber.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -309,3 +309,5 @@
 
     </div>
 </div>
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

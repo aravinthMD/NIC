@@ -92,6 +92,15 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     request: any
   }
 
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+  
+
   constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService,private router: Router) { 
 
 
@@ -187,6 +196,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
     if(this.form.invalid) {
       this.isDirty = true;
+      return;
     }
 
 
@@ -197,7 +207,31 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
     console.log(this.form.value)
 
+    this.toasterService.showSuccess('Data Saved Successfully','')
 
+      this.showDataSaveModal = true;
+      this.dataValue= {
+        title: 'SMS Credit Saved Successfully',
+        message: 'Are you sure you want to proceed project execution page?'
+      }
+
+
+  }
+
+  saveYes()
+  {
+ 
+   this.showDataSaveModal = false;
+ 
+   this.next()
+ 
+ 
+  }
+ 
+  saveCancel() {
+ 
+   this.showDataSaveModal = false;
+  
   }
 
   onSearch() {
@@ -293,9 +327,9 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   next() {
 
-    this.utilService.setCurrentUrl('users/purchaseOrder')
+    this.utilService.setCurrentUrl('users/projectExecution')
 
-    this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
 
   }
 }

@@ -78,6 +78,8 @@ export class CustomInputComponent
       this.checkIsFirst = false;
       this.checkValidation(this.data);
       //this.propagateChange(this.data);
+    }else {
+      this.inputError = false;
     }
   }
 

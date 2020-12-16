@@ -75,6 +75,13 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
   storeProjectNo: string;
 
+  showDataSaveModal: boolean;
+
+dataValue: {
+  title: string;
+  message: string
+}
+
   constructor(private labelsService : LabelsService,private dialog : MatDialog,
     private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService,private router: Router) { 
 
@@ -159,6 +166,14 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
     this.PurchaseEntryForm.reset();
 
+    this.toasterService.showSuccess('Data Saved Successfully','')
+
+  this.showDataSaveModal = true;
+  this.dataValue= {
+    title: 'SMS Credit Saved Successfully',
+    message: 'Are you sure you want to proceed purchase order invoice page?'
+  }
+
   }
 
   onSearch() {
@@ -225,9 +240,25 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
   next() {
 
-    this.utilService.setCurrentUrl('users/proformaInvoice')
+    this.utilService.setCurrentUrl('users/purchaseOrder')
 
-    this.router.navigate([`/users/proformaInvoice/${this.storeProjectNo}`])
+    this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
+  }
+
+  saveYes()
+  {
+ 
+   this.showDataSaveModal = false;
+   
+   this.next()
+ 
+ 
+  }
+ 
+  saveCancel() {
+ 
+   this.showDataSaveModal = false;
 
   }
 
