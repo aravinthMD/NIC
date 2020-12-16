@@ -16,6 +16,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
   billOwnerForm:FormGroup;
   isDirty: boolean;
   propertyFlag : boolean;
+  showDataSaveModal : boolean;
+  dataValue  = {}
 
   countryCodeValues = [
     {key:0,value:'+91'},
@@ -167,6 +169,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   onSubmit(){
+
+    this.showDataSaveModal = true;
+
+    this.dataValue = {
+      title : "Billing Admin Details Updated Successfully",
+      message : "Are you sure you to proceed to SMS Credit Allocation Screen?"
+    }
+
     if(this.billOwnerForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields','')
@@ -198,6 +208,20 @@ export class BillingOwnerDetailsComponent implements OnInit {
     this.router.navigate(['/users/smsCredit'])
 
     }
+  }
+
+  saveYes(){
+    this.utilService.setCurrentUrl('users/smsCredit')
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val) =>{
+      pno = val
+    })
+
+    this.router.navigate(['/users/smsCredit/'+pno])
+  }
+
+  saveCancel() {
+    this.showDataSaveModal = false;
   }
 
 }

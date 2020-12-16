@@ -236,15 +236,40 @@
 
         </div>
         </form>
-        <div class="row pt-3 pb-3 m-0">
+        <!-- <div class="row pt-3 pb-3 m-0">
             <button class="btn btn-primary" matRipple type="submit" [disabled]="billOwnerForm.invalid" *ngIf="!propertyFlag" (click)="onSubmit()">{{'Submit'}}</button>
 
             <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
             
-            <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
 
+            <div class="ml-auto float-right">
             <button class="btn btn-primary back-btn" matRipple (click)="next()" *ngIf="user">Next</button>
+            <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
+            </div>
+
+        </div> -->
+
+        <div class="row pt-3 pb-3">
+
+            <div class="col-10">
+
+                <button class="btn btn-primary float-left" matRipple type="submit" [disabled]="billOwnerForm.invalid" *ngIf="!propertyFlag" (click)="onSubmit()">{{'Submit'}}</button>
+
+                <button class="btn btn-primary float-left back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+
+            </div>
+
+           <div class="col-1" style="float: left;">
+            <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+
+           </div>
+
+           <div class="col-1" style="float: left;">
+            <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+
+           </div>
         </div>
+
 <!-- 
         <div class="bottom-button">
            <button mat-raised-button (click)="next()" *ngIf="user" class="float-left" matRipple style="background-color:#0e4d92;color: #fff;" (click)="back()">Back</button>
@@ -261,3 +286,4 @@
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
 
+<app-data-saved-modal *ngIf = "showDataSaveModal" [showSavedModal] = "showDataSaveModal" [data] = "dataValue" (yes) = "saveYes()" (cancel) = "saveCancel()"></app-data-saved-modal>

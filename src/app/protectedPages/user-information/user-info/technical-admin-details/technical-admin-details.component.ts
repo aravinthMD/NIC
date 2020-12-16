@@ -17,6 +17,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   technicaladminform:FormGroup;
   isDirty: boolean;
   propertyFlag : boolean;
+  showDataSaveModal  :boolean;
+  dataValue  = {}
 
   departmentListData = [
     {key:0,value:'Department of Sainik Welfare'},
@@ -138,6 +140,14 @@ remarkModal: boolean;
       this.toasterService.showError('Please fill all the mandatory fields','')
       return
     }
+
+    this.showDataSaveModal = true;
+
+    this.dataValue = {
+      title : "Technical Admin details saved Sucessfully",
+      message : "Are you sure want to proceed to Billing Admin Detail?"
+    }
+
     console.log('billOwnerForm',this.technicaladminform.value)
 
     this.detectFormChanges()
@@ -212,4 +222,19 @@ remarkModal: boolean;
   remarkOkay() {
     this.remarkModal = false;
   }
+
+  saveYes(){
+    this.utilService.setCurrentUrl('users/billingAdmin');
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val) =>{
+      pno = val;
+    })
+    this.router.navigate(['/users/billingAdmin/'+pno]);
+  }
+
+  saveCancel() {
+    this.showDataSaveModal = false;
+  }
+
+
 }

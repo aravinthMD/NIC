@@ -261,7 +261,7 @@
 
             <div class="input-group input-group-sm mb-2">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.projectedDomesticMonthlySMStraffic}}</span>
+                  <span class="input-group-text" id="inputGroup-sizing-sm">PDMST</span>
                 </div>
                 <input type="text" formControlName="domMonSmsTraffic" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
@@ -272,7 +272,7 @@
 
             <div class="input-group input-group-sm mb-2">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.projectedInternationalMonthlySMStraffic}}</span>
+                  <span class="input-group-text" id="inputGroup-sizing-sm">PIMST</span>
                 </div>
                 <input type="text" formControlName="intMonSmsTraffic" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
@@ -434,8 +434,18 @@
 
 </div>
 
-<button class="btn btn-primary float-left" (click) = "OnEdit()">Edit</button>
-<ng-content></ng-content>         <!-- Next and Back Button -->
+<div class="row pt-3 pb-3 m-0">
+
+  <div class="col-10">
+    <button class="btn btn-primary float-left" (click) = "OnEdit()">Edit</button>
+  </div>
+
+ <div class="col-2" style="float: left;">
+  <ng-content></ng-content>
+ </div>
+
+
+</div>
 
 </form>
 </div>
