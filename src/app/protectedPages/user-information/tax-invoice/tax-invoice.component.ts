@@ -4,11 +4,12 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
-import { ActivatedRoute } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+
 
 @Component({
   selector: 'app-tax-invoice',
@@ -63,9 +64,11 @@ export class TaxInvoiceComponent implements OnInit {
   status: string;
   propertyFlag: boolean;
 
+  storeProjectNo: string;
+
   constructor(private labelsService: LabelsService,
     private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,
-    private dialog : MatDialog, private utilService: UtilService,private toasterService: ToasterService) { }
+    private dialog : MatDialog, private utilService: UtilService,private toasterService: ToasterService,private router: Router) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -107,6 +110,8 @@ export class TaxInvoiceComponent implements OnInit {
     })
 
     this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
 
       this.userList =   [
    
@@ -224,6 +229,14 @@ export class TaxInvoiceComponent implements OnInit {
     this.toasterService.showError('Please click the todate icon to select date','');
   }
   
+}
+
+back() {
+
+  this.utilService.setCurrentUrl('users/purchaseOrder')
+
+  this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
 }
 
 

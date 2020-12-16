@@ -304,6 +304,14 @@ dataValue: {
 
   }
 
+  back() {
+
+    this.utilService.setCurrentUrl('users/projectExecution')
+
+    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
+
+  }
+
   submitPO() {
 
     if(this.formQuantity.invalid) {

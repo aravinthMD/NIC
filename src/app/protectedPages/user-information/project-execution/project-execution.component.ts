@@ -246,6 +246,12 @@ dataValue: {
 
   }
 
+  back() {
+    this.utilService.setCurrentUrl('users/proformaInvoice')
+
+    this.router.navigate([`/users/proformaInvoice/${this.storeProjectNo}`])
+  }
+
   saveYes()
   {
  

@@ -332,4 +332,12 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
 
   }
+
+  back() {
+
+    this.utilService.setCurrentUrl('users/smsCredit')
+
+    this.router.navigate([`/users/smsCredit/${this.storeProjectNo}`])
+
+  }
 }
