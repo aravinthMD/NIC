@@ -69,6 +69,7 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   date = new FormControl();
   PurchaseOrderForm:FormGroup;
+  formQuantity: FormGroup;
   labels: any = {};
   isDirty: boolean;
 
@@ -79,6 +80,19 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   accountName: string;
 
 status: string;
+
+showPOModal: boolean;
+
+isQuantityDirty: boolean;
+
+showDataSaveModal: boolean;
+
+dataValue: {
+  title: string;
+  message: string
+}
+
+
 
 
   constructor(
@@ -126,6 +140,12 @@ status: string;
       searchTo: new FormControl(null)
     })
 
+    this.formQuantity = new FormGroup({
+      rate: new FormControl(null),
+      quantity: new FormControl(null),
+      description: new FormControl(null)
+    })
+
     this.utilService.userDetails$.subscribe((val)=> {
 
       this.accountName = val['userId'] || '';
@@ -159,16 +179,49 @@ status: string;
   });
     
   }
+
+  initForm() {
+
+
+    this.PurchaseOrderForm = new FormGroup({
+      userName: new FormControl(null),
+    
+      piNumber: new FormControl(null),
+      poNumber: new FormControl(null),
+      smsApproved: new FormControl(null),
+      projectName:new FormControl(null),
+      date:new FormControl(null),
+      withoutTax: new FormControl(null),
+      poStatus:new FormControl(''),
+      startDate: new FormControl(null),
+      endDate: new FormControl(null),
+      userEmail:new FormControl(null),
+      poManagerEmail: new FormControl(null),
+      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
+      poAmountWithTax: new FormControl(null),
+      departmentName: new FormControl(''),
+      paymentStatus:new FormControl(''),
+      uploadDoc:new FormControl(null),
+      remark:new FormControl('')
+
+    })
+
+
+  }
   POForm(){
+
     if(this.PurchaseOrderForm.invalid) {
      
       this.isDirty = true;
 
       return
     }
+  
+    this.showPOModal = true;
     this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
    console.log(this.PurchaseOrderForm.value)
-   this.PurchaseOrderForm.reset();
+  
+  
   }
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
@@ -251,4 +304,50 @@ status: string;
 
   }
 
+  submitPO() {
+
+    if(this.formQuantity.invalid) {
+      this.isQuantityDirty = true;
+      return;
+    }
+
+    this.showPOModal= false;
+
+    this.isDirty = false;
+
+    this.PurchaseOrderForm.reset()
+
+
+  this.toasterService.showSuccess('Data Saved Successfully','')
+
+  this.showDataSaveModal = true;
+  this.dataValue= {
+    title: 'SMS Credit Saved Successfully',
+    message: 'Are you sure you want to proceed tax invoice page?'
+  }
+
+  }
+
+  cancelPO() {
+    this.showPOModal= false;
+  }
+
+  saveYes()
+ {
+
+  this.showDataSaveModal = false;
+  this.showPOModal= false;
+
+  this.utilService.setCurrentUrl('users/taxInvoice')
+
+  this.router.navigate([`/users/taxInvoice/${this.storeProjectNo}`])
+
+
+ }
+
+ saveCancel() {
+
+  this.showDataSaveModal = false;
+  this.showPOModal= false;
+ }
 }

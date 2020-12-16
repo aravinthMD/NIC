@@ -11,7 +11,7 @@
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Purchase Order
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <form (submit)="POForm()" [formGroup]="PurchaseOrderForm" (keydown.enter)="$event.preventDefault()">
+                <form  [formGroup]="PurchaseOrderForm" (keydown.enter)="$event.preventDefault()">
                     <!--FIRST ROW-->
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
             <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
@@ -239,7 +239,7 @@
                     </div>
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary" type="submit">Raise E-Invoice</button>
+                        <button class="btn btn-primary" (click)="POForm()">Raise E-Invoice</button>
                         <button class="btn btn-primary ml-3" (click)="next()">Next</button>
                     </div>
                 </form>
@@ -376,3 +376,57 @@
     </div>
 
 </div>
+
+
+<div class="modal" id="poModal" [ngClass]="{ 'dis-block': showPOModal }">
+    <div class="modal-dialog order-popup">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">Purchase Order</h4>
+            </div>
+            <div class="modal-body msg-data">
+               
+
+                <form [formGroup]="formQuantity" (keydown.enter)="$event.preventDefault()">
+
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="rate" [isRequired]="'Rate is Mandatory'" [labelName]="labels.rate" [maxLength]="labels?.validationData?.rate?.maxLength" [type]="labels?.validationData?.rate?.type" [isDirty]="isQuantityDirty">
+                                </app-custom-input>
+
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="quantity" [isRequired]="'Quantity is Mandatory'" [labelName]="labels.quantity" [maxLength]="labels?.validationData?.quantity?.maxLength" [type]="labels?.validationData?.quantity?.type" [isDirty]="isQuantityDirty">
+                                </app-custom-input>
+
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="description" [isRequired]="'Description is Mandatory'" [labelName]="labels.description" [maxLength]="labels?.validationData?.description?.maxLength" [isDirty]="isQuantityDirty">
+                                </app-custom-input>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="submitPO()"> Submit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelPO()"> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

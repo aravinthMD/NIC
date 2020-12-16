@@ -102,6 +102,9 @@
     "smsApproved": "SMS Approved",
     "submittedDate": "Submitted Date",
     "nicsiManager": "NICSI Manager",
+    "rate": "Rate",
+    "quantity": "Quantity",
+    "description": "Description",
     "validationData": {
         "name": {
             "maxLength": {
@@ -443,6 +446,23 @@
                 "rule": "50"
             },
             "type": "alpha"
+        },
+        "rate": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "quantity": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "description": {
+            "maxLength": {
+                "rule": "2000"
+            }
         }
     }
 }
