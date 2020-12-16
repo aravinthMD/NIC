@@ -1,4 +1,4 @@
-
+<div class="preview-page">
 <form [formGroup] = "form">
 <div class="row">
 
@@ -7,8 +7,8 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.department}}</span>
             </div>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option *ngFor = "let department of departmentListData" [value] = "department.key">{{department.value}}</option>
+            <select class="form-control" id="exampleFormControlSelect1" formControlName = "departmentName">
+              <option *ngFor = "let department of departmentListData" [ngValue] = "department.key">{{department.value}}</option>
             </select>
               </div>
     </div>
@@ -148,8 +148,10 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.smsServiceReqd}}</span>
                     </div>
-                    <input type="text" formControlName="smsServiceReqd" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                  </div>
+                    <select class="form-control" formControlName="smsServiceReqd" id="">
+                      <option *ngFor = "let item of smsServiceReqd" [ngValue] = "item.key">{{item.value}}</option>
+                    </select>                  
+                </div>
 
             </div>
 
@@ -248,7 +250,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.ipofStagingServReqdforTesting}}</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" formControlName="ipServReqd" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -342,6 +344,7 @@
               </div>
 
         </div>
+        
 
         <div class="col-4">
 
@@ -351,6 +354,17 @@
                 </div>
                 <input type="text" formControlName="creditAdded" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
+
+        </div>
+
+        <div class="col-4">
+
+          <div class="input-group input-group-sm mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditApprover}}</span>
+            </div>
+            <input type="text" formControlName="creditApprover" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
 
         </div>
 
@@ -382,7 +396,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.uploadDoc}}</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="file" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
 
         </div>
@@ -393,7 +407,9 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.status}}</span>
                 </div>
-                <input type="text" formControlName="status"  class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <select class="form-control" id="" formControlName = "status">
+                  <option *ngFor = "let statusItem of statusList" [ngValue] = "statusItem.key">{{statusItem.value}}</option>
+                </select>              
               </div>
 
         </div>
@@ -413,6 +429,7 @@
 
 </div>
 
-<button class="btn btn-primary float-left" (click) = "OnEdit()">Edit</button>
+<button class="btn btn-primary float-left" (click) = "OnEdit()">Edit</button><br>
 
 </form>
+</div>

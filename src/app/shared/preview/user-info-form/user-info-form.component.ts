@@ -25,6 +25,34 @@ export class UserInfoFormComponent implements OnInit {
     {key:4,value:'Bureau of Naviks Mumbai'}
 ];
 
+
+smsServiceReqd=[
+  {key:0,value:'Prepaid'},
+  {key:1,value:'Post-Paid'}
+]
+
+countryCodeValues = [
+  {key:0,value:'+91'},
+  {key:1,value:'+60'},
+  {key:2,value:'+65'}
+]
+
+teleCodeValues = [
+  {key:0,value:'+044'},
+  {key:1,value:'+040'},
+  {key:2,value:'+080'}
+]
+
+
+statusList= [
+  {
+    key:0,value: 'Active',
+  },
+  {
+    key:1,value:'Inactive'
+  }
+]
+
   form : FormGroup;
 
   labels :  any[] = []
@@ -33,7 +61,7 @@ export class UserInfoFormComponent implements OnInit {
 
     this.form =this.formBuilder.group({
       applicantName : [null],
-      departmentName : [''],
+      departmentName : ['1'],
       designation : [null],
       employeeCode : [null],
       email : [null],
@@ -95,7 +123,7 @@ export class UserInfoFormComponent implements OnInit {
   setFormValues(){
     this.form.patchValue({
       applicantName : this.accountName.split('.')[0] || 'Arul',
-      departmentName : 0,
+      departmentName : this.departmentListData[0],
       designation : 'Senior Engineer',
       employeeCode : '12008',
       email : 'authregister@nic.com',

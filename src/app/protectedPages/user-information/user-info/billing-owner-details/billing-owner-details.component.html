@@ -241,10 +241,19 @@
 
             <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
-            <button class="btn btn-primary back-btn" matRipple (click)="next()" *ngIf="user">Next</button>
-            <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
+            <!-- <button class="btn btn-primary back-btn" matRipple (click)="next()" *ngIf="user">Next</button> -->
+            <!-- <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button> -->
         </div>
+
+        <div class="bottom-button">
+           <button mat-raised-button (click)="next()" *ngIf="user" class="float-left" matRipple style="background-color:#0e4d92;color: #fff;" (click)="back()">Back</button>
+           <button mat-raised-button (click)="back()" class="float-right" matRipple style="background-color:#0e4d92;color: #fff;" (click)="next()">Next</button>
+        </div>
+
     </div>
+
+
+
 </mat-card>
 </div>
 
