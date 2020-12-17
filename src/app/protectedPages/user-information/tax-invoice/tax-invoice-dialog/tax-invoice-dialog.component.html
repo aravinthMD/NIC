@@ -300,7 +300,8 @@
       </div>
 
         <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
-            <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
+            <button class="btn btn-primary"  *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
+            <button class="btn btn-primary"  *ngIf="showUpdate" (click)="OnUpdate()">Update</button>
             <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
         </div>
 

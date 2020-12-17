@@ -3,6 +3,10 @@ import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {LabelsService} from '../../../../services/labels.service';
 import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
+
+
 @Component({
   selector: 'app-project-excecution-dialog',
   templateUrl: './project-excecution-dialog.component.html',
@@ -52,8 +56,19 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   showPdfModal:boolean;
   remarkModal:boolean;
   detectAuditTrialObj:any;
+  showUpdate: boolean;
 
-  constructor(private labelsService : LabelsService,private toasterService: ToasterService,private dialogRef : MatDialogRef<ProjectExcecutionDialogComponent> ,private formBuilder :  FormBuilder) { 
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
+
+  constructor(private labelsService : LabelsService,private toasterService: ToasterService,private dialogRef : MatDialogRef<ProjectExcecutionDialogComponent> ,private formBuilder :  FormBuilder,private utilService: UtilService,private router: Router,private activatedRoute: ActivatedRoute) { 
 
     // this.ProjectExcecutionForm = new FormGroup({
     //   userName : new FormControl(null),
@@ -98,20 +113,62 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.labels = value;
     })
 
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+    })
+
+  }
+
+  OnEdit() {
+    this.enableflag = false;
+    this.showUpdate = true;
   }
 
   OnUpdate(){
-    if(this.buttonName=='Update'){
-      this.detectFormChanges();
-      }
-    this.buttonName = 'Update';
-    this.enableflag = false;
-
+   
+   
+    this.detectFormChanges();
+      
     if(this.ProjectExcecutionForm.invalid){
       this.isDirty = true;
+      return;
     }
 
-  }
+    this.showDataSaveModal = true;
+    this.dataValue= {
+      title: 'Project Execution Saved Successfully',
+      message: 'Are you sure you want to proceed purchase order page?'
+    }
+}
+
+saveYes()
+{
+
+this.showDataSaveModal = false;
+
+this.closeDialog()
+this.next()
+
+
+
+}
+
+next() {
+
+  this.utilService.setCurrentUrl('users/purchaseOrder')
+
+  this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
+}
+
+saveCancel() {
+
+this.showDataSaveModal = false;
+this.closeDialog()
+
+}
+
 
 
   closeDialog(){

@@ -211,7 +211,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
       this.showDataSaveModal = true;
       this.dataValue= {
-        title: 'SMS Credit Saved Successfully',
+        title: 'Proforma Invoice Saved Successfully',
         message: 'Are you sure you want to proceed project execution page?'
       }
 

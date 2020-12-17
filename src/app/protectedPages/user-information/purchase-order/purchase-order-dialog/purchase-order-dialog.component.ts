@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import {LabelsService } from '../../../../services/labels.service'
 import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
+
 @Component({
   selector: 'app-purchase-order-dialog',
   templateUrl: './purchase-order-dialog.component.html',
@@ -50,8 +53,19 @@ export class PurchaseOrderDialogComponent implements OnInit {
   showPdfModal: boolean;
   remarkModal:boolean;
 
+  showUpdate: boolean;
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
   constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
-    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,private toasterService: ToasterService) {
+    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService) {
 
     this.PurchaseOrderForm = this.formBuilder.group({
       userName : ['Kumaran'],
@@ -80,19 +94,64 @@ export class PurchaseOrderDialogComponent implements OnInit {
     this.labelService.getLabelsData().subscribe((value) =>{
     this.labels = value;
     })
+
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+    })
+  }
+
+  OnEdit() {
+
+
+    this.enableFlag = false;
+    this.showUpdate = true;
   }
 
   OnUpdate(){
-    if(this.buttonName=='Update'){
+  
       this.detectFormChanges();
-      }
-    this.buttonName = 'Update';
-    this.enableFlag = false;
 
-    if(this.PurchaseOrderForm.invalid)
+    if(this.PurchaseOrderForm.invalid) {
       this.isDirty = true;
+      return;
+    }
+      
+
+      this.showDataSaveModal = true;
+    this.dataValue= {
+      title: 'Purchase Order Saved Successfully',
+      message: 'Are you sure you want to proceed tax invoice page?'
+    }
 
   }
+
+  saveYes()
+{
+
+this.showDataSaveModal = false;
+
+this.closeDialog()
+this.next()
+
+
+
+}
+
+next() {
+
+  this.utilService.setCurrentUrl('users/taxInvoice')
+
+    this.router.navigate([`/users/taxInvoice/${this.storeProjectNo}`])
+
+}
+
+saveCancel() {
+
+this.showDataSaveModal = false;
+this.closeDialog()
+
+}
 
 
   closeDialog(){

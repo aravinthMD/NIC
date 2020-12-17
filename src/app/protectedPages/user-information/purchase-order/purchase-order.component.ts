@@ -330,7 +330,7 @@ dataValue: {
 
   this.showDataSaveModal = true;
   this.dataValue= {
-    title: 'SMS Credit Saved Successfully',
+    title: 'Purchase Order Saved Successfully',
     message: 'Are you sure you want to proceed tax invoice page?'
   }
 

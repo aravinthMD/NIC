@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import {LabelsService} from '../../../../services/labels.service';
 import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -27,8 +29,19 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   showDeleteModal: boolean;
 
+  showUpdate: boolean;
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
   constructor(private formBuilder : FormBuilder,private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
-    private labelService : LabelsService,private toasterService: ToasterService) {
+    private labelService : LabelsService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService) {
 
     this.taxInvoiceForm = this.formBuilder.group({
       userName : ['Arun'],
@@ -71,17 +84,28 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.labelService.getLabelsData().subscribe((value) => {
       this.labels = value;
     })
+
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+    })
+  }
+
+  OnEdit() {
+
+
+    this.enableFlag = false;
+    this.showUpdate = true;
   }
 
   OnUpdate(){
-    if(this.buttonName=='Update'){
+    
     this.detectFormChanges();
-    }
-    this.buttonName  = 'Update';
-    this.enableFlag = false;
+    
 
     if(this.taxInvoiceForm.invalid){
       this.isDirty = true;
+      return;
     }
   }
 

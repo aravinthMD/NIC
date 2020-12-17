@@ -5,6 +5,8 @@ import { LabelsService } from '../../../../services/labels.service';
 import { DatePipe } from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-proforma-invoice-dialog-form',
@@ -69,10 +71,22 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   remarkModal:boolean;
   detectAuditTrialObj:any;
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
+  showUpdate: boolean;
+
   
   constructor( public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
     
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private sanitizer: DomSanitizer) { 
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private sanitizer: DomSanitizer, private utilService: UtilService,private router: Router,private activatedRoute: ActivatedRoute) { 
 
     console.log(data)
 
@@ -101,17 +115,29 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       this.labels = values;
     })
 
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+
+    })
+
+  }
+
+  OnEdit() {
+
+    this.showUpdate = true;
+    this.enableflag = false;
   }
 
   OnUpdate(){
-    if(this.buttonName=='Update'){
-      this.detectFormChanges();
-      }
-    this.buttonName = 'Update';
-    this.enableflag = false;
+  
+    this.detectFormChanges();
+   
+   
 
     if(this.form.invalid) {
       this.isDirty = true;
+      return;
     }
 
     this.form.value['fromDate'] = this.datePipe.transform(this.form.value['fromDate'], 'dd/MM/yyyy')
@@ -120,6 +146,38 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     this.form.value['poDate'] = this.datePipe.transform(this.form.value['poDate'], 'dd/MM/yyyy')
 
     console.log(this.form.value)
+
+    this.showDataSaveModal = true;
+        this.dataValue= {
+          title: 'Proforma Invoice Saved Successfully',
+          message: 'Are you sure you want to proceed project execution page?'
+        }
+  }
+
+  saveYes()
+  {
+ 
+   this.showDataSaveModal = false;
+ 
+   this.closeDialog()
+   this.next()
+ 
+
+ 
+  }
+ 
+  saveCancel() {
+ 
+   this.showDataSaveModal = false;
+   this.closeDialog()
+  
+  }
+
+  next() {
+
+    this.utilService.setCurrentUrl('users/projectExecution')
+
+    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
 
   }
 
