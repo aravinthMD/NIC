@@ -18,7 +18,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   isDirty: boolean;
   propertyFlag : boolean;
   showDataSaveModal  :boolean;
-  dataValue  = {}
+  dataValue  = {};
+  showView: boolean = true;
 
   departmentListData = [
     {key:0,value:'Department of Sainik Welfare'},
@@ -101,6 +102,8 @@ remarkModal: boolean;
       this.setFormValues();
       this.propertyFlag = true;
 
+      }else {
+        this.showView = false;
       }
 
 
@@ -108,6 +111,7 @@ remarkModal: boolean;
 
   editData() {
     this.propertyFlag = false;
+    this.showView = false;
   }
 
   setFormValues() {

@@ -2,7 +2,7 @@ import { EventEmitter } from '@angular/core';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {LabelsService} from '../../../services/labels.service'
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-user-info-preview-form',
   templateUrl: './user-info-form.component.html',
@@ -57,7 +57,9 @@ statusList= [
 
   labels: any = {};
 
-  constructor(private labelService :LabelsService,private formBuilder :  FormBuilder) {
+  userData: any;
+
+  constructor(private labelService :LabelsService,private formBuilder :  FormBuilder,private datePipe : DatePipe) {
 
     this.form =this.formBuilder.group({
       applicantName : [null],
@@ -122,6 +124,12 @@ statusList= [
 
 
   setFormValues(){
+
+    var dateObj = new Date();
+var month = dateObj.getUTCMonth() + 1; //months from 1-12
+var day = dateObj.getUTCDate();
+var year = dateObj.getUTCFullYear();
+
     this.form.patchValue({
       applicantName : this.accountName.split('.')[0] || 'Arul',
       departmentName : 'Ministry of Minority Affairs',
@@ -131,7 +139,7 @@ statusList= [
       mobileNo : '8754809950',
       telPhno : '2281756',
       teleCode: '+044',
-      offAddress1 : '23, Bhandup West, Mumbai,Maharastra - 641008',
+      offAddress1 : '23, Bhandup Bhairavi Voras Lab West',
       offAddress2 : '23, Bhandup West, Mumbai,Maharastra - 641008',
       offAddress3 : '23, Bhandup West, Mumbai,Maharastra - 641008',
       city : 'Mumbai',
@@ -142,10 +150,10 @@ statusList= [
       projectNo : this.user || '8776',
       creditAdded : '1000',
       creditApprover : 'Vikash',
-      fromDate: new Date(),
-      toDate: new Date(),
-      creditDate : new Date(),
-      creditAddedAgainstPi : new Date(),
+      fromDate: day+'/'+month+'/'+year,
+      toDate: day+'/'+month+'/'+year,
+      creditDate : day+'/'+month+'/'+year,
+      creditAddedAgainstPi : day+'/'+month+'/'+year,
       countryCode: '91',
       
       OfficerName:'Sri Ram',
@@ -166,7 +174,7 @@ statusList= [
       domMonSmsTraffic: '1000',
       intMonSmsTraffic: '1000',
       appSecurAudClear: 'Secure',
-      auditDate:new Date(),
+      auditDate:day+'/'+month+'/'+year,
       traiSenderId: 'No',
       userId: this.accountName || 'Arul.auth',
       password: 'nic@123',
@@ -176,6 +184,8 @@ statusList= [
       
 
     })
+
+    this.userData = this.form.value;
   }
 
   OnEdit(){
