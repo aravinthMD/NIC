@@ -6,7 +6,10 @@
 
             <app-account-header [title]="'SMS Credit Allocation'" [accountName]="accountName" [status]="status" [user]="'smsCredit'" (addCredit)="newCredit()"></app-account-header>
 
-            <form (submit)="onSubmit()" [formGroup]="smsCreditAllocation">
+            <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
+
+
+            <form (submit)="onSubmit()" [formGroup]="smsCreditAllocation" *ngIf = "!showView">
                 <div class="row">
                     <div class="col-4 pb-0">
                         <div class="form-group">

@@ -28,6 +28,8 @@ smsCreditAllocation:FormGroup;
 panelOpenState=false;
 displayedColumns:any[]=['s.no','credit','expiryDate','status','reminder','remark']
 
+viewInfoData : any
+
 currentDate:any;
 
 history:any[]=[
@@ -51,6 +53,8 @@ dataSource = new MatTableDataSource<any>(this.history)
 isDisabledInp=true;
 
 isDirty: boolean;
+
+showView :  boolean  = true;
 
 propertyFlag: boolean;
 
@@ -132,6 +136,8 @@ showDataSaveModal: boolean;
       this.setFormValues();
       this.propertyFlag = true;
 
+      }else {
+        this.showView = false
       }
 
 
@@ -139,6 +145,7 @@ showDataSaveModal: boolean;
 
   editData() {
     this.propertyFlag = false;
+    this.showView = false;
   }
 
 
@@ -155,11 +162,47 @@ showDataSaveModal: boolean;
       timeStamp: this.currentDate,
     })
     this.detectAuditTrialObj = this.smsCreditAllocation.value;
+
+    this.viewInfoData = [
+      {
+        key  : this.labels.smsQuotaMetrix,
+        value  : this.smsCreditAllocation.value.smsQuotaMetrix
+      },
+      {
+        key  : this.labels.credit,
+        value  : this.smsCreditAllocation.value.credit
+      },
+      {
+        key  : this.labels.date,
+        value  : this.smsCreditAllocation.value.date
+      },
+      {
+        key  : this.labels.status,
+        value :  this.smsCreditAllocation.value.statusList
+      },
+      {
+        key  : this.labels.onApprovalOf,
+        value  : this.smsCreditAllocation.value.onApprovalOf
+      },
+      {
+        key  : this.labels.remark,
+        value  : "Status Changed"
+      },
+      {
+        key   : this.labels.statusChangedBy,
+        value  : this.smsCreditAllocation.value.statusChangedBy
+      },
+      {
+        key  : this.labels.timeStamp,
+        value :  this.smsCreditAllocation.value.timeStamp
+      }
+    ]
+
   }
 
    detectFormChanges() {
 
-    let iRemark = false;
+    let iRemark = false;  
 
     const formObject = this.smsCreditAllocation.value;
 

@@ -2,13 +2,14 @@
 <div class="col-md-10 main"> 
     <mat-card>
 <div class="billOwner">
-    <!-- <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Billing Admin Details</h1> -->
 
     <app-account-header [title]="'Billing Admin Detail'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
 
-    <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
-<form (submit)="onSubmit()" [formGroup]="billOwnerForm" *ngIf="showEdit">
+    <app-view-info [userDetails]="viewInfoData" *ngIf="showView"></app-view-info>
+    
+    
+<form (submit)="onSubmit()" [formGroup]="billOwnerForm" *ngIf="!showView">
         <div class="row">
             <div class="col-4">
                 <div class="form-group">

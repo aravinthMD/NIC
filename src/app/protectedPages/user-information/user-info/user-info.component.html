@@ -4,13 +4,14 @@
 
         <app-account-header [title]="'Customer Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
-        <app-user-info-preview-form *ngIf = "existingPreviewUserFlag" [accountName] = "accountName" [status] = "status" [user] = "user" (edit) = "editData($event)">
+        <!-- <app-user-info-preview-form *ngIf = "existingPreviewUserFlag" [accountName] = "accountName" [status] = "status" [user] = "user" (edit) = "editData($event)">
             <button class="btn btn-primary float-left" matRipple (click)="back()">Back</button>
             <button class="btn btn-primary back-btn float-left" matRipple (click)="next()">Next</button>
-        </app-user-info-preview-form>
+        </app-user-info-preview-form> -->
 
-            <ng-container *ngIf = "existingUserFlag || newUserFlag">
-            <form [formGroup]="form" (keydown.enter)="$event.preventDefault()">
+        <app-view-info [userDetails]  = "viewInfoData" *ngIf = "existingPreviewUserFlag"></app-view-info>
+
+            <form [formGroup]="form" (keydown.enter)="$event.preventDefault()" *ngIf = "existingUserFlag || newUserFlag">
                 <!--FIRST ROW-->
 
                 <div class="row">
@@ -669,25 +670,10 @@
 
                 </div> -->
 
-                <div class="row pt-3 pb-3">
-                    <div class="col-10">
-                    <button class="btn btn-primary float-left" matRipple type="submit"
-                      (click)="Onsubmit()" *ngIf="!propertyFlag">Save</button>
-                    <button class="btn btn-primary back-btn float-left" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
-                    </div>
-
-                   <div class="col-1" style="float: left;">
-                    <button class="btn btn-primary ml-3" (click)="back()">Back</button>
-                   </div>
-
-                   <div class="col-1" style="float: left;">
-                    <button class="btn btn-primary ml-3" (click)="next()">Next</button>
-                   </div>
-                </div>
+                
 
             </form>
 
-        </ng-container>
 
             <!-- <div>
            <button mat-raised-button matRipple style="background-color:#0e4d92;color: #fff;" (click)="back()">Back</button>
@@ -700,6 +686,22 @@
           <button mat-mini-fab color="primary" class="float-right" aria-label="Example icon button with a home icon">
             <mat-icon>arrow_forward_ios</mat-icon>
           </button> -->
+
+          <div class="row pt-3 pb-3">
+            <div class="col-10">
+            <button class="btn btn-primary float-left" matRipple type="submit"
+              (click)="Onsubmit()" *ngIf="!propertyFlag">Save</button>
+            <button class="btn btn-primary back-btn float-left" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+            </div>
+
+           <div class="col-1" style="float: left;">
+            <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+           </div>
+
+           <div class="col-1" style="float: left;">
+            <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+           </div>
+        </div>
           
     </mat-card>
 

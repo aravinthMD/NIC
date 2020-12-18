@@ -19,6 +19,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
   showDataSaveModal : boolean;
   dataValue  = {}
 
+  viewInfoData  : any;
+
+
   countryCodeValues = [
     {key:0,value:'+91'},
     {key:1,value:'+60'},
@@ -40,9 +43,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   remarkModal: boolean;
 
-  viewInfoData: any;
 
-  showEdit: boolean;
+  showView: boolean = true;
 
   constructor(
     private labelsService:LabelsService,
@@ -53,6 +55,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    debugger;
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
@@ -92,6 +95,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
       this.setFormValues();
       this.propertyFlag = true;
 
+      }else  {
+       this.showView = false
       }
 
 
@@ -119,6 +124,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
       remark: 'Pincode Changed'
 
     })
+
+    this.detectAuditTrialObj = this.billOwnerForm.value;
+
 
     this.viewInfoData = [
       {
@@ -155,7 +163,6 @@ export class BillingOwnerDetailsComponent implements OnInit {
       }
     ]
 
-    this.detectAuditTrialObj = this.billOwnerForm.value;
   }
 
   detectFormChanges() {
@@ -205,7 +212,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   editData() {
     this.propertyFlag = false;
-    this.showEdit = true;
+    this.showView = false;
   }
 
   onSubmit(){

@@ -21,6 +21,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   dataValue  = {};
   showView: boolean = true;
 
+  viewInfoData :  any;
+
   departmentListData = [
     {key:0,value:'Department of Sainik Welfare'},
     {key:1,value:'Ministry of Minority Affairs'},
@@ -60,6 +62,8 @@ remarkModal: boolean;
     ) { }
 
   ngOnInit() {
+
+    debugger
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
@@ -135,7 +139,61 @@ remarkModal: boolean;
       remark: 'Address Changed'
     })
 
+
     this.detectAuditTrialObj = this.technicaladminform.value;
+
+
+    this.viewInfoData = [
+      {
+        key : this.labels.name,
+        value : this.technicaladminform.value.name
+      },
+      {
+        key  : this.labels.email,
+        value  : this.technicaladminform.value.email
+      },
+      {
+        key  : this.labels.department,
+        value :  this.technicaladminform.value.departmentName
+      },
+      {
+        key  : this.labels.designation,
+        value :  this.technicaladminform.value.designation
+      },
+      {
+        key  : this.labels.employeeCode,
+        value :  this.technicaladminform.value.employeeCode
+      },
+      {
+        key  : this.labels.mobileNo,
+        value  :  `${this.technicaladminform.value.countryCode}${this.technicaladminform.value.mobileNo}`
+      },
+      {
+        key  : this.labels.telPhno,
+        value :  `${this.technicaladminform.value.teleCode}${this.technicaladminform.value.telPhno}`
+      },
+      {
+        key  : "Official Address",
+        value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3}`
+      },
+      {
+        key  : this.labels.city,
+        value :  this.technicaladminform.value.city
+      },
+      {
+        key  : this.labels.state,
+        value  : this.technicaladminform.value.state
+      },
+      {
+        key : this.labels.pincode,
+        value :  this.technicaladminform.value.pincode
+      },
+      {
+        key  : this.labels.remark,
+        value  : this.technicaladminform.value.remark
+      }
+    ]
+
 
   }
   onSubmit(){

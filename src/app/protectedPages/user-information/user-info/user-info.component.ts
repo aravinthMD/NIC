@@ -37,6 +37,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   dataValue = {}
 
+  viewInfoData : any;
+
   // deparmentList : any[] = ['','Department of Sainik Welfare',
   //  'Minstry of minority affairs',
   //   'Vishakhapatnam port Trust' ,
@@ -162,6 +164,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
    }
 
   ngOnInit() {
+    debugger;
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -192,6 +195,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
         // this.setFormValues();
 
         this.existingPreviewUserFlag = true
+        this.setFormValues();
         this.buttonName = 'Edit';
         this.propertyFlag = true;
 
@@ -222,6 +226,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   editData(value ?: string) {
     this.propertyFlag = false;
     this.existingPreviewUserFlag  = false;
+    this.existingUserFlag =  true
     this.setFormValues();
   }
 
@@ -237,7 +242,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   setFormValues(){
     
-    this.existingUserFlag = true;
+    debugger;
     
     this.form.patchValue({
       applicantName : this.accountName.split('.')[0] || 'Arul',
@@ -294,6 +299,161 @@ export class UserInfoComponent implements OnInit,OnChanges {
     })
 
     this.detectAuditTrialObj = this.form.value;
+
+    
+    this.viewInfoData = [
+      {
+        key: this.labels.department,
+        value : "Ministry of Home Affairs"
+      },
+      {
+        key : this.labels.applicantName,
+        value : this.form.value.applicantName
+      },
+      {
+        key  :this.labels.applicantEmail,
+        value : this.form.value.email
+      },
+      {
+        key : this.labels.applicantMobile,
+        value : this.form.value.mobileNo
+      },
+      {
+        key : "Officer Name",
+        value : this.form.value.OfficerName
+      },
+      {
+        key : "Officer Email",
+        value : this.form.value.OfficerEmail
+      },
+      {
+        key  :"Officer Mobile",
+        value :this.form.value.OfficerMobile
+      },
+      {
+        key  :this.labels.designation,
+        value : this.form.value.designation
+      },
+      {
+        key  : this.labels.teleNumber,
+        value : `${this.form.value.teleCode}${this.form.value.telPhno}`
+      },
+      {
+        key  : "Official Address",
+        value  : `${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3}`
+      },{
+        key  : this.labels.city,
+        value : this.form.value.city
+      },
+      {
+        key  : this.labels.state,
+        value  : this.form.value.state
+      },
+      {
+        key  : this.labels.pincode,
+        value : this.form.value.pinCode
+      },
+      {
+        key  : this.labels.smsServiceReqd,
+        value : 'Post Paid'
+      },
+      {
+        key :  this.labels.credits_SMSQuota,
+        value : this.form.value.creditsSMSQuota
+      },
+      {
+        key  : this.labels.smsTraffic,
+        value : this.form.value.smsTariffMonthWise
+      },
+      {
+        key  : this.labels.availableCredit,
+        value : this.form.value.availableCredit
+      },
+      {
+        key  : this.labels.nameOfTheApplication,
+        value  : this.form.value.nameOfTheApplication
+      },
+      {
+        key : this.labels.applicationUrl,
+        value : this.form.value.applicationUrl
+      },
+      {
+        key  : this.labels.serverLocation,
+        value : this.form.value.serverLocation
+      },
+      {
+        key : this.labels.purpOfTheApplication,
+        value : this.form.value.purpOfTheApplication
+      },
+      {
+        key  : "SMS GateWay IP",
+        value : this.form.value.smsGatewayAccess
+      },
+      {
+        key  : "IP of Staging Server",
+        value  : this.form.value.ipServReqd
+      },{
+        key : "PDMST",
+        value : this.form.value.domMonSmsTraffic
+      },
+      {
+        key : "PIMST",
+        value  : this.form.value.intMonSmsTraffic
+      },
+      {
+        key : this.labels.applicationsecurAuditCleared,
+        value : this.form.value.appSecurAudClear
+      },
+      {
+        key  : "Audit Date Cleared",
+        value  : this.form.value.auditDate
+      },
+      {
+        key : "TRAI Exempted Sender ID",
+        value : "No"
+      },
+      {
+        key  : this.labels.projectNo,
+        value : this.form.value.projectNo
+      },
+      {
+        key  : this.labels.userId,
+        value  :  this.form.value.userId
+      },
+      {
+        key : this.labels.password,
+        value : this.form.value.password
+      },
+      {
+        key  : this.labels.creditAdded,
+        value  : this.form.value.creditAdded
+      },
+      {
+        key  :this.labels.creditApprover,
+        value :  this.form.value.creditApprover
+      },
+      {
+        key  : this.labels.creditDate,
+        value :  this.form.value.creditDate
+      },
+      {
+        key :  "Credit Against PI",
+        value :  this.form.value.creditAddedAgainstPi
+      },
+      {
+        key  : this.labels.uploadDoc,
+        value  : 'Invoice.pdf'
+      },
+      {
+        key  : this.labels.status,
+        value  : 'Active'
+      },
+      {
+        key  : this.labels.remark,
+        value :  this.form.value.remark
+      }
+    ]
+
   }
 
   formDateFunc(date) {
