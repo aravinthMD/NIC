@@ -67,6 +67,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
 
   storeProjectNo: string;
 
+  viewInfoData: any;
+
+  showEdit: boolean;
+
 
   constructor(private labelsService : LabelsService,private toasterService: ToasterService,private dialogRef : MatDialogRef<ProjectExcecutionDialogComponent> ,private formBuilder :  FormBuilder,private utilService: UtilService,private router: Router,private activatedRoute: ActivatedRoute) { 
 
@@ -118,11 +122,77 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.storeProjectNo = value.projectNo || 4535;
     })
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    this.viewInfoData = [
+      {
+        key: this.labels.userName,
+        value:this.ProjectExcecutionForm.value.userName
+      },
+      {
+        key: this.labels.proformaIN,
+        value:this.ProjectExcecutionForm.value.piNumber
+      },
+      {
+        key: 'Proforma Invoice Date',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.piAmount,
+        value:this.ProjectExcecutionForm.value.piAmount
+      },
+      {
+        key: this.labels.modeOfPayment,
+        value:'RTGS'
+      },
+      {
+        key: this.labels.documentNo,
+        value:this.ProjectExcecutionForm.value.documentNo
+      },
+      {
+        key: 'Date of Transaction',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.bankName,
+        value:this.ProjectExcecutionForm.value.bankName
+      },
+      {
+        key: this.labels.amountReceived,
+        value:this.ProjectExcecutionForm.value.amountReceived
+      },
+      {
+        key: this.labels.tds,
+        value:this.ProjectExcecutionForm.value.tds
+      },
+      {
+        key: this.labels.nicsiProjectNumber,
+        value:this.ProjectExcecutionForm.value.NICSIProjectNo
+      },
+      {
+        key: 'PI Paid',
+        value:'Partial Payment'
+      },
+      {
+        key: this.labels.remark,
+        value:this.ProjectExcecutionForm.value.remark
+      },
+      {
+        key: 'Document',
+        value:'invoice.pdf'
+      }
+
+    ]
+
   }
 
   OnEdit() {
     this.enableflag = false;
     this.showUpdate = true;
+    this.showEdit = true;
   }
 
   OnUpdate(){

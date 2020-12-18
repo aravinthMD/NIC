@@ -64,6 +64,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   storeProjectNo: string;
 
+  viewInfoData: any;
+
+  showEdit: boolean;
+
   constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
     private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService) {
 
@@ -99,6 +103,99 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
       this.storeProjectNo = value.projectNo || 4535;
     })
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+
+const psData = this.paymentStatus.filter((val)=> {
+
+  return val.key == this.PurchaseOrderForm.value.paymentStatus
+})
+
+const poStatus = this.poStatus.filter((val)=> {
+  return val.key == this.PurchaseOrderForm.value.poStatus
+})
+
+const departmentListData = this.departmentListData.filter((val)=> {
+  return val.key == this.PurchaseOrderForm.value.departmentName
+})
+    this.viewInfoData = [
+      {
+        key: this.labels.userName,
+        value:this.PurchaseOrderForm.value.userName
+      },
+      {
+        key: this.labels.piNumber,
+        value:this.PurchaseOrderForm.value.piNumber
+      },
+      {
+        key: this.labels.poNumber,
+        value:this.PurchaseOrderForm.value.poNumber
+      },
+      {
+        key: this.labels.smsApproved,
+        value:this.PurchaseOrderForm.value.smsApproved
+      },
+      {
+        key: this.labels.projectName,
+        value:this.PurchaseOrderForm.value.projectName
+      },
+      {
+        key: this.labels.date,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.withoutTax,
+        value:this.PurchaseOrderForm.value.withoutTax
+      },
+      {
+        key: this.labels.poStatus,
+        value:poStatus[0].value
+      },
+      {
+        key: 'Valid From',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: 'Valid Upto',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.userEmail,
+        value:this.PurchaseOrderForm.value.userEmail
+      },
+      {
+        key: this.labels.poManagerEmail,
+        value:this.PurchaseOrderForm.value.poManagerEmail
+      },
+      {
+        key: this.labels.projectNo,
+        value:this.PurchaseOrderForm.value.projectNo
+      },
+      {
+        key: this.labels.poAmountWithTax,
+        value:this.PurchaseOrderForm.value.poAmountWithTax
+      },
+      {
+        key: this.labels.department,
+        value:departmentListData[0].value
+      },
+      {
+        key: this.labels.paymentStatus,
+        value:psData[0].value
+      },
+      {
+        key: this.labels.remark,
+        value:this.PurchaseOrderForm.value.remark
+      },
+      {
+        key: 'Document',
+        value:'invoice.pdf'
+      },
+    ]
   }
 
   OnEdit() {
@@ -106,6 +203,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
     this.enableFlag = false;
     this.showUpdate = true;
+    this.showEdit = true;
   }
 
   OnUpdate(){

@@ -29,6 +29,11 @@ detectAuditTrialObj: any;
 
 remarkModal: boolean;
 
+showUpdate: boolean;
+showEdit:boolean;
+
+viewInfoData: any;
+
 deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'},{key:3,value:'Sales User'}];
 
 countryCodeValues = [
@@ -76,14 +81,73 @@ teleCodeValues = [
       this.labels = values;
     })
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    const deparmentList  = this.deparmentList.filter((val)=> {
+      return val.key == this.form.value.departmentName
+    })
+
+    const countryCodeValues = this.countryCodeValues.filter((val)=> {
+      return val.key == this.form.value.countryCode
+    })
+    const teleCodeValues = this.teleCodeValues.filter((val)=> {
+      return val.key == this.form.value.teleCode
+    })
+    this.viewInfoData = [
+      {
+        key: this.labels.name,
+        value:this.form.value.name
+      },
+      {
+        key: 'Department',
+        value:deparmentList[0].value
+      },
+      {
+        key: this.labels.designation,
+        value:this.form.value.designation
+      },
+      {
+        key: this.labels.employeeCode,
+        value:this.form.value.employeeCode
+      },
+      {
+        key: this.labels.email,
+        value:this.form.value.email
+      },
+      {
+        key: this.labels.mobileNo,
+        value:countryCodeValues[0].value+this.form.value.mobileNo
+      },
+      {
+        key: this.labels.teleNumber,
+        value:`${teleCodeValues[0].value}${this.form.value.telPhno}`
+      },
+      {
+        key: 'Official Address',
+        value:`${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3}, ${this.form.value.city}, ${this.form.value.state} - ${this.form.value.pinCode}`
+      },
+      {
+        key: this.labels.remark,
+        value:this.form.value.remark
+      }
+    ]
+
     
   }
 
+  OnEdit() {
+
+    this.showUpdate = true;
+    this.enableflag = false;
+    this.showEdit = true;
+  }
+
+
   OnUpdate(){
-    if(this.buttonName == 'Edit') {
-      this.enableflag = false
-      this.buttonName = 'Update';
-    }else {
+   
       // this.enableflag = true
       // this.buttonName = 'Edit';
       if(this.form.invalid) {
@@ -94,9 +158,12 @@ teleCodeValues = [
         return
       }
       this.detectFormChanges()
-    }
     
     
+  }
+
+  closeDialog() {
+    this.dialogRef.close({ event: 'close', data: 'returnvalue' });
   }
 
   detectFormChanges() {
