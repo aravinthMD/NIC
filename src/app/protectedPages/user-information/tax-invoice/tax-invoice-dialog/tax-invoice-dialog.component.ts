@@ -40,6 +40,10 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   storeProjectNo: string;
 
+  viewInfoData: any;
+
+  showEdit: boolean;
+
   constructor(private formBuilder : FormBuilder,private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
     private labelService : LabelsService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService) {
 
@@ -89,6 +93,93 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
       this.storeProjectNo = value.projectNo || 4535;
     })
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+
+    const psData = this.paymentStatus.filter((val)=> {
+
+      return val.key == this.taxInvoiceForm.value.paymentStatus
+    })
+
+    const invoiceStatusList = this.invoiceStatusList.filter((val)=> {
+      return val.key == this.taxInvoiceForm.value.invoiceStatus
+    })
+
+    this.viewInfoData = [
+      {
+        key: this.labels.userName,
+        value:this.taxInvoiceForm.value.userName
+      },
+      {
+        key: this.labels.projectNo,
+        value:this.taxInvoiceForm.value.projectNo
+      },
+      {
+        key: this.labels.poNumber,
+        value:this.taxInvoiceForm.value.poNumber
+      },
+      {
+        key: this.labels.poDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.fromDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.toDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.poBillable,
+        value:this.taxInvoiceForm.value.poBillable
+      },
+      {
+        key: this.labels.invoiceAmount,
+        value:this.taxInvoiceForm.value.invoiceAmount
+      },
+
+      {
+        key: this.labels.taxIN,
+        value:this.taxInvoiceForm.value.taxIN
+      },
+      {
+        key: this.labels.submittedDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.invoiceStatus,
+        value:invoiceStatusList[0].value
+      },
+      {
+        key: this.labels.invoiceAmountPaid,
+        value:this.taxInvoiceForm.value.invoiceAmountPaid
+      },
+      {
+        key: this.labels.tds,
+        value:this.taxInvoiceForm.value.tds
+      },
+      {
+        key: this.labels.penalty,
+        value:this.taxInvoiceForm.value.penalty
+      },
+      {
+        key: this.labels.shortPay,
+        value:this.taxInvoiceForm.value.shortPay
+      },
+      {
+        key: this.labels.paymentStatus,
+        value:psData[0].value
+      },
+      {
+        key: this.labels.remark,
+        value:this.taxInvoiceForm.value.remark
+      },
+    ]
   }
 
   OnEdit() {
@@ -96,6 +187,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
     this.enableFlag = false;
     this.showUpdate = true;
+    this.showEdit = true;
   }
 
   OnUpdate(){

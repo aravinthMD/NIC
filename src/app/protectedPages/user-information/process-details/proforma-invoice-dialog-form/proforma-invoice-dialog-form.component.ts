@@ -83,6 +83,10 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   showUpdate: boolean;
 
+  showEdit: boolean;
+
+  viewInfoData: any;
+
   
   constructor( public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
     
@@ -121,12 +125,78 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
     })
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    this.viewInfoData = [
+      {
+        key: this.labels.accountName,
+        value:this.form.value.accountName
+      },
+      {
+        key: this.labels.proformaIN,
+        value:this.form.value.invoiceNumber
+      },
+      {
+        key: this.labels.refNo,
+        value:this.form.value.refNumber
+      },
+      {
+        key: this.labels.piOwner,
+        value:this.form.value.piOwner
+      },
+      {
+        key: this.labels.piAmount,
+        value:this.form.value.piAmount
+      },
+      {
+        key: this.labels.piTraffic,
+        value:this.form.value.piTraffic
+      },
+      {
+        key: this.labels.date,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: 'NICSI Manager',
+        value:'vinod.agrawal@nic.in'
+      },
+      {
+        key: 'Start Date',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: 'End Date',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: 'PI Status',
+        value:'Pending'
+      },
+      {
+        key: 'Payment Status',
+        value:'On hold'
+      },
+      {
+        key: this.labels.remark,
+        value:this.form.value.remark
+      },
+      {
+        key: 'Document',
+        value:'invoice.pdf'
+      },
+
+    ]
+
   }
 
   OnEdit() {
 
     this.showUpdate = true;
     this.enableflag = false;
+    this.showEdit = true;
   }
 
   OnUpdate(){
