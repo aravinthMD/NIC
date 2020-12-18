@@ -40,6 +40,10 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   remarkModal: boolean;
 
+  viewInfoData: any;
+
+  showEdit: boolean;
+
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
@@ -116,6 +120,41 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
     })
 
+    this.viewInfoData = [
+      {
+        key: this.labels.name,
+        value:this.billOwnerForm.value.name
+      },
+      {
+        key: this.labels.email,
+        value:this.billOwnerForm.value.email
+      },
+      {
+        key: this.labels.designation,
+        value:this.billOwnerForm.value.designation
+      },
+      {
+        key: this.labels.employeeCode,
+        value:this.billOwnerForm.value.employeeCode
+      },
+      {
+        key: this.labels.mobileNo,
+        value:`91${this.billOwnerForm.value.mobileNo}`
+      },
+      {
+        key: this.labels.teleNumber,
+        value:`044${this.billOwnerForm.value.telPhno}`
+      },
+      {
+        key: 'Official Address',
+        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`
+      },
+      {
+        key: this.labels.remark,
+        value:this.billOwnerForm.value.remark
+      }
+    ]
+
     this.detectAuditTrialObj = this.billOwnerForm.value;
   }
 
@@ -166,6 +205,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   editData() {
     this.propertyFlag = false;
+    this.showEdit = true;
   }
 
   onSubmit(){

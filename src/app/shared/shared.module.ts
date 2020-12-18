@@ -12,10 +12,11 @@ import { RemarkModalComponent } from './remark-modal/remark-modal.component';
 import { MatDatepickerModule } from '@angular/material';
 import { UserInfoFormComponent } from './preview/user-info-form/user-info-form.component';
 import { DataSavedModalComponent } from './data-saved-modal/data-saved-modal.component';
+import { ViewInfoComponent } from './view-info/view-info.component';
 
 
 @NgModule({
-  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent],
+  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent, ViewInfoComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -31,7 +32,8 @@ import { DataSavedModalComponent } from './data-saved-modal/data-saved-modal.com
     AccountHeaderComponent,
     RemarkModalComponent,
     UserInfoFormComponent,
-    DataSavedModalComponent
+    DataSavedModalComponent,
+    ViewInfoComponent
   ],
   providers : [],
   entryComponents : [AuditTrailDialogComponent]

@@ -7,7 +7,8 @@
     <app-account-header [title]="'Billing Admin Detail'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
 
-<form (submit)="onSubmit()" [formGroup]="billOwnerForm">
+    <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
+<form (submit)="onSubmit()" [formGroup]="billOwnerForm" *ngIf="showEdit">
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
