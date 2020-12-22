@@ -37,6 +37,36 @@ export class ApiService {
       workflowId : 'ac548f821cc511ebb6c1727d5ac274b2',
       processId : 'a1b4c89a1daf11ebb6c3727d5ac274b2',
       projectId : environment.projectIds.projectId
+    },
+
+    gtLovsList: {
+      workflowId: 'bfe7bbf4408411ebb7bf727d5ac274b2',
+      processId: 'bfe7bbf4408411ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+
+    getLovSubmenuList: {
+      workflowId: 'bfb43590408411ebb7bf727d5ac274b2',
+      processId: 'bfe7bbf4408411ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+
+    updateLov: {
+      workflowId: 'bfb43590408411ebb7bf727d5ac274b2',
+      processId: 'bfe7bbf4408411ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+
+    deleteLov: {
+      workflowId: 'bfb43590408411ebb7bf727d5ac274b2',
+      processId: 'bfe7bbf4408411ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+
+    insertLov: {
+      workflowId: 'bfb43590408411ebb7bf727d5ac274b2',
+      processId: 'bfe7bbf4408411ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
     }
   }
 

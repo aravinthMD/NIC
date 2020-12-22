@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-3" *ngFor="let data of userDetails">
-    <label for="">{{data?.key}}</label><br>
+    <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of userDetails;let i = index">
+    <label for="">{{data?.key}} {{i}}</label><br>
     <span>{{data?.value}}</span>
     </div>
 </div>

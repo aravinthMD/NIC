@@ -63,7 +63,7 @@ remarkModal: boolean;
 
   ngOnInit() {
 
-    debugger
+   
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
@@ -142,6 +142,16 @@ remarkModal: boolean;
 
     this.detectAuditTrialObj = this.technicaladminform.value;
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+
+const departmentListData = this.departmentListData.filter((val)=> {
+  return val.key == this.technicaladminform.value.departmentName
+})
+
 
     this.viewInfoData = [
       {
@@ -154,7 +164,7 @@ remarkModal: boolean;
       },
       {
         key  : this.labels.department,
-        value :  this.technicaladminform.value.departmentName
+        value :  departmentListData[0].value
       },
       {
         key  : this.labels.designation,
@@ -166,11 +176,11 @@ remarkModal: boolean;
       },
       {
         key  : this.labels.mobileNo,
-        value  :  `${this.technicaladminform.value.countryCode}${this.technicaladminform.value.mobileNo}`
+        value  :  `91${this.technicaladminform.value.mobileNo}`
       },
       {
-        key  : this.labels.telPhno,
-        value :  `${this.technicaladminform.value.teleCode}${this.technicaladminform.value.telPhno}`
+        key  : this.labels.teleNumber,
+        value :  `044${this.technicaladminform.value.telPhno}`
       },
       {
         key  : "Official Address",
@@ -186,7 +196,7 @@ remarkModal: boolean;
       },
       {
         key : this.labels.pincode,
-        value :  this.technicaladminform.value.pincode
+        value :  this.technicaladminform.value.pinCode
       },
       {
         key  : this.labels.remark,
@@ -261,8 +271,15 @@ remarkModal: boolean;
   back() {
 
     this.utilService.setCurrentUrl('users/customerDetails')
+
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+
     if(this.user) {
-      this.router.navigate(['/users/customerDetails/1'])
+      this.router.navigate(['/users/customerDetails/'+pno])
     }else {
       this.router.navigate(['/users/customerDetails'])
     }
@@ -273,8 +290,14 @@ remarkModal: boolean;
     
     this.utilService.setCurrentUrl('users/billingAdmin')
 
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+
     if(this.user) {
-      this.router.navigate(['/users/billingAdmin/1'])
+      this.router.navigate(['/users/billingAdmin/'+pno])
     }else {
       this.router.navigate(['/users/billingAdmin'])
     }
