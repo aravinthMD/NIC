@@ -166,6 +166,141 @@ insertLov(lov) {
 
 }
 
+
+createAdminUser(data) {
+
+  const processId = this.apiService.api.createAdminUser.processId;
+  const workflowId = this.apiService.api.createAdminUser.workflowId;
+  const projectId = this.apiService.api.createAdminUser.projectId;
+
+
+  const requestEntity: any = {
+    processId,
+    ProcessVariables: data,
+    workflowId,
+    projectId,
+  };
+
+  const body = {
+    processVariables: JSON.stringify(requestEntity),
+  };
+
+  const formData = this.transform(body);
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+  return this.httpService.post(url,formData);
+
+} 
+
+fetchAllAdminUser() {
+
+  const processId = this.apiService.api.fetchAllAdminUser.processId;
+  const workflowId = this.apiService.api.fetchAllAdminUser.workflowId;
+  const projectId = this.apiService.api.fetchAllAdminUser.projectId;
+
+
+  const requestEntity: any = {
+    processId,
+    ProcessVariables: {},
+    workflowId,
+    projectId,
+  };
+
+  const body = {
+    processVariables: JSON.stringify(requestEntity),
+  };
+
+  const formData = this.transform(body);
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+  return this.httpService.post(url,formData);
+
+}
+
+getParticularAdminUser(id) {
+
+  const processId = this.apiService.api.getParticularAdminUser.processId;
+  const workflowId = this.apiService.api.getParticularAdminUser.workflowId;
+  const projectId = this.apiService.api.getParticularAdminUser.projectId;
+
+
+  const requestEntity: any = {
+    processId,
+    ProcessVariables: {
+      "userId": String(id)
+    },
+    workflowId,
+    projectId,
+  };
+
+  const body = {
+    processVariables: JSON.stringify(requestEntity),
+  };
+
+  const formData = this.transform(body);
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+  return this.httpService.post(url,formData);
+
+}
+
+updateAdminUser(data) {
+
+  const processId = this.apiService.api.updateAdminUser.processId;
+  const workflowId = this.apiService.api.updateAdminUser.workflowId;
+  const projectId = this.apiService.api.updateAdminUser.projectId;
+
+
+  const requestEntity: any = {
+    processId,
+    ProcessVariables: data,
+    workflowId,
+    projectId,
+  };
+
+  const body = {
+    processVariables: JSON.stringify(requestEntity),
+  };
+
+  const formData = this.transform(body);
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+  return this.httpService.post(url,formData);
+
+}
+
+deleteAdminUser(id) {
+
+  const processId = this.apiService.api.deleteAdminUser.processId;
+  const workflowId = this.apiService.api.deleteAdminUser.workflowId;
+  const projectId = this.apiService.api.deleteAdminUser.projectId;
+
+
+  const requestEntity: any = {
+    processId,
+    ProcessVariables: {
+      "id": String(id)
+    },
+    workflowId,
+    projectId,
+  };
+
+  const body = {
+    processVariables: JSON.stringify(requestEntity),
+  };
+
+  const formData = this.transform(body);
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+  return this.httpService.post(url,formData);
+
+}
+
 transform(data: any) {
   return new HttpParams({ fromObject: data });
 }

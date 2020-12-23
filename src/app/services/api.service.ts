@@ -67,6 +67,31 @@ export class ApiService {
       workflowId: 'bfb43590408411ebb7bf727d5ac274b2',
       processId: 'bfe7bbf4408411ebb7bf727d5ac274b2',
       projectId : environment.projectIds.projectId
+    },
+    createAdminUser: {
+      workflowId: 'f00f86cc2d5b11ebb771727d5ac274b2',
+      processId: 'f00f86cc2d5b11ebb771727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    fetchAllAdminUser: {
+      workflowId: '3180972e2d8711ebb77e727d5ac274b2',
+      processId: '3180972e2d8711ebb77e727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getParticularAdminUser: {
+      workflowId: 'ddc8df6a2d8111ebb77e727d5ac274b2',
+      processId: 'ddc8df6a2d8111ebb77e727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    updateAdminUser: {
+      workflowId: '623531022d8911ebb77e727d5ac274b2',
+      processId: '623531022d8911ebb77e727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    deleteAdminUser:{
+      workflowId: 'e54b6d842d9511ebb77e727d5ac274b2',
+      processId: 'e54b6d842d9511ebb77e727d5ac274b2',
+      projectId : environment.projectIds.projectId
     }
   }
 
