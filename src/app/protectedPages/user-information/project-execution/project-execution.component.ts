@@ -196,7 +196,6 @@ dataValue: {
 
       this.updateProjectExecutionDetail();
 
-      debugger;
         const feildControls =   this.PurchaseEntryForm.controls;
         const userName  = feildControls.userName.value;
         const piNumber =  feildControls.piNumber.value;

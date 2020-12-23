@@ -169,6 +169,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatIconModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
+      positionClass:'toast-top-center'
     }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgMultiSelectDropDownModule.forRoot()

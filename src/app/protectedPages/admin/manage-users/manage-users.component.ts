@@ -4,6 +4,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import { ManageUserDialogComponent } from '../manage-user-dialog/manage-user-dialog.component';
 import { LoginService} from "src/app/services/login.service";
+import { AdminService } from '@services/admin.service';
+import {ToasterService} from '@services/toaster.service';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
-  displayedColumns: string[] = ['S.NO', 'userId', 'UserName','EmployeeCode','Department','Role', 'CreatedOn','Action']; 
+  displayedColumns: string[] = ['userId', 'UserName','EmployeeCode','Department','Role', 'CreatedOn','Action']; 
 
   userList : any[] = [
     {username : "Suchita",name : "Suchita",email : "suchita.patel@nic.com",mobile_no : "7689549827",role:"Admin",createdOn:"28/10/2020"},
@@ -37,12 +39,18 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
-  constructor(private dialog: MatDialog,private loginService : LoginService) {
+  showModal: boolean;
+
+  deleteAccount: string;
+
+  deleteUserId: string;
+
+  constructor(private dialog: MatDialog,private loginService : LoginService,private adminService: AdminService,private toasterService: ToasterService) {
 
    }
 
-  ngOnInit() {
-    // this.fetchManageUsers();
+  async ngOnInit() {
+    await this.fetchManageUsers();
   }
 
   ngAfterViewInit(){
@@ -52,16 +60,65 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   edit(element) {
 
     console.log(element)
-    const dialogRef = this.dialog.open(ManageUserDialogComponent,{
-      data: element
+
+    let objData = {}
+
+    // this.adminService.getParticularAdminUser(element.userId).subscribe((response)=> {
+
+    //   console.log('PU',response)
+
+    //   objData = response['ProcessVariables']['usersList'][0];
+
+      const dialogRef = this.dialog.open(ManageUserDialogComponent,{
+        data: element
+      });
+    // })
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.fetchManageUsers();
     });
+
+
+   
   }
 
   fetchManageUsers(){
-    this.loginService.fetchManageUsers().subscribe((response) => {
-        this.dataSource = new MatTableDataSource<any>(response['ProcessVariables']['allUser']);
+    this.adminService.fetchAllAdminUser().subscribe((response) => {
+        this.dataSource = new MatTableDataSource<any>(response['ProcessVariables']['usersList']);
         this.dataSource.paginator = this.paginator;
     })
+  }
+
+  disable(element) {
+
+    this.deleteUserId = element.userId;
+    this.deleteAccount = element.name;
+    this.showModal = true;
+
+  }
+
+  delete() {
+
+    let id = this.deleteUserId
+
+    this.adminService.deleteAdminUser(id).subscribe((response)=> {
+
+      if(response['ProcessVariables']['response']['type'] == 'Success') {
+
+        this.showModal = false;
+        this.fetchManageUsers()
+
+        this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+      }
+    })
+
+  }
+
+  onCancel() {
+
+    this.showModal = false;
   }
 
 

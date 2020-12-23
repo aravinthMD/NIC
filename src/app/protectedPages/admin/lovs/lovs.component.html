@@ -19,11 +19,23 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="department">{{labelNameDrp?labelNameDrp:'Sub-LOVs'}}</label>
-                    <app-vf-custom-select [values]="lovsList1" 
+                    <!-- <app-vf-custom-select [values]="lovsList1" 
                     formControlName="labelNameDrp"
                     (change)="onChangeDept($event,lovsList1)"
                     >
-                    </app-vf-custom-select>
+                    </app-vf-custom-select> -->
+                    <input type="text" style="border-color: #6c757d;"
+                    class="form-control"
+                    placeholder="select the {{labelNameDrp}}"
+                    [formControl]="LovsControl.controls['labelNameDrp']"
+                    formControlName = "labelNameDrp"
+                    [matAutocomplete]="auto" 
+                   >
+                   <mat-autocomplete #auto="matAutocomplete" [displayWith] = "displayFn.bind(this)">
+                    <mat-option *ngFor="let lovValue of filteredOptions" [value]="lovValue.key">
+                      {{lovValue.value}}
+                    </mat-option>
+                  </mat-autocomplete>
                 </div>
             </div>
              <div *ngIf="hideButton" class="col-1" style="margin-top:40px">
@@ -400,6 +412,8 @@
         </div>
 
     </form>
+
+
     <div
     class="modal"
     id="ucicModel2"
@@ -427,7 +441,7 @@
             class="btn btn-success"
             data-dismiss="modal"
             id="ucic_lead"
-
+            (click)="delete()"
           >
             <!-- (click)="checkNegativeList()" -->
   

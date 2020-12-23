@@ -46,6 +46,17 @@
 
             <div class="col-4">
                 <div class="form-group">
+                    <label for="department">Role<span style="color:red">*</span></label>
+
+                    <app-vf-custom-select formControlName="roleName" [values]="roleList" [isRequired]="'Please Select Department'" [isDisabled]="enableflag"></app-vf-custom-select>
+
+
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
                     <!-- <label for="designation">Designation<span style="color:red">*</span></label>
                     <input type="text" [disabled]="enableflag"  value="desigation" class="form-control" id="designation" aria-describedby="designationHelp">
                     <small id="designationHelp" class="form-text text-muted"></small> -->

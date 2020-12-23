@@ -55,7 +55,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    debugger;
+    
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
@@ -237,8 +237,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
     this.utilService.setCurrentUrl('users/techAdmin')
 
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+
     if(this.user) {
-      this.router.navigate(['/users/techAdmin/1'])
+      this.router.navigate(['/users/techAdmin/'+pno])
     }else {
       this.router.navigate(['/users/techAdmin'])
     }
@@ -248,8 +254,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
   next() {
     this.utilService.setCurrentUrl('users/smsCredit')
 
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+
     if(this.user) {
-    this.router.navigate(['/users/smsCredit/1'])
+    this.router.navigate(['/users/smsCredit/'+pno])
 
     }else {
     this.router.navigate(['/users/smsCredit'])
@@ -261,7 +273,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     this.utilService.setCurrentUrl('users/smsCredit')
     let pno = '';
     this.utilService.projectNumber$.subscribe((val) =>{
-      pno = val
+      pno = val || '1';
     })
 
     this.router.navigate(['/users/smsCredit/'+pno])

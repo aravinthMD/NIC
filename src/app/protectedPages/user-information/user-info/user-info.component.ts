@@ -164,7 +164,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
    }
 
   ngOnInit() {
-    debugger;
+    
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -241,8 +241,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
 
   setFormValues(){
-    
-    debugger;
+  
     
     this.form.patchValue({
       applicantName : this.accountName.split('.')[0] || 'Arul',
@@ -300,6 +299,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     this.detectAuditTrialObj = this.form.value;
 
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+  
     
     this.viewInfoData = [
       {
@@ -340,18 +345,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       },
       {
         key  : "Official Address",
-        value  : `${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3}`
-      },{
-        key  : this.labels.city,
-        value : this.form.value.city
-      },
-      {
-        key  : this.labels.state,
-        value  : this.form.value.state
-      },
-      {
-        key  : this.labels.pincode,
-        value : this.form.value.pinCode
+        value  : `${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3},${this.form.value.city},${this.form.value.state} - ${this.form.value.pinCode}`
       },
       {
         key  : this.labels.smsServiceReqd,
@@ -406,7 +400,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       },
       {
         key  : "Audit Date Cleared",
-        value  : this.form.value.auditDate
+        value  :   `${day}/${month}/${year}`
       },
       {
         key : "TRAI Exempted Sender ID",
@@ -434,11 +428,11 @@ export class UserInfoComponent implements OnInit,OnChanges {
       },
       {
         key  : this.labels.creditDate,
-        value :  this.form.value.creditDate
+        value :    `${day}/${month}/${year}`
       },
       {
         key :  "Credit Against PI",
-        value :  this.form.value.creditAddedAgainstPi
+        value :    `${day}/${month}/${year}`
       },
       {
         key  : this.labels.uploadDoc,
@@ -552,9 +546,15 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     console.log(this.user)
 
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+
     if(this.user) {
       this.utilService.setCurrentUrl('users/techAdmin')
-      this.router.navigate(['/users/techAdmin/1'])
+      this.router.navigate(['/users/techAdmin/'+pno])
     }else {
       this.utilService.setCurrentUrl('users/techAdmin')
       this.router.navigate(['/users/techAdmin'])

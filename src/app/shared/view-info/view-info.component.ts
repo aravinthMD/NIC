@@ -5,15 +5,20 @@ import { Component, OnInit,Input,OnChanges } from '@angular/core';
   templateUrl: './view-info.component.html',
   styleUrls: ['./view-info.component.scss']
 })
+
+
 export class ViewInfoComponent implements OnInit,OnChanges {
 
 
   @Input() userDetails: any;
 
+  
+  Math: any;
   constructor() { }
 
   ngOnInit() {
 
+    this.Math = Math;
     console.log(this.userDetails)
   }
 

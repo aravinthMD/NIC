@@ -163,10 +163,31 @@ showDataSaveModal: boolean;
     })
     this.detectAuditTrialObj = this.smsCreditAllocation.value;
 
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    
+
+    const smsQuotaMetrix = this.smsQuotaMetrix.filter((val)=> {
+
+      return val.key == this.smsCreditAllocation.value.smsQuotaMetrix
+    })
+
+    
+
+    const statusList = this.statusList.filter((val)=> {
+
+      return val.key == this.smsCreditAllocation.value.status
+    })
+
+
     this.viewInfoData = [
       {
         key  : this.labels.smsQuotaMetrix,
-        value  : this.smsCreditAllocation.value.smsQuotaMetrix
+        value  : smsQuotaMetrix[0].value
       },
       {
         key  : this.labels.credit,
@@ -174,11 +195,11 @@ showDataSaveModal: boolean;
       },
       {
         key  : this.labels.date,
-        value  : this.smsCreditAllocation.value.date
+        value  : `${day}/${month}/${year}`
       },
       {
         key  : this.labels.status,
-        value :  this.smsCreditAllocation.value.statusList
+        value :  statusList[0].value
       },
       {
         key  : this.labels.onApprovalOf,
@@ -256,7 +277,7 @@ showDataSaveModal: boolean;
     this.utilService.setCurrentUrl('users/proformaInvoice')
     let pno = '';
     this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val;
+      pno = val || '1';
     })
     this.router.navigate(['/users/proformaInvoice/'+pno])
 
@@ -266,8 +287,13 @@ showDataSaveModal: boolean;
   back(){
     this.utilService.setCurrentUrl('users/billingAdmin')
 
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
     if(this.user){
-      this.router.navigate(['/users/billingAdmin/1'])
+      this.router.navigate(['/users/billingAdmin/'+pno])
     }else {
       this.router.navigate(['/users/billingAdmin'])
 
