@@ -37,7 +37,49 @@ export class ApiService {
       workflowId : 'ac548f821cc511ebb6c1727d5ac274b2',
       processId : 'a1b4c89a1daf11ebb6c3727d5ac274b2',
       projectId : environment.projectIds.projectId
+    },
+
+    createProjectExecution :  {
+      workflowId : 'e4537964406711ebb7bf727d5ac274b2',
+      processId  :'e487eb40406711ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
+
+    },
+
+    getProjectExecutionDetailsList : {
+
+      workflowId : 'e4537964406711ebb7bf727d5ac274b2',
+      processId  : '5e47716c410d11ebb7bf727d5ac274b2',
+      projectId  : environment.projectIds.projectId
+
+    },
+
+    getProjectExecutionDetailById : {
+
+      workflowId : 'e4537964406711ebb7bf727d5ac274b2',
+      processId : '2082717240f111ebb7bf727d5ac274b2',
+      projectId  : environment.projectIds.projectId
+
+    },
+
+    updateProjectExecutionDetail : {
+
+      workflowId : 'e4537964406711ebb7bf727d5ac274b2',
+      processId  : '2082717240f111ebb7bf727d5ac274b2',
+      projectId  : environment.projectIds.projectId
+
+    },
+
+    deleteProjectExecution : {
+
+      workflowId :  '',
+      processId  : '6f4724a8410311ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
     }
+
+
+
+
   }
 
 

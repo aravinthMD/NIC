@@ -9,6 +9,7 @@ import { ProjectExcecutionDialogComponent } from './project-excecution-dialog/pr
 import { Router,ActivatedRoute } from '@angular/router';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+import { InvoiceService } from '@services/invoice.service';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
 
-  dataSource = new MatTableDataSource<any>(this.userList);
+  dataSource = new MatTableDataSource<any>([]);
 
   displayedColumns : string[] = ["ProjectNo","InvoiceNo","InvoiceDate","Amount","Action"]
 
@@ -82,17 +83,20 @@ dataValue: {
   message: string
 }
 
-  constructor(private labelsService : LabelsService,private dialog : MatDialog,
-    private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService,private router: Router) { 
-
-
+  constructor(
+              private labelsService : LabelsService,
+              private dialog : MatDialog,
+              private activatedRoute: ActivatedRoute,
+              private utilService: UtilService,
+              private toasterService: ToasterService,
+              private router: Router,
+              private invoiceService : InvoiceService
+              ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
     })
-
-
   }
 
   ngOnInit() {
@@ -150,8 +154,18 @@ dataValue: {
 
     })
 
-    this.dataSource = new MatTableDataSource<any>(this.userList);
+    // this.dataSource = new MatTableDataSource<any>(this.userList);
+
+    this.getProjectExecutionDetails();     //Getting the Projet Execution details API
+
+    this.getProjectExecutionDetailById();
+
+    this.deleteProjectExecution();
   }
+
+
+
+
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
@@ -175,6 +189,140 @@ dataValue: {
   }
 
   }
+
+    //Create PE
+
+    createProjectExecution(){
+
+      this.updateProjectExecutionDetail();
+
+      debugger;
+        const feildControls =   this.PurchaseEntryForm.controls;
+        const userName  = feildControls.userName.value;
+        const piNumber =  feildControls.piNumber.value;
+        const piDate = feildControls.piDate.value;
+        const piAmount = feildControls.piAmount.value;
+        const modeOfPayment = feildControls.modeOfPayment.value;
+        const documentNo = feildControls.documentNo.value;
+        const dateOfTransaction = feildControls.dateOfTransaction.value;
+        const bankName = feildControls.bankName.value;
+        const amountReceived = feildControls.amountReceived.value;
+        const tds = feildControls.tds.value;
+        const NICSIProjectNo = feildControls.NICSIProjectNo.value;
+        const invoiceDate = feildControls.invoiceDate.value;
+        const transactionDate =  feildControls.transactionDate.value;
+        const piPaid = feildControls.piPaid.value;
+        const remark = feildControls.remark.value;
+  
+  
+        const Data = {
+          userName,
+          piNumber,
+          piDate,
+          piAmount,
+          modeOfPayment,
+          documentNo,
+          dateOfTransaction,
+          bankName,
+          amountReceived,
+          tds,
+          NICSIProjectNo,
+          invoiceDate,
+          transactionDate,
+          piPaid,
+          remark
+        }
+  
+        this.invoiceService.createProjectExecution(Data).subscribe(
+          (response) => {
+                console.log(response['ProcessVariables']); 
+          },(error) => {
+            console.log(error)
+        })
+  
+    }
+
+
+
+    getProjectExecutionDetails(){   //Fetch All Details
+
+      this.invoiceService.getProjectExecutionDetails('INV123').subscribe((response) => {
+
+        console.log(response);
+
+      this.dataSource = new MatTableDataSource<any>(response["ProcessVariables"]["peList" ]);
+
+      },(error) => {
+
+        console.log(error)
+
+      })
+
+
+    }
+
+    getProjectExecutionDetailById(){
+
+      this.invoiceService.getProjectExecutionDetailbyId('').subscribe((response) => {
+
+        console.log(response)
+
+      },(error) => {
+
+        console.log(error)
+
+      })
+
+    }
+
+
+    updateProjectExecutionDetail(){
+
+
+      const data = {
+              "currentPEId":"26",
+              "userName":"demouser",
+              "invoiceNumber":"INV123",
+              "amount":"2000",
+              "invoiceDate":"17/12/2020",
+              "paymentMode":"cash",
+              "documentNumber":"PE1342343",
+              "transactionDate":"16/12/2020",
+              "branchName":"ABC",
+              "receivedAmount":"200",
+              "tds":"50",
+              "nicsiProjectNumber":"97878978",
+              "paidPI":"180",
+              "remark":"Remarks",
+              "uploadDocument":"Yes",
+              "temp":"update"
+            }
+
+
+
+      this.invoiceService.updateProjectExecutionDetail(data).subscribe((resonse) => {
+
+
+      },(error) => {
+
+
+      })
+    }
+
+
+    deleteProjectExecution(){
+      
+      this.invoiceService.deleteProjectExecution("INV1234").subscribe((response) => {
+
+        console.log(response)
+
+      },(error) => {
+
+        console.log(error)
+      })
+
+    }
+
 
   onSearch() {
 
