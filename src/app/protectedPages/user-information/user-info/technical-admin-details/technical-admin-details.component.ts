@@ -184,19 +184,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
       },
       {
         key  : "Official Address",
-        value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3}`
-      },
-      {
-        key  : this.labels.city,
-        value :  this.technicaladminform.value.city
-      },
-      {
-        key  : this.labels.state,
-        value  : this.technicaladminform.value.state
-      },
-      {
-        key : this.labels.pincode,
-        value :  this.technicaladminform.value.pinCode
+        value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3},${this.technicaladminform.value.city},${this.technicaladminform.value.state} - ${this.technicaladminform.value.pinCode}`
       },
       {
         key  : this.labels.remark,

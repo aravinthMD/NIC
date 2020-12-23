@@ -11,7 +11,7 @@
             <a routerLink="/users/userInfo" (click)="navigation('1')" [ngClass]="{'side-menu': (isLocation == '1')}" routerLinkActive="active-link" class=""><i class="fa fa-user-plus pr-2" aria-hidden="true"></i>New Account</a>
         </li> -->
         <li class="list-group-item">
-            <a class="" id="forarrow" href="#newaccount" data-toggle="collapse" [ngClass]="{'side-menu': (parentLocation == '1')}" routerLinkActive="active-link"><i class="fa fa-user-plus pr-2" aria-hidden="true"></i>New Account</a>
+            <a class="" id="forarrow" href="#newaccount" data-toggle="collapse" [ngClass]="{'side-menu': (parentLocation == '1')}" routerLinkActive="active-link"><i class="fa fa-user-plus pr-2" aria-hidden="true"></i>{{(isExistingUser)?'Existing Account':'New Account'}}</a>
             <!-- <a><i class="fa fa-table"></i> <span class="d-none d-sm-inline">NewAccount</span><i _ngcontent-xbm-c3="" aria-hidden="false" class="fa fa-chevron-down"></i></a> -->
             <div class="collapse" id="newaccount" aria-expanded="false">
                 <ul class="flex-column  nav">

@@ -42,7 +42,7 @@ export class CreateUserComponent implements OnInit {
 
   deparmentList : any[] = [{key:1,value:'Admin User'},{key:2,value:'Operation User'},{key:3,value:'Finance User'},{key:4,value:'Sales User'}];
 
-  roleList: any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'},{key:3,value:'Sales User'}]
+  roleList: any[] = [{key:1,value:'Admin User'},{key:2,value:'Operation User'},{key:3,value:'Finance User'},{key:4,value:'Sales User'}]
 
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,private adminService: AdminService,private toasterService: ToasterService) {
 

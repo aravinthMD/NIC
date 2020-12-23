@@ -54,7 +54,7 @@
                 <th mat-header-cell *matHeaderCellDef class="pad-left"> Action </th>
                 <td mat-cell *matCellDef="let element">
                     <button class="btn btn-primary mr-1" (click)="edit(element)" matRipple>Edit</button>
-                    <button class="btn btn-primary" matRipple (click)="disable(element)">Disable</button>
+                    <button class="btn btn-primary" matRipple (click)="disable(element)">Delete</button>
                 </td>
             </ng-container>
 
@@ -89,7 +89,7 @@ id="ucicModel2"
     <!-- Modal body -->
     <div class="modal-body">
       <p id="" style="line-height: 25px;">
-          Are you sure you want to disable this {{deleteAccount}} account?
+          Are you sure you want to delete this {{deleteAccount}} account?
       </p>
     </div>
 
