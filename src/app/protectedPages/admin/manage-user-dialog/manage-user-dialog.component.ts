@@ -152,11 +152,13 @@ teleCodeValues = [
       },
       {
         key: this.labels.mobileNo,
-        value:`${this.data.mobileNoCode || ''}${this.form.value.mobileNo}`
+        // value:`${this.data.mobileNoCode || ''}${this.form.value.mobileNo}`
+        value:`91${this.form.value.mobileNo}`
       },
       {
         key: this.labels.teleNumber,
-        value:`${this.data.telephoneNoCode || ''}${this.form.value.telPhno}`
+        // value:`${this.data.telephoneNoCode || ''}${this.form.value.telPhno}`
+        value:`044${this.form.value.telPhno}`
       },
       {
         key: 'Official Address',
@@ -185,7 +187,22 @@ teleCodeValues = [
       });
     })
 
-    this.deparmentList = listData
+    this.deparmentList = listData;
+
+
+    let roleData = []
+
+    await this.adminService.getLovSubMenuList("5").subscribe((response)=> {
+
+
+      const rolesList = response['ProcessVariables']['Lovitems'];
+      rolesList.forEach(element => {
+        
+        roleData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.roleList = roleData
   }
 
   OnEdit() {

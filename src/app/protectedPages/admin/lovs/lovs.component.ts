@@ -220,6 +220,14 @@ if(this.selectedLovs=='0'){
         this.labelNameDrp=this.labels['piReceivedIn']
         this.lovsList1=listData
         this.filteredOptions = this.lovsList1;
+      }else if(this.selectedLovs== '5') {
+
+        this.labelNameKey='Roles Key'
+        this.labelNameVal='Roles Value'
+        this.labelNameDrp='Roles'
+        this.lovsList1=listData
+        this.filteredOptions = this.lovsList1
+
       }
 }
 
