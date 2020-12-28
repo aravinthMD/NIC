@@ -1,0 +1,95 @@
+<h2 mat-dialog-title>View SMS Credit Allocation</h2>
+
+
+<mat-dialog-content class="mat-typography">
+
+    <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info> 
+    <form [formGroup]="smsCreditAllocation" *ngIf = "!showView">
+        <div class="row">
+            <div class="col-4 pb-0">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="smsQuotaMetrix">{{labels.smsQuotaMetrix}}</label>
+                        <app-vf-custom-select formControlName="smsQuotaMetrix" [values]="smsQuotaMetrix" [isDirty]="isDirty" [isRequired]="'SMS quota metrix is mandatory'">
+                        </app-vf-custom-select>
+                    </div>
+                    <!-- <app-custom-input formControlName="smsQuotaMetrix" [labelName]="labels.smsQuotaMetrix"
+                        [id]="'smsQuotaMetrix'" [maxLength]="labels?.validationData.name.maxLength"
+                        [isDirty]="isDirty">
+                    </app-custom-input> -->
+                </div>
+            </div>
+            <div class="col-4 pb-0">
+                <div class="form-group">
+                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'" [mandatoryField]="true">
+                    </app-custom-input>
+                    <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
+                        <div>
+                            {{'Please Enter Digits'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="creditDate">{{labels.date}}</label>
+                    <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
+                        <input matInput [matDatepicker]="picker3" formControlName="date" (keyup)="detectDateKeyAction($event,'date')" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+
+                    <div class="date-picker-error" *ngIf="
+              isDirty &&
+              smsCreditAllocation.get('date').errors?.required
+            ">
+                                    Please Select Date
+                                </div>
+
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="status">{{labels.status}}</label>
+                    <app-vf-custom-select formControlName="status" [values]="statusList" [isDirty]="isDirty" [isRequired]="'Status is mandatory'">
+                    </app-vf-custom-select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="onApprovalOf" [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" [maxLength]="labels?.validationData.userName.maxLength"  [isRequired]="'OnApproval is mandatory'" [mandatoryField]="true" [isDirty]="isDirty">
+                    </app-custom-input>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [mandatoryField]="true"  [isRequired]="'Remark is mandatory'">
+                    </app-custom-input>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="statusChangedBy" [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp">
+                    </app-custom-input>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="timeStamp" [labelName]="labels.timeStamp" [id]="'timeStamp'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp" [isDisabledInp]="propertyFlag">
+                    </app-custom-input>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
+        <button class="btn btn-primary" type="submit" (click)="onSubmit()" *ngIf="!showView">Submit</button>
+        <button class="btn btn-primary" type="submit" (click)="onEdit()" *ngIf="showView">Edit</button>
+        <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
+    </div>
+</mat-dialog-content>
+
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

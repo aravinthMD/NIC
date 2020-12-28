@@ -65,6 +65,9 @@ import { ProjectExecutionComponent } from './protectedPages/user-information/pro
 import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
 import { ProjectExcecutionDialogComponent } from './protectedPages/user-information/project-execution/project-excecution-dialog/project-excecution-dialog.component';
 import { PurchaseOrderDialogComponent } from './protectedPages/user-information/purchase-order/purchase-order-dialog/purchase-order-dialog.component';
+import { ReportsTableComponent } from './protectedPages/reports/reports-table/reports-table.component';
+import { SmsCreditDialogComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-dialog/sms-credit-dialog.component';
+import { ViewTechnicalAdminComponent } from './protectedPages/user-information/user-info/technical-admin-details/view-technical-admin/view-technical-admin.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -140,7 +143,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ManageGroupComponent,
     ProjectExcecutionDialogComponent,
     PurchaseOrderDialogComponent,
-    TaxInvoiceDialogComponent
+    TaxInvoiceDialogComponent,
+    ReportsTableComponent,
+    SmsCreditDialogComponent,
+    ViewTechnicalAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -163,6 +169,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatIconModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
+      positionClass:'toast-top-center'
     }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgMultiSelectDropDownModule.forRoot()
@@ -190,7 +197,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
      ManageUserDialogComponent,
      ProjectExcecutionDialogComponent,
     TaxInvoiceDialogComponent,
-  PurchaseOrderDialogComponent]
+  PurchaseOrderDialogComponent,SmsCreditDialogComponent]
 })
 export class AppModule { }
 

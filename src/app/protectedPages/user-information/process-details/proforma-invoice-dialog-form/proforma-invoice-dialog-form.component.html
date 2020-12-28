@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>Proforma Invoice</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="form">
+
+  <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()" *ngIf="showEdit">
     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
@@ -127,7 +129,7 @@
 
 
           <mat-form-field>
-            <input matInput required formControlName="date" [matDatepicker]="picker1">
+            <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
@@ -163,7 +165,7 @@
           <label for="Fromperiod">Start Date</label>
 
           <mat-form-field [ngClass]="{'inp-date':enableflag}">
-            <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value">
+            <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
           </mat-form-field>
@@ -174,7 +176,7 @@
           <label for="Toperiod">End Date</label>
 
           <mat-form-field [ngClass]="{'inp-date':enableflag}">
-            <input matInput [matDatepicker]="picker4" formControlName="endDate" [min]="form.get('startDate').value">
+            <input matInput [matDatepicker]="picker4" formControlName="endDate" [min]="form.get('startDate').value" (keyup)="detectDateKeyAction($event,'endDate')">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
             <mat-datepicker #picker4></mat-datepicker>
           </mat-form-field>
@@ -207,6 +209,18 @@
         </div>
 
       </div>
+      <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName="remark"
+            [isDisabledInp]="enableflag"
+            [labelName]="labels.remark" 
+            [id]="'remark'" 
+            [maxLength]="labels?.validationData.userName.maxLength" 
+            [isDirty]="isDirty"
+            [isRequired]="'Please enter the remark'">
+            </app-custom-input>
+        </div>
+    </div>
 
       <div class="col-4">
 
@@ -217,7 +231,7 @@
 
             <button class="btn btn-primary" style="position: absolute;
                     left: 8vw;
-                    bottom: -0.5vw;" (click)="viewDoc()">View</button>
+                    bottom: 0.5vw;" (click)="viewDoc()">View</button>
           </div>
 
 
@@ -229,13 +243,14 @@
     </div>
 
 
-
+  </form>
     <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
-      <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
+      <button class="btn btn-primary" type="submit"  *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
+      <button class="btn btn-primary" type="submit" *ngIf="showUpdate" (click)="OnUpdate()">Update</button>
       <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
     </div>
 
-  </form>
+  
 </mat-dialog-content>
 
 
@@ -343,7 +358,7 @@
         <button type="button" class="close" data-dismiss="modal"
           (click)="showPdfModal = false;showUploadModal = true">&times;</button>
       </div>
-      <div class="modal-body" style="height:800px">
+      <div class="modal-body" style="height:500px">
 
       </div>
     </div>
@@ -370,7 +385,6 @@
       <div class="modal-footer text-center">
         <button type="button" class="btn btn-success" data-dismiss="modal" id="ucic_lead">
           <!-- (click)="checkNegativeList()" -->
-
           Yes
         </button>
         <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="showDeleteModal = false">
@@ -380,3 +394,8 @@
     </div>
   </div>
 </div>
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

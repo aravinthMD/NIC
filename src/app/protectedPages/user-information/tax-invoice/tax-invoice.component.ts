@@ -4,10 +4,12 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
-import { ActivatedRoute } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
-import { UtilService } from '@services/util.service'
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
+
 
 @Component({
   selector: 'app-tax-invoice',
@@ -21,6 +23,16 @@ export class TaxInvoiceComponent implements OnInit {
   @Input('userObj') user : any;
 
   displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks','Active']
+
+  csvSampleData:any[]=[
+    {InvoiceNo:1111,projectNo:1111,piAmt:1000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:2222,projectNo:2222,piAmt:2000,remarks:'nill',Active:'deactive'},
+    {InvoiceNo:3333,projectNo:3333,piAmt:3000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:4444,projectNo:4444,piAmt:4000,remarks:'nill',Active:'deactive'},
+    {InvoiceNo:5555,projectNo:5555,piAmt:5000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:6666,projectNo:6666,piAmt:6000,remarks:'nill',Active:'deactive'},
+    {InvoiceNo:7777,projectNo:7777,piAmt:7000,remarks:'nill',Active:'Active'},
+    {InvoiceNo:8888,projectNo:8888,piAmt:8000,remarks:'nill',Active:'deactive'}]
 
   userList : any[] =   [
    
@@ -50,10 +62,13 @@ export class TaxInvoiceComponent implements OnInit {
   accountName: string;
 
   status: string;
+  propertyFlag: boolean;
+
+  storeProjectNo: string;
 
   constructor(private labelsService: LabelsService,
     private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,
-    private dialog : MatDialog, private utilService: UtilService) { }
+    private dialog : MatDialog, private utilService: UtilService,private toasterService: ToasterService,private router: Router) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -64,7 +79,7 @@ export class TaxInvoiceComponent implements OnInit {
       userName: new FormControl(null),
       taxIN:new FormControl(null),
       invoiceDate:new FormControl(null),
-      projectNo:new FormControl(null),
+      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
       poNumber:new FormControl(null),
       poDate:new FormControl(null),
       fromDate:new FormControl(null),
@@ -95,6 +110,8 @@ export class TaxInvoiceComponent implements OnInit {
     })
 
     this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
 
       this.userList =   [
    
@@ -168,5 +185,59 @@ export class TaxInvoiceComponent implements OnInit {
 
     })
   }
+ getDownloadXls(){
+   this.utilService.getDownloadXlsFile(this.userList,"TaxInvoice");
+ }
+
+ detectDateKeyAction(event,type) {
+
+  console.log(event)
+  
+  if(type == 'poDate') {
+
+    this.taxInvoiceForm.patchValue({
+      poDate: ''
+    })
+    this.toasterService.showError('Please click the PO date icon to select date','');
+  }else if(type == 'fromDate') {
+
+    this.taxInvoiceForm.patchValue({
+      fromDate: ''
+    })
+    this.toasterService.showError('Please click the fromDate icon to select date','');
+  }else if(type == 'toDate') {
+
+    this.taxInvoiceForm.patchValue({
+      toDate: ''
+    })
+    this.toasterService.showError('Please click the toDate icon to select date','');
+  }else if(type == 'submittedOn') {
+
+    this.taxInvoiceForm.patchValue({
+      submittedOn: ''
+    })
+    this.toasterService.showError('Please click the submittedOn icon to select date','');
+  }else if(type == 'searchFrom') {
+    this.searchForm.patchValue({
+      searchFrom: ''
+    })
+    this.toasterService.showError('Please click the fromdate icon to select date','');
+  }else if(type == 'searchTo') {
+    this.searchForm.patchValue({
+      searchTo: ''
+    })
+    this.toasterService.showError('Please click the todate icon to select date','');
+  }
+  
+}
+
+back() {
+
+  this.utilService.setCurrentUrl('users/purchaseOrder')
+
+  this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
+}
+
 
 }

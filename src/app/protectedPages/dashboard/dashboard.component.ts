@@ -15,19 +15,19 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
   displayedColumns: string[] = ['UserID','projectNo', 'Department', 'State', 'Status']; 
 
   userList : any[] = [
-    {userId : "arul.auth",projectNo: '4535',department : "Finance Department Uttarakhand",state : "Uttarakhand",status :"Active",id:1},
-    {userId : "kumar.auth",projectNo: '6534',department : "Department of School Education",state : "Delhi",status :"InActive",id:2},
-    {userId : "Jain.auth",projectNo: '7644',department : "Election Department , Manipur",state : "Manipur",status :"InActive",id:3},
-    {userId : "Mani.auth",projectNo: '6454',department : "Director of emloyment and ceo",state : "Delhi",status :"Active",id:4},
+    {userId : "Arul.auth",projectNo: '4535',department : "Finance Department Uttarakhand",state : "Uttarakhand",status :"Active",id:1},
+    {userId : "Kumar.auth",projectNo: '6534',department : "Department of School Education",state : "Delhi",status :"Inactive",id:2},
+    {userId : "Jain.auth",projectNo: '7644',department : "Election Department, Manipur",state : "Manipur",status :"Inactive",id:3},
+    {userId : "Mani.auth",projectNo: '6454',department : "Director of Emloyment and CEO",state : "Delhi",status :"Active",id:4},
     {userId : "Saran.auth",projectNo: '3432',department : "Revenue Department, Tripura ",state : "Tripura",status :"Active",id:5},
     {userId : "Karthi.auth",projectNo: '8799',department : "Finance Department Jaipur",state : "Jaipur",status :"Active",id:6},
-    {userId : "Josh.auth",projectNo: '9876',department : "Land records and settlement ",state : "Delhi",status :"Active",id:7},
+    {userId : "Josh.auth",projectNo: '9876',department : "Land Records and Settlement ",state : "Delhi",status :"Active",id:7},
     {userId : "Salim.auth",projectNo: '5423',department : "Finance Department Mumbai",state : "Mumbai",status :"Active",id:8},
-    {userId : "Prakash.auth",projectNo: '7565',department : "Revenue Department, nagpur",state : "Nagpur",status :"Active",id:9},
-    {userId : "Raja.auth",projectNo: '3544',department : "Election Department , Bangalore",state : "Bangalore",status :"Active",id:10},
-    {userId : "Suresh.auth",projectNo: '2333',department : "Land records and settlement ",state : "Delhi",status :"Active",id:11},
-    {userId : "Jain.auth",projectNo: '7644',department : "Election Department , Manipur",state : "Manipur",status :"InActive",id:12},
-    {userId : "Mani.auth",projectNo: '5655',department : "Director of emloyment and ceo",state : "Delhi",status :"Active",id:13},
+    {userId : "Prakash.auth",projectNo: '7565',department : "Revenue Department, Nagpur",state : "Nagpur",status :"Active",id:9},
+    {userId : "Raja.auth",projectNo: '3544',department : "Election Department, Bangalore",state : "Bangalore",status :"Active",id:10},
+    {userId : "Suresh.auth",projectNo: '2333',department : "Land Records and Settlement ",state : "Delhi",status :"Active",id:11},
+    {userId : "Jain.auth",projectNo: '7644',department : "Election Department, Manipur",state : "Manipur",status :"Inactive",id:12},
+    {userId : "Mani.auth",projectNo: '5655',department : "Director of Emloyment and CEO",state : "Delhi",status :"Active",id:13},
     {userId : "Saran.auth",projectNo: '3332',department : "Revenue Department, Tripura ",state : "Tripura",status :"Active",id:14},
     {userId : "Karthi.auth",projectNo: '4343',department : "Finance Department Jaipur",state : "Jaipur",status :"Active",id:15}
   ]
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
     this.utilService.setUserDetails(element);
 
     this.utilService.setCurrentUrl('users/customerDetails')
-    this.route.navigate(['/users/customerDetails/'+element.id])
+    this.route.navigate(['/users/customerDetails/'+element.projectNo])
   }
 
 }

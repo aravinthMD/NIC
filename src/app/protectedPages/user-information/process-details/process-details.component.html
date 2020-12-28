@@ -2,7 +2,7 @@
     <div class="proforma-invoice">
        
 
-        <app-account-header [title]="'Profoma Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Proforma Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
 
 
 
@@ -10,7 +10,7 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple>
                     <mat-panel-title>
-                        <mat-icon>add_circle</mat-icon> Add New Proforma Invoice
+                        <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Proforma Invoice
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <form [formGroup]="form">
@@ -20,10 +20,10 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [type]="labels?.validationData.userName.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" [isRequired]="'Account Name is Mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [type]="labels?.validationData.userName.type" [isDirty]="isDirty">
                                 </app-custom-input>
 
-                                <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
+                                <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is Mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
 
                     </app-custom-input> -->
 
@@ -47,7 +47,7 @@
                         Please select date
                   </div> -->
 
-                                <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [type]="labels?.validationData.proformaIN.type"
+                                <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice Number is Mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [type]="labels?.validationData.proformaIN.type"
                                     [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
@@ -56,7 +56,7 @@
                             <div class="form-group">
 
 
-                                <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [type]="labels?.validationData.refNo.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" [isRequired]="'Reference Number is Mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [type]="labels?.validationData.refNo.type" [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -68,7 +68,7 @@
 
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [type]="labels?.validationData.piOwner.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" [isRequired]="'Owner is Mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [type]="labels?.validationData.piOwner.type" [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -93,7 +93,7 @@
                   Please select date
             </div> -->
 
-                                <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'Amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'Amount is Mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -102,7 +102,7 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piTraffic" [labelName]="labels.piTraffic" [id]="'piTraffic'" [isRequired]="'Traffic is mandatory'" [maxLength]="labels?.validationData.piTraffic.maxLength" [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piTraffic" [labelName]="labels.piTraffic" [id]="'piTraffic'" [isRequired]="'Traffic is Mandatory'" [maxLength]="labels?.validationData.piTraffic.maxLength" [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -118,7 +118,7 @@
                     <small id="dateHelp" class="form-text text-muted"></small> -->
 
                                 <mat-form-field>
-                                    <input matInput required formControlName="date" [matDatepicker]="picker1">
+                                    <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" >
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
@@ -126,7 +126,7 @@
             isDirty &&
             form.get('date').errors?.required
           ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
 
@@ -142,7 +142,7 @@
                                 <!-- <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
             [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select> -->
 
-                                <app-custom-input formControlName="nicsiManager" [labelName]="labels.nicsiManager" [id]="'nicsiManager'" [isRequired]="'NICSI Manager is mandatory'" [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type"
+                                <app-custom-input formControlName="nicsiManager" [labelName]="labels.nicsiManager" [id]="'nicsiManager'" [isRequired]="'NICSI Manager is Mandatory'" [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type"
                                     [isDirty]="isDirty">
 
                                 </app-custom-input>
@@ -155,7 +155,7 @@
                                 <label for="Fromperiod">Start Date</label>
 
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" required>
+                                    <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                                     <mat-datepicker #picker3></mat-datepicker>
                                 </mat-form-field>
@@ -164,7 +164,7 @@
                 isDirty &&
                 form.get('startDate').errors?.required
               ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -174,7 +174,7 @@
                                 <label for="Toperiod">End Date</label>
 
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker4" [min]="form.get('startDate').value" formControlName="endDate" required>
+                                    <input matInput [matDatepicker]="picker4" [min]="form.get('startDate').value" formControlName="endDate" (keyup)="detectDateKeyAction($event,'endDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
                                 </mat-form-field>
@@ -183,7 +183,7 @@
               isDirty &&
               form.get('endDate').errors?.required
             ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -211,6 +211,12 @@
                             </div>
 
                         </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is Mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
 
                         <div class="col-4">
                             <div class="form-group">
@@ -224,7 +230,23 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary" type="submit" (click)="onSubmit()">Raise PO</button>
+
+                        <div class="col-10">
+
+                            <button class="btn btn-primary" style="float: left;" (click)="onSubmit()">Raise PE</button>
+
+                        </div>
+
+                       <div class="col-1" style="float: left;">
+                        <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+
+                       </div>
+
+                       <div class="col-1" style="float: left;">
+                        <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+
+                       </div>
+
                     </div>
                 </form>
 
@@ -257,7 +279,7 @@
                             <label for="dateFor">From Date</label>
 
                             <mat-form-field>
-                                <input matInput [matDatepicker]="picker6" formControlName="searchFrom">
+                                <input matInput [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
                                 <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                                 <mat-datepicker #picker6></mat-datepicker>
                             </mat-form-field>
@@ -272,7 +294,7 @@
                             <label for="dateFor">To Date</label>
 
                             <mat-form-field>
-                                <input matInput [matDatepicker]="picker7" formControlName="searchTo">
+                                <input matInput [min]="searchForm.get('searchFrom').value" [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                                 <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
                                 <mat-datepicker #picker7></mat-datepicker>
                             </mat-form-field>
@@ -310,7 +332,7 @@
 
         <!--Material Table-->
 
-        <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+        <button class="btn btn-primary download download-pad"  (click)="getDownloadXls()" type="button">Export as CSV</button>
 
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" class=" ">
@@ -373,3 +395,6 @@
 </div>
 
 <app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="modalData" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

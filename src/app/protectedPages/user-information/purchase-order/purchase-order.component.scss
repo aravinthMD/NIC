@@ -171,3 +171,24 @@ td.mat-cell {
     vertical-align: middle;
     color: #f8f9fa;
 }
+
+.dis-block {
+    display: block;
+  }
+
+  .save-popup{
+    max-width: 700px !important;
+    top: 20% !important;
+    color: #0d4d92;
+}
+
+.dirty-error{
+    font-size: 0.9vw;
+    font-family: zurich-bold;
+    letter-spacing: .5px;
+    color: red;
+    margin-top: 1vw;
+}
+
+
+

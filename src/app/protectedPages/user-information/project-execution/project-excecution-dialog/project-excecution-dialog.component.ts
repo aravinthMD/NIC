@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {LabelsService} from '../../../../services/labels.service';
 import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
+
 
 @Component({
   selector: 'app-project-excecution-dialog',
@@ -26,10 +30,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
 
   departmentListData = [
     {key:0,value:'Department of Sainik Welfare'},
-    {key:1,value:'Minstry of minority affairs'},
-    {key:2,value:'Vishakhapatnam port Trust'},
-    {key:3,value:'Ministry of trible affairs'},
-    {key:4,value:'Bureasu of Naviks.Mumbai'}
+    {key:1,value:'Ministry of Minority Affairs'},
+    {key:2,value:'Visakhapatnam Port Trust'},
+    {key:3,value:'Ministry of Tribal Affairs'},
+    {key:4,value:'Bureau of Naviks.Mumbai'}
 ];
 
   piPaidValues = [
@@ -50,10 +54,25 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   fileType: string;
 
   showPdfModal:boolean;
+  remarkModal:boolean;
+  detectAuditTrialObj:any;
+  showUpdate: boolean;
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
+  viewInfoData: any;
+
+  showEdit: boolean;
 
 
-
-  constructor(private labelsService : LabelsService,private dialogRef : MatDialogRef<ProjectExcecutionDialogComponent> ,private formBuilder :  FormBuilder) { 
+  constructor(private labelsService : LabelsService,private toasterService: ToasterService,private dialogRef : MatDialogRef<ProjectExcecutionDialogComponent> ,private formBuilder :  FormBuilder,private utilService: UtilService,private router: Router,private activatedRoute: ActivatedRoute) { 
 
     // this.ProjectExcecutionForm = new FormGroup({
     //   userName : new FormControl(null),
@@ -86,9 +105,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       NICSIProjectNo: ['6785'],
       invoiceDate : new Date(),
       transactionDate : new Date(),
-      piPaid : ['1']
+      piPaid : ['1'],
+      remark:['User Updated']
     })
-
+    this.detectAuditTrialObj=this.ProjectExcecutionForm.value
   }
 
   ngOnInit() {
@@ -97,17 +117,128 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.labels = value;
     })
 
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+    })
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    this.viewInfoData = [
+      {
+        key: this.labels.userName,
+        value:this.ProjectExcecutionForm.value.userName
+      },
+      {
+        key: this.labels.proformaIN,
+        value:this.ProjectExcecutionForm.value.piNumber
+      },
+      {
+        key: 'Proforma Invoice Date',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.piAmount,
+        value:this.ProjectExcecutionForm.value.piAmount
+      },
+      {
+        key: this.labels.modeOfPayment,
+        value:'RTGS'
+      },
+      {
+        key: this.labels.documentNo,
+        value:this.ProjectExcecutionForm.value.documentNo
+      },
+      {
+        key: 'Date of Transaction',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.bankName,
+        value:this.ProjectExcecutionForm.value.bankName
+      },
+      {
+        key: this.labels.amountReceived,
+        value:this.ProjectExcecutionForm.value.amountReceived
+      },
+      {
+        key: this.labels.tds,
+        value:this.ProjectExcecutionForm.value.tds
+      },
+      {
+        key: this.labels.nicsiProjectNumber,
+        value:this.ProjectExcecutionForm.value.NICSIProjectNo
+      },
+      {
+        key: 'PI Paid',
+        value:'Partial Payment'
+      },
+      {
+        key: this.labels.remark,
+        value:this.ProjectExcecutionForm.value.remark
+      },
+      {
+        key: 'Document',
+        value:'invoice.pdf'
+      }
+
+    ]
+
+  }
+
+  OnEdit() {
+    this.enableflag = false;
+    this.showUpdate = true;
+    this.showEdit = true;
   }
 
   OnUpdate(){
-    this.buttonName = 'Update';
-    this.enableflag = false;
-
+   
+   
+    this.detectFormChanges();
+      
     if(this.ProjectExcecutionForm.invalid){
       this.isDirty = true;
+      return;
     }
 
-  }
+    this.showDataSaveModal = true;
+    this.dataValue= {
+      title: 'Project Execution Saved Successfully',
+      message: 'Are you sure you want to proceed purchase order page?'
+    }
+}
+
+saveYes()
+{
+
+this.showDataSaveModal = false;
+
+this.closeDialog()
+this.next()
+
+
+
+}
+
+next() {
+
+  this.utilService.setCurrentUrl('users/purchaseOrder')
+
+  this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
+}
+
+saveCancel() {
+
+this.showDataSaveModal = false;
+this.closeDialog()
+
+}
+
 
 
   closeDialog(){
@@ -121,6 +252,52 @@ export class ProjectExcecutionDialogComponent implements OnInit {
 
   download(){
   
+  }
+  
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.ProjectExcecutionForm.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.ProjectExcecutionForm[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.ProjectExcecutionForm.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+
+      this.detectAuditTrialObj = this.ProjectExcecutionForm.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
   async onFileSelect(event) {
@@ -229,6 +406,26 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   showPDF() {
     this.showUploadModal = false;
     this.showPdfModal = true;
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'invoiceDate') {
+
+      this.ProjectExcecutionForm.patchValue({
+        invoiceDate: ''
+      })
+      this.toasterService.showError('Please click the PI date icon to select date','');
+    }else if(type == 'transactionDate') {
+
+      this.ProjectExcecutionForm.patchValue({
+        transactionDate: ''
+      })
+      this.toasterService.showError('Please click the date of transaction icon to select date','');
+    }
+    
   }
 
 

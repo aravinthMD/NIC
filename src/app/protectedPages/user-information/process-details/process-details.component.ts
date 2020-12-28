@@ -6,8 +6,9 @@ import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router'
-import { UtilService } from '@services/util.service'
+import { Router,ActivatedRoute } from '@angular/router'
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-process-details',
@@ -20,6 +21,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
+  storeProjectNo: string;
+
   displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"reminder","Escalation"]
 
 
@@ -28,8 +31,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: 4535,piAmt:56000,remarks:'credited'},
     {invoiceNo : 6574,accountName : "Sharma",projectNumber: 4535,piAmt:25000,remarks:'credited'},
     {invoiceNo : 7454,accountName : "Sharma",projectNumber: 4535,piAmt:70000,remarks:'credited'},
-    {invoiceNo : 5667,accountName : "Sharma",projectNumber: 4535,piAmt:5000,remarks:'credited'},
-    {invoiceNo : 5663,accountName : "Sharma",projectNumber: 4535,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 5667,accountName : "Sharma",propropertyFlagjectNumber: 4535,piAmt:56000,remarks:'credited'},
     {invoiceNo : 5889,accountName : "Sharma",projectNumber: 4535,piAmt:23000,remarks:'credited'},
     {invoiceNo : 4500,accountName : "Sharma",projectNumber: 4535,piAmt:45000,remarks:'credited'},
     {invoiceNo : 7800,accountName : "Sharma",projectNumber: 4535,piAmt:34000,remarks:'credited'},
@@ -41,9 +43,9 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     {invoiceNo : 3445,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'}
   ];
 
-  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
+  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
 
-  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
+  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
 
   nicsiData = [
     {
@@ -83,12 +85,23 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   showEmailModal: boolean;
 
+  propertyFlag: boolean;
+
   modalData: {
     title: string;
     request: any
   }
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+  
+
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService,private router: Router) { 
 
 
     this.form =this.formBuilder.group({
@@ -103,7 +116,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       startDate:[null],
       endDate:[null],
       piStatus: [''],
-      paymentStatus:['']
+      paymentStatus:[''],
+      remark:['']
 
     })
 
@@ -129,6 +143,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     })
 
     this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
       this.userList =   [
         {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
         {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: value.projectNo || 4535,piAmt:56000,remarks:'credited'},
@@ -180,6 +196,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
     if(this.form.invalid) {
       this.isDirty = true;
+      return;
     }
 
 
@@ -190,7 +207,31 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
     console.log(this.form.value)
 
+    this.toasterService.showSuccess('Data Saved Successfully','')
 
+      this.showDataSaveModal = true;
+      this.dataValue= {
+        title: 'Proforma Invoice Saved Successfully',
+        message: 'Are you sure you want to proceed project execution page?'
+      }
+
+
+  }
+
+  saveYes()
+  {
+ 
+   this.showDataSaveModal = false;
+ 
+   this.next()
+ 
+ 
+  }
+ 
+  saveCancel() {
+ 
+   this.showDataSaveModal = false;
+  
   }
 
   onSearch() {
@@ -244,4 +285,59 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     this.showEmailModal = false;
   }
 
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.userList,'ProformaInvoice');
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'date') {
+
+      this.form.patchValue({
+        date: ''
+      })
+      this.toasterService.showError('Please click the date icon to select date','');
+    }else if(type == 'startDate') {
+
+      this.form.patchValue({
+        startDate: ''
+      })
+      this.toasterService.showError('Please click the startDate icon to select date','');
+    }else if(type == 'endDate') {
+
+      this.form.patchValue({
+        endDate: ''
+      })
+      this.toasterService.showError('Please click the endDate icon to select date','');
+    }else if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
+  }
+
+  next() {
+
+    this.utilService.setCurrentUrl('users/projectExecution')
+
+    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
+
+  }
+
+  back() {
+
+    this.utilService.setCurrentUrl('users/smsCredit')
+
+    this.router.navigate([`/users/smsCredit/${this.storeProjectNo}`])
+
+  }
 }

@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>Project Execution</h2>
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="ProjectExcecutionForm">
+
+  <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
+    <form [formGroup]="ProjectExcecutionForm" (keydown.enter)="$event.preventDefault()" *ngIf="showEdit">
         <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
@@ -50,7 +52,7 @@
               <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
               <mat-form-field>
-                <input matInput [disabled]="enableflag" [matDatepicker]="picker1" formControlName="invoiceDate"  required>
+                <input matInput [disabled]="enableflag" [matDatepicker]="picker1" formControlName="invoiceDate" (keyup)="detectDateKeyAction($event,'invoiceDate')" required>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
               </mat-form-field>
@@ -108,7 +110,7 @@
               <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
   
               <mat-form-field>
-                <input matInput [matDatepicker]="picker2" formControlName="transactionDate" [disabled] = "enableflag" required>
+                <input matInput [matDatepicker]="picker2" formControlName="transactionDate" [disabled] = "enableflag" (keyup)="detectDateKeyAction($event,'transactionDate')" required>
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
@@ -179,12 +181,22 @@
 
         <div class="col-4">
           <div class="form-group">
-            <label for="modeOfPayment">PI paid</label>
+            <label for="modeOfPayment">PI Paid</label>
              <app-vf-custom-select [isDisabled] = "enableflag" formControlName ="piPaid" [values] = "piPaidValues"
              [isRequired] = "'Please Select the PI paid'" [isDirty] = "isDirty" ></app-vf-custom-select>
           </div>
       </div>
-
+      <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName="remark"
+            [isDisabledInp]="enableflag"
+            [labelName]="labels.remark" [id]="'remark'" 
+            [maxLength]="labels?.validationData.userName.maxLength" 
+            [isDirty]="isDirty"
+            [isRequired] = "'Please enter the remark'">
+            </app-custom-input>
+        </div>
+    </div>
         <!-- <div class="col-4">
           <div class="form-group">
               <label for="poBillable">Upload Document</label>
@@ -202,7 +214,7 @@
 
             <button class="btn btn-primary" style="position: absolute;
                     left: 8vw;
-                    bottom: -0.5vw;" (click)="viewDoc()">View</button>
+                    bottom: 0.5vw;" (click)="viewDoc()">View</button>
           </div>
 
 
@@ -213,14 +225,15 @@
 
       </div>
 
-
+    </form>
 
         <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
-            <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
+            <button class="btn btn-primary" *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
+            <button class="btn btn-primary" *ngIf="showUpdate" (click)="OnUpdate()">Update</button>
             <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
         </div>
 
-    </form>
+    
 </mat-dialog-content>
 
 
@@ -326,7 +339,7 @@
           <h4 class="modal-title">View PDF</h4>
           <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
         </div>
-        <div class="modal-body" style="height:800px">
+        <div class="modal-body" style="height:500px">
   
         </div>
   </div>
@@ -379,3 +392,7 @@ id="deleteModal"
   </div>
 </div>
 </div>
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

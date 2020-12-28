@@ -16,6 +16,11 @@ export class BillingOwnerDetailsComponent implements OnInit {
   billOwnerForm:FormGroup;
   isDirty: boolean;
   propertyFlag : boolean;
+  showDataSaveModal : boolean;
+  dataValue  = {}
+
+  viewInfoData  : any;
+
 
   countryCodeValues = [
     {key:0,value:'+91'},
@@ -23,10 +28,23 @@ export class BillingOwnerDetailsComponent implements OnInit {
     {key:2,value:'+65'}
   ]
 
+  teleCodeValues = [
+    {key:0,value:'+044'},
+    {key:1,value:'+040'},
+    {key:2,value:'+080'}
+  ]
+
   user: string;
 
   accountName: string;
   status: string;
+
+  detectAuditTrialObj: any;
+
+  remarkModal: boolean;
+
+
+  showView: boolean = true;
 
   constructor(
     private labelsService:LabelsService,
@@ -37,6 +55,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
@@ -49,12 +68,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
       countryCode: new FormControl(null),
       mobileNo :new FormControl (''),
       telPhno : new FormControl (''),
+      teleCode: new FormControl(),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
       city : new FormControl ([null]),
       state : new FormControl ([null]),
       pinCode : new FormControl (''),
+      remark: new FormControl('')
     })
 
     this.user = ''
@@ -74,6 +95,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
       this.setFormValues();
       this.propertyFlag = true;
 
+      }else  {
+       this.showView = false
       }
 
 
@@ -83,42 +106,145 @@ export class BillingOwnerDetailsComponent implements OnInit {
   setFormValues() {
 
     this.billOwnerForm.patchValue({
-      name : 'sasi',
+      name : 'Sasi',
       departmentName : '1',
-      designation : 'chennai',
+      designation : 'Chennai',
       employeeCode : '54534',
       email : 'test@gmail.com',
       countryCode: '0',
       mobileNo : '9754544445',
-      telPhno : '8667756765',
+      telPhno : '2273422',
+      teleCode:'0',
       offAddress1 : 'add1',
       offAddress2 : 'add2',
       offAddress3 : 'add3',
-      city : 'chennai',
-      state : 'tamilnadu',
+      city : 'Chennai',
+      state : 'Tamilnadu',
       pinCode : '600025',
+      remark: 'Pincode Changed'
 
     })
+
+    this.detectAuditTrialObj = this.billOwnerForm.value;
+
+
+    this.viewInfoData = [
+      {
+        key: this.labels.name,
+        value:this.billOwnerForm.value.name
+      },
+      {
+        key: this.labels.email,
+        value:this.billOwnerForm.value.email
+      },
+      {
+        key: this.labels.designation,
+        value:this.billOwnerForm.value.designation
+      },
+      {
+        key: this.labels.employeeCode,
+        value:this.billOwnerForm.value.employeeCode
+      },
+      {
+        key: this.labels.mobileNo,
+        value:`91${this.billOwnerForm.value.mobileNo}`
+      },
+      {
+        key: this.labels.teleNumber,
+        value:`044${this.billOwnerForm.value.telPhno}`
+      },
+      {
+        key: 'Official Address',
+        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`
+      },
+      {
+        key: this.labels.remark,
+        value:this.billOwnerForm.value.remark
+      }
+    ]
+
+  }
+
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.billOwnerForm.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.billOwnerForm.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+      this.detectAuditTrialObj = this.billOwnerForm.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
   editData() {
     this.propertyFlag = false;
+    this.showView = false;
   }
 
   onSubmit(){
+
+    this.showDataSaveModal = true;
+
+    this.dataValue = {
+      title : "Billing Admin Details Updated Successfully",
+      message : "Are you sure you to proceed to SMS Credit Allocation Screen?"
+    }
+
     if(this.billOwnerForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields','')
       return
     }
     console.log('billOwnerForm',this.billOwnerForm.value)
+
+    this.detectFormChanges();
   }
   back() {
 
     this.utilService.setCurrentUrl('users/techAdmin')
 
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+
     if(this.user) {
-      this.router.navigate(['/users/techAdmin/1'])
+      this.router.navigate(['/users/techAdmin/'+pno])
     }else {
       this.router.navigate(['/users/techAdmin'])
     }
@@ -128,13 +254,33 @@ export class BillingOwnerDetailsComponent implements OnInit {
   next() {
     this.utilService.setCurrentUrl('users/smsCredit')
 
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+
     if(this.user) {
-    this.router.navigate(['/users/smsCredit/1'])
+    this.router.navigate(['/users/smsCredit/'+pno])
 
     }else {
     this.router.navigate(['/users/smsCredit'])
 
     }
+  }
+
+  saveYes(){
+    this.utilService.setCurrentUrl('users/smsCredit')
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val) =>{
+      pno = val || '1';
+    })
+
+    this.router.navigate(['/users/smsCredit/'+pno])
+  }
+
+  saveCancel() {
+    this.showDataSaveModal = false;
   }
 
 }

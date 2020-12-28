@@ -11,13 +11,20 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class ProtectedComponent implements OnInit {
 
-  constructor(private router :Router,private utilService:UtilService,private ngxUiLoaderService: NgxUiLoaderService) { }
+
+  userName : string;
+  constructor(private router :Router,private utilService:UtilService,private ngxUiLoaderService: NgxUiLoaderService) { 
+
+    this.userName = localStorage.getItem('userName') || 'Admin User'
+  }
 
   ngOnInit() {
   }
 
   newUserMethod(){
-    this.ngxUiLoaderService.start()
+    this.ngxUiLoaderService.start();
+
+    this.utilService.setProjectNumber(null)
     this.utilService.setCurrentUrl('users/customerDetails');
     this.router.navigate(['/users/customerDetails']);
     this.ngxUiLoaderService.stop()

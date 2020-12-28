@@ -21,6 +21,8 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   version: string;
 
+  isExistingUser: boolean;
+
   constructor(private location: Location,private utilService: UtilService,private router: Router) { 
 
     this.version = environment.version;
@@ -50,6 +52,18 @@ export class SideNavComponent implements OnInit,OnChanges {
       }else if(user.includes('users/smsCredit')){
         this.accountInfoNav = '1.1'
         this.isLocation = '1.1.4'
+      }else if(user.includes('users/projectExecution')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.3'
+      }else if(user.includes('users/proformaInvoice')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.2'
+      }else if(user.includes('users/purchaseOrder')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.4'
+      }else if(user.includes('users/taxInvoice')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.5'
       }
     })
 
@@ -106,6 +120,21 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.parentLocation = ''
     }
 
+    if(path.includes('users/proformaInvoice') || path.includes('users/projectExecution') || path.includes('users/purchaseOrder') || path.includes('users/taxInvoice') || path.includes('users/smsCredit')) {
+
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.1'
+      this.router.navigate(['/users/customerDetails'])
+
+    }
+
+    this.utilService.projectNumber$.subscribe((pno)=> {
+      if(pno){
+        this.isExistingUser = true
+      }else {
+        this.isExistingUser = false
+      }
+  })
    
     
   }
@@ -136,6 +165,7 @@ export class SideNavComponent implements OnInit,OnChanges {
   if(route.includes('1.')){
     this.accountInfoNav = '1.1'
   }else {
+    this.utilService.setProjectNumber(null)
     this.accountInfoNav = ''
   }
 

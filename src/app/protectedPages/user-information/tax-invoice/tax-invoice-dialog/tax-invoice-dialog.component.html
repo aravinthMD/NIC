@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>Tax Invoice</h2>
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="taxInvoiceForm">
+
+  <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
+    <form [formGroup]="taxInvoiceForm" (keydown.enter)="$event.preventDefault()" *ngIf="showEdit">
         <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
@@ -56,7 +58,7 @@
               <label for="InvoiceDate">{{labels?.poDate}}</label>
              
               <mat-form-field>
-                <input matInput formControlName="poDate" required [matDatepicker]="poDateId" [disabled] = "enableFlag" >
+                <input matInput formControlName="poDate" required [matDatepicker]="poDateId" [disabled] = "enableFlag" (keyup)="detectDateKeyAction($event,'poDate')">
                 <mat-datepicker-toggle matSuffix [for]="poDateId"></mat-datepicker-toggle>
                 <mat-datepicker #poDateId></mat-datepicker>
               </mat-form-field>
@@ -87,7 +89,7 @@
       <div class="form-group">
           <label for="fromDate">{{labels?.fromDate}}</label>
           <mat-form-field>
-            <input matInput  formControlName="fromDate" required [matDatepicker]="fromDateId" [disabled] = "enableFlag" >
+            <input matInput  formControlName="fromDate" required [matDatepicker]="fromDateId" [disabled] = "enableFlag" (keyup)="detectDateKeyAction($event,'fromDate')">
             <mat-datepicker-toggle matSuffix [for]="fromDateId"></mat-datepicker-toggle>
             <mat-datepicker #fromDateId></mat-datepicker>
           </mat-form-field>
@@ -104,7 +106,7 @@
       <div class="form-group">
           <label for="toDate">{{labels?.toDate}}</label>
           <mat-form-field >
-            <input matInput formControlName="toDate" required  [matDatepicker]="toDateId" [disabled] = "enableFlag"
+            <input matInput formControlName="toDate" required  [matDatepicker]="toDateId" (keyup)="detectDateKeyAction($event,'toDate')" [disabled] = "enableFlag"
             [min]= "taxInvoiceForm.get('toDate').value">
             <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
             <mat-datepicker #toDateId></mat-datepicker>
@@ -163,7 +165,7 @@
  
   <mat-form-field>
     <input matInput required formControlName="submittedOn" 
-    [matDatepicker]="sumbittedDatePicker" [disabled] = "enableFlag">
+    [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')" [disabled] = "enableFlag">
     <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker" 
     ></mat-datepicker-toggle>
     <mat-datepicker #sumbittedDatePicker></mat-datepicker>
@@ -182,7 +184,7 @@
         <div class="col-4">
           <div class="form-group">
             <label for="">{{labels?.invoiceStatus}}</label>
-            <app-vf-custom-select formControlName = "invoiceAmountPaid"
+            <app-vf-custom-select formControlName = "invoiceStatus"
             [values] = "invoiceStatusList"
             [isRequired] = "'Please select the Invoice Status'"
             [isDirty] = "isDirty"
@@ -259,6 +261,18 @@
         </div>
       </div>
 
+      <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName="remark"
+            [isDisabledInp]="enableFlag" 
+             [labelName]="labels.remark" [id]="'remark'" 
+             [maxLength]="labels?.validationData.userName.maxLength" 
+             [isDirty]="isDirty" 
+             [isDisabledInp]="propertyFlag"
+             [isRequired]="'Please enter the remark'">
+            </app-custom-input>
+        </div>
+    </div>
          
         <!-- <div class="col-4">
             <div class="form-group">
@@ -286,13 +300,15 @@
 
 
       </div>
+    </form>
 
         <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
-            <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
+            <button class="btn btn-primary"  *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
+            <button class="btn btn-primary"  *ngIf="showUpdate" (click)="OnUpdate()">Update</button>
             <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
         </div>
 
-    </form>
+   
 </mat-dialog-content>
 
 
@@ -383,7 +399,7 @@
           <h4 class="modal-title">View PDF</h4>
           <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
         </div>
-        <div class="modal-body" style="height:800px">
+        <div class="modal-body" style="height:500px">
   
         </div>
   </div>
@@ -435,3 +451,7 @@ id="deleteModal"
   </div>
 </div>
 </div>
+
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
+  

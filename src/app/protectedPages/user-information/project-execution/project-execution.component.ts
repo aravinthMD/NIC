@@ -6,8 +6,11 @@ import {LabelsService} from '../../../services/labels.service';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material';
 import { ProjectExcecutionDialogComponent } from './project-excecution-dialog/project-excecution-dialog.component';
-import { ActivatedRoute } from '@angular/router';
-import { UtilService } from '@services/util.service'
+import { Router,ActivatedRoute } from '@angular/router';
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
+import { InvoiceService } from '@services/invoice.service';
+
 
 @Component({
   selector: 'app-project-execution',
@@ -60,7 +63,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
 
-  dataSource = new MatTableDataSource<any>(this.userList);
+  dataSource = new MatTableDataSource<any>([]);
 
   displayedColumns : string[] = ["ProjectNo","InvoiceNo","InvoiceDate","Amount","Action"]
 
@@ -69,17 +72,31 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
   accountName: string;
   status: string;
 
+  propertyFlag: boolean;
 
-  constructor(private labelsService : LabelsService,private dialog : MatDialog,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
+  storeProjectNo: string;
 
+  showDataSaveModal: boolean;
 
+dataValue: {
+  title: string;
+  message: string
+}
+
+  constructor(
+              private labelsService : LabelsService,
+              private dialog : MatDialog,
+              private activatedRoute: ActivatedRoute,
+              private utilService: UtilService,
+              private toasterService: ToasterService,
+              private router: Router,
+              private invoiceService : InvoiceService
+              ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
     })
-
-
   }
 
   ngOnInit() {
@@ -103,7 +120,8 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
       NICSIProjectNo : new FormControl(null),
       invoiceDate :  new FormControl(null),
       transactionDate : new FormControl(null),
-      piPaid: new FormControl('')
+      piPaid: new FormControl(''),
+      remark:new FormControl('')
     });
 
     this.utilService.userDetails$.subscribe((val)=> {
@@ -114,6 +132,7 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
     this.activatedRoute.params.subscribe((value)=> {
 
+      this.storeProjectNo = value.projectNo || 4535
       this.userList =   [
         {projectNo:value.projectNo || 4535, invoiceNumber: 4355, invoiceDate: '12/04/2017', amount: 50000},
         {projectNo:value.projectNo || 4535, invoiceNumber: 2313, invoiceDate: '15/06/2018', amount: 45900},
@@ -135,8 +154,18 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
     })
 
-    this.dataSource = new MatTableDataSource<any>(this.userList);
+    // this.dataSource = new MatTableDataSource<any>(this.userList);
+
+    this.getProjectExecutionDetails();     //Getting the Projet Execution details API
+
+    this.getProjectExecutionDetailById();
+
+    this.deleteProjectExecution();
   }
+
+
+
+
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
@@ -151,7 +180,148 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
     this.PurchaseEntryForm.reset();
 
+    this.toasterService.showSuccess('Data Saved Successfully','')
+
+  this.showDataSaveModal = true;
+  this.dataValue= {
+    title: 'Project Execution Saved Successfully',
+    message: 'Are you sure you want to proceed purchase order invoice page?'
   }
+
+  }
+
+    //Create PE
+
+    createProjectExecution(){
+
+      this.updateProjectExecutionDetail();
+
+        const feildControls =   this.PurchaseEntryForm.controls;
+        const userName  = feildControls.userName.value;
+        const piNumber =  feildControls.piNumber.value;
+        const piDate = feildControls.piDate.value;
+        const piAmount = feildControls.piAmount.value;
+        const modeOfPayment = feildControls.modeOfPayment.value;
+        const documentNo = feildControls.documentNo.value;
+        const dateOfTransaction = feildControls.dateOfTransaction.value;
+        const bankName = feildControls.bankName.value;
+        const amountReceived = feildControls.amountReceived.value;
+        const tds = feildControls.tds.value;
+        const NICSIProjectNo = feildControls.NICSIProjectNo.value;
+        const invoiceDate = feildControls.invoiceDate.value;
+        const transactionDate =  feildControls.transactionDate.value;
+        const piPaid = feildControls.piPaid.value;
+        const remark = feildControls.remark.value;
+  
+  
+        const Data = {
+          userName,
+          piNumber,
+          piDate,
+          piAmount,
+          modeOfPayment,
+          documentNo,
+          dateOfTransaction,
+          bankName,
+          amountReceived,
+          tds,
+          NICSIProjectNo,
+          invoiceDate,
+          transactionDate,
+          piPaid,
+          remark
+        }
+  
+        this.invoiceService.createProjectExecution(Data).subscribe(
+          (response) => {
+                console.log(response['ProcessVariables']); 
+          },(error) => {
+            console.log(error)
+        })
+  
+    }
+
+
+
+    getProjectExecutionDetails(){   //Fetch All Details
+
+      this.invoiceService.getProjectExecutionDetails('INV123').subscribe((response) => {
+
+        console.log(response);
+
+      this.dataSource = new MatTableDataSource<any>(response["ProcessVariables"]["peList" ]);
+
+      },(error) => {
+
+        console.log(error)
+
+      })
+
+
+    }
+
+    getProjectExecutionDetailById(){
+
+      this.invoiceService.getProjectExecutionDetailbyId('').subscribe((response) => {
+
+        console.log(response)
+
+      },(error) => {
+
+        console.log(error)
+
+      })
+
+    }
+
+
+    updateProjectExecutionDetail(){
+
+
+      const data = {
+              "currentPEId":"26",
+              "userName":"demouser",
+              "invoiceNumber":"INV123",
+              "amount":"2000",
+              "invoiceDate":"17/12/2020",
+              "paymentMode":"cash",
+              "documentNumber":"PE1342343",
+              "transactionDate":"16/12/2020",
+              "branchName":"ABC",
+              "receivedAmount":"200",
+              "tds":"50",
+              "nicsiProjectNumber":"97878978",
+              "paidPI":"180",
+              "remark":"Remarks",
+              "uploadDocument":"Yes",
+              "temp":"update"
+            }
+
+
+
+      this.invoiceService.updateProjectExecutionDetail(data).subscribe((resonse) => {
+
+
+      },(error) => {
+
+
+      })
+    }
+
+
+    deleteProjectExecution(){
+      
+      this.invoiceService.deleteProjectExecution("INV1234").subscribe((response) => {
+
+        console.log(response)
+
+      },(error) => {
+
+        console.log(error)
+      })
+
+    }
+
 
   onSearch() {
 
@@ -179,6 +349,72 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
       console.log('The dialog was Closed',result);
     })
   }
+
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.userList,'ProjectExecution');
+  }
+
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'invoiceDate') {
+
+      this.PurchaseEntryForm.patchValue({
+        invoiceDate: ''
+      })
+      this.toasterService.showError('Please click the PI date icon to select date','');
+    }else if(type == 'transactionDate') {
+
+      this.PurchaseEntryForm.patchValue({
+        transactionDate: ''
+      })
+      this.toasterService.showError('Please click the date of transaction icon to select date','');
+    }else if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
+  }
+
+  next() {
+
+    this.utilService.setCurrentUrl('users/purchaseOrder')
+
+    this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
+  }
+
+  back() {
+    this.utilService.setCurrentUrl('users/proformaInvoice')
+
+    this.router.navigate([`/users/proformaInvoice/${this.storeProjectNo}`])
+  }
+
+  saveYes()
+  {
+ 
+   this.showDataSaveModal = false;
+   
+   this.next()
+ 
+ 
+  }
+ 
+  saveCancel() {
+ 
+   this.showDataSaveModal = false;
+
+  }
+
 
   }
 

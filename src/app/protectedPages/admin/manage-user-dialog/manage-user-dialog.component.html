@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>User Info</h2>
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="form">
+
+    <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
+    <form [formGroup]="form"*ngIf="showEdit">
         <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
@@ -36,6 +38,17 @@
                     <!-- </select> -->
 
                     <app-vf-custom-select formControlName="departmentName" [values]="deparmentList" [isRequired]="'Please Select Department'" [isDisabled]="enableflag"></app-vf-custom-select>
+
+
+                    <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="department">Role<span style="color:red">*</span></label>
+
+                    <app-vf-custom-select formControlName="roleName" [values]="roleList" [isRequired]="'Please Select Department'" [isDisabled]="enableflag"></app-vf-custom-select>
 
 
                     <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
@@ -85,12 +98,11 @@
 
                 </div>
             </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="mobileNumber">Mobile Number<span style="color:red">*</span></label>
-                    <input type="text" class="form-control" value='9867666444' [disabled]="enableflag"   id="mobileNumber" aria-describedby="mobileNumberHelp">
-                    <small id="mobileNumberHelp" class="form-text text-muted"></small> -->
 
+
+            <!-- <div class="col-4">
+                <div class="form-group">
+                   
                     <app-custom-input formControlName="mobileNo" [labelName]="labels.mobileNo" [id]="'mobileNo'" [isRequired]="'Mobile number is mandatory'" [type]="labels?.validationData.mobile.type" [patternCheck]="labels?.validationData.mobile.patternCheck" [maxLength]="labels?.validationData.mobile.maxLength"
                         [mandatoryField]="true" [isDisabledInp]="enableflag">
 
@@ -98,13 +110,41 @@
 
 
                 </div>
+            </div> -->
+
+
+            <div class="col-1 pr-2 mr-0">
+                <div class="form-group">
+                   
+                    <label for="department">Code<span style="color:red">*</span></label>
+                    <app-vf-custom-select formControlName="countryCode" [className]="'form-control Mandatory code-pad'" [values]="countryCodeValues"
+                    [isRequired]="'Select code'" [isDisabled]="enableflag"
+                    [isDirty]="isDirty">
+                </app-vf-custom-select>
+                </div>
+            </div> 
+
+            <div class="col-3">
+                <div class="form-group">
+                
+                    <app-custom-input formControlName="mobileNo" 
+                    [labelName]="labels.mobileNo" 
+                    [id]="'mobileNo'" 
+                    [isRequired]="'Mobile number is Mandatory'" 
+                    [type]="labels?.validationData.mobile.type" 
+                    [patternCheck]="labels?.validationData.mobile.patternCheck" 
+                    [maxLength]="labels?.validationData.mobile.maxLength" 
+                    [mandatoryField]="true" [isDisabledInp]="enableflag">
+
+                    </app-custom-input>
+
+
+                </div>
             </div>
 
-            <div class="col-4">
+
+            <!-- <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="telPhno">Telephone Number(Office)<span style="color:blue">*</span></label>
-                    <input type="text" class="form-control"  value='044-564533' [disabled]="enableflag"  id="telPhno" aria-describedby="telPhnoHelp">
-                    <small id="telPhnoHelp" class="form-text text-muted"></small> -->
 
                     <app-custom-input formControlName="telPhno" [labelName]="labels.teleNumber" [id]="'telPhno'" [isRequired]="'Telephone number is mandatory'" [type]="labels?.validationData.telephoneNumber.type" [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
                         [maxLength]="labels?.validationData.telephoneNumber.maxLength" [mandatoryField]="true" [isDisabledInp]="enableflag">
@@ -113,7 +153,40 @@
 
 
                 </div>
+            </div> -->
+
+
+
+            <div class="col-1 pr-2 mr-0">
+                <div class="form-group">
+                   
+                    <label for="department">Code<span style="color:red">*</span></label>
+                    <app-vf-custom-select formControlName="teleCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues"
+                    [isRequired]="'Select code'" [isDisabled]="enableflag"
+                    [isDirty]="isDirty">
+                </app-vf-custom-select>
+                </div>
             </div>
+            <div class="col-3 pl-2 ml-0">
+                <div class="form-group">
+                    <app-custom-input formControlName="telPhno" 
+                    [labelName]="labels.teleNumber" [id]="'telPhno'"
+                    [isRequired]="'Telephone number is Mandatory'" 
+                    [mandatoryField]="true"
+                    [type]="labels?.validationData.telephoneNumber.type"
+                    [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
+                    [maxLength]="labels?.validationData.telephoneNumber.maxLength"
+                    [isDisabledInp]="enableflag">
+                    </app-custom-input>
+                </div>
+
+            </div>
+
+
+
+
+
+
             <div class="col-4">
                 <div class="form-group">
                     <!-- <label for="offcAddressLine1">Official Address line 1<span style="color:red">*</span></label>
@@ -195,6 +268,19 @@
 
                 </div>
             </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
+                        [maxLength]="labels?.validationData.remark.maxLength" 
+                        [isRequired]="'Remark is mandatory'"
+                        [isDisabledInp]="enableflag"
+                        [isDirty]="isDirty">
+                    </app-custom-input>
+                </div>
+            </div>
+
+
             <!-- <div class="col-4">
       <div class="form-group">
           <label for="poBillable">Upload Document</label>
@@ -204,12 +290,15 @@
   </div> -->
         </div>
 
-
+    </form>
 
         <div class="row pt-3 pb-3 m-0">
-            <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
-            <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+            <button class="btn btn-primary" type="submit"  *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
+      <button class="btn btn-primary" type="submit" *ngIf="showUpdate" (click)="OnUpdate()">Update</button>
+      <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
         </div>
 
-    </form>
+   
 </mat-dialog-content>
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

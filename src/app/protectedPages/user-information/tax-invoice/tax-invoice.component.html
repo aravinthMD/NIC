@@ -9,7 +9,7 @@
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple>
                     <mat-panel-title>
-                        <mat-icon>add_circle</mat-icon> Add New Tax Invoice
+                        <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Tax Invoice
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <form (submit)="taxInForm()" [formGroup]="taxInvoiceForm">
@@ -27,12 +27,17 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="projectNo" [isRequired]="'Project Number is Mandatory'" [labelName]="labels.projectNo" [maxLength]="labels?.validationData?.projectNo?.maxLength" [isDirty]="isDirty">
                                 </app-custom-input>
+                                <div *ngIf="taxInvoiceForm.get('projectNo').errors?.pattern" class="error-feedback">
+                                    <div>
+                                        {{'Please Enter Digits'}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="poNumber" [isRequired]="'PO Number is Mandatory'" [labelName]="labels?.poNumber" [maxLength]="labels?.validationData?.poNumber?.maxLength" [isDirty]="isDirty">
+                                <app-custom-input formControlName="poNumber" [isRequired]="'PO Number is Mandatory'" [labelName]="labels?.poNumber" [maxLength]="labels?.validationData?.poNumber?.maxLength" [type]="labels?.validationData?.poNumber?.type" [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -46,7 +51,7 @@
                                 <label for="InvoiceDate">{{labels?.poDate}}</label>
 
                                 <mat-form-field>
-                                    <input matInput formControlName="poDate" required [matDatepicker]="poDateId">
+                                    <input matInput formControlName="poDate" required [matDatepicker]="poDateId" (keyup)="detectDateKeyAction($event,'poDate')">
                                     <mat-datepicker-toggle matSuffix [for]="poDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #poDateId></mat-datepicker>
                                 </mat-form-field>
@@ -54,7 +59,7 @@
                 isDirty &&
                 taxInvoiceForm.get('poDate').errors?.required
               ">
-                                    Please select PO Date
+                                    Please Select PO Date
                                 </div>
                             </div>
                         </div>
@@ -77,7 +82,7 @@
                             <div class="form-group">
                                 <label for="fromDate">{{labels?.fromDate}}</label>
                                 <mat-form-field>
-                                    <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId">
+                                    <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId" (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="fromDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #fromDateId></mat-datepicker>
                                 </mat-form-field>
@@ -85,7 +90,7 @@
       isDirty &&
       taxInvoiceForm.get('fromDate').errors?.required
     ">
-                                    Please select From date
+                                    Please Select From Date
                                 </div>
 
                             </div>
@@ -94,12 +99,12 @@
                             <div class="form-group">
                                 <label for="toDate">{{labels?.toDate}}</label>
                                 <mat-form-field>
-                                    <input matInput formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value">
+                                    <input matInput formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #toDateId></mat-datepicker>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="isDirty && taxInvoiceForm.get('toDate').errors?.required">
-                                    Please select To Date
+                                    Please Select To Date
                                 </div>
                             </div>
                         </div>
@@ -120,7 +125,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="taxIN" [isRequired]="'Tax Invoice Number is Mandatory'" [labelName]="labels?.taxIN" [maxLength]="labels?.validationData?.taxIN?.maxLength" [isDirty]="isDirty">
+                                <app-custom-input formControlName="taxIN" [isRequired]="'Tax Invoice Number is Mandatory'" [labelName]="labels?.taxIN" [maxLength]="labels?.validationData?.taxIN?.maxLength" [type]="labels?.validationData?.taxIN?.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -130,7 +135,7 @@
                                 <label for="dateFor">{{labels?.submittedDate}}</label>
 
                                 <mat-form-field>
-                                    <input matInput required formControlName="submittedOn" [matDatepicker]="sumbittedDatePicker">
+                                    <input matInput required formControlName="submittedOn" [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
                                     <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker"></mat-datepicker-toggle>
                                     <mat-datepicker #sumbittedDatePicker></mat-datepicker>
                                 </mat-form-field>
@@ -138,7 +143,7 @@
     isDirty &&
     taxInvoiceForm.get('submittedOn').errors?.required
   ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -148,7 +153,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">{{labels?.invoiceStatus}}</label>
-                                <app-vf-custom-select formControlName="invoiceAmountPaid" [values]="invoiceStatusList" [isRequired]="'Please select the Invoice Status'" [isDirty]="isDirty"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="invoiceAmountPaid" [values]="invoiceStatusList" [isRequired]="'Please Select the Invoice Status'" [isDirty]="isDirty"></app-vf-custom-select>
                             </div>
                         </div>
 
@@ -188,7 +193,12 @@
 
                             </div>
                         </div>
-
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is Mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
 
                         <div class="col-4">
                             <div class="form-group">
@@ -206,7 +216,19 @@
                     </div>
                     <!--Second Row End-->
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary" type="submit">Send Email</button>
+                       
+
+                        <div class="col-11">
+
+                            <button class="btn btn-primary" style="float:left" type="submit">Send Email</button>
+                        </div>
+
+                       <div class="col-1" style="float: left;">
+                        <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+
+                       </div>
+
+                       
                     </div>
                 </form>
             </mat-expansion-panel>
@@ -239,7 +261,7 @@
                      
                      <mat-form-field>
                        <input matInput 
-                       [matDatepicker]="picker6" formControlName="searchFrom">
+                       [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
                        <mat-datepicker-toggle matSuffix [for]="picker6" 
                        ></mat-datepicker-toggle>
                        <mat-datepicker #picker6></mat-datepicker>
@@ -255,8 +277,8 @@
                      <label for="dateFor">To Date</label>
                      
                      <mat-form-field>
-                       <input matInput  
-                       [matDatepicker]="picker7" formControlName="searchTo">
+                       <input matInput  [min]="searchForm.get('searchFrom').value"
+                       [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                        <mat-datepicker-toggle matSuffix [for]="picker7" 
                        ></mat-datepicker-toggle>
                        <mat-datepicker #picker7></mat-datepicker>
@@ -290,7 +312,7 @@
            </form>
            </mat-card>
 
-        <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
+        <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="submit">Export as CSV</button>
 
 
         <div class="mat-elevation-z8">

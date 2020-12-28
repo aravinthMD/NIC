@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
-import {LabelsService} from '../../../../services/labels.service'
-
+import {LabelsService} from '../../../../services/labels.service';
+import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -27,8 +29,23 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   showDeleteModal: boolean;
 
+  showUpdate: boolean;
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
+  viewInfoData: any;
+
+  showEdit: boolean;
+
   constructor(private formBuilder : FormBuilder,private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
-    private labelService : LabelsService) {
+    private labelService : LabelsService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService) {
 
     this.taxInvoiceForm = this.formBuilder.group({
       userName : ['Arun'],
@@ -39,11 +56,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
       poDate : new Date(),
       fromDate : new Date(),
       toDate : new Date(),
-      invoiceAmount : ['10000'],
+      invoiceAmount : ['1000'],
       remark : ['Testing'],
       uploadDoc : [''],
       paymentStatus : ['2'],
-      invoiceStatus : ['1'],
+      invoiceStatus : ['2'],
       invoiceAmountPaid : ['10000'],
       tds : ['10000'],
       penalty : ['10000'],
@@ -51,15 +68,17 @@ export class TaxInvoiceDialogComponent implements OnInit {
       submittedOn : new Date(),
       poBillable : ['1000']
     })
+    this.detectAuditTrialObj=this.taxInvoiceForm.value
    }
 
    invoiceStatusList :  any[] = [
     {key : 0,value : 'Pending'},
     {key : 1,value : 'Paid'},
     {key : 2,value : 'Partially Paid'},
-    {kwy : 3,value : 'Return by NICSI'}
+    {key : 3,value : 'Return by NICSI'}
   ]
-
+  detectAuditTrialObj:any;
+  remarkModal:boolean;
   paymentStatus: any[] = [
     { key: 0, value: 'Pending' },
     { key: 1, value: 'Received' },
@@ -69,14 +88,116 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.labelService.getLabelsData().subscribe((value) => {
       this.labels = value;
     })
+
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+    })
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+
+    const psData = this.paymentStatus.filter((val)=> {
+
+      return val.key == this.taxInvoiceForm.value.paymentStatus
+    })
+
+    const invoiceStatusList = this.invoiceStatusList.filter((val)=> {
+      return val.key == this.taxInvoiceForm.value.invoiceStatus
+    })
+
+    this.viewInfoData = [
+      {
+        key: this.labels.userName,
+        value:this.taxInvoiceForm.value.userName
+      },
+      {
+        key: this.labels.projectNo,
+        value:this.taxInvoiceForm.value.projectNo
+      },
+      {
+        key: this.labels.poNumber,
+        value:this.taxInvoiceForm.value.poNumber
+      },
+      {
+        key: this.labels.poDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.fromDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.toDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.poBillable,
+        value:this.taxInvoiceForm.value.poBillable
+      },
+      {
+        key: this.labels.invoiceAmount,
+        value:this.taxInvoiceForm.value.invoiceAmount
+      },
+
+      {
+        key: this.labels.taxIN,
+        value:this.taxInvoiceForm.value.taxIN
+      },
+      {
+        key: this.labels.submittedDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.invoiceStatus,
+        value:invoiceStatusList[0].value
+      },
+      {
+        key: this.labels.invoiceAmountPaid,
+        value:this.taxInvoiceForm.value.invoiceAmountPaid
+      },
+      {
+        key: this.labels.tds,
+        value:this.taxInvoiceForm.value.tds
+      },
+      {
+        key: this.labels.penalty,
+        value:this.taxInvoiceForm.value.penalty
+      },
+      {
+        key: this.labels.shortPay,
+        value:this.taxInvoiceForm.value.shortPay
+      },
+      {
+        key: this.labels.paymentStatus,
+        value:psData[0].value
+      },
+      {
+        key: this.labels.remark,
+        value:this.taxInvoiceForm.value.remark
+      },
+    ]
+  }
+
+  OnEdit() {
+
+
+    this.enableFlag = false;
+    this.showUpdate = true;
+    this.showEdit = true;
   }
 
   OnUpdate(){
-    this.buttonName  = 'Update';
-    this.enableFlag = false;
+    
+    this.detectFormChanges();
+    
 
     if(this.taxInvoiceForm.invalid){
       this.isDirty = true;
+      return;
     }
   }
 
@@ -92,6 +213,51 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   download(){
   
+  }
+  detectFormChanges() {
+
+    let iRemark = false;
+
+    const formObject = this.taxInvoiceForm.value;
+
+    const keyArr = Object.keys(formObject);
+
+    const index = keyArr.findIndex((val)=> {
+      return val == 'remark'
+    })
+    
+    keyArr.splice(index,1)
+
+    const found = keyArr.find((element) => {
+              return formObject[element] != this.detectAuditTrialObj[element]
+        
+    });
+
+
+    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+      iRemark = true;
+    // this.toasterService.showError('Please enter the remark','')
+    this.remarkModal = true;
+    this.taxInvoiceForm.patchValue({
+      remark: ''
+    })
+    
+    }else {
+
+      // if(!found && !iRemark) {
+
+      //   this.form.patchValue({
+      //     remark: this.detectAuditTrialObj.remark
+      //   })
+      // }
+
+      this.detectAuditTrialObj = this.taxInvoiceForm.value;
+      this.toasterService.showSuccess('Data Saved Successfully','')
+    }
+  }
+
+  remarkOkay() {
+    this.remarkModal = false;
   }
 
   async onFileSelect(event) {
@@ -202,5 +368,37 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.showPdfModal = true;
   }
 
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'poDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        poDate: ''
+      })
+      this.toasterService.showError('Please click the PO date icon to select date','');
+    }else if(type == 'fromDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        fromDate: ''
+      })
+      this.toasterService.showError('Please click the fromDate icon to select date','');
+    }else if(type == 'toDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        toDate: ''
+      })
+      this.toasterService.showError('Please click the toDate icon to select date','');
+    }else if(type == 'submittedOn') {
+  
+      this.taxInvoiceForm.patchValue({
+        submittedOn: ''
+      })
+      this.toasterService.showError('Please click the submittedOn icon to select date','');
+    }
+    
+  }
 
 }

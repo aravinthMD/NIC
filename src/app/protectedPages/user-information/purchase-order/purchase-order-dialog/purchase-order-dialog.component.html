@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>Purchase Order</h2>
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="PurchaseOrderForm">
+    <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
+
+    <form [formGroup]="PurchaseOrderForm" (keydown.enter)="$event.preventDefault()" *ngIf="showEdit">
         <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
@@ -41,9 +43,13 @@
 
               </section> -->
 
-                    <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty"
+              <label for="smsApproved">{{labels.smsApproved}}</label>
+              <app-vf-custom-select formControlName="smsApproved" [values]="smsApprovedList" [isRequired]="'Please Select SMS Approved'" [isDirty]="isDirty" [isDisabled]="enableFlag">
+              </app-vf-custom-select>
+
+                    <!-- <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty"
                         [isDisabledInp]="enableFlag">
-                    </app-custom-input>
+                    </app-custom-input> -->
 
                 </div>
             </div>
@@ -62,7 +68,7 @@
                     <label for="dateFor">{{labels?.date}}</label>
 
                     <mat-form-field>
-                        <input matInput required formControlName="date" [matDatepicker]="picker1" [disabled]="enableFlag">
+                        <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" [disabled]="enableFlag">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </mat-form-field>
@@ -102,7 +108,7 @@
                     <label for="Fromperiod">Valid From</label>
 
                     <mat-form-field>
-                        <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="PurchaseOrderForm.get('endDate').value" [disabled]="enableFlag" required>
+                        <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="PurchaseOrderForm.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" [disabled]="enableFlag" required>
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
@@ -121,7 +127,7 @@
                     <label for="Toperiod">Valid Upto</label>
 
                     <mat-form-field>
-                        <input matInput [matDatepicker]="picker4" [min]="PurchaseOrderForm.get('startDate').value" formControlName="endDate" [disabled]="enableFlag" required>
+                        <input matInput [matDatepicker]="picker4" [min]="PurchaseOrderForm.get('startDate').value" formControlName="endDate" (keyup)="detectDateKeyAction($event,'endDate')" [disabled]="enableFlag" required>
                         <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                         <mat-datepicker #picker4></mat-datepicker>
                     </mat-form-field>
@@ -191,6 +197,17 @@
                 </div>
             </div>
 
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="remark" 
+                    [labelName]="labels.remark" [id]="'remark'"
+                    [isDisabledInp]="enableFlag" 
+                    [isRequired]="'Please enter the remark'"
+                     [maxLength]="labels?.validationData.userName.maxLength" 
+                     [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                    </app-custom-input>
+                </div>
+            </div>
             <!-- <div class="col-4">
           <div class="form-group">
             <label for="poBillable">{{labels.uploadDoc}}</label>
@@ -222,13 +239,14 @@
 
         </div>
 
-
+    </form>
         <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
-            <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
+            <button class="btn btn-primary" *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
+            <button class="btn btn-primary" *ngIf="showUpdate" (click)="OnUpdate()">Update</button>
             <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
         </div>
 
-    </form>
+    
 </mat-dialog-content>
 
 
@@ -331,7 +349,7 @@
                 <h4 class="modal-title">View PDF</h4>
                 <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
             </div>
-            <div class="modal-body" style="height:800px">
+            <div class="modal-body" style="height:500px">
 
             </div>
         </div>
@@ -369,3 +387,7 @@
         </div>
     </div>
 </div>
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

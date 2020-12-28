@@ -33,12 +33,12 @@
                                 <option value="5">All</option>
                               </select> -->
 
-                                <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Reports'"></app-vf-custom-select>
+                                <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Report'"></app-vf-custom-select>
                             </div>
                         </div>
 
-                        <div class="col-4">
-                            <div class="form-group">
+                        <div class="col-4" *ngIf="reportKey <= 4 || reportKey == 10">
+                            <div class="form-group" optionValue>
                                 <label for="mobile">Status</label>
                                 <!-- <select class="form-control">
                                 <option value = '0' disabled>--select--</option>
@@ -48,7 +48,7 @@
                                 
                               </select> -->
 
-                                <app-vf-custom-select formControlName="status" [values]="optionValue" [isRequired]="'Please Select Status'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="status" [values]="optionValue" ></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                                 <option value="2">Department</option>
                                 <option value="3">Status</option> -->
                                 <!-- </select> -->
-                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter" [isRequired]="'Please Select ReportFilter'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter"></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -109,7 +109,6 @@
                             [settings]="dropdownSettings"
                             (onSelectAll)="onSelectAll('1')"
                             (onDeSelect) = "onItemDeSelect('1')"
-                            (onFilterChange) =  "onItemDeSelect('1')"
                             (onDeSelectAll) = "onItemDeSelect('1')"
                             >
                             </ng-multiselect-dropdown>
@@ -120,7 +119,7 @@
                             <label for="mobile">Project No</label>
                             <div class="form-group">
                             <ng-multiselect-dropdown
-                            [placeholder]="'Choose project no'"
+                            [placeholder]="'Choose Project No'"
                             formControlName ="projectNoFilter"
                             [data]="projectNoDropDownList"
                             [settings]="dropdownSettings"
@@ -173,7 +172,7 @@
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" formControlName="fromDate" [max]="form.get('toDate').value">
+                                    <input matInput [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'fromDate')" formControlName="fromDate" [max]="form.get('toDate').value">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
@@ -186,7 +185,7 @@
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker2" (dateInput)="formDateFunc($event.value)" [min]="form.get('fromDate').value" formControlName="toDate">
+                                    <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="form.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
@@ -197,7 +196,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">User Status</label>
-                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the status'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the Status'"></app-vf-custom-select>
                             </div>
                         </div>
 
@@ -248,8 +247,9 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Filter</button>
+                        <button  class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Filter</button>
                         <button class="btn btn-primary" (click)="filterTabButtonName = ''" type="submit">Clear</button>
+
 
                         <!-- <button class="btn btn-primary download mrg-lft" type="submit">Download</button> -->
 
@@ -259,68 +259,9 @@
 
             </mat-expansion-panel>
         </mat-accordion>
+        <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         <!--Material Table-->
-        <button style="float: right;" class="btn btn-primary download download-pad" type="submit">Export as CSV</button>
-        <div class="mat-elevation-z8">
-
-            <div class="row  pb-3 pr-3 pl-3 float-right m-0">
-                <!-- <button class="btn btn-primary download mrg-lft" type="submit">Download</button> -->
-            </div>
-
-            <table mat-table [dataSource]="dataSource">
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="UserID">
-                    <th mat-header-cell *matHeaderCellDef> User ID </th>
-                    <td mat-cell *matCellDef="let element"> <a>{{element.userId}}</a> </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="Department">
-                    <th mat-header-cell *matHeaderCellDef> Department </th>
-                    <td mat-cell *matCellDef="let element"> {{element.department}} </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="state">
-                    <th mat-header-cell *matHeaderCellDef> State </th>
-                    <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="projectNumber">
-                    <th mat-header-cell *matHeaderCellDef> Project Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.projectNumber}} </td>
-                </ng-container>
-
-
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="piNumber">
-                    <th mat-header-cell *matHeaderCellDef> PI Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.piNumber}} </td>
-                </ng-container>
-
-
-                <!--Invoice raised-->
-                <ng-container matColumnDef="piDate">
-                    <th mat-header-cell *matHeaderCellDef> PI Date </th>
-                    <td mat-cell *matCellDef="let element"> {{element.piDate}} </td>
-                </ng-container>
-
-                <!-- <ng-container matColumnDef="download">
-                    <th mat-header-cell *matHeaderCellDef> Download </th>
-                   
-                </ng-container> -->
-
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
-            </table>
-
-            <!-- <button class="btn btn-primary download download-pad" type="submit">Export As CSV</button> -->
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
-            <div class="mb-3"></div>
-        </div>
+        <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
 
     </div>
     <!--Reports Tag close-->

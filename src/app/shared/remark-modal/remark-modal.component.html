@@ -1,0 +1,15 @@
+<div class="modal" id="statusModal" [ngClass]="{ 'dis-block': showRemarkModal }">
+    <div class="modal-dialog remark-popup">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">Remark</h4>
+            </div>
+            <div class="modal-body red-color">
+                <p id="">Please enter the remark reason</p>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onRemarkOK()"> OK</button>
+            </div>
+        </div>
+    </div>
+</div>

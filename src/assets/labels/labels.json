@@ -9,23 +9,23 @@
     "OfficerMobile": "Reporting/Nodal/Forwarding Officer Mobile",
     "smsServiceReqd": "SMS Service Required",
     "credits_SMSQuota": "Credits (SMS Quota)",
-    "availableCredit": "Available Credit",
+    "availableCredit": "Available Credits",
     "nameOfTheApplication": "Name of the Application",
     "applicationUrl": "Application URL",
     "serverLocation": "Server Location",
     "password": "Password",
-    "credit": "Credit",
+    "credit": "Credits",
     "onApprovalOf": "On Approval Of",
     "statusChangedBy": "Status Changed By",
     "timeStamp": "Time Stamp",
     "purpOfTheApplication": "Purpose of the Application",
     "ipformwhichSmsGatewaywillbeaccess": "IP Form which SMS Gateway will be access",
     "ipofStagingServReqdforTesting": "IP of Staging Server Required for Testing",
-    "projectedDomesticMonthlySMStraffic": "Projected Domestic Monthly SMS traffic",
-    "projectedInternationalMonthlySMStraffic": "Projected International Monthly SMS traffic",
-    "applicationsecurAuditCleared": "Application security audit cleared",
+    "projectedDomesticMonthlySMStraffic": "Projected Domestic Monthly SMS Traffic",
+    "projectedInternationalMonthlySMStraffic": "Projected International Monthly SMS Traffic",
+    "applicationsecurAuditCleared": "Application Security Audit Cleared",
     "auditDatebyWhenItWillBeCleared": "Audit Date by when it will be cleared",
-    "doYouHaveTRAIexemptedSenderId": "Do you have TRAI exempted Sender Id",
+    "doYouHaveTRAIexemptedSenderId": "Do you have TRAI exempted Sender ID",
     "department": "Department",
     "departmentKey": "Department Key",
     "departmentVal": "Department Value",
@@ -45,11 +45,11 @@
     "toDate": "To Date",
     "projectNo": "Project Number",
     "uploadDoc": "Upload Document",
-    "creditAdded": "Credit added",
+    "creditAdded": "Credit Added",
     "creditApprover": "Credit Approver",
     "creditDate": "Credit Date",
     "smsQuotaMetrix": "SMS Quota Approval Metrix",
-    "creditPI": "Credit Added Against The PI",
+    "creditPI": "Credit Added against the PI",
     "proformaIN": "Proforma Invoice Number",
     "invoiceDate": "Invoice Date",
     "poNumber": "Purchase Order Number",
@@ -102,18 +102,29 @@
     "smsApproved": "SMS Approved",
     "submittedDate": "Submitted Date",
     "nicsiManager": "NICSI Manager",
+    "rate": "Rate",
+    "quantity": "Quantity",
+    "description": "Description",
     "validationData": {
         "name": {
             "maxLength": {
                 "rule": 50
             },
-            "type": "alpha"
+            "type": "alpha",
+            "patternCheck":{
+                "rule":"^[a-zA-Z][a-zA-Z\\s]+$",
+                "msg": "Invalid Name"
+            }
         },
         "userName": {
             "maxLength": {
                 "rule": 50
             },
-            "type": "alpha"
+            "type": "alpha",
+            "patternCheck":{
+                "rule":"^[a-zA-Z][a-zA-Z\\s]+$",
+                "msg": "Invalid UserName"
+            }
         },
         "applicantName": {
             "maxLength": {
@@ -223,11 +234,11 @@
         },
         "telephoneNumber": {
             "maxLength": {
-                "rule": 10
+                "rule": 7
             },
             "type": "number",
             "patternCheck": {
-                "rule": "^[0-9]{10}",
+                "rule": "^[0-9]{7}",
                 "msg": "Invalid telephone number"
             }
         },
@@ -241,12 +252,15 @@
             "maxLength": {
                 "rule": 12
             },
-            "type": "number"
+            "patternCheck": {
+                "rule": "^[0-9]{12}",
+                "msg": "Should be Digits Only"
+            }
         },
         "officeAddress": {
             "maxLength": {
                 "rule": 50
-            }
+         }
         },
         "city": {
             "maxLength": {
@@ -269,19 +283,29 @@
             "maxLength": {
                 "rule": 12
             },
-            "type": "number"
+            "patternCheck": {
+                "rule": "^[0-9]{12}",
+                "msg": "Should be Digits Only"
+            }
         },
         "projectNo": {
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "proformaIN": {
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
+        },
+        
+        "UserId": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type": "number"
         },
         "proformaPN": {
             "maxLength": {
@@ -292,7 +316,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "piAmount": {
             "maxLength": {
@@ -314,7 +338,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "piOwner": {
             "maxLength": {
@@ -332,7 +356,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "withoutTax": {
             "maxLength": {
@@ -415,13 +439,31 @@
         "taxIN": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type" : "number"
         },
         "nicsiManager": {
             "maxLength": {
                 "rule": "50"
             },
             "type": "alpha"
+        },
+        "rate": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "quantity": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "description": {
+            "maxLength": {
+                "rule": "2000"
+            }
         }
     }
 }
