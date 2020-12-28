@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Optional, Inject, } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
 import {LabelsService } from '../../../../services/labels.service'
 import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router';
+import { AdminService } from '@services/admin.service';
+import { InvoiceService } from '@services/invoice.service'
 
 @Component({
   selector: 'app-purchase-order-dialog',
@@ -18,21 +20,9 @@ export class PurchaseOrderDialogComponent implements OnInit {
   PurchaseOrderForm :  FormGroup;
   enableFlag : boolean = true;
   isDirty : boolean;
-  poStatus: any[] = [
-    { key :0, value: 'Received' },
-    { key :1,value : 'Not Received'},
-    { key :2,value : 'Raised'},
-    { key: 3, value: 'Pending' },
-    { key: 4, value: 'Rejected' },
-    { key: 5, value: 'On Hold' }]
+  poStatus: any;
 
-    departmentListData = [
-      {key:0,value:'Department of Sainik Welfare'},
-      {key:1,value:'Ministry of Minority Affairs'},
-      {key:2,value:'Visakhapatnam Port Trust'},
-      {key:3,value:'Ministry of Tribal Affairs'},
-      {key:4,value:'Bureau of Naviks.Mumbai'}
-  ];
+  departmentListData: any;
 
   paymentStatus: any[] = [
     { key: 0, value: 'Pending' },
@@ -68,36 +58,97 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   showEdit: boolean;
 
-  constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
-    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService) {
+  smsApprovedList = [
+    {
+    key: '1',
+    value: 'Yes'
+  },
+  {
+    key: '0',
+    value: 'No'
+  }
 
-    this.PurchaseOrderForm = this.formBuilder.group({
-      userName : ['Kumaran'],
-      piNumber : ['35000'],
-      poNumber : ['45000'],
-      smsApproved : ['2000'],
-      projectName : ['STNIC'],
-      date : new Date(),
-      withoutTax : ['2400'],
-      poStatus : ['3'],
-      startDate : new Date(),
-      endDate : new Date(),
-      userEmail : ['mathur@nic.com'],
-      poManagerEmail : ['kumar@nicadmin.com'],
-      projectNo : ['3400'],
-      poAmountWithTax : [5000],
-      departmentName : ['2'],
-      paymentStatus : ['1'],
-      remark:['User Updated'],
-      uploadDoc : ['']
-    })
-    this.detectAuditTrialObj=this.PurchaseOrderForm.value
+  ]
+
+  constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
+    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService) {
+
+
+      this.PurchaseOrderForm = this.formBuilder.group({
+        userName : [this.data.userName],
+        piNumber : [this.data.piNumber],
+        poNumber : [this.data.poNumber],
+        smsApproved : [this.data.smsApproved],
+        projectName : [this.data.projectName],
+        date : new Date(`${this.changeDateFormat(this.data.poDate)}`),
+        withoutTax : [this.data.withOutTax],
+        poStatus : [this.data.poStatus],
+        startDate :  new Date(`${this.changeDateFormat(this.data.validFrom)}`),
+        endDate :  new Date(`${this.changeDateFormat(this.data.validTo)}`),
+        userEmail : [this.data.userEmail],
+        poManagerEmail : [this.data.managerEmail],
+        projectNo : [this.data.projectNumber],
+        poAmountWithTax : [this.data.amountWithTax],
+        departmentName : [this.data.department],
+        paymentStatus : [''],
+        remark:[this.data.remark],
+        uploadDoc : ['']
+      })
+      this.detectAuditTrialObj=this.PurchaseOrderForm.value
+
+      
    }
 
-  ngOnInit() {
+   changeDateFormat(date) {
+
+    const splitDate = date.split('/');
+
+    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+   }
+
+   async getDepartmentLov() {
+    return new Promise(async (resolve,reject)=> {
+          let listData = []
+          this.adminService.getLovSubMenuList("0").subscribe((response)=> {
+            const submenuList = response['ProcessVariables']['Lovitems'];
+            submenuList.forEach(element => {
+                
+                listData.push({key:element.key,value:element.name})
+              });
+
+            resolve(listData)
+            })
+      })
+            
+  }
+
+  async getStatusLov() {
+
+    return new Promise(async (resolve,reject)=> {
+        let poData = []
+        this.adminService.getLovSubMenuList("1").subscribe((response)=> {
+        const poList = response['ProcessVariables']['Lovitems'];
+        poList.forEach(element => {
+          
+          poData.push({key:element.key,value:element.name})
+        });
+
+        resolve(poData)
+      })
+    })
+  }
+
+ async ngOnInit() {
     this.labelService.getLabelsData().subscribe((value) =>{
     this.labels = value;
     })
+
+
+    this.departmentListData = await this.getDepartmentLov();
+
+    this.poStatus = await this.getStatusLov()
+
 
     this.activatedRoute.params.subscribe((value)=> {
 
@@ -108,6 +159,9 @@ export class PurchaseOrderDialogComponent implements OnInit {
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
+
+    console.log(this.data)
+  
 
 
 const psData = this.paymentStatus.filter((val)=> {
@@ -145,7 +199,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
       },
       {
         key: this.labels.date,
-        value:`${day}/${month}/${year}`
+        value:this.data.poDate
       },
       {
         key: this.labels.withoutTax,
@@ -157,11 +211,11 @@ const departmentListData = this.departmentListData.filter((val)=> {
       },
       {
         key: 'Valid From',
-        value:`${day}/${month}/${year}`
+        value:this.data.validFrom
       },
       {
         key: 'Valid Upto',
-        value:`${day}/${month}/${year}`
+        value:this.data.validTo
       },
       {
         key: this.labels.userEmail,
@@ -216,11 +270,47 @@ const departmentListData = this.departmentListData.filter((val)=> {
     }
       
 
-      this.showDataSaveModal = true;
-    this.dataValue= {
-      title: 'Purchase Order Saved Successfully',
-      message: 'Are you sure you want to proceed tax invoice page?'
+    const poObject = {
+
+      "uploads":"file",
+      "paymentStatus":2,
+      "selectedPOId":this.PurchaseOrderForm.value.poNumber,
+      "temp":"update",
+      "poNumber":this.PurchaseOrderForm.value.poNumber,
+      "projectNumber":this.PurchaseOrderForm.value.projectNo,
+      "projectName": this.PurchaseOrderForm.value.projectName,
+      "poDate": this.PurchaseOrderForm.value.date,
+      "poStatus":Number(this.PurchaseOrderForm.value.poStatus),
+      "uploadDocument":"file",
+      "piNumber":this.PurchaseOrderForm.value.piNumber,
+      "smsApproved":this.PurchaseOrderForm.value.smsApproved,
+      "validUpto":this.PurchaseOrderForm.value.endDate,
+      "department":this.PurchaseOrderForm.value.departmentName,
+      "userName":this.PurchaseOrderForm.value.userName,
+      "remark":this.PurchaseOrderForm.value.remark,
+      "withoutTax":this.PurchaseOrderForm.value.withoutTax,
+      "userEmail":this.PurchaseOrderForm.value.userEmail,
+      "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
+      "validFrom":this.PurchaseOrderForm.value.startDate,
+      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax
     }
+
+
+    this.invoiceService.updatePurchaseOrder(poObject).subscribe((response)=> {
+
+      console.log(response)
+
+      
+      this.toasterService.showSuccess('Data Saved Successfully','')
+
+      this.showDataSaveModal = true;
+      this.dataValue= {
+        title: 'Purchase Order Saved Successfully',
+        message: 'Are you sure you want to proceed tax invoice page?'
+      }
+    })
+
+    
 
   }
 
@@ -302,8 +392,11 @@ this.closeDialog()
       //   })
       // }
 
+    
+
+
       this.detectAuditTrialObj = this.PurchaseOrderForm.value;
-      this.toasterService.showSuccess('Data Saved Successfully','')
+     
     }
   }
 

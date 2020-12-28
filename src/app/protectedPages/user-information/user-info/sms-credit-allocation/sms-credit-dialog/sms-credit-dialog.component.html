@@ -1,6 +1,10 @@
-<h2 mat-dialog-title>Add SMS Credit Allocation</h2>
+<h2 mat-dialog-title>View SMS Credit Allocation</h2>
+
+
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="smsCreditAllocation">
+
+    <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info> 
+    <form [formGroup]="smsCreditAllocation" *ngIf = "!showView">
         <div class="row">
             <div class="col-4 pb-0">
                 <div class="form-group">
@@ -77,12 +81,13 @@
             </div>
         </div>
 
-        <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
-            <button class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
-            <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
-        </div>
-
     </form>
+
+    <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
+        <button class="btn btn-primary" type="submit" (click)="onSubmit()" *ngIf="!showView">Submit</button>
+        <button class="btn btn-primary" type="submit" (click)="onEdit()" *ngIf="showView">Edit</button>
+        <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
+    </div>
 </mat-dialog-content>
 
 

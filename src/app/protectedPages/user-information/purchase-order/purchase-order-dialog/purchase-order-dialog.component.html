@@ -43,9 +43,13 @@
 
               </section> -->
 
-                    <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty"
+              <label for="smsApproved">{{labels.smsApproved}}</label>
+              <app-vf-custom-select formControlName="smsApproved" [values]="smsApprovedList" [isRequired]="'Please Select SMS Approved'" [isDirty]="isDirty" [isDisabled]="enableFlag">
+              </app-vf-custom-select>
+
+                    <!-- <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty"
                         [isDisabledInp]="enableFlag">
-                    </app-custom-input>
+                    </app-custom-input> -->
 
                 </div>
             </div>

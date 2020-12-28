@@ -26,7 +26,7 @@ export class SmsCreditAllocationComponent implements OnInit {
 labels: any = {};
 smsCreditAllocation:FormGroup;
 panelOpenState=false;
-displayedColumns:any[]=['s.no','credit','expiryDate','status','reminder','remark']
+displayedColumns:any[]=['s.no','credit','expiryDate','status','reminder','remark','Action']
 
 viewInfoData : any
 
@@ -102,7 +102,7 @@ showDataSaveModal: boolean;
     });
     this.smsCreditAllocation=new FormGroup({
       smsQuotaMetrix: new FormControl (['']),
-      credit: new FormControl ([null,Validators.pattern("^[0-9]{0,12}$")]),
+      credit: new FormControl ([null]),
       date: new FormControl ([null]),
       status: new FormControl ([null]),
       onApprovalOf: new FormControl ([null]),
@@ -151,16 +151,16 @@ showDataSaveModal: boolean;
 
   setFormValues() {
    
-    this.smsCreditAllocation.patchValue({
-      smsQuotaMetrix: '1',
-      credit: '5000',
-      date: new Date(),
-      status: '2',
-      onApprovalOf: 'dureja.sk@nic.in',
-      remark: 'Status Changed',
-      statusChangedBy: 'Akshaya',
-      timeStamp: this.currentDate,
-    })
+    // this.smsCreditAllocation.patchValue({
+    //   smsQuotaMetrix: '1',
+    //   credit: '5000',
+    //   date: new Date(),
+    //   status: '2',
+    //   onApprovalOf: 'dureja.sk@nic.in',
+    //   remark: 'Status Changed',
+    //   statusChangedBy: 'Akshaya',
+    //   timeStamp: this.currentDate,
+    // })
     this.detectAuditTrialObj = this.smsCreditAllocation.value;
 
 
@@ -404,6 +404,12 @@ showDataSaveModal: boolean;
 
   saveCancel() {
     this.showDataSaveModal = false;
+  }
+
+  OnEdit(element) {
+
+    this.newCredit()
+
   }
 
 }

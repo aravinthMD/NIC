@@ -51,8 +51,12 @@
 
                 </section> -->
 
-                                <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty">
-                                </app-custom-input>
+                <label for="smsApproved">{{labels.smsApproved}}</label>
+                <app-vf-custom-select formControlName="smsApproved" [values]="smsApprovedList" [isRequired]="'Please Select SMS Approved'" [isDirty]="isDirty">
+                </app-vf-custom-select>
+
+                                <!-- <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [isDirty]="isDirty">
+                                </app-custom-input> -->
 
                             </div>
                         </div>
@@ -363,7 +367,7 @@
 
                 <ng-container matColumnDef="purchaseNo">
                     <th mat-header-cell *matHeaderCellDef>Purchase Order No </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.purchaseNo}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.poNumber}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="projectNo">
@@ -373,12 +377,12 @@
 
                 <ng-container matColumnDef="piAmt">
                     <th mat-header-cell *matHeaderCellDef> PO Amount </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piAmt}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.amountWithTax}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="remarks">
                     <th mat-header-cell *matHeaderCellDef> Remarks </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.remarks}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.remark}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Action">

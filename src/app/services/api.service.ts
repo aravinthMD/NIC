@@ -163,10 +163,24 @@ export class ApiService {
     getTaxInvoiceDetails : {
       workflowId : '11522f7845c211ebb7cc727d5ac274b2',
       processId  : '842375d045d011ebb7cc727d5ac274b2',
+      projectId  : environment.projectIds.projectId
+    },
+    createPurchaseOrder: {
+      workflowId: '46cfa3dc1f2b11ebb6c9727d5ac274b2',
+      processId: '46cfa3dc1f2b11ebb6c9727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    fetchPurchaseOrder: {
+      workflowId: '96bada94451711ebb7cb727d5ac274b2',
+      processId: '96bada94451711ebb7cb727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    updatePurchaseOrder: {
+      workflowId: '06fd5a02437e11ebb7bf727d5ac274b2',
+      processId: '06fd5a02437e11ebb7bf727d5ac274b2',
       projectId : environment.projectIds.projectId
     }
 
   }
 
-
-}
+  }
