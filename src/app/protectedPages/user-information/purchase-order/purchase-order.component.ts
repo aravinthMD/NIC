@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+import { InvoiceService } from '@services/invoice.service';
+import { AdminService } from '@services/admin.service'
 
 @Component({
   selector: 'app-purchase-order',
@@ -92,6 +94,18 @@ dataValue: {
   message: string
 }
 
+smsApprovedList = [
+      {
+      key: '1',
+      value: 'Yes'
+    },
+    {
+      key: '0',
+      value: 'No'
+    }
+
+]
+
 
 
 
@@ -102,7 +116,9 @@ dataValue: {
     private dialog : MatDialog,
     private utilService: UtilService,
     private toasterService: ToasterService,
-    private router: Router
+    private router: Router,
+    private invoiceService: InvoiceService,
+    private adminService: AdminService
     ) { }
 
   ngOnInit() {
@@ -152,32 +168,54 @@ dataValue: {
       this.status = val['status'] || '';
     })
 
-    this.activatedRoute.params.subscribe((value)=> {
+   this.fetchPODetails();
 
-      this.storeProjectNo = value.projectNo || 4535;
+   this.getSubLovs();
+    
+  }
 
-      this.userList =   [
-        {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:24250,reminder:'Send Reminder'},
-        {purchaseNo : 197,projectNumber : value.projectNo || 4535,piAmt:25000,reminder:'Send Reminder'},
-        {purchaseNo : 767,projectNumber : value.projectNo || 4535,piAmt:45000,reminder:'Send Reminder'},
-        {purchaseNo : 678,projectNumber : value.projectNo || 4535,piAmt:24250,reminder:'Send Reminder'},
-        {purchaseNo : 114,projectNumber : value.projectNo || 4535,piAmt:28000,reminder:'Send Reminder'},
-        {purchaseNo : 899,projectNumber : value.projectNo || 4535,piAmt:34000,reminder:'Send Reminder'},
-        {purchaseNo : 333,projectNumber : value.projectNo || 4535,piAmt:23000,reminder:'Send Reminder'},
-        {purchaseNo : 232,projectNumber : value.projectNo || 4535,piAmt:12000,reminder:'Send Reminder'},
-        {purchaseNo : 344,projectNumber : value.projectNo || 4535,piAmt:22000,reminder:'Send Reminder'},
-        {purchaseNo : 333,projectNumber : value.projectNo || 4535,piAmt:44300,reminder:'Send Reminder'},
-        {purchaseNo : 212,projectNumber : value.projectNo || 4535,piAmt:33449,reminder:'Send Reminder'},
-        {purchaseNo : 422,projectNumber : value.projectNo || 4535,piAmt:34433,reminder:'Send Reminder'},
-        {purchaseNo : 224,projectNumber : value.projectNo || 4535,piAmt:53555,reminder:'Send Reminder'},
-        {purchaseNo : 776,projectNumber : value.projectNo || 4535,piAmt:34455,reminder:'Send Reminder'},
-        {purchaseNo : 223,projectNumber : value.projectNo || 4535,piAmt:54556,reminder:'Send Reminder'},
-       
-      ];
+  fetchPODetails() {
+
+    this.invoiceService.fetchAllPO().subscribe((response)=> {
+
+      this.userList = response['ProcessVariables']['purchaseData'];
+
+      console.log(response)
 
       this.dataSource = new MatTableDataSource<any>(this.userList);
-  });
-    
+    })
+  }
+
+  async getSubLovs() {
+
+    let listData = []
+
+    await this.adminService.getLovSubMenuList("0").subscribe((response)=> {
+
+
+      const submenuList = response['ProcessVariables']['Lovitems'];
+     submenuList.forEach(element => {
+        
+        listData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.departmentListData = listData;
+
+
+    let poData = []
+
+    await this.adminService.getLovSubMenuList("1").subscribe((response)=> {
+
+
+      const poList = response['ProcessVariables']['Lovitems'];
+      poList.forEach(element => {
+        
+        poData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.poStatus = poData
   }
 
   initForm() {
@@ -216,12 +254,8 @@ dataValue: {
 
       return
     }
-  
+
     this.showPOModal = true;
-    this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
-   console.log(this.PurchaseOrderForm.value)
-  
-  
   }
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
@@ -242,16 +276,16 @@ dataValue: {
     })
   }
 
-  OnEdit(fromObj :  any){
+  OnEdit(element :  any){
 
     const dialogRef = this.dialog.open(PurchaseOrderDialogComponent,{
-      data : {
-        value : 'testing'
-      }
+      data : element
     })
 
     dialogRef.afterClosed().subscribe((result) =>{
       console.log('The dialog was closed', result);
+
+      this.fetchPODetails();
 
     })
 
@@ -319,20 +353,59 @@ dataValue: {
       return;
     }
 
-    this.showPOModal= false;
 
-    this.isDirty = false;
+    this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
 
-    this.PurchaseOrderForm.reset()
+    this.PurchaseOrderForm.value['startDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['startDate'],'dd/MM/yyyy')
+
+    this.PurchaseOrderForm.value['endDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['endDate'],'dd/MM/yyyy')
 
 
-  this.toasterService.showSuccess('Data Saved Successfully','')
+    const data = {
+      "poNumber":this.PurchaseOrderForm.value.poNumber,
+      "projectNumber":this.PurchaseOrderForm.value.projectNo,
+      "projectName": this.PurchaseOrderForm.value.projectName,
+      "poDate": this.PurchaseOrderForm.value.date,
+      "poStatus":Number(this.PurchaseOrderForm.value.poStatus),
+      "uploadDocument":"file",
+      "pi_no":this.PurchaseOrderForm.value.piNumber,
+      "smsapproved":this.PurchaseOrderForm.value.smsApproved,
+      "validUpto":this.PurchaseOrderForm.value.endDate,
+      "department":this.PurchaseOrderForm.value.departmentName,
+      "username":this.PurchaseOrderForm.value.userName,
+      "remark":this.PurchaseOrderForm.value.remark,
+      "withouttax":this.PurchaseOrderForm.value.withoutTax,
+      "userEmail":this.PurchaseOrderForm.value.userEmail,
+      "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
+      "validFrom":this.PurchaseOrderForm.value.startDate,
+      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax
+    }
 
-  this.showDataSaveModal = true;
-  this.dataValue= {
-    title: 'Purchase Order Saved Successfully',
-    message: 'Are you sure you want to proceed tax invoice page?'
-  }
+
+
+    this.invoiceService.createPurchaseOrder(data).subscribe((response)=> {
+
+      console.log('Response',response)
+
+        this.showPOModal= false;
+
+        this.isDirty = false;
+
+        this.PurchaseOrderForm.reset()
+
+
+          this.toasterService.showSuccess('Data Saved Successfully','')
+
+          this.fetchPODetails()
+
+          this.showDataSaveModal = true;
+          this.dataValue= {
+            title: 'Purchase Order Saved Successfully',
+            message: 'Are you sure you want to proceed tax invoice page?'
+          }
+
+    })
+    
 
   }
 

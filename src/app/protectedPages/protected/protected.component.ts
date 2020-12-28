@@ -11,7 +11,12 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 })
 export class ProtectedComponent implements OnInit {
 
-  constructor(private router :Router,private utilService:UtilService,private ngxUiLoaderService: NgxUiLoaderService) { }
+
+  userName : string;
+  constructor(private router :Router,private utilService:UtilService,private ngxUiLoaderService: NgxUiLoaderService) { 
+
+    this.userName = localStorage.getItem('userName') || 'Admin User'
+  }
 
   ngOnInit() {
   }

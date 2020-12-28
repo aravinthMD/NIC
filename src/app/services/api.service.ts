@@ -134,6 +134,21 @@ export class ApiService {
       workflowId: 'e54b6d842d9511ebb77e727d5ac274b2',
       processId: 'e54b6d842d9511ebb77e727d5ac274b2',
       projectId : environment.projectIds.projectId
+    },
+    createPurchaseOrder: {
+      workflowId: '46cfa3dc1f2b11ebb6c9727d5ac274b2',
+      processId: '46cfa3dc1f2b11ebb6c9727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    fetchPurchaseOrder: {
+      workflowId: '96bada94451711ebb7cb727d5ac274b2',
+      processId: '96bada94451711ebb7cb727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    updatePurchaseOrder: {
+      workflowId: '06fd5a02437e11ebb7bf727d5ac274b2',
+      processId: '06fd5a02437e11ebb7bf727d5ac274b2',
+      projectId : environment.projectIds.projectId
     }
 
 

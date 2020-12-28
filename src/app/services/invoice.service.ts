@@ -211,6 +211,95 @@ export class InvoiceService {
     return  this.httpService.post<any>(url,formData);
 
   }
+
+  createPurchaseOrder(data : any){
+    const {
+        api : {
+          createPurchaseOrder : {
+              workflowId,
+              processId,
+              projectId
+          }
+        }
+    } = this.apiService;
+
+   
+    const requestEntity  : any  = {
+      processId,
+      ProcessVariables : data,
+      projectId
+    }
+
+    const body = {
+      processVariables : JSON.stringify(requestEntity)
+    };
+
+    const formData = this.transform(body)
+
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+    return  this.httpService.post<any>(url,formData);
+}
+
+fetchAllPO() {
+
+          const {
+            api : {
+              fetchPurchaseOrder : {
+                  workflowId,
+                  processId,
+                  projectId
+              }
+            }
+        } = this.apiService;
+
+
+        const requestEntity  : any  = {
+          processId,
+          ProcessVariables : {},
+          projectId
+        }
+
+        const body = {
+          processVariables : JSON.stringify(requestEntity)
+        };
+
+        const formData = this.transform(body)
+
+        let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+        return  this.httpService.post<any>(url,formData);
+
+}
+
+updatePurchaseOrder(data) {
+
+        const {
+          api : {
+            updatePurchaseOrder : {
+                workflowId,
+                processId,
+                projectId
+            }
+          }
+      } = this.apiService;
+
+
+      const requestEntity  : any  = {
+        processId,
+        ProcessVariables : data,
+        projectId
+      }
+
+      const body = {
+        processVariables : JSON.stringify(requestEntity)
+      };
+
+      const formData = this.transform(body)
+
+      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+      return  this.httpService.post<any>(url,formData);
+
+
+}
   
 
 

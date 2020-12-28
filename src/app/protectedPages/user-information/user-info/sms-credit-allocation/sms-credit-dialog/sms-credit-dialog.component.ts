@@ -49,6 +49,11 @@ smsQuotaMetrix:any[]=[
   {key:3,value:'pradeep.garg@nic.in'}
 ];
 
+showView: boolean = true;
+
+viewInfoData: any;
+
+
   constructor(private dialogRef : MatDialogRef<SmsCreditDialogComponent>,private datePipe: DatePipe,private labelsService :LabelsService,private toasterService: ToasterService,private formBuilder:FormBuilder,  private utilService:UtilService,
     private router:Router,) {
 
@@ -76,7 +81,37 @@ smsQuotaMetrix:any[]=[
     });
 
 
-   
+    this.viewInfoData = [
+      {
+        key: this.labels.smsQuotaMetrix,
+        value:'pradeep.garg@nic.in'
+      },
+      {
+        key: this.labels.credit,
+        value:'5000'
+      },
+      {
+        key: this.labels.date,
+        value:'02/12/2020'
+      },
+      {
+        key: this.labels.status,
+        value:'Approved'
+      },
+      {
+        key: this.labels.onApprovalOf,
+        value:'pradeep.garg@nic.in'
+      },
+      {
+        key: this.labels.remark,
+        value:'Changes in all fields'
+      },
+      {
+        key: this.labels.statusChangedBy,
+        value:'Akshaya'
+      }
+     
+   ]
     
   }
 
@@ -130,6 +165,25 @@ smsQuotaMetrix:any[]=[
   saveCancel() {
     this.showDataSaveModal = false;
     this. closeDialog()
+  }
+
+  onEdit() {
+
+    this.showView = false;
+
+    this.smsCreditAllocation.patchValue({
+      smsQuotaMetrix: '3',
+      credit:'5000',
+      date : new Date('2020-12-02'),
+      status : '1',
+      onApprovalOf : 'pradeep.garg@nic.in',
+      remark : 'Changes in fields',
+      statusChangedBy : 'Akshaya',
+      timeStamp: this.currentDate
+
+    })
+
+
   }
 
   
