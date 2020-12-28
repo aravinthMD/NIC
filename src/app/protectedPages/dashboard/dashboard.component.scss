@@ -103,6 +103,7 @@ tr.example-element-row:hover {
     background: whitesmoke;
 }
 
+
 ::ng-deep .mat-select-value {
     font-size: 15px !important;
 }
@@ -131,12 +132,12 @@ mat-form-field {
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;
-    text-align: center;
+    text-align: left;
 }
 
 :host ::ng-deep td.mat-cell {
     line-height: 24px !important;
-    text-align: center;
+    text-align: left;
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;

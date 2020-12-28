@@ -140,7 +140,7 @@ button {
 
 mat-card.mat-card {
     margin-top: 20px !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 0px !important;
 }
 
 mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
@@ -172,12 +172,12 @@ th.mat-header-cell {
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;
-    text-align: center;
+    text-align: left;
 }
 
 td.mat-cell {
     line-height: 24px !important;
-    text-align: center;
+    text-align: left;
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;

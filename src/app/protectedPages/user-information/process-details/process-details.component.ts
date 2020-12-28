@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { Router,ActivatedRoute } from '@angular/router'
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+import { InvoiceService } from '@services/invoice.service';
 
 @Component({
   selector: 'app-process-details',
@@ -70,7 +71,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     }
   ]
 
-  dataSource = new MatTableDataSource<any>(this.userList);
+  dataSource = new MatTableDataSource<any>([]);
 
 
   labels: any;
@@ -101,7 +102,17 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   }
   
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService,private toasterService: ToasterService,private router: Router) { 
+  constructor(
+        private dialog: MatDialog,
+        private labelsService: LabelsService,
+        private formBuilder : FormBuilder,
+        private datePipe: DatePipe,
+        private activatedRoute: ActivatedRoute,
+        private utilService: UtilService,
+        private toasterService: ToasterService,
+        private router: Router,
+        private invoiceService : InvoiceService,
+        ) { 
 
 
     this.form =this.formBuilder.group({
@@ -163,8 +174,9 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
         {invoiceNo : 3445,accountName : "Juli",projectNumber:  value.projectNo ||4535,piAmt:20000,remarks:'credited'}
       ];
 
-      this.dataSource = new MatTableDataSource<any>(this.userList);
   });
+
+  this.fetchAllProformaInvoice();
 
   }
 
@@ -173,17 +185,29 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   }
 
-  OnEdit(formObj : any){
+  OnEdit(Data : any){
     const dialogRef = this.dialog.open(ProformaInvoiceDialogFormComponent,{
-      data: {
-        value:'testing'
-      }
+      data: Data.piNumber
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.fetchAllProformaInvoice();
     });
 
+  }
+
+  fetchAllProformaInvoice(){
+      this.invoiceService.fetchAllProformaInvoice().subscribe((response) => {
+
+        const DataPIlist = response['ProcessVariables']['piDataList']
+
+          this.dataSource = new MatTableDataSource<any>(DataPIlist)
+      },(error) => {
+
+        this.toasterService.showError(error,'')
+
+      })
   }
 
   onSubmit() {
@@ -216,6 +240,61 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       }
 
 
+  }
+
+  createProformaInvoice(){
+      const feildControls = this.form.controls;
+      const accountName  = feildControls.accountName.value;
+      const invoiceNumber = feildControls.invoiceNumber.value;
+      const refNumber  = feildControls.refNumber.value;
+      const piTraffic = feildControls.piTraffic.value;
+      const piOwner = feildControls.piOwner.value;
+      const date = feildControls.date.value;
+      const nicsiManager = feildControls.nicsiManager.value;
+      const piAmount = feildControls.piAmount.value;
+      const startDate = feildControls.startDate.value;
+      const endDate = feildControls.endDate.value;
+      const piStatus = +feildControls.piStatus.value;
+      const paymentStatus = +feildControls.paymentStatus.value;
+      const remark = feildControls.remark.value;
+
+
+      const formattedDate = this.datePipe.transform(date,'dd/MM/yyyy')
+      const formattedStartDate = this.datePipe.transform(startDate,'dd/MM/yyyy')
+      const formattedEndDate = this.datePipe.transform(endDate,'dd/MM/yyyy')
+
+
+      const Data = {
+        accountName,
+        invoiceNumber,
+        refNumber,
+        piTraffic,
+        piOwner,
+        date : formattedDate,     
+        nicsiManager,
+        piAmount,
+        startDate : formattedStartDate,
+        endDate : formattedEndDate,
+        piStatus,
+        paymentStatus,
+        remark,
+        uploadDocument : 'yes'
+      }
+
+      this.invoiceService.createProformaInvoice(Data).subscribe((response) => {
+
+          console.log(response)
+          if(response['ProcessVariables']){
+            this.toasterService.showSuccess('proforma Invoice Updated SucessFully','')
+            this.form.reset();
+            this.fetchAllProformaInvoice();
+          }
+
+      },
+      (error) => {
+          this.toasterService.showError(error,'')
+      })
+          
   }
 
   saveYes()

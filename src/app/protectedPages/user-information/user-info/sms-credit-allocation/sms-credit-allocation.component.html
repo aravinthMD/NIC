@@ -173,7 +173,7 @@
                                 </div>
             
                                 <div class="row m-0 col-3">
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-3 form-group">
             
                                         <div class="row mt-4 pt-2">
                                             <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
@@ -182,12 +182,23 @@
                                     </div>
             
             
-                                    <div class="col-md-6 form-group">
+                                    <div class="col-md-3 form-group">
             
                                         <div class="row mt-4 pt-2">
                                             <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
                                         </div>
             
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+
+                                        <div class="row mt-4 pt-2">
+                
+                                            <button (click) = "getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
+                
+                
+                                        </div>
+                
                                     </div>
             
             
@@ -201,7 +212,7 @@
 
 
 
-                    <button style="float: right;margin-bottom: 1vw;margin-right: 1vw;margin-top: 1vw;" class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button>
+                    <!-- <button style="float: right;margin-bottom: 1vw;margin-right: 1vw;margin-top: 1vw;" class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button> -->
                     <div class="mat-elevation-z8" class="p-0">
                         <table mat-table [dataSource]="dataSource">
 

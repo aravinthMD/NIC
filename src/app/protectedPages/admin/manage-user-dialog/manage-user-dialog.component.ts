@@ -36,9 +36,19 @@ showEdit:boolean;
 
 viewInfoData: any;
 
-deparmentList : any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'},{key:3,value:'Sales User'}];
+deparmentList : any[] = [
+    {key:0,value:'Admin User'},
+    {key:1,value:'Operation User'},
+    {key:2,value:'Finance User'},
+    {key:3,value:'Sales User'}
+  ];
 
-roleList: any[] = [{key:0,value:'Admin User'},{key:1,value:'Operation User'},{key:2,value:'Finance User'},{key:3,value:'Sales User'}];
+roleList: any[] = [
+  {key:0,value:'Admin User'},
+  {key:1,value:'Operation User'},
+  {key:2,value:'Finance User'},
+  {key:3,value:'Sales User'}
+];
 
 countryCodeValues = [
   {key:0,value:'+91'},
@@ -52,10 +62,15 @@ teleCodeValues = [
   {key:2,value:'+080'}
 ]
 
-  constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<ManageUserDialogComponent>,
-    
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private adminService: AdminService,private cdr: ChangeDetectorRef) {
-
+  constructor(
+    private labelsService: LabelsService,
+    private formBuilder:FormBuilder,
+    public dialogRef: MatDialogRef<ManageUserDialogComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private toasterService: ToasterService,
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef
+    ) {
 
 //       address1: ""
 // address2: ""

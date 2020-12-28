@@ -155,6 +155,9 @@ const routes: Routes = [
         component : AccountManageComponent
       }
     ]},
+    {
+      path : "**",redirectTo : "/"
+    }
   ];
 
 @NgModule({

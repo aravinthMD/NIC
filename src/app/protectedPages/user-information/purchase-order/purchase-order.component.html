@@ -320,7 +320,7 @@
                  </div>
          
                  <div class="row m-0 col-3">
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-3 form-group">
 
                         <div class="row mt-4 pt-2">
                             <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
@@ -328,10 +328,21 @@
 
                     </div>
 
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-3 form-group">
 
                         <div class="row mt-4 pt-2">
                             <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 form-group">
+
+                        <div class="row mt-4 pt-2">
+
+                            <button (click) = "getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
+
+
                         </div>
 
                     </div>
@@ -343,7 +354,7 @@
            </form>
            </mat-card>
 
-        <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button>
+        <!-- <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button> -->
 
         <!--Material Table-->
 

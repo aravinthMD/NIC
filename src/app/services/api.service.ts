@@ -134,10 +134,27 @@ export class ApiService {
       workflowId: 'e54b6d842d9511ebb77e727d5ac274b2',
       processId: 'e54b6d842d9511ebb77e727d5ac274b2',
       projectId : environment.projectIds.projectId
+    },
+    fetchAllProformaInvoice : {
+      workflowId : '640f2fe8442a11ebb7bf727d5ac274b2',
+      processId : 'd277de3844ef11ebb7c5727d5ac274b2',
+      projectId  : environment.projectIds.projectId
+    },
+    createProformaInvoice : {
+      workflowId:  '640f2fe8442a11ebb7bf727d5ac274b2',
+      processId : '6438ef36442a11ebb7bf727d5ac274b2',
+      projectId  : environment.projectIds.projectId
+    },
+    getProformaInvoiceDetailById : {
+      workflowId :  '640f2fe8442a11ebb7bf727d5ac274b2',
+      processId :  '8e09c75444fc11ebb7cb727d5ac274b2',
+      projectId :  environment.projectIds.projectId
+    },
+    updateProformaInvoice : { 
+      workflowId : '640f2fe8442a11ebb7bf727d5ac274b2',
+      processId :  '8e09c75444fc11ebb7cb727d5ac274b2',
+      projectId  : environment.projectIds.projectId
     }
-
-
-
 
   }
 

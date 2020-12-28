@@ -130,7 +130,7 @@ dataValue: {
       this.status = val['status'] || '';
     })
 
-    this.activatedRoute.params.subscribe((value)=> {
+    this.activatedRoute.params.subscribe((value)=> {  
 
       this.storeProjectNo = value.projectNo || 4535
       this.userList =   [
@@ -193,8 +193,8 @@ dataValue: {
     //Create PE
 
     createProjectExecution(){
-
-      this.updateProjectExecutionDetail();
+      
+      // this.updateProjectExecutionDetail();
 
         const feildControls =   this.PurchaseEntryForm.controls;
         const userName  = feildControls.userName.value;
