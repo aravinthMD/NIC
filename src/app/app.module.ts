@@ -68,6 +68,7 @@ import { PurchaseOrderDialogComponent } from './protectedPages/user-information/
 import { ReportsTableComponent } from './protectedPages/reports/reports-table/reports-table.component';
 import { SmsCreditDialogComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-dialog/sms-credit-dialog.component';
 import { ViewTechnicalAdminComponent } from './protectedPages/user-information/user-info/technical-admin-details/view-technical-admin/view-technical-admin.component';
+import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -146,7 +147,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     TaxInvoiceDialogComponent,
     ReportsTableComponent,
     SmsCreditDialogComponent,
-    ViewTechnicalAdminComponent
+    ViewTechnicalAdminComponent,
+    DefineRolesComponent
   ],
   imports: [
     BrowserModule,

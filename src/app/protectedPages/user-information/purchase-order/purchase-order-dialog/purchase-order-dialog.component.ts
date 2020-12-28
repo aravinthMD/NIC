@@ -70,9 +70,13 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   ]
 
+  poId: string;
+
   constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
     private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService) {
 
+
+      this.poId = this.data.currentPOId;
 
       this.PurchaseOrderForm = this.formBuilder.group({
         userName : [this.data.userName],
@@ -207,7 +211,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
       },
       {
         key: this.labels.poStatus,
-        value:poStatus[0].value
+        value: (poStatus.length > 0) ? poStatus[0].value : ''
       },
       {
         key: 'Valid From',
@@ -235,11 +239,11 @@ const departmentListData = this.departmentListData.filter((val)=> {
       },
       {
         key: this.labels.department,
-        value:departmentListData[0].value
+        value:(departmentListData.length > 0)?departmentListData[0].value:''
       },
       {
         key: this.labels.paymentStatus,
-        value:psData[0].value
+        value: (psData.length > 0)?psData[0].value:''
       },
       {
         key: this.labels.remark,
@@ -274,7 +278,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
       "uploads":"file",
       "paymentStatus":2,
-      "selectedPOId":this.PurchaseOrderForm.value.poNumber,
+      "selectedPOId":this.poId,
       "temp":"update",
       "poNumber":this.PurchaseOrderForm.value.poNumber,
       "projectNumber":this.PurchaseOrderForm.value.projectNo,
