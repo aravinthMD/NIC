@@ -1,7 +1,7 @@
 import { Component, OnInit,AfterViewInit,ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
-import { from } from 'rxjs';
+import {DatePipe} from '@angular/common';
 import {LabelsService} from '../../../services/labels.service';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatDialog } from '@angular/material';
@@ -90,7 +90,8 @@ dataValue: {
               private utilService: UtilService,
               private toasterService: ToasterService,
               private router: Router,
-              private invoiceService : InvoiceService
+              private invoiceService : InvoiceService,
+              private datePipe:DatePipe,
               ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
@@ -195,7 +196,6 @@ dataValue: {
     createProjectExecution(){
       
       // this.updateProjectExecutionDetail();
-
         const feildControls =   this.PurchaseEntryForm.controls;
         const userName  = feildControls.userName.value;
         const piNumber =  feildControls.piNumber.value;
@@ -214,27 +214,42 @@ dataValue: {
         const remark = feildControls.remark.value;
   
   
+        const formattedProformaInvoiceDate = this.datePipe.transform(invoiceDate,'dd/MM/yyyy')
+        const formattedDateOfTransaction = this.datePipe.transform(transactionDate,'dd/MM/yyyy')
+ 
+
+
         const Data = {
           userName,
           piNumber,
-          piDate,
+          piDate : formattedProformaInvoiceDate,
           piAmount,
           modeOfPayment,
           documentNo,
-          dateOfTransaction,
+          dateOfTransaction : formattedDateOfTransaction,
           bankName,
           amountReceived,
           tds,
           NICSIProjectNo,
-          invoiceDate,
-          transactionDate,
           piPaid,
-          remark
+          remark,
+          uploadDocument : "file"
         }
   
         this.invoiceService.createProjectExecution(Data).subscribe(
           (response) => {
                 console.log(response['ProcessVariables']); 
+              if(response['ProcessVariables']){
+                this.PurchaseEntryForm.reset();
+                this.getProjectExecutionDetails();
+                this.toasterService.showSuccess('Data Saved Successfully','')
+            
+              this.showDataSaveModal = true;
+              this.dataValue= {
+                title: 'Project Execution Saved Successfully',
+                message: 'Are you sure you want to proceed purchase order invoice page?'         
+                   } 
+                  }
           },(error) => {
             console.log(error)
         })

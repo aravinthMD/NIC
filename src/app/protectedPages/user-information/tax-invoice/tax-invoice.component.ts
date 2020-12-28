@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+import { InvoiceService } from '@services/invoice.service';
 
 
 @Component({
@@ -53,7 +54,7 @@ export class TaxInvoiceComponent implements OnInit {
       {kwy : 3,value : 'Return by NICSI'}
     ]
 
-  dataSource = new MatTableDataSource<any>(this.userList);
+  dataSource = new MatTableDataSource<any>([]);
   taxInvoiceForm:FormGroup;
   searchForm : FormGroup;
   labels: any ={};
@@ -66,9 +67,16 @@ export class TaxInvoiceComponent implements OnInit {
 
   storeProjectNo: string;
 
-  constructor(private labelsService: LabelsService,
-    private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,
-    private dialog : MatDialog, private utilService: UtilService,private toasterService: ToasterService,private router: Router) { }
+  constructor(
+      private labelsService: LabelsService,
+      private Datepipe:DatePipe,
+      private activatedRoute: ActivatedRoute,
+      private dialog : MatDialog,
+      private utilService: UtilService,
+      private toasterService: ToasterService,
+      private router: Router,
+      private invoiceService : InvoiceService
+      ) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -135,14 +143,86 @@ export class TaxInvoiceComponent implements OnInit {
 
     })
 
-    this.dataSource = new MatTableDataSource<any>(this.userList);
-
+    // this.dataSource = new MatTableDataSource<any>(this.userList);
+    this.getAllTaxInvoiceDetails();
   }
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
   }
+
+  getAllTaxInvoiceDetails(){
+
+    this.invoiceService.getTaxInvoiceDetails().subscribe((response) => {
+      const DataTaxInvoiceList = response["ProcessVariables"]["TIList"]
+      this.dataSource = new MatTableDataSource<any>(DataTaxInvoiceList);
+    },(error) =>{
+      this.toasterService.showError(error,'')
+    })
+
+  }
+
+
+  createTaxInvoice(){
+    const feildControls = this.taxInvoiceForm.controls;
+    const userName = feildControls.userName.value;
+    const taxIN  = feildControls.taxIN.value;
+    const invoiceDate = feildControls.invoiceDate.value;
+    const projectNo = feildControls.projectNo.value;
+    const poNumber = feildControls.poNumber.value;
+    const poDate = feildControls.poDate.value;
+    const fromDate = feildControls.fromDate.value;
+    const toDate = feildControls.toDate.value;
+    const invoiceAmount = feildControls.invoiceAmount.value;
+    const remark = feildControls.remark.value;
+    const uploadDoc = feildControls.uploadDoc.value;
+    const paymentStatus = +feildControls.paymentStatus.value;
+    const invoiceStatus = +feildControls.invoiceStatus.value;
+    const invoiceAmountPaid = feildControls.invoiceAmountPaid.value;
+    const tds = feildControls.tds.value;
+    const penalty = feildControls.penalty.value;
+    const shortPay = feildControls.shortPay.value;
+    const submittedOn = feildControls.submittedOn.value;
+    const poBillable = feildControls.poBillable.value;
+    
+
+    const Data = {
+      userName,
+      projectNumber : projectNo,
+      poNumber,
+      poDate,
+      fromDate,
+      toDate,
+      billableAmount : poBillable,
+      InvoiceAmount : invoiceAmount,
+      TaxInvoiceNumber  : taxIN,
+      submittedDate :  submittedOn,
+      InvoiceStatus  : invoiceStatus,
+      InvoicePaidAmount : invoiceAmountPaid,
+      tds,
+      penalty,
+      shortPay,
+      paymentStatus,
+      remark,
+		  uploadDocument  : "file"
+
+    }
+
+    this.invoiceService.createTaxInvoice(Data).subscribe((response) =>{
+
+            console.log(response["ProcessVariables"])
+            if(response["ProcessVariables"]){
+              this.toasterService.showSuccess('Tax Invoice Form Submitted Sucessfully','');
+              this.taxInvoiceForm.reset();
+            }
+
+    },(error) => {
+      console.log(error)
+    })
+    
+  }
+
   taxInForm(){
     if(this.taxInvoiceForm.invalid) {
      

@@ -7,6 +7,10 @@
 
     <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
 
+    <app-account-header [title]="'Billing Admin Details'"></app-account-header>
+    <app-view-info [userDetails] = "viewBillAdminInfoData" *ngIf = "showView"></app-view-info>
+
+
     <form (submit)="onSubmit()" [formGroup]="technicaladminform" *ngIf="!showView">
             <div class="row">
                 <div class="col-4">

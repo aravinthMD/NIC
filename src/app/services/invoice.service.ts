@@ -23,17 +23,17 @@ export class InvoiceService {
 
       const data = {
         userName : form.userName,
-        proformaInvoiceNumber : form.proformaInvoiceNumber,
-        proformaInvoiceDate : form.proformaInvoiceDate,
-        amount : form.amount,
-        paymentMode : form.paymentMode,
-        documentNumber : form.documentNumber,
-        transactionDate : form.transactionDate,
-        branchName : form.branchName,
-        receivedAmount : form.receivedAmount,
+        proformaInvoiceNumber : form.piNumber,
+        proformaInvoiceDate : form.piDate,
+        amount : form.piAmount,
+        paymentMode : form.modeOfPayment,
+        documentNumber : form.documentNo,
+        transactionDate : form.dateOfTransaction,
+        branchName : form.bankName,
+        receivedAmount : form.amountReceived,
         tds : form.tds,
-        nicsiProjectNumber : form.nicsiProjectNumber,
-        paidPI : form.paidPI,
+        nicsiProjectNumber : form.NICSIProjectNo,
+        paidPI : form.piPaid,
         remark  :form.remark,
         uploadDocument : form.uploadDocument
       }
@@ -376,9 +376,90 @@ export class InvoiceService {
       let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
       return  this.httpService.post<any>(url,formData);
   }
+
+
+  createTaxInvoice(form : any){
+
+    const {
+      api : {
+        createTaxInvoice : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  const data = {
+    userName : form.userName,
+    projectNumber : form.projectNumber,
+    poNumber : form.poNumber,
+    poDate : form.poDate,
+    fromDate : form.fromDate,
+    toDate : form.toDate,
+    billableAmount : form.billableAmount,
+    InvoiceAmount : form.InvoiceAmount,
+    TaxInvoiceNumber : form.TaxInvoiceNumber,
+    submittedDate : form.submittedDate,
+    InvoiceStatus : form.InvoiceStatus,
+    InvoicePaidAmount : form.InvoicePaidAmount,
+    tds : form.tds,
+    penalty : form.penalty,
+    shortPay : form.shortPay,
+    paymentStatus : form.paymentStatus,
+    remark : form.remark,
+    uploadDoc : form.uploadDocument
+  }
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+
+  }
+
+
+  getTaxInvoiceDetails(){
+
+    const {
+      api : {
+        getTaxInvoiceDetails : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  const data = {}
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+
+  }
   
-
-
 
   transform(data: any) {
     return new HttpParams({ fromObject: data });

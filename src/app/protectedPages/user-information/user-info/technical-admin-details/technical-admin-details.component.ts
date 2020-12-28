@@ -15,6 +15,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
  
   labels:any ;
   technicaladminform:FormGroup;
+
+  billOwnerForm  :FormGroup;
+
   isDirty: boolean;
   propertyFlag : boolean;
   showDataSaveModal  :boolean;
@@ -22,6 +25,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   showView: boolean = true;
 
   viewInfoData :  any;
+
+  viewBillAdminInfoData = []
 
   departmentListData = [
     {key:0,value:'Department of Sainik Welfare'},
@@ -88,6 +93,27 @@ remarkModal: boolean;
       remark: new FormControl('')
     })
 
+
+    this.billOwnerForm = new FormGroup({
+      name : new FormControl ([null]),
+      departmentName : new FormControl ([null]),
+      designation :new FormControl ([null]),
+      employeeCode : new FormControl ([null]),
+      email : new FormControl (''),
+      countryCode: new FormControl(null),
+      mobileNo :new FormControl (''),
+      telPhno : new FormControl (''),
+      teleCode: new FormControl(),
+      offAddress1 : new FormControl ([null]),
+      offAddress2 : new FormControl ([null]),
+      offAddress3 : new FormControl ([null]),
+      city : new FormControl ([null]),
+      state : new FormControl ([null]),
+      pinCode : new FormControl (''),
+      remark: new FormControl('')
+    })
+
+
     this.user = ''
     this.activatedRoute.params.subscribe((value)=> {
       this.user = value.id;
@@ -104,12 +130,73 @@ remarkModal: boolean;
 
 
       this.setFormValues();
+      this.setBillOwnerFormValues();
       this.propertyFlag = true;
 
       }else {
         this.showView = false;
       }
 
+
+  }
+
+
+  setBillOwnerFormValues(){
+    
+    
+    this.billOwnerForm.patchValue({
+      name : 'Sasi',
+      departmentName : '1',
+      designation : 'Chennai',
+      employeeCode : '54534',
+      email : 'test@gmail.com',
+      countryCode: '0',
+      mobileNo : '9754544445',
+      telPhno : '2273422',
+      teleCode:'0',
+      offAddress1 : 'add1',
+      offAddress2 : 'add2',
+      offAddress3 : 'add3',
+      city : 'Chennai',
+      state : 'Tamilnadu',
+      pinCode : '600025',
+      remark: 'Pincode Changed'
+
+    })
+
+    this.viewBillAdminInfoData = [
+      {
+        key: this.labels.name,
+        value:this.billOwnerForm.value.name
+      },
+      {
+        key: this.labels.email,
+        value:this.billOwnerForm.value.email
+      },
+      {
+        key: this.labels.designation,
+        value:this.billOwnerForm.value.designation
+      },
+      {
+        key: this.labels.employeeCode,
+        value:this.billOwnerForm.value.employeeCode
+      },
+      {
+        key: this.labels.mobileNo,
+        value:`91${this.billOwnerForm.value.mobileNo}`
+      },
+      {
+        key: this.labels.teleNumber,
+        value:`044${this.billOwnerForm.value.telPhno}`
+      },
+      {
+        key: 'Official Address',
+        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`
+      },
+      {
+        key: this.labels.remark,
+        value:this.billOwnerForm.value.remark
+      }]
 
   }
 
