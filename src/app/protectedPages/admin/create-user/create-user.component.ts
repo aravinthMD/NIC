@@ -40,9 +40,9 @@ export class CreateUserComponent implements OnInit {
   ]
   
 
-  deparmentList : any[] = [{key:1,value:'Admin User'},{key:2,value:'Operation User'},{key:3,value:'Finance User'},{key:4,value:'Sales User'}];
+  deparmentList : any[] = [];
 
-  roleList: any[] = [{key:1,value:'Admin User'},{key:2,value:'Operation User'},{key:3,value:'Finance User'},{key:4,value:'Sales User'}]
+  roleList: any[] = []
 
   constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,private adminService: AdminService,private toasterService: ToasterService) {
 
@@ -89,9 +89,20 @@ export class CreateUserComponent implements OnInit {
       });
     })
 
-    this.deparmentList = listData
+    this.deparmentList = listData;
+
+    let roleData = []
+
+    await this.adminService.getLovSubMenuList("5").subscribe((response)=> {
 
 
+      const rolesList = response['ProcessVariables']['Lovitems'];
+      rolesList.forEach(element => {
+        roleData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.roleList = roleData
 
     this.passwordValidation = this.passwordValidationCheck()
 
