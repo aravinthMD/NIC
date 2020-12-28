@@ -551,6 +551,39 @@ updatePurchaseOrder(data) {
   return  this.httpService.post<any>(url,formData);
 
   }
+
+  getTaxInvoiceDetailById(currentTiId ?: string){
+
+    const {
+      api : {
+        getTaxInvoiceDetailById : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  const data = {
+    currentTiId ,
+    temp : "get"
+  }
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+  }
   
 
   transform(data: any) {

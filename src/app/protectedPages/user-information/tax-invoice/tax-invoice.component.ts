@@ -255,9 +255,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   OnEdit(fromObj :  any){
     const dialogRef = this.dialog.open(TaxInvoiceDialogComponent, {
-      data : {
-        value : 'testing'
-      }
+      data : fromObj.currentTIId
     })
 
     dialogRef.afterClosed().subscribe((result) =>{

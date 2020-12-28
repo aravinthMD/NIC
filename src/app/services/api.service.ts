@@ -165,6 +165,11 @@ export class ApiService {
       processId  : '842375d045d011ebb7cc727d5ac274b2',
       projectId  : environment.projectIds.projectId
     },
+    getTaxInvoiceDetailById : {
+      workflowId : '11522f7845c211ebb7cc727d5ac274b2',
+      processId : '642880ce45d311ebb7cc727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
     createPurchaseOrder: {
       workflowId: '46cfa3dc1f2b11ebb6c9727d5ac274b2',
       processId: '46cfa3dc1f2b11ebb6c9727d5ac274b2',
