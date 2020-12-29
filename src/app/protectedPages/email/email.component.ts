@@ -5,6 +5,9 @@ import { Validators, FormGroup,FormControl,ReactiveFormsModule } from "@angular/
 import { Observable } from 'rxjs';
 import {map, startWith } from 'rxjs/operators';
 import { ToasterService } from '@services/toaster.service';
+import { Router,ActivatedRoute } from '@angular/router';
+import { UtilService } from '@services/util.service';
+
 
 export interface Email {
   name: string;
@@ -58,7 +61,7 @@ export class EmailComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredOptions1: Observable<string[]>;
 today=new Date()
-  constructor(private toasterService: ToasterService) { }
+  constructor(private toasterService: ToasterService,private router: Router,private utilService: UtilService) { }
 
   ngOnInit() {
   this.emailform=new FormGroup({
@@ -165,6 +168,12 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
   }
   update(){
     this.toasterService.showSuccess('Templete Updated','');
+  }
+
+  home() {
+
+    this.utilService.setCurrentUrl('dashboard')
+    this.router.navigate(['/users/Dashboard'])
   }
 
 }

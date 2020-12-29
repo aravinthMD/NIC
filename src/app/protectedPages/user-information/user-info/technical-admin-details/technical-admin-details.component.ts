@@ -57,6 +57,8 @@ detectAuditTrialObj: any;
 
 remarkModal: boolean;
 
+showViewBill:boolean = true;
+
 
   constructor(
     private labelsService:LabelsService,
@@ -394,6 +396,16 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
   saveCancel() {
     this.showDataSaveModal = false;
+  }
+
+  editDataBill() {
+
+    this.utilService.setCurrentUrl('users/billingAdmin');
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val) =>{
+      pno = val;
+    })
+    this.router.navigate(['/users/billingAdmin/'+pno]);
   }
 
 
