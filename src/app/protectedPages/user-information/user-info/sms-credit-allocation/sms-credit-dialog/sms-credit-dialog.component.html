@@ -19,17 +19,7 @@
                     </app-custom-input> -->
                 </div>
             </div>
-            <div class="col-4 pb-0">
-                <div class="form-group">
-                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'" [mandatoryField]="true">
-                    </app-custom-input>
-                    <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
-                        <div>
-                            {{'Please Enter Digits'}}
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-4">
                 <div class="form-group">
                     <label for="creditDate">{{labels.date}}</label>
@@ -48,6 +38,33 @@
 
                 </div>
             </div>
+
+            <div class="col-4 pb-0">
+                <div class="form-group">
+                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [type]="'number'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'" [mandatoryField]="true">
+                    </app-custom-input>
+                    <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
+                        <div>
+                            {{'Please Enter Digits'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4 pb-0">
+                <div class="form-group">
+                    <app-custom-input formControlName="smsTraffic" [labelName]="labels.smsTraffic" [id]="'smstraffic'" [type]="'number'" [maxLength]="labels?.validationData.smsTraffic.maxLength" [isDirty]="isDirty" [isRequired]="'SMS traffic is mandatory'" [mandatoryField]="true">
+                    </app-custom-input>
+                </div>
+            </div>
+
+            <div class="col-4 pb-0">
+                <div class="form-group">
+                    <app-custom-input formControlName="availableCredit" [labelName]="labels.availableCredit" [id]="'availableCredit'" [type]="'number'" [maxLength]="labels?.validationData.availableCredit.maxLength" [isDirty]="isDirty" [isRequired]="'Available credit is mandatory'" [mandatoryField]="true">
+                    </app-custom-input>
+                </div>
+            </div>
+           
             <div class="col-4">
                 <div class="form-group">
                     <label for="status">{{labels.status}}</label>

@@ -47,3 +47,15 @@ input.mat-chip-input {
 .nic-bg{
     color: #0d4d92 !important;
 }
+
+:host ::ng-deep .multiselect-dropdown {
+    margin-left: 6px;
+    /* padding: 8px; */
+    padding-right: 60px;
+    font-size: 15px !important;
+    // padding-right: 85px;
+    // padding-bottom: 14px;
+    // padding-left: 20px;
+    // padding-top: 12px;
+    // margin-left: 10px;
+}

@@ -61,6 +61,8 @@ viewInfoData: any;
     this.smsCreditAllocation =this.formBuilder.group({
       smsQuotaMetrix: [''],
       credit:[null,Validators.pattern("^[0-9]{0,12}$")],
+      smsTraffic:[null],
+      availableCredit:[null],
       date : [null],
       status : [''],
       onApprovalOf : [null],
@@ -87,12 +89,20 @@ viewInfoData: any;
         value:'pradeep.garg@nic.in'
       },
       {
+        key: this.labels.date,
+        value:'02/12/2020'
+      },
+      {
         key: this.labels.credit,
         value:'5000'
       },
       {
-        key: this.labels.date,
-        value:'02/12/2020'
+        key: this.labels.smsTraffic,
+        value:'1000'
+      },
+      {
+        key: this.labels.availableCredit,
+        value:'4000'
       },
       {
         key: this.labels.status,
@@ -174,6 +184,8 @@ viewInfoData: any;
     this.smsCreditAllocation.patchValue({
       smsQuotaMetrix: '3',
       credit:'5000',
+      smsTraffic: '1000',
+      availableCredit:'4000',
       date : new Date('2020-12-02'),
       status : '1',
       onApprovalOf : 'pradeep.garg@nic.in',

@@ -8,6 +8,8 @@ import { ToasterService } from '@services/toaster.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { UtilService } from '@services/util.service';
 
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 
 export interface Email {
   name: string;
@@ -46,6 +48,22 @@ export class EmailComponent implements OnInit {
   SelectedVal;
   emailform:FormGroup;
 
+  optionsScreen: string[] = [
+    'Customer Details',
+    'Technical Admin',
+    'Billing Admin',
+    'SMS Credit Allocation',
+    'Proforma Invoice',
+    'Project Execution',
+    'Purchase Order',
+    'Tax Invoice',
+    'Reports',
+    'Email'
+  ];
+
+  dropdownSettings : IDropdownSettings = {};
+  
+
   options: string[] = ['00.00', '00.30', '01.00', '01.30','02.00', '02.30',
   , '03.00', '03.30','04.00', '04.30','05.00', '05.30', '06.00', '06.30', '07.00', '07.30',
   , '08.00', '08.30','09.00', '09.30','10.00', '10.30', '11.00', '11.30', '12.00', '12.30',
@@ -61,12 +79,26 @@ export class EmailComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredOptions1: Observable<string[]>;
 today=new Date()
-  constructor(private toasterService: ToasterService,private router: Router,private utilService: UtilService) { }
+  constructor(private toasterService: ToasterService,private router: Router,private utilService: UtilService) {
+
+    this.dropdownSettings  = {
+      singleSelection: false,
+      selectAllText: 'Select All',
+      unSelectAllText: 'Unselect All',
+      allowSearchFilter: true,
+      enableCheckAll : true,
+      clearSearchFilter : true,
+      itemsShowLimit:1
+    };
+
+   }
 
   ngOnInit() {
   this.emailform=new FormGroup({
   selectedTemp:new FormControl(''),
   textarea:new FormControl(''),
+  screenName: new FormControl(''),
+  screenNameEdit: new FormControl(''),
   renameTemplate:new FormControl(''),
   subject:new FormControl(''),
   fromtime:new FormControl(),
@@ -117,6 +149,9 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
     }
   }
   saveTemplete(){
+    this.emailform.patchValue({
+      selectedTemp: ''
+    })
     this.showinput=true
     this.chooseTemp=false
     this.editTempinp=false
@@ -139,6 +174,10 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
   editTemplete(){
     this.editTempinp=true;
     this.emailform.patchValue({renameTemplate:this.SelectedVal[0]['value']})
+
+    this.emailform.patchValue({
+      screenNameEdit: ['Proforma Invoice','Purchase Order']
+    })
   
   }
   onChange(event){
