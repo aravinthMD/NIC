@@ -69,6 +69,7 @@ import { ReportsTableComponent } from './protectedPages/reports/reports-table/re
 import { SmsCreditDialogComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-dialog/sms-credit-dialog.component';
 import { ViewTechnicalAdminComponent } from './protectedPages/user-information/user-info/technical-admin-details/view-technical-admin/view-technical-admin.component';
 import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
+import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-roles/admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -148,7 +149,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ReportsTableComponent,
     SmsCreditDialogComponent,
     ViewTechnicalAdminComponent,
-    DefineRolesComponent
+    DefineRolesComponent,
+    AdminRolesMappingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -195,11 +197,15 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderService
   ],
   bootstrap: [AppComponent],
-  entryComponents:[ProformaInvoiceDialogFormComponent,
-     ManageUserDialogComponent,
-     ProjectExcecutionDialogComponent,
+  entryComponents:[
+    ProformaInvoiceDialogFormComponent,
+    ManageUserDialogComponent,
+    ProjectExcecutionDialogComponent,
     TaxInvoiceDialogComponent,
-  PurchaseOrderDialogComponent,SmsCreditDialogComponent]
+    PurchaseOrderDialogComponent,
+    SmsCreditDialogComponent,
+    AdminRolesMappingDialogComponent
+  ]
 })
 export class AppModule { }
 

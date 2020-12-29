@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
+import { AdminRolesMappingDialogComponent } from './admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
 
 @Component({
   selector: 'app-define-roles',
@@ -21,34 +22,44 @@ export class DefineRolesComponent implements OnInit {
 
     {
       role: 'Finance User',
-      screenName: 'Customer Details'
+      screenName: 'Customer Details',
+      mappingStatus : 'mapped'
     },
     {
       role: 'Finance User',
-      screenName: 'Technical Admin'
+      screenName: 'Technical Admin',
+      mappingStatus : "mapped"
     },
     {
       role: 'Finance User',
-      screenName: 'Billing Admin'
+      screenName: 'Billing Admin',
+      mappingStatus  :"not Mapped"
     },
     {
       role: 'Finance User',
-      screenName: 'Customer Details'
+      screenName: 'Proforma Invoice',
+      mappingStatus : "Mapped"
+
     },
     {
       role: 'Finance User',
-      screenName: 'Customer Details'
+      screenName: 'Reports',
+      mappingStatus : "Mapped"
     }
   ]
   dataSource = new MatTableDataSource<any>(this.roleList);
 
-  constructor(private adminService: AdminService,private dialog: MatDialog) { }
+  constructor(
+    private adminService: AdminService,
+    private dialog: MatDialog
+    ) { }
 
   rolesList: any;
 
   rolesControl: FormGroup;
 
-  displayedColumns : string[] = ['Role','ScreenName','showMode','emailMode']
+  // displayedColumns : string[] = ['Role','ScreenName','showMode','emailMode']
+  displayedColumns  :string[] = ['ScreenName','Mapping','Modify']
 
   subtasks = []
 
@@ -88,6 +99,17 @@ export class DefineRolesComponent implements OnInit {
     {
       name: 'delete'
     }]
+  }
+
+
+  mappingMethod(){
+
+    this.dialog.open(AdminRolesMappingDialogComponent,{
+      width : '500px',
+      height  :'400px'
+    });
+
+
   }
 
   submitData() {
