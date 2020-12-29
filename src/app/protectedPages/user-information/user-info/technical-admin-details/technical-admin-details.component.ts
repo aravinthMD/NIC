@@ -364,20 +364,44 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
   next() {
 
-    
-    this.utilService.setCurrentUrl('users/billingAdmin')
+    if(!this.user) {
 
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val || '1';
-    })
+      this.utilService.setCurrentUrl('users/billingAdmin')
 
+      let pno = '';
+      this.utilService.projectNumber$.subscribe((val)=> {
+        pno = val || '1';
+      })
+  
+  
+      if(this.user) {
+        this.router.navigate(['/users/billingAdmin/'+pno])
+      }else {
+        this.router.navigate(['/users/billingAdmin'])
+      }
 
-    if(this.user) {
-      this.router.navigate(['/users/billingAdmin/'+pno])
     }else {
-      this.router.navigate(['/users/billingAdmin'])
+
+      this.utilService.setCurrentUrl('users/smsCredit')
+
+      let pno = '';
+      this.utilService.projectNumber$.subscribe((val)=> {
+        pno = val || '1';
+      })
+
+
+      if(this.user) {
+      this.router.navigate(['/users/smsCredit/'+pno])
+
+      }else {
+      this.router.navigate(['/users/smsCredit'])
+
+     }
+
     }
+   
+
+       
    
   }
 

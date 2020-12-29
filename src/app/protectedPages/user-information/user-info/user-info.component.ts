@@ -352,18 +352,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
         value : 'Post Paid'
       },
       {
-        key :  this.labels.credits_SMSQuota,
-        value : this.form.value.creditsSMSQuota
-      },
-      {
-        key  : this.labels.smsTraffic,
-        value : this.form.value.smsTariffMonthWise
-      },
-      {
-        key  : this.labels.availableCredit,
-        value : this.form.value.availableCredit
-      },
-      {
         key  : this.labels.nameOfTheApplication,
         value  : this.form.value.nameOfTheApplication
       },

@@ -33,14 +33,14 @@ viewInfoData : any
 currentDate:any;
 
 history:any[]=[
-  {credit:1000,expiryDate:'1/10/2020',status:'Pending',remark:'credited'},
-  {credit:1500,expiryDate:'2/09/2020',status:'Pending',remark:'credited'},
-  {credit:2000,expiryDate:'3/08/2020',status:'Approved',remark:'credited'},
-  {credit:2500,expiryDate:'4/07/2020',status:'Pending',remark:'credited'},
-  {credit:500,expiryDate:'19/05/2020',status:'Rejected',remark:'credited'},
-  {credit:20,expiryDate:'13/04/2020',status:'Rejected',remark:'credited'},
-  {credit:12500,expiryDate:'24/03/2020',status:'Pending',remark:'credited'},
-  {credit:7500,expiryDate:'22/02/2020',status:'Pending',remark:'credited'}
+  {credit:5000,expiryDate:'1/10/2020',status:'Pending',remark:'credited'},
+  {credit:4500,expiryDate:'2/09/2020',status:'Pending',remark:'credited'},
+  {credit:3000,expiryDate:'3/08/2020',status:'Approved',remark:'credited'},
+  {credit:3500,expiryDate:'4/07/2020',status:'Pending',remark:'credited'},
+  {credit:3000,expiryDate:'19/05/2020',status:'Rejected',remark:'credited'},
+  {credit:2000,expiryDate:'13/04/2020',status:'Rejected',remark:'credited'},
+  {credit:3000,expiryDate:'24/03/2020',status:'Pending',remark:'credited'},
+  {credit:5000,expiryDate:'22/02/2020',status:'Pending',remark:'credited'}
 ]
 smsQuotaMetrix:any[]=[
   {key:0,value:'arpita.burman@nic.in'},
@@ -377,12 +377,10 @@ showDataSaveModal: boolean;
     this.showEmailModal = false;
   }
 
-  newCredit() {
+  newCredit(element) {
    
     const dialogRef = this.dialog.open(SmsCreditDialogComponent, {
-      data : {
-        value : 'testing'
-      }
+      data :element
     })
 
     dialogRef.afterClosed().subscribe((result) =>{
@@ -408,7 +406,7 @@ showDataSaveModal: boolean;
 
   OnEdit(element) {
 
-    this.newCredit()
+    this.newCredit(element)
 
   }
 
