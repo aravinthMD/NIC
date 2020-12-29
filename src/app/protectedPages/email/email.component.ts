@@ -150,7 +150,8 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
   }
   saveTemplete(){
     this.emailform.patchValue({
-      selectedTemp: ''
+      selectedTemp: '',
+      screenName:''
     })
     this.showinput=true
     this.chooseTemp=false
