@@ -70,6 +70,7 @@ import { SmsCreditDialogComponent } from './protectedPages/user-information/user
 import { ViewTechnicalAdminComponent } from './protectedPages/user-information/user-info/technical-admin-details/view-technical-admin/view-technical-admin.component';
 import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
 import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-roles/admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
+import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -150,7 +151,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SmsCreditDialogComponent,
     ViewTechnicalAdminComponent,
     DefineRolesComponent,
-    AdminRolesMappingDialogComponent
+    AdminRolesMappingDialogComponent,
+    ManageEmailComponent
   ],
   imports: [
     BrowserModule,

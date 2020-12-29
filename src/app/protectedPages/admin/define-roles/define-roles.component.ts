@@ -23,28 +23,38 @@ export class DefineRolesComponent implements OnInit {
     {
       role: 'Finance User',
       screenName: 'Customer Details',
-      mappingStatus : 'mapped'
+      mappingStatus : 'mapped',
+      status : 'read/write',
+      emailFlag  : 'enabled'
     },
     {
       role: 'Finance User',
       screenName: 'Technical Admin',
-      mappingStatus : "mapped"
+      mappingStatus : "mapped",
+      status : 'read/write/delete',
+      emailFlag : 'disabled'
     },
     {
       role: 'Finance User',
       screenName: 'Billing Admin',
-      mappingStatus  :"not Mapped"
+      mappingStatus  :"not Mapped",
+      status : 'read',
+      emailFlag  : 'disabled'
     },
     {
       role: 'Finance User',
       screenName: 'Proforma Invoice',
-      mappingStatus : "Mapped"
+      mappingStatus : "Mapped",
+      status  : 'read',
+      emailFlag  : 'enabled'
 
     },
     {
       role: 'Finance User',
       screenName: 'Reports',
-      mappingStatus : "Mapped"
+      mappingStatus : "Mapped",
+      status  : 'read/write',
+      emailFlag :  'disabled'
     }
   ]
   dataSource = new MatTableDataSource<any>(this.roleList);
@@ -59,7 +69,7 @@ export class DefineRolesComponent implements OnInit {
   rolesControl: FormGroup;
 
   // displayedColumns : string[] = ['Role','ScreenName','showMode','emailMode']
-  displayedColumns  :string[] = ['ScreenName','Mapping','Modify']
+  displayedColumns  :string[] = ['ScreenName','Mapping','Modify','status','email']
 
   subtasks = []
 
