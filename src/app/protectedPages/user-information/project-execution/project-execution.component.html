@@ -1,9 +1,9 @@
 <div class="col-md-10 main">
 
     <div class="purchase-entry">
-       
 
-    <app-account-header [title]="'Project Execution'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+
+        <app-account-header [title]="'Project Execution'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
 
 
 
@@ -137,7 +137,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="NICSIProjectNo" [isRequired]="'NICSI Project Number is Required'" [labelName]="labels?.nicsiProjectNumber" [maxLength]="labels?.validationData?.nicsiProjectNumber.maxLength" [type]="labels?.validationData?.nicsiProjectNumber.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="NICSIProjectNo" [isRequired]="'NICSI Project Number is Required'" [labelName]="labels?.nicsiProjectNumber" [maxLength]="labels?.validationData?.nicsiProjectNumber.maxLength" [type]="labels?.validationData?.nicsiProjectNumber.type"
+                                    [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -149,15 +150,11 @@
                             </div>
                         </div>
                         <div class="col-4">
-                          <div class="form-group">
-                              <app-custom-input formControlName="remark" 
-                              [labelName]="labels.remark" [id]="'remark'" 
-                              [maxLength]="labels?.validationData.userName.maxLength"
-                              [isRequired]="'Remark is Mandatory'"
-                               [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
-                              </app-custom-input>
-                          </div>
-                      </div>
+                            <div class="form-group">
+                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isRequired]="'Remark is Mandatory'" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
 
                         <div class="col-4">
                             <div class="form-group">
@@ -169,22 +166,22 @@
                     </div>
 
                     <div class="row pt-3 pb-3 m-0">
-                     
+
                         <div class="col-10">
 
-                            <button class="btn btn-primary" (click) = "createProjectExecution()" style="float: left;" type="submit">Raise PO</button>
+                            <button class="btn btn-primary" (click)="createProjectExecution()" style="float: left;" type="submit">Raise PO</button>
 
                         </div>
 
-                       <div class="col-1" style="float: left;">
-                        <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+                        <div class="col-1" style="float: left;">
+                            <button class="btn btn-primary ml-3" (click)="back()">Back</button>
 
-                       </div>
+                        </div>
 
-                       <div class="col-1" style="float: left;">
-                        <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+                        <div class="col-1" style="float: left;">
+                            <button class="btn btn-primary ml-3" (click)="next()">Next</button>
 
-                       </div>
+                        </div>
 
                     </div>
                 </form>
@@ -228,7 +225,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="col-3">
                         <div class="form-group">
 

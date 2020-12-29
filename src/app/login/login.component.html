@@ -9,12 +9,12 @@
                 <!-- <label for="exampleInputEmail1">Email address</label> -->
                 <input type="text" class="form-control" formControlName="userName" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter the User Name">
                 <!-- <small id="emailHelp" class="form-text text-muted">Enter Valid Email</small> -->
-               
+
 
             </div>
             <div class="form-group mb-3">
                 <!-- <label for="exampleInputPassword1">Password</label> -->
-                <input type="password" class="form-control" formControlName="password"  id="exampleInputPassword1" placeholder="Password">
+                <input type="password" class="form-control" formControlName="password" id="exampleInputPassword1" placeholder="Password">
 
             </div>
             <!-- <div class="form-group form-check">
@@ -22,17 +22,17 @@
            <label class="form-check-label" for="exampleCheck1">Forget Password?</label>
         </div> -->
 
-        <div class="form-group txt-center">
-        <mat-error>
-          {{errroMsg}} 
-        </mat-error>
-        </div>
+            <div class="form-group txt-center">
+                <mat-error>
+                    {{errroMsg}}
+                </mat-error>
+            </div>
 
-            <div class="form-group mouse-pointer">
+            <div class="form-group mouse-pointer mb-3">
                 <a (click)="forgotPassword()">Forgot Password?</a>
             </div>
 
-          
+
 
             <div class="col-md-12 d-flex justify-content-center">
                 <button type="submit" (click)="login()" matRipple class="col-md-4 btn btn-primary">Sign in</button>
