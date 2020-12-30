@@ -194,7 +194,7 @@ showDataSaveModal: boolean;
         value  : this.smsCreditAllocation.value.credit
       },
       {
-        key  : this.labels.date,
+        key  : this.labels.dateOfRequest,
         value  : `${day}/${month}/${year}`
       },
       {

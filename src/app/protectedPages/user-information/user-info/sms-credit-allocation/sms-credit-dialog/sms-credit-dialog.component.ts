@@ -89,7 +89,7 @@ viewInfoData: any;
         value:'pradeep.garg@nic.in'
       },
       {
-        key: this.labels.date,
+        key: this.labels.dateOfRequest,
         value:'02/12/2020'
       },
       {

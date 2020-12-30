@@ -34,7 +34,7 @@
 
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="creditDate">{{labels.date}}</label>
+                                    <label for="creditDate">{{labels.dateOfRequest}}</label>
                                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
                                         <input matInput [matDatepicker]="picker3" formControlName="date" (keyup)="detectDateKeyAction($event,'date')">
                                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
