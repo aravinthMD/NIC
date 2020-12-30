@@ -23,23 +23,31 @@ export class DefineRolesComponent implements OnInit {
     {
       role: 'Finance User',
       screenName: 'Customer Details',
-      mappingStatus : 'mapped',
+      mappingStatus : 'Mapped',
       status : 'read/write',
       emailFlag  : 'enabled'
     },
     {
       role: 'Finance User',
       screenName: 'Technical Admin',
-      mappingStatus : "mapped",
+      mappingStatus : "Mapped",
       status : 'read/write/delete',
       emailFlag : 'disabled'
     },
     {
       role: 'Finance User',
       screenName: 'Billing Admin',
-      mappingStatus  :"not Mapped",
+      mappingStatus  :"Not Mapped",
       status : 'read',
       emailFlag  : 'disabled'
+    },
+   
+    {
+      role  :'Finance User',
+      screenName : 'SMS Credit Allocation',
+      mappingStatus : "Not Mapped",
+      status  : 'read/write',
+      emailFlag  : 'enabled'
     },
     {
       role: 'Finance User',
@@ -50,11 +58,41 @@ export class DefineRolesComponent implements OnInit {
 
     },
     {
+      role  : 'Finance User',
+      screenName  : 'Project Execution',
+      mappingStatus : "Mapped",
+      status  : 'read',
+      emailFlag :  'enabled'
+    },
+    {
+      role  : 'Finance User',
+      screenName  :  'Purchase Order',
+      mappingStatus :  'Not Mapped',
+      status  : 'read/write',
+      emailFlag  : 'enabled'
+    },
+    {
+      role :  'Financial User',
+      screenName  : 'Tax Invoice',
+      mappingStatus  : 'Mapped',
+      status : 'read/write',
+      emailFlag  :'enabled'
+    },
+    
+    {
       role: 'Finance User',
       screenName: 'Reports',
       mappingStatus : "Mapped",
       status  : 'read/write',
       emailFlag :  'disabled'
+    },
+
+    {
+      role  : 'Finance User',
+      screenName  : 'Email',
+      mappingStatus :  "Mapped",
+      status  : 'read',
+      emailFlag : 'disabled'
     }
   ]
   dataSource = new MatTableDataSource<any>(this.roleList);

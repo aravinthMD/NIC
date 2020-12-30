@@ -85,7 +85,7 @@ viewInfoData: any;
 
     this.viewInfoData = [
       {
-        key: this.labels.smsQuotaMetrix,
+        key: this.labels.smsQuotaMatrix,
         value:'pradeep.garg@nic.in'
       },
       {

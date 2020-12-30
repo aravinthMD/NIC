@@ -52,9 +52,13 @@ export class LoginComponent implements OnInit {
 
         console.log(response)
         if(response['ProcessVariables']['countUser'] === ''){
-          this.errroMsg = response['ProcessVariables']['response']
+          // this.errroMsg = response['ProcessVariables']['response']
+          const errMsg  = response['ProcessVariables']['response']
+          this.toasterService.showError(errMsg,'')
         } else if(response['ProcessVariables']['countUser'] === '0'){
-          this.errroMsg = response['ProcessVariables']['response']
+          const errMsg  = response['ProcessVariables']['response'];
+          this.toasterService.showError(errMsg,'');
+          // this.errroMsg = response['ProcessVariables']['response']
         }
         else if(response['ProcessVariables']['countUser'] === '1') {
 
