@@ -31,17 +31,7 @@
                                     </app-custom-input> -->
                                 </div>
                             </div>
-                            <div class="col-4 pb-0">
-                                <div class="form-group">
-                                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'">
-                                    </app-custom-input>
-                                    <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
-                                        <div>
-                                            {{'Please Enter Digits'}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="creditDate">{{labels.date}}</label>
@@ -52,6 +42,19 @@
                                     </mat-form-field>
                                 </div>
                             </div>
+
+                            <div class="col-4 pb-0">
+                                <div class="form-group">
+                                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [maxLength]="labels?.validationData.userName.maxLength" [type]="'number'" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'">
+                                    </app-custom-input>
+                                    <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
+                                        <div>
+                                            {{'Please Enter Digits'}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="status">{{labels.status}}</label>

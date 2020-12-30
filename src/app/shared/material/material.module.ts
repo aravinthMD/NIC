@@ -12,6 +12,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatRadioModule} from '@angular/material/radio';
 
 
 const materialComponents = [
@@ -27,7 +28,8 @@ const materialComponents = [
   MatRippleModule,
   MatCardModule,
   MatDividerModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatRadioModule
 ]
 
 @NgModule({

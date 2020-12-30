@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Optional,Inject } from '@angular/core';
 import { Validators,FormBuilder, FormGroup,FormControl } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { LabelsService } from '@services/labels.service';
 
@@ -55,12 +55,14 @@ viewInfoData: any;
 
 
   constructor(private dialogRef : MatDialogRef<SmsCreditDialogComponent>,private datePipe: DatePipe,private labelsService :LabelsService,private toasterService: ToasterService,private formBuilder:FormBuilder,  private utilService:UtilService,
-    private router:Router,) {
+    private router:Router,@Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.currentDate=this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	')
     this.smsCreditAllocation =this.formBuilder.group({
       smsQuotaMetrix: [''],
       credit:[null,Validators.pattern("^[0-9]{0,12}$")],
+      smsTraffic:[null],
+      availableCredit:[null],
       date : [null],
       status : [''],
       onApprovalOf : [null],
@@ -87,12 +89,20 @@ viewInfoData: any;
         value:'pradeep.garg@nic.in'
       },
       {
-        key: this.labels.credit,
-        value:'5000'
-      },
-      {
         key: this.labels.date,
         value:'02/12/2020'
+      },
+      {
+        key: this.labels.credit,
+        value:this.data.credit
+      },
+      {
+        key: this.labels.smsTraffic,
+        value:'1000'
+      },
+      {
+        key: this.labels.availableCredit,
+        value:(Number(this.data.credit) - 1000)
       },
       {
         key: this.labels.status,
@@ -173,7 +183,9 @@ viewInfoData: any;
 
     this.smsCreditAllocation.patchValue({
       smsQuotaMetrix: '3',
-      credit:'5000',
+      credit:this.data.credit,
+      smsTraffic: '1000',
+      availableCredit: (Number(this.data.credit) - 1000),
       date : new Date('2020-12-02'),
       status : '1',
       onApprovalOf : 'pradeep.garg@nic.in',
