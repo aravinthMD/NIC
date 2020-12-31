@@ -164,10 +164,10 @@ mat-form-field {
     margin-top: 16px;
 }
 
-mat-card {
-    margin-bottom: 4px;
-    margin-top: 8px;
-}
+// mat-card {
+//     margin-bottom: 4px;
+//     margin-top: 8px;
+// }
 
 button {
     height: 30px;
@@ -190,10 +190,10 @@ button {
     margin-top: -22px !important;
 }
 
-mat-card.mat-card {
-    margin-top: 20px !important;
-    margin-bottom: 20px !important;
-}
+// mat-card.mat-card {
+//     margin-top: 20px !important;
+//     margin-bottom: 20px !important;
+// }
 
 mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
     padding-right: 10px !important;
@@ -258,4 +258,13 @@ td.mat-cell {
 
   .row  {
     margin-bottom: 35px;
+  }
+
+  mat-card.defineRoles {
+    width: 100% !important;
+}
+
+.mat-row:hover > .mat-cell {
+    background-color:#d8d0d0 ;
+  
   }

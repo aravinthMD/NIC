@@ -9,7 +9,7 @@
     "OfficerMobile": "Reporting/Nodal/Forwarding Officer Mobile",
     "smsServiceReqd": "SMS Service Required",
     "credits_SMSQuota": "Credits (SMS Quota)",
-    "availableCredit": "Available Credits",
+    "availableCredit": "Available Credit",
     "nameOfTheApplication": "Name of the Application",
     "applicationUrl": "Application URL",
     "serverLocation": "Server Location",
@@ -48,7 +48,7 @@
     "creditAdded": "Credit Added",
     "creditApprover": "Credit Approver",
     "creditDate": "Credit Date",
-    "smsQuotaMetrix": "SMS Quota Approval Metrix",
+    "smsQuotaMatrix": "SMS Quota Approval Matrix",
     "creditPI": "Credit Added against the PI",
     "proformaIN": "Proforma Invoice Number",
     "invoiceDate": "Invoice Date",
@@ -64,6 +64,7 @@
     "projectName": "Project Name",
     "userId": "User ID",
     "date": "Date",
+    "dateOfRequest" : "Date of Request",
     "poAmount": "PO Amount",
     "poStatus": "Status",
     "poStatusKey": "PO Status Key",
@@ -102,6 +103,9 @@
     "smsApproved": "SMS Approved",
     "submittedDate": "Submitted Date",
     "nicsiManager": "NICSI Manager",
+    "rate": "Rate",
+    "quantity": "Quantity",
+    "description": "Description",
     "validationData": {
         "name": {
             "maxLength": {
@@ -295,7 +299,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         
         "UserId": {
@@ -313,7 +317,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "piAmount": {
             "maxLength": {
@@ -335,7 +339,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "piOwner": {
             "maxLength": {
@@ -353,7 +357,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "alpha-numeric"
+            "type": "number"
         },
         "withoutTax": {
             "maxLength": {
@@ -436,13 +440,31 @@
         "taxIN": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type" : "number"
         },
         "nicsiManager": {
             "maxLength": {
                 "rule": "50"
             },
             "type": "alpha"
+        },
+        "rate": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "quantity": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "description": {
+            "maxLength": {
+                "rule": "2000"
+            }
         }
     }
 }

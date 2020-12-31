@@ -1,9 +1,16 @@
 <!-- <div class="col-md-10 main"> -->
 
-    <div class="col-md-12 userForm shadow p-3 mb-5 bg-white rounded">
-        <h1 class="h3  text-gray-800 mb-2">User Creation</h1>
-
-        <form class="pt-4" [formGroup]="form">
+    <div class="col-md-10 main">
+        <mat-card> 
+        <!-- <app-account-header class="headers" [title]="'User Creation'"></app-account-header> -->
+        <div class="col-md-12 headers p-0">
+             
+            <div class="headers"><span>User Creation</span> 
+               
+            </div>
+        <!-- <h1 class="h3  text-gray-800 mb-2">User Creation</h1> -->
+         </div>
+        <form class="" [formGroup]="form">
             <!--FIRST ROW-->
 
             <div class="row">
@@ -346,6 +353,7 @@
                 <button class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
             </div>
         </form>
+    </mat-card>
     </div>
 
 <!-- </div> -->

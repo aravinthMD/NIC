@@ -20,12 +20,47 @@ export class ManageEmailComponent implements OnInit {
   }
 
   dataList = [
-    { screen :  "Customer Details", status  : "Enabled" },
-    { screen  :  "Technical Admin Details",status :  "Disabled" },
-    { screen  : "Reports",status  : "Enabled" },
-    { screen :  "Proforma Invoice",status :  "Disabled" },
-    { screen  : "Project Execution",status :  "Enabled" },
-    { screen  :  "Email" , status :  "Disabled" }
+    { 
+      screen :  "Customer Details",
+      status  : "Enabled" 
+    },
+    { 
+      screen  :  "Technical Admin",
+      status :  "Disabled" 
+    },
+    {
+      screen: 'Billing Admin',
+      status : 'Disabled',
+    },
+    {
+      screen : 'SMS Credit Allocation',
+      status  : 'Enabled',
+    },
+    { 
+      screen :  "Proforma Invoice",
+      status :  "Disabled" 
+    },
+    { 
+      screen  : "Project Execution",
+      status :  "Enabled"
+     },
+     {
+      screen  :  'Purchase Order',
+      status  : 'Disabled',
+    },
+    {
+      screen  : 'Tax Invoice',
+      status : 'Disabled',
+    },
+
+    { 
+      screen  : "Reports",
+      status  : "Enabled" 
+    },
+    { 
+      screen  :  "Email" , 
+      status :  "Disabled" 
+    }
   ]
 
   dataSource  = this.dataList;

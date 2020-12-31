@@ -59,7 +59,11 @@ h3 {
 }
 
 table {
-    width: 100%;
+    width: 103%;
+}
+
+.font-paginator {
+    width: 103%;
 }
 
 th {
@@ -147,3 +151,69 @@ mat-form-field {
 .clr-white {
     color: #fff !important
 }
+
+
+
+
+.dashBoard {
+    background: #0e4d92 !important;
+    color: #fff!important;
+    margin-bottom: 17px;
+    height: 44px;
+    padding-top: 13px;
+    padding-left: 10px;
+    font-size: 21px;
+    font-weight: 500;
+    border-color: #0e4d92;
+    border-style: solid;
+    vertical-align: middle !important;
+    width  :103%
+}
+
+#mySearch {
+    width: 24%;
+    font-size: 17px;
+    padding: 7px;
+    border: 1px solid #ddd;
+    margin-bottom: 0px;
+    border-radius: 3px 3px 3px 3px;
+    text-align: center; 
+    color: #212121;
+
+  }
+
+  #mySearch.active{
+    border-color: #0e4d92 !important;
+  }
+
+// #mySearch { 
+//     width: 24%; 
+//     padding: 10px; 
+//     text-align: center; 
+// } 
+
+
+  .input-icons { 
+    width: 100%; 
+    margin-bottom: 10px; 
+} 
+
+.input-icons i { 
+    position: absolute; 
+    padding-top: 10px;
+    padding-left: 16px;
+    color: #747677 !important;
+} 
+
+.input-icons { 
+    width: 100%; 
+    margin-bottom: 10px; 
+} 
+
+.icon { 
+    padding: 10px; 
+    min-width: 40px; 
+} 
+  
+
+  

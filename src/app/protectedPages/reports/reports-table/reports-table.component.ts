@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
+import { UtilService } from '@services/util.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
@@ -30,8 +32,12 @@ export class ReportsTableComponent implements OnInit,OnChanges {
 
   paidColumns: string[] = ['UserName','projectNumber','InvoiceNo','InvoiceAmount','InvoicePaid','InvoiceUnpaid']
 
-  smsColumns: string[] = ['smsMetrix','Credits','Date','Status']
-  constructor(private ngxUiLoaderService : NgxUiLoaderService) {
+  smsColumns: string[] = ['smsMatrix','Credits','Date','Status','Navigate']
+  constructor(
+    private ngxUiLoaderService : NgxUiLoaderService,
+    private utilService  :UtilService,
+    private router  :Router
+    ) {
    }
 
   ngOnInit() {
@@ -79,6 +85,18 @@ export class ReportsTableComponent implements OnInit,OnChanges {
   }
 
   this.ngxUiLoaderService.stop();
+
+  }
+
+  Navigate(obj : any ){
+
+    const projectNo = obj.projectNo;
+
+    this.utilService.setProjectNumber(projectNo);
+
+    this.utilService.setCurrentUrl('users/smsCredit');
+
+    this.router.navigate([`/users/smsCredit/${projectNo}`])
 
   }
 

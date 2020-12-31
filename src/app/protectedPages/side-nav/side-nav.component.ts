@@ -106,8 +106,16 @@ export class SideNavComponent implements OnInit,OnChanges {
         this.isLocation = '4.2'
     }else if(path.includes('admin/manageUser')) {
       this.isLocation = '2.1';
-    }else if(path.includes('admin/manageAccount')) {
+    }else if(path.includes('admin/createuser')) {
       this.isLocation = '2.2';
+    }else if(path.includes('admin/manageUsers')){
+      this.isLocation = '2.3'
+    }else if(path.includes('admin/managelovs')){
+      this.isLocation = '2.4'
+    }else if(path.includes('admin/manageRoles')){
+      this.isLocation = '2.5'
+    }else if(path.includes('/admin/manageEmail')){
+      this.isLocation = '2.6'
     }
 
     if(path.includes('users/') && !path.includes('users/Dashboard') && !path.includes('users/reports') &&!path.includes('users/sendemail') &&!path.includes('users/managegroup')) {

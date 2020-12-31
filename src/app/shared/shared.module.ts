@@ -13,10 +13,11 @@ import { MatDatepickerModule } from '@angular/material';
 import { UserInfoFormComponent } from './preview/user-info-form/user-info-form.component';
 import { DataSavedModalComponent } from './data-saved-modal/data-saved-modal.component';
 import { ViewInfoComponent } from './view-info/view-info.component';
+import { BorderDirective } from './border.directive';
 
 
 @NgModule({
-  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent, ViewInfoComponent],
+  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent, ViewInfoComponent, BorderDirective],
   imports: [
     CommonModule,
     FormsModule,

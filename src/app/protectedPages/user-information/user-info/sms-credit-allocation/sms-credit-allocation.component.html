@@ -21,8 +21,8 @@
                             <div class="col-4 pb-0">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="smsQuotaMetrix">{{labels.smsQuotaMetrix}}</label>
-                                        <app-vf-custom-select formControlName="smsQuotaMetrix" [values]="smsQuotaMetrix" [isDirty]="isDirty" [isRequired]="'SMS quota metrix is mandatory'">
+                                        <label for="smsQuotaMetrix">{{labels.smsQuotaMatrix}}</label>
+                                        <app-vf-custom-select formControlName="smsQuotaMetrix" [values]="smsQuotaMetrix" [isDirty]="isDirty" [isRequired]="'SMS quota matrix is mandatory'">
                                         </app-vf-custom-select>
                                     </div>
                                     <!-- <app-custom-input formControlName="smsQuotaMetrix" [labelName]="labels.smsQuotaMetrix"
@@ -34,7 +34,7 @@
 
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="creditDate">{{labels.date}}</label>
+                                    <label for="creditDate">{{labels.dateOfRequest}}</label>
                                     <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
                                         <input matInput [matDatepicker]="picker3" formControlName="date" (keyup)="detectDateKeyAction($event,'date')">
                                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>

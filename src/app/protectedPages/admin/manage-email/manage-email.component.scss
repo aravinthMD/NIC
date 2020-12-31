@@ -57,3 +57,22 @@ td.mat-cell {
     font-weight: 450;
     line-height: 26px;
 }
+
+.button1 { 
+    padding-left: 122px;
+}
+
+.dialog-button{
+
+    font-size: 17px;
+}
+
+
+mat-card {
+    width: 100% !important;
+}
+
+.mat-row:hover > .mat-cell {
+    background-color:#d8d0d0 ;
+  
+  }
