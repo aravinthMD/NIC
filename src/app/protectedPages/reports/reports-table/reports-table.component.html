@@ -1,6 +1,6 @@
 <div class="mat-elevation-z8">
 
-    <table mat-table [dataSource]="dataSource">
+    <table class="mt-3" mat-table [dataSource]="dataSource">
 
 
         <ng-container matColumnDef="UserID">
@@ -175,7 +175,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
     </table>
-
+    <ng-content></ng-content>
     <!-- <button class="btn btn-primary download download-pad" type="submit">Export As CSV</button> -->
     <mat-paginator class="font-paginator" [pageSize]="[5]" showFirstLastButtons></mat-paginator>
     <div class="mb-3"></div>
