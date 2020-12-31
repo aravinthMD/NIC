@@ -210,7 +210,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
                 // this.detectFormChanges()
             });
 
-            this.getCustomerDetailByCustomerId();
+            // this.getCustomerDetailByCustomerId();
 
   }
 
@@ -535,19 +535,19 @@ export class UserInfoComponent implements OnInit,OnChanges {
     
   }
 
-  getCustomerDetailByCustomerId(id:string){
+  // getCustomerDetailByCustomerId(id:string){
 
-    this.userInfoService.getCustomerDetailByCustomerId('24').subscribe((response) => {
+  //   this.userInfoService.getCustomerDetailByCustomerId('24').subscribe((response) => {
 
-      console.log(response)
+  //     console.log(response)
 
-    },(error) => {
+  //   },(error) => {
 
-      console.log(error)
+  //     console.log(error)
 
-    })
+  //   })
 
-  }
+  // }
 
 
 

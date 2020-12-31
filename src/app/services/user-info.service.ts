@@ -42,40 +42,40 @@ export class UserInfoService {
   
   } 
 
-  getCustomerDetailByCustomerId(customerId : string){
+  // getCustomerDetailByCustomerId(customerId : string){
 
-    const {
-      api : {
-        getCustomerDetailByCustomerId : {
-            workflowId,
-            processId,
-            projectId
-        }
-      }
-  } = this.apiService;
+  //   const {
+  //     api : {
+  //       getCustomerDetailByCustomerId : {
+  //           workflowId,
+  //           processId,
+  //           projectId
+  //       }
+  //     }
+  // } = this.apiService;
 
-  const data = {
-    currentCustomerId  : customerId,
-    temp : "get"
+  // const data = {
+  //   currentCustomerId  : customerId,
+  //   temp : "get"
 
-  }
+  // }
 
-  const requestEntity  : any  = {
-    processId,
-    ProcessVariables : data,
-    projectId
-  }
+  // const requestEntity  : any  = {
+  //   processId,
+  //   ProcessVariables : data,
+  //   projectId
+  // }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
+  // const body = {
+  //   processVariables : JSON.stringify(requestEntity)
+  // };
 
-  const formData = this.transform(body)
+  // const formData = this.transform(body)
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  // let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  // return  this.httpService.post<any>(url,formData);
 
-  }
+  // }
   transform(data: any) {
     return new HttpParams({ fromObject: data });
   }   
