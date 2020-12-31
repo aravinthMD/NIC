@@ -98,25 +98,29 @@ export class ReportsComponent implements OnInit {
       smsQuotaApprovalMetrix: 'dureja.sk@nic.in',
       credits: "5000",
       date:'16/12/2020',
-      status: 'Pending'
+      status: 'Pending',
+      projectNo :  '4535'
     },
     {
       smsQuotaApprovalMetrix: 'arpita.burman@nic.in',
       credits: "6000",
       date:'14/12/2020',
-      status: 'Approved'
+      status: 'Approved',
+      projectNo  : '6534'
     },
     {
       smsQuotaApprovalMetrix: 'sshanker@nic.in',
       credits: "4000",
       date:'13/12/2020',
-      status: 'Pending'
+      status: 'Pending',
+      projectNo   : '7644'
     },
     {
       smsQuotaApprovalMetrix: 'pradeep.garg@nic.in',
       credits: "3000",
       date:'12/12/2020',
-      status: 'Rejected'
+      status: 'Rejected',
+      projectNo  : '6454'
     }
   ]
 
