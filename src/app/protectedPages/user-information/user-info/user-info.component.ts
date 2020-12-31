@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import {ToasterService} from '@services/toaster.service';
 
 import { Router,ActivatedRoute } from '@angular/router'
+import { UserInfoService } from '@services/user-info.service';
 
 
 @Component({
@@ -49,7 +50,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       {key:0,value:'Department of Sainik Welfare'},
       {key:1,value:'Ministry of Minority Affairs'},
       {key:2,value:'Visakhapatnam Port Trust'},
-      {key:3,value:'Ministry of Tribal Affairs'},
+      {key:13,value:'Ministry of Tribal Affairs'},
       {key:4,value:'Bureau of Naviks Mumbai'}
   ];
   smsServiceReqd=[
@@ -111,7 +112,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }[];
 
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private userInfoService:UserInfoService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
 
     this.form =this.formBuilder.group({
       applicantName : [null],
@@ -208,6 +209,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
          
                 // this.detectFormChanges()
             });
+
+            this.getCustomerDetailByCustomerId();
 
   }
 
@@ -454,9 +457,65 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
       return
     }
+    const userInfo = {
+      "department":this.form.value.departmentName,
+      "App_name":this.form.value.applicantName,
+      "App_email":this.form.value.email,
+      "App_mobile":this.form.value.mobileNo,
+      "FO_name":this.form.value.OfficerName,
+      "FO_email":this.form.value.OfficerEmail,
+      "countryCode": "",
+      "FO_mobile":this.form.value.OfficerMobile,
+      "FO_designation":this.form.value.designation,
+      "Tele_number": this.form.value.teleCode,
+      "Tele_number_OF":this.form.value.telPhno,
+      "OA_line1":this.form.value.offAddress1,
+      "OA_line2":this.form.value.offAddress2,
+      "OA_line3":this.form.value.offAddress3,
+      "city":this.form.value.city,
+      "state":this.form.value.state,
+      "pinCode":this.form.value.pincode,
+      "sms_service":this.form.value.smsServiceReqd,
+      "credits":this.form.value.creditAdded,
+      "sms_traffic":this.form.value.domMonSmsTraffic,
+      "name_applicant":this.form.value.nameOfTheApplication,
+      "available_credit":this.form.value.userName,
+      "App_url":this.form.value.applicationUrl,
+      "server_location":this.form.value.serverLocation,
+      "purpose_applicant":this.form.value.purpOfTheApplication,
+      "Ip_form":this.form.value.smsGatewayAccess,
+      "Ip_staging":this.form.value.ipServReqd,
+      "proj_international":this.form.value.intMonSmsTraffic,
+      "proj_domestic":this.form.value.domMonSmsTraffic,
+      "app_security":this.form.value.appSecurAudClear,
+      "audit_date":this.form.value.auditDate,
+      "trai_extempted":this.form.value.traiSenderId,
+      "proj_number":this.form.value.projectNo,
+      "userId":this.form.value.userId,
+      "password":this.form.value.password,
+      "upload_document":"",
+      "remark":this.form.value.remark,
+      "creationStatus":"",
+    }
+    this.userInfoService.createCustomerDetails(userInfo).subscribe((response)=> {
+
+      console.log('Response',response)
+
+      if(response['Error'] == '0' && response['ProcessVariables']['response']['type'] == 'Success') {
+
+        this.isDirty=false;
+        this.form.reset()
+        this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
+
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+      }
+
+    })
+
     this.propertyFlag = false;
     this.buttonName = 'Update';
-
+     
     // this.form.value['creditDate'] = this.datePipe.transform(this.form.value['creditDate'], 'dd/MM/yyyy')
     // this.form.value['creditAddedAgainstPi'] = this.datePipe.transform(this.form.value['creditAddedAgainstPi'], 'dd/MM/yyyy')
     // this.form.value['auditDate'] = this.datePipe.transform(this.form.value['auditDate'], 'dd/MM/yyyy')
@@ -474,6 +533,20 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     this.toasterService.showSuccess('Data Saved Successfully',"");
     
+  }
+
+  getCustomerDetailByCustomerId(id:string){
+
+    this.userInfoService.getCustomerDetailByCustomerId('24').subscribe((response) => {
+
+      console.log(response)
+
+    },(error) => {
+
+      console.log(error)
+
+    })
+
   }
 
 
@@ -752,3 +825,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
 }
+
+
+
+ 
+
