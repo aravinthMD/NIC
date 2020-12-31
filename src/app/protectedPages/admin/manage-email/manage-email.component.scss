@@ -71,3 +71,8 @@ td.mat-cell {
 mat-card {
     width: 100% !important;
 }
+
+.mat-row:hover > .mat-cell {
+    background-color:#d8d0d0 ;
+  
+  }

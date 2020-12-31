@@ -1,10 +1,15 @@
 <!-- <div class="col-md-10 main"> -->
 
     <div class="col-md-10 main">
-        <mat-card>
+        <mat-card> 
         <app-account-header [title]="'User Creation'"></app-account-header>
-        <!-- <h1 class="h3  text-gray-800 mb-2">User Creation</h1> -->
-
+        <!-- <div class="col-md-12 p-0">
+             
+            <div class="headers"><span>User Creation</span> 
+               
+            </div>
+       
+         </div> -->
         <form class="" [formGroup]="form">
             <!--FIRST ROW-->
 
@@ -277,7 +282,8 @@
                         </app-custom-input>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
                 <div class="col-4">
                     <div class="form-group">
 
@@ -307,8 +313,8 @@
                         </app-custom-input>
                     </div>
                 </div>
-    
-            </div>
+             
+        </div>
     
             <!-- <ng-template [ngIf]="existingUserFlag">
                 <div class="row">

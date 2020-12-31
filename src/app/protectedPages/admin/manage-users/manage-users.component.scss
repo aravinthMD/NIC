@@ -85,4 +85,7 @@ tr:nth-child(even) {background-color:#f5f4f4;}
     width: 100% !important;
 }
 
- 
+.mat-row:hover > .mat-cell {
+  background-color:#d8d0d0 ;
+
+}

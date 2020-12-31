@@ -308,3 +308,9 @@ tr {
     }
     height: 65px;
 }
+
+
+.mat-row:hover > .mat-cell {
+    
+    background-color:#e2d9d9 ;
+}

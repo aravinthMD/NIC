@@ -263,3 +263,11 @@ td.mat-cell {
   mat-card.defineRoles {
     width: 100% !important;
 }
+
+.mat-row:hover > .mat-cell {
+    background-color:#d8d0d0 ;
+}
+label {
+    display: inline-block;
+    margin-bottom: -0.2rem;
+  }

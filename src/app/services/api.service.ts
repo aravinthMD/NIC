@@ -184,7 +184,17 @@ export class ApiService {
       workflowId: '06fd5a02437e11ebb7bf727d5ac274b2',
       processId: '06fd5a02437e11ebb7bf727d5ac274b2',
       projectId : environment.projectIds.projectId
-    }
+    },
+    createCustomerDetails: {
+      workflowId: '826732c62e1611ebb77f727d5ac274b2',
+      processId: '82a1e07e2e1611ebb77f727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getCustomerDetailByCustomerId: {
+      workflowId: '826732c62e1611ebb77f727d5ac274b2',
+      processId: '1c6033c0491811ebb7dc727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
 
   }
 
