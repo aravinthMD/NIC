@@ -24,75 +24,75 @@ export class DefineRolesComponent implements OnInit {
       role: 'Finance User',
       screenName: 'Customer Details',
       mappingStatus : 'Mapped',
-      status : 'read/write',
-      emailFlag  : 'enabled'
+      status : 'Read/Write',
+      emailFlag  : 'Enabled'
     },
     {
       role: 'Finance User',
       screenName: 'Technical Admin',
       mappingStatus : "Mapped",
-      status : 'read/write/delete',
-      emailFlag : 'disabled'
+      status : 'Read/Write/Delete',
+      emailFlag : 'Disabled'
     },
     {
       role: 'Finance User',
       screenName: 'Billing Admin',
       mappingStatus  :"Not Mapped",
-      status : 'read',
-      emailFlag  : 'disabled'
+      status : 'Read',
+      emailFlag  : 'Disabled'
     },
    
     {
       role  :'Finance User',
       screenName : 'SMS Credit Allocation',
       mappingStatus : "Not Mapped",
-      status  : 'read/write',
-      emailFlag  : 'enabled'
+      status  : 'Read/Write',
+      emailFlag  : 'Enabled'
     },
     {
       role: 'Finance User',
       screenName: 'Proforma Invoice',
       mappingStatus : "Mapped",
-      status  : 'read',
-      emailFlag  : 'enabled'
+      status  : 'Read',
+      emailFlag  : 'Enabled'
 
     },
     {
       role  : 'Finance User',
       screenName  : 'Project Execution',
       mappingStatus : "Mapped",
-      status  : 'read',
-      emailFlag :  'enabled'
+      status  : 'Read',
+      emailFlag :  'Enabled'
     },
     {
       role  : 'Finance User',
       screenName  :  'Purchase Order',
       mappingStatus :  'Not Mapped',
-      status  : 'read/write',
-      emailFlag  : 'enabled'
+      status  : 'Read/Write',
+      emailFlag  : 'Enabled'
     },
     {
       role :  'Financial User',
       screenName  : 'Tax Invoice',
       mappingStatus  : 'Mapped',
-      status : 'read/write',
-      emailFlag  :'enabled'
+      status : 'Read/Write',
+      emailFlag  :'Enabled'
     },
     
     {
       role: 'Finance User',
       screenName: 'Reports',
       mappingStatus : "Mapped",
-      status  : 'read/write',
-      emailFlag :  'disabled'
+      status  : 'Read/Write',
+      emailFlag :  'Disabled'
     },
 
     {
       role  : 'Finance User',
       screenName  : 'Email',
       mappingStatus :  "Mapped",
-      status  : 'read',
-      emailFlag : 'disabled'
+      status  : 'Read',
+      emailFlag : 'Disabled'
     }
   ]
   dataSource = new MatTableDataSource<any>(this.roleList);

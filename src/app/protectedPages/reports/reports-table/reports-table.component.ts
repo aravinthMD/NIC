@@ -30,7 +30,7 @@ export class ReportsTableComponent implements OnInit,OnChanges {
 
   paidColumns: string[] = ['UserName','projectNumber','InvoiceNo','InvoiceAmount','InvoicePaid','InvoiceUnpaid']
 
-  smsColumns: string[] = ['smsMetrix','Credits','Date','Status']
+  smsColumns: string[] = ['smsMatrix','Credits','Date','Status']
   constructor(private ngxUiLoaderService : NgxUiLoaderService) {
    }
 

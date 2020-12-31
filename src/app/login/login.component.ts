@@ -96,7 +96,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/verifyotp'])
         }else {
           // this.toasterService.showError('Invalid Username','')
-          this.errroMsg = 'Invalid username'
+          // this.errroMsg = 'Invalid username'
+          this.toasterService.showError('Invalid User Name','')
         }
              
       })

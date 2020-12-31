@@ -1,8 +1,10 @@
-<div class="col-md-12 userForm shadow p-3 mb-5 bg-white rounded">
+<div class="col-md-10 main">
 
-    <h1 class="h3  text-gray-800 mb-2">Manage Roles</h1>
+  <mat-card class="defineRoles">
+    <app-account-header [title]="'Manage Roles'"></app-account-header>
 
-    <form class="pt-4" [formGroup]="rolesControl">
+
+    <form class="" [formGroup]="rolesControl">
         <!--FIRST ROW-->
 
         <div class="row pad-row">
@@ -26,7 +28,9 @@
         
         <!--Material Table-->
 
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <div class="mat-elevation-z8">
+
+        <table mat-table [dataSource]="dataSource">
 
           
             <ng-container matColumnDef="ScreenName">
@@ -60,11 +64,10 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
 
-          <mat-paginator [length]="100"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]">
-          </mat-paginator>
+          <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
 
+        </div>
         <div class="m-5"></div>
+   </mat-card>    
 
 </div>
