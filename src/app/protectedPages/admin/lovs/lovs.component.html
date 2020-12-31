@@ -50,7 +50,6 @@
         </div>
         <div class="row pad-row">
 
-
             <div class="col-2">
                 <div class="form-group">
                     <!-- <label for="Department">Department Key</label>
@@ -169,7 +168,7 @@
                     (click)="deleteField('poStatus')">Delete</button>
             </div> -->
 
-             <div class="col-2" style="margin-top:40px">
+             <div class="row col-2" style="margin-top:40px">
 
                     <button class="btn btn-primary" (click)="addField()">Add</button>
                 </div>
@@ -379,7 +378,8 @@
                 </div>
             </div>
             
-                <div class="col-2" style="margin-top:40px">
+
+                <div class="col-2 mt-10" style="margin-top:40px">
 
                     <button class="btn btn-primary" (click)="addField()">Add</button>
                 </div>
@@ -390,6 +390,8 @@
                     <button class="btn btn-primary">Delete</button>
 
                 </div>
+
+           
             <!-- <div class="col-1" style="margin-top:1.3vw;">
                 <button
                     [disabled]="(LovsControl.get('piReceivedInKey').value ==='') || (LovsControl.get('piReceivedInVal').value ==='') || btnShow "
