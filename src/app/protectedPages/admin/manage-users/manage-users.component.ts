@@ -2,7 +2,10 @@ import { Component, OnInit,AfterViewInit,ViewChild,Input } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
-import { ManageUserDialogComponent } from '../manage-user-dialog/manage-user-dialog.component'
+import { ManageUserDialogComponent } from '../manage-user-dialog/manage-user-dialog.component';
+import { LoginService} from "src/app/services/login.service";
+import { AdminService } from '@services/admin.service';
+import {ToasterService} from '@services/toaster.service';
 
 
 @Component({
@@ -16,46 +19,109 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
-  displayedColumns: string[] = ['S.NO', 'userId', 'UserName','EmployeeCode','Department','Role', 'CreatedOn','Action']; 
+  displayedColumns: string[] = ['userId', 'UserName','EmployeeCode','Department','Role', 'CreatedOn','Action']; 
 
   userList : any[] = [
-    {userId : 'RK',userName:'Rajesh Kumar',employeeCode:'NIC001234',role:'Admin',createdOn : '10-10-2019',department:'Admin User'},
-    {userId : 'JK',userName:'Jain Sharma',employeeCode:'NIC004567',role:'Operation',createdOn : '13-05-2020',department:'Operation User'},
-    {userId : 'MR',userName:'Mani Ramesh',employeeCode:'NIC007666',role:'Finance',createdOn : '12-6-2018',department:'Finance User'},
-    {userId : 'RP',userName:'Rajesh Patel',employeeCode:'NIC007655',role:'Operation',createdOn : '10-10-2019',department:'Operation User'},
-    {userId : 'TP',userName:'Tushar Pandey',employeeCode:'NIC004356',role:'Admin',createdOn : '10-10-2019',department:'Admin User'},
-    {userId : 'Giri',userName:'Giritharan',employeeCode:'NIC007888',role:'Finance',createdOn : '10-10-2019',department:'Finance User'},
-    {userId : 'Ajay',userName:'AjaySathya',employeeCode:'NIC005555',role:'Operation',createdOn : '10-10-2019',department:'Operation User'},
-    {userId : 'KC',userName:'Kalpana Chawla',employeeCode:'NIC003434',role:'Finance',createdOn : '10-10-2019',department:'Finance User'},
-    {userId : 'SM',userName:'Selvan Murugan',employeeCode:'NIC003332',role:'Admin',createdOn : '10-10-2019',department:'Admin User'},
-    {userId : 'Tamil',userName:'Tamil',employeeCode:'NIC004344',role:'Operation',createdOn : '10-10-2019',department:'Operation User'},
-    {userId : 'Ketan',userName:'Ketan',employeeCode:'NIC004322',role:'Finance',createdOn : '10-10-2019',department:'Finance User'},
-    {userId : 'Ridan',userName:'Ridan',employeeCode:'NIC004444',role:'Operation',createdOn : '10-10-2019',department:'Operation User'},
-    {userId : 'RA',userName:'Rizwan Azar',employeeCode:'NIC006666',role:'Operation',createdOn : '10-10-2019',department:'Operation User'},
-    {userId : 'Patel',userName:'Patel',employeeCode:'NIC004333',role:'Operation',createdOn : '10-10-2019',department:'Operation User'},
-    {userId : 'kumar',userName:'Kumar',employeeCode:'NIC002223',role:'Finance',createdOn : '10-10-2019',department:'Finance User'},
-    {userId : 'Ankit',userName:'Ankit',employeeCode:'NIC007654',role:'Admin',createdOn : '10-10-2019',department:'Admin User'},
-    {userId : 'RM',userName:'Radhe Muna',employeeCode:'NIC002221',role:'Admin',createdOn : '10-10-2019',department:'Admin User'},
-    {userId : 'GF',userName:'Gujjar Fazil',employeeCode:'NIC001221',role:'Finance',createdOn : '10-10-2019',department:'Finance User'},
-    {userId : 'Kini',userName:'Kini',employeeCode:'NIC002123',role:'Operation',createdOn : '10-10-2019',department:'Operation User'},
-    {userId : 'Rajesh',userName:'Rajesh',employeeCode:'NIC008675',role:'Finance',createdOn : '10-10-2019',department:'Finance User'},
-
+    {username : "Suchita",name : "Suchita",email : "suchita.patel@nic.com",mobile_no : "7689549827",role:"Admin",createdOn:"28/10/2020"},
+    {username : "Abhijeet",name : "Abhijeet",email : "abhijeet.parate@nic.com",mobile_no : "7709865489",role : "Sales",createdOn : "10/09/2020"},
+    {username : "KumaraV",name : "Kumara Velraj",email : "kumar.raja@nic.com",mobile_no : "9889546389",role : "Operation",createdOn : "14/08/2020"},
+    {username  :"Rajesh",name : "Rajesh",email : "rajesh.gaud@nic.com",mobile_no : "8754678956",role : "Finance",createdOn : "10/07/2020"},
+    {username : "GuruP",name : "Guru Prasad",email : "guru.prasad@nic.com",mobile_no : "8754895678",role : "Sales",createdOn  : "18/06/2020"},
+    {username : "RanjithK",name : "Ranjith Kumar",email : "rankth@nic.com",mobile_no : "8754893365",role : "Finance",createdOn : "10/06/2020"},
+    {username : "AnkitS",name : "Ankit Sharma",email : "ankit@nic.com",mobile_no : "8754890954",role : "Sales",createdOn : "10/05/2020"},
+    {username :  "RajeshP",name : "Rajesh Patel",email : "rajesh.prasanth@nic.com",mobile_no : "8645789065",role : "Admin",createdOn : "09/04/2020"},
+    {username  : "AajyG",name : "Ajay Gaikwad",email : "ajay.gonnade@nic.com",mobile_no : "8876490346",role : "Sales",createdOn:"07/03/2020"},
+    {username  : "Ram",name : "Ram Kumar",email : "ram.guru@nic.com",mobile_no : "9876348956",role : "Operation",createdOn : "04/02/2020"},
+    {username :  "Krishna",name : "Krishna",email  :"krishna.kumar@nic.com",mobile_no : "9845785438",role : "Operation",createdOn  :"16/01/2020"},
+    {username : "Reshmika",name : "Reshmika",email : "reshmi.vargese@nic.com",mobile_no : "9865789456",role : "Finance", createdOn : "02/01/2020"}
   ]
+  
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
-  constructor(private dialog: MatDialog) { }
+  showModal: boolean;
 
-  ngOnInit() {
+  deleteAccount: string;
+
+  deleteUserId: string;
+
+  constructor(private dialog: MatDialog,private loginService : LoginService,private adminService: AdminService,private toasterService: ToasterService) {
+
+   }
+
+  async ngOnInit() {
+    await this.fetchManageUsers();
   }
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
+  }
+
+  edit(element) {
+
+    console.log(element)
+
+    let objData = {}
+
+    // this.adminService.getParticularAdminUser(element.userId).subscribe((response)=> {
+
+    //   console.log('PU',response)
+
+    //   objData = response['ProcessVariables']['usersList'][0];
+
+      const dialogRef = this.dialog.open(ManageUserDialogComponent,{
+        data: element
+      });
+    // })
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.fetchManageUsers();
+    });
+
+
+   
+  }
+
+  fetchManageUsers(){
+    this.adminService.fetchAllAdminUser().subscribe((response) => {
+        this.dataSource = new MatTableDataSource<any>(response['ProcessVariables']['usersList']);
+        this.dataSource.paginator = this.paginator;
+    })
+  }
+
+  disable(element) {
+
+    this.deleteUserId = element.userId;
+    this.deleteAccount = element.name;
+    this.showModal = true;
 
   }
 
-  edit() {
-    const dialogRef = this.dialog.open(ManageUserDialogComponent);
+  delete() {
+
+    let id = this.deleteUserId
+
+    this.adminService.deleteAdminUser(id).subscribe((response)=> {
+
+      if(response['ProcessVariables']['response']['type'] == 'Success') {
+
+        this.showModal = false;
+        this.fetchManageUsers()
+
+        this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+      }
+    })
+
   }
+
+  onCancel() {
+
+    this.showModal = false;
+  }
+
+
+  
 
 }

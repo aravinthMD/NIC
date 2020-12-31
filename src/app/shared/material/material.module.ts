@@ -9,6 +9,11 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatRippleModule} from '@angular/material/core';
+import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 const materialComponents = [
   MatExpansionModule,
@@ -20,7 +25,11 @@ const materialComponents = [
   MatTableModule,
   MatPaginatorModule,
   MatDialogModule,
-  MatRippleModule
+  MatRippleModule,
+  MatCardModule,
+  MatDividerModule,
+  MatTooltipModule,
+  MatRadioModule
 ]
 
 @NgModule({

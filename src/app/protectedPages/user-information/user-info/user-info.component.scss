@@ -16,10 +16,10 @@
     margin-left: 8px;
   }
 
-  // .userForm{
-  //     overflow-x: hidden;
-  //     padding-top: 20px;
-  // }
+  .customer_details{
+      overflow-x: hidden;
+      padding-top: 10px;
+  }
 
   .userForm {
     overflow-x: hidden;
@@ -62,7 +62,6 @@ h2{
     line-height: 1.2;
 }
 button.btn.btn-primary {
-  float: right;
   background-color: #0e4d92 !important;
   border: 1px solid #0e4d92 !important;
   font-size: 13px;
@@ -125,3 +124,52 @@ mat-form-field{
   /* opacity: 1 !important; */
   border-color: #7cdcd2 !important;
 }
+
+.back-btn {
+  margin-left:2vw
+}
+
+.material-icons{
+  padding-right: 32px;
+}
+mat-expansion-panel{  
+   margin-top: 20px;
+   margin-bottom: 10px;
+  
+}
+.mat-expansion-panel-header {
+  line-height: 24px;
+  
+  background-color: #dfdfdf !important;
+  font-weight: 500 !important;
+}
+
+.mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
+  background-color: #dfdfdf !important;
+}
+
+.dis-block {
+  display: block;
+}
+.code{
+  padding-left:-1px !important;
+}
+.error-feedback{
+  font-size: 0.9vw;
+  font-family: zurich-bold;
+  letter-spacing: .5px;
+  color: red;
+  padding-top: 0.5vw;
+  line-height: 1.2vw;
+}
+
+.bottom-button {
+  margin-top: 41px;
+}
+
+
+mat-card {
+  width: 100% !important;
+}
+
+

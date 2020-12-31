@@ -60,37 +60,107 @@ tr:nth-child(even) {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.auto-mrg-top {
+    margin-top: 1vw;
+}
+
+.download-pad {
+    margin: 1vw 2vw;
+}
+
+.mrg-lft {
+    margin: 2vw;
+}
+
+ ::ng-deep .mat-select-value {
+    font-size: 15px !important;
+}
+
+ ::ng-deep .mat-option-text {
+    font-size: 15px !important;
+}
+
+ ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 10px !important;
+}
+
+mat-form-field {
+    margin-top: -0.4vw;
+}
+
+.mat-paginator {
+    display: block;
+    margin-bottom: 50px !important;
+}
+
+::ng-deep .mat-form-field-flex {
+    margin-top: -24px !important;
+}
+
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: .4375em 0 13px 0px !important;
   }
   
-  .example-full-width {
-    width: 100%;
+  th.mat-header-cell {
+    flex: 0 16% !important;
+    width: 16% !important;
+    line-height: 20px !important;
+    text-align: center;
+  }
+  
+  td.mat-cell {
+    line-height: 24px !important;
+    text-align: center;
+    flex: 0 16% !important;
+    width: 16% !important;
+    line-height: 20px !important;
   }
 
-  .auto-mrg-top {
-      margin-top: 1vw;
+  .mat-expansion-panel{
+      overflow: visible;
   }
 
-  .download-pad {
+
+  .mat-expansion-panel-header-title {
+    display: flex;
+    flex-grow: 1;
+    margin-right: 16px;
+    color: #f8f9fa;
     
-    margin: 1vw 2vw;
-  }
+}
 
-  .mrg-lft{
-      margin: 2vw;
-  }
+:host ::ng-deep .mat-expansion-indicator::after {
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    content: '';
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    vertical-align: middle;
+    color: #f8f9fa;
+}
 
-  ::ng-deep .mat-select-value {
-    font-size: 15px !important;
-  }
 
-  ::ng-deep .mat-option-text {
-    font-size: 15px !important;
-  }
+.mat-expansion-panel-header {
+    background-color: #0d4d92 !important;
+}
 
-  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-      padding: 10px !important;
-  }
+// :host ::ng-deep .mat-panel-description {
+//     color:white;
+//     margin-top:8px;
+//     margin-left:50px
+// }
 
-  mat-form-field{
-    margin-top: -0.4vw;
+.mat-expansion-panel-header-description {
+    flex-grow: 2;
+    color:white;
+    margin-top:8px;
+    margin-left:50px
 }

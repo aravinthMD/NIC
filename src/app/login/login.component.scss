@@ -1,6 +1,6 @@
 .login {
     font-size: 0.8rem;
-    border-radius: 1rem;
+    // border-radius: 1rem;
     padding: 1.5rem 1rem;
     margin-top: 155px;
     display: flex;
@@ -89,4 +89,19 @@ button.btn.btn-primary {
 
 a {
     padding-left: 78px;
+    color:#0e4d92 !important;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.mouse-pointer {
+    cursor: pointer;
+}
+
+.txt-center {
+    text-align: center;
+}
+
+a:hover { 
+   color:  #ffff !important;
 }

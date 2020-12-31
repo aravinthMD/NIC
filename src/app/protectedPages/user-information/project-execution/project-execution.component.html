@@ -1,0 +1,335 @@
+<div class="col-md-10 main">
+
+    <div class="purchase-entry">
+
+
+        <app-account-header [title]="'Project Execution'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+
+
+
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header matRipple>
+                    <mat-panel-title>
+                        <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Project Execution
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form (submit)="PEForm()" [formGroup]="PurchaseEntryForm">
+                    <!--FIRST ROW-->
+                    <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
+                  <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
+                  <button  class="btn btn-primary" type="submit">PDF Upload</button>
+                </div>  -->
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <!-- <label for="purchaseOrder">{{labels?.purchaseON}}</label> -->
+                                <app-custom-input formControlName="userName" [isRequired]="'User Name is Mandatory'" [labelName]="labels.userName" [maxLength]="labels?.validationData?.name?.maxLength" [type]="labels?.validationData?.name?.type" [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="piNumber" [isRequired]="'PI Number is Mandatory'" [labelName]="labels.proformaIN" [maxLength]="labels?.validationData?.proformaIN?.maxLength" [type]="labels?.validationData?.proformaIN?.type" [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName = "piDate"
+                        [isRequired] = "'Purchase Invoice Date is Mandatory'"
+                        [labelName] = "labels.invoiceDate"
+                        [maxLength] = "labels?.validationData?.invoiceDate.maxLength"
+                        [isDirty] = "isDirty">
+                        </app-custom-input>
+                    </div>
+                </div> -->
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="invoiceDate">Proforma Invoice Date</label>
+                                <!--  <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
+                      <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker1" formControlName="invoiceDate" (keyup)="detectDateKeyAction($event,'invoiceDate')" required>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+
+                                <div class="date-picker-error" *ngIf="
+                        isDirty &&
+                        PurchaseEntryForm.get('invoiceDate').errors?.required
+                      ">
+                                    Please Select Date
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="piAmount" [isRequired]="'Purchase Invoice Number is Mandatory'" [labelName]="labels.piAmount" [maxLength]="labels?.validationData?.piAmount.maxLength" [type]="labels?.validationData?.piAmount.type" [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="modeOfPayment">{{labels.modeOfPayment}}</label>
+                                <app-vf-custom-select formControlName="modeOfPayment" [values]="modeOfPaymentList" [isRequired]="'Please Select the Payment'" [isDirty]="isDirty"></app-vf-custom-select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="documentNo" [isRequired]="'Document Number is Mandatory'" [labelName]="labels.documentNo" [maxLength]="labels?.validationData?.documentNo.maxLength" [type]="labels?.validationData?.documentNo.type" [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="invoiceDate">Date of Transaction</label>
+                                <!--  <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
+                      <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker2" formControlName="transactionDate" (keyup)="detectDateKeyAction($event,'transactionDate')" required>
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+
+                                <div class="date-picker-error" *ngIf="
+                        isDirty &&
+                        PurchaseEntryForm.get('transactionDate').errors?.required
+                      ">
+                                    Please Select Date
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="bankName" [isRequired]="'Bank Name/Branch is Mandatory'" [labelName]="labels.bankName" [maxLength]="labels?.validationData?.bankName.maxLength" [type]="labels?.validationData?.bankName.type" [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="amountReceived" [isRequired]="'Amount Received is Required'" [labelName]="labels.amountReceived" [maxLength]="labels?.validationData?.amountReceived.maxLength" [type]="labels?.validationData?.amountReceived.type" [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="tds" [isRequired]="'TDS is Required'" [labelName]="labels?.tds" [maxLength]="labels?.validationData?.tds.maxLength" [type]="labels?.validationData?.tds.type" [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="NICSIProjectNo" [isRequired]="'NICSI Project Number is Required'" [labelName]="labels?.nicsiProjectNumber" [maxLength]="labels?.validationData?.nicsiProjectNumber.maxLength" [type]="labels?.validationData?.nicsiProjectNumber.type"
+                                    [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="modeOfPayment">PI Paid</label>
+                                <app-vf-custom-select formControlName="piPaid" [values]="piPaidValues" [isRequired]="'Please Select the PI Paid'" [isDirty]="isDirty"></app-vf-custom-select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isRequired]="'Remark is Mandatory'" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="poBillable">Upload Document</label>
+                                <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
+                                <small id="poBillableHelp" class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-3 pb-3 m-0">
+
+                        <div class="col-10">
+
+                            <button class="btn btn-primary" (click)="createProjectExecution()" style="float: left;" type="submit">Raise PO</button>
+
+                        </div>
+
+                        <div class="col-1" style="float: left;">
+                            <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+
+                        </div>
+
+                        <div class="col-1" style="float: left;">
+                            <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+
+                        </div>
+
+                    </div>
+                </form>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+        <mat-card>
+            <form [formGroup]="searchForm">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
+                            <mat-form-field class="example-form-field p-0 search-label">
+                                <mat-label>Search...</mat-label>
+                                <input matInput type="text" formControlName="searchData">
+                                <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                       <mat-icon>search</mat-icon>
+                     </button>
+                            </mat-form-field>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-3">
+                        <div class="form-group">
+
+
+                            <label for="dateFor">From Date</label>
+
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
+                                <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                                <mat-datepicker #picker6></mat-datepicker>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-3">
+                        <div class="form-group">
+
+
+                            <label for="dateFor">To Date</label>
+
+                            <mat-form-field>
+                                <input matInput [min]="searchForm.get('searchFrom').value" [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
+                                <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                                <mat-datepicker #picker7></mat-datepicker>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                    <div class="row m-0 col-3">
+                        <div class="col-md-3 form-group">
+
+                            <div class="row mt-4 pt-2">
+                                <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-3 form-group">
+
+                            <div class="row mt-4 pt-2">
+                                <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 form-group">
+
+                            <div class="row mt-4 pt-2">
+    
+                                <button (click) = "getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
+    
+    
+                            </div>
+    
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+            </form>
+        </mat-card>
+
+        <!-- <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button> -->
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class=" ">
+
+
+                <ng-container matColumnDef="ProjectNo">
+                    <th mat-header-cell *matHeaderCellDef> Project No </th>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.projectNumber}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="InvoiceNo">
+                    <th mat-header-cell *matHeaderCellDef>Proforma Invoice No </th>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.invoiceNumber}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="InvoiceDate">
+                    <th mat-header-cell *matHeaderCellDef> Proforma Invoice Date </th>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.invoiceDate}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Amount">
+                    <th mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.Amount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> <button (click)="OnEdit(element)" class="background-none">
+                        
+                        <i class="fa fa-eye mr-2" aria-hidden="true"></i>
+                        <i class="fa fa-pencil " aria-hidden="true"></i>
+                    
+                    </button> </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+
+            <!-- <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button> -->
+            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+            <div class="m-5"></div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

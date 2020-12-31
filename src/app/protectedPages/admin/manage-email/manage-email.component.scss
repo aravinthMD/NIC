@@ -1,0 +1,73 @@
+table {
+    width: 100%;
+  }
+
+  th {
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #0e4d92;
+    color: #fff;
+}
+
+button {
+    height: 30px;
+    border-radius: 5px;
+    color: #ffffff !important;
+    background-color: #0e4d92 !important;
+    border-style: none;
+    font-weight: 400;
+}
+
+th.mat-header-cell {
+    flex: 0 14% !important;
+    width: 14% !important;
+    line-height: 20px !important;
+    text-align: center;
+}
+
+.text-gray-800 {
+    color: #676767 !important;
+    font-weight: 400;
+    // #676767
+}
+
+td.mat-cell {
+    line-height: 24px !important;
+    text-align: center;
+    flex: 0 14% !important;
+    width: 14% !important;
+    line-height: 20px !important;
+    word-break: break-all;
+}
+
+
+.dis-block {
+        top: 20%;
+        display: block;
+        
+  }
+
+  ::ng-deep.mat-radio-button {
+    padding: 13px 24px 7px 13px;
+  }
+
+
+  span {
+    color: #0e4d92;
+    font-weight: 450;
+    line-height: 26px;
+}
+
+.button1 { 
+    padding-left: 122px;
+}
+
+.dialog-button{
+
+    font-size: 17px;
+}
+
+
+mat-card {
+    width: 100% !important;
+}

@@ -1,9 +1,20 @@
-<div class="col-md-10 main">
-      <mat-tab-group  mat-stretch-tabs style="width:100%;">
-        <mat-tab label="User Info" class="activeTab"><app-user-info [userObj] = "flag"></app-user-info></mat-tab>
-        <mat-tab label="Proforma Invoice"><app-process-details [userObj] = "flag"></app-process-details></mat-tab>
-        <mat-tab label="Purchase Order"><app-purchase-order [userObj] = "flag"></app-purchase-order></mat-tab>
-        <mat-tab label="Tax Invoice"><app-tax-invoice [userObj] = "flag"></app-tax-invoice></mat-tab>
+ <div class="col-md-10 main"> 
+      <mat-tab-group  mat-stretch-tabs style="width:100%;" (click)="detectDirty($event)">
+        <mat-tab label="Account Info" class="activeTab">
+          <app-user-info [userObj] = "flag"></app-user-info>
+        </mat-tab>
+        <mat-tab label="Proforma Invoice">
+          <app-process-details [userObj] = "flag"></app-process-details>
+        </mat-tab>
+        <mat-tab label = "Project Execution">
+          <app-project-execution></app-project-execution>
+        </mat-tab>
+        <mat-tab label="Purchase Order">
+          <app-purchase-order [userObj] = "flag"></app-purchase-order>
+        </mat-tab>
+        <mat-tab label="Tax Invoice">
+          <app-tax-invoice [userObj] = "flag"></app-tax-invoice>
+        </mat-tab>
       </mat-tab-group>
       <!-- <button>bulk upload</button> -->
-</div>
+ </div> 

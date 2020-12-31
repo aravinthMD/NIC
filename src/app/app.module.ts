@@ -30,11 +30,88 @@ import { EmailComponent } from './protectedPages/email/email.component'
 import { ManageUserDialogComponent } from './protectedPages/admin/manage-user-dialog/manage-user-dialog.component';
 import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatDatepickerModule} from '@angular/material';
+import {MatDatepickerModule,MatCardModule} from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import { DatePipe } from '@angular/common';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.service';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '@services/auth.interceptor.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
+import { BillingOwnerDetailsComponent } from './protectedPages/user-information/user-info/billing-owner-details/billing-owner-details.component';
+import { SmsCreditAllocationComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-allocation.component';
+import { AccountManageComponent } from './protectedPages/admin/account-manage/account-manage.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {TaxInvoiceDialogComponent} from './protectedPages/user-information/tax-invoice/tax-invoice-dialog/tax-invoice-dialog.component'
+import {MatIconModule} from '@angular/material/icon';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
+
+
+import {
+  NgxUiLoaderModule,
+  NgxUiLoaderConfig,
+  SPINNER,
+  POSITION,
+  PB_DIRECTION,
+  NgxUiLoaderService
+} from 'ngx-ui-loader';
+import { ProjectExecutionComponent } from './protectedPages/user-information/project-execution/project-execution.component';
+import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
+import { ProjectExcecutionDialogComponent } from './protectedPages/user-information/project-execution/project-excecution-dialog/project-excecution-dialog.component';
+import { PurchaseOrderDialogComponent } from './protectedPages/user-information/purchase-order/purchase-order-dialog/purchase-order-dialog.component';
+import { ReportsTableComponent } from './protectedPages/reports/reports-table/reports-table.component';
+import { SmsCreditDialogComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-dialog/sms-credit-dialog.component';
+import { ViewTechnicalAdminComponent } from './protectedPages/user-information/user-info/technical-admin-details/view-technical-admin/view-technical-admin.component';
+import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
+import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-roles/admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
+import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  // bgsColor: 'red',
+  // fgsColor: '#fa6745',
+  // bgsPosition: POSITION.bottomCenter,
+  // bgsSize: 100,
+  // bgsType: SPINNER.cubeGrid, // background spinner type
+  // fgsType: SPINNER.cubeGrid, // foreground spinner type
+  // pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
+  // pbThickness: 5, // progress bar thickness
+
+  "bgsColor": "#0e4d92",
+  "bgsOpacity": 0.5,
+  "bgsPosition": "bottom-right",
+  "bgsSize": 60,
+  "bgsType": "ball-spin-clockwise",
+  "blur": 5,
+  "delay": 0,
+  "fastFadeOut": true,
+  "fgsColor": "#0e4d92",
+  "fgsPosition": "center-center",
+  "fgsSize": 60,
+  "fgsType": "ball-spin-clockwise",
+  "gap": 24,
+  "logoPosition": "center-center",
+  "logoSize": 120,
+  "logoUrl": "",
+  "masterLoaderId": "master",
+  "overlayBorderRadius": "0",
+  "overlayColor": "rgba(40, 40, 40, 0.8)",
+  "pbColor": "#0e4d92",
+  "pbDirection": "ltr",
+  "pbThickness": 3,
+  "hasProgressBar": true,
+  "text": "",
+  "textColor": "#FFFFFF",
+  "textPosition": "center-center",
+  "maxTime": -1,
+  "minTime": 300
+};
+
 
 
 @NgModule({
@@ -61,9 +138,25 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     EmailComponent,
     ManageUserDialogComponent,
     LovsComponent,
+    ProjectExecutionComponent,
+    TechnicalAdminDetailsComponent,
+    BillingOwnerDetailsComponent,
+    SmsCreditAllocationComponent,
+    AccountManageComponent,
+    ManageGroupComponent,
+    ProjectExcecutionDialogComponent,
+    PurchaseOrderDialogComponent,
+    TaxInvoiceDialogComponent,
+    ReportsTableComponent,
+    SmsCreditDialogComponent,
+    ViewTechnicalAdminComponent,
+    DefineRolesComponent,
+    AdminRolesMappingDialogComponent,
+    ManageEmailComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -74,8 +167,18 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule, 
-    MatInputModule
-    
+    MatSlideToggleModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatChipsModule,
+    MatIconModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true,
+      positionClass:'toast-top-center'
+    }),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   exports: [
     MatAutocompleteModule,
@@ -83,8 +186,28 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     MatNativeDateModule,
     MatInputModule
   ],
-  providers: [DatePipe,{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
+    NgxUiLoaderService
+  ],
   bootstrap: [AppComponent],
-  entryComponents:[ProformaInvoiceDialogFormComponent, ManageUserDialogComponent]
+  entryComponents:[
+    ProformaInvoiceDialogFormComponent,
+    ManageUserDialogComponent,
+    ProjectExcecutionDialogComponent,
+    TaxInvoiceDialogComponent,
+    PurchaseOrderDialogComponent,
+    SmsCreditDialogComponent,
+    AdminRolesMappingDialogComponent
+  ]
 })
 export class AppModule { }
+

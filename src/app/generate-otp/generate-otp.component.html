@@ -1,25 +1,33 @@
 <div class="log">
     <div class="col-md-6 login shadow-lg p-4">
 
-        <form class="col-md-12">
+        <form class="col-md-12" [formGroup]="form">
             <div class="logo_header text-center mb-4">
                 <a class="logo_nic p-0"><img src="assets/images/nic_logo_login_1.png" class="nic_logo"></a>
             </div>
             <div class="col-md-10 mx-auto">
-                <div class="col-md-10 mx-auto">
-                    <label>Please enter your received OTP here !</label>
+                <div class="col-md-12 mx-auto label_content">
+                    <label>Please enter the OTP sent your registered Email ID and Mobile Number</label>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-2 mt-3">
                     <!-- <label for="exampleInputEmail1">Email address</label> -->
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Your OTP">
+                    <input type="text" class="form-control" id="otp" aria-describedby="otp" formControlName="otpValue" (input)="valuePatternCheck($event)" [maxlength]="4" placeholder="Enter Your OTP">
                     <!-- <small id="emailHelp" class="form-text text-muted">Enter Valid Email</small> -->
                 </div>
-                <div class="col-md-8 row p-0 mx-auto">
+
+                <div class="form-group" *ngIf="isError">
+
+                    <mat-error>
+                        {{errorMsg}}
+                    </mat-error>
+
+                </div>
+                <div class="col-md-12 row p-0 mx-auto">
                     <div class="col-md-6 d-flex justify-content-center mt-3 pr-0">
-                        <button type="submit" matRipple class="btn btn-primary" routerLink="/resetpassword">Verify</button>
+                        <button type="submit" matRipple class="btn btn-primary" [disabled]="isReachMaxCount" (click)="verifyOTP()">Verify</button>
                     </div>
                     <div class="col-md-6 d-flex justify-content-center mt-3">
-                        <button type="submit"  matRipple class="btn btn-primary">Resend OTP</button>
+                        <button type="submit" matRipple class="btn btn-primary" (click)="resendOTP()">Resend OTP</button>
                     </div>
                 </div>
             </div>

@@ -1,82 +1,134 @@
-<div class="col-md-12 userForm shadow p-3 mb-5 bg-white rounded">
+<div class="col-md-10 main">
 
+    <mat-card>
+        <app-account-header [title]="'LOVs'"></app-account-header>
 
-    <h1 class="h3  text-gray-800 mb-2">Manage LOVS</h1>
-
-    <form class="pt-4">
+    <form class="pt-4" [formGroup]="LovsControl">
         <!--FIRST ROW-->
 
         <div class="row pad-row">
-
-
-            <div class="col-2">
-                <div class="form-group">
-                    <label for="Department">Department Key</label>
-                    <input type="text" class="form-control" [disabled]="propertyFlag" id="departmentKey"
-                        aria-describedby="departmentHelp">
-                    <small id="departmentHelp" class="form-text text-muted"></small>
-                </div>
-
-            </div>
-
-            <div class="col-2">
-
-                <div class="form-group">
-                    <label for="Department">Department Value</label>
-                    <input type="text" class="form-control" [disabled]="propertyFlag" id="departmentValue"
-                        aria-describedby="departmentHelp">
-                    <small id="departmentHelp" class="form-text text-muted"></small>
-                </div>
-
-            </div>
-
-
-
-
-
             <div class="col-4">
                 <div class="form-group">
-                    <label for="department">Department</label>
-                    <select id="department" class="form-control" aria-describedby="emailHelp">
-                        <option [value]="list.value" *ngFor="let list of deparmentList">{{list.key}}</option>
-
-                    </select>
-                    <small id="emailHelp" class="form-text text-muted"></small>
+                    <label for="department">Choose LOVs</label>
+                    <app-vf-custom-select [values]="lovsList" 
+                    formControlName="LOVsList"
+                        (change)="onChangeLov($event)">
+                    </app-vf-custom-select>
+        </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="department">{{labelNameDrp?labelNameDrp:'Sub-LOVs'}}</label>
+                    <!-- <app-vf-custom-select [values]="lovsList1" 
+                    formControlName="labelNameDrp"
+                    (change)="onChangeDept($event,lovsList1)"
+                    >
+                    </app-vf-custom-select> -->
+                    <input type="text" style="border-color: #6c757d;"
+                    class="form-control"
+                    placeholder="select the {{labelNameDrp}}"
+                    [formControl]="LovsControl.controls['labelNameDrp']"
+                    formControlName = "labelNameDrp"
+                    [matAutocomplete]="auto" 
+                   >
+                   <mat-autocomplete #auto="matAutocomplete" [displayWith] = "displayFn.bind(this)">
+                    <mat-option *ngFor="let lovValue of filteredOptions" [value]="lovValue.key">
+                      {{lovValue.value}}
+                    </mat-option>
+                  </mat-autocomplete>
                 </div>
             </div>
-
-            <div class="col-2" style="margin-top:1.3vw">
-
-                <button class="btn btn-primary" (click)="saveOrEdit()">{{buttonName}}</button>
+             <div *ngIf="hideButton" class="col-1" style="margin-top:40px">
+             <button [disabled]="enablebtn" class="btn btn-primary" (click)="addField()">Add</button>
             </div>
-            <div class="col-1" style="margin-top:1.3vw">
-                <button class="btn btn-primary">Delete</button>
-
+            <div  style="margin-top:40px">
+                <button class="btn btn-primary" [disabled]="isDisabled || LovsControl.get('labelNameDrp').value==''" (click)="editField()">Modify</button>
             </div>
-
-
-
-
+            <div  class="col-1" style="margin-top:40px">
+                <button  class="btn btn-primary" [disabled]="isDisabled" (click)="deleteField()">Delete</button>
+            </div>
         </div>
-
         <div class="row pad-row">
 
+
             <div class="col-2">
                 <div class="form-group">
-                    <label for="poStatus">PO Status Key</label>
+                    <!-- <label for="Department">Department Key</label>
+                    <input type="text" class="form-control" [disabled]="propertyFlag" id="departmentKey"
+                        aria-describedby="departmentHelp">
+                    <small id="departmentHelp" class="form-text text-muted"></small> -->
+                    <app-custom-input 
+                    [labelName]="labelNameKey"
+                    formControlName="lovControlKey" 
+                    [isDisabledInp]="isDisabledVal">
+                    </app-custom-input>
+                </div>
+
+            </div>
+
+            <div class="col-2">
+
+                <div class="form-group">
+                    <!-- <label for="Department">Department Value</label>
+                    <input type="text" class="form-control" [disabled]="propertyFlag" id="departmentValue"
+                        aria-describedby="departmentHelp">
+                    <small id="departmentHelp" class="form-text text-muted"></small> -->
+                    <app-custom-input 
+                    [labelName]="labelNameVal"
+                    formControlName="lovControlVal"
+                    [isDisabledInp]="isDisabledValBtn">
+                    </app-custom-input>
+                </div>
+            </div>
+            <div *ngIf="!hideButton" class="col-1" style="margin-top:40px">
+                <button class="btn btn-primary" (click)="click(btnName)">{{btnName}}</button>
+               </div>
+            <div *ngIf="!hideButton" class="col-1" style="margin-top:40px">
+                <button class="btn btn-primary" (click)="close()">Close</button>
+               </div>
+
+        
+            <!-- <div *ngIf="hideButton" class="col-1" style="margin-top:1.3vw;">
+                <button [disabled]="LovsControl.get('lovControlKey').value=='0' || LovsControl.get('lovControlVal').value=='0'" class="btn btn-primary" (click)="addField()">Add</button>
+            </div>
+            <div  *ngIf="showButton" style="margin-top:1.3vw; padding-right:20px ;">
+                <button class="btn btn-primary" (click)="updateField()">Update</button>
+            </div>
+            <div *ngIf="hideButton" style="margin-top:1.3vw;">
+                <button class="btn btn-primary" (click)="editField()">Edit</button>
+            </div>
+            <div *ngIf="showButton" style="margin-top:1.3vw">
+                <button class="btn btn-primary" (click)="clearField()">Clear</button>
+            </div>
+            <div *ngIf="hideButton" class="col-1" style="margin-top:1.3vw">
+                <button  class="btn btn-primary" (click)="deleteField()">Delete</button>
+            </div> -->
+        
+    </div>
+        <div *ngIf="false" class="row pad-row">
+
+            <div class="col-2">
+                <div class="form-group">
+                    <!-- <label for="poStatus">PO Status Key</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="poStatusKey"
-                        aria-describedby="poStatus">
-                    <small id="poStatus" class="form-text text-muted"></small>
+       J;JBCTYQA1                    aria-describedby="poStatus">
+                    <small id="poStatus" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'Po Status is Mandatory'" [labelName]="labels.poStatusKey"
+                        >
+                    </app-custom-input>
                 </div>
 
             </div>
 
             <div class="col-2">
                 <div class="form-group">
-                    <label for="poStatus">PO Status Value</label>
+                    <!-- <label for="poStatus">PO Status Value</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="poStatusValue"
                         aria-describedby="poStatus">
-                    <small id="poStatus" class="form-text text-muted"></small>
+                    <small id="poStatus" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'Po Status Value is Mandatory'" [labelName]="labels.poStatusVal"
+                        >
+                    </app-custom-input>
                 </div>
 
             </div>
@@ -86,47 +138,74 @@
 
                 <div class="form-group">
                     <label for="poStatus">PO Status</label>
-                    <select name="poStatus" id="poStatus" class="form-control">
+                    <app-vf-custom-select [values]="poStatus" [isRequired]="'Please Select PO Status'">
+                    </app-vf-custom-select>
+                    <!-- <select name="poStatus" id="poStatus" class="form-control">
                         <option>Received</option>
                         <option>Approved</option>
                         <option>Pending</option>
                         <option>Rejected</option>
                         <option>On hold</option>
-                    </select>
+                    </select> -->
                 </div>
 
             </div>
-
-            <div class="col-2" style="margin-top:1.3vw">
-
-                <button class="btn btn-primary" (click)="saveOrEdit()">{{buttonName}}</button>
+            <!-- <div class="col-1" style="margin-top:1.3vw;">
+                <button
+                    [disabled]="(LovsControl.get('poStatusKey').value ==='') || (LovsControl.get('poStatusVal').value ==='') || btnShow "
+                    class="btn btn-primary" (click)="addField('poStatus')">Add</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw; padding-right:20px ;">
+                <button class="btn btn-primary" (click)="updateField('poStatus')">Update</button>
+            </div>
+            <div *ngIf="!btnShow" style="margin-top:1.3vw;">
+                <button [disabled]="btnHide" class="btn btn-primary" (click)="editField('poStatus')">Edit</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw">
+                <button class="btn btn-primary" (click)="clearField('poStatus')">Clear</button>
             </div>
             <div class="col-1" style="margin-top:1.3vw">
-                <button class="btn btn-primary">Delete</button>
+                <button [disabled]="btnHide || btnShow" class="btn btn-primary"
+                    (click)="deleteField('poStatus')">Delete</button>
+            </div> -->
 
-            </div>
+             <div class="col-2" style="margin-top:40px">
+
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
+                </div>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Modify</button>
+                </div>
+                <div class="col-1" style="margin-top:40px">
+                    <button class="btn btn-primary">Delete</button>
+                </div> 
 
         </div>
 
-
-        <div class="row pad-row">
+        <div *ngIf="false" class="row pad-row">
 
             <div class="col-2">
                 <div class="form-group">
-                    <label for="piStatus">PI Status Key</label>
+                    <!-- <label for="piStatus">PI Status Key</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="piStatusKey"
                         aria-describedby="poStatus">
-                    <small id="piStatus" class="form-text text-muted"></small>
+                    <small id="piStatus" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'PI Status Key is Mandatory'" [labelName]="labels.piStatusKey"
+                        >
+                    </app-custom-input>
                 </div>
 
             </div>
 
             <div class="col-2">
                 <div class="form-group">
-                    <label for="piStatus">PI Status Value</label>
+                    <!-- <label for="piStatus">PI Status Value</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="piStatusValue"
                         aria-describedby="piStatus">
-                    <small id="piStatus" class="form-text text-muted"></small>
+                    <small id="piStatus" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'PI Status Value is Mandatory'" [labelName]="labels.piStatusVal"
+                        >
+                    </app-custom-input>
                 </div>
 
             </div>
@@ -136,45 +215,74 @@
 
                 <div class="form-group">
                     <label for="piStatus">PI Status</label>
-                    <select name="piStatus" id="piStatus" class="form-control">
+                    <app-vf-custom-select [values]="piStatus" [isRequired]="'Please Select PI Status'">
+                    </app-vf-custom-select>
+                    <!-- <select name="piStatus" id="piStatus" class="form-control">
                         <option>Received</option>
                         <option>Approved</option>
                         <option>Pending</option>
                         <option>Rejected</option>
                         <option>On hold</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
-
-            <div class="col-2" style="margin-top:1.3vw">
-
-                <button class="btn btn-primary" (click)="saveOrEdit()">{{buttonName}}</button>
+            <!-- <div class="col-1" style="margin-top:1.3vw;">
+                <button
+                    [disabled]="(LovsControl.get('piStatusKey').value ==='') || (LovsControl.get('piStatusVal').value ==='') || btnShow "
+                    class="btn btn-primary" (click)="addField('piStatus')">Add</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw; padding-right:20px ;">
+                <button class="btn btn-primary" (click)="updateField('piStatus')">Update</button>
+            </div>
+            <div *ngIf="!btnShow" style="margin-top:1.3vw;">
+                <button [disabled]="btnHide" class="btn btn-primary" (click)="editField('piStatus')">Edit</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw">
+                <button class="btn btn-primary" (click)="clearField('piStatus')">Clear</button>
             </div>
             <div class="col-1" style="margin-top:1.3vw">
-                <button class="btn btn-primary">Delete</button>
+                <button [disabled]="btnHide || btnShow" class="btn btn-primary"
+                    (click)="deleteField('piStatus')">Delete</button>
+            </div> -->
+            <div class="col-2" style="margin-top:40px">
 
-            </div>
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
+                </div>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Modify</button>
+                </div>
+                <div class="col-1" style="margin-top:40px">
+                    <button class="btn btn-primary">Delete</button>
+
+                </div>
 
         </div>
 
-        <div class="row pad-row">
+        <div *ngIf="false" class="row pad-row">
 
             <div class="col-2">
                 <div class="form-group">
-                    <label for="PaymentStatus">Payment Status Key</label>
+                    <!-- <label for="PaymentStatus">Payment Status Key</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="PaymentStatusKey"
                         aria-describedby="PaymentStatus">
-                    <small id="PaymentStatus" class="form-text text-muted"></small>
+                    <small id="PaymentStatus" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'Payment Status Key is Mandatory'"
+                        [labelName]="labels.paymentStatusKey" >
+                    </app-custom-input>
                 </div>
 
             </div>
 
             <div class="col-2">
                 <div class="form-group">
-                    <label for="PaymentStatus">Payment Status Value</label>
+                    <!-- <label for="PaymentStatus">Payment Status Value</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="PaymentStatusValue"
                         aria-describedby="PaymentStatus">
-                    <small id="PaymentStatus" class="form-text text-muted"></small>
+                    <small id="PaymentStatus" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'Payment Status Value is Mandatory'"
+                        [labelName]="labels.paymentStatusVal" 
+                        >
+                    </app-custom-input>
                 </div>
 
             </div>
@@ -184,44 +292,73 @@
 
                 <div class="form-group">
                     <label for="PaymentStatus">Payment Status</label>
-                    <select name="PaymentStatus" id="PaymentStatus" class="form-control">
+                    <app-vf-custom-select [values]="paymentStatus" [isRequired]="'Please Select Payment Status'">
+                    </app-vf-custom-select>
+                    <!-- <select name="PaymentStatus" id="PaymentStatus" class="form-control">
                 
                         <option>Received</option>
                         <option>Pending</option>
                         <option>On hold</option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
 
-            <div class="col-2" style="margin-top:1.3vw">
+            <div class="col-2" style="margin-top:40px">
 
-                <button class="btn btn-primary" (click)="saveOrEdit()">{{buttonName}}</button>
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
+                </div>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Modify</button>
+                </div>
+                <div class="col-1" style="margin-top:40px">
+                    <button class="btn btn-primary">Delete</button>
+
+                </div>
+
+            <!-- <div class="col-1" style="margin-top:1.3vw;">
+                <button
+                    [disabled]="(LovsControl.get('paymentStatusKey').value ==='') || (LovsControl.get('paymentStatusVal').value ==='') || btnShow "
+                    class="btn btn-primary" (click)="addField('paymentStatus')">Add</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw; padding-right:20px ;">
+                <button class="btn btn-primary" (click)="updateField('paymentStatus')">Update</button>
+            </div>
+            <div *ngIf="!btnShow" style="margin-top:1.3vw;">
+                <button [disabled]="btnHide" class="btn btn-primary" (click)="editField('paymentStatus')">Edit</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw">
+                <button class="btn btn-primary" (click)="clearField('paymentStatus')">Clear</button>
             </div>
             <div class="col-1" style="margin-top:1.3vw">
-                <button class="btn btn-primary">Delete</button>
-
-            </div>
-
+                <button [disabled]="btnHide || btnShow" class="btn btn-primary"
+                    (click)="deleteField('paymentStatus')">Delete</button>
+            </div> -->
         </div>
 
-        <div class="row pad-row">
+        <div *ngIf="false" class="row pad-row">
 
             <div class="col-2">
                 <div class="form-group">
-                    <label for="piReceived">PI Received in Key</label>
+                    <!-- <label for="piReceived">PI Received in Key</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="piReceivedKey"
                         aria-describedby="piReceived">
-                    <small id="piReceived" class="form-text text-muted"></small>
+                    <small id="piReceived" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'PI Received in Key is Mandatory'"
+                        [labelName]="labels.piReceivedKey" >
+                    </app-custom-input>
                 </div>
 
             </div>
 
             <div class="col-2">
                 <div class="form-group">
-                    <label for="piReceived">PI Received in Value</label>
+                    <!-- <label for="piReceived">PI Received in Value</label>
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="piReceivedValue"
                         aria-describedby="piReceived">
-                    <small id="piReceived" class="form-text text-muted"></small>
+                    <small id="piReceived" class="form-text text-muted"></small> -->
+                    <app-custom-input [isRequired]="'PI Received in Value is Mandatory'"
+                        [labelName]="labels.piReceivedVal">
+                    </app-custom-input>
                 </div>
 
             </div>
@@ -230,28 +367,98 @@
             <div class="col-4">
 
                 <div class="form-group">
-                    <label for="piReceived">Payment Status</label>
-                    <select name="piReceived" id="piReceived" class="form-control">
+                    <label for="piReceived">PI Received</label>
+                    <app-vf-custom-select [values]="piReceivedIn" [isRequired]="'Please Select PI ReceivedIn'">
+                    </app-vf-custom-select>
+                    <!-- <select name="piReceived" id="piReceived" class="form-control">
                 
                         <option>Full</option>
                         <option>Partial</option>
                       
-                    </select>
+                    </select> -->
                 </div>
             </div>
+            
+                <div class="col-2" style="margin-top:40px">
 
-            <div class="col-2" style="margin-top:1.3vw">
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
+                </div>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Modify</button>
+                </div>
+                <div class="col-1" style="margin-top:40px">
+                    <button class="btn btn-primary">Delete</button>
 
-                <button class="btn btn-primary" (click)="saveOrEdit()">{{buttonName}}</button>
+                </div>
+            <!-- <div class="col-1" style="margin-top:1.3vw;">
+                <button
+                    [disabled]="(LovsControl.get('piReceivedInKey').value ==='') || (LovsControl.get('piReceivedInVal').value ==='') || btnShow "
+                    class="btn btn-primary" (click)="addField('piReceivedIn')">Add</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw; padding-right:20px ;">
+                <button class="btn btn-primary" (click)="updateField('piReceivedIn')">Update</button>
+            </div>
+            <div *ngIf="!btnShow" style="margin-top:1.3vw;">
+                <button [disabled]="btnHide" class="btn btn-primary" (click)="editField('piReceivedIn')">Edit</button>
+            </div>
+            <div *ngIf="btnShow" style="margin-top:1.3vw">
+                <button class="btn btn-primary" (click)="clearField('piReceivedIn')">Clear</button>
             </div>
             <div class="col-1" style="margin-top:1.3vw">
-                <button class="btn btn-primary">Delete</button>
-
-            </div>
+                <button [disabled]="btnHide || btnShow" class="btn btn-primary"
+                    (click)="deleteField('piReceivedIn')">Delete</button>
+            </div> -->
 
         </div>
 
     </form>
 
 
+    <div
+    class="modal"
+    id="ucicModel2"
+    [ngClass]="{ 'dis-block': showModal }"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header text-center">
+          <h4 class="modal-title"></h4>
+          <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <p id="">
+              Are you sure you want to delete  ?
+          </p>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer text-center">
+          <button
+            type="button"
+            class="btn btn-success"
+            data-dismiss="modal"
+            id="ucic_lead"
+            (click)="delete()"
+          >
+            <!-- (click)="checkNegativeList()" -->
+  
+            Yes
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            data-dismiss="modal"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</mat-card>
 </div>

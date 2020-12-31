@@ -1,7 +1,10 @@
 import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router'; 
+import { ActivatedRoute, ParamMap,Router } from '@angular/router'; 
+// import {} from '@services/'
+// import {} from '@service/'
 
+import {UtilService} from '../../services/util.service';
 
 @Component({
   selector: 'app-user-information',
@@ -16,7 +19,7 @@ export class UserInformationComponent implements OnInit {
   flag : boolean = false;
   
 
-  constructor(private activateRoute : ActivatedRoute,) {
+  constructor(private activateRoute : ActivatedRoute,private utilService: UtilService,private router: Router) {
 
    }
 
@@ -31,6 +34,10 @@ export class UserInformationComponent implements OnInit {
         console.log('User '+this.user)
       }
     })
+  }
+
+  detectDirty(event) {
+    console.log(event.target.innerText)
   }
 
 }

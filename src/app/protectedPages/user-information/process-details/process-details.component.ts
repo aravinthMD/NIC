@@ -5,6 +5,11 @@ import {MatDialog} from '@angular/material/dialog';
 import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form/proforma-invoice-dialog-form.component'
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
+import { DatePipe } from '@angular/common';
+import { Router,ActivatedRoute } from '@angular/router'
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
+import { InvoiceService } from '@services/invoice.service';
 
 @Component({
   selector: 'app-process-details',
@@ -17,38 +22,120 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','Action']
+  storeProjectNo: string;
+
+  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"reminder","Escalation"]
 
 
   userList : any[] =   [
-    {invoiceNo : 4355,projectNumber : 4534,piAmt:25000,remarks:'credited'},
-    {invoiceNo : 2313,projectNumber : 6756,piAmt:56000,remarks:'credited'},
-    {invoiceNo : 6574,projectNumber : 3453,piAmt:25000,remarks:'credited'}
+    {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: 4535,piAmt:25000,remarks:'credited'},
+    {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: 4535,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 6574,accountName : "Sharma",projectNumber: 4535,piAmt:25000,remarks:'credited'},
+    {invoiceNo : 7454,accountName : "Sharma",projectNumber: 4535,piAmt:70000,remarks:'credited'},
+    {invoiceNo : 5667,accountName : "Sharma",propropertyFlagjectNumber: 4535,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 5889,accountName : "Sharma",projectNumber: 4535,piAmt:23000,remarks:'credited'},
+    {invoiceNo : 4500,accountName : "Sharma",projectNumber: 4535,piAmt:45000,remarks:'credited'},
+    {invoiceNo : 7800,accountName : "Sharma",projectNumber: 4535,piAmt:34000,remarks:'credited'},
+    {invoiceNo : 7688,accountName : "Sharma",projectNumber: 4535,piAmt:24000,remarks:'credited'},
+    {invoiceNo : 5322,accountName : "Sharma",projectNumber: 4535,piAmt:67000,remarks:'credited'},
+    {invoiceNo : 1332,accountName : "Sharma",projectNumber: 4535,piAmt:54000,remarks:'credited'},
+    {invoiceNo : 5454,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'},
+    {invoiceNo : 6543,accountName : "Sharma",projectNumber: 4535,piAmt:10000,remarks:'credited'},
+    {invoiceNo : 3445,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'}
   ];
 
-  dataSource = new MatTableDataSource<any>(this.userList);
+  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
 
-  fromDate = new FormControl();
-  toDate = new FormControl();
-  invoiceDate = new FormControl();
-  poDate = new FormControl();
+  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
+
+  nicsiData = [
+    {
+      key: '1',
+      value: 'ukjena@nic.in'
+    },
+    {
+      key: '2',
+      value: 'vinod.agrawal@nic.in'
+    },
+    {
+      key: '3',
+      value: 'rk.raina@nic.in'
+    },
+    {
+      key: '4',
+      value: 'sshanker@nic.in'
+    },
+    {
+      key: '5',
+      value: 'Deepak.saxena@nic.in'
+    }
+  ]
+
+  dataSource = new MatTableDataSource<any>([]);
+
 
   labels: any;
 
-  form : FormGroup
+  form : FormGroup;
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder) { 
+  isDirty: boolean;
+
+  searchForm: FormGroup;
+  accountName: string;
+  status: string;
+
+  showEmailModal: boolean;
+
+  propertyFlag: boolean;
+
+  modalData: {
+    title: string;
+    request: any
+  }
+
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+  
+
+  constructor(
+        private dialog: MatDialog,
+        private labelsService: LabelsService,
+        private formBuilder : FormBuilder,
+        private datePipe: DatePipe,
+        private activatedRoute: ActivatedRoute,
+        private utilService: UtilService,
+        private toasterService: ToasterService,
+        private router: Router,
+        private invoiceService : InvoiceService,
+        ) { 
 
 
     this.form =this.formBuilder.group({
+      accountName: [null],
       invoiceNumber : [null],
-      projectNumber : [null],
-      poNumber: [null],
+      refNumber: [null],
+      piTraffic: [null],
+      piOwner: [null],
+      date: [null],
+      nicsiManager: [''],
       piAmount: [null],
-      emailAddress: [null],
-      remark: [null],
-      piBillable: [null]
+      startDate:[null],
+      endDate:[null],
+      piStatus: [''],
+      paymentStatus:[''],
+      remark:['']
 
+    })
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
     })
 
 
@@ -60,6 +147,37 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
       this.labels = values;
     })
 
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val['userId'] || '';
+      this.status = val['status'] || '';
+    })
+
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+      this.userList =   [
+        {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
+        {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: value.projectNo || 4535,piAmt:56000,remarks:'credited'},
+        {invoiceNo : 6574,accountName : "Sharma",projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
+        {invoiceNo : 7454,accountName : "Prakash",projectNumber:  value.projectNo ||4535,piAmt:70000,remarks:'credited'},
+        {invoiceNo : 5667,accountName : "Mani",projectNumber:  value.projectNo ||4535,piAmt:5000,remarks:'credited'},
+        {invoiceNo : 5663,accountName : "Raja",projectNumber:  value.projectNo ||4535,piAmt:56000,remarks:'credited'},
+        {invoiceNo : 5889,accountName : "Karthi",projectNumber:  value.projectNo ||4535,piAmt:23000,remarks:'credited'},
+        {invoiceNo : 4500,accountName : "Saran",projectNumber:  value.projectNo ||4535,piAmt:45000,remarks:'credited'},
+        {invoiceNo : 7800,accountName : "Rebaca",projectNumber:  value.projectNo ||4535,piAmt:34000,remarks:'credited'},
+        {invoiceNo : 7688,accountName : "John",projectNumber:  value.projectNo ||4535,piAmt:24000,remarks:'credited'},
+        {invoiceNo : 5322,accountName : "Selva",projectNumber:  value.projectNo ||4535,piAmt:67000,remarks:'credited'},
+        {invoiceNo : 1332,accountName : "Subash",projectNumber:  value.projectNo ||4535,piAmt:54000,remarks:'credited'},
+        {invoiceNo : 5454,accountName : "Vinoth",projectNumber:  value.projectNo ||4535,piAmt:20000,remarks:'credited'},
+        {invoiceNo : 6543,accountName : "Prem",projectNumber:  value.projectNo ||4535,piAmt:10000,remarks:'credited'},
+        {invoiceNo : 3445,accountName : "Juli",projectNumber:  value.projectNo ||4535,piAmt:20000,remarks:'credited'}
+      ];
+
+  });
+
+  this.fetchAllProformaInvoice();
+
   }
 
   ngAfterViewInit(){
@@ -67,17 +185,29 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   }
 
-  OnEdit(formObj : any){
+  OnEdit(Data : any){
     const dialogRef = this.dialog.open(ProformaInvoiceDialogFormComponent,{
-      data: {
-        value:'testing'
-      }
+      data: Data.piNumber
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
+      this.fetchAllProformaInvoice();
     });
 
+  }
+
+  fetchAllProformaInvoice(){
+      this.invoiceService.fetchAllProformaInvoice().subscribe((response) => {
+
+        const DataPIlist = response['ProcessVariables']['piDataList']
+
+          this.dataSource = new MatTableDataSource<any>(DataPIlist)
+      },(error) => {
+
+        this.toasterService.showError(error,'')
+
+      })
   }
 
   onSubmit() {
@@ -88,13 +218,205 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
     // this.dataSource.paginator = this.paginator;
 
+    if(this.form.invalid) {
+      this.isDirty = true;
+      return;
+    }
+
+
+    this.form.value['fromDate'] = this.datePipe.transform(this.form.value['fromDate'], 'dd/MM/yyyy')
+    this.form.value['toDate'] = this.datePipe.transform(this.form.value['toDate'], 'dd/MM/yyyy')
+    this.form.value['invoiceDate'] = this.datePipe.transform(this.form.value['invoiceDate'], 'dd/MM/yyyy')
+    this.form.value['poDate'] = this.datePipe.transform(this.form.value['poDate'], 'dd/MM/yyyy')
+
+    console.log(this.form.value)
+
+    this.toasterService.showSuccess('Data Saved Successfully','')
+
+      this.showDataSaveModal = true;
+      this.dataValue= {
+        title: 'Proforma Invoice Saved Successfully',
+        message: 'Are you sure you want to proceed project execution page?'
+      }
 
 
   }
 
-  formDateFunc(event) {
+  createProformaInvoice(){
+      const feildControls = this.form.controls;
+      const accountName  = feildControls.accountName.value;
+      const invoiceNumber = feildControls.invoiceNumber.value;
+      const refNumber  = feildControls.refNumber.value;
+      const piTraffic = feildControls.piTraffic.value;
+      const piOwner = feildControls.piOwner.value;
+      const date = feildControls.date.value;
+      const nicsiManager = feildControls.nicsiManager.value;
+      const piAmount = feildControls.piAmount.value;
+      const startDate = feildControls.startDate.value;
+      const endDate = feildControls.endDate.value;
+      const piStatus = +feildControls.piStatus.value;
+      const paymentStatus = +feildControls.paymentStatus.value;
+      const remark = feildControls.remark.value;
+
+
+      const formattedDate = this.datePipe.transform(date,'dd/MM/yyyy')
+      const formattedStartDate = this.datePipe.transform(startDate,'dd/MM/yyyy')
+      const formattedEndDate = this.datePipe.transform(endDate,'dd/MM/yyyy')
+
+
+      const Data = {
+        accountName,
+        invoiceNumber,
+        refNumber,
+        piTraffic,
+        piOwner,
+        date : formattedDate,     
+        nicsiManager,
+        piAmount,
+        startDate : formattedStartDate,
+        endDate : formattedEndDate,
+        piStatus,
+        paymentStatus,
+        remark,
+        uploadDocument : 'yes'
+      }
+
+      this.invoiceService.createProformaInvoice(Data).subscribe((response) => {
+
+          console.log(response)
+          if(response['ProcessVariables']){
+            this.toasterService.showSuccess('proforma Invoice Updated SucessFully','')
+            this.form.reset();
+            this.fetchAllProformaInvoice();
+          }
+
+      },
+      (error) => {
+          this.toasterService.showError(error,'')
+      })
+          
+  }
+
+  saveYes()
+  {
+ 
+   this.showDataSaveModal = false;
+ 
+   this.next()
+ 
+ 
+  }
+ 
+  saveCancel() {
+ 
+   this.showDataSaveModal = false;
+  
+  }
+
+  onSearch() {
+
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
+  }
+
+
+
+  sendReminder(element) {
+    this.showEmailModal = true;
+
+    this.modalData =  {
+      title: 'Send Reminder Email',
+      request: {
+        from: 'akshaya@appiyo.com',
+        to: 'arul.auth@nic.in',
+        subject: `Test Email: ${element.invoiceNo}`
+      }
+    }
+  }
+
+  sendEscalation(element) {
+    this.showEmailModal = true;
+
+    this.modalData =  {
+      title: 'Send Escalation Email',
+      request: {
+        from: 'akshaya@appiyo.com',
+        to: 'escalation@nic.in',
+        subject: `Test Email: [##201##]_PI REF: ${element.invoiceNo}`
+      }
+    }
+
+  }
+
+  onOkay() {
+    this.showEmailModal = false;
+  }
+
+  onCancel() {
+    this.showEmailModal = false;
+  }
+
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.userList,'ProformaInvoice');
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'date') {
+
+      this.form.patchValue({
+        date: ''
+      })
+      this.toasterService.showError('Please click the date icon to select date','');
+    }else if(type == 'startDate') {
+
+      this.form.patchValue({
+        startDate: ''
+      })
+      this.toasterService.showError('Please click the startDate icon to select date','');
+    }else if(type == 'endDate') {
+
+      this.form.patchValue({
+        endDate: ''
+      })
+      this.toasterService.showError('Please click the endDate icon to select date','');
+    }else if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
     
   }
 
+  next() {
 
+    this.utilService.setCurrentUrl('users/projectExecution')
+
+    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
+
+  }
+
+  back() {
+
+    this.utilService.setCurrentUrl('users/smsCredit')
+
+    this.router.navigate([`/users/smsCredit/${this.storeProjectNo}`])
+
+  }
 }

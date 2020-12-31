@@ -13,9 +13,9 @@
                     <mat-panel-description>
                         {{filterTabButtonName}}
                         <!-- <mat-icon>filter_alt</mat-icon> -->
-                      </mat-panel-description>
+                    </mat-panel-description>
                 </mat-expansion-panel-header>
-                <form>
+                <form [formGroup]="form">
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                 <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
               </div>  -->
@@ -24,39 +24,46 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Reports</label>
-                                <select class="form-control" (change)="onSelect($event)">
+                                <!-- <select class="form-control" (change)="onSelect($event)">
                                 <option  value = '0' disabled>--select--</option>
                                 <option value="1">Proforma Invoice Raised</option>
                                 <option value="2">Purchase Order Raised</option>
                                 <option value="3">Invoice Raised</option>
                                 <option value="4">Payment Status</option>
                                 <option value="5">All</option>
-                              </select>
+                              </select> -->
+
+                                <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Report'"></app-vf-custom-select>
                             </div>
                         </div>
 
-                        <div class="col-4">
-                            <div class="form-group">
+                        <div class="col-4" *ngIf="reportKey <= 4 || reportKey == 10">
+                            <div class="form-group" optionValue>
                                 <label for="mobile">Status</label>
-                                <select class="form-control">
+                                <!-- <select class="form-control">
                                 <option value = '0' disabled>--select--</option>
                                 <option *ngFor="let val of optionValue">
                                     {{val.key}}
                                 </option>
                                 
-                              </select>
+                              </select> -->
+
+                                <app-vf-custom-select formControlName="status" [values]="optionValue" ></app-vf-custom-select>
+
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Report Filter</label>
-                                <select class="form-control" (change)="onRepFilter($event)">
+                                <!-- <select class="form-control" (change)="onRepFilter($event)">
                                 <option  value = '0' disabled>--select--</option>
                                 <option value="1">User Id</option>
                                 <option value="2">Department</option>
-                                <option value="3">Status</option>
-                              </select>
+                                <option value="3">Status</option> -->
+                                <!-- </select> -->
+                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter"></app-vf-custom-select>
+
                             </div>
                         </div>
 
@@ -64,35 +71,99 @@
                             <div class="form-group">
 
                                 <label for="mobile">State</label>
-                                <select class="form-control">
+                                <!-- <select class="form-control">
                                 <option value = '0' disabled>--select--</option>
                                 <option *ngFor="let val of states">
                                     {{val.key}}
                                 </option>
                                 
-                              </select>
+                              </select> -->
+
+                                <app-vf-custom-select formControlName="state" [values]="states" [isRequired]="'Please Select State'"></app-vf-custom-select>
 
 
                             </div>
                         </div>
 
-                        <div class="col-4">
-
-                            <mat-form-field class="example-full-width auto-mrg-top">
-                                <input type="text"
-                                       [placeholder]="placeholderData"
-                                       aria-label="Number"
-                                       matInput
-                                       [formControl]="myControl"
-                                       [matAutocomplete]="auto">
+                        <!-- <div class="col-4">
+                            <label for="dateFor" class="" style="visibility:hidden;margin-bottom: 0px;">From Date</label>
+                            <mat-form-field class="example-full-width p-0 mt-2" style="margin-top: 12px !important;">
+                                <input type="text" [placeholder]="placeholderData" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                    {{option}}
-                                  </mat-option>
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
                                 </mat-autocomplete>
-                              </mat-form-field>
+                            </mat-form-field>
 
+                        </div> -->
+
+
+                        <div class="col-4" *ngIf = "accountFilterFlag">
+                            <label for="mobile">Account Name</label>
+                            <div class="form-group">
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Choose Account'"
+                            formControlName ="accountFilter"
+                            [data]="options"
+                            [settings]="dropdownSettings"
+                            (onSelectAll)="onSelectAll('1')"
+                            (onDeSelect) = "onItemDeSelect('1')"
+                            (onDeSelectAll) = "onItemDeSelect('1')"
+                            >
+                            </ng-multiselect-dropdown>
                         </div>
+                        </div>
+
+                        <div class="col-4" *ngIf = "projectNoFilterFlag">
+                            <label for="mobile">Project No</label>
+                            <div class="form-group">
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Choose Project No'"
+                            formControlName ="projectNoFilter"
+                            [data]="projectNoDropDownList"
+                            [settings]="dropdownSettings"
+                            (onSelectAll)="onSelectAll('2')"
+                            (onDeSelect) = "onItemDeSelect('2')"
+                            (onDeSelectAll) = "onItemDeSelect('2')"
+                            >
+                            </ng-multiselect-dropdown>
+                        </div>
+                            </div>
+
+
+                        <div class="col-4" *ngIf = "departMentFilterFlag">
+                            <label for="">Department</label>
+                            <div class="form-group">
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Choose Department'"
+                                formControlName ="departMentFilter"
+                                [data]="departMentDropDownList"
+                                [settings]="dropdownSettings"
+                                (onSelectAll)="onSelectAll('3')"
+                                (onDeSelect) = "onItemDeSelect('3')"
+                                (onDeSelectAll) = "onItemDeSelect('3')"
+                                >
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-4" *ngIf = "stateFilterFlag">
+                            <label for="">State</label>
+                            <div class="form-group">
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Choose State'"
+                                formControlName ="stateFilter"
+                                [data]="stateDropDownList"
+                                [settings]="dropdownSettings"
+                                (onSelectAll)="onSelectAll()"
+                                (onDeSelect) = "onItemDeSelect('4')"
+                                (onDeSelectAll) = "onItemDeSelect('4')"
+                                >
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+
 
                         <div class="col-4">
                             <div class="form-group">
@@ -101,10 +172,10 @@
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" [formControl]="fromDate">
+                                    <input matInput [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'fromDate')" formControlName="fromDate" [max]="form.get('toDate').value">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
-                                  </mat-form-field>
+                                </mat-form-field>
 
                             </div>
                         </div>
@@ -114,13 +185,21 @@
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
                                 <mat-form-field>
-                                    <input matInput [matDatepicker]="picker2" (dateInput)="formDateFunc($event.value)" [formControl]="toDate">
+                                    <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="form.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
-                                  </mat-form-field>
+                                </mat-form-field>
 
                             </div>
                         </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="">User Status</label>
+                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the Status'"></app-vf-custom-select>
+                            </div>
+                        </div>
+
                         <!-- <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Profoma Report</label>
@@ -168,71 +247,21 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary mr-3" (click) = "OnFilter()" type="submit">Filter</button>
-                        <button class="btn btn-primary" (click) = "filterTabButtonName = ''" type="submit">Clear</button>
-                       
-                         <!-- <button class="btn btn-primary download mrg-lft" type="submit">Download</button> -->
-                    
+                        <button  class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Filter</button>
+                        <button class="btn btn-primary" (click)="filterTabButtonName = ''" type="submit">Clear</button>
+
+
+                        <!-- <button class="btn btn-primary download mrg-lft" type="submit">Download</button> -->
+
 
                     </div>
                 </form>
 
             </mat-expansion-panel>
         </mat-accordion>
+        <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         <!--Material Table-->
-
-        <div class="mat-elevation-z8">
-
-            <div class="row pt-3 pb-3 pr-3 pl-3 float-right m-0">
-                <!-- <button class="btn btn-primary download mrg-lft" type="submit">Download</button> -->
-             </div> 
-           
-            <table mat-table [dataSource]="dataSource">
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="UserID">
-                    <th mat-header-cell *matHeaderCellDef> User ID </th>
-                    <td mat-cell *matCellDef="let element"> <a [routerLink]="['/users/userInfo',{id:element.id}]">{{element.userId}}</a> </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="Department">
-                    <th mat-header-cell *matHeaderCellDef> Department </th>
-                    <td mat-cell *matCellDef="let element"> {{element.department}} </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="state">
-                    <th mat-header-cell *matHeaderCellDef> State </th>
-                    <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-                </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="piNumber">
-                    <th mat-header-cell *matHeaderCellDef> PI Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.piNumber}} </td>
-                </ng-container>
-
-
-                <!--Invoice raised-->
-                <ng-container matColumnDef="piDate">
-                    <th mat-header-cell *matHeaderCellDef> PI Date </th>
-                    <td mat-cell *matCellDef="let element"> {{element.piDate}} </td>
-                </ng-container>
-
-                <!-- <ng-container matColumnDef="download">
-                    <th mat-header-cell *matHeaderCellDef> Download </th>
-                   
-                </ng-container> -->
-
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
-            </table>
-
-            <button class="btn btn-primary download download-pad" type="submit">Download</button>
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-        </div>
+        <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
 
     </div>
     <!--Reports Tag close-->

@@ -1,0 +1,43 @@
+<mat-card>
+<div class="row m-0">
+    <div class="col-md-6 p-0">
+        <h1 class="h4 text-gray-100 title" matRipple>{{title || ''}}
+           
+            <button *ngIf="user == 'smsCredit'" mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addSMSCredit()">
+                <mat-icon>add</mat-icon>
+            </button>
+            
+        </h1>
+        
+    </div>
+
+
+    <div class="col-md-6 d-flex justify-content-end mt-2 account-info"
+        *ngIf="user || user == 'invoice'">
+       <!-- <a (click) = "openAuditTrailDialog()"> <span  data-toggle="tooltip" title="Audit trail for {{'arul.auth'}}" class="material-icons mr-3">
+            history
+            </span>
+        </a> -->
+        <div (click)="openAuditTrailDialog()">
+            <!-- <button class="mat-button" matTooltip="Audit Trail for {{'arul.auth'}}" aria-label="Example icon button with a home icon" matTooltipPosition="above" mat-icon-button (click)="openAuditTrailDialog()"><mat-icon  color="accent" class="icons">history</mat-icon></button> -->
+
+            <span title="Audit trail" class="material-icons" style="margin-top: -5px;
+            margin-right: 5px;
+            cursor: pointer;
+            color: white;">
+                history
+                </span>
+        </div>
+
+        <span class="mr-4">
+            <span class="label-color">Account Name :&nbsp; </span>
+            <span>{{ accountName || 'arul.auth'}}</span></span>
+
+        <span>
+
+            <span class="label-color"> Status :&nbsp; </span>
+            <span>{{ status || 'Active'}}</span>
+        </span>
+    </div>
+</div>
+</mat-card>

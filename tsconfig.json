@@ -13,6 +13,10 @@
     "target": "es2015",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@services/*": ["src/app/services/*"]
+    },
     "typeRoots": [
       "node_modules/@types",
       "../src/typings.d.ts"
