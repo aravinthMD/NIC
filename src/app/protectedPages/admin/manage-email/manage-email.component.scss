@@ -16,7 +16,15 @@ button {
     background-color: #0e4d92 !important;
     border-style: none;
     font-weight: 400;
+    font-size: 14px;
+    padding: 6px;
 }
+
+// button:hover { 
+//     border-style: solid;
+//     border-color: #fff !important;
+//     padding: 7px !important;
+// }
 
 th.mat-header-cell {
     flex: 0 14% !important;

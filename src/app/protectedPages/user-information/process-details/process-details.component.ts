@@ -24,7 +24,7 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   storeProjectNo: string;
 
-  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"reminder","Escalation"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt',"reminder","Escalation","Action"]
 
 
   userList : any[] =   [
