@@ -1,18 +1,21 @@
-<mat-card>
+<div class="accountHeader">
 <div class="row m-0">
-    <div class="col-md-6 p-0">
-        <h1 class="h4 text-gray-100 title" matRipple>{{title || ''}}
-           
+    <div class="col-md-6 p-0 pt-1 pb-1">
+        <!-- <h1 class="h4 text-gray-100 title" matRipple>{{title || ''}}
+            
+        -->
+        
+            <div>{{title || ''}}</div>
             <button *ngIf="user == 'smsCredit'" mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addSMSCredit()">
                 <mat-icon>add</mat-icon>
             </button>
             
-        </h1>
+        <!-- </h1> -->
         
     </div>
 
 
-    <div class="col-md-6 d-flex justify-content-end mt-2 account-info"
+    <div class="col-md-6 d-flex justify-content-end mt-0 pt-0 account-info"
         *ngIf="user || user == 'invoice'">
        <!-- <a (click) = "openAuditTrailDialog()"> <span  data-toggle="tooltip" title="Audit trail for {{'arul.auth'}}" class="material-icons mr-3">
             history
@@ -40,4 +43,4 @@
         </span>
     </div>
 </div>
-</mat-card>
+</div>

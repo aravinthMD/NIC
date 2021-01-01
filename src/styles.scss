@@ -66,16 +66,16 @@ body {
 }
 
 .main {
-    margin-top: 1vw;
+    margin-top: 0vw;
     margin-left: 225px;
     font-size: 20px;
     /* Increased text to enable scrolling */
     padding: 10px;
     display: flex;
-    padding-right: 2.5rem;
-    padding-left: 2.5rem;
+    padding-right: 1.0rem;
+    padding-left: 1.0rem;
     position: absolute;
-    top: 52px;
+    top: 49px;
     z-index: 0;
     background: #eff6fd !important;
     margin-bottom: 50px;
@@ -280,8 +280,37 @@ label {
     background: #ffffffb3;
 }
 
+
+.mat-calendar-body-selected {
+    background-color: #0e4d92;
+    color: #fff;
+}
+
+
+tr {
+    td {
+        vertical-align: middle;
+        font-size: 17px !important;
+        color: #0e4d92de !important;
+        font-weight: 500 !important;
+        a {
+            cursor: pointer;
+            // font-size: 14px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+    th {
+        vertical-align: middle;
+        font-size: 17px !important;
+        font-weight: 500 !important;
+    }
+    height: 65px;
+}
+
+
 .mat-row:hover > .mat-cell {
     
     background-color:#e2d9d9 ;
-  
-  }
+}

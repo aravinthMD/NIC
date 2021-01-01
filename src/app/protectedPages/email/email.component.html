@@ -16,7 +16,13 @@
     <mat-card>
 
 
-        <div class="row m-0">
+        <div class="dashBoard">
+            <div>Compose<i class="fa fa-envelope pl-2" aria-hidden="true"></i></div>
+        </div> 
+
+
+
+        <!-- <div class="row m-0">
             <div class="col-md-8 p-0">
                 <h1 class="h4 text-gray-100 title nic-bg" matRipple><span class="panel-title">Compose E-Mail</span></h1>
             </div>
@@ -25,7 +31,7 @@
                 <button type="button" (click)="home()" matRipple class=" btn btn-primary">Home</button>
             </div>
 
-        </div>
+        </div> -->
                 <form [formGroup]="emailform">
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                 <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
@@ -128,7 +134,7 @@
                                     </mat-autocomplete>
                                 </mat-form-field>
                             </div>
-                            <span class="pl-3 pt-2" style="font-size: 14px;margin-top: 6px;">(Asia/Calcutta)</span>
+                            <div class="pl-2 pt-2" style="font-size: 14px;margin-top: 6px;"><i class="fa fa-clock-o fa-lg pr-2" aria-hidden="true"></i>(Asia/Calcutta)</div>
                         </div>
 
                         <div *ngIf="showinput" class="row col-8 ml-1">
@@ -195,7 +201,8 @@
 
                                     <label for="">Compose</label>
                             
-                                    <button type="submit" matRipple class=" btn btn-primary">Send</button>
+                                    <button type="submit" matRipple class=" btn btn-primary">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
+                                    <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
 
                                 </div>
                               

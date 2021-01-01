@@ -3,7 +3,12 @@
 
     <div class="col-md-12 reports p-0">
         <!--Reports Tag Start-->
-        <h1 class="h3  text-gray-800 mb-2">Reports</h1>
+        <!-- <h1 class="h3  text-gray-800 mb-2">Reports</h1> -->
+
+        <div class="dashBoard mt-2">
+            <div>Reports</div>
+        </div> 
+
         <mat-accordion>
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple>
@@ -259,9 +264,10 @@
 
             </mat-expansion-panel>
         </mat-accordion>
-        <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         <!--Material Table-->
-        <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
+        <app-reports-table [dataList] = "dataList" [id] = "id">
+            <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
+        </app-reports-table>
 
     </div>
     <!--Reports Tag close-->

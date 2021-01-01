@@ -1,5 +1,5 @@
 <div class="col-md-10 main"> 
-    <mat-card>
+    <mat-card class="pt-2">
 <div class="technical_admin">
     <!-- <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Technical Admin Details</h1> -->
 
@@ -294,8 +294,17 @@
            <button mat-raised-button (click)="back()" class="float-right" matRipple style="background-color:#0e4d92;color: #fff;" (click)="next()">Next</button>
         </div> -->
 
-        <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header>
+        <!-- <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header> -->
+
+        <div class="dashBoard" *ngIf = "user">
+            <div>
+                Billing Admin Details
+            </div>
+        </div>
+
         <app-view-info [userDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
+
+
 
 
         <div class="row pt-3 pb-3" *ngIf="user">
