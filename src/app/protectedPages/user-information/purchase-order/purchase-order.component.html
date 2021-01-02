@@ -21,7 +21,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="userName" [isRequired]="'User Name is Mandatory'" [labelName]="labels.userName" [maxLength]="labels?.validationData?.userName?.maxLength" [type]="labels?.validationData?.userName?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="userName" 
+                                  [isRequired]="'User Name is Mandatory'" 
+                                  [labelName]="labels.userName" 
+                                  placeHolder =  "Enter the User Name"
+                                  [maxLength]="labels?.validationData?.userName?.maxLength" 
+                                  [type]="labels?.validationData?.userName?.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -29,7 +35,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piNumber" [isRequired]="'Proforma Invoice Number is Mandatory'" [labelName]="labels.piNumber" [maxLength]="labels?.validationData?.piNumber?.maxLength" [type]="labels?.validationData?.piNumber?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piNumber" 
+                                    [isRequired]="'Proforma Invoice Number is Mandatory'" 
+                                    [labelName]="labels.piNumber" 
+                                    placeHolder = "Enter the Proforma Invoice Number"
+                                    [maxLength]="labels?.validationData?.piNumber?.maxLength" 
+                                    [type]="labels?.validationData?.piNumber?.type" 
+                                    [isDirty]="isDirty">
                                 </app-custom-input>
                                 
 
@@ -39,7 +51,13 @@
                             <div class="form-group">
 
 
-                                <app-custom-input formControlName="poNumber" [isRequired]="'Purchase Order Number is Mandatory'" [labelName]="labels.poNumber" [maxLength]="labels?.validationData?.poNumber?.maxLength" [type]="labels?.validationData?.poNumber?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="poNumber" 
+                                   [isRequired]="'Purchase Order Number is Mandatory'" 
+                                   [labelName]="labels.poNumber"
+                                   placeHolder =  "Enter the Proforma Invoice Number" 
+                                   [maxLength]="labels?.validationData?.poNumber?.maxLength" 
+                                   [type]="labels?.validationData?.poNumber?.type" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -64,7 +82,12 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="projectName" [isRequired]="'Project Name is Mandatory'" [labelName]="labels.projectName" [maxLength]="labels?.validationData?.projectName?.maxLength" [isDirty]="isDirty">
+                                <app-custom-input formControlName="projectName" 
+                                   [isRequired]="'Project Name is Mandatory'" 
+                                   [labelName]="labels.projectName" 
+                                   placeHolder =  "Enter the Project Name"
+                                   [maxLength]="labels?.validationData?.projectName?.maxLength" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -93,7 +116,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="withoutTax" [isRequired]="'Without Tax is Mandatory'" [labelName]="labels.withoutTax" [maxLength]="labels?.validationData?.withoutTax?.maxLength" [type]="labels?.validationData?.withoutTax?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="withoutTax" 
+                                   [isRequired]="'Without Tax is Mandatory'" 
+                                   [labelName]="labels.withoutTax" 
+                                   placeHolder =  "Enter the Without Tax Amount"
+                                   [maxLength]="labels?.validationData?.withoutTax?.maxLength" 
+                                   [type]="labels?.validationData?.withoutTax?.type" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -103,7 +132,11 @@
                             <div class="form-group">
 
                                 <label for="poStatus">{{labels.poStatus}}</label>
-                                <app-vf-custom-select formControlName="poStatus" [values]="poStatus" [isRequired]="'Please Select PO Status'" [isDirty]="isDirty">
+                                <app-vf-custom-select formControlName="poStatus" 
+                                   [values]="poStatus" 
+                                   placeHolder =  "Enter the PO Status"
+                                   [isRequired]="'Please Select PO Status'" 
+                                   [isDirty]="isDirty">
                                 </app-vf-custom-select>
 
                             </div>
@@ -151,8 +184,15 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="userEmail" [labelName]="labels.userEmail" [id]="'email'" [isRequired]="'User Email is Mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag"
-                                    [isDirty]="isDirty">
+                                <app-custom-input formControlName="userEmail" 
+                                   [labelName]="labels.userEmail" 
+                                   placeHolder =  "Enter the User Email"
+                                   [id]="'email'" 
+                                   [isRequired]="'User Email is Mandatory'" 
+                                   [patternCheck]="labels?.validationData.email.patternCheck" 
+                                   [maxLength]="labels?.validationData.email.maxLength" 
+                                   [isDisabledInp]="propertyFlag"
+                                   [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -162,8 +202,14 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="poManagerEmail" [labelName]="labels.poManagerEmail" [id]="'email'" [isRequired]="'Manager Email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength"
-                                    [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                                <app-custom-input formControlName="poManagerEmail" 
+                                [labelName]="labels.poManagerEmail" [id]="'email'"
+                                placeHolder =  "Enter the Manager Email" 
+                                [isRequired]="'Manager Email is mandatory'" 
+                                [patternCheck]="labels?.validationData.email.patternCheck" 
+                                [maxLength]="labels?.validationData.email.maxLength"
+                                [isDisabledInp]="propertyFlag" 
+                                [isDirty]="isDirty">
                                 </app-custom-input>
 
 
@@ -174,7 +220,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" [id]="'projectNo'" [isRequired]="'Project number is Mandatory'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                                <app-custom-input formControlName="projectNo" 
+                                   [labelName]="labels.projectNo" [id]="'projectNo'"
+                                   placeHolder =  "Enter the Project Number" 
+                                   [isRequired]="'Project number is Mandatory'" 
+                                   [maxLength]="labels?.validationData.projectNo.maxLength" 
+                                   [isDisabledInp]="propertyFlag" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
                                 <div *ngIf="PurchaseOrderForm.get('projectNo').errors?.pattern" class="error-feedback">
                                     <div>
@@ -187,7 +239,12 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="poAmountWithTax" [isRequired]="'Amount with Tax is Mandatory'" [labelName]="labels.poAmountWithTax" [maxLength]="labels?.validationData?.poAmountWithTax?.maxLength" [type]="labels?.validationData?.poAmountWithTax?.type"
+                                <app-custom-input formControlName="poAmountWithTax" 
+                                    [isRequired]="'Amount with Tax is Mandatory'" 
+                                    [labelName]="labels.poAmountWithTax" 
+                                    placeHolder = "Enter the Amount with Tax"
+                                    [maxLength]="labels?.validationData?.poAmountWithTax?.maxLength" 
+                                    [type]="labels?.validationData?.poAmountWithTax?.type"
                                     [isDirty]="isDirty">
                                 </app-custom-input>
 
@@ -226,7 +283,8 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" 
-                                [labelName]="labels.remark" [id]="'remark'" 
+                                [labelName]="labels.remark" [id]="'remark'"
+                                placeHolder =  "Enter the Remark" 
                                 [isRequired]="'Remark is Mandatory'"
                                 [maxLength]="labels?.validationData.userName.maxLength" 
                                 [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
@@ -430,7 +488,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="rate" [isRequired]="'Rate is Mandatory'" [labelName]="labels.rate" [maxLength]="labels?.validationData?.rate?.maxLength" [type]="labels?.validationData?.rate?.type" [isDirty]="isQuantityDirty">
+                                <app-custom-input formControlName="rate" 
+                                  [isRequired]="'Rate is Mandatory'" 
+                                  [labelName]="labels.rate"
+                                  placeHolder =  "Enter the Rate" 
+                                  [maxLength]="labels?.validationData?.rate?.maxLength" 
+                                  [type]="labels?.validationData?.rate?.type" 
+                                  [isDirty]="isQuantityDirty">
                                 </app-custom-input>
 
                             </div>
@@ -439,7 +503,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="quantity" [isRequired]="'Quantity is Mandatory'" [labelName]="labels.quantity" [maxLength]="labels?.validationData?.quantity?.maxLength" [type]="labels?.validationData?.quantity?.type" [isDirty]="isQuantityDirty">
+                                <app-custom-input formControlName="quantity" 
+                                 [isRequired]="'Quantity is Mandatory'" 
+                                 [labelName]="labels.quantity" 
+                                 placeHolder =  "Enter the Quantity"
+                                 [maxLength]="labels?.validationData?.quantity?.maxLength" 
+                                 [type]="labels?.validationData?.quantity?.type" 
+                                 [isDirty]="isQuantityDirty">
                                 </app-custom-input>
 
                             </div>
@@ -447,7 +517,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="description" [isRequired]="'Description is Mandatory'" [labelName]="labels.description" [maxLength]="labels?.validationData?.description?.maxLength" [isDirty]="isQuantityDirty">
+                                <app-custom-input formControlName="description" 
+                                 [isRequired]="'Description is Mandatory'" 
+                                 [labelName]="labels.description"
+                                 placeHolder = "Enter the Description" 
+                                 placeHolder =  "Enter the Description"
+                                 [maxLength]="labels?.validationData?.description?.maxLength" 
+                                 [isDirty]="isQuantityDirty">
                                 </app-custom-input>
 
                             </div>

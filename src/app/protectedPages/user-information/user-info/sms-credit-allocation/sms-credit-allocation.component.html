@@ -45,7 +45,13 @@
 
                             <div class="col-4 pb-0">
                                 <div class="form-group">
-                                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [maxLength]="labels?.validationData.userName.maxLength" [type]="'number'" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'">
+                                    <app-custom-input formControlName="credit" 
+                                      [labelName]="labels.credit" [id]="'credit'" 
+                                      placeHolder =  "Enter the Credit"
+                                      [maxLength]="labels?.validationData.userName.maxLength" 
+                                      [type]="'number'" 
+                                      [isDirty]="isDirty" 
+                                      [isRequired]="'Credit is mandatory'">
                                     </app-custom-input>
                                     <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
                                         <div>
@@ -64,25 +70,47 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <app-custom-input formControlName="onApprovalOf" [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" [maxLength]="labels?.validationData.userName.maxLength"  [isRequired]="'OnApproval is mandatory'" [isDirty]="isDirty">
+                                    <app-custom-input formControlName="onApprovalOf" 
+                                     [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" 
+                                     placeHolder =  "Enter the Approval"
+                                     [maxLength]="labels?.validationData.userName.maxLength"  
+                                     [isRequired]="'OnApproval is mandatory'" 
+                                     [isDirty]="isDirty">
                                     </app-custom-input>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty"  [isRequired]="'Remark is mandatory'">
+                                    <app-custom-input formControlName="remark" 
+                                    [labelName]="labels.remark" [id]="'remark'" 
+                                    placeHolder =  "Enter the Remark"
+                                    [maxLength]="labels?.validationData.userName.maxLength" 
+                                    [isDirty]="isDirty"  
+                                    [isRequired]="'Remark is mandatory'">
                                     </app-custom-input>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <app-custom-input formControlName="statusChangedBy" [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp">
+                                    <app-custom-input formControlName="statusChangedBy" 
+                                    [labelName]="labels.statusChangedBy" 
+                                    placeHolder =  "Enter the Name"
+                                    [id]="'statusChangedBy'" 
+                                    [maxLength]="labels?.validationData.userName.maxLength" 
+                                    [isDirty]="isDirty" 
+                                    [isDisabledInp]="isDisabledInp">
                                     </app-custom-input>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <app-custom-input formControlName="timeStamp" [labelName]="labels.timeStamp" [id]="'timeStamp'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp">
+                                    <app-custom-input formControlName="timeStamp" 
+                                    [labelName]="labels.timeStamp" 
+                                    placeHolder =  "Enter the Time"
+                                    [id]="'timeStamp'" 
+                                    [maxLength]="labels?.validationData.name.maxLength" 
+                                    [isDirty]="isDirty" 
+                                    [isDisabledInp]="isDisabledInp">
                                     </app-custom-input>
                                 </div>
                             </div>

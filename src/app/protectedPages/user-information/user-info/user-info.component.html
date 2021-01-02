@@ -116,7 +116,7 @@
                         <div class="form-group">
                             <app-custom-input formControlName="OfficerMobile" 
                                 [labelName]="labels.OfficerMobile"
-                                placeHolder = "Enter the Officer Mobile"
+                                placeHolder = "Enter the Officer Mobile Number"
                                 [id]="'rep/Nod/ForOfficerMobile'" 
                                 [isRequired]="'Officer Mobile number is Mandatory'"
                                 [type]="labels?.validationData.mobile.type" 
@@ -222,7 +222,7 @@
                         <div class="form-group">
                             <app-custom-input formControlName="offAddress1" 
                             [labelName]="labels.officialAdd1"
-                            placeHolder = "Enter the Address"
+                            placeHolder = "Enter the Address1"
                             [id]="'offcAddressLine1'" 
                             [mandatoryField]="true"
                             [isRequired]="'Office AddressLine1 is Mandatory'"
@@ -236,7 +236,7 @@
                         <div class="form-group">
                             <app-custom-input formControlName="offAddress2" 
                             [labelName]="labels.officialAdd2"
-                            placeHolder = "Enter the Address"
+                            placeHolder = "Enter the Address2"
                             [id]="'offcAddressLine2'" 
                             [mandatoryField]="true"
                             [isRequired]="'Office AddressLine2 is Mandatory'"
@@ -253,7 +253,7 @@
                         <div class="form-group">
                             <app-custom-input formControlName="offAddress3" 
                             [labelName]="labels.officialAdd3"
-                            placeHolder =  "Enter the Address"
+                            placeHolder =  "Enter the Address3"
                             [id]="'offcAddressLine3'" 
                             [mandatoryField]="true"
                             [isRequired]="'Office AddressLine3 is Mandatory'"
@@ -711,6 +711,7 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" 
                                     [labelName]="labels.remark" 
+                                    placeHolder =  "Enter the Remark"
                                     [id]="'remark'"
                                     [maxLength]="labels?.validationData.remark.maxLength" 
                                     [isRequired]="'Remark is Mandatory'"

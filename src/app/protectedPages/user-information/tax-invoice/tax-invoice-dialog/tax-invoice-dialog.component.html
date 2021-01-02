@@ -13,7 +13,8 @@
           <div class="form-group">
             <app-custom-input formControlName="userName" 
             [isRequired]="'UserName is Mandatory'" 
-            [labelName]="labels.userName" 
+            [labelName]="labels.userName"
+            placeHolder =  "Enter the User Name" 
             [maxLength]="labels?.validationData?.userName?.maxLength"
             [type] ="labels?.validationData?.userName?.type"
             [isDirty]="isDirty"
@@ -28,6 +29,7 @@
             <app-custom-input formControlName="projectNo" 
             [isRequired]="'Project Number is Mandatory'" 
             [labelName]="labels.projectNo" 
+            placeHolder = "Enter the Project Number"
             [maxLength]="labels?.validationData?.projectNo?.maxLength"
             [isDirty]="isDirty"
             [isDisabledInp]="enableFlag" 
@@ -41,6 +43,7 @@
               <app-custom-input formControlName="poNumber" 
               [isRequired]="'PO Number is Mandatory'" 
               [labelName]="labels?.poNumber" 
+              placeHolder =  "Enter the PO Number"
               [maxLength]="labels?.validationData?.poNumber?.maxLength"
               [isDirty]="isDirty"
               [isDisabledInp]="enableFlag" 
@@ -58,7 +61,10 @@
               <label for="InvoiceDate">{{labels?.poDate}}</label>
              
               <mat-form-field>
-                <input matInput formControlName="poDate" required [matDatepicker]="poDateId" [disabled] = "enableFlag" (keyup)="detectDateKeyAction($event,'poDate')">
+                <input matInput formControlName="poDate" required 
+                   [matDatepicker]="poDateId" 
+                   [disabled] = "enableFlag" 
+                   (keyup)="detectDateKeyAction($event,'poDate')">
                 <mat-datepicker-toggle matSuffix [for]="poDateId"></mat-datepicker-toggle>
                 <mat-datepicker #poDateId></mat-datepicker>
               </mat-form-field>
@@ -123,6 +129,7 @@
         <app-custom-input  formControlName="poBillable" 
         [isRequired]="'Billable Amount is Mandatory'" 
         [labelName]="labels?.poBillable"
+        placeHolder  =  "Enter the Billable Amount"
         [type] = "labels?.validationData?.poBillable.type"
         [maxLength] = "labels?.validationData?.poBillable.maxLength"
         [isDirty]="isDirty"
@@ -137,6 +144,7 @@
         <app-custom-input formControlName="invoiceAmount" 
         [isRequired]="'Invoice Amount is Mandatory'" 
         [labelName]="labels?.invoiceAmount" 
+        placeHolder =  "Enter the Invoice Amount"
         [type]="labels?.validationData?.invoiceAmount?.type"
         [maxLength]="labels?.validationData?.invoiceAmount?.maxLength"
         [isDirty]="isDirty"
@@ -151,6 +159,7 @@
       <app-custom-input formControlName="taxIN" 
       [isRequired]="'Tax Invoice Number is Mandatory'" 
       [labelName]="labels?.taxIN" 
+      placeHolder =  "Enter the Tax Invoice Number"
       [maxLength]="labels?.validationData?.taxIN?.maxLength"
       [isDirty]="isDirty"
       [isDisabledInp]="enableFlag" 
@@ -197,6 +206,7 @@
             <app-custom-input formControlName = "invoiceAmountPaid"
             [isRequired] = "'Invoice Amount Paid is Mandatory'"
             [labelName] = "labels?.invoiceAmountPaid"
+            placeHolder =  "Enter the Invoice Paid Amount"
             [maxLength] = "labels?.validationData?.invoiceAmountPaid.maxLength"
             [type] = "labels?.validationData?.invoiceAmountPaid.type"
             [isDirty] = "isDirty"
@@ -211,6 +221,7 @@
               <app-custom-input formControlName = "tds"
               [isRequired] = "'TDS is Required'"
               [labelName] = "labels?.tds"
+              placeHolder =  "Enter the TDS Amount"
               [maxLength] = "labels?.validationData?.tds.maxLength"
               [type] = "labels?.validationData?.tds.type"
               [isDirty] = "isDirty"
@@ -225,6 +236,7 @@
           <app-custom-input formControlName = "penalty"
           [isRequired] = "'Penalty is Mandatory'"
           [labelName] = "labels?.penalty"
+          placeHolder = "Enter the Penalty"
           [maxLength] = "labels?.validationData?.penalty.maxLength"
           [type] = "labels?.validationData?.penalty.type"
           [isDirty] = "isDirty"
@@ -239,6 +251,7 @@
           <app-custom-input formControlName = "shortPay"
           [isRequired] = "'Short Pay is Mandatory'"
           [labelName] = "labels?.shortPay"
+          placeHolder =  "Enter the Short Pay"
           [maxLength] = "labels?.validationData?.shortPay.maxLength"
           [type] = "labels?.validationData?.shortPay.type"
           [isDirty] = "isDirty"
@@ -266,6 +279,7 @@
             <app-custom-input formControlName="remark"
             [isDisabledInp]="enableFlag" 
              [labelName]="labels.remark" [id]="'remark'" 
+             placeHolder =  "Enter the Remark"
              [maxLength]="labels?.validationData.userName.maxLength" 
              [isDirty]="isDirty" 
              [isDisabledInp]="propertyFlag"

@@ -41,7 +41,14 @@
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [type]="'number'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'" [mandatoryField]="true">
+                    <app-custom-input formControlName="credit" 
+                      [labelName]="labels.credit" [id]="'credit'" 
+                      placeHolder =  "Enter the Credit"
+                      [type]="'number'" 
+                      [maxLength]="labels?.validationData.userName.maxLength" 
+                      [isDirty]="isDirty" 
+                      [isRequired]="'Credit is mandatory'" 
+                      [mandatoryField]="true">
                     </app-custom-input>
                     <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
                         <div>
@@ -53,14 +60,28 @@
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="smsTraffic" [labelName]="labels.smsTraffic" [id]="'smstraffic'" [type]="'number'" [maxLength]="labels?.validationData.smsTraffic.maxLength" [isDirty]="isDirty" [isRequired]="'SMS traffic is mandatory'" [mandatoryField]="true">
+                    <app-custom-input formControlName="smsTraffic" 
+                     [labelName]="labels.smsTraffic" [id]="'smstraffic'" 
+                     placeHolder =  "Enter the SMS Traffic"
+                     [type]="'number'" 
+                     [maxLength]="labels?.validationData.smsTraffic.maxLength" 
+                     [isDirty]="isDirty" 
+                     [isRequired]="'SMS traffic is mandatory'" 
+                     [mandatoryField]="true">
                     </app-custom-input>
                 </div>
             </div>
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="availableCredit" [labelName]="labels.availableCredit" [id]="'availableCredit'" [type]="'number'" [maxLength]="labels?.validationData.availableCredit.maxLength" [isDirty]="isDirty" [isRequired]="'Available credit is mandatory'" [mandatoryField]="true">
+                    <app-custom-input formControlName="availableCredit" 
+                     [labelName]="labels.availableCredit" [id]="'availableCredit'" 
+                     placeHolder =  "Enter the Available Credit"
+                     [type]="'number'" 
+                     [maxLength]="labels?.validationData.availableCredit.maxLength" 
+                     [isDirty]="isDirty" 
+                     [isRequired]="'Available credit is mandatory'" 
+                     [mandatoryField]="true">
                     </app-custom-input>
                 </div>
             </div>
@@ -74,25 +95,48 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="onApprovalOf" [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" [maxLength]="labels?.validationData.userName.maxLength"  [isRequired]="'OnApproval is mandatory'" [mandatoryField]="true" [isDirty]="isDirty">
+                    <app-custom-input formControlName="onApprovalOf" 
+                     [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" 
+                     placeHolder =  "Enter the Email"
+                     [maxLength]="labels?.validationData.userName.maxLength"  
+                     [isRequired]="'OnApproval is mandatory'" 
+                     [mandatoryField]="true" 
+                     [isDirty]="isDirty">
                     </app-custom-input>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [mandatoryField]="true"  [isRequired]="'Remark is mandatory'">
+                    <app-custom-input formControlName="remark" 
+                     [labelName]="labels.remark" [id]="'remark'" 
+                     placeHolder =  "Enter the Remark"
+                     [maxLength]="labels?.validationData.userName.maxLength" 
+                     [isDirty]="isDirty" 
+                     [mandatoryField]="true"  
+                     [isRequired]="'Remark is mandatory'">
                     </app-custom-input>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="statusChangedBy" [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp">
+                    <app-custom-input formControlName="statusChangedBy" 
+                     [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" 
+                     placeHolder =  "Enter the Name"
+                     [maxLength]="labels?.validationData.userName.maxLength" 
+                     [isDirty]="isDirty" 
+                     [isDisabledInp]="isDisabledInp">
                     </app-custom-input>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="timeStamp" [labelName]="labels.timeStamp" [id]="'timeStamp'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp" [isDisabledInp]="propertyFlag">
+                    <app-custom-input formControlName="timeStamp" 
+                    [labelName]="labels.timeStamp" [id]="'timeStamp'" 
+                    placeHolder =  "Enter the Time"
+                    [maxLength]="labels?.validationData.name.maxLength" 
+                    [isDirty]="isDirty" 
+                    [isDisabledInp]="isDisabledInp" 
+                    [isDisabledInp]="propertyFlag">
                     </app-custom-input>
                 </div>
             </div>
