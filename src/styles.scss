@@ -312,14 +312,14 @@ tr {
 
 .mat-row:hover > .mat-cell {
     
-    background-color:#e2d9d9 ;
+    // background-color:#e2d9d9 ;
+    background-color: #41b1c791 !important;
 }
-
 
 .formAlignment {
     display: flex;
     flex-wrap: wrap;
     margin-right: -15px;
     margin-left: -15px;
-    margin-top: -7px;
+    margin-top: 5px;
   }

@@ -24,14 +24,26 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <!-- <label for="purchaseOrder">{{labels?.purchaseON}}</label> -->
-                                <app-custom-input formControlName="userName" [isRequired]="'User Name is Mandatory'" [labelName]="labels.userName" [maxLength]="labels?.validationData?.name?.maxLength" [type]="labels?.validationData?.name?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="userName" 
+                                 [isRequired]="'User Name is Mandatory'" 
+                                 placeHolder =  "Ener the User Name"
+                                 [labelName]="labels.userName" 
+                                 [maxLength]="labels?.validationData?.name?.maxLength" 
+                                 [type]="labels?.validationData?.name?.type" 
+                                 [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="piNumber" [isRequired]="'PI Number is Mandatory'" [labelName]="labels.proformaIN" [maxLength]="labels?.validationData?.proformaIN?.maxLength" [type]="labels?.validationData?.proformaIN?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piNumber" 
+                                  [isRequired]="'PI Number is Mandatory'" 
+                                  [labelName]="labels.proformaIN" 
+                                  placeHolder =  "Enter the Proforma Invoice Number"
+                                  [maxLength]="labels?.validationData?.proformaIN?.maxLength" 
+                                  [type]="labels?.validationData?.proformaIN?.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -74,7 +86,13 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="piAmount" [isRequired]="'Purchase Invoice Number is Mandatory'" [labelName]="labels.piAmount" [maxLength]="labels?.validationData?.piAmount.maxLength" [type]="labels?.validationData?.piAmount.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piAmount" 
+                                  [isRequired]="'Purchase Invoice Number is Mandatory'" 
+                                  [labelName]="labels.piAmount" 
+                                  placeHolder =  "Enter the Proforma Invoice Amount"
+                                  [maxLength]="labels?.validationData?.piAmount.maxLength" 
+                                  [type]="labels?.validationData?.piAmount.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -86,7 +104,13 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="documentNo" [isRequired]="'Document Number is Mandatory'" [labelName]="labels.documentNo" [maxLength]="labels?.validationData?.documentNo.maxLength" [type]="labels?.validationData?.documentNo.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="documentNo" 
+                                  [isRequired]="'Document Number is Mandatory'" 
+                                  [labelName]="labels.documentNo" 
+                                  placeHolder =  "Enter the Document Number"
+                                  [maxLength]="labels?.validationData?.documentNo.maxLength" 
+                                  [type]="labels?.validationData?.documentNo.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -116,28 +140,51 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="bankName" [isRequired]="'Bank Name/Branch is Mandatory'" [labelName]="labels.bankName" [maxLength]="labels?.validationData?.bankName.maxLength" [type]="labels?.validationData?.bankName.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="bankName" 
+                                  [isRequired]="'Bank Name/Branch is Mandatory'" 
+                                  [labelName]="labels.bankName" 
+                                  placeHolder =  "Enter the Bank Name"
+                                  [maxLength]="labels?.validationData?.bankName.maxLength" 
+                                  [type]="labels?.validationData?.bankName.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="amountReceived" [isRequired]="'Amount Received is Required'" [labelName]="labels.amountReceived" [maxLength]="labels?.validationData?.amountReceived.maxLength" [type]="labels?.validationData?.amountReceived.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="amountReceived" 
+                                  [isRequired]="'Amount Received is Required'" 
+                                  [labelName]="labels.amountReceived" 
+                                  placeHolder =  "Enter the Amount Received"
+                                  [maxLength]="labels?.validationData?.amountReceived.maxLength" 
+                                  [type]="labels?.validationData?.amountReceived.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="tds" [isRequired]="'TDS is Required'" [labelName]="labels?.tds" [maxLength]="labels?.validationData?.tds.maxLength" [type]="labels?.validationData?.tds.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="tds" 
+                                  [isRequired]="'TDS is Required'" 
+                                  [labelName]="labels?.tds" 
+                                  placeHolder =  "Enter the TDS"
+                                  [maxLength]="labels?.validationData?.tds.maxLength" 
+                                  [type]="labels?.validationData?.tds.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="NICSIProjectNo" [isRequired]="'NICSI Project Number is Required'" [labelName]="labels?.nicsiProjectNumber" [maxLength]="labels?.validationData?.nicsiProjectNumber.maxLength" [type]="labels?.validationData?.nicsiProjectNumber.type"
+                                <app-custom-input formControlName="NICSIProjectNo" 
+                                    [isRequired]="'NICSI Project Number is Required'" 
+                                    [labelName]="labels?.nicsiProjectNumber" 
+                                    placeHolder = "Enter the NICSI Project Number"
+                                    [maxLength]="labels?.validationData?.nicsiProjectNumber.maxLength" 
+                                    [type]="labels?.validationData?.nicsiProjectNumber.type"
                                     [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
@@ -146,12 +193,21 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="modeOfPayment">PI Paid</label>
-                                <app-vf-custom-select formControlName="piPaid" [values]="piPaidValues" [isRequired]="'Please Select the PI Paid'" [isDirty]="isDirty"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="piPaid" 
+                                  [values]="piPaidValues" 
+                                  [isRequired]="'Please Select the PI Paid'" 
+                                  [isDirty]="isDirty"></app-vf-custom-select>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isRequired]="'Remark is Mandatory'" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="remark" 
+                                [labelName]="labels.remark" [id]="'remark'" 
+                                placeHolder =  "Enter the Remark"
+                                [maxLength]="labels?.validationData.userName.maxLength" 
+                                [isRequired]="'Remark is Mandatory'" 
+                                [isDirty]="isDirty" 
+                                [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>

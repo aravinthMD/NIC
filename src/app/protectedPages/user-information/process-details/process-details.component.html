@@ -20,7 +20,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" [isRequired]="'Account Name is Mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [type]="labels?.validationData.userName.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="accountName" 
+                                 [labelName]="labels.accountName" [id]="'accountName'" 
+                                 placeHolder =  "Enter the Account Name"
+                                 [isRequired]="'Account Name is Mandatory'" 
+                                 [maxLength]="labels?.validationData.userName.maxLength" 
+                                 [type]="labels?.validationData.userName.type" 
+                                 [isDirty]="isDirty">
                                 </app-custom-input>
 
                                 <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is Mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
@@ -47,7 +53,12 @@
                         Please select date
                   </div> -->
 
-                                <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice Number is Mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [type]="labels?.validationData.proformaIN.type"
+                                <app-custom-input formControlName="invoiceNumber" 
+                                    [labelName]="labels.proformaIN" [id]="'invoiceNumber'" 
+                                    placeHolder = "Enter the Proforma Invoice Number"
+                                    [isRequired]="'Invoice Number is Mandatory'" 
+                                    [maxLength]="labels?.validationData.proformaIN.maxLength" 
+                                    [type]="labels?.validationData.proformaIN.type"
                                     [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
@@ -56,7 +67,13 @@
                             <div class="form-group">
 
 
-                                <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" [isRequired]="'Reference Number is Mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [type]="labels?.validationData.refNo.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="refNumber" 
+                                  [labelName]="labels.refNo" [id]="'refNo'" 
+                                  placeHolder =  "Enter the Reference Number"
+                                  [isRequired]="'Reference Number is Mandatory'" 
+                                  [maxLength]="labels?.validationData.refNo.maxLength" 
+                                  [type]="labels?.validationData.refNo.type" 
+                                  [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -68,7 +85,13 @@
 
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" [isRequired]="'Owner is Mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [type]="labels?.validationData.piOwner.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piOwner" 
+                                    [labelName]="labels.piOwner" [id]="'piOwner'" 
+                                    placeHolder =  "Enter the Proforma Invoice Owner"
+                                    [isRequired]="'Owner is Mandatory'" 
+                                    [maxLength]="labels?.validationData.piOwner.maxLength" 
+                                    [type]="labels?.validationData.piOwner.type" 
+                                    [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -93,7 +116,13 @@
                   Please select date
             </div> -->
 
-                                <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'Amount is Mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piAmount" 
+                                   [labelName]="labels.piAmount" [id]="'piAmount'" 
+                                   placeHolder =  "Enter the Amount"
+                                   [isRequired]="'Amount is Mandatory'" 
+                                   [maxLength]="labels?.validationData.piAmount.maxLength" 
+                                   [type]="labels?.validationData.piAmount.type" 
+                                   [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -102,7 +131,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piTraffic" [labelName]="labels.piTraffic" [id]="'piTraffic'" [isRequired]="'Traffic is Mandatory'" [maxLength]="labels?.validationData.piTraffic.maxLength" [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piTraffic" 
+                                [labelName]="labels.piTraffic" [id]="'piTraffic'" 
+                                placeHolder =  "Enter the Traffic"
+                                [isRequired]="'Traffic is Mandatory'" 
+                                [maxLength]="labels?.validationData.piTraffic.maxLength" 
+                                [type]="labels?.validationData.piTraffic.type" 
+                                [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -142,8 +177,13 @@
                                 <!-- <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
             [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select> -->
 
-                                <app-custom-input formControlName="nicsiManager" [labelName]="labels.nicsiManager" [id]="'nicsiManager'" [isRequired]="'NICSI Manager is Mandatory'" [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type"
-                                    [isDirty]="isDirty">
+                                <app-custom-input formControlName="nicsiManager" 
+                                   [labelName]="labels.nicsiManager" [id]="'nicsiManager'" 
+                                   placeHolder =  "Enter the NICSI Manager"
+                                   [isRequired]="'NICSI Manager is Mandatory'" 
+                                   [maxLength]="labels?.validationData.nicsiManager.maxLength" 
+                                   [type]="labels?.validationData.nicsiManager.type"
+                                   [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -213,7 +253,13 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is Mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="remark" 
+                                   [labelName]="labels.remark" [id]="'remark'" 
+                                   placeHolder =  "Enter the Remark"
+                                   [isRequired]="'Remark is Mandatory'" 
+                                   [maxLength]="labels?.validationData.userName.maxLength" 
+                                   [isDirty]="isDirty" 
+                                   [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>

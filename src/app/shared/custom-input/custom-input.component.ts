@@ -41,6 +41,7 @@ export class CustomInputComponent
     msg?: string;
   };
   @Input() className = '';
+  @Input() placeHolder = ''
   @Input() optional: string;
   @Input() minLength: {
     rule?: number;
