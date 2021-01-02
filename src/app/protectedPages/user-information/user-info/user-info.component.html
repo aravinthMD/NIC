@@ -2,7 +2,7 @@
     <mat-card class="pt-2">
         <div class="customer_details">
 
-        <app-account-header [title]="'Customer Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
+        <app-account-header [title]="'Customer Details'" [accountName]="accountName" [user] =  "user"></app-account-header>
 
         <!-- <app-user-info-preview-form *ngIf = "existingPreviewUserFlag" [accountName] = "accountName" [status] = "status" [user] = "user" (edit) = "editData($event)">
             <button class="btn btn-primary float-left" matRipple (click)="back()">Back</button>
@@ -14,7 +14,7 @@
             <form [formGroup]="form" (keydown.enter)="$event.preventDefault()" *ngIf = "existingUserFlag || newUserFlag">
                 <!--FIRST ROW-->
 
-                <div class="row">
+                <div class="row formAlignment">
                     <div class="col-4">
                         <div class="form-group">
                             <label for="department">{{labels.department}}</label>
@@ -52,6 +52,8 @@
                             </app-custom-input>
                         </div>
                     </div>
+                </div>
+                <div class="row formAlignment">
                     <div class="col-1 pr-2 mr-0">
                         <div class="form-group">
                 
@@ -101,7 +103,8 @@
                             </app-custom-input>
                         </div>
                     </div>
-
+                </div>
+                <div class="row formAlignment"> 
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="OfficerMobile" [labelName]="labels.OfficerMobile"
@@ -183,7 +186,7 @@
 
                     </div>
 
-
+                </div>
                     <!-- <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="telPhno" 
@@ -197,6 +200,8 @@
                             </app-custom-input>
                         </div>
                     </div> -->
+
+                    <div class="row formAlignment"> 
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="offAddress1" 
@@ -232,6 +237,8 @@
                             </app-custom-input>
                         </div>
                     </div>
+                </div>
+                <div class="row formAlignment"> 
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="city" 
@@ -265,6 +272,8 @@
                             </app-custom-input>
                         </div>
                     </div>
+                </div>
+                <div class="row formAlignment">
                     <div class="col-4">
                         <div class="form-group">
                             <label for="department">{{labels.smsServiceReqd}}</label>
@@ -379,6 +388,8 @@
                             </app-custom-input>
                         </div>
                     </div>
+                </div>
+                <div class="row formAlignment">  
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="serverLocation" 
@@ -414,6 +425,8 @@
                             </app-custom-input>
                         </div>
                     </div>
+                </div>
+                <div class="row formAlignment"> 
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="ipServReqd"
@@ -455,6 +468,8 @@
                             </app-custom-input>
                         </div>
                     </div>
+                </div>
+                    <div class="row formAlignment">    
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="appSecurAudClear"
@@ -504,7 +519,9 @@
                             </app-custom-input> -->
                         </div>
                     </div>
-                    <div class="col-4">
+                </div>
+                <div class="row formAlignment"> 
+                      <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="projectNo" 
                             [labelName]="labels.projectNo"
@@ -545,7 +562,7 @@
                     
                 </div>
               
-                    <div class="row">
+                    <div class="row formAlignment">
                         <div class="col-4" *ngIf="existingUserFlag">
                             <div class="form-group">
                                 <app-custom-input formControlName="creditAdded" [labelName]="labels.creditAdded"
@@ -583,6 +600,8 @@
 
                             </div>
                         </div>
+                      </div> 
+                        <div class="row formAlignment1"> 
                         <div class="col-4" *ngIf="existingUserFlag">
                             <div class="form-group">
                                 <label for="creditAddedAgainstPi">{{labels.creditPI}}</label>
@@ -601,6 +620,23 @@
                                 </div>
 
                             </div>
+                        </div>
+
+                        
+                        
+                        </div>
+                    <div class="row formAlignment"> 
+                        <div class="col-4" *ngIf="existingUserFlag">
+                        <div class="form-group">
+                            <label for="department">{{labels.status}}</label>
+                            <app-vf-custom-select formControlName="status" 
+                            [values]="statusList"
+                            [isRequired]="'Please Select Status'" 
+                            (valueChange)="statusChange($event)"
+                            [isDisabled]="propertyFlag"
+                            [isDirty]="isDirty">
+                            </app-vf-custom-select>
+                        </div>
                         </div>
 
                         <div class="col-4" *ngIf="!existingUserFlag">
@@ -624,24 +660,10 @@
                                         bottom: 30px;" (click)="viewDoc()">View</button>
                               </div>
                     
-                    
+                    </div>
                     
                             </div>
-                          </div>
-                    
-                        <div class="col-4" *ngIf="existingUserFlag">
-                        <div class="form-group">
-                            <label for="department">{{labels.status}}</label>
-                            <app-vf-custom-select formControlName="status" 
-                            [values]="statusList"
-                            [isRequired]="'Please Select Status'" 
-                            (valueChange)="statusChange($event)"
-                            [isDisabled]="propertyFlag"
-                            [isDirty]="isDirty">
-                            </app-vf-custom-select>
-                        </div>
-                        </div>
-
+                         
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
@@ -652,9 +674,7 @@
                                 </app-custom-input>
                             </div>
                         </div>
-
-
-                    </div>
+                     </div>
                
               
                 <!-- <div class="row pt-3 pb-3 m-0">

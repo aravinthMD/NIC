@@ -10,7 +10,7 @@
     
     
 <form (submit)="onSubmit()" [formGroup]="billOwnerForm">
-        <div class="row">
+        <div class="row formAlignment">
             <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="name" 
@@ -53,6 +53,8 @@
                     </app-custom-input>
                 </div>
             </div>
+        </div>
+            <div class="row formAlignment"> 
             <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="employeeCode" 
@@ -137,8 +139,8 @@
                 </div>
 
             </div>
-
-
+            </div>
+            <div class="row formAlignment">
             <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="offAddress1" 
@@ -181,7 +183,9 @@
                     </app-custom-input>
                 </div>
             </div>
-            <div class="col-4">
+            </div>
+            <div class="row formAlignment"> 
+               <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="city" 
                     [labelName]="labels.city" 
@@ -224,7 +228,8 @@
                     </app-custom-input>
                 </div>
             </div>
-
+            </div>
+            <div class="row formAlignment"> 
             <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"

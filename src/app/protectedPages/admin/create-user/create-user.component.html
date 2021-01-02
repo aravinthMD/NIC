@@ -13,17 +13,18 @@
         <form class="" [formGroup]="form">
             <!--FIRST ROW-->
 
-            <div class="row">
+            <div class="row formAlignment">
                 <div class="col-4">
                     <div class="form-group">
-                        <app-custom-input formControlName="userName" 
+                        <app-custom-input formControlName="userName"    
                         [labelName]="labels.userName" 
                         [mandatoryField]="true" 
                         [patternCheck]="labels?.validationData.userName.patternCheck"
                         [id]="'UserName'" 
                         [isRequired]="'User name is Mandatory'" 
                         [maxLength]="labels?.validationData.userName.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                         >
                     </app-custom-input>
                     </div>
                 </div>
@@ -57,7 +58,7 @@
 
             </div>
     
-            <div class="row">
+            <div class="row formAlignment">
     
                 <div class="col-4">
                     <div class="form-group">
@@ -99,7 +100,7 @@
 
             </div>
             <!--SECOND ROW-->
-            <div class="row">
+            <div class="row formAlignment">
 
                 <div class="col-4">
                     <div class="form-group">
@@ -179,7 +180,7 @@
             </div>
     
             <!--THIRD ROW-->
-            <div class="row">
+            <div class="row formAlignment">
 
                 <div class="col-1 pr-2 mr-0">
                     <div class="form-group">
@@ -241,7 +242,7 @@
             </div>
     
             <!--FOURTH ROW-->
-            <div class="row">
+            <div class="row formAlignment">
 
                 <div class="col-4">
                     <div class="form-group">
@@ -283,7 +284,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row formAlignment">
                 <div class="col-4">
                     <div class="form-group">
 
@@ -300,8 +301,6 @@
 
                     </div>
                 </div>
-
-               
 
                 <div class="col-4">
                     <div class="form-group">
