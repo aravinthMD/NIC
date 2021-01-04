@@ -126,7 +126,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       OfficerEmail:[null],
       OfficerMobile:[null],
       telPhno : [null],
-      teleCode: [null],
+      teleCode: [this.teleCodeValues[0].key],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
