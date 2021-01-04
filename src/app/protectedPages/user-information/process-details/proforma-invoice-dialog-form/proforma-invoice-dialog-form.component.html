@@ -152,10 +152,11 @@
           <label for="dateFor">{{labels?.date}}</label>
 
 
-          <mat-form-field>
+          <mat-form-field floatLabel  =  "never">
             <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
+            <mat-placeholder>Choose The Date</mat-placeholder>
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
                   isDirty &&
@@ -188,10 +189,11 @@
         <div class="form-group">
           <label for="Fromperiod">Start Date</label>
 
-          <mat-form-field [ngClass]="{'inp-date':enableflag}">
+          <mat-form-field [ngClass]="{'inp-date':enableflag}" floatLabel  =  "never">
             <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
+            <mat-placeholder>Start Date</mat-placeholder>
           </mat-form-field>
         </div>
       </div>
@@ -199,10 +201,11 @@
         <div class="form-group">
           <label for="Toperiod">End Date</label>
 
-          <mat-form-field [ngClass]="{'inp-date':enableflag}">
+          <mat-form-field [ngClass]="{'inp-date':enableflag}" floatLabel  =  "never">
             <input matInput [matDatepicker]="picker4" formControlName="endDate" [min]="form.get('startDate').value" (keyup)="detectDateKeyAction($event,'endDate')">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
             <mat-datepicker #picker4></mat-datepicker>
+            <mat-placeholder>End Date</mat-placeholder>
           </mat-form-field>
         </div>
       </div>
@@ -210,8 +213,7 @@
       <div class="col-4">
 
         <div class="form-group">
-          <label for="piStatus">PI Status</label>
-
+          <label for="piStatus" style="padding-top:0px;">PI Status</label>
           <app-vf-custom-select formControlName="piStatus" [values]="piStatusData"
             [isRequired]="'Please Select PI Status'" [isDisabled]="enableflag" [isDirty]="isDirty">
           </app-vf-custom-select>
@@ -224,8 +226,6 @@
 
         <div class="form-group">
           <label for="payMentStatus">Payment Status</label>
-
-
           <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData"
             [isRequired]="'Please Select Payment Status'" [isDisabled]="enableflag" [isDirty]="isDirty">
           </app-vf-custom-select>
@@ -238,7 +238,7 @@
             <app-custom-input formControlName="remark"
             [isDisabledInp]="enableflag"
             [labelName]="labels.remark" 
-            placeHolder =  "Enter the Remark"
+            placeHolder ="Enter the Remark"
             [id]="'remark'" 
             [maxLength]="labels?.validationData.userName.maxLength" 
             [isDirty]="isDirty"
