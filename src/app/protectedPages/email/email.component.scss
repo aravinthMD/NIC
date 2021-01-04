@@ -2,7 +2,7 @@
     margin-top: 6px;
 }
 textarea.form-control {
-    height: 300px;
+    height: 184px !important;
 }
 
 mat-chip{
@@ -11,6 +11,8 @@ mat-chip{
 input.mat-chip-input {
     width: 100%;
     margin: 0;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
 }   
 
 
@@ -78,4 +80,10 @@ input.mat-chip-input {
 
 mat-card.mat-card  {
     width: 103%;
+}
+
+.mat-error { 
+    font-size: 14px !important;
+    padding: 10px !important;
+    font-weight: 400 !important;
 }

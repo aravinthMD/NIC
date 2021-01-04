@@ -252,7 +252,14 @@ const departmentListData = this.departmentListData.filter((val)=> {
       {
         key: 'Document',
         value:'invoice.pdf'
+      },{
+        key :  "",
+        value :  ""
       },
+      {
+        key :  "",
+        value :  ""
+      }
     ]
   }
 

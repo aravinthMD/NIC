@@ -293,9 +293,9 @@ showDataSaveModal: boolean;
     })
 
     if(this.user){
-      this.router.navigate(['/users/billingAdmin/'+pno])
+      this.router.navigate(['/users/techAdmin/'+pno])
     }else {
-      this.router.navigate(['/users/billingAdmin'])
+      this.router.navigate(['/users/techAdmin'])
 
     }
   

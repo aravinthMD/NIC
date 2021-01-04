@@ -93,7 +93,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       })
 
       this.setFormValues();
-      this.propertyFlag = true;
+      // this.propertyFlag = true;
 
       }else  {
        this.showView = false
@@ -211,7 +211,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   editData() {
-    this.propertyFlag = false;
+    // this.propertyFlag = false;
     this.showView = false;
   }
 

@@ -351,9 +351,10 @@
                    <div class="form-group">
          
                     
-                     <label for="dateFor">From Date</label>
+                     <label for="dateFor" style="visibility:hidden;">From Date</label>
                      
                      <mat-form-field>
+                         <mat-label>From Date</mat-label>
                        <input matInput 
                        [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
                        <mat-datepicker-toggle matSuffix [for]="picker6" 
@@ -368,9 +369,10 @@
                    <div class="form-group">
          
                     
-                     <label for="dateFor">To Date</label>
+                     <label for="dateFor" style="visibility:hidden;">To Date</label>
                      
-                     <mat-form-field>
+                     <mat-form-field floatLabel  =  "float">
+                         <mat-label>To Date</mat-label>
                        <input matInput [min]="searchForm.get('searchFrom').value" 
                        [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                        <mat-datepicker-toggle matSuffix [for]="picker7" 
@@ -421,7 +423,7 @@
         <!--Material Table-->
 
         <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="dataSource" class="custom-table">
 
                 <ng-container matColumnDef="purchaseNo">
                     <th mat-header-cell *matHeaderCellDef>Purchase Order No </th>

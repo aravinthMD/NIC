@@ -278,6 +278,18 @@ const departmentListData = this.departmentListData.filter((val)=> {
       {
         key  : this.labels.remark,
         value  : this.technicaladminform.value.remark
+      },
+      {
+        key : "",
+        value :  ""
+      },
+      {
+        key :  "",
+        value :  ""
+      },
+      {
+        key  : "",
+        value :  ""
       }
     ]
 

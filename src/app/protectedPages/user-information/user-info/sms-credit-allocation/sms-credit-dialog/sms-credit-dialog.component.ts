@@ -119,6 +119,22 @@ viewInfoData: any;
       {
         key: this.labels.statusChangedBy,
         value:'Akshaya'
+      },
+      {
+        key :  "",
+        value :  ""
+      },
+      {
+        key : "",
+        value :  ""
+      },
+      {
+        key :  "",
+        value :  ""
+      },
+      {
+        key  : "",
+        value  : ""
       }
      
    ]

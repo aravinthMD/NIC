@@ -192,6 +192,17 @@ export class TaxInvoiceDialogComponent implements OnInit {
         key: this.labels.remark,
         value:this.taxInvoiceForm.value.remark
       },
+      {
+        key :  "",
+        value  : ""
+      },{
+        key :  "",
+        value :  ""
+      },
+      {
+        key :  "",
+        value : ""
+      }
     ]   
 
     this.getTaxInvoiceDetailById(this.data)

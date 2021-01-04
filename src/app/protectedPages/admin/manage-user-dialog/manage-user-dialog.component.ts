@@ -182,6 +182,18 @@ teleCodeValues = [
       {
         key: this.labels.remark,
         value:this.form.value.remark
+      },
+      {
+        key : "",
+        value :  ""
+      },
+      {
+        key :  "",
+        value :  ""
+      },
+      {
+        key :  "",
+        value : ""
       }
     ]
 

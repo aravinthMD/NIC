@@ -321,6 +321,7 @@
 
         <!-- <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header> -->
 
+        <div *ngIf = "showView">
         <div class="dashBoard" *ngIf = "user">
             <div>
                 Billing Admin Details
@@ -328,6 +329,7 @@
         </div>
 
         <app-view-info [userDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
+
 
 
 
@@ -349,6 +351,7 @@
 
            </div>
         </div>
+    </div>
 
 
     </mat-card>
