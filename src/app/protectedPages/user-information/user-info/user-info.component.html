@@ -61,8 +61,10 @@
                 
                             <label for="department">Code<span style="color:red">*</span></label>
                             <app-vf-custom-select class="code" formControlName="countryCode" 
-                            [className]="'form-control Mandatory code-pad'" [values]="countryCodeValues"
-                            [isRequired]="'Select code'" [isDisabled]="propertyFlag"
+                            [className]="'form-control Mandatory code-pad'" 
+                            [values]="countryCodeValues"
+                            [isRequired]="'Select code'" 
+                            [isDisabled]="propertyFlag"
                             [isDirty]="isDirty">
                         </app-vf-custom-select>
                         </div>

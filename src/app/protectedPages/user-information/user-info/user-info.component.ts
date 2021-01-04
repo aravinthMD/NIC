@@ -120,7 +120,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       designation : [null],
       employeeCode : [null],
       email : [null],
-      countryCode: [null],
+      countryCode: [this.countryCodeValues[0].key],
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
