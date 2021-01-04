@@ -354,9 +354,6 @@
             "maxLength": {
                 "rule": 12
             },
-<<<<<<< HEAD
-            "type":"number"
-=======
             "type": "number"
         },
         "creditAdded": {
@@ -499,7 +496,6 @@
             "maxLength": {
                 "rule": "2000"
             }
->>>>>>> aff4fbe6f2f176a2af3b0d69fbd3477541f21e2a
         }
         
     }
