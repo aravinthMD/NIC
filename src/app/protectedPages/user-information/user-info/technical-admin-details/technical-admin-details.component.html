@@ -295,14 +295,14 @@
 
             
             <div class="row pt-3 pb-3">
-              
                 <div class="col-10">
                     <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button>
                     <button class="btn btn-primary float-left back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
                 </div>
 
                <div class="col-1" style="float: left;">
-                <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+                <button class="btn btn-primary ml-3" *ngIf = "!showView" (click)="back('show')">Back</button>
+                <button class="btn btn-primary ml-3" *ngIf = "showView" (click)="back('view')">Back</button>
 
                </div>
 
@@ -335,14 +335,13 @@
 
 
         <div class="row pt-3 pb-3" *ngIf="user">
-              
             <div class="col-10">
                 <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
                 <button class="btn btn-primary float-left back-btn" matRipple (click)="editDataBill()">Edit</button>
             </div>
 
            <div class="col-1" style="float: left;">
-            <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+            <button class="btn btn-primary ml-3" (click)="back('billAdmin')">Back</button>
 
            </div>
 

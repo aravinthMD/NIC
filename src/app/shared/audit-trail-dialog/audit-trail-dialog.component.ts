@@ -18,7 +18,7 @@ export class AuditTrailDialogComponent implements OnInit,AfterViewInit {
   searchForm : FormGroup;
 
 
-  displayedColumns: string[] = ['screen','dataFeild', 'oldValue','newValue','changedBy','timestamp']; 
+  displayedColumns: string[] = ['screen','dataFeild', 'oldValue','newValue','changedBy','timestamp','remarks']; 
 
   userList : any[] = [
     {screen : "Customer Details",dataFeild : "Project Number",oldValue : "8776",newValue : "9569",changedBy : "Selvakumar",timestamp : "13/10/2020 17:08:21",remarks : "Customer Details Project Number Update"},

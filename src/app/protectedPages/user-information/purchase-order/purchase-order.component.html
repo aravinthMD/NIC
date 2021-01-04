@@ -6,7 +6,7 @@
 
         <mat-accordion>
             <mat-expansion-panel>
-                <mat-expansion-panel-header matRipple>
+                <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px">
                     <mat-panel-title>
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Purchase Order
                     </mat-panel-title>
@@ -97,10 +97,11 @@
                             <div class="form-group">
                                 <label for="dateFor">{{labels?.date}}</label>
 
-                                <mat-form-field>
+                                <mat-form-field floatLabel  =  "never">
                                     <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="
               isDirty &&
@@ -146,10 +147,11 @@
                             <div class="form-group">
                                 <label for="Fromperiod">Valid From</label>
 
-                                <mat-form-field>
+                                <mat-form-field floatLabel  =  "never">
                                     <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="PurchaseOrderForm.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                                     <mat-datepicker #picker3></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
 
                                 <div class="date-picker-error" *ngIf="
@@ -165,10 +167,11 @@
                             <div class="form-group">
                                 <label for="Toperiod">Valid Upto</label>
 
-                                <mat-form-field>
+                                <mat-form-field floatLabel  =  "never">
                                     <input matInput [matDatepicker]="picker4" [min]="PurchaseOrderForm.get('startDate').value" formControlName="endDate" (keyup)="detectDateKeyAction($event,'endDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
 
                                 <div class="date-picker-error" *ngIf="
@@ -449,7 +452,7 @@
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let element" class="value-bold"> 
                         <button  matTooltip  = "View And Edit" class="background-none" (click)="OnEdit(element)">
-                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
                         </button> 
                     </td>
                 </ng-container>

@@ -172,18 +172,16 @@ mat-card {
   width: 100% !important;
 }
 
-
-label {
-  display: inline-block;
-  margin-bottom: -0.1rem;
-}
-
- 
-
 .formAlignment1{
   display: flex;
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
   margin-top: 7px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: -0.1rem;
+  font-size: 16px;
 }

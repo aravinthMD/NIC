@@ -7,7 +7,7 @@
         <!--Mat Expansion Panel -->
         <mat-accordion>
             <mat-expansion-panel>
-                <mat-expansion-panel-header matRipple>
+                <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px">
                     <mat-panel-title>
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Tax Invoice
                     </mat-panel-title>
@@ -67,14 +67,14 @@
                             <div class="form-group">
                                 <label for="InvoiceDate">{{labels?.poDate}}</label>
 
-                                <mat-form-field>
+                                <mat-form-field floatLabel  =  "never">
                                     <input matInput formControlName="poDate" required 
                                        [matDatepicker]="poDateId" 
-                                       placeholder="Choose the Date"
                                        floatLabel =  "always"
                                        (keyup)="detectDateKeyAction($event,'poDate')">
                                     <mat-datepicker-toggle matSuffix [for]="poDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #poDateId></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="
                 isDirty &&
@@ -102,10 +102,11 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="fromDate">{{labels?.fromDate}}</label>
-                                <mat-form-field>
+                                <mat-form-field floatLabel  =  "never">
                                     <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId" (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="fromDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #fromDateId></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="
       isDirty &&
@@ -119,10 +120,11 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="toDate">{{labels?.toDate}}</label>
-                                <mat-form-field>
+                                <mat-form-field floatLabel  =  "never">
                                     <input matInput formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #toDateId></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="isDirty && taxInvoiceForm.get('toDate').errors?.required">
                                     Please Select To Date
@@ -173,10 +175,11 @@
                             <div class="form-group">
                                 <label for="dateFor">{{labels?.submittedDate}}</label>
 
-                                <mat-form-field>
+                                <mat-form-field floatLabel  =  "never">
                                     <input matInput required formControlName="submittedOn" [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
                                     <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker"></mat-datepicker-toggle>
                                     <mat-datepicker #sumbittedDatePicker></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="
     isDirty &&
@@ -426,7 +429,7 @@
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let element" class="value-bold"> 
                         <button  matTooltip = "View And Edit" (click)="OnEdit(element)" class="background-none">
-                            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
                         </button> 
                     </td>
                 </ng-container>
