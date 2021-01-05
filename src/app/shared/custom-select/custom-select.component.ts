@@ -30,7 +30,7 @@ export class CustomSelectComponent
   @Input() className = 'form-control mandatory';
   @Input() defaultOption = {
     key: '',
-    value: '-Select One-',
+    value: '-- Select One --',
   };
   @Input() isDisabled: boolean;
   @Input('selectedOption') val: any;

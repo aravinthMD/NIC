@@ -94,17 +94,10 @@ dataValue: {
   message: string
 }
 
-smsApprovedList = [
-      {
-      key: '1',
-      value: 'Yes'
-    },
-    {
-      key: '0',
-      value: 'No'
-    }
-
-]
+smsApprovedList : any[] = [
+        {key: '0', value: 'No'},
+        {key: '1',value: 'Yes'}
+              ]
 
 
 

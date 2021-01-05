@@ -143,6 +143,10 @@ showViewBill:boolean = true;
   }
 
 
+
+
+
+
   setBillOwnerFormValues(){
     
     
@@ -278,6 +282,18 @@ const departmentListData = this.departmentListData.filter((val)=> {
       {
         key  : this.labels.remark,
         value  : this.technicaladminform.value.remark
+      },
+      {
+        key : "",
+        value :  ""
+      },
+      {
+        key :  "",
+        value :  ""
+      },
+      {
+        key  : "",
+        value :  ""
       }
     ]
 
@@ -345,7 +361,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
   }
 
 
-  back() {
+  back(value ? :string) {
 
     this.utilService.setCurrentUrl('users/customerDetails')
 
@@ -355,11 +371,24 @@ const departmentListData = this.departmentListData.filter((val)=> {
     })
 
 
-    if(this.user) {
-      this.router.navigate(['/users/customerDetails/'+pno])
-    }else {
-      this.router.navigate(['/users/customerDetails'])
+    if(value  === 'view' || value == 'billAdmin'){
+      if(this.user) {
+        this.router.navigate(['/users/customerDetails/'+pno])
+      }else {
+        this.router.navigate(['/users/customerDetails'])
+      }
+    }else if(value == 'show'){
+      if(this.user){
+        this.router.navigate(['/users/techAdmin/'+pno])
+        this.showView = true
+        this.propertyFlag = true
+      }else{
+        this.router.navigate(['/users/techAdmin'])
+      }
     }
+    
+
+    
   }
 
   next() {

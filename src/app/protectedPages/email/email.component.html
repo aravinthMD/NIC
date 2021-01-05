@@ -43,7 +43,7 @@
                                 <input type="text" value="deepak.saxena@nic.in" class="form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="">To</label>
+                                <label class="pb-2" for="">To</label>
                                 <div class="ml-4">
                                     <mat-chip-list #chipList aria-label="email selection">
                                         <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable"
@@ -197,9 +197,9 @@
 
                         <div class="col-12">
                             <div class="form-group compose-height">
-                                <div class="col-2" style="padding:10px">
+                                <div class="col-2" style="padding:10px;padding-bottom: 0%;">
 
-                                    <label for="">Compose</label>
+                                    <label for="">Message</label>
                             
                                     <button type="submit" matRipple class=" btn btn-primary">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
                                     <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->

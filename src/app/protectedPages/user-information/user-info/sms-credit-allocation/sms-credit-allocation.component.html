@@ -194,9 +194,10 @@
                                     <div class="form-group">
             
             
-                                        <label for="dateFor">From Date</label>
+                                        <label for="dateFor"  style="visibility:hidden;">From Date</label>
             
                                         <mat-form-field>
+                                            <mat-label>From Date</mat-label>
                                             <input matInput [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
                                             <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                                             <mat-datepicker #picker6></mat-datepicker>
@@ -209,9 +210,10 @@
                                     <div class="form-group">
             
             
-                                        <label for="dateFor">To Date</label>
+                                        <label for="dateFor"  style="visibility:hidden;">To Date</label>
             
                                         <mat-form-field>
+                                            <mat-label>To Date</mat-label>
                                             <input matInput [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                                             <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
                                             <mat-datepicker #picker7></mat-datepicker>
@@ -262,7 +264,7 @@
 
                     <!-- <button style="float: right;margin-bottom: 1vw;margin-right: 1vw;margin-top: 1vw;" class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button> -->
                     <div class="mat-elevation-z8" class="p-0">
-                        <table mat-table [dataSource]="dataSource">
+                        <table mat-table [dataSource]="dataSource" class="custom-table">
 
                             <ng-container matColumnDef="s.no">
                                 <th mat-header-cell *matHeaderCellDef> S.No </th>
