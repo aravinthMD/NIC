@@ -31,16 +31,22 @@
                                     </app-custom-input> -->
                                 </div>
                             </div>
-
+                             
                             <div class="col-4">
                                 <div class="form-group">
                                     <label for="creditDate">{{labels.dateOfRequest}}</label>
-                                    <mat-form-field [ngClass]="{'inp-date':propertyFlag}" floatLabel  =  "never">
-                                        <input matInput [matDatepicker]="picker3" formControlName="date" (keyup)="detectDateKeyAction($event,'date')">
+                                    <mat-form-field   floatLabel = "never">
+                                        <input matInput [matDatepicker]="picker3" formControlName="date" (keyup)="detectDateKeyAction($event,'date')" required>
                                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                                         <mat-datepicker #picker3></mat-datepicker>
                                         <mat-placeholder>Choose The Date</mat-placeholder>
                                     </mat-form-field>
+                                    <div class="date-picker-error" *ngIf="
+                              isDirty &&
+                              smsCreditAllocation.get('date').errors?.required
+                            ">
+                                                    Please Select Date
+                                                </div>
                                 </div>
                             </div>
 
@@ -61,6 +67,42 @@
                                     </div>
                                 </div>
                             </div>
+                           
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <app-custom-input formControlName="smsTraffic" 
+                                      [labelName]="labels.smsTraffic" [id]="'smsTraffic'" 
+                                      placeHolder =  "Enter the SMSTrafficMonthWise"
+                                      [maxLength]="labels?.validationData.userName.maxLength" 
+                                      [type]="'number'" 
+                                      [isDirty]="isDirty" 
+                                      [isRequired]="'smsTraffic is mandatory'">
+                                    </app-custom-input>
+                                    <div *ngIf="smsCreditAllocation.get('smsTraffic').errors?.pattern" class="error-feedback">
+                                        <div>
+                                            {{'Please Enter Digits'}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                              
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <app-custom-input formControlName="availableCredit" 
+                                      [labelName]="labels.availableCredit" [id]="'availableCredit'" 
+                                      placeHolder =  "Enter the availableCredit"
+                                      [maxLength]="labels?.validationData.userName.maxLength" 
+                                      [type]="'number'" 
+                                      [isDirty]="isDirty" 
+                                      [isRequired]="'availableCredit is mandatory'">
+                                    </app-custom-input>
+                                    <div *ngIf="smsCreditAllocation.get('availableCredit').errors?.pattern" class="error-feedback">
+                                        <div>
+                                            {{'Please Enter Digits'}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
                           
                             <div class="col-4">
                                 <div class="form-group">
@@ -328,3 +370,8 @@
 <app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="modalData" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
 
 <app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>
+
+
+
+
+     

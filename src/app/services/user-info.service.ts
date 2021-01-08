@@ -42,40 +42,129 @@ export class UserInfoService {
   
   } 
 
-  // getCustomerDetailByCustomerId(customerId : string){
 
-  //   const {
-  //     api : {
-  //       getCustomerDetailByCustomerId : {
-  //           workflowId,
-  //           processId,
-  //           projectId
-  //       }
-  //     }
-  // } = this.apiService;
+  fetchAllCustomers() {
 
-  // const data = {
-  //   currentCustomerId  : customerId,
-  //   temp : "get"
+    const {
+      api : {
+        getAllCustomerDetails : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
 
-  // }
 
-  // const requestEntity  : any  = {
-  //   processId,
-  //   ProcessVariables : data,
-  //   projectId
-  // }
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : {},
+    projectId
+  }
 
-  // const body = {
-  //   processVariables : JSON.stringify(requestEntity)
-  // };
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
 
-  // const formData = this.transform(body)
+  const formData = this.transform(body)
 
-  // let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  // return  this.httpService.post<any>(url,formData);
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
 
-  // }
+}
+
+  getCustomerDetailByCustomerId(customerId : string){
+
+    const {
+      api : {
+        getCustomerDetailByCustomerId : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  const data = {
+    currentCustomerId  : customerId,
+    temp : "get"
+
+  }
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+
+  }
+
+
+  /// create technical Admin details
+
+  createTechnicalAdmin(data) {
+
+    const processId = this.apiService.api.createTechnicalAdmin.processId;
+    const workflowId = this.apiService.api.createTechnicalAdmin.workflowId;
+    const projectId = this.apiService.api.createTechnicalAdmin.projectId;
+  
+  
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+  
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+  
+    const formData = this.transform(body);
+  
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  
+    return this.httpService.post(url,formData);
+  
+  }
+
+   /// create technical Admin details
+
+   createBilling(data) {
+
+    const processId = this.apiService.api.createBillingDetails.processId;
+    const workflowId = this.apiService.api.createBillingDetails.workflowId;
+    const projectId = this.apiService.api.createBillingDetails.projectId;
+  
+  
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+  
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+  
+    const formData = this.transform(body);
+  
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  
+    return this.httpService.post(url,formData);
+  
+  }
+  
   transform(data: any) {
     return new HttpParams({ fromObject: data });
   }   

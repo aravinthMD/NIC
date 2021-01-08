@@ -11,6 +11,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import { ToasterService } from '@services/toaster.service';
 import { MatDialog } from '@angular/material';
 import { SmsCreditDialogComponent } from './sms-credit-dialog/sms-credit-dialog.component'
+import { InvoiceService } from '@services/invoice.service';
+import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -71,6 +73,9 @@ remarkModal: boolean;
 
 showEmailModal: boolean;
 
+smsCredit:string;
+
+
 modalData: {
   title: string;
   request: any
@@ -83,6 +88,7 @@ showDataSaveModal: boolean;
     title: string;
     message: string
   }
+  userId: any;
 
 
 
@@ -93,9 +99,18 @@ showDataSaveModal: boolean;
     private activatedRoute: ActivatedRoute,
     private datePipe: DatePipe,
     private toasterService:ToasterService,
+    private invoiceService : InvoiceService,
+    private behser: BehaviourSubjectService,
     private dialog : MatDialog) { }
 
   ngOnInit() {
+      
+    this.behser.$userId.subscribe( res => {
+      this.userId = res;
+    });
+
+    console.log("userId>>>>in >> sms", this.userId);
+
     this.currentDate=this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	')
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -107,6 +122,8 @@ showDataSaveModal: boolean;
       status: new FormControl ([null]),
       onApprovalOf: new FormControl ([null]),
       remark: new FormControl ([null]),
+      smsTraffic: new FormControl([null]),
+      availableCredit: new FormControl([null]),
       statusChangedBy: new FormControl (['Akshaya']),
       timeStamp: new FormControl ([this.currentDate]),
     })
@@ -306,10 +323,35 @@ showDataSaveModal: boolean;
       this.toasterService.showError('Please fill all the mandatory fields','')
       return
     }
+    const smsCredit = {
+      "clientId":this.userId,
+      "smsApprover":this.smsCreditAllocation.value.smsApprover,
+      "dateOfRequest":this.smsCreditAllocation.value.date,
+      "balanceCredit":this.smsCreditAllocation.value.credit,
+      "status":this.smsCreditAllocation.value.status,
+      "onApprovalOf":this.smsCreditAllocation.value.onApprovalOf,
+      "remark":this.smsCreditAllocation.value.remark
+    } 
+this.invoiceService.smsCreditAllocationDetails(smsCredit).subscribe((response)=> {
+console.log('Response',response)
 
-    this.detectFormChanges()
-  }
+if(response['Error'] == '0' && response['ProcessVariables']['response']['type'] == 'Success') {
 
+  this.isDirty=false;
+  this.smsCreditAllocation.reset()
+ this.toasterService.showSuccess(response,'')
+
+}else {
+  this.toasterService.showError(response,'')
+}
+
+})
+
+
+   this.detectFormChanges()
+}
+   
+ 
   onSearch() {
 
     console.log(this.searchForm.value)
@@ -356,6 +398,7 @@ showDataSaveModal: boolean;
     
   }
 
+ 
 
   sendReminder(element) {
     this.showEmailModal = true;
@@ -369,6 +412,9 @@ showDataSaveModal: boolean;
       }
     }
   }
+  
+  
+
   onOkay() {
     this.showEmailModal = false;
   }
@@ -411,3 +457,6 @@ showDataSaveModal: boolean;
   }
 
 }
+
+ 
+

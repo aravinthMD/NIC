@@ -584,6 +584,35 @@ updatePurchaseOrder(data) {
   let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
   return  this.httpService.post<any>(url,formData);
   }
+
+
+  // creating sms credit allocation
+
+  smsCreditAllocationDetails(data) {
+
+    const processId = this.apiService.api.smsCreditAllocation.processId;
+    const workflowId = this.apiService.api.smsCreditAllocation.workflowId;
+    const projectId = this.apiService.api.smsCreditAllocation.projectId;
+  
+  
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+  
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+  
+    const formData = this.transform(body);
+  
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  
+    return this.httpService.post(url,formData);
+  
+  }
   
 
   transform(data: any) {

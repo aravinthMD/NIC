@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
+import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
+import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
 
 @Component({
@@ -14,6 +16,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
  
   labels:any ;
+  
   technicaladminform:FormGroup;
 
   billOwnerForm  :FormGroup;
@@ -49,6 +52,7 @@ teleCodeValues = [
 ]
 
 user: string;
+name: string;
 
 accountName: string;
 status: string;
@@ -57,18 +61,29 @@ detectAuditTrialObj: any;
 
 remarkModal: boolean;
 
+hideEditButton: boolean = false;
 showViewBill:boolean = true;
+userId;
+ 
 
 
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
     private router:Router,
+    private userInfoService:UserInfoService,
     private utilService:UtilService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private behser: BehaviourSubjectService
     ) { }
 
   ngOnInit() {
+    this.behser.$userId.subscribe( res => {
+      this.userId = res;
+    });
+
+    console.log("userId>>>>>>>>>>>>>", this.userId);
+    
 
    
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -204,11 +219,13 @@ showViewBill:boolean = true;
         value:this.billOwnerForm.value.remark
       }]
 
-  }
+  
+    }
 
   editData() {
     this.propertyFlag = false;
     this.showView = false;
+    // this.hideEditButton = true;
   }
 
   setFormValues() {
@@ -299,6 +316,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
 
   }
+
   onSubmit(){
     if(this.technicaladminform.invalid) {
       this.isDirty = true;
@@ -306,16 +324,60 @@ const departmentListData = this.departmentListData.filter((val)=> {
       return
     }
 
+    const techAdminDetails = {
+      "department":this.technicaladminform.value.departmentName,
+      "designation":this.technicaladminform.value.designation,
+      "emailAddress":this.technicaladminform.value.email,
+      "employeeCode":this.technicaladminform.value.employeeCode,
+      "mobileCode":this.technicaladminform.value.countryCode,
+      "mobileNumber":this.technicaladminform.value.mobileNo,
+      "telephoneCode":this.technicaladminform.value.teleCode,
+      "telephoneNumber":this.technicaladminform.value.telPhno,
+      "name": this.technicaladminform.value.name,
+      "officeAddressLine1":this.technicaladminform.value.offAddress1,
+      "officeAddressLine2":this.technicaladminform.value.offAddress2,
+      "officeAddressLine3":this.technicaladminform.value.offAddress3,
+      "city":this.technicaladminform.value.city,
+      "state":this.technicaladminform.value.state,
+      "pincode":this.technicaladminform.value.pinCode,
+      "remark":this.technicaladminform.value.remark, 
+      "clientUserId":this.userId,
+      
+    }
+      this.userInfoService.createTechnicalAdmin(techAdminDetails).subscribe((response)=> {
+  
+        console.log('Response',response)
+  
+         
+        if(response['Error'] == '0' && response) {
+       
+          this.isDirty=false;
+
+          this.technicaladminform.reset()
+          this.toasterService.showSuccess(response,'')
+           
+        }else {
+          this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+        }
+  
+      })
+
     this.showDataSaveModal = true;
 
     this.dataValue = {
-      title : "Technical Admin details saved Sucessfully",
-      message : "Are you sure want to proceed to Billing Admin Detail?"
+      title : "Account Created Sucessfully",
+      message : "Redirecting to Billing Admin Detail?"
     }
+
+    // this.dataValue = {
+    //   title : "Technical Admin details saved Sucessfully",
+    //   message : "Are you sure want to proceed to Billing Admin Detail?"
+    // }
 
     console.log('billOwnerForm',this.technicaladminform.value)
 
-    this.detectFormChanges()
+    // this.detectFormChanges()
+  
   
   }
 
@@ -463,3 +525,8 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
 
 }
+ 
+
+
+
+ 

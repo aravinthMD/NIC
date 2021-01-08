@@ -11,6 +11,9 @@ import {ToasterService} from '@services/toaster.service';
 
 import { Router,ActivatedRoute } from '@angular/router'
 import { UserInfoService } from '@services/user-info.service';
+import { MatTableDataSource } from '@angular/material';
+import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.component';
 
 
 @Component({
@@ -25,9 +28,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
   @Input('userObj') user : any;
 
   showDataSaveModal:boolean;
+     
+  hide = true;
 
   form : FormGroup
   existingUserFlag : boolean = false;
+  hideEditButton : boolean = false;
   existingPreviewUserFlag :  boolean;
   buttonName : any = "Save";
   propertyFlag : boolean;
@@ -39,6 +45,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   dataValue = {}
 
   viewInfoData : any;
+  type:String;
+  applicantName:string;
 
   // deparmentList : any[] = ['','Department of Sainik Welfare',
   //  'Minstry of minority affairs',
@@ -87,6 +95,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
     }
   ]
 
+  dataSource = new MatTableDataSource<any>();
+
   showStatusModal: boolean;
   modalMsg: string;
 
@@ -99,7 +109,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   imageUrl: string;
   fileSize: string = 'Size - 109.4 KB';
-  fileName: string = 'invoice.pdf';;
+  fileName: string = 'invoice.pdf';
+  customersList: any;
+  
+;
   fileType: string;
 
   detectAuditTrialObj: any;
@@ -110,9 +123,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
     rule?: any;
     msg?: string;
   }[];
+ private userPassWord: string;
 
-
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private userInfoService:UserInfoService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private userInfoService:UserInfoService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute, private beheSer : BehaviourSubjectService) {
 
     this.form =this.formBuilder.group({
       applicantName : [null],
@@ -209,8 +222,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
          
                 // this.detectFormChanges()
             });
-
-            // this.getCustomerDetailByCustomerId();
+            
+            this.fetchAllCustomerDetails();
+            // this.getCustomerDetailByCustomerId('');
 
   }
 
@@ -230,6 +244,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.propertyFlag = false;
     this.existingPreviewUserFlag  = false;
     this.existingUserFlag =  true
+    // this.hideEditButton = true;
     this.setFormValues();
   }
 
@@ -261,7 +276,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       city : 'Mumbai',
       state : 'Maharastra',
       pinCode : '641008',
-      smsTariffMonthWise : '1000',
+      // smsTariffMonthWise : '1000',
       piDuration : '6',
       projectNo : this.user || '8776',
       creditAdded : '1000',
@@ -277,9 +292,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
       OfficerMobile:'9768674555',
      
       smsServiceReqd: '1',
-      creditsSMSQuota: '4000',
+      // creditsSMSQuota: '4000',
      
-      availableCredit: '3000',
+      // availableCredit: '3000',
       nameOfTheApplication: 'Sathish',
       applicationUrl: 'www.applicant.com',
       serverLocation: 'Chennai',
@@ -310,10 +325,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   
     
     this.viewInfoData = [
-      {
-        key: this.labels.department,
-        value : "Ministry of Home Affairs"
-      },
+      
       {
         key : this.labels.applicantName,
         value : this.form.value.applicantName
@@ -325,6 +337,26 @@ export class UserInfoComponent implements OnInit,OnChanges {
       {
         key : this.labels.applicantMobile,
         value : this.form.value.mobileNo
+      },
+      {
+        key: this.labels.department,
+        value : "Ministry of Home Affairs"
+      },
+      {
+        key  :this.labels.designation,
+        value : this.form.value.designation
+      },
+      {
+        key  : this.labels.projectNo,
+        value : this.form.value.projectNo
+      },
+      // {
+      //   key  : this.labels.userId,
+      //   value  :  this.form.value.userId
+      // },
+      {
+        key : this.labels.password,
+        value : this.form.value.password?this.replaceStrar( this.form.value.password) : null
       },
       {
         key : "Officer Name",
@@ -339,17 +371,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
         value :this.form.value.OfficerMobile
       },
       {
-        key  :this.labels.designation,
-        value : this.form.value.designation
+        key  : "Official Address",
+        value  : `${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3},${this.form.value.city},${this.form.value.state} - ${this.form.value.pinCode}`
       },
       {
         key  : this.labels.teleNumber,
         value : `${this.form.value.teleCode}${this.form.value.telPhno}`
       },
-      {
-        key  : "Official Address",
-        value  : `${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3},${this.form.value.city},${this.form.value.state} - ${this.form.value.pinCode}`
-      },
+    
       {
         key  : this.labels.smsServiceReqd,
         value : 'Post Paid'
@@ -396,18 +425,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
       {
         key : "TRAI Exempted Sender ID",
         value : "No"
-      },
-      {
-        key  : this.labels.projectNo,
-        value : this.form.value.projectNo
-      },
-      {
-        key  : this.labels.userId,
-        value  :  this.form.value.userId
-      },
-      {
-        key : this.labels.password,
-        value : this.form.value.password
       },
       {
         key  : this.labels.creditAdded,
@@ -474,9 +491,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "OA_line3":this.form.value.offAddress3,
       "city":this.form.value.city,
       "state":this.form.value.state,
-      "pinCode":this.form.value.pincode,
+      "pincode":this.form.value.pinCode,
       "sms_service":this.form.value.smsServiceReqd,
-      "credits":this.form.value.creditAdded,
+      "credits":this.form.value.creditsSMSQuota,
       "sms_traffic":this.form.value.domMonSmsTraffic,
       "name_applicant":this.form.value.nameOfTheApplication,
       "available_credit":this.form.value.userName,
@@ -500,13 +517,15 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.userInfoService.createCustomerDetails(userInfo).subscribe((response)=> {
 
       console.log('Response',response)
-
-      if(response['Error'] == '0' && response['ProcessVariables']['response']['type'] == 'Success') {
+ 
+      if(response['Error'] == '0' && response) {
 
         this.isDirty=false;
         this.form.reset()
-        this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
-
+        this.toasterService.showSuccess(response,'')
+        console.log('userId........', userInfo.userId);
+        this.beheSer.setUserId(userInfo.userId);
+        // console.log('userId ]]]]]]',this.beheSer.userId);
       }else {
         this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
       }
@@ -522,7 +541,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     // console.log(this.fromDate)
     console.log(this.form.value)
 
-    this.detectFormChanges()
+    // this.detectFormChanges()
 
     this.showDataSaveModal = true;
 
@@ -535,11 +554,23 @@ export class UserInfoComponent implements OnInit,OnChanges {
     
   }
 
+  fetchAllCustomerDetails() {
+
+    this.userInfoService.fetchAllCustomers().subscribe((response)=> {
+
+      this.customersList = response['ProcessVariables']['customerList'];
+
+      console.log(response)
+
+      this.dataSource = new MatTableDataSource<any>(this.customersList);
+    })
+  }
+
   // getCustomerDetailByCustomerId(id:string){
 
-  //   this.userInfoService.getCustomerDetailByCustomerId('24').subscribe((response) => {
+  //   this.userInfoService.getCustomerDetailByCustomerId('id').subscribe((data) => {
 
-  //     console.log(response)
+  //     console.log(data)
 
   //   },(error) => {
 
@@ -823,9 +854,52 @@ export class UserInfoComponent implements OnInit,OnChanges {
     })
     this.router.navigate(['/users/techAdmin/'+pno])
   }
+  replaceStrar(getPassWord){
+    this.userPassWord = getPassWord;
+    return '*'.repeat(this.userPassWord.length)
+  }
 
 }
 
+
+
+// table Data
+
+// applicantEmail: "test@gmail.com"
+// applicantMobile: "8675898756"
+// applicantName: "test"
+// applicantSecurityAudit: "cleared"
+// applicationName: "application"
+// applicationPurpose: "purpose"
+// appurl: "url"
+// auditDate: "2021-01-03T18:30:00.000Z"
+// availableCredits: ""
+// city: "test"
+// credits: ""
+// department: "2"
+// departmentName: "Department Test"
+// foDesignation: "test"
+// foEmail: "test@gmail.com"
+// foMobile: "8576478567"
+// foName: "officername"
+// ipForm: "sms"
+// ipStaging: "23.23.23.23"
+// officeTeleNumber: "9867859"
+// officialAddress1: "line1"
+// officialAddress2: "line2"
+// officialAddress3: "line3"
+// passWord: "demo@123"
+// pincode: ""
+// projectNumber: "12"
+// projectedDomestic: "sms"
+// projectedInternational: "projected"
+// requiredSmsService: "0"
+// serverLocation: "location"
+// smsTraffic: "sms"
+// state: "test"
+// traiExempted: "0"
+// uploadDocument: ""
+// userId: "72"
 
 
  
