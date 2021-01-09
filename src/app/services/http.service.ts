@@ -12,6 +12,11 @@ export class HttpService {
     return this.http.get(url, params);
   }
 
+  post(url: string, params: any) {
+    return this.http.post(url, params);
+  }
+  
+
   // post(
   //   url: string,
   //   requestEntity: any,

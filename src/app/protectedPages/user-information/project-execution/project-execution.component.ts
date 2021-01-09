@@ -10,12 +10,14 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
+import { ProjectExecutionService } from './services/project-execution.service';
 
 
 @Component({
   selector: 'app-project-execution',
   templateUrl: './project-execution.component.html',
-  styleUrls: ['./project-execution.component.scss']
+  styleUrls: ['./project-execution.component.scss'],
+  providers: [ ProjectExecutionService]
 })
 export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
@@ -92,6 +94,7 @@ dataValue: {
               private router: Router,
               private invoiceService : InvoiceService,
               private datePipe:DatePipe,
+              private projectExecutionService: ProjectExecutionService
               ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
@@ -159,9 +162,23 @@ dataValue: {
 
     this.getProjectExecutionDetails();     //Getting the Projet Execution details API
 
-    this.getProjectExecutionDetailById();
+    // this.getProjectExecutionDetailById();
 
-    this.deleteProjectExecution();
+  //  this.deleteProjectExecution();
+  }
+
+
+
+  searchProjectExecution() {
+      const data = {
+        searchKeyword: this.searchForm.get('searchData').value,
+        fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
+        toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
+      }
+      this.projectExecutionService
+          .searchProjectExecution(data).subscribe((value) => {
+            console.log('value', value);
+          })
   }
 
 
