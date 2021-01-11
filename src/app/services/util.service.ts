@@ -7,12 +7,15 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 export class UtilService {
 
   detectSidNav$: BehaviorSubject<string> = new BehaviorSubject('');
+  clearDirty$: BehaviorSubject<string> = new BehaviorSubject('');
+  userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
+
+
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
     }
 
-    clearDirty$: BehaviorSubject<string> = new BehaviorSubject('');
     
     setClearDirty(data) {
         this.clearDirty$.next(data)
@@ -24,7 +27,6 @@ export class UtilService {
         this.projectNumber$.next(data)
     }
 
-    userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
     
     setUserDetails(data) {
         this.userDetails$.next(data)
