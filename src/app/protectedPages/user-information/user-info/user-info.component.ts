@@ -528,7 +528,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
         this.isDirty=false;
         this.form.reset()        
-        this.beheSer.setUserId(userInfo.userId);
+        this.beheSer.setUserId(response['ProcessVariables']['generatedCustomerId']);
          this.showDataSaveModal = true;
 
         this.dataValue = {

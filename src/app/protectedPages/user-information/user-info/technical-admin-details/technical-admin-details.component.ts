@@ -79,6 +79,7 @@ userId;
 
   ngOnInit() {
     this.behser.$userId.subscribe( res => {
+      console.log("Cleint ID  ",res)
       this.userId = res;
     });
 
