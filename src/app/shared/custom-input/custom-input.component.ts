@@ -41,6 +41,7 @@ export class CustomInputComponent
     msg?: string;
   };
   @Input() className = '';
+  @Input() placeHolder = ''
   @Input() optional: string;
   @Input() minLength: {
     rule?: number;
@@ -78,6 +79,8 @@ export class CustomInputComponent
       this.checkIsFirst = false;
       this.checkValidation(this.data);
       //this.propagateChange(this.data);
+    }else {
+      this.inputError = false;
     }
   }
 

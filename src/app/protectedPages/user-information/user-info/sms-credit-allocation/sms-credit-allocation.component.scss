@@ -116,15 +116,15 @@ tr.example-element-row:hover {
     padding: 0;
 }
 
-.mat-expansion-panel-header {
-    line-height: 24px;
-    background-color: #dfdfdf !important;
-    font-weight: 500 !important;
-}
+// .mat-expansion-panel-header {
+//     line-height: 24px;
+//     background-color: #dfdfdf !important;
+//     font-weight: 500 !important;
+// }
 
-.mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
-    background-color: #dfdfdf !important;
-}
+// .mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
+//     background-color: #dfdfdf !important;
+// }
 
 .mat-expansion-panel-body {
     padding: 0px !important;
@@ -140,17 +140,17 @@ mat-expansion-panel-header#mat-expansion-panel-header-0 {
   }
   
   th.mat-header-cell {
-    flex: 0 25% !important;
-    width: 25% !important;
+    flex: 0 16% !important;
+    width: 16% !important;
     line-height: 20px !important;
-    text-align: center;
+    text-align: left;
   }
   
   td.mat-cell {
     line-height: 24px !important;
-    text-align: center;
-    flex: 0 25% !important;
-    width: 25% !important;
+    text-align: left;
+    flex: 0 16% !important;
+    width: 16% !important;
     line-height: 20px !important;
     word-break: break-all;
   }
@@ -170,4 +170,61 @@ mat-expansion-panel-header#mat-expansion-panel-header-0 {
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
     padding: .4375em 0 13px 0px !important;
+}
+
+.background-none {
+    background-color: initial !important;
+    color: #0e4d92 !important;
+}
+
+mat-card .history-card {
+
+    background: #0d4d92 !important;
+    margin-bottom: 20px !important;
+}
+
+mat-card {
+    width: 100% !important;
+}
+
+.mat-expansion-panel-header {
+    line-height: 24px;
+    margin-bottom: 10px;
+    // background-color: #dfdfdf !important;
+    background-color: #0d4d92 !important;
+    font-weight: 500 !important;
+}
+
+.mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
+    // background-color: #dfdfdf !important;
+    background-color: #0d4d92 !important;
+}
+
+.mat-expansion-panel-header-title {
+    display: flex;
+    flex-grow: 1;
+    margin-right: 16px;
+    color: #f8f9fa;
+}
+
+:host ::ng-deep .mat-expansion-indicator::after {
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    content: '';
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    vertical-align: middle;
+    color: #f8f9fa;
+}
+
+mat-card{
+
+    box-shadow: none !important;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: -0.1rem;
+    font-size: 16px;
 }

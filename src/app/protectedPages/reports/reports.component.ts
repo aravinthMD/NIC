@@ -7,6 +7,7 @@ import {map, startWith} from 'rxjs/operators';
 import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
 
 
 @Component({
@@ -29,12 +30,12 @@ export class ReportsComponent implements OnInit {
 
 
   userList : any[] = [
-    {userId : "arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",projectNumber: '2356',status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/05/2020'},
-    {userId : "kumar.auth",department : "Department of School Education",state : "Delhi",projectNumber: '4532',status :"InActive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
-    {userId : "Jain.auth",department : "Election Department , Manipur",state : "Manipur",projectNumber: '6445',status :"InActive",id:3,po:'Raised',pi:'',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/04/2020'},
-    {userId : "Jain.auth",department : "Director of emloyment and ceo",state : "Delhi",projectNumber: '5454',status :"Active",id:3,po:'Raised',pi:'pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6789',piDate:'21/07/2020'},
-    {userId : "Jain.auth",department : "revenue Department, tripura ",state : "tripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/04/2020'},
-    {userId : "Jain.auth",department : "Land records and settlement ",state : "delhi",projectNumber: '7554',status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/06/2020'},
+    {userId : "Arul.auth",department : "Finance Department Uttarakhand",state : "Uttarakhand",projectNumber: '2356',status :"Active",id:1,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'4355',piDate:'12/07/2020'},
+    {userId : "Kumar.auth",department : "Department of School Education",state : "Delhi",projectNumber: '4532',status :"Inactive",id:2,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'2313',piDate:'15/06/2020'},
+    {userId : "Jain.auth",department : "Election Department, Manipur",state : "Manipur",projectNumber: '6445',status :"Inactive",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6574',piDate:'08/05/2020'},
+    {userId : "Jain.auth",department : "Director of Emloyment and CEO",state : "Delhi",projectNumber: '5454',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6789',piDate:'21/04/2020'},
+    {userId : "Jain.auth",department : "Revenue Department, Tripura ",state : "Tripura",projectNumber: '6453',status :"Active",id:3,po:'Raised',pi:'Pending',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'6743',piDate:'11/03/2020'},
+    {userId : "Jain.auth",department : "Land Records and Settlement ",state : "Delhi",projectNumber: '7554',status :"Active",id:3,po:'Raised',pi:'Approved',invoiceRaised:'True',paymentStatus:'Approved',piNumber:'5432',piDate:'12/02/2020'},
   ]
 
   userListPT :  any[] = [
@@ -92,6 +93,37 @@ export class ReportsComponent implements OnInit {
     }
   ]
 
+  smsCreditList = [
+    {
+      smsQuotaApprovalMetrix: 'dureja.sk@nic.in',
+      credits: "5000",
+      date:'16/12/2020',
+      status: 'Pending',
+      projectNo :  '4535'
+    },
+    {
+      smsQuotaApprovalMetrix: 'arpita.burman@nic.in',
+      credits: "6000",
+      date:'14/12/2020',
+      status: 'Approved',
+      projectNo  : '6534'
+    },
+    {
+      smsQuotaApprovalMetrix: 'sshanker@nic.in',
+      credits: "4000",
+      date:'13/12/2020',
+      status: 'Pending',
+      projectNo   : '7644'
+    },
+    {
+      smsQuotaApprovalMetrix: 'pradeep.garg@nic.in',
+      credits: "3000",
+      date:'12/12/2020',
+      status: 'Rejected',
+      projectNo  : '6454'
+    }
+  ]
+
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
@@ -99,7 +131,7 @@ export class ReportsComponent implements OnInit {
 
   options: string[] = ['arul.auth','kumar.auth','gonnade.auth','Rajesh.auth','swapnil.parab.auth','abijith.auth','ankit.auth','ketan.auth'];
   projectNoDropDownList : string[] = ['2356','4532','6445','5454','6453','7554','8857','9568'];
-  departMentDropDownList :  string[] = ['Finance Department Uttarakhand','Department of School Education','Election Department','Director of emloyment and ceo','revenue Department'];
+  departMentDropDownList :  string[] = ['Finance Department Uttarakhand','Department of School Education','Election Department','Director of Emloyment and CEO','Revenue Department'];
   stateDropDownList : string[] = ['TamilNadu','Kerala','AndhraPradesh','Karnataka','Mizoram','Maharastra','Gujarat','Punjab','MadhyaPradesh','NagaLand']
 
   
@@ -147,6 +179,10 @@ paymnettrackkey:any[]=[
     value : "Paid and Unpaid"
   },
   {
+    key : 10,
+    value : "SMS Credit Allocation"
+  },
+  {
     key: 1,
     value:'Proforma Invoice Raised'
   },
@@ -176,7 +212,7 @@ reportFilter = [
   },
   {
     key:'2',
-    value:'ProjectNo'
+    value:'Project No'
   },
   {
     key:'3',
@@ -189,14 +225,14 @@ reportFilter = [
 ]
 
 userStatus  = [
-  {"key":'1',"value" :"ALL"},
+  {"key":'1',"value" :"All"},
   {"key":"2","value":"Active"},
-  {"key":"3","value":"InActive"}
+  {"key":"3","value":"Inactive"}
 ]
   
 
 
-  constructor(private formBuilder: FormBuilder,private utilService: UtilService) {
+  constructor(private formBuilder: FormBuilder,private utilService: UtilService,private toasterService: ToasterService) {
 
     this.form = this.formBuilder.group({
       reports: [''],
@@ -219,7 +255,7 @@ userStatus  = [
     this.dropdownSettings  = {
       singleSelection: false,
       selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      unSelectAllText: 'Unselect All',
       allowSearchFilter: true,
       enableCheckAll : true,
       clearSearchFilter : true,
@@ -289,6 +325,11 @@ userStatus  = [
       this.dataList = this.userListpaid;
     }
 
+    if(reportVal == 10){
+      this.id = Number(reportVal)
+      this.dataList = this.smsCreditList;
+    }
+
 
     console.log(this.form.value)
 
@@ -319,15 +360,15 @@ userStatus  = [
         {value:'Not Raised',key:'4'},
         {value:'PO Claim Full',key:'5'},
         {value:'PO Claim Partially',key:'6'},
-        {value:'PO need to amend',key:'7'},
-        {value: 'PO need cancelled',key:'8'}
+        {value:'PO Need to Amend',key:'7'},
+        {value:'PO Need Cancelled',key:'8'}
       ]
 
     }else if(data == '3') {
       this.optionValue = [
         {value:'Validated',key:'1'},
         {value:'Pending for Validation',key:'2'},
-        {value:'on Hold',key:'3'},
+        {value:'On Hold',key:'3'},
         {value:'Submitted to NIICSI',key:'4'},
         {value:'Not Submitted to NICSI',key:'5'},
         {value:'Paid',key:'6'},
@@ -339,6 +380,12 @@ userStatus  = [
       this.optionValue = [
         {value:'Received',key:'1'},
         {value:'Pending',key:'2'}
+      ]
+    }else if(data == '10') {
+      this.optionValue = [
+        {value:'Approved',key:'1'},
+        {value:'Rejected',key:'2'},
+        {value:'Pending',key:'3'}
       ]
     }else if(data == '5'){
       this.optionValue = [];
@@ -418,8 +465,23 @@ userStatus  = [
     }
   }
 
-  formDateFunc(event) {
+  detectDateKeyAction(event,type) {
 
+    console.log(event)
+  
+    if(type == 'fromDate') {
+
+      this.form.patchValue({
+        fromDate: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'toDate') {
+      this.form.patchValue({
+        toDate: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
+    
   }
 
   exportCSV(datatable:any[]) {

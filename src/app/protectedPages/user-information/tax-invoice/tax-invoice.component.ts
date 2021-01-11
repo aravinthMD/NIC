@@ -4,10 +4,13 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
-import { ActivatedRoute } from '@angular/router'
+import { Router,ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
-import { UtilService } from '@services/util.service'
+import { UtilService } from '@services/util.service';
+import { ToasterService } from '@services/toaster.service';
+import { InvoiceService } from '@services/invoice.service';
+
 
 @Component({
   selector: 'app-tax-invoice',
@@ -18,7 +21,13 @@ export class TaxInvoiceComponent implements OnInit {
 
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
 
-  @Input('userObj') user : any;
+  @Input('userObj') user : any; 
+
+//    monthList = [ "January", "February", "March", "April", "May", "June",
+// "July", "August", "September", "October", "November", "December" ];
+
+//  yearList = [ "2020", "2021", "2022", "2023", "2024", "2025",
+// "2026", "2027", "2028", "2029", "2030", "2031" ];
 
   displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks','Active']
 
@@ -51,7 +60,7 @@ export class TaxInvoiceComponent implements OnInit {
       {kwy : 3,value : 'Return by NICSI'}
     ]
 
-  dataSource = new MatTableDataSource<any>(this.userList);
+  dataSource = new MatTableDataSource<any>([]);
   taxInvoiceForm:FormGroup;
   searchForm : FormGroup;
   labels: any ={};
@@ -62,9 +71,18 @@ export class TaxInvoiceComponent implements OnInit {
   status: string;
   propertyFlag: boolean;
 
-  constructor(private labelsService: LabelsService,
-    private Datepipe:DatePipe,private activatedRoute: ActivatedRoute,
-    private dialog : MatDialog, private utilService: UtilService) { }
+  storeProjectNo: string;
+
+  constructor(
+      private labelsService: LabelsService,
+      private Datepipe:DatePipe,
+      private activatedRoute: ActivatedRoute,
+      private dialog : MatDialog,
+      private utilService: UtilService,
+      private toasterService: ToasterService,
+      private router: Router,
+      private invoiceService : InvoiceService
+      ) { }
 
   ngOnInit() {
     this.labelsService.getLabelsData().subscribe((values)=> {
@@ -75,7 +93,7 @@ export class TaxInvoiceComponent implements OnInit {
       userName: new FormControl(null),
       taxIN:new FormControl(null),
       invoiceDate:new FormControl(null),
-      projectNo:new FormControl(null),
+      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
       poNumber:new FormControl(null),
       poDate:new FormControl(null),
       fromDate:new FormControl(null),
@@ -90,7 +108,24 @@ export class TaxInvoiceComponent implements OnInit {
       penalty :  new FormControl(null),
       shortPay : new FormControl(null),
       submittedOn : new FormControl(null),
-      poBillable : new FormControl(null)
+      projectName:new FormControl(null),
+      projectCordinator:new FormControl(null),
+      PONoAmendOrder:new FormControl(null),
+      mail:new FormControl(null),
+      totalSMS:new FormControl(null),
+      counts:new FormControl(null),
+      baseAmount : new FormControl(null),
+      tax:new FormControl(null),
+      recvDate : new FormControl(null),
+      book :  new FormControl(null),
+      dateEstimated :  new FormControl(null),
+      invoiceAmount2 : new FormControl(null),
+      bankReceived : new FormControl(null),
+      interestOnTDSotherDeduction : new FormControl(null),
+      receiptDate :  new FormControl(null),
+      month : new FormControl(null),
+      year : new FormControl(null),
+      mrn : new FormControl(null)
     })
 
     this.searchForm = new FormGroup({
@@ -106,6 +141,8 @@ export class TaxInvoiceComponent implements OnInit {
     })
 
     this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
 
       this.userList =   [
    
@@ -129,14 +166,122 @@ export class TaxInvoiceComponent implements OnInit {
 
     })
 
-    this.dataSource = new MatTableDataSource<any>(this.userList);
-
+    // this.dataSource = new MatTableDataSource<any>(this.userList);
+    this.getAllTaxInvoiceDetails();
   }
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
   }
+
+  getAllTaxInvoiceDetails(){
+
+    this.invoiceService.getTaxInvoiceDetails().subscribe((response) => {
+      const DataTaxInvoiceList = response["ProcessVariables"]["TIList"]
+      this.dataSource = new MatTableDataSource<any>(DataTaxInvoiceList);
+    },(error) =>{
+      this.toasterService.showError(error,'')
+    })
+
+  }
+
+
+  createTaxInvoice(){
+    const feildControls = this.taxInvoiceForm.controls;
+    const userName = feildControls.userName.value;
+    const taxIN  = feildControls.taxIN.value;
+    const invoiceDate = feildControls.invoiceDate.value;
+    const projectNo = feildControls.projectNo.value;
+    const poNumber = feildControls.poNumber.value;
+    const poDate = feildControls.poDate.value;
+    const fromDate = feildControls.fromDate.value;
+    const toDate = feildControls.toDate.value;
+    const invoiceAmount = feildControls.invoiceAmount.value;
+    const remark = feildControls.remark.value;
+    const uploadDoc = feildControls.uploadDoc.value;
+    const paymentStatus = +feildControls.paymentStatus.value;
+    const invoiceStatus = +feildControls.invoiceStatus.value;
+    const invoiceAmountPaid = feildControls.invoiceAmountPaid.value;
+    const tds = feildControls.tds.value;
+    const penalty = feildControls.penalty.value;
+    const shortPay = feildControls.shortPay.value;
+    const submittedOn = feildControls.submittedOn.value;
+    const poBillable = feildControls.poBillable.value;
+    const projectName = feildControls.projectName.value;
+    const projectCordinator = feildControls.projectCordinator.value;
+    const PONoAmendOrder = +feildControls.PONoAmendOrder.value;
+    const mail = +feildControls.mail.value;
+    const totalSMS = feildControls.totalSMS.value;
+    const counts = feildControls.counts.value;
+    const baseAmount = feildControls.baseAmount.value;
+    const tax = feildControls.tax.value;
+    const book = feildControls.book.value;
+    const invoiceAmount2 = feildControls.invoiceAmount2.value;
+    const bankReceived = feildControls.bankReceived.value;
+    const interestOnTDSotherDeduction = feildControls.interestOnTDSotherDeduction.value;
+    const mrn = feildControls.mrn.value;
+    const recvDate = feildControls.recvDate.value;
+    const receiptDate = feildControls.receiptDate.value;
+    const dateEstimated = feildControls.dateEstimated.value;
+
+    
+    const formattedRecvDate = this.Datepipe.transform(recvDate,'dd/MM/yyyy')
+    const formattedReceiptDate = this.Datepipe.transform(receiptDate,'dd/MM/yyyy')
+    const formattedDateEstimated = this.Datepipe.transform(dateEstimated,'dd/MM/yyyy')
+
+    const Data = {
+      userName,
+      projectNumber : projectNo,
+      poNumber,
+      poDate,
+      fromDate,
+      toDate,
+      billableAmount : poBillable,
+      InvoiceAmount : invoiceAmount,
+      TaxInvoiceNumber  : taxIN,
+      submittedDate :  submittedOn,
+      InvoiceStatus  : invoiceStatus,
+      InvoicePaidAmount : invoiceAmountPaid,
+      tds,
+      penalty,
+      shortPay,
+      paymentStatus,
+      remark,
+      projectName,
+      projectCordinator,
+      PONoAmendOrder,
+      mail,
+      totalSMS,
+      counts,
+      baseAmount,
+      tax,
+      book,
+      invoiceAmount2,
+      bankReceived,
+      interestOnTDSotherDeduction,
+      mrn,
+      receiptDate : formattedReceiptDate,
+      recvDate :formattedRecvDate,
+      dateEstimated :formattedDateEstimated,
+		  uploadDocument  : "file"
+
+    }
+
+    this.invoiceService.createTaxInvoice(Data).subscribe((response) =>{
+
+            console.log(response["ProcessVariables"])
+            if(response["ProcessVariables"]){
+              this.toasterService.showSuccess('Tax Invoice Form Submitted Sucessfully','');
+              this.taxInvoiceForm.reset();
+            }
+
+    },(error) => {
+      console.log(error)
+    })
+    
+  }
+
   taxInForm(){
     if(this.taxInvoiceForm.invalid) {
      
@@ -169,9 +314,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   OnEdit(fromObj :  any){
     const dialogRef = this.dialog.open(TaxInvoiceDialogComponent, {
-      data : {
-        value : 'testing'
-      }
+      data : fromObj.currentTIId
     })
 
     dialogRef.afterClosed().subscribe((result) =>{
@@ -182,6 +325,56 @@ export class TaxInvoiceComponent implements OnInit {
  getDownloadXls(){
    this.utilService.getDownloadXlsFile(this.userList,"TaxInvoice");
  }
+
+ detectDateKeyAction(event,type) {
+
+  console.log(event)
+  
+  if(type == 'poDate') {
+
+    this.taxInvoiceForm.patchValue({
+      poDate: ''
+    })
+    this.toasterService.showError('Please click the PO date icon to select date','');
+  }else if(type == 'fromDate') {
+
+    this.taxInvoiceForm.patchValue({
+      fromDate: ''
+    })
+    this.toasterService.showError('Please click the fromDate icon to select date','');
+  }else if(type == 'toDate') {
+
+    this.taxInvoiceForm.patchValue({
+      toDate: ''
+    })
+    this.toasterService.showError('Please click the toDate icon to select date','');
+  }else if(type == 'submittedOn') {
+
+    this.taxInvoiceForm.patchValue({
+      submittedOn: ''
+    })
+    this.toasterService.showError('Please click the submittedOn icon to select date','');
+  }else if(type == 'searchFrom') {
+    this.searchForm.patchValue({
+      searchFrom: ''
+    })
+    this.toasterService.showError('Please click the fromdate icon to select date','');
+  }else if(type == 'searchTo') {
+    this.searchForm.patchValue({
+      searchTo: ''
+    })
+    this.toasterService.showError('Please click the todate icon to select date','');
+  }
+  
+}
+
+back() {
+
+  this.utilService.setCurrentUrl('users/purchaseOrder')
+
+  this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
+}
 
 
 }

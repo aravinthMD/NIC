@@ -5,6 +5,9 @@ import { LabelsService } from '../../../../services/labels.service';
 import { DatePipe } from '@angular/common';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
+import { InvoiceService } from '@services/invoice.service';
 
 @Component({
   selector: 'app-proforma-invoice-dialog-form',
@@ -16,6 +19,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   buttonName : any = 'Edit'
   enableflag :boolean = true;
 
+  dataForm : any = {}
+  currentPIId : string =  '';
   
   removable = false;;
 
@@ -69,31 +74,57 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   remarkModal:boolean;
   detectAuditTrialObj:any;
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
+  showUpdate: boolean;
+
+  showEdit: boolean;
+
+  viewInfoData: any;
+
   
-  constructor( public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
-    
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private sanitizer: DomSanitizer) { 
+  constructor( 
+    public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
+    private toasterService: ToasterService,
+    private labelsService: LabelsService,
+    private formBuilder : FormBuilder,
+    private datePipe: DatePipe,
+    private utilService: UtilService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private invoiceServoice : InvoiceService
+    ) { 
 
     console.log(data)
 
     this.form =this.formBuilder.group({
     
-      accountName: ['Suresh'],
-      invoiceNumber : ['4355'],
-      refNumber: ['43434'],
-      piTraffic: ['5678'],
-      piOwner: ['Raja'],
+      accountName: [''],
+      invoiceNumber : [''],
+      refNumber: [''],
+      piTraffic: [''],
+      piOwner: [''],
       date: new Date(),
-      nicsiManager: ['2'],
-      piAmount: ['50000'],
+      nicsiManager: [''],
+      piAmount: [''],
       startDate:new Date(),
       endDate:new Date(),
-      piStatus: ['2'],
-      paymentStatus:['2'],
-      remark:['testing']
+      piStatus: [''],
+      paymentStatus:[''],
+      remark:['']
     })
     this.detectAuditTrialObj=this.form.value
   }
+
 
   ngOnInit() {
 
@@ -101,17 +132,185 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       this.labels = values;
     })
 
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+
+    })
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    this.viewInfoData = [
+      {
+        key: this.labels.accountName,
+        value:this.form.value.accountName
+      },
+      {
+        key: this.labels.proformaIN,
+        value:this.form.value.invoiceNumber
+      },
+      {
+        key: this.labels.refNo,
+        value:this.form.value.refNumber
+      },
+      {
+        key: this.labels.piOwner,
+        value:this.form.value.piOwner
+      },
+      {
+        key: this.labels.piAmount,
+        value:this.form.value.piAmount
+      },
+      {
+        key: this.labels.piTraffic,
+        value:this.form.value.piTraffic
+      },
+      {
+        key: this.labels.date,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: 'NICSI Manager',
+        value:'vinod.agrawal@nic.in'
+      },
+      {
+        key: 'Start Date',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: 'End Date',
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: 'PI Status',
+        value:'Pending'
+      },
+      {
+        key: 'Payment Status',
+        value:'On hold'
+      },
+      {
+        key: this.labels.remark,
+        value:this.form.value.remark
+      },
+      {
+        key: 'Document',
+        value:'invoice.pdf'
+      },
+
+    ]
+
+    this.getProformaInvoiceDetailById(this.data);
+
+  }
+
+  getProformaInvoiceDetailById(proformaInvoiceId : string){
+    
+    this.invoiceServoice.getProformaInvoiceDetailById(proformaInvoiceId).subscribe((response) => {
+
+      console.log(response);
+      this.dataForm =  response['ProcessVariables'];
+      this.currentPIId = response['ProcessVariables']['currentPIId'];
+      this.assignToForm(this.dataForm);
+
+    },(error) => {
+        this.toasterService.showError(error,'')
+    })
+
+  }
+
+
+  OnEdit() {
+
+    this.showUpdate = true;
+    this.enableflag = false;
+    this.showEdit = true;
+  }
+
+  assignToForm(dataForm : any){
+
+    this.form.patchValue({
+
+      accountName : this.dataForm['AccountName'] || '',
+      invoiceNumber : this.dataForm['piNumber'] || '',
+      refNumber : this.dataForm['ReferenceNumber'] || '',
+      piTraffic  : this.dataForm['Traffic'] || '',
+      piOwner : this.dataForm['Owner'] || '',
+      date  : this.dataForm['piDate'] || '',
+      nicsiManager  :this.dataForm['NICSIManager'] || '',
+      piAmount  :this.dataForm['piAmount'] || '',
+      startDate : this.dataForm['startDate'] || '',
+      endDate : this.dataForm['endDate'] || '',
+      piStatus : this.dataForm['piStatus'] || '',
+      paymentStatus : this.dataForm['paymentStatus'] || '',
+      remark : this.dataForm['remark'] || ''
+
+
+    })
+
+  }
+
+  updateProformaInvoice(){
+
+
+    const feildControls = this.form.controls;
+    const accountName = feildControls.accountName.value;
+    const invoiceNumber = feildControls.invoiceNumber.value;
+    const refNumber = feildControls.refNumber.value;
+    const piTraffic = feildControls.piTraffic.value;
+    const piOwner = feildControls.piOwner.value;
+    const date = feildControls.date.value;
+    const nicsiManager = feildControls.nicsiManager.value;
+    const piAmount = feildControls.piAmount.value;
+    const startDate = feildControls.startDate.value;
+    const endDate = feildControls.endDate.value;
+    const piStatus = feildControls.piStatus.value;
+    const paymentStatus = feildControls.paymentStatus.value;
+    const remark = feildControls.remark.value;
+
+
+    const Data =  {
+      AccountName : accountName,
+      piNumber : invoiceNumber,
+      ReferenceNumber : refNumber,
+      Traffic : piTraffic,
+      Owner : piOwner,
+      piDate : date,
+      NICSIManager : nicsiManager,
+      piAmount : piAmount,
+      startDate : startDate,
+      endDate : endDate,
+      piStatus : +piStatus,
+      paymentStatus : +paymentStatus,
+      remark : remark,
+      currentPIId : this.currentPIId,
+      temp : 'update',
+      selectedPIId : this.currentPIId
+    }
+
+
+    this.invoiceServoice.updateProformaInvoice(Data).subscribe((response) => {
+      this.toasterService.showSuccess('PI Details Updated Successfully','')
+      console.log(response)
+      
+    },(error) => {
+      this.toasterService.showError(error,'');
+    })
+
   }
 
   OnUpdate(){
-    if(this.buttonName=='Update'){
-      this.detectFormChanges();
-      }
-    this.buttonName = 'Update';
-    this.enableflag = false;
+  
+    this.detectFormChanges();
+   
+   
 
     if(this.form.invalid) {
       this.isDirty = true;
+      return;
     }
 
     this.form.value['fromDate'] = this.datePipe.transform(this.form.value['fromDate'], 'dd/MM/yyyy')
@@ -120,6 +319,38 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     this.form.value['poDate'] = this.datePipe.transform(this.form.value['poDate'], 'dd/MM/yyyy')
 
     console.log(this.form.value)
+
+    this.showDataSaveModal = true;
+        this.dataValue= {
+          title: 'Proforma Invoice Saved Successfully',
+          message: 'Are you sure you want to proceed project execution page?'
+        }
+  }
+
+  saveYes()
+  {
+ 
+   this.showDataSaveModal = false;
+ 
+   this.closeDialog()
+   this.next()
+ 
+
+ 
+  }
+ 
+  saveCancel() {
+ 
+   this.showDataSaveModal = false;
+   this.closeDialog()
+  
+  }
+
+  next() {
+
+    this.utilService.setCurrentUrl('users/projectExecution')
+
+    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
 
   }
 
@@ -312,6 +543,32 @@ download(){
 showPDF() {
   this.showUploadModal = false;
   this.showPdfModal = true;
+}
+
+detectDateKeyAction(event,type) {
+
+  console.log(event)
+  
+  if(type == 'date') {
+
+    this.form.patchValue({
+      date: ''
+    })
+    this.toasterService.showError('Please click the date icon to select date','');
+  }else if(type == 'startDate') {
+
+    this.form.patchValue({
+      startDate: ''
+    })
+    this.toasterService.showError('Please click the startDate icon to select date','');
+  }else if(type == 'endDate') {
+
+    this.form.patchValue({
+      endDate: ''
+    })
+    this.toasterService.showError('Please click the endDate icon to select date','');
+  }
+  
 }
 
 }

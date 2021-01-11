@@ -6,12 +6,12 @@
 
         <mat-accordion>
             <mat-expansion-panel>
-                <mat-expansion-panel-header matRipple>
+                <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px">
                     <mat-panel-title>
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Purchase Order
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <form (submit)="POForm()" [formGroup]="PurchaseOrderForm">
+                <form  [formGroup]="PurchaseOrderForm" (keydown.enter)="$event.preventDefault()">
                     <!--FIRST ROW-->
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
             <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
@@ -21,7 +21,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="userName" [isRequired]="'User name is Mandatory'" [labelName]="labels.userName" [maxLength]="labels?.validationData?.userName?.maxLength" [type]="labels?.validationData?.userName?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="userName" 
+                                  [isRequired]="'User Name is Mandatory'" 
+                                  [labelName]="labels.userName" 
+                                  placeHolder =  "Enter the User Name"
+                                  [maxLength]="labels?.validationData?.userName?.maxLength" 
+                                  [type]="labels?.validationData?.userName?.type" 
+                                  [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -29,9 +35,15 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piNumber" [isRequired]="'Proforma Invoice Number is Mandatory'" [labelName]="labels.piNumber" [maxLength]="labels?.validationData?.piNumber?.maxLength" [type]="labels?.validationData?.piNumber?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piNumber" 
+                                    [isRequired]="'Proforma Invoice Number is Mandatory'" 
+                                    [labelName]="labels.piNumber" 
+                                    placeHolder = "Enter the Proforma Invoice Number"
+                                    [maxLength]="labels?.validationData?.piNumber?.maxLength" 
+                                    [type]="labels?.validationData?.piNumber?.type" 
+                                    [isDirty]="isDirty">
                                 </app-custom-input>
-
+                                
 
                             </div>
                         </div>
@@ -39,10 +51,14 @@
                             <div class="form-group">
 
 
-                                <app-custom-input formControlName="poNumber" [isRequired]="'Purchase Order Number is Mandatory'" [labelName]="labels.poNumber" [maxLength]="labels?.validationData?.poNumber?.maxLength" [type]="labels?.validationData?.poNumber?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="poNumber" 
+                                   [isRequired]="'Purchase Order Number is Mandatory'" 
+                                   [labelName]="labels.poNumber"
+                                   placeHolder =  "Enter the Proforma Invoice Number" 
+                                   [maxLength]="labels?.validationData?.poNumber?.maxLength" 
+                                   [type]="labels?.validationData?.poNumber?.type" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
-
-
                             </div>
                         </div>
                         <div class="col-4">
@@ -53,8 +69,12 @@
 
                 </section> -->
 
-                                <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty">
-                                </app-custom-input>
+                <label for="smsApproved">{{labels.smsApproved}}</label>
+                <app-vf-custom-select formControlName="smsApproved" [values]="smsApprovedList" [isRequired]="'Please Select SMS Approved'" [isDirty]="isDirty">
+                </app-vf-custom-select>
+
+                                <!-- <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [isDirty]="isDirty">
+                                </app-custom-input> -->
 
                             </div>
                         </div>
@@ -62,7 +82,12 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="projectName" [isRequired]="'Project Name is Mandatory'" [labelName]="labels.projectName" [maxLength]="labels?.validationData?.projectName?.maxLength" [isDirty]="isDirty">
+                                <app-custom-input formControlName="projectName" 
+                                   [isRequired]="'Project Name is Mandatory'" 
+                                   [labelName]="labels.projectName" 
+                                   placeHolder =  "Enter the Project Name"
+                                   [maxLength]="labels?.validationData?.projectName?.maxLength" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -72,16 +97,17 @@
                             <div class="form-group">
                                 <label for="dateFor">{{labels?.date}}</label>
 
-                                <mat-form-field>
-                                    <input matInput required formControlName="date" [matDatepicker]="picker1">
+                                <mat-form-field floatLabel  =  "never">
+                                    <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="
               isDirty &&
               PurchaseOrderForm.get('date').errors?.required
             ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -91,7 +117,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="withoutTax" [isRequired]="'Without tax is Mandatory'" [labelName]="labels.withoutTax" [maxLength]="labels?.validationData?.withoutTax?.maxLength" [type]="labels?.validationData?.withoutTax?.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="withoutTax" 
+                                   [isRequired]="'Without Tax is Mandatory'" 
+                                   [labelName]="labels.withoutTax" 
+                                   placeHolder =  "Enter the Without Tax Amount"
+                                   [maxLength]="labels?.validationData?.withoutTax?.maxLength" 
+                                   [type]="labels?.validationData?.withoutTax?.type" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -101,7 +133,11 @@
                             <div class="form-group">
 
                                 <label for="poStatus">{{labels.poStatus}}</label>
-                                <app-vf-custom-select formControlName="poStatus" [values]="poStatus" [isRequired]="'Please Select PO Status'" [isDirty]="isDirty">
+                                <app-vf-custom-select formControlName="poStatus" 
+                                   [values]="poStatus" 
+                                   placeHolder =  "Enter the PO Status"
+                                   [isRequired]="'Please Select PO Status'" 
+                                   [isDirty]="isDirty">
                                 </app-vf-custom-select>
 
                             </div>
@@ -111,17 +147,18 @@
                             <div class="form-group">
                                 <label for="Fromperiod">Valid From</label>
 
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="PurchaseOrderForm.get('endDate').value" required>
+                                <mat-form-field floatLabel  =  "never">
+                                    <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="PurchaseOrderForm.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                                     <mat-datepicker #picker3></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
 
                                 <div class="date-picker-error" *ngIf="
                 isDirty &&
                 PurchaseOrderForm.get('startDate').errors?.required
               ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -130,17 +167,18 @@
                             <div class="form-group">
                                 <label for="Toperiod">Valid Upto</label>
 
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker4" [min]="PurchaseOrderForm.get('startDate').value" formControlName="endDate" required>
+                                <mat-form-field floatLabel  =  "never">
+                                    <input matInput [matDatepicker]="picker4" [min]="PurchaseOrderForm.get('startDate').value" formControlName="endDate" (keyup)="detectDateKeyAction($event,'endDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
 
                                 <div class="date-picker-error" *ngIf="
               isDirty &&
               PurchaseOrderForm.get('endDate').errors?.required
             ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -149,8 +187,15 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="userEmail" [labelName]="labels.userEmail" [id]="'email'" [isRequired]="'User email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [isDisabledInp]="propertyFlag"
-                                    [isDirty]="isDirty">
+                                <app-custom-input formControlName="userEmail" 
+                                   [labelName]="labels.userEmail" 
+                                   placeHolder =  "Enter the User Email"
+                                   [id]="'email'" 
+                                   [isRequired]="'User Email is Mandatory'" 
+                                   [patternCheck]="labels?.validationData.email.patternCheck" 
+                                   [maxLength]="labels?.validationData.email.maxLength" 
+                                   [isDisabledInp]="propertyFlag"
+                                   [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -160,8 +205,14 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="poManagerEmail" [labelName]="labels.poManagerEmail" [id]="'email'" [isRequired]="'Manager email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength"
-                                    [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                                <app-custom-input formControlName="poManagerEmail" 
+                                [labelName]="labels.poManagerEmail" [id]="'email'"
+                                placeHolder =  "Enter the Manager Email" 
+                                [isRequired]="'Manager Email is mandatory'" 
+                                [patternCheck]="labels?.validationData.email.patternCheck" 
+                                [maxLength]="labels?.validationData.email.maxLength"
+                                [isDisabledInp]="propertyFlag" 
+                                [isDirty]="isDirty">
                                 </app-custom-input>
 
 
@@ -172,16 +223,31 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" [id]="'projectNo'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                                <app-custom-input formControlName="projectNo" 
+                                   [labelName]="labels.projectNo" [id]="'projectNo'"
+                                   placeHolder =  "Enter the Project Number" 
+                                   [isRequired]="'Project number is Mandatory'" 
+                                   [maxLength]="labels?.validationData.projectNo.maxLength" 
+                                   [isDisabledInp]="propertyFlag" 
+                                   [isDirty]="isDirty">
                                 </app-custom-input>
-
+                                <div *ngIf="PurchaseOrderForm.get('projectNo').errors?.pattern" class="error-feedback">
+                                    <div>
+                                        {{'Please Enter Digits'}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="poAmountWithTax" [isRequired]="'Amount with tax is Mandatory'" [labelName]="labels.poAmountWithTax" [maxLength]="labels?.validationData?.poAmountWithTax?.maxLength" [type]="labels?.validationData?.poAmountWithTax?.type"
+                                <app-custom-input formControlName="poAmountWithTax" 
+                                    [isRequired]="'Amount with Tax is Mandatory'" 
+                                    [labelName]="labels.poAmountWithTax" 
+                                    placeHolder = "Enter the Amount with Tax"
+                                    [maxLength]="labels?.validationData?.poAmountWithTax?.maxLength" 
+                                    [type]="labels?.validationData?.poAmountWithTax?.type"
                                     [isDirty]="isDirty">
                                 </app-custom-input>
 
@@ -220,7 +286,9 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" 
-                                [labelName]="labels.remark" [id]="'remark'" 
+                                [labelName]="labels.remark" [id]="'remark'"
+                                placeHolder =  "Enter the Remark" 
+                                [isRequired]="'Remark is Mandatory'"
                                 [maxLength]="labels?.validationData.userName.maxLength" 
                                 [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
@@ -237,7 +305,24 @@
                     </div>
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary" type="submit">Raise E-Invoice</button>
+                        <!-- <button class="btn btn-primary" (click)="POForm()">Raise E-Invoice</button>
+                        <button class="btn btn-primary ml-3" (click)="next()">Next</button> -->
+
+                        <div class="col-10">
+
+                            <button class="btn btn-primary" style="float:left" (click)="POForm()">Submit</button>
+
+                        </div>
+
+                       <div class="col-1" style="float: left;">
+                        <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+
+                       </div>
+
+                       <div class="col-1" style="float: left;">
+                        <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+
+                       </div>
                     </div>
                 </form>
 
@@ -269,16 +354,17 @@
                    <div class="form-group">
          
                     
-                     <label for="dateFor">From Date</label>
+                     <label for="dateFor" style="visibility:hidden;">From Date</label>
                      
                      <mat-form-field>
-                       <input matInput 
-                       [matDatepicker]="picker6" formControlName="searchFrom">
-                       <mat-datepicker-toggle matSuffix [for]="picker6" 
-                       ></mat-datepicker-toggle>
+                         <mat-label>From Date</mat-label>
+                       <input matInput [matDatepicker]="picker6" formControlName="searchData"  
+                       (keyup)="detectDateKeyAction($event,'searchData')"
+                      >
+                       <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                        <mat-datepicker #picker6></mat-datepicker>
                      </mat-form-field>
-                     
+                    
                    </div>
                  </div>
          
@@ -286,11 +372,12 @@
                    <div class="form-group">
          
                     
-                     <label for="dateFor">To Date</label>
+                     <label for="dateFor" style="visibility:hidden;">To Date</label>
                      
                      <mat-form-field>
-                       <input matInput [min]="searchForm.get('searchFrom').value" 
-                       [matDatepicker]="picker7" formControlName="searchTo">
+                         <mat-label floatLabel="float">To Date</mat-label>
+                       <input matInput [min]="searchForm.get('searchData').value" 
+                       [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                        <mat-datepicker-toggle matSuffix [for]="picker7" 
                        ></mat-datepicker-toggle>
                        <mat-datepicker #picker7></mat-datepicker>
@@ -300,7 +387,7 @@
                  </div>
          
                  <div class="row m-0 col-3">
-                    <div class="col-md-4 form-group">
+                    <div class="col-md-3 form-group">
 
                         <div class="row mt-4 pt-2">
                             <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
@@ -308,10 +395,21 @@
 
                     </div>
 
-                    <div class="col-md-6 form-group">
+                    <div class="col-md-3 form-group">
 
                         <div class="row mt-4 pt-2">
                             <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 form-group">
+
+                        <div class="row mt-4 pt-2">
+
+                            <button (click) = "getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
+
+
                         </div>
 
                     </div>
@@ -323,16 +421,16 @@
            </form>
            </mat-card>
 
-        <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button>
+        <!-- <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="button">Export as CSV</button> -->
 
         <!--Material Table-->
 
         <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="dataSource" class="custom-table">
 
                 <ng-container matColumnDef="purchaseNo">
                     <th mat-header-cell *matHeaderCellDef>Purchase Order No </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.purchaseNo}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.poNumber}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="projectNo">
@@ -342,17 +440,21 @@
 
                 <ng-container matColumnDef="piAmt">
                     <th mat-header-cell *matHeaderCellDef> PO Amount </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piAmt}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.amountWithTax}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="remarks">
                     <th mat-header-cell *matHeaderCellDef> Remarks </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.remarks}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.remark}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Action">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> <button (click)="OnEdit(element)" class="background-none"><i class="fa fa-eye mr-2" aria-hidden="true"></i><i class="fa fa-pencil " aria-hidden="true"></i></button> </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> 
+                        <button  matTooltip  = "View And Edit" class="background-none" (click)="OnEdit(element)">
+                            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                        </button> 
+                    </td>
                 </ng-container>
 
                 <!-- <ng-container matColumnDef="remainder">
@@ -367,9 +469,89 @@
             <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
         </div>
 
-        <!--Materail Table End-->
+        <!--Materail Table End -->
         <div class="m-5"></div>
 
     </div>
 
 </div>
+
+
+<div class="modal" id="poModal" [ngClass]="{ 'dis-block': showPOModal }">
+    <div class="modal-dialog order-popup">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                 <h4 class="modal-title"> </h4> 
+            <table>
+                <thead>
+                 <tr>
+                    <th>{{accountName}}</th>
+                    <th>{{poNumber}}</th>
+                    <th>{{smsapproved}}</th>
+                </tr>
+            </thead>
+            </table>
+            </div>
+            <div class="modal-body msg-data">
+               
+
+                <form [formGroup]="formQuantity" (ngSubmit)="submit()">
+
+
+                    <div class="row"  *ngFor="let obj of dataArray;let i = index;">
+                        <div class="col-3">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="description" 
+                                 [labelName]="labels.description"
+                                 placeHolder = "Enter the Description" 
+                                 [(ngModel)]="obj.description">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        
+                        <div class="col-3">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="quantity" 
+                                 [labelName]="labels.quantity" 
+                                 placeHolder =  "Enter the Quantity"
+                                 [(ngModel)]="obj.quantity">
+                                </app-custom-input>
+
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="rate"                     
+                                  [labelName]="labels.rate" 
+                                  placeHolder =  "Enter the Rate"
+                                  [(ngModel)]="obj.rate">
+                                </app-custom-input>
+
+                            </div>
+                        </div>
+                        <div class="col-1 plus" >
+                        <span (click)="purchaseForm()" class="btn btn-success">+</span>
+                          </div>
+                          <div class="col-1 plus">
+                            <span (click)="deleteRow(i)" class="btn btn-danger">-</span>
+                            </div>
+                    </div>
+               
+                     <span class="btn btn-info" (click)="submit()">Save</span>
+                  
+                </form>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="submitPO()"> Submit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelPO()"> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

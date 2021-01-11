@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import {LabelsService} from '../../../../services/labels.service';
 import {ToasterService} from '@services/toaster.service';
+import { UtilService } from '@services/util.service';
+import { Router,ActivatedRoute } from '@angular/router'
+import { InvoiceService } from '@services/invoice.service';
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -16,6 +19,9 @@ export class TaxInvoiceDialogComponent implements OnInit {
   enableFlag : boolean = true;
   isDirty : boolean;
 
+  dataForm  : any = {}
+  currentTIId  : string = ''
+
   showUploadModal: boolean;
 
   imageUrl: string;
@@ -27,29 +33,53 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   showDeleteModal: boolean;
 
-  constructor(private formBuilder : FormBuilder,private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
-    private labelService : LabelsService,private toasterService: ToasterService) {
+  showUpdate: boolean;
+
+  showDataSaveModal: boolean;
+
+  dataValue: {
+    title: string;
+    message: string
+  }
+
+  storeProjectNo: string;
+
+  viewInfoData: any;
+
+  showEdit: boolean;
+
+  constructor(
+      private formBuilder : FormBuilder,
+      private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
+      private labelService : LabelsService,
+      private toasterService: ToasterService,
+      private router: Router,
+      private activatedRoute: ActivatedRoute,
+      private utilService: UtilService,
+      private invoiceService : InvoiceService,
+      @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
+      ) {
 
     this.taxInvoiceForm = this.formBuilder.group({
-      userName : ['Arun'],
-      taxIN : ['7867'],
+      userName : [''],
+      taxIN : [''],
       invoiceDate : new Date(),
-      projectNo : ['4535'],
-      poNumber : ['2002'],
+      projectNo : [''],
+      poNumber : [''],
       poDate : new Date(),
       fromDate : new Date(),
       toDate : new Date(),
-      invoiceAmount : ['1000'],
-      remark : ['Testing'],
+      invoiceAmount : [''],
+      remark : [''],
       uploadDoc : [''],
-      paymentStatus : ['2'],
-      invoiceStatus : ['2'],
-      invoiceAmountPaid : ['10000'],
-      tds : ['10000'],
-      penalty : ['10000'],
-      shortPay : ['2000'],
+      paymentStatus : [''],
+      invoiceStatus : [''],
+      invoiceAmountPaid : [''],
+      tds : [''],
+      penalty : [''],
+      shortPay : [''],
       submittedOn : new Date(),
-      poBillable : ['1000']
+      poBillable : ['']
     })
     this.detectAuditTrialObj=this.taxInvoiceForm.value
    }
@@ -71,17 +101,174 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.labelService.getLabelsData().subscribe((value) => {
       this.labels = value;
     })
+
+    this.activatedRoute.params.subscribe((value)=> {
+
+      this.storeProjectNo = value.projectNo || 4535;
+    })
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+
+    const psData = this.paymentStatus.filter((val)=> {
+
+      return val.key == this.taxInvoiceForm.value.paymentStatus
+    })
+
+    const invoiceStatusList = this.invoiceStatusList.filter((val)=> {
+      return val.key == this.taxInvoiceForm.value.invoiceStatus
+    })
+
+    this.viewInfoData = [
+      {
+        key: this.labels.userName,
+        value:this.taxInvoiceForm.value.userName
+      },
+      {
+        key: this.labels.projectNo,
+        value:this.taxInvoiceForm.value.projectNo
+      },
+      {
+        key: this.labels.poNumber,
+        value:this.taxInvoiceForm.value.poNumber
+      },
+      {
+        key: this.labels.poDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.fromDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.toDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.poBillable,
+        value:this.taxInvoiceForm.value.poBillable
+      },
+      {
+        key: this.labels.invoiceAmount,
+        value:this.taxInvoiceForm.value.invoiceAmount
+      },
+
+      {
+        key: this.labels.taxIN,
+        value:this.taxInvoiceForm.value.taxIN
+      },
+      {
+        key: this.labels.submittedDate,
+        value:`${day}/${month}/${year}`
+      },
+      {
+        key: this.labels.invoiceStatus,
+        value:invoiceStatusList[0].value
+      },
+      {
+        key: this.labels.invoiceAmountPaid,
+        value:this.taxInvoiceForm.value.invoiceAmountPaid
+      },
+      {
+        key: this.labels.tds,
+        value:this.taxInvoiceForm.value.tds
+      },
+      {
+        key: this.labels.penalty,
+        value:this.taxInvoiceForm.value.penalty
+      },
+      {
+        key: this.labels.shortPay,
+        value:this.taxInvoiceForm.value.shortPay
+      },
+      {
+        key: this.labels.paymentStatus,
+        value:psData[0].value
+      },
+      {
+        key: this.labels.remark,
+        value:this.taxInvoiceForm.value.remark
+      },
+      {
+        key :  "",
+        value  : ""
+      },{
+        key :  "",
+        value :  ""
+      },
+      {
+        key :  "",
+        value : ""
+      }
+    ]   
+
+    this.getTaxInvoiceDetailById(this.data)
+  }
+
+  getTaxInvoiceDetailById(currentTiId :  string){
+
+    this.invoiceService.getTaxInvoiceDetailById(currentTiId).subscribe((response) => {
+        console.log(response);
+        this.dataForm = response['ProcessVariables'];
+        this.currentTIId = response['ProcessVariables']['currentTiIds'];
+        this.assignToForm(this.dataForm);
+    },
+    (error) => {
+      this.toasterService.showError('Failed to Fetch the Tax Invoice Detail','')
+    })
+
+  }
+
+  assignToForm(dataForm  :any){
+
+    this.taxInvoiceForm.patchValue({
+
+      userName : dataForm['userName'] || '',
+      taxIN : dataForm["TaxInvoiceNumber"] || '',
+      invoiceDate : dataForm["poDate"] || '',
+      projectNo : dataForm["projectNumber"] || '',
+      poNumber : dataForm["poNumber"] || '',
+      poDate : dataForm["poDate"] || '',
+      fromDate : dataForm["fromDate"] || '',
+      toDate : dataForm["toDate"] || '',
+      invoiceAmount : dataForm["InvoiceAmount"] || '',
+      remark : dataForm["remark"] || '',
+      // uploadDoc : [''],
+      paymentStatus : dataForm['paymentStatus'] || '',
+      invoiceStatus : dataForm['InvoiceStatus'] || '',
+      invoiceAmountPaid : dataForm['InvoicePaidAmount'] || '',
+      tds : dataForm['tds'] || '',
+      penalty : dataForm['penalty'] || '',
+      shortPay : dataForm['shortPay'] || '',
+      submittedOn : dataForm['submittedDate'] || '',
+      poBillable : dataForm['billableAmount'] || ''
+
+
+    })
+
+  }
+
+
+
+  OnEdit() {
+
+
+    this.enableFlag = false;
+    this.showUpdate = true;
+    this.showEdit = true;
   }
 
   OnUpdate(){
-    if(this.buttonName=='Update'){
+    
     this.detectFormChanges();
-    }
-    this.buttonName  = 'Update';
-    this.enableFlag = false;
+    
 
     if(this.taxInvoiceForm.invalid){
       this.isDirty = true;
+      return;
     }
   }
 
@@ -252,5 +439,37 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.showPdfModal = true;
   }
 
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+    
+    if(type == 'poDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        poDate: ''
+      })
+      this.toasterService.showError('Please click the PO date icon to select date','');
+    }else if(type == 'fromDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        fromDate: ''
+      })
+      this.toasterService.showError('Please click the fromDate icon to select date','');
+    }else if(type == 'toDate') {
+  
+      this.taxInvoiceForm.patchValue({
+        toDate: ''
+      })
+      this.toasterService.showError('Please click the toDate icon to select date','');
+    }else if(type == 'submittedOn') {
+  
+      this.taxInvoiceForm.patchValue({
+        submittedOn: ''
+      })
+      this.toasterService.showError('Please click the submittedOn icon to select date','');
+    }
+    
+  }
 
 }

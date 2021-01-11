@@ -1,10 +1,10 @@
 .technical_admin{
-    margin-top: 10px;
+    margin-top: 0px;
     overflow-x: hidden;
 }
 button.btn.btn-primary {
-    float: right;
-    margin-left:20px;
+    // float: right;
+    // margin-left:20px;
     background-color: #0e4d92 !important;
     border: 1px solid #0e4d92 !important;
     font-size: 13px;
@@ -13,4 +13,31 @@ button.btn.btn-primary {
     padding-bottom: 20px;
   }
 
- 
+  .back-btn {
+    margin-left:1.5vw
+  }
+
+  mat-card {
+    width: 100% !important;
+}
+
+.dashBoard {
+  background: #0e4d92 !important;
+  color: #fff!important;
+  margin-bottom: 17px;
+  // height: 44px;
+  // padding-top: 10px;
+  // padding-left: 10px;
+  font-size: 21px;
+  font-weight: 500;
+  border-color: #0e4d92;
+  border-style: solid;
+  vertical-align: middle !important;
+  padding: 11px;
+}
+
+
+label {
+  display: inline-block;
+  margin-bottom: -0.1rem;
+}

@@ -1,0 +1,516 @@
+<div class="preview-page">
+<form [formGroup] = "form">
+<div class="row">
+
+    
+      <div class="col-4">
+        <div class="input-group input-group-sm mb-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.department}}</span>
+          </div>
+            <label style="margin-bottom: 0px;
+            margin-left: 10px;">{{userData.departmentName}}</label>
+  
+         
+      </div>
+      </div>
+        
+      
+   
+    <div class="col-4">
+        <div class="input-group input-group-sm mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicantName}}</span>
+            </div>
+
+            <label style="margin-bottom: 0px;
+            margin-left: 10px;">{{userData.applicantName}}</label>
+  
+           
+          </div>
+    </div>
+
+
+        <div class="col-4">
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicantEmail}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.email}}</label>
+              </div>
+            </div>
+
+            <div class="col-4">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicantMobile}}</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.mobileNo}}</label>
+                  </div>
+
+            </div>
+
+            <div class="col-4">
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Officer Name</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.OfficerName}}</label>
+                  </div>
+                </div>
+            
+            <div class="col-4">
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Officer Email</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.OfficerEmail}}</label>
+                  </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Officer Mobile</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.OfficerMobile}}</label>
+                  </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.designation}}</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.designation}}</label>
+                  </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.teleNumber}}</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.teleCode + userData.telPhno}}</label>
+                  </div>
+
+            </div>
+
+            <div class="col-4">
+              
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">Official Address</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.offAddress1}}</label>
+                  </div>
+
+            </div>
+
+            <div class="col-4">
+
+              <div class="input-group input-group-sm mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">City</span>
+                  </div>
+                  <label style="margin-bottom: 0px;
+                  margin-left: 10px;">{{userData.city}}</label>
+                </div>
+
+          </div>
+          <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">State</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.state}}</label>
+              </div>
+
+        </div>
+        <div class="col-4">
+
+          <div class="input-group input-group-sm mb-2">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Pincode</span>
+              </div>
+              <label style="margin-bottom: 0px;
+              margin-left: 10px;">{{userData.pinCode}}</label>
+            </div>
+
+      </div>
+
+            <!-- <div class="col-3">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.city}}</span>
+                    </div>
+                    <input onkeypress="return false" type="text" formControlName="city" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                  </div>
+
+            </div> -->
+
+            <!-- <div class="col-3">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.state}}</span>
+                    </div>
+                    <input onkeypress="return false" type="text" formControlName="state" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                  </div>
+
+            </div> -->
+<!-- 
+            <div class="col-4">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.pincode}}</span>
+                    </div>
+                    <input onkeypress="return false" type="text" formControlName="pinCode" class="form-control not-allowed" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                  </div>
+
+            </div> -->
+
+            <div class="col-4">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.smsServiceReqd}}</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.smsServiceReqd}}</label>
+                </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="input-group input-group-sm mb-2">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.credits_SMSQuota}}</span>
+                    </div>
+                    <label style="margin-bottom: 0px;
+                    margin-left: 10px;">{{userData.creditsSMSQuota}}</label>
+                  </div>
+
+            </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.smsTraffic}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.smsTariffMonthWise}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.availableCredit}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.availableCredit}}</label>
+              </div>
+
+        </div>
+
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.nameOfTheApplication}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.nameOfTheApplication}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicationUrl}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+            margin-left: 10px;">{{userData.applicationUrl}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.serverLocation}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.serverLocation}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.purpOfTheApplication}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.purpOfTheApplication}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">SMS Gateway IP</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.smsGatewayAccess}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">IP of Staging Server</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.ipServReqd}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">PDMST</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.domMonSmsTraffic}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">PIMST</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.intMonSmsTraffic}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.applicationsecurAuditCleared}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.appSecurAudClear}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+            
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Audit Date Cleared</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.auditDate}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.doYouHaveTRAIexemptedSenderId}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.traiSenderId}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.projectNo}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.projectNo}}</label>
+              </div>
+
+        </div>
+
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.userId}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.userId}}</label>
+              </div>
+
+        </div>
+
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.password}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.password}}</label>
+              </div>
+
+        </div>
+        
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditAdded}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.creditAdded}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+          <div class="input-group input-group-sm mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditApprover}}</span>
+            </div>
+            <label style="margin-bottom: 0px;
+            margin-left: 10px;">{{userData.creditApprover}}</label>
+          </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.creditDate}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.creditDate}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">Credit Against PI</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.creditAddedAgainstPi}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.uploadDoc}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.document}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.status}}</span>
+                </div>
+               
+                          
+                          <label style="margin-bottom: 0px;
+                          margin-left: 10px;">{{userData.status}}</label>
+              </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group input-group-sm mb-2">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">{{labels.remark}}</span>
+                </div>
+                <label style="margin-bottom: 0px;
+                margin-left: 10px;">{{userData.remark}}</label>
+              </div>
+
+        </div>
+
+
+
+</div>
+
+<div class="row pt-3 pb-3 m-0">
+
+  <div class="col-10">
+    <button class="btn btn-primary float-left" (click) = "OnEdit()">Edit</button>
+  </div>
+
+ <div class="col-2" style="float: left;">
+  <ng-content></ng-content>
+ </div>
+
+
+</div>
+
+</form>
+</div>

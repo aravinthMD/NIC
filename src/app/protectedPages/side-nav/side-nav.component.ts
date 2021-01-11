@@ -55,6 +55,15 @@ export class SideNavComponent implements OnInit,OnChanges {
       }else if(user.includes('users/projectExecution')){
         this.accountInfoNav = '1.1'
         this.isLocation = '1.3'
+      }else if(user.includes('users/proformaInvoice')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.2'
+      }else if(user.includes('users/purchaseOrder')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.4'
+      }else if(user.includes('users/taxInvoice')){
+        this.accountInfoNav = '1.1'
+        this.isLocation = '1.5'
       }
     })
 
@@ -97,8 +106,16 @@ export class SideNavComponent implements OnInit,OnChanges {
         this.isLocation = '4.2'
     }else if(path.includes('admin/manageUser')) {
       this.isLocation = '2.1';
-    }else if(path.includes('admin/manageAccount')) {
+    }else if(path.includes('admin/createuser')) {
       this.isLocation = '2.2';
+    }else if(path.includes('admin/manageUsers')){
+      this.isLocation = '2.3'
+    }else if(path.includes('admin/managelovs')){
+      this.isLocation = '2.4'
+    }else if(path.includes('admin/manageRoles')){
+      this.isLocation = '2.5'
+    }else if(path.includes('/admin/manageEmail')){
+      this.isLocation = '2.6'
     }
 
     if(path.includes('users/') && !path.includes('users/Dashboard') && !path.includes('users/reports') &&!path.includes('users/sendemail') &&!path.includes('users/managegroup')) {
@@ -111,6 +128,13 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.parentLocation = ''
     }
 
+    if(path.includes('users/proformaInvoice') || path.includes('users/projectExecution') || path.includes('users/purchaseOrder') || path.includes('users/taxInvoice') || path.includes('users/smsCredit')) {
+
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.1'
+      this.router.navigate(['/users/customerDetails'])
+
+    }
 
     this.utilService.projectNumber$.subscribe((pno)=> {
       if(pno){

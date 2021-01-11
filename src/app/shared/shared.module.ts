@@ -10,9 +10,14 @@ import { AuditTrailDialogComponent } from './audit-trail-dialog/audit-trail-dial
 import {MaterialModule} from './material/material.module'
 import { RemarkModalComponent } from './remark-modal/remark-modal.component';
 import { MatDatepickerModule } from '@angular/material';
+import { UserInfoFormComponent } from './preview/user-info-form/user-info-form.component';
+import { DataSavedModalComponent } from './data-saved-modal/data-saved-modal.component';
+import { ViewInfoComponent } from './view-info/view-info.component';
+import { BorderDirective } from './border.directive';
+
 
 @NgModule({
-  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent],
+  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent, ViewInfoComponent, BorderDirective],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +31,10 @@ import { MatDatepickerModule } from '@angular/material';
     CustomSelectComponent,
     EmailModalComponent,
     AccountHeaderComponent,
-    RemarkModalComponent
+    RemarkModalComponent,
+    UserInfoFormComponent,
+    DataSavedModalComponent,
+    ViewInfoComponent
   ],
   providers : [],
   entryComponents : [AuditTrailDialogComponent]

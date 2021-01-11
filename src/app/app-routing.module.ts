@@ -30,6 +30,9 @@ import  { UserInfoComponent } from './protectedPages/user-information/user-info/
 import { ManageGroupComponent } from './protectedPages/email/manage-group/manage-group.component';
 
 import { LoaderService } from '@services/loader.service'
+import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
+import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
+import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 
 const routes: Routes = [
   {
@@ -153,8 +156,27 @@ const routes: Routes = [
       { 
         path : "manageAccount",
         component : AccountManageComponent
+      },
+      {
+        path :  "manageUsers",
+        component :  ManageUsersComponent
+      },
+      {
+        path :  "managelovs",
+        component :  LovsComponent
+      },
+      {
+        path : "manageRoles",
+        component : DefineRolesComponent
+      },
+      {
+        path :  "manageEmail",
+        component : ManageEmailComponent
       }
     ]},
+    {
+      path : "**",redirectTo : "/",
+    }
   ];
 
 @NgModule({

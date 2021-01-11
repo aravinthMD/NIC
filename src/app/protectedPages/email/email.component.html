@@ -4,14 +4,34 @@
     <div class="col-md-12  p-0">
         <!--Reports Tag Start-->
         <!-- <h1 class="h3  text-gray-800 mb-2">Reports</h1> -->
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header matRipple>
+        <!-- <mat-accordion> -->
+            <!---<mat-expansion-panel> -->
+                <!-- <mat-expansion-panel-header matRipple>
                     <mat-panel-title>
                         <mat-icon>filter_alt</mat-icon><span class="panel-title">Compose E-Mail</span>
                     </mat-panel-title>
 
-                </mat-expansion-panel-header>
+                </mat-expansion-panel-header>  -->
+
+    <mat-card>
+
+
+        <div class="dashBoard">
+            <div>Compose<i class="fa fa-envelope pl-2" aria-hidden="true"></i></div>
+        </div> 
+
+
+
+        <!-- <div class="row m-0">
+            <div class="col-md-8 p-0">
+                <h1 class="h4 text-gray-100 title nic-bg" matRipple><span class="panel-title">Compose E-Mail</span></h1>
+            </div>
+
+            <div class="col-md-4 p-0">
+                <button type="button" (click)="home()" matRipple class=" btn btn-primary">Home</button>
+            </div>
+
+        </div> -->
                 <form [formGroup]="emailform">
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                 <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
@@ -20,10 +40,10 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="">From</label>
-                                <input type="text" class="form-control" readonly>
+                                <input type="text" value="deepak.saxena@nic.in" class="form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="">To</label>
+                                <label class="pb-2" for="">To</label>
                                 <div class="ml-4">
                                     <mat-chip-list #chipList aria-label="email selection">
                                         <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable"
@@ -72,7 +92,7 @@
                                 class="col-10 form-control" style="margin-left: 26px;border:none">
                                     <mat-label>From Date</mat-label>
                                     <input matInput [matDatepicker]="picker" formControlName="fromDate" 
-                                    [min]="today">
+                                    [min]="today" (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
@@ -89,14 +109,14 @@
                                     </mat-autocomplete>
                                 </mat-form-field>
                             </div> -->
-                            <span  class="d-flex justify-content-star pl-3 mt-2">--</span>
+                            <span  class="d-flex justify-content-star pl-3 mt-3">--</span>
                             <div  class="d-flex justify-content-star mr-2" style="width: 15%;">
                                 <mat-form-field class="col-10 form-control" 
                                 style="margin-left: 15px;border:none">
                                     <mat-label>To Date</mat-label>
                                     <input matInput formControlName="toDate"
                                     [matDatepicker]="picker1"
-                                    [min]="emailform.get('fromDate').value">
+                                    [min]="emailform.get('fromDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
@@ -114,16 +134,28 @@
                                     </mat-autocomplete>
                                 </mat-form-field>
                             </div>
-                            <span class="pl-3 pt-2">(Asia/Calcutta)</span>
+                            <div class="pl-2 pt-2" style="font-size: 14px;margin-top: 1px;"><i class="fa fa-clock-o fa-lg pr-2" aria-hidden="true"></i>(Asia/Calcutta)</div>
                         </div>
 
                         <div *ngIf="showinput" class="row col-8 ml-1">
                             <div class="form-group">
-                                <label for="">Template Name</label>
+                                <label for="">Template Name <span style="color:red">*</span></label>
                                 <input type="text" class="form-control">
                             </div>
+
+                            <div class="form-group">
+                                <label for="">Screen Name(Optional)</label>
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Choose Screen'"
+                                formControlName ="screenName"
+                                [data]="optionsScreen"
+                                [settings]="dropdownSettings"
+                               
+                                >
+                                </ng-multiselect-dropdown>
+                            </div>
                             <div class="pl-3" style="margin-top: 40px !important;">
-                                <button type="button"  matRipple class=" btn btn-primary">Save</button>
+                                <button type="button"  matRipple (click)="save()" class=" btn btn-primary">Save</button>
                             </div>
                             <div class="pl-3" style="margin-top: 40px !important;">
                                 <button type="button" (click)="cancel()" matRipple
@@ -144,8 +176,20 @@
                                 </app-custom-input>
                             </div>
                         </div>
+
+                        <div *ngIf="editTempinp" class="col-3">
+                            <div class="form-group">
+                                <label for="">Screen Name</label>
+                                <ng-multiselect-dropdown
+                                [placeholder]="'Choose Screen'"
+                                formControlName ="screenNameEdit"
+                                [data]="optionsScreen"
+                                [settings]="dropdownSettings">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
                         <div *ngIf="editTempinp" style="margin-top: 3.2% !important;padding-right: 10px;">
-                            <button type="button"  matRipple class=" btn btn-primary">Update</button>
+                            <button type="button"  matRipple (click)="update()" class=" btn btn-primary">Update</button>
                         </div>
                         <div *ngIf="chooseTemp" style="margin-top: 3.2% !important;margin-left: 0%">
                             <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
@@ -153,7 +197,16 @@
 
                         <div class="col-12">
                             <div class="form-group compose-height">
-                                <label for="">Compose</label>
+                                <div class="col-2" style="padding:10px;padding-bottom: 0%;">
+
+                                    <label for="">Message</label>
+                            
+                                    <button type="submit" matRipple class=" btn btn-primary">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
+                                    <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
+
+                                </div>
+                              
+                                
                                 <textarea type="text" formControlName="textarea" class="form-control"></textarea>
                             </div>
                         </div>
@@ -167,14 +220,16 @@
 
                 </form>
 
-                <div class="row m-0">
-                    <!-- <h4 class="col-12 p-0">Attachement</h4> -->
+                <!-- <div class="row m-0">
+                    
                     <div class="d-flex justify-content-start button mr-2 mt-2">
                         <button type="submit" matRipple class=" btn btn-primary">Send</button>
                     </div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
+                </div> -->
+
+            </mat-card>
+            <!-- </mat-expansion-panel> -->
+        <!-- </mat-accordion> -->
 
         <div class="mt-5"></div>
         <div class="mt-3"></div>

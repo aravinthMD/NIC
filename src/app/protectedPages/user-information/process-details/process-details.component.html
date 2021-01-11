@@ -2,13 +2,13 @@
     <div class="proforma-invoice">
        
 
-        <app-account-header [title]="'Profoma Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Proforma Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
 
 
 
         <mat-accordion>
             <mat-expansion-panel>
-                <mat-expansion-panel-header matRipple>
+                <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px">
                     <mat-panel-title>
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Proforma Invoice
                     </mat-panel-title>
@@ -20,10 +20,16 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.userName.maxLength" [type]="labels?.validationData.userName.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="accountName" 
+                                 [labelName]="labels.accountName" [id]="'accountName'" 
+                                 placeHolder =  "Enter the Account Name"
+                                 [isRequired]="'Account Name is Mandatory'" 
+                                 [maxLength]="labels?.validationData.userName.maxLength" 
+                                 [type]="labels?.validationData.userName.type" 
+                                 [isDirty]="isDirty">
                                 </app-custom-input>
 
-                                <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
+                                <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is Mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
 
                     </app-custom-input> -->
 
@@ -47,7 +53,12 @@
                         Please select date
                   </div> -->
 
-                                <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [type]="labels?.validationData.proformaIN.type"
+                                <app-custom-input formControlName="invoiceNumber" 
+                                    [labelName]="labels.proformaIN" [id]="'invoiceNumber'" 
+                                    placeHolder = "Enter the Proforma Invoice Number"
+                                    [isRequired]="'Invoice Number is Mandatory'" 
+                                    [maxLength]="labels?.validationData.proformaIN.maxLength" 
+                                    [type]="labels?.validationData.proformaIN.type"
                                     [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
@@ -56,7 +67,13 @@
                             <div class="form-group">
 
 
-                                <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [type]="labels?.validationData.refNo.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="refNumber" 
+                                  [labelName]="labels.refNo" [id]="'refNo'" 
+                                  placeHolder =  "Enter the Reference Number"
+                                  [isRequired]="'Reference Number is Mandatory'" 
+                                  [maxLength]="labels?.validationData.refNo.maxLength" 
+                                  [type]="labels?.validationData.refNo.type" 
+                                  [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -68,7 +85,13 @@
 
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [type]="labels?.validationData.piOwner.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piOwner" 
+                                    [labelName]="labels.piOwner" [id]="'piOwner'" 
+                                    placeHolder =  "Enter the Proforma Invoice Owner"
+                                    [isRequired]="'Owner is Mandatory'" 
+                                    [maxLength]="labels?.validationData.piOwner.maxLength" 
+                                    [type]="labels?.validationData.piOwner.type" 
+                                    [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -93,7 +116,13 @@
                   Please select date
             </div> -->
 
-                                <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'Amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piAmount" 
+                                   [labelName]="labels.piAmount" [id]="'piAmount'" 
+                                   placeHolder =  "Enter the Amount"
+                                   [isRequired]="'Amount is Mandatory'" 
+                                   [maxLength]="labels?.validationData.piAmount.maxLength" 
+                                   [type]="labels?.validationData.piAmount.type" 
+                                   [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -102,7 +131,13 @@
                         <div class="col-4">
                             <div class="form-group">
 
-                                <app-custom-input formControlName="piTraffic" [labelName]="labels.piTraffic" [id]="'piTraffic'" [isRequired]="'Traffic is mandatory'" [maxLength]="labels?.validationData.piTraffic.maxLength" [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty">
+                                <app-custom-input formControlName="piTraffic" 
+                                [labelName]="labels.piTraffic" [id]="'piTraffic'" 
+                                placeHolder =  "Enter the Traffic"
+                                [isRequired]="'Traffic is Mandatory'" 
+                                [maxLength]="labels?.validationData.piTraffic.maxLength" 
+                                [type]="labels?.validationData.piTraffic.type" 
+                                [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -117,16 +152,17 @@
                                 <!-- <input type="date" class="form-control" id="dateFor" aria-describedby="dateHelp">
                     <small id="dateHelp" class="form-text text-muted"></small> -->
 
-                                <mat-form-field>
-                                    <input matInput required formControlName="date" [matDatepicker]="picker1">
+                                <mat-form-field floatLabel  =  "never">
+                                    <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" >
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-placeholder>Select Date</mat-placeholder>
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="
             isDirty &&
             form.get('date').errors?.required
           ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
 
@@ -142,8 +178,13 @@
                                 <!-- <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
             [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select> -->
 
-                                <app-custom-input formControlName="nicsiManager" [labelName]="labels.nicsiManager" [id]="'nicsiManager'" [isRequired]="'NICSI Manager is mandatory'" [maxLength]="labels?.validationData.nicsiManager.maxLength" [type]="labels?.validationData.nicsiManager.type"
-                                    [isDirty]="isDirty">
+                                <app-custom-input formControlName="nicsiManager" 
+                                   [labelName]="labels.nicsiManager" [id]="'nicsiManager'" 
+                                   placeHolder =  "Enter the NICSI Manager"
+                                   [isRequired]="'NICSI Manager is Mandatory'" 
+                                   [maxLength]="labels?.validationData.nicsiManager.maxLength" 
+                                   [type]="labels?.validationData.nicsiManager.type"
+                                   [isDirty]="isDirty">
 
                                 </app-custom-input>
 
@@ -154,17 +195,18 @@
                             <div class="form-group">
                                 <label for="Fromperiod">Start Date</label>
 
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" required>
+                                <mat-form-field floatLabel  =  "never">
+                                    <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                                     <mat-datepicker #picker3></mat-datepicker>
+                                    <mat-placeholder>Select Start Date</mat-placeholder>
                                 </mat-form-field>
 
                                 <div class="date-picker-error" *ngIf="
                 isDirty &&
                 form.get('startDate').errors?.required
               ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -173,17 +215,18 @@
                             <div class="form-group">
                                 <label for="Toperiod">End Date</label>
 
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker4" [min]="form.get('startDate').value" formControlName="endDate" required>
+                                <mat-form-field floatLabel  =  "never">
+                                    <input matInput [matDatepicker]="picker4" [min]="form.get('startDate').value" formControlName="endDate" (keyup)="detectDateKeyAction($event,'endDate')" required>
                                     <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                                     <mat-datepicker #picker4></mat-datepicker>
+                                    <mat-placeholder>Select End Date</mat-placeholder>
                                 </mat-form-field>
 
                                 <div class="date-picker-error" *ngIf="
               isDirty &&
               form.get('endDate').errors?.required
             ">
-                                    Please select date
+                                    Please Select Date
                                 </div>
 
                             </div>
@@ -193,7 +236,7 @@
                         <div class="col-4">
 
                             <div class="form-group">
-                                <label for="piStatus">PI Status</label>
+                                <label for="piStatus" style="margin-bottom: -1em">PI Status</label>
 
                                 <app-vf-custom-select formControlName="piStatus" [values]="piStatusData" [isRequired]="'Please Select PI Status'" [isDirty]="isDirty"></app-vf-custom-select>
 
@@ -203,7 +246,7 @@
                         <div class="col-4">
 
                             <div class="form-group">
-                                <label for="payMentStatus">Payment Status</label>
+                                <label for="payMentStatus" style="margin-bottom: -1em">Payment Status</label>
 
                                 <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData" [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty">
                                 </app-vf-custom-select>
@@ -213,14 +256,20 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="remark" 
+                                   [labelName]="labels.remark" [id]="'remark'" 
+                                   placeHolder =  "Enter the Remark"
+                                   [isRequired]="'Remark is Mandatory'" 
+                                   [maxLength]="labels?.validationData.userName.maxLength" 
+                                   [isDirty]="isDirty" 
+                                   [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="poBillable">Upload Document</label>
+                                <label for="poBillable" style="margin-bottom: -1em">Upload Document</label>
                                 <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
@@ -230,7 +279,23 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button class="btn btn-primary" type="submit" (click)="onSubmit()">Raise PO</button>
+
+                        <div class="col-10">
+
+                            <button class="btn btn-primary btn-lg" style="float: left; padding-bottom: 10px; margin-top: 10px;" (click)="createProformaInvoice()">Submit</button>
+
+                        </div>
+
+                       <div class="col-1" style="float: left;">
+                        <button class="btn btn-primary btn-lg ml-3" (click)="back()">Back</button>
+
+                       </div>
+
+                       <div class="col-1" style="float: left;">
+                        <button class="btn btn-primary btn-lg ml-3" (click)="next()">Next</button>
+
+                       </div>
+
                     </div>
                 </form>
 
@@ -260,10 +325,11 @@
                         <div class="form-group">
 
 
-                            <label for="dateFor">From Date</label>
+                            <label for="dateFor" style="visibility:hidden;">From Date</label>
 
                             <mat-form-field>
-                                <input matInput [matDatepicker]="picker6" formControlName="searchFrom">
+                                <mat-label>From Date</mat-label>
+                                <input matInput [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
                                 <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                                 <mat-datepicker #picker6></mat-datepicker>
                             </mat-form-field>
@@ -275,10 +341,11 @@
                         <div class="form-group">
 
 
-                            <label for="dateFor">To Date</label>
+                            <label for="dateFor" style="visibility:hidden;">To Date</label>
 
                             <mat-form-field>
-                                <input matInput [min]="searchForm.get('searchFrom').value" [matDatepicker]="picker7" formControlName="searchTo">
+                                <mat-label>To Date</mat-label>
+                                <input matInput [min]="searchForm.get('searchFrom').value" [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                                 <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
                                 <mat-datepicker #picker7></mat-datepicker>
                             </mat-form-field>
@@ -287,7 +354,7 @@
                     </div>
 
                     <div class="row m-0 col-3">
-                        <div class="col-md-4 form-group">
+                        <div class="col-md-3 form-group">
 
                             <div class="row mt-4 pt-2">
                                 <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
@@ -295,12 +362,23 @@
 
                         </div>
 
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-3 form-group">
 
                             <div class="row mt-4 pt-2">
                                 <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
                             </div>
 
+                        </div>
+
+                        <div class="col-md-6 form-group">
+
+                            <div class="row mt-4 pt-2">
+    
+                                <button (click) = "getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
+    
+    
+                            </div>
+    
                         </div>
 
 
@@ -316,20 +394,20 @@
 
         <!--Material Table-->
 
-        <button class="btn btn-primary download download-pad"  (click)="getDownloadXls()" type="button">Export as CSV</button>
+        <!-- <button class="btn btn-primary download download-pad"  (click)="getDownloadXls()" type="button">Export as CSV</button> -->
 
         <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" class=" ">
+            <table mat-table [dataSource]="dataSource" class="custom-table">
 
                 <ng-container matColumnDef="InvoiceNo">
                     <th mat-header-cell *matHeaderCellDef class="pl-0">Proforma Invoice No </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.invoiceNo}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piNumber}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="accountName">
                     <th mat-header-cell *matHeaderCellDef> Account Name </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.accountName}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.AccountName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="projectNumber">
@@ -339,22 +417,31 @@
 
                 <ng-container matColumnDef="piAmt">
                     <th mat-header-cell *matHeaderCellDef> PI Amount </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piAmt}} </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piAmount}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Action">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> <button (click)="OnEdit(element)" class="background-none"><i class="fa fa-eye mr-2" aria-hidden="true"></i><i class="fa fa-pencil " aria-hidden="true"></i></button> </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> 
+                        <button mat-button matTooltip = "View and Edit"  (click)="OnEdit(element)" class="background-none">
+                            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                        </button> 
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="reminder">
                     <th mat-header-cell *matHeaderCellDef> Reminder </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> <button mat-button (click)="sendReminder(element)" class="background-none"><i class="fa fa-paper-plane mr-2" aria-hidden="true"></i></button> </td>
+                    <td mat-cell *matCellDef="let element" class="value-bold"> 
+                        <button mat-button matTooltip = "Send Remainder" (click)="sendReminder(element)" class="background-none">
+                            <i class="fa fa-paper-plane fa-lg mr-2" aria-hidden="true"></i>
+                        </button> 
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Escalation">
                     <th mat-header-cell *matHeaderCellDef class="pr-0"> Escalation </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> <button mat-button (click)="sendEscalation(element)" class="background-none">
+                    <td mat-cell *matCellDef="let element" class="value-bold"> 
+                        <button matTooltip = "Send Escalation" mat-button (click)="sendEscalation(element)" class="background-none">
                         <!-- <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"></i> -->
                         <!-- <span class="material-icons">
                             report
@@ -379,3 +466,6 @@
 </div>
 
 <app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="modalData" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

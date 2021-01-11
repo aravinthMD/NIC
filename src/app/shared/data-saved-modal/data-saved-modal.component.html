@@ -1,0 +1,16 @@
+<div class="modal" id="saveModal" [ngClass]="{ 'dis-block': showSavedModal }">
+    <div class="modal-dialog save-popup">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title text-success">{{ data.title }}</h4>
+            </div>
+            <div class="modal-body msg-data">
+                <p id="">{{ data.message }}</p>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onSaveYes()"> OK</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onSaveCancel()"> Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

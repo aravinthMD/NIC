@@ -2,7 +2,7 @@
     margin-top: 6px;
 }
 textarea.form-control {
-    height: 300px;
+    height: 184px !important;
 }
 
 mat-chip{
@@ -11,6 +11,8 @@ mat-chip{
 input.mat-chip-input {
     width: 100%;
     margin: 0;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
 }   
 
 
@@ -42,4 +44,46 @@ input.mat-chip-input {
 
 .mat-expansion-panel-header {
     background-color: #0d4d92 !important;
+}
+
+.nic-bg{
+    color: #0d4d92 !important;
+}
+
+:host ::ng-deep .multiselect-dropdown {
+    margin-left: 6px;
+    /* padding: 8px; */
+    padding-right: 60px;
+    font-size: 15px !important;
+    // padding-right: 85px;
+    // padding-bottom: 14px;
+    // padding-left: 20px;
+    // padding-top: 12px;
+    // margin-left: 10px;
+}
+
+.dashBoard {
+    background: #0e4d92 !important;
+    color: #fff!important;
+    margin-bottom: 17px;
+    // height: 44px;
+    // padding-top: 10px;
+    // padding-left: 10px;
+    font-size: 21px;
+    font-weight: 500;
+    border-color: #0e4d92;
+    border-style: solid;
+    vertical-align: middle !important;
+    padding: 10px;
+}
+
+
+mat-card.mat-card  {
+    width: 103%;
+}
+
+.mat-error { 
+    font-size: 14px !important;
+    padding: 10px !important;
+    font-weight: 400 !important;
 }

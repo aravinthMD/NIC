@@ -83,3 +83,39 @@ h2 {
 
 }
 
+mat-card {
+    width: 100% !important;
+}
+
+
+
+label {
+    display: inline-block;
+    margin-bottom: -0.2rem;
+}
+
+// .row {
+//     display: flex;
+//     flex-wrap: wrap;
+//     margin-right: -15px;
+//     margin-left: -15px;
+//     margin-top: -30px;
+// }
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-top: -30px;
+}
+
+.row1 {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-top: 1px;
+}
+
+ 

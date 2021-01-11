@@ -9,27 +9,41 @@ th {
     color: #fff;
 }
 
-tr:nth-child(even) {
-    background-color: #f5f4f4;
-}
+// tr:nth-child(even) {
+//     background-color: #f5f4f4;
+// }
 
 .mat-paginator {
     display: block;
     margin-bottom: 50px !important;
 }
 
-th.mat-header-cell {
-    flex: 0 16% !important;
-    width: 16% !important;
-    line-height: 20px !important;
-    text-align: center;
-  }
+// th.mat-header-cell {
+//     flex: 0 16% !important;
+//     width: 16% !important;
+//     line-height: 20px !important;
+//     text-align: left;
+//   }
 
-  td.mat-cell {
-    line-height: 24px !important;
-    text-align: center;
-    flex: 0 16% !important;
-    width: 16% !important;
-    line-height: 20px !important;
-  }
+//   td.mat-cell {
+//     line-height: 24px !important;
+//     text-align: left;
+//     flex: 0 16% !important;
+//     width: 16% !important;
+//     line-height: 20px !important;
+//   }
+
+  button {
+    height: 30px;
+    border-radius: 5px;
+    color: #ffffff !important;
+    background-color: #0e4d92 !important;
+    border-style: none;
+    font-weight: 400;
+}
   
+
+.navigate:hover  {
+    background: #fff !important;
+    color: #0e4d92 !important
+}

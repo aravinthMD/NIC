@@ -66,6 +66,11 @@ import { ManageGroupComponent } from './protectedPages/email/manage-group/manage
 import { ProjectExcecutionDialogComponent } from './protectedPages/user-information/project-execution/project-excecution-dialog/project-excecution-dialog.component';
 import { PurchaseOrderDialogComponent } from './protectedPages/user-information/purchase-order/purchase-order-dialog/purchase-order-dialog.component';
 import { ReportsTableComponent } from './protectedPages/reports/reports-table/reports-table.component';
+import { SmsCreditDialogComponent } from './protectedPages/user-information/user-info/sms-credit-allocation/sms-credit-dialog/sms-credit-dialog.component';
+import { ViewTechnicalAdminComponent } from './protectedPages/user-information/user-info/technical-admin-details/view-technical-admin/view-technical-admin.component';
+import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
+import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-roles/admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
+import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -142,7 +147,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProjectExcecutionDialogComponent,
     PurchaseOrderDialogComponent,
     TaxInvoiceDialogComponent,
-    ReportsTableComponent
+    ReportsTableComponent,
+    SmsCreditDialogComponent,
+    ViewTechnicalAdminComponent,
+    DefineRolesComponent,
+    AdminRolesMappingDialogComponent,
+    ManageEmailComponent
   ],
   imports: [
     BrowserModule,
@@ -165,6 +175,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatIconModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
+      positionClass:'toast-top-center'
     }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgMultiSelectDropDownModule.forRoot()
@@ -188,11 +199,15 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderService
   ],
   bootstrap: [AppComponent],
-  entryComponents:[ProformaInvoiceDialogFormComponent,
-     ManageUserDialogComponent,
-     ProjectExcecutionDialogComponent,
+  entryComponents:[
+    ProformaInvoiceDialogFormComponent,
+    ManageUserDialogComponent,
+    ProjectExcecutionDialogComponent,
     TaxInvoiceDialogComponent,
-  PurchaseOrderDialogComponent]
+    PurchaseOrderDialogComponent,
+    SmsCreditDialogComponent,
+    AdminRolesMappingDialogComponent
+  ]
 })
 export class AppModule { }
 

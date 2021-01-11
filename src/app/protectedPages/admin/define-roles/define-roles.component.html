@@ -1,0 +1,74 @@
+<div class="col-md-10 main">
+
+  <mat-card class="defineRoles">
+    <app-account-header [title]="'Manage Roles'"></app-account-header>
+
+
+    <form class="" [formGroup]="rolesControl">
+        <!--FIRST ROW-->
+
+        <div class="row pad-row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="department">Choose Roles</label>
+                    <app-vf-custom-select [values]="rolesList" 
+                    formControlName="rolesList"
+                        (change)="onChangeRole($event)">
+                    </app-vf-custom-select>
+        </div>
+
+    </div>
+    </div>
+
+    </form>
+
+
+
+    <!-- <button class="btn btn-primary download download-pad"  (click)="submitData()" type="button">Submit</button> -->
+        
+        <!--Material Table-->
+
+        <div class="mat-elevation-z8">
+
+        <table mat-table [dataSource]="dataSource" class="custom-table">
+
+          
+            <ng-container matColumnDef="ScreenName">
+              <th mat-header-cell *matHeaderCellDef> Screen Name </th>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.screenName}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Mapping">
+              <th mat-header-cell *matHeaderCellDef> Mapping </th>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.mappingStatus}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Modify">
+              <th mat-header-cell *matHeaderCellDef> Modify </th>
+              <td mat-row mat-cell *matCellDef="let element"> 
+                
+                  <button (click) = "mappingMethod()"> Modify</button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> Email </th>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.emailFlag}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+
+        </div>
+        <div class="m-5"></div>
+   </mat-card>    
+
+</div>

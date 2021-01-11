@@ -3,7 +3,12 @@
 
     <div class="col-md-12 reports p-0">
         <!--Reports Tag Start-->
-        <h1 class="h3  text-gray-800 mb-2">Reports</h1>
+        <!-- <h1 class="h3  text-gray-800 mb-2">Reports</h1> -->
+
+        <div class="dashBoard mt-2">
+            <div>Reports</div>
+        </div> 
+
         <mat-accordion>
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple>
@@ -33,11 +38,11 @@
                                 <option value="5">All</option>
                               </select> -->
 
-                                <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Reports'"></app-vf-custom-select>
+                                <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Report'"></app-vf-custom-select>
                             </div>
                         </div>
 
-                        <div class="col-4" *ngIf="reportKey <= 4">
+                        <div class="col-4" *ngIf="reportKey <= 4 || reportKey == 10">
                             <div class="form-group" optionValue>
                                 <label for="mobile">Status</label>
                                 <!-- <select class="form-control">
@@ -62,7 +67,7 @@
                                 <option value="2">Department</option>
                                 <option value="3">Status</option> -->
                                 <!-- </select> -->
-                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter" [isRequired]="'Please Select ReportFilter'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter"></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -119,7 +124,7 @@
                             <label for="mobile">Project No</label>
                             <div class="form-group">
                             <ng-multiselect-dropdown
-                            [placeholder]="'Choose project no'"
+                            [placeholder]="'Choose Project No'"
                             formControlName ="projectNoFilter"
                             [data]="projectNoDropDownList"
                             [settings]="dropdownSettings"
@@ -171,8 +176,9 @@
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker1" (dateInput)="formDateFunc($event.value)" formControlName="fromDate" [max]="form.get('toDate').value">
+                                <mat-form-field floatLabel = "never">
+                                    <mat-placeholder>dd-mm-yyyy</mat-placeholder>
+                                    <input matInput [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'fromDate')" formControlName="fromDate" [max]="form.get('toDate').value">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
@@ -184,8 +190,9 @@
                                 <label for="invoiceDate">To Date</label>
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
-                                <mat-form-field>
-                                    <input matInput [matDatepicker]="picker2" (dateInput)="formDateFunc($event.value)" [min]="form.get('fromDate').value" formControlName="toDate">
+                                <mat-form-field floatLabel =  "never">
+                                    <mat-placeholder>dd-mm-yyyy</mat-placeholder>
+                                    <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="form.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
@@ -196,7 +203,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">User Status</label>
-                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the status'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the Status'"></app-vf-custom-select>
                             </div>
                         </div>
 
@@ -259,9 +266,10 @@
 
             </mat-expansion-panel>
         </mat-accordion>
-        <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         <!--Material Table-->
-        <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
+        <app-reports-table [dataList] = "dataList" [id] = "id">
+            <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
+        </app-reports-table>
 
     </div>
     <!--Reports Tag close-->

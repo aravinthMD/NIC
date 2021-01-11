@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { UtilService } from '@services/util.service';
+import {ToasterService} from '@services/toaster.service';
 
 @Component({
   selector: 'app-audit-trail-dialog',
@@ -62,7 +63,7 @@ export class AuditTrailDialogComponent implements OnInit,AfterViewInit {
   dataSource = new MatTableDataSource<any>(this.userList);
 
 
-  constructor(private utilService : UtilService) {
+  constructor(private utilService : UtilService,private toasterService: ToasterService) {
     this.searchForm = new FormGroup( {
       searchData :  new FormControl(null),
       searchFrom :  new FormControl(null),
@@ -104,6 +105,22 @@ export class AuditTrailDialogComponent implements OnInit,AfterViewInit {
 
   getDownloadXls(){
     this.utilService.getDownloadXlsFile(this.userList)
+  }
+
+  detectDateKeyAction(event,type) {
+
+    console.log(event)
+   if(type == 'searchFrom') {
+      this.searchForm.patchValue({
+        searchFrom: ''
+      })
+      this.toasterService.showError('Please click the fromdate icon to select date','');
+    }else if(type == 'searchTo') {
+      this.searchForm.patchValue({
+        searchTo: ''
+      })
+      this.toasterService.showError('Please click the todate icon to select date','');
+    }
   }
 
 

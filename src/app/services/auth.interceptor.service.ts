@@ -240,7 +240,7 @@ export class AuthInterceptor implements HttpInterceptor {
     this.apiCount++;
 
 
-    console.log(req.method)
+    console.log("request ",req);
     const httpMethod = req.method
     if (httpMethod == 'POST') {
       if (req.url.includes('appiyo')) {

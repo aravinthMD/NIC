@@ -1,22 +1,3 @@
-tr {
-    td {
-        vertical-align: middle;
-        font-size: 15px;
-        a {
-            cursor: pointer;
-            font-size: 14px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    }
-    th {
-        vertical-align: middle;
-        font-size: 17px;
-        font-weight: 500;
-    }
-    height: 65px;
-}
 
 table {
     margin-bottom: 0rem !important;
@@ -59,7 +40,11 @@ h3 {
 }
 
 table {
-    width: 100%;
+    width: 103%;
+}
+
+.font-paginator {
+    width: 103%;
 }
 
 th {
@@ -74,29 +59,35 @@ th {
 //       pointer-events: none;
 //   }
 .font-size {
-    font-size: 15px !important;
-    font-weight: 500;
+    font-size: 16px !important;
+    font-weight: 580;
+    line-height: 18px;
 }
 
 .border-left-primary {
+    background: #4e73df !important;
     border-left: .25rem solid #4e73df !important;
 }
 
 .border-left-success {
-    border-left: .25rem solid #1cc88a !important;
+    background: #361cc8a8 !important;
+    // border-left: .25rem solid #1cc88a !important;
 }
 
 .border-left-info {
+    background: #36b9cc !important;
     border-left: .25rem solid #36b9cc !important;
 }
 
 .border-left-warning {
+    background: #f6c23e !important;
     border-left: .25rem solid #f6c23e !important;
 }
 
-tr.example-element-row:hover {
-    background: whitesmoke;
-}
+// tr.example-element-row:hover {    <!--- Commented For Later Use ----->
+//     background: whitesmoke;
+// }
+
 
 ::ng-deep .mat-select-value {
     font-size: 15px !important;
@@ -126,14 +117,97 @@ mat-form-field {
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;
-    text-align: center;
+    text-align: left;
 }
 
 :host ::ng-deep td.mat-cell {
     line-height: 24px !important;
-    text-align: center;
+    text-align: left;
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;
+    padding: 8px;
     // word-break: break-all;
 }
+
+.clr-white {
+    color: #fff !important
+}
+
+
+
+
+.dashBoard {
+    background: #0e4d92 !important;
+    color: #fff!important;
+    // margin-bottom: 17px;
+    // height: 44px;
+    // padding-top: 13px;
+    // padding-left: 10px;
+    font-size: 21px;
+    font-weight: 500;
+    border-color: #0e4d92;
+    border-style: solid;
+    vertical-align: middle !important;
+    width  :103%
+}
+
+#mySearch {
+    width: 34%;
+    font-size: 17px;
+    padding: 7px;
+    border: 1px solid #ddd;
+    margin-bottom: 0px;
+    border-radius: 3px 3px 3px 3px;
+    text-align: center; 
+    color: #212121;
+
+  }
+
+  #mySearch.active{
+    border-color: #0e4d92 !important;
+  }
+
+// #mySearch { 
+//     width: 24%; 
+//     padding: 10px; 
+//     text-align: center; 
+// } 
+
+
+  .input-icons { 
+    width: 100%; 
+    margin-bottom: 0px; 
+} 
+
+.input-icons i { 
+    position: absolute; 
+    padding-top: 10px;
+    // padding-left: 16px;
+    padding-right: 8px !important;
+    color: #747677 !important;
+} 
+
+// .input-icons { 
+//     width: 100%; 
+//     margin-bottom: 10px; 
+// } 
+
+.icon { 
+    padding: 10px; 
+    min-width: 40px; 
+} 
+  
+
+.dashb  {
+    font-size: 25px;
+    font-weight: 450;
+    padding-bottom: 15px;
+
+}
+
+::ng-deep.cdk-column-Department  {
+     padding-left: 0px !important;
+}
+
+  

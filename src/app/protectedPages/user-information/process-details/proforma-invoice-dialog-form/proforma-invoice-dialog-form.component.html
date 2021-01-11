@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>Proforma Invoice</h2>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="form">
+
+  <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
+  <form [formGroup]="form" (keydown.enter)="$event.preventDefault()" *ngIf="showEdit">
     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
@@ -15,9 +17,13 @@
 
                     </app-custom-input> -->
 
-          <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'"
-            [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.name.maxLength"
-            [isDisabledInp]="enableflag" [isDirty]="isDirty">
+          <app-custom-input formControlName="accountName" 
+            [labelName]="labels.accountName" [id]="'accountName'"
+            placeHolder =  "Enter the Account Name"
+            [isRequired]="'Account name is mandatory'" 
+            [maxLength]="labels?.validationData.name.maxLength"
+            [isDisabledInp]="enableflag" 
+            [isDirty]="isDirty">
 
           </app-custom-input>
 
@@ -35,9 +41,13 @@
                         <mat-datepicker #picker1></mat-datepicker>
                       </mat-form-field> -->
 
-          <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'"
-            [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength"
-            [isDisabledInp]="enableflag" [isDirty]="isDirty">
+          <app-custom-input formControlName="invoiceNumber" 
+            [labelName]="labels.proformaIN" [id]="'invoiceNumber'"
+            placeHolder =  "Enter the Invoice Number"
+            [isRequired]="'Invoice number is mandatory'" 
+            [maxLength]="labels?.validationData.proformaIN.maxLength"
+            [isDisabledInp]="enableflag" 
+            [isDirty]="isDirty">
 
           </app-custom-input>
 
@@ -54,8 +64,11 @@
 
                     </app-custom-input> -->
 
-          <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'"
-            [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength"
+          <app-custom-input formControlName="refNumber" 
+            [labelName]="labels.refNo" [id]="'refNo'"
+            placeHolder =  "Enter the Reference Number"
+            [isRequired]="'Reference number is mandatory'" 
+            [maxLength]="labels?.validationData.refNo.maxLength"
             [isDisabledInp]="enableflag" [isDirty]="isDirty">
 
           </app-custom-input>
@@ -77,8 +90,11 @@
 
                 </app-custom-input> -->
 
-          <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'"
-            [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength"
+          <app-custom-input formControlName="piOwner" 
+            [labelName]="labels.piOwner" [id]="'piOwner'"
+            placeHolder=   "Enter the Proforma Invoice Owner"
+            [isRequired]="'Owner is mandatory'" 
+            [maxLength]="labels?.validationData.piOwner.maxLength"
             [isDisabledInp]="enableflag" [isDirty]="isDirty">
 
           </app-custom-input>
@@ -98,9 +114,14 @@
                         <mat-datepicker #picker2></mat-datepicker>
                       </mat-form-field> -->
 
-          <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'"
-            [isRequired]="'Amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength"
-            [isDisabledInp]="enableflag" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
+          <app-custom-input formControlName="piAmount" 
+            [labelName]="labels.piAmount" [id]="'piAmount'"
+            placeHolder =  "Enter the Amount"
+            [isRequired]="'Amount is mandatory'" 
+            [maxLength]="labels?.validationData.piAmount.maxLength"
+            [isDisabledInp]="enableflag" 
+            [type]="labels?.validationData.piAmount.type" 
+            [isDirty]="isDirty">
 
           </app-custom-input>
 
@@ -110,9 +131,14 @@
       <div class="col-4">
         <div class="form-group">
 
-          <app-custom-input formControlName="piTraffic" [labelName]="labels.piTraffic" [id]="'piTraffic'"
-            [isRequired]="'Traffic is mandatory'" [maxLength]="labels?.validationData.piTraffic.maxLength"
-            [isDisabledInp]="enableflag" [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty">
+          <app-custom-input formControlName="piTraffic" 
+            [labelName]="labels.piTraffic" [id]="'piTraffic'"
+            placeHolder =  "Enter the Traffic"
+            [isRequired]="'Traffic is mandatory'" 
+            [maxLength]="labels?.validationData.piTraffic.maxLength"
+            [isDisabledInp]="enableflag" 
+            [type]="labels?.validationData.piTraffic.type" 
+            [isDirty]="isDirty">
 
           </app-custom-input>
 
@@ -126,10 +152,11 @@
           <label for="dateFor">{{labels?.date}}</label>
 
 
-          <mat-form-field>
-            <input matInput required formControlName="date" [matDatepicker]="picker1">
+          <mat-form-field floatLabel  =  "never">
+            <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
+            <mat-placeholder>Choose The Date</mat-placeholder>
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
                   isDirty &&
@@ -162,10 +189,11 @@
         <div class="form-group">
           <label for="Fromperiod">Start Date</label>
 
-          <mat-form-field [ngClass]="{'inp-date':enableflag}">
-            <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value">
+          <mat-form-field [ngClass]="{'inp-date':enableflag}" floatLabel  =  "never">
+            <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
+            <mat-placeholder>Start Date</mat-placeholder>
           </mat-form-field>
         </div>
       </div>
@@ -173,10 +201,11 @@
         <div class="form-group">
           <label for="Toperiod">End Date</label>
 
-          <mat-form-field [ngClass]="{'inp-date':enableflag}">
-            <input matInput [matDatepicker]="picker4" formControlName="endDate" [min]="form.get('startDate').value">
+          <mat-form-field [ngClass]="{'inp-date':enableflag}" floatLabel  =  "never">
+            <input matInput [matDatepicker]="picker4" formControlName="endDate" [min]="form.get('startDate').value" (keyup)="detectDateKeyAction($event,'endDate')">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
             <mat-datepicker #picker4></mat-datepicker>
+            <mat-placeholder>End Date</mat-placeholder>
           </mat-form-field>
         </div>
       </div>
@@ -184,8 +213,7 @@
       <div class="col-4">
 
         <div class="form-group">
-          <label for="piStatus">PI Status</label>
-
+          <label for="piStatus" style="padding-top:0px;">PI Status</label>
           <app-vf-custom-select formControlName="piStatus" [values]="piStatusData"
             [isRequired]="'Please Select PI Status'" [isDisabled]="enableflag" [isDirty]="isDirty">
           </app-vf-custom-select>
@@ -198,8 +226,6 @@
 
         <div class="form-group">
           <label for="payMentStatus">Payment Status</label>
-
-
           <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData"
             [isRequired]="'Please Select Payment Status'" [isDisabled]="enableflag" [isDirty]="isDirty">
           </app-vf-custom-select>
@@ -212,6 +238,7 @@
             <app-custom-input formControlName="remark"
             [isDisabledInp]="enableflag"
             [labelName]="labels.remark" 
+            placeHolder ="Enter the Remark"
             [id]="'remark'" 
             [maxLength]="labels?.validationData.userName.maxLength" 
             [isDirty]="isDirty"
@@ -241,13 +268,14 @@
     </div>
 
 
-
+  </form>
     <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
-      <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
+      <button class="btn btn-primary" type="submit"  *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
+      <button class="btn btn-primary" type="submit" mat-dialog-close = 'close' *ngIf="showUpdate" (click)="updateProformaInvoice()">Update</button>
       <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
     </div>
 
-  </form>
+  
 </mat-dialog-content>
 
 
@@ -274,6 +302,7 @@
             </div>
             <div class="form-group small">
               {{fileSize}}
+              
             </div>
             <div class="form-group row" style="margin-left: 0.5vw">
 
@@ -393,3 +422,6 @@
 </div>
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
+
+
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>
