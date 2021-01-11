@@ -28,9 +28,11 @@ export class UtilService {
     }
 
     
-    setUserDetails(data) {
+  setUserDetails(data) {
         this.userDetails$.next(data)
-    }
+  }
+  
+   
 
     getDownloadXlsFile(tabledata:any[],type?:string){
       

@@ -11,6 +11,7 @@ import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
 import { AdminService } from '@services/admin.service'
+import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -20,6 +21,9 @@ import { AdminService } from '@services/admin.service'
 export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
+
+  poNumber : any = 'Saikumar';
+  smsapproved: any = 'Yes';
 
   
   @Input('userObj') user : any
@@ -66,12 +70,16 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
         {key:4,value:'Bureau of Naviks.Mumbai'}
     ];
     
+    dataArray=[]
       
   dataSource = new MatTableDataSource<any>(this.userList);
 
   date = new FormControl();
+
+  
   PurchaseOrderForm:FormGroup;
-  formQuantity: FormGroup;
+   formQuantity: FormGroup;
+  
   labels: any = {};
   isDirty: boolean;
 
@@ -98,6 +106,9 @@ smsApprovedList : any[] = [
         {key: '0', value: 'No'},
         {key: '1',value: 'Yes'}
               ]
+  // poNumber: string;
+  // smsapproved: any;
+ 
 
 
 
@@ -111,7 +122,8 @@ smsApprovedList : any[] = [
     private toasterService: ToasterService,
     private router: Router,
     private invoiceService: InvoiceService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private beheSer : BehaviourSubjectService
     ) { }
 
   ngOnInit() {
@@ -145,7 +157,6 @@ smsApprovedList : any[] = [
 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
-      searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
     })
 
@@ -161,10 +172,36 @@ smsApprovedList : any[] = [
       this.status = val['status'] || '';
     })
 
+    this.beheSer.$poNumber.subscribe( res => {
+      this.poNumber = res;
+       this.poNumber =this.poNumber;
+    });
+
+    this.beheSer.$smsapproved.subscribe( res => {
+      this.smsapproved = res;
+      this.smsapproved = this.smsapproved;
+    });
+
    this.fetchPODetails();
 
    this.getSubLovs();
-    
+
+   this.dataArray.push(this.formQuantity);
+  }
+
+  
+ 
+
+  purchaseForm(){
+    this.dataArray.push(this.formQuantity);
+  }
+
+  deleteRow(index){
+    this.dataArray.splice(index);
+  }
+
+  submit(){
+    console.log(this.dataArray);
   }
 
   fetchPODetails() {
@@ -239,6 +276,7 @@ smsApprovedList : any[] = [
 
 
   }
+  
   POForm(){
 
     if(this.PurchaseOrderForm.invalid) {
@@ -346,6 +384,8 @@ smsApprovedList : any[] = [
       return;
     }
 
+   
+
 
     this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
 
@@ -385,6 +425,8 @@ smsApprovedList : any[] = [
         this.isDirty = false;
 
         this.PurchaseOrderForm.reset()
+        this.beheSer.setPoNumber(data.poNumber);
+        this.beheSer.setSmsApproved(data.smsapproved);
 
 
           this.toasterService.showSuccess('Data Saved Successfully','')
@@ -397,10 +439,18 @@ smsApprovedList : any[] = [
             message: 'Are you sure you want to proceed tax invoice page?'
           }
 
+       
+
     })
-    
+ 
 
   }
+
+  
+
+  
+
+  
 
   cancelPO() {
     this.showPOModal= false;

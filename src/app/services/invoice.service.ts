@@ -500,6 +500,21 @@ updatePurchaseOrder(data) {
     shortPay : form.shortPay,
     paymentStatus : form.paymentStatus,
     remark : form.remark,
+    projectName:form.projectName,
+    projectCordinator : form.projectCordinator,
+    PONoAmendOrder : form.PONoAmendOrder,
+    mail : form.mail,
+    totalSMS : form.totalSMS,
+    counts : form.counts,
+    baseAmount : form.baseAmount,
+    tax : form.tax,
+    recvDate:form.recvDate,
+    book : form.book,
+    dateEstimated : form.dateEstimated,
+    invoiceAmount2 : form.invoiceAmount2,
+    bankReceived : form.bankReceived,
+    interestOnTDSotherDeduction : form.interestOnTDSotherDeduction,
+    receiptDate : form.receiptDate,
     uploadDoc : form.uploadDocument
   }
 
@@ -583,6 +598,35 @@ updatePurchaseOrder(data) {
 
   let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
   return  this.httpService.post<any>(url,formData);
+  }
+
+
+  // creating sms credit allocation
+
+  smsCreditAllocationDetails(data) {
+
+    const processId = this.apiService.api.smsCreditAllocation.processId;
+    const workflowId = this.apiService.api.smsCreditAllocation.workflowId;
+    const projectId = this.apiService.api.smsCreditAllocation.projectId;
+  
+  
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+  
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+  
+    const formData = this.transform(body);
+  
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  
+    return this.httpService.post(url,formData);
+  
   }
   
 

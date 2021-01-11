@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
+import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
+import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
 
 @Component({
@@ -13,6 +15,7 @@ import { UtilService } from '@services/util.service';
 export class BillingOwnerDetailsComponent implements OnInit {
 
   labels:any;
+  name: string;
   billOwnerForm:FormGroup;
   isDirty: boolean;
   propertyFlag : boolean;
@@ -45,16 +48,25 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
 
   showView: boolean = true;
+  userId: string;
 
   constructor(
     private labelsService:LabelsService,
     private toasterService:ToasterService,
     private router:Router,
     private utilService:UtilService,
-    private activatedRoute: ActivatedRoute
+    private userInfoService:UserInfoService,
+    private activatedRoute: ActivatedRoute,
+    private behser: BehaviourSubjectService
     ) { }
 
   ngOnInit() {
+
+    this.behser.$userId.subscribe( res => {
+      this.userId = res;
+    });
+
+    console.log("userId>>", this.userId);
     
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -211,7 +223,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   editData() {
-    // this.propertyFlag = false;
+    this.propertyFlag = true;
     this.showView = false;
   }
 
@@ -231,7 +243,46 @@ export class BillingOwnerDetailsComponent implements OnInit {
     }
     console.log('billOwnerForm',this.billOwnerForm.value)
 
-    this.detectFormChanges();
+    const billingDetails = {
+      // "selectedClient":"55",
+      "clientId":this.userId,
+      "selectedClient":this.userId,
+      "name":this.billOwnerForm.value.name,
+      "city":this.billOwnerForm.value.city,
+      "designation":this.billOwnerForm.value.designation,
+      "email":this.billOwnerForm.value.email,
+      "employeeCode":this.billOwnerForm.value.employeeCode,
+      "mobileNumberCode":this.billOwnerForm.value.mobileNumberCode,
+      "mobileNumber":this.billOwnerForm.value.mobileNo,
+      "telephoneCode":this.billOwnerForm.value.teleCode,
+      "telephoneNumber":this.billOwnerForm.value.telPhno,
+      "oaLine1":this.billOwnerForm.value.offAddress1,
+      "oaLine2":this.billOwnerForm.value.offAddress2,
+      "oaLine3":this.billOwnerForm.value.offAddress3,
+      "state":this.billOwnerForm.value.state,
+      "pincode":this.billOwnerForm.value.pinCode,
+      "remark":this.billOwnerForm.value.remark, 
+    }
+     this.userInfoService.createBilling(billingDetails).subscribe((response)=> {
+      
+            console.log('Response',response)
+      
+             
+            if(response['Error'] == '0' && response) {
+      
+              this.isDirty=false;
+              this.billOwnerForm.reset()
+              this.toasterService.showSuccess(response,'')
+      
+            }else {
+              this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+            }
+      
+          })
+
+    // this.detectFormChanges();
+
+    
   }
   back() {
 
@@ -281,6 +332,19 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   saveCancel() {
     this.showDataSaveModal = false;
-  }
 
+  let pno = '';
+  this.utilService.projectNumber$.subscribe((val)=> {
+    pno = val || '1';
+  })
+
+  if(this.user){
+    this.router.navigate(['/users/techAdmin/'+pno])
+    this.showView = true
+    this.propertyFlag = true
+  }else{
+    this.router.navigate(['/users/techAdmin'])
+  }
+  }
+  
 }

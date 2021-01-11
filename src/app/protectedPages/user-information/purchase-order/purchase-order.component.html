@@ -310,7 +310,7 @@
 
                         <div class="col-10">
 
-                            <button class="btn btn-primary" style="float:left" (click)="POForm()">Raise E-Invoice</button>
+                            <button class="btn btn-primary" style="float:left" (click)="POForm()">Submit</button>
 
                         </div>
 
@@ -358,13 +358,13 @@
                      
                      <mat-form-field>
                          <mat-label>From Date</mat-label>
-                       <input matInput 
-                       [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
-                       <mat-datepicker-toggle matSuffix [for]="picker6" 
-                       ></mat-datepicker-toggle>
+                       <input matInput [matDatepicker]="picker6" formControlName="searchData"  
+                       (keyup)="detectDateKeyAction($event,'searchData')"
+                      >
+                       <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                        <mat-datepicker #picker6></mat-datepicker>
                      </mat-form-field>
-                     
+                    
                    </div>
                  </div>
          
@@ -374,9 +374,9 @@
                     
                      <label for="dateFor" style="visibility:hidden;">To Date</label>
                      
-                     <mat-form-field floatLabel  =  "float">
-                         <mat-label>To Date</mat-label>
-                       <input matInput [min]="searchForm.get('searchFrom').value" 
+                     <mat-form-field>
+                         <mat-label floatLabel="float">To Date</mat-label>
+                       <input matInput [min]="searchForm.get('searchData').value" 
                        [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                        <mat-datepicker-toggle matSuffix [for]="picker7" 
                        ></mat-datepicker-toggle>
@@ -469,7 +469,7 @@
             <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
         </div>
 
-        <!--Materail Table End-->
+        <!--Materail Table End -->
         <div class="m-5"></div>
 
     </div>
@@ -481,60 +481,68 @@
     <div class="modal-dialog order-popup">
         <div class="modal-content">
             <div class="modal-header text-center">
-                <h4 class="modal-title">Purchase Order</h4>
+                 <h4 class="modal-title"> </h4> 
+            <table>
+                <thead>
+                 <tr>
+                    <th>{{accountName}}</th>
+                    <th>{{poNumber}}</th>
+                    <th>{{smsapproved}}</th>
+                </tr>
+            </thead>
+            </table>
             </div>
             <div class="modal-body msg-data">
                
 
-                <form [formGroup]="formQuantity" (keydown.enter)="$event.preventDefault()">
+                <form [formGroup]="formQuantity" (ngSubmit)="submit()">
 
 
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-
-                                <app-custom-input formControlName="rate" 
-                                  [isRequired]="'Rate is Mandatory'" 
-                                  [labelName]="labels.rate"
-                                  placeHolder =  "Enter the Rate" 
-                                  [maxLength]="labels?.validationData?.rate?.maxLength" 
-                                  [type]="labels?.validationData?.rate?.type" 
-                                  [isDirty]="isQuantityDirty">
-                                </app-custom-input>
-
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="form-group">
-
-                                <app-custom-input formControlName="quantity" 
-                                 [isRequired]="'Quantity is Mandatory'" 
-                                 [labelName]="labels.quantity" 
-                                 placeHolder =  "Enter the Quantity"
-                                 [maxLength]="labels?.validationData?.quantity?.maxLength" 
-                                 [type]="labels?.validationData?.quantity?.type" 
-                                 [isDirty]="isQuantityDirty">
-                                </app-custom-input>
-
-                            </div>
-                        </div>
-                        <div class="col-4">
+                    <div class="row"  *ngFor="let obj of dataArray;let i = index;">
+                        <div class="col-3">
                             <div class="form-group">
 
                                 <app-custom-input formControlName="description" 
-                                 [isRequired]="'Description is Mandatory'" 
                                  [labelName]="labels.description"
                                  placeHolder = "Enter the Description" 
-                                 placeHolder =  "Enter the Description"
-                                 [maxLength]="labels?.validationData?.description?.maxLength" 
-                                 [isDirty]="isQuantityDirty">
+                                 [(ngModel)]="obj.description">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        
+                        <div class="col-3">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="quantity" 
+                                 [labelName]="labels.quantity" 
+                                 placeHolder =  "Enter the Quantity"
+                                 [(ngModel)]="obj.quantity">
                                 </app-custom-input>
 
                             </div>
                         </div>
 
+                        <div class="col-3">
+                            <div class="form-group">
+
+                                <app-custom-input formControlName="rate"                     
+                                  [labelName]="labels.rate" 
+                                  placeHolder =  "Enter the Rate"
+                                  [(ngModel)]="obj.rate">
+                                </app-custom-input>
+
+                            </div>
+                        </div>
+                        <div class="col-1 plus" >
+                        <span (click)="purchaseForm()" class="btn btn-success">+</span>
+                          </div>
+                          <div class="col-1 plus">
+                            <span (click)="deleteRow(i)" class="btn btn-danger">-</span>
+                            </div>
                     </div>
+               
+                     <span class="btn btn-info" (click)="submit()">Save</span>
+                  
                 </form>
             </div>
             <div class="modal-footer text-center">

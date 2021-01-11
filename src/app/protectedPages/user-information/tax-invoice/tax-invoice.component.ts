@@ -21,7 +21,13 @@ export class TaxInvoiceComponent implements OnInit {
 
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
 
-  @Input('userObj') user : any;
+  @Input('userObj') user : any; 
+
+//    monthList = [ "January", "February", "March", "April", "May", "June",
+// "July", "August", "September", "October", "November", "December" ];
+
+//  yearList = [ "2020", "2021", "2022", "2023", "2024", "2025",
+// "2026", "2027", "2028", "2029", "2030", "2031" ];
 
   displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks','Active']
 
@@ -102,7 +108,24 @@ export class TaxInvoiceComponent implements OnInit {
       penalty :  new FormControl(null),
       shortPay : new FormControl(null),
       submittedOn : new FormControl(null),
-      poBillable : new FormControl(null)
+      projectName:new FormControl(null),
+      projectCordinator:new FormControl(null),
+      PONoAmendOrder:new FormControl(null),
+      mail:new FormControl(null),
+      totalSMS:new FormControl(null),
+      counts:new FormControl(null),
+      baseAmount : new FormControl(null),
+      tax:new FormControl(null),
+      recvDate : new FormControl(null),
+      book :  new FormControl(null),
+      dateEstimated :  new FormControl(null),
+      invoiceAmount2 : new FormControl(null),
+      bankReceived : new FormControl(null),
+      interestOnTDSotherDeduction : new FormControl(null),
+      receiptDate :  new FormControl(null),
+      month : new FormControl(null),
+      year : new FormControl(null),
+      mrn : new FormControl(null)
     })
 
     this.searchForm = new FormGroup({
@@ -185,7 +208,27 @@ export class TaxInvoiceComponent implements OnInit {
     const shortPay = feildControls.shortPay.value;
     const submittedOn = feildControls.submittedOn.value;
     const poBillable = feildControls.poBillable.value;
+    const projectName = feildControls.projectName.value;
+    const projectCordinator = feildControls.projectCordinator.value;
+    const PONoAmendOrder = +feildControls.PONoAmendOrder.value;
+    const mail = +feildControls.mail.value;
+    const totalSMS = feildControls.totalSMS.value;
+    const counts = feildControls.counts.value;
+    const baseAmount = feildControls.baseAmount.value;
+    const tax = feildControls.tax.value;
+    const book = feildControls.book.value;
+    const invoiceAmount2 = feildControls.invoiceAmount2.value;
+    const bankReceived = feildControls.bankReceived.value;
+    const interestOnTDSotherDeduction = feildControls.interestOnTDSotherDeduction.value;
+    const mrn = feildControls.mrn.value;
+    const recvDate = feildControls.recvDate.value;
+    const receiptDate = feildControls.receiptDate.value;
+    const dateEstimated = feildControls.dateEstimated.value;
+
     
+    const formattedRecvDate = this.Datepipe.transform(recvDate,'dd/MM/yyyy')
+    const formattedReceiptDate = this.Datepipe.transform(receiptDate,'dd/MM/yyyy')
+    const formattedDateEstimated = this.Datepipe.transform(dateEstimated,'dd/MM/yyyy')
 
     const Data = {
       userName,
@@ -205,6 +248,22 @@ export class TaxInvoiceComponent implements OnInit {
       shortPay,
       paymentStatus,
       remark,
+      projectName,
+      projectCordinator,
+      PONoAmendOrder,
+      mail,
+      totalSMS,
+      counts,
+      baseAmount,
+      tax,
+      book,
+      invoiceAmount2,
+      bankReceived,
+      interestOnTDSotherDeduction,
+      mrn,
+      receiptDate : formattedReceiptDate,
+      recvDate :formattedRecvDate,
+      dateEstimated :formattedDateEstimated,
 		  uploadDocument  : "file"
 
     }
