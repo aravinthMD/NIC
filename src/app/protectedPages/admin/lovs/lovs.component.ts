@@ -1,3 +1,4 @@
+import { NullVisitor } from '@angular/compiler/src/render3/r3_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { LabelsService } from '@services/labels.service';
@@ -10,22 +11,25 @@ import { LabelsService } from '@services/labels.service';
 export class LovsComponent implements OnInit {
  LovsControl: FormGroup;
   selectedValue:any[];
-  labels: any[]
+  labels: any;
   showModal:boolean=false;
   propertyFlag: boolean = false;
   isDisabledInp: boolean=true;
   isDisabled:boolean=true
   isDisabledVal:boolean=true
+  isDisabledValBtn:boolean=true
   hideButton:boolean = true;
   showButton: boolean = false;
+  enablebtn:boolean=true
   selectedLovs;
-  labelNameKey;
-  labelNameVal;
+  labelNameKey:string='Key';
+  labelNameVal:string='Value';
   labelNameDrp
-  lovsList1;
+  lovsList1:any[]=[];
+  btnName:string=''
   lovsList:any[] = [
     { key: 0, value: 'Deparment List' },
-    { key: 1, value: 'Po Status' },
+    { key: 1, value: 'PO Status' },
     { key: 2, value: 'PI Status' },
     { key: 3, value: 'Payment Status' },
     { key: 4, value: 'PI Received In' }]
@@ -34,7 +38,7 @@ export class LovsComponent implements OnInit {
     { value: 'Department of Sainik Welfare', key: 0 },
     { value: 'Minstry of minority affairs', key: 1 },
     { value: 'Vishakhapatnam port Trust', key: 2 },
-    { value: 'minstry of trible affairs', key: 3 },
+    { value: 'Minstry of trible affairs', key: 3 },
     { value: 'Bureasu of Naviks.Mumbai', key: 4 }];
      poStatus: any[] = [
     { key: 0, value: 'Received' },
@@ -44,6 +48,7 @@ export class LovsComponent implements OnInit {
     { key: 4, value: 'On Hold' }]
 
      piStatus: any[] = [
+
     { key: 0, value: 'Received' },
     { key: 1, value: 'Pending' },
     { key: 2, value: 'Approved' },
@@ -69,26 +74,15 @@ export class LovsComponent implements OnInit {
     this.LovsControl=new FormGroup({
       lovControlKey:new FormControl(null),
       lovControlVal:new FormControl(null),
-      labelNameDrp:new FormControl(''),
+      labelNameDrp:new FormControl({value:'',disabled:true}),
       LOVsList:new FormControl('')
        })
   }
-
-  saveOrEdit() {
-    return
-    // if (this.buttonName == 'Edit') {
-    //   this.propertyFlag = false;
-    //   this.buttonName = 'Save'
-    // } else {
-    //   this.propertyFlag = true;
-    //   this.buttonName = 'Edit'
-    // }
-
-  }
   onChangeLov(event){
     this.selectedLovs = event.target.value; 
-    this.isDisabledInp=true
-    this.isDisabled=false;
+    this.isDisabledInp=true;
+    this.enablebtn=false
+    this.LovsControl.get('labelNameDrp').enable();
 if(this.selectedLovs=='0'){
   this.labelNameKey=this.labels['departmentKey']
   this.labelNameVal=this.labels['departmentVal']
@@ -116,34 +110,53 @@ if(this.selectedLovs=='0'){
         this.lovsList1=this.piReceivedIn
         }
 }
-  onChangeDept(event){
-    const value = event.target.value; 
-    this.isDisabledVal=false;
-    //this.boolean = false;
 
-  //   this.selectedValue = this.deparmentList.filter(data => data.key==value);
-  // this.LovsControl.patchValue({
-  //   lovControlKey:this.selectedValue[0].key,
-  //   lovControlVal:this.selectedValue[0].value,
-  //   });
-  //   this.isDisabledInp=true
-  //   this.btnHide=false;
+  onChangeDept(event,data){
+    const value = event.target.value;
+    const selectedVal=data.filter(obj=>obj.key==value);
+    this.LovsControl.get('lovControlKey').patchValue(selectedVal[0].key)
+    this.LovsControl.get('lovControlVal').patchValue(selectedVal[0].value)
+    this.isDisabled=false
+  }
+addField(){
+  this.isDisabledValBtn=false;
+  this.LovsControl.patchValue({labelNameDrp : '',lovControlVal:'',lovControlKey:''
+  })
 
-}
-
-addField(value){
-
+  this.LovsControl.get('labelNameDrp').disable();
+  this.LovsControl.get('labelNameDrp').updateValueAndValidity()
+  this.hideButton=false
+  this.btnName="Add"
 }
 editField(){
-  this.showButton=true
+  this.LovsControl.get('labelNameDrp').enable();
+  this.hideButton=false
+  this.btnName="Update"
+  this.isDisabledValBtn=false
+ 
 }
-deleteField(value){
+deleteField(){
   this.showModal = true;
 }
-clearField(value){
-
+close(){
+  this.hideButton=true
+  this.isDisabledValBtn=true
+  this.LovsControl.patchValue({
+    labelNameDrp : '',
+    lovControlVal:'',
+    lovControlKey:''
+  })
+  this.LovsControl.get('labelNameDrp').enable();
 }
 onCancel() {
   this.showModal = false;
+}
+updateField() {
+
+}
+click(evn:string){
+  if(evn=='Add'){}
+  else if(evn=='Update'){}
+  
 }
 } 

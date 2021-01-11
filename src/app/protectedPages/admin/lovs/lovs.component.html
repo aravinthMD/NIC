@@ -16,6 +16,25 @@
                     </app-vf-custom-select>
         </div>
             </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="department">{{labelNameDrp?labelNameDrp:'Sub-Lovs'}}</label>
+                    <app-vf-custom-select [values]="lovsList1" 
+                    formControlName="labelNameDrp"
+                    (change)="onChangeDept($event,lovsList1)"
+                    >
+                    </app-vf-custom-select>
+                </div>
+            </div>
+             <div *ngIf="hideButton" class="col-1" style="margin-top:40px">
+             <button [disabled]="enablebtn" class="btn btn-primary" (click)="addField()">Add</button>
+            </div>
+            <div  style="margin-top:40px">
+                <button class="btn btn-primary" [disabled]="isDisabled || LovsControl.get('labelNameDrp').value==''" (click)="editField()">Edit</button>
+            </div>
+            <div  class="col-1" style="margin-top:40px">
+                <button  class="btn btn-primary" [disabled]="isDisabled" (click)="deleteField()">Delete</button>
+            </div>
         </div>
         <div class="row pad-row">
 
@@ -27,10 +46,9 @@
                         aria-describedby="departmentHelp">
                     <small id="departmentHelp" class="form-text text-muted"></small> -->
                     <app-custom-input 
-                    [isRequired]="labelNameDrp +'is Mandatory'" 
                     [labelName]="labelNameKey"
                     formControlName="lovControlKey" 
-                    [isDisabledInp]="isDisabledInp">
+                    [isDisabledInp]="isDisabledVal">
                     </app-custom-input>
                 </div>
 
@@ -43,32 +61,22 @@
                     <input type="text" class="form-control" [disabled]="propertyFlag" id="departmentValue"
                         aria-describedby="departmentHelp">
                     <small id="departmentHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input [isRequired]="labelNameDrp +' is Mandatory'" 
+                    <app-custom-input 
                     [labelName]="labelNameVal"
                     formControlName="lovControlVal"
-                    [isDisabledInp]="isDisabledVal">
+                    [isDisabledInp]="isDisabledValBtn">
                     </app-custom-input>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="department">{{labelNameDrp}}</label>
-                    <app-vf-custom-select [values]="lovsList1" 
-                    formControlName="labelNameDrp"
-                    [isRequired]="'Please Select Payment Status'"
-                    (change)="onChangeDept($event)"
-                    [isDisabled]="isDisabled">
-                    
-                    </app-vf-custom-select>
-                    <!-- <select id="department" class="form-control" aria-describedby="emailHelp">
-                        <option [value]="list.value" *ngFor="let list of deparmentList">{{list.key}}</option>
+            <div *ngIf="!hideButton" class="col-1" style="margin-top:40px">
+                <button class="btn btn-primary" (click)="click(btnName)">{{btnName}}</button>
+               </div>
+            <div *ngIf="!hideButton" class="col-1" style="margin-top:40px">
+                <button class="btn btn-primary" (click)="close()">Close</button>
+               </div>
 
-                    </select>
-                    <small id="emailHelp" class="form-text text-muted"></small> -->
-                </div>
-            </div>
         
-            <div *ngIf="hideButton" class="col-1" style="margin-top:1.3vw;">
+            <!-- <div *ngIf="hideButton" class="col-1" style="margin-top:1.3vw;">
                 <button [disabled]="LovsControl.get('lovControlKey').value=='0' || LovsControl.get('lovControlVal').value=='0'" class="btn btn-primary" (click)="addField()">Add</button>
             </div>
             <div  *ngIf="showButton" style="margin-top:1.3vw; padding-right:20px ;">
@@ -82,7 +90,7 @@
             </div>
             <div *ngIf="hideButton" class="col-1" style="margin-top:1.3vw">
                 <button  class="btn btn-primary" (click)="deleteField()">Delete</button>
-            </div>
+            </div> -->
         
     </div>
         <div *ngIf="false" class="row pad-row">
@@ -149,14 +157,14 @@
                     (click)="deleteField('poStatus')">Delete</button>
             </div> -->
 
-             <div class="col-2" style="margin-top:1.3vw">
+             <div class="col-2" style="margin-top:40px">
 
-                    <button class="btn btn-primary" (click)="Addfield()">Add</button>
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
                 </div>
-                <div style="margin-top:1.3vw">
-                    <button class="btn btn-primary" (click)="Editfield()">Edit</button>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Edit</button>
                 </div>
-                <div class="col-1" style="margin-top:1.3vw">
+                <div class="col-1" style="margin-top:40px">
                     <button class="btn btn-primary">Delete</button>
                 </div> 
 
@@ -224,14 +232,14 @@
                 <button [disabled]="btnHide || btnShow" class="btn btn-primary"
                     (click)="deleteField('piStatus')">Delete</button>
             </div> -->
-            <div class="col-2" style="margin-top:1.3vw">
+            <div class="col-2" style="margin-top:40px">
 
-                    <button class="btn btn-primary" (click)="Addfield()">Add</button>
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
                 </div>
-                <div style="margin-top:1.3vw">
-                    <button class="btn btn-primary" (click)="Editfield()">Edit</button>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Edit</button>
                 </div>
-                <div class="col-1" style="margin-top:1.3vw">
+                <div class="col-1" style="margin-top:40px">
                     <button class="btn btn-primary">Delete</button>
 
                 </div>
@@ -283,14 +291,14 @@
                 </div>
             </div>
 
-            <div class="col-2" style="margin-top:1.3vw">
+            <div class="col-2" style="margin-top:40px">
 
-                    <button class="btn btn-primary" (click)="Addfield()">Add</button>
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
                 </div>
-                <div style="margin-top:1.3vw">
-                    <button class="btn btn-primary" (click)="Editfield()">Edit</button>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Edit</button>
                 </div>
-                <div class="col-1" style="margin-top:1.3vw">
+                <div class="col-1" style="margin-top:40px">
                     <button class="btn btn-primary">Delete</button>
 
                 </div>
@@ -359,14 +367,14 @@
                 </div>
             </div>
             
-                <div class="col-2" style="margin-top:1.3vw">
+                <div class="col-2" style="margin-top:40px">
 
-                    <button class="btn btn-primary" (click)="Addfield()">Add</button>
+                    <button class="btn btn-primary" (click)="addField()">Add</button>
                 </div>
-                <div style="margin-top:1.3vw">
-                    <button class="btn btn-primary" (click)="Editfield()">Edit</button>
+                <div style="margin-top:40px">
+                    <button class="btn btn-primary" (click)="editField()">Edit</button>
                 </div>
-                <div class="col-1" style="margin-top:1.3vw">
+                <div class="col-1" style="margin-top:40px">
                     <button class="btn btn-primary">Delete</button>
 
                 </div>

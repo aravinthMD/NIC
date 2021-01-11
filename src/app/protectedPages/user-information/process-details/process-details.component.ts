@@ -6,6 +6,8 @@ import {ProformaInvoiceDialogFormComponent} from './proforma-invoice-dialog-form
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router'
+import { UtilService } from '@services/util.service'
 
 @Component({
   selector: 'app-process-details',
@@ -18,18 +20,52 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
   @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
   @Input('userObj') user : any;
 
-  displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','Action',"remainder"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt','Action',"reminder","Escalation"]
 
 
   userList : any[] =   [
-    {invoiceNo : 4355,projectNumber : 4534,piAmt:25000,remarks:'credited'},
-    {invoiceNo : 2313,projectNumber : 6756,piAmt:56000,remarks:'credited'},
-    {invoiceNo : 6574,projectNumber : 3453,piAmt:25000,remarks:'credited'}
+    {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: 4535,piAmt:25000,remarks:'credited'},
+    {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: 4535,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 6574,accountName : "Sharma",projectNumber: 4535,piAmt:25000,remarks:'credited'},
+    {invoiceNo : 7454,accountName : "Sharma",projectNumber: 4535,piAmt:70000,remarks:'credited'},
+    {invoiceNo : 5667,accountName : "Sharma",propropertyFlagjectNumber: 4535,piAmt:56000,remarks:'credited'},
+    {invoiceNo : 5889,accountName : "Sharma",projectNumber: 4535,piAmt:23000,remarks:'credited'},
+    {invoiceNo : 4500,accountName : "Sharma",projectNumber: 4535,piAmt:45000,remarks:'credited'},
+    {invoiceNo : 7800,accountName : "Sharma",projectNumber: 4535,piAmt:34000,remarks:'credited'},
+    {invoiceNo : 7688,accountName : "Sharma",projectNumber: 4535,piAmt:24000,remarks:'credited'},
+    {invoiceNo : 5322,accountName : "Sharma",projectNumber: 4535,piAmt:67000,remarks:'credited'},
+    {invoiceNo : 1332,accountName : "Sharma",projectNumber: 4535,piAmt:54000,remarks:'credited'},
+    {invoiceNo : 5454,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'},
+    {invoiceNo : 6543,accountName : "Sharma",projectNumber: 4535,piAmt:10000,remarks:'credited'},
+    {invoiceNo : 3445,accountName : "Sharma",projectNumber: 4535,piAmt:20000,remarks:'credited'}
   ];
 
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
 
   paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On hold'}]
+
+  nicsiData = [
+    {
+      key: '1',
+      value: 'ukjena@nic.in'
+    },
+    {
+      key: '2',
+      value: 'vinod.agrawal@nic.in'
+    },
+    {
+      key: '3',
+      value: 'rk.raina@nic.in'
+    },
+    {
+      key: '4',
+      value: 'sshanker@nic.in'
+    },
+    {
+      key: '5',
+      value: 'Deepak.saxena@nic.in'
+    }
+  ]
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
@@ -40,24 +76,43 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   isDirty: boolean;
 
-  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe) { 
+  searchForm: FormGroup;
+  accountName: string;
+  status: string;
+
+  showEmailModal: boolean;
+
+  propertyFlag: boolean;
+
+  modalData: {
+    title: string;
+    request: any
+  }
+
+  constructor(private dialog: MatDialog,private labelsService: LabelsService,private formBuilder : FormBuilder,private datePipe: DatePipe,private activatedRoute: ActivatedRoute,private utilService: UtilService) { 
 
 
     this.form =this.formBuilder.group({
+      accountName: [null],
       invoiceNumber : [null],
-      projectNumber : [null],
-      poNumber: [null],
+      refNumber: [null],
+      piTraffic: [null],
+      piOwner: [null],
+      date: [null],
+      nicsiManager: [''],
       piAmount: [null],
-      emailAddress: [null],
-      remark: [null],
-      piBillable: [null],
-      fromDate:[null],
-      toDate:[null],
-      invoiceDate:[null],
-      poDate:[null],
+      startDate:[null],
+      endDate:[null],
       piStatus: [''],
-      paymentStatus:['']
+      paymentStatus:[''],
+      remark:['']
 
+    })
+
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchFrom: new FormControl(null),
+      searchTo: new FormControl(null)
     })
 
 
@@ -68,6 +123,34 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     })
+
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val['userId'] || '';
+      this.status = val['status'] || '';
+    })
+
+    this.activatedRoute.params.subscribe((value)=> {
+      this.userList =   [
+        {invoiceNo : 4355,accountName : 'RajeshK',projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
+        {invoiceNo : 2313,accountName : 'Suresh Agarwal',projectNumber: value.projectNo || 4535,piAmt:56000,remarks:'credited'},
+        {invoiceNo : 6574,accountName : "Sharma",projectNumber: value.projectNo || 4535,piAmt:25000,remarks:'credited'},
+        {invoiceNo : 7454,accountName : "Prakash",projectNumber:  value.projectNo ||4535,piAmt:70000,remarks:'credited'},
+        {invoiceNo : 5667,accountName : "Mani",projectNumber:  value.projectNo ||4535,piAmt:5000,remarks:'credited'},
+        {invoiceNo : 5663,accountName : "Raja",projectNumber:  value.projectNo ||4535,piAmt:56000,remarks:'credited'},
+        {invoiceNo : 5889,accountName : "Karthi",projectNumber:  value.projectNo ||4535,piAmt:23000,remarks:'credited'},
+        {invoiceNo : 4500,accountName : "Saran",projectNumber:  value.projectNo ||4535,piAmt:45000,remarks:'credited'},
+        {invoiceNo : 7800,accountName : "Rebaca",projectNumber:  value.projectNo ||4535,piAmt:34000,remarks:'credited'},
+        {invoiceNo : 7688,accountName : "John",projectNumber:  value.projectNo ||4535,piAmt:24000,remarks:'credited'},
+        {invoiceNo : 5322,accountName : "Selva",projectNumber:  value.projectNo ||4535,piAmt:67000,remarks:'credited'},
+        {invoiceNo : 1332,accountName : "Subash",projectNumber:  value.projectNo ||4535,piAmt:54000,remarks:'credited'},
+        {invoiceNo : 5454,accountName : "Vinoth",projectNumber:  value.projectNo ||4535,piAmt:20000,remarks:'credited'},
+        {invoiceNo : 6543,accountName : "Prem",projectNumber:  value.projectNo ||4535,piAmt:10000,remarks:'credited'},
+        {invoiceNo : 3445,accountName : "Juli",projectNumber:  value.projectNo ||4535,piAmt:20000,remarks:'credited'}
+      ];
+
+      this.dataSource = new MatTableDataSource<any>(this.userList);
+  });
 
   }
 
@@ -112,5 +195,58 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   }
 
+  onSearch() {
 
+    console.log(this.searchForm.value)
+  }
+
+  clear() {
+
+    this.searchForm.patchValue({
+      searchData: null,
+      searchFrom:null,
+      searchTo:null
+    })
+  }
+
+
+
+  sendReminder(element) {
+    this.showEmailModal = true;
+
+    this.modalData =  {
+      title: 'Send Reminder Email',
+      request: {
+        from: 'akshaya@appiyo.com',
+        to: 'arul.auth@nic.in',
+        subject: `Test Email: ${element.invoiceNo}`
+      }
+    }
+  }
+
+  sendEscalation(element) {
+    this.showEmailModal = true;
+
+    this.modalData =  {
+      title: 'Send Escalation Email',
+      request: {
+        from: 'akshaya@appiyo.com',
+        to: 'escalation@nic.in',
+        subject: `Test Email: [##201##]_PI REF: ${element.invoiceNo}`
+      }
+    }
+
+  }
+
+  onOkay() {
+    this.showEmailModal = false;
+  }
+
+  onCancel() {
+    this.showEmailModal = false;
+  }
+
+  getDownloadXls(){
+    this.utilService.getDownloadXlsFile(this.userList,'ProformaInvoice');
+  }
 }

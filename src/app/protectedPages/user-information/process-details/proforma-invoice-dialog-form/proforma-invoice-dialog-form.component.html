@@ -1,207 +1,395 @@
 <h2 mat-dialog-title>Proforma Invoice</h2>
 <mat-dialog-content class="mat-typography">
-    <form [formGroup]="form">
-        <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
+  <form [formGroup]="form">
+    <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
       <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
     </div>  -->
-        <div class="row">
-            <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="invoiceNumber">Invoice Number</label>
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <!-- <label for="invoiceNumber">Invoice Number</label>
                     <input type="email" [disabled]="enableflag" value="3434" class="form-control" id="invoiceNumber" aria-describedby="invoiceNumberHelp">
                     <small id="invoiceNumberHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
+          <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
 
-                    </app-custom-input>
+                    </app-custom-input> -->
 
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="invoiceDate">Invoice Date</label>
-                    <!-- <input type="date" [disabled]="enableflag" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
-                    <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+          <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'"
+            [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.name.maxLength"
+            [isDisabledInp]="enableflag" [isDirty]="isDirty">
+
+          </app-custom-input>
+
+
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <!-- <label for="invoiceDate">Invoice Date</label>
+                  
 
                     <mat-form-field [ngClass]="{'inp-date':enableflag}">
                         <input matInput [matDatepicker]="picker1" formControlName="invoiceDate">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
-                      </mat-form-field>
+                      </mat-form-field> -->
+
+          <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'"
+            [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength"
+            [isDisabledInp]="enableflag" [isDirty]="isDirty">
+
+          </app-custom-input>
 
 
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="exampleInputEmail1">Project Number</label>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <!-- <label for="exampleInputEmail1">Project Number</label>
                     <input type="projectNumber" value="4355" [disabled]="enableflag" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
                     <small id="projectNumberHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="projectNumber" [labelName]="labels.projectNo" [id]="'projectNumber'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.proformaPN.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
+          <!-- <app-custom-input formControlName="projectNumber" [labelName]="labels.projectNo" [id]="'projectNumber'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.proformaPN.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
 
-                    </app-custom-input>
+                    </app-custom-input> -->
 
-                </div>
-            </div>
+          <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'"
+            [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength"
+            [isDisabledInp]="enableflag" [isDirty]="isDirty">
 
-            <div class="col-4">
-                <!-- <div class="form-group">
+          </app-custom-input>
+
+        </div>
+      </div>
+
+      <div class="col-4">
+        <!-- <div class="form-group">
               <label for="poNumber">PO Number</label>
               <input type="email" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
               <small id="poNumberHelp" class="form-text text-muted"></small>
             </div>-->
-                <div class="form-group">
-                    <!-- <label for="poNumber">PO Number</label>
+        <div class="form-group">
+          <!-- <label for="poNumber">PO Number</label>
                   <input type="poNumber" value="5678" [disabled]="enableflag" class="form-control" id="poNumber" aria-describedby="poNumberHelp"> -->
 
-                  <app-custom-input formControlName="poNumber" [labelName]="labels.poNumber" [id]="'poNumber'" [isRequired]="'PO number is mandatory'" [maxLength]="labels?.validationData.poNumber.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
+          <!-- <app-custom-input formControlName="poNumber" [labelName]="labels.poNumber" [id]="'poNumber'" [isRequired]="'PO number is mandatory'" [maxLength]="labels?.validationData.poNumber.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
 
-                </app-custom-input>
+                </app-custom-input> -->
+
+          <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'"
+            [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength"
+            [isDisabledInp]="enableflag" [isDirty]="isDirty">
+
+          </app-custom-input>
 
 
-                  
-             
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="poDate">PO Date</label>
-                    <!-- <input type="date" class="form-control" [disabled]="enableflag" id="poDate" aria-describedby="poDateHelp">
-                    <small id="poDateHelp" class="form-text text-muted"></small> -->
+
+
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <!-- <label for="poDate">PO Date</label>
+                   
                     <mat-form-field [ngClass]="{'inp-date':enableflag}">
                         <input matInput [matDatepicker]="picker2" formControlName="poDate">
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
-                      </mat-form-field>
+                      </mat-form-field> -->
 
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="Fromperiod">From Date</label>
-                    <!-- <input type="date" class="form-control" [disabled]="enableflag" id="Fromperiod" aria-describedby="FromperiodHelp">
-                    <small id="FromperiodHelp" class="form-text text-muted"></small> -->
-                    <mat-form-field [ngClass]="{'inp-date':enableflag}">
-                        <input matInput [matDatepicker]="picker3" formControlName="fromDate" [max]= "form.get('toDate').value">
-                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                        <mat-datepicker #picker3></mat-datepicker>
-                      </mat-form-field>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="Toperiod">To Date</label>
-                    <!-- <input type="date" class="form-control" [disabled]="enableflag" id="Toperiod" aria-describedby="ToperiodHelp">
-                    <small id="ToperiodHelp" class="form-text text-muted"></small> -->
-                    <mat-form-field [ngClass]="{'inp-date':enableflag}">
-                        <input matInput [matDatepicker]="picker4" formControlName="toDate" [min]= "form.get('fromDate').value">
-                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                        <mat-datepicker #picker4></mat-datepicker>
-                      </mat-form-field>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="piAmount">PI Amount</label>
-                    <input type="number" value="54500" [disabled]="enableflag" class="form-control" id="piAmount" aria-describedby="piAmountHelp">
-                    <small id="piAmountHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" [isRequired]="'PI amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [type]="labels?.validationData.piAmount.type" [isDisabledInp]="enableflag" [isDirty]="isDirty">
+          <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'"
+            [isRequired]="'Amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength"
+            [isDisabledInp]="enableflag" [type]="labels?.validationData.piAmount.type" [isDirty]="isDirty">
 
-                    </app-custom-input>
+          </app-custom-input>
 
-                    
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="exampleInputEmail1">Email Address</label>
-                    <input type="email" value="guru.auth@nic.com" [disabled]="enableflag" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    <small id="emailHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="emailAddress" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email address is mandatory'" [maxLength]="labels?.validationData.email.maxLength" [patternCheck]="labels?.validationData.email.patternCheck" [isDisabledInp]="enableflag" [isDirty]="isDirty">
-
-                    </app-custom-input>
-
-                </div>
-            </div>
-            <div class="col-4">
-                <!--<div class="form-group">
-              <label for="piStatus">PI Status</label>
-              <input type="text" class="form-control" id="piStatus" aria-describedby="piStatusHelp">
-              <small id="piStatusHelp" class="form-text text-muted"></small>
-            </div> -->
-                <div class="form-group">
-                    <label for="piStatus">PI Status</label>
-                    <!-- <select name="piStatus" id="piStatus" [disabled]="enableflag" class="form-control">
-                  <option>Rejected</option>
-                  <option>Approved</option>
-                  <option>Pending</option>
-                  <option>Rejected</option>
-                  <option>OnHold</option>
-              </select> -->
-              <app-vf-custom-select formControlName="piStatus" [values]="piStatusData"
-              [isRequired]="'Please Select PI Status'" [isDisabled]="enableflag" [isDirty]="isDirty"></app-vf-custom-select>
-
-
-                </div>
-            </div>
-
-            <div class="col-4">
-                <!-- <div class="form-group">
-            <label for="payMentStatus">Payment Status</label>
-            <input type="text" class="form-control" id="payMentStatus" aria-describedby="payMentStatusHelp">
-            <small id="payMentStatusHelp" class="form-text text-muted"></small>
-          </div> -->
-                <div class="form-group">
-                    <label for="payMentStatus">Payment Status</label>
-                    <!-- <select [disabled]="enableflag" name="payMentStatus" id="payMentStatus" class="form-control">
-                  <option>Received</option>
-                  <option>Pending</option>
-                  <option>On hold</option>
-              </select> -->
-
-              <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData"
-              [isRequired]="'Please Select Payment Status'" [isDisabled]="enableflag" [isDirty]="isDirty"></app-vf-custom-select>
-
-                </div>
-
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="remark">Remark</label>
-                    <input type="email" class="form-control" [disabled]="enableflag" id="remark" aria-describedby="remarkHelp">
-                    <small id="remarkHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [isRequired]="'Remark is mandatory'" [maxLength]="labels?.validationData.remark.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
-
-                    </app-custom-input>
-
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="piBillable">PI Billable</label>
-                    <input type="text" class="form-control" [disabled]="enableflag" id="piBillable" aria-describedby="remarkHelp"> -->
-                    <app-custom-input formControlName="piBillable" [labelName]="labels.piBillable" [id]="'piBillable'" [isRequired]="'PI billable is mandatory'" [isDisabledInp]="enableflag" [isDirty]="isDirty">
-
-                    </app-custom-input>
-
-                </div>
-            </div>
-            <!-- <div class="col-4">
-      <div class="form-group">
-          <label for="poBillable">Upload Document</label>
-          <input type="file" class="form-control" id="poBillable" aria-describedby="poBillableHelp">
-          <small id="poBillableHelp" class="form-text text-muted"></small>
         </div>
-  </div> -->
+      </div>
+
+      <div class="col-4">
+        <div class="form-group">
+
+          <app-custom-input formControlName="piTraffic" [labelName]="labels.piTraffic" [id]="'piTraffic'"
+            [isRequired]="'Traffic is mandatory'" [maxLength]="labels?.validationData.piTraffic.maxLength"
+            [isDisabledInp]="enableflag" [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty">
+
+          </app-custom-input>
+
+
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+
+
+          <label for="dateFor">{{labels?.date}}</label>
+
+
+          <mat-form-field>
+            <input matInput required formControlName="date" [matDatepicker]="picker1">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <div class="date-picker-error" *ngIf="
+                  isDirty &&
+                  form.get('date').errors?.required
+                ">
+            Please select date
+          </div>
+
+
+
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+
+
+          <label for="nicsiManager">NICSI Manager</label>
+
+          <app-vf-custom-select formControlName="nicsiManager" [values]="nicsiData"
+            [isRequired]="'Please Select NICSI Manager'" [isDisabled]="enableflag" [isDirty]="isDirty">
+          </app-vf-custom-select>
+
+
+
+        </div>
+      </div>
+
+
+      <div class="col-4">
+        <div class="form-group">
+          <label for="Fromperiod">Start Date</label>
+
+          <mat-form-field [ngClass]="{'inp-date':enableflag}">
+            <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label for="Toperiod">End Date</label>
+
+          <mat-form-field [ngClass]="{'inp-date':enableflag}">
+            <input matInput [matDatepicker]="picker4" formControlName="endDate" [min]="form.get('startDate').value">
+            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+            <mat-datepicker #picker4></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-4">
+
+        <div class="form-group">
+          <label for="piStatus">PI Status</label>
+
+          <app-vf-custom-select formControlName="piStatus" [values]="piStatusData"
+            [isRequired]="'Please Select PI Status'" [isDisabled]="enableflag" [isDirty]="isDirty">
+          </app-vf-custom-select>
+
+
+        </div>
+      </div>
+
+      <div class="col-4">
+
+        <div class="form-group">
+          <label for="payMentStatus">Payment Status</label>
+
+
+          <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData"
+            [isRequired]="'Please Select Payment Status'" [isDisabled]="enableflag" [isDirty]="isDirty">
+          </app-vf-custom-select>
+
         </div>
 
-
-
-        <div class="row pt-3 pb-3 m-0">
-            <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
-            <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName="remark"
+            [isDisabledInp]="enableflag"
+            [labelName]="labels.remark" 
+            [id]="'remark'" 
+            [maxLength]="labels?.validationData.userName.maxLength" 
+            [isDirty]="isDirty"
+            [isRequired]="'Please enter the remark'">
+            </app-custom-input>
         </div>
+    </div>
 
-    </form>
+      <div class="col-4">
+
+        <div class="form-group">
+          <label for="document">Document</label>
+          <div class="pd-2">
+            <span> {{'invoice.pdf'}} </span>
+
+            <button class="btn btn-primary" style="position: absolute;
+                    left: 8vw;
+                    bottom: 0.5vw;" (click)="viewDoc()">View</button>
+          </div>
+
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+    <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
+      <button class="btn btn-primary" type="submit" (click)="OnUpdate()">{{buttonName}}</button>
+      <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
+    </div>
+
+  </form>
 </mat-dialog-content>
+
+
+<div class="modal" id="uploadModal" [ngClass]="{ 'dis-block': showUploadModal }" *ngIf="showUploadModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">Upload Document</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="showUploadModal = false">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group" style="cursor: pointer;" (click)="showPDF()">
+
+              <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'"
+                height="80px" width="80px" />
+            </div>
+          </div>
+          <!-- <div class="col-12  pr-2">
+            <div class="form-group">
+              {{fileName}}
+            </div>
+            <div class="form-group small">
+              {{fileSize}}
+            </div>
+            <div class="form-group row" style="margin-left: 0.5vw">
+
+              <div class="pr-2">
+                <button matRipple class=" btn btn-primary" style="font-size: 10px;"
+                  (click)="download()">Download</button>
+              </div>
+              <div class="pr-2">
+                <button matRipple class=" btn btn-primary" style="font-size: 10px;"
+                  (click)="showDeleteModal = true">Remove</button>
+              </div>
+            </div>
+          </div> -->
+          <div class="col-12 pt-3 ">
+            <div class="form-group ml-1">
+              {{fileName}}
+            </div>
+            <div class="form-group small ml-1 pt-2 pb-3">
+              {{fileSize}}
+            </div>
+            <div class="form-group row" style="margin-left: 5px">
+              
+              <div class="pt-2 pr-2 pb-3">
+                <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="download()">Download</button>
+              </div>
+              <div class="pt-2 pb-3">
+                <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="col-12">
+
+                <div class="form-group"> -->
+
+        <!-- <mat-card class="col-sm-12" style="padding:4px">
+                    <div style="display: flex;align-items: center;justify-content: center;"> -->
+        <!-- <img [src]="selectedPdf" class="img-responsive img" /></div> -->
+
+        <!-- <embed width="100%" height="100%" src="'data:application/pdf;base64,' + selectedPdf" type="application/pdf" /> -->
+
+        <!-- </div>
+                    </mat-card> -->
+
+
+        <!-- <embed width="100%" height="100%" [src]="selectedPdf" type="application/pdf" />
+
+                  </div>
+                
+
+              </div> -->
+
+        <div class="col-12" style="margin-left: -10px;">
+
+
+          <div class="pd-3 pb-3 pt-3">
+            <button matRipple type="button" class="btn btn-primary" style="float: left;"
+              (click)="fileInput.click()">Choose Document</button>
+          </div>
+
+          <!-- <button type="button" class="btn btn-primary" style="float: left;">Save</button>
+                  <button type="button" class="btn btn-primary" style="float: left;"  (click)="fileInput.click()"> Choose Upload</button> -->
+        </div>
+      </div>
+      <input #fileInput type="file" style="display: none;" (input)="onFileSelect($event)" />
+
+    </div>
+
+  
+</div>
+</div>
+
+<div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:800px">
+      <div class="modal-header text-center">
+        <h4 class="modal-title">View PDF</h4>
+        <button type="button" class="close" data-dismiss="modal"
+          (click)="showPdfModal = false;showUploadModal = true">&times;</button>
+      </div>
+      <div class="modal-body" style="height:500px">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="deleteModal" [ngClass]="{ 'dis-block': showDeleteModal }">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header text-center">
+        <h4 class="modal-title"></h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <p id="">
+          Are you sure you want to remove this pdf ?
+        </p>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="ucic_lead">
+          <!-- (click)="checkNegativeList()" -->
+          Yes
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="showDeleteModal = false">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

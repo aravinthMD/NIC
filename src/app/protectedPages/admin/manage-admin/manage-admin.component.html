@@ -1,20 +1,26 @@
 <div class="col-md-10 main">
-    <mat-tab-group  mat-stretch-tabs style="width:100%;">
-      <mat-tab label="Create User" class="activeTab">
+    <mat-tab-group mat-stretch-tabs style="width:100%;">
+        <mat-tab label="Create User" class="activeTab">
+            <ng-template matTabContent>
+                <app-create-user></app-create-user>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Manage User">
+            <ng-template matTabContent>
+                <app-manage-users></app-manage-users>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="LOVS">
+            <ng-template matTabContent>
+                <app-lovs></app-lovs>
+            </ng-template>
+        </mat-tab>
+        <!-- <mat-tab label="Account Manage">
         <ng-template matTabContent>
-        <app-create-user></app-create-user>
-        </ng-template>
-      </mat-tab>
-      <mat-tab label="Manage User">
-        <ng-template matTabContent>
-        <app-manage-users></app-manage-users>
+          <app-account-manage></app-account-manage>
       </ng-template>
-      </mat-tab>
-      <mat-tab label="LOVS">
-        <ng-template matTabContent>
-        <app-lovs></app-lovs>
-      </ng-template>
-      </mat-tab>
+      </mat-tab> -->
     </mat-tab-group>
     <!-- <button>bulk upload</button> -->
+
 </div>

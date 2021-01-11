@@ -1,4 +1,11 @@
+<div class="col-md-10 main"> 
+    <mat-card>
 <div class="technical_admin">
+    <!-- <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Technical Admin Details</h1> -->
+
+    <app-account-header [title]="'Technical Admin Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
+
+
     <form (submit)="onSubmit()" [formGroup]="technicaladminform">
             <div class="row">
                 <div class="col-4">
@@ -8,7 +15,9 @@
                         [isRequired]="'Name is mandatory'" 
                         [mandatoryField]="true"
                         [maxLength]="labels?.validationData.name.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -20,7 +29,9 @@
                         [mandatoryField]="true"
                         [patternCheck]="labels?.validationData.email.patternCheck" 
                         [maxLength]="labels?.validationData.email.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -30,7 +41,9 @@
                         <app-vf-custom-select formControlName="departmentName" 
                         [values]="departmentListData"
                         [isRequired]="'Please Select Department'" 
-                        [isDirty]="isDirty"></app-vf-custom-select>
+                        [isDirty]="isDirty"
+                        [isDisabled]="propertyFlag"
+                        ></app-vf-custom-select>
                     </div>
                 </div>
                 <div class="col-4">
@@ -42,7 +55,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Designation is mandatory'" 
                         [maxLength]="labels?.validationData.designation.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -52,23 +67,44 @@
                         [labelName]="labels.employeeCode" 
                         [id]="'employeeCode'" 
                         [maxLength]="labels?.validationData.employeeCode.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
-                <div class="col-4">
+
+                <div class="col-1 pr-2">
+                    <div class="form-group">
+                        <label for="">Code<span style="color: red;">*</span></label>
+                        <app-vf-custom-select formControlName = "countryCode"
+                        [values] = "countryCodeValues"
+                        [isRequired] = "'Select Code'"
+                        [isDisabled] = "propertyFlag"
+                        [isDirty] = "isDirty"
+                        [isDisabled]="propertyFlag"
+                        >
+                    </app-vf-custom-select>
+                    </div>
+                </div>
+
+
+                <div class="col-3">
                     <div class="form-group">
                         <app-custom-input formControlName="mobileNo" 
                         [labelName]="labels.mobileNo" 
                         [id]="'mobileNo'" 
+                        [mandatoryField]="true"
                         [type]="labels?.validationData.mobile.type" 
                         [patternCheck]="labels?.validationData.mobile.patternCheck" 
                         [maxLength]="labels?.validationData.mobile.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
-                <div class="col-4">
+                <!-- <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="telPhno" 
                         [labelName]="labels.teleNumber" 
@@ -78,10 +114,40 @@
                         [type]="labels?.validationData.telephoneNumber.type" 
                         [patternCheck]="labels?.validationData.telephoneNumber.patternCheck" 
                         [maxLength]="labels?.validationData.telephoneNumber.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
+                </div> -->
+
+
+                <div class="col-1 pr-2 mr-0">
+                    <div class="form-group">
+                       
+                        <label for="department">Code<span style="color:red">*</span></label>
+                        <app-vf-custom-select formControlName="teleCode" [values]="teleCodeValues"
+                        [isRequired]="'Select code'" [isDisabled]="propertyFlag"
+                        [isDirty]="isDirty">
+                    </app-vf-custom-select>
+                    </div>
                 </div>
+                <div class="col-3 pl-2 ml-0">
+                    <div class="form-group">
+                        <app-custom-input formControlName="telPhno" 
+                        [labelName]="labels.teleNumber" [id]="'telPhno'"
+                        [isRequired]="'Telephone number is mandatory'" 
+                        [mandatoryField]="true"
+                        [type]="labels?.validationData.telephoneNumber.type"
+                        [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
+                        [maxLength]="labels?.validationData.telephoneNumber.maxLength"
+                        [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+
+                </div>
+
+
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="offAddress1" 
@@ -90,7 +156,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine1 is mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -102,7 +170,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine2 is mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -114,7 +184,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine3 is mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -126,7 +198,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'City is mandatory'" 
                         [maxLength]="labels?.validationData.city.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -138,7 +212,9 @@
                         [mandatoryField]="true"
                         [isRequired]="'State is mandatory'" 
                         [maxLength]="labels?.validationData.state.maxLength" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
@@ -151,14 +227,41 @@
                         [isRequired]="'Pincode is mandatory'" 
                         [maxLength]="labels?.validationData.pincode.maxLength" 
                         [type]="labels?.validationData.pincode.type" 
-                        [isDirty]="isDirty">
+                        [isDirty]="isDirty"
+                        [isDisabledInp]="propertyFlag"
+                        >
                         </app-custom-input>
                     </div>
                 </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
+                            [maxLength]="labels?.validationData.remark.maxLength" 
+                            [isRequired]="'Remark is mandatory'"
+                            [isDisabledInp]="propertyFlag"
+                            [isDirty]="isDirty">
+                        </app-custom-input>
+                    </div>
+                </div>
+
+
             </div>
             </form>
             <div class="row pt-3 pb-3 m-0">
-                <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" >{{'Submit'}}</button>
+                <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button>
+
+                <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+
+
+                <button class="btn btn-primary back-btn" matRipple (click)="next()">Next</button>
+
                 <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
             </div>
         </div>
+    </mat-card>
+        </div>
+
+
+
+<app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

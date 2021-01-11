@@ -1,11 +1,16 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
+import { environment as environmentProd } from './environment.prod';
 export const environment = {
   production: false,
   projectIds: {
     projectId: '2efbdc721cc311ebb6c0727d5ac274b2'
+  },
+  version:environmentProd.version,
+  apiVersion: {
+    login: 'v3/',
+    api: 'v2/'
   },
   host:'http://178.128.125.44/appiyo/',
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',

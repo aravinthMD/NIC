@@ -1,0 +1,152 @@
+<div class="mat-elevation-z8">
+
+    <table mat-table [dataSource]="dataSource">
+
+
+        <ng-container matColumnDef="UserID">
+            <th mat-header-cell *matHeaderCellDef> User ID </th>
+            <td mat-cell *matCellDef="let element"> <a>{{element.userId}}</a> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Department">
+            <th mat-header-cell *matHeaderCellDef> Department </th>
+            <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef> State </th>
+            <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="projectNumber">
+            <th mat-header-cell *matHeaderCellDef> Project Number </th>
+            <td mat-cell *matCellDef="let element"> {{element.projectNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="piNumber">
+            <th mat-header-cell *matHeaderCellDef> PI Number </th>
+            <td mat-cell *matCellDef="let element"> {{element.piNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="piDate">
+            <th mat-header-cell *matHeaderCellDef> PI Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.piDate}} </td>
+        </ng-container>
+
+
+
+        <!--Payments Tracking-->
+        
+        <ng-container matColumnDef="UserName">
+            <th mat-header-cell *matHeaderCellDef> User Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="projectNumber">
+            <th mat-header-cell *matHeaderCellDef> Project Number </th>
+            <td mat-cell *matCellDef="let element"> {{element.projectNumber}} </td>
+        </ng-container> -->
+
+
+        <ng-container matColumnDef="InvoiceAmount">
+            <th mat-header-cell *matHeaderCellDef> Invoice Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceAmount}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="InvoiceDate">
+            <th mat-header-cell *matHeaderCellDef> Invoice Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceDate}} </td>
+        </ng-container> 
+        
+        <ng-container matColumnDef="RecvDate">
+            <th mat-header-cell *matHeaderCellDef> Receieved Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.recvDate}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="Shortfall">
+            <th mat-header-cell *matHeaderCellDef>Short Fall</th>
+            <td mat-cell *matCellDef="let element"> {{element.shortfall}} </td>
+        </ng-container> 
+
+        <!--Payments Receieved table-->
+
+        <ng-container matColumnDef="InvoiceNo">
+            <th mat-header-cell *matHeaderCellDef>Invoice Number</th>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="TDS">
+            <th mat-header-cell *matHeaderCellDef>TDS</th>
+            <td mat-cell *matCellDef="let element"> {{element.tds}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="Deduction">
+            <th mat-header-cell *matHeaderCellDef>Deduction</th>
+            <td mat-cell *matCellDef="let element"> {{element.deduction}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="ActualPayment">
+            <th mat-header-cell *matHeaderCellDef>Actual Payment</th>
+            <td mat-cell *matCellDef="let element"> {{element.actualPayment}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="ShortPay">
+            <th mat-header-cell *matHeaderCellDef>ShortPay</th>
+            <td mat-cell *matCellDef="let element"> {{element.shortPay}} </td>
+        </ng-container> 
+
+
+        <!--Short Filter Table-->
+
+        <ng-container matColumnDef="DocRecDate">
+            <th mat-header-cell *matHeaderCellDef>Document Date</th>
+            <td mat-cell *matCellDef="let element"> {{element.docRecDate}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="PaymentRecDate">
+            <th mat-header-cell *matHeaderCellDef>Payment Receieved Date</th>
+            <td mat-cell *matCellDef="let element"> {{element.paymentRecDate}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="DocNo">
+            <th mat-header-cell *matHeaderCellDef>Document Number</th>
+            <td mat-cell *matCellDef="let element"> {{element.docNo}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="PayBMade">
+            <th mat-header-cell *matHeaderCellDef>Payment Being Mode</th>
+            <td mat-cell *matCellDef="let element"> {{element.payBMade}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="Diff">
+            <th mat-header-cell *matHeaderCellDef>Difference</th>
+            <td mat-cell *matCellDef="let element"> {{element.diff}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="WithTdS">
+            <th mat-header-cell *matHeaderCellDef>With TDS</th>
+            <td mat-cell *matCellDef="let element"> {{element.withTdS}} </td>
+        </ng-container>
+
+
+         <!--Paid and Unpaid Filter Table-->
+
+         <ng-container matColumnDef="InvoicePaid">
+            <th mat-header-cell *matHeaderCellDef>Invoice Amount Paid</th>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceAmountPaid}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="InvoiceUnpaid">
+            <th mat-header-cell *matHeaderCellDef>Unpaid</th>
+            <td mat-cell *matCellDef="let element"> {{element.unpaid}} </td>
+        </ng-container> 
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
+    </table>
+
+    <!-- <button class="btn btn-primary download download-pad" type="submit">Export As CSV</button> -->
+    <mat-paginator class="font-paginator" [pageSize]="[5]" showFirstLastButtons></mat-paginator>
+    <div class="mb-3"></div>
+</div>

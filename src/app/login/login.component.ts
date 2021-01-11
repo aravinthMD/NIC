@@ -38,6 +38,9 @@ export class LoginComponent implements OnInit {
     }else {
 
       const data = {
+        // email: 'akshaya.venkataraman@appiyo.com',
+        // password: 'inswit@123',
+        // longTermToken: true
         username: this.form.value.userName,
         password: this.form.value.password
       }
@@ -46,6 +49,8 @@ export class LoginComponent implements OnInit {
 
       this.loginService.getLogin(data).subscribe((response)=> {
 
+
+        console.log(response)
         if(response['ProcessVariables']['countUser'] === ''){
           this.errroMsg = response['ProcessVariables']['response']
         } else if(response['ProcessVariables']['countUser'] === '0'){
@@ -72,7 +77,7 @@ export class LoginComponent implements OnInit {
 
 
     if(!this.form.value.userName){
-      this.errroMsg = 'Please enter the useranme to reset password'
+      this.errroMsg = 'Please enter the username to reset password'
       // this.toasterService.showError('Please enter the useranme to reset password','')
     }else {
 
@@ -86,7 +91,8 @@ export class LoginComponent implements OnInit {
           this.toasterService.showSuccess('OTP Sent Successfully','')
           this.router.navigate(['/verifyotp'])
         }else {
-          this.toasterService.showError('Invalid Username','')
+          // this.toasterService.showError('Invalid Username','')
+          this.errroMsg = 'Invalid username'
         }
              
       })
