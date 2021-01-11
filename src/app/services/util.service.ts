@@ -7,6 +7,8 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 export class UtilService {
 
   detectSidNav$: BehaviorSubject<string> = new BehaviorSubject('');
+  $setPoNumber: any;
+  $setSmsapproved: any;
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
@@ -26,9 +28,11 @@ export class UtilService {
 
     userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
     
-    setUserDetails(data) {
+  setUserDetails(data) {
         this.userDetails$.next(data)
-    }
+  }
+  
+   
 
     getDownloadXlsFile(tabledata:any[],type?:string){
       

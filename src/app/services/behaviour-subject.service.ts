@@ -7,11 +7,23 @@ import { BehaviorSubject } from 'rxjs';
 export class BehaviourSubjectService {
 
    $userId = new BehaviorSubject('');
-    // user = this.userId.asObservable();
-
+    
     setUserId(userId){
       this.$userId.next(userId)
     }
 
+
+    $poNumber = new BehaviorSubject('');
+
+    setPoNumber(poNumber) {
+        this.$poNumber.next(poNumber)
+    }
+    
+    $smsapproved = new BehaviorSubject('');
+  
+    setSmsApproved(smsapproved) {
+        this.$smsapproved.next(smsapproved)
+
+    }
   constructor() { }
 }

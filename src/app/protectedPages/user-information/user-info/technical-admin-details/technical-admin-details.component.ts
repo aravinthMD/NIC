@@ -354,25 +354,21 @@ const departmentListData = this.departmentListData.filter((val)=> {
           this.isDirty=false;
 
           this.technicaladminform.reset()
-          this.toasterService.showSuccess(response,'')
-           
+          // this.toasterService.showSuccess(response,'')
+          this.showDataSaveModal = true;   
+
+          this.dataValue = {
+            title : "Technical Admin details saved Sucessfully",
+            message : "Are you sure want to proceed to Billing Admin Detail?"
+          }
+                
         }else {
-          this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+          this.toasterService.showError(response['ErrorMessage'],'')
         }
   
       })
 
-    this.showDataSaveModal = true;
-
-    this.dataValue = {
-      title : "Account Created Sucessfully",
-      message : "Redirecting to Billing Admin Detail?"
-    }
-
-    // this.dataValue = {
-    //   title : "Technical Admin details saved Sucessfully",
-    //   message : "Are you sure want to proceed to Billing Admin Detail?"
-    // }
+    
 
     console.log('billOwnerForm',this.technicaladminform.value)
 
@@ -511,6 +507,20 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
   saveCancel() {
     this.showDataSaveModal = false;
+    
+    let pno = '';
+    this.utilService.projectNumber$.subscribe((val)=> {
+      pno = val || '1';
+    })
+
+    if(this.user){
+      this.router.navigate(['/users/techAdmin/'+pno])
+      this.showView = true
+      this.propertyFlag = true
+    }else{
+      this.router.navigate(['/users/techAdmin'])
+    }
+
   }
 
   editDataBill() {
