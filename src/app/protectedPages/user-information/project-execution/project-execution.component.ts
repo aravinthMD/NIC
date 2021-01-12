@@ -10,14 +10,15 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
-import { ProjectExecutionService } from './services/project-execution.service';
+import { SearchService } from '../../../services/search.service';
+import {ApiService} from '../../../services/api.service';
 
 
 @Component({
   selector: 'app-project-execution',
   templateUrl: './project-execution.component.html',
   styleUrls: ['./project-execution.component.scss'],
-  providers: [ ProjectExecutionService]
+  //providers: [ SearchService]
 })
 export class ProjectExecutionComponent implements OnInit,AfterViewInit {
 
@@ -94,7 +95,8 @@ dataValue: {
               private router: Router,
               private invoiceService : InvoiceService,
               private datePipe:DatePipe,
-              private projectExecutionService: ProjectExecutionService
+              private searchService: SearchService,
+              private apiService:ApiService
               ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
@@ -160,7 +162,7 @@ dataValue: {
 
     // this.dataSource = new MatTableDataSource<any>(this.userList);
 
-    this.getProjectExecutionDetails();     //Getting the Projet Execution details API
+    this.getProjectExecutionDetails();     //Getting the Project Execution details API
 
     // this.getProjectExecutionDetailById();
 
@@ -170,14 +172,31 @@ dataValue: {
 
 
   searchProjectExecution() {
-      const data = {
+
+    const data = this.apiService.api.getProjectExecutionDetailsList;
+
+      const params = {
         searchKeyword: this.searchForm.get('searchData').value,
         fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
         toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
       }
-      this.projectExecutionService
-          .searchProjectExecution(data).subscribe((value) => {
-            console.log('value', value);
+
+      this.searchService
+          .searchProjectExecution(data,params).subscribe((resp) => {
+            console.log('value', resp);
+            
+            const respError=resp["ProcessVariables"]["error" ];
+
+            if(respError.code=="400")
+            {
+              
+            console.log('result',resp['ProcessVariables']);
+            this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["peList" ]);
+        }
+        else 
+        { 
+          this.toasterService.showError(`${respError.code}: ${respError.message}`, 'Technical error..');
+        }
           })
   }
 
@@ -357,7 +376,8 @@ dataValue: {
 
   onSearch() {
 
-    console.log(this.searchForm.value)
+    console.log(this.searchForm.value);
+
   }
 
   clear() {

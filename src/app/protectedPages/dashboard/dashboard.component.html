@@ -7,8 +7,8 @@
             Dashboard
           </div>
           <div class="input-icons col-md-6 d-flex justify-content-end">
-            <i class="fa fa-search"></i>
-            <input type="text" id="mySearch" title="Search the Account Details">
+           <i class="fa fa-search" (click)="onSearch(mySearch)"></i>
+            <input type="text" id="mySearch" #mySearch title="Search the Account Details">
           </div> 
           <!-- <mat-form-field class="example-form-field p-0 mt-3">
           <mat-label>Search...</mat-label>

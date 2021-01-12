@@ -10,7 +10,8 @@ import { Router,ActivatedRoute } from '@angular/router'
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
-
+import { SearchService } from '../../../services/search.service';
+import{ApiService} from '../../../services/api.service'
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -112,6 +113,8 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
         private toasterService: ToasterService,
         private router: Router,
         private invoiceService : InvoiceService,
+        private searchService: SearchService,
+        private apiService:ApiService
         ) { 
 
 
@@ -315,7 +318,34 @@ export class ProcessDetailsComponent implements OnInit,AfterViewInit {
 
   onSearch() {
 
-    console.log(this.searchForm.value)
+    console.log(this.searchForm.value);
+    
+    const data = this.apiService.api.fetchAllProformaInvoice;
+
+    const params = {
+        searchKeyword: this.searchForm.get('searchData').value,
+        fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
+        toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
+    }
+
+      this.searchService
+          .searchProjectExecution(data,params).subscribe((resp) => {
+            console.log('value', resp);
+            const respError=resp["ProcessVariables"]["error" ];
+
+            if(respError.code=="300")
+            {
+              
+              console.log('result',resp['ProcessVariables']);
+              this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["piDataList" ]);
+            }
+            else 
+            { 
+              this.toasterService.showError(`${respError.code}: ${respError.message}`, 'Technical error..');
+            }
+
+            
+          })
   }
 
   clear() {

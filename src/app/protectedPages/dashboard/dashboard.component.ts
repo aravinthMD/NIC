@@ -3,6 +3,9 @@ import { Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { UtilService } from '../../services/util.service';
+import { SearchService } from '../../services/search.service';
+import {ApiService} from '../../services/api.service';
+import { ToasterService } from '@services/toaster.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +15,7 @@ import { UtilService } from '../../services/util.service';
 export class DashboardComponent implements OnInit ,AfterViewInit{
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
+
   displayedColumns: string[] = ['UserID','projectNo', 'Department', 'State', 'Status']; 
 
   userList : any[] = [
@@ -34,9 +38,15 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
 
   dataSource = new MatTableDataSource<any>(this.userList);
 
-  constructor(private route:Router,private utilService: UtilService) { }
+  constructor(
+    private route:Router,
+    private utilService: UtilService,
+    private searchService: SearchService,
+    private apiService:ApiService,
+    private toasterService: ToasterService) { }
   
   ngOnInit() {
+    this.onSearch();
   }
 
   ngAfterViewInit(){
@@ -59,6 +69,53 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
 
     this.utilService.setCurrentUrl('users/customerDetails')
     this.route.navigate(['/users/customerDetails/'+element.projectNo])
+  }
+  onSearch(mySearch?)
+  {
+    const keyword=mySearch.value
+   console.log('Search Value',keyword);
+   const data = this.apiService.api.getAllCustomerDetails;
+
+  const params = {
+     searchKeyword:keyword
+      // fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
+      // toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
+  }
+
+    this.searchService
+        .searchProjectExecution(data,params).subscribe((resp) => {
+          console.log('Response', resp);
+         
+          const respError=resp["ProcessVariables"]["error" ];
+
+          if(respError.code=="600")
+          {
+            const result=resp["ProcessVariables"]["customerList" ];
+            this.dataSource = new MatTableDataSource<any>(result);
+          console.log('result',result);
+          const DashboardList:any[]=[];
+          result.forEach(obj => {
+            DashboardList.push(
+              {
+                userId : obj.applicantName,
+                projectNo: obj.projectNumber,
+                department : obj.departmentName,
+                state : obj.state,
+                status :"Active",
+                id:obj.userId
+              });          
+        });
+
+          console.log('DashboardList',DashboardList);
+          this.dataSource = new MatTableDataSource<any>(DashboardList);
+      }
+      else 
+      { 
+        this.toasterService.showError(`${respError.code}: ${respError.message}`, 'Technical error..');
+      }
+        })
+      
+
   }
 
 }
