@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material';
 import { Router,ActivatedRoute } from '@angular/router';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { LabelsService } from '@services/labels.service';
@@ -51,6 +52,8 @@ teleCodeValues = [
   {key:2,value:'+080'}
 ]
 
+dataSource = new MatTableDataSource<any>();
+
 user: string;
 name: string;
 
@@ -64,6 +67,9 @@ remarkModal: boolean;
 hideEditButton: boolean = false;
 showViewBill:boolean = true;
 userId;
+  adminsList: any;
+  form: any;
+  BillDetailsList: any;
  
 
 
@@ -85,12 +91,12 @@ userId;
 
     console.log("userId>>>>>>>>>>>>>", this.userId);
     
-
    
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
 
+    
     
     this.technicaladminform=new FormGroup({
       name : new FormControl ([null]),
@@ -135,10 +141,10 @@ userId;
     this.user = ''
     this.activatedRoute.params.subscribe((value)=> {
       this.user = value.id;
-  });
+     });
 
-  console.log(this.activatedRoute)
-    if(this.user){
+    console.log(this.activatedRoute)
+      if(this.user){
 
       this.utilService.userDetails$.subscribe((val)=> {
 
@@ -147,7 +153,7 @@ userId;
       })
 
 
-      this.setFormValues();
+       this.setFormValues();
       this.setBillOwnerFormValues();
       this.propertyFlag = true;
 
@@ -155,7 +161,7 @@ userId;
         this.showView = false;
       }
 
-
+      this.fetchAllTechAdmins();
   }
 
 
@@ -163,29 +169,30 @@ userId;
 
 
 
-  setBillOwnerFormValues(){
-    
+  setBillOwnerFormValues(data?: any){
+     
+    if(data){
     
     this.billOwnerForm.patchValue({
-      name : 'Sasi',
-      departmentName : '1',
-      designation : 'Chennai',
-      employeeCode : '54534',
-      email : 'test@gmail.com',
-      countryCode: '0',
-      mobileNo : '9754544445',
-      telPhno : '2273422',
-      teleCode:'0',
-      offAddress1 : '4/345,baharathi nagar',
-      offAddress2 : 'Raja Street',
-      offAddress3 : 'adayar',
-      city : 'Chennai',
-      state : 'Tamilnadu',
-      pinCode : '600025',
-      remark: 'Pincode Changed'
-
+      name : data.name,
+      departmentName : data.department,
+      designation : data.designation,
+      employeeCode : data.employeeCode,
+      email : data.emailAddress,
+      countryCode: data.mobileCode,
+      mobileNo : data.mobileNumber,
+      telPhno : data.telephoneNumber,
+      teleCode:data.telephoneCode,
+      offAddress1 : data.officeAddressLine1,
+      offAddress2 : data.officeAddressLine2,
+      offAddress3 : data.officeAddressLine3,
+      city : data.city,
+      state : data.state,
+      pinCode : data.pincode,
+      remark: data.remark,
+      userId: data.clientId
     })
-
+  }
     this.viewBillAdminInfoData = [
       {
         key: this.labels.name,
@@ -229,28 +236,32 @@ userId;
     // this.hideEditButton = true;
   }
 
-  setFormValues() {
+  setFormValues(data?: any) {
+
+    if(data){
 
     this.technicaladminform.patchValue({
-      name : 'Prakash',
-      departmentName : '1',
-      designation :'Officer',
-      employeeCode : '23232',
-      email : 'technical@nic.in',
-      countryCode : '0',
-      mobileNo :'9867655433',
-      telPhno : '2276644',
-      teleCode:'0',
-      offAddress1 : '4/345,baharathi nagar',
-      offAddress2 : 'Raja Street',
-      offAddress3 : 'adayar',
-      city : 'Chennai',
-      state : 'Tamilnadu',
-      pinCode : '600028',
-      remark: 'Address Changed'
+      name : data.name,
+      departmentName : data.department,
+      designation :data.designation,
+      employeeCode : data.employeeCode,
+      email : data.emailAddress,
+      countryCode : data.mobileCode,
+      mobileNo : data.mobileNumber,
+      telPhno : data.telephoneNumber,
+      teleCode: data.telephoneCode,
+      offAddress1 : data.officeAddressLine1,
+      offAddress2 : data.officeAddressLine2,
+      offAddress3 : data.officeAddressLine3,
+      city : data.city,
+      state : data.state,
+      pinCode : data.pincode,
+      remark: data.remark,
+      userId: data.clientId
+
     })
 
-
+  }
     this.detectAuditTrialObj = this.technicaladminform.value;
 
     var dateObj = new Date();
@@ -326,15 +337,16 @@ const departmentListData = this.departmentListData.filter((val)=> {
     }
 
     const techAdminDetails = {
+
+      "name": this.technicaladminform.value.name,
       "department":this.technicaladminform.value.departmentName,
       "designation":this.technicaladminform.value.designation,
-      "emailAddress":this.technicaladminform.value.email,
       "employeeCode":this.technicaladminform.value.employeeCode,
+      "emailAddress":this.technicaladminform.value.email,
       "mobileCode":this.technicaladminform.value.countryCode,
       "mobileNumber":this.technicaladminform.value.mobileNo,
-      "telephoneCode":this.technicaladminform.value.teleCode,
       "telephoneNumber":this.technicaladminform.value.telPhno,
-      "name": this.technicaladminform.value.name,
+      "telephoneCode":this.technicaladminform.value.teleCode,
       "officeAddressLine1":this.technicaladminform.value.offAddress1,
       "officeAddressLine2":this.technicaladminform.value.offAddress2,
       "officeAddressLine3":this.technicaladminform.value.offAddress3,
@@ -376,6 +388,53 @@ const departmentListData = this.departmentListData.filter((val)=> {
     // this.detectFormChanges()
   
   
+  }
+
+  fetchAllTechAdmins() {
+
+    this.userInfoService.fetchAllTechAdmins().subscribe((response)=> {
+
+      console.log("techAdminDetails",response)
+
+      this.adminsList = response['ProcessVariables'];
+
+      this.dataSource = new MatTableDataSource<any>(this.adminsList);
+    })
+  }
+
+  getBillingAdminDetailById(id:string) {
+
+    this.userInfoService.getBillingAdminDetailById(id).subscribe((response)=> {
+
+      console.log("billAdminDetails by id",response)
+      this.utilService.setUserDetails(response["ProcessVariables"]);
+      this.setFormValues(response["ProcessVariables"]);
+    
+    },(error) => {
+    
+      console.log(error)
+    
+    })
+  }
+
+  
+  
+
+
+  getTechAdminsById(id:string){    
+
+    this.userInfoService.getTechAdminDetailById(id).subscribe((response) => {
+
+      console.log("get customer by id",response)
+      this.utilService.setUserDetails(response["ProcessVariables"]);
+      this.setFormValues(response["ProcessVariables"]);
+
+    },(error) => {
+
+      console.log(error)
+
+    })
+
   }
 
   detectFormChanges() {

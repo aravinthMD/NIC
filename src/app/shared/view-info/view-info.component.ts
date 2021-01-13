@@ -14,6 +14,7 @@ export class ViewInfoComponent implements OnInit,OnChanges {
 
   
   Math: any;
+ 
   constructor() { }
 
   ngOnInit() {
