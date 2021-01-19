@@ -5,7 +5,7 @@
 
     <app-account-header [title]="'Technical Admin Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
-    <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
+    <app-view-info [techAdminUserDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
 
    
 
@@ -326,7 +326,7 @@
             </div>
         </div>
 
-        <app-view-info [userDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
+        <app-view-info [billAdminUserDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
 
 
 

@@ -179,8 +179,7 @@ export class UserInfoService {
 
       const data = {
         currentClientId : Number(clientId),
-        temp : "get"
-
+        temp:'get'
       }
 
       const requestEntity  : any  = {
@@ -243,8 +242,7 @@ export class UserInfoService {
   
   const data = {
     currentBillId : Number(clientId),
-    temp : "get"
-  
+    temp: 'get'
   }
   
   const requestEntity  : any  = {

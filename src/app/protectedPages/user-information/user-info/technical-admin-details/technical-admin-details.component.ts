@@ -70,6 +70,7 @@ userId;
   adminsList: any;
   form: any;
   BillDetailsList: any;
+  clientId: string;
  
 
 
@@ -145,7 +146,8 @@ userId;
 
     console.log(this.activatedRoute)
       if(this.user){
-
+      
+      this.getTechAdminsById(this.clientId);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['userId'] || '';
@@ -162,12 +164,11 @@ userId;
       }
 
       this.fetchAllTechAdmins();
+
+       this.getTechAdminsById('22');
+
+       this.getBillingAdminDetailById('23');
   }
-
-
-
-
-
 
   setBillOwnerFormValues(data?: any){
      
@@ -178,7 +179,7 @@ userId;
       departmentName : data.department,
       designation : data.designation,
       employeeCode : data.employeeCode,
-      email : data.emailAddress,
+      email : data.email,
       countryCode: data.mobileCode,
       mobileNo : data.mobileNumber,
       telPhno : data.telephoneNumber,
@@ -189,10 +190,11 @@ userId;
       city : data.city,
       state : data.state,
       pinCode : data.pincode,
-      remark: data.remark,
+      remark: data.remarks,
       userId: data.clientId
     })
   }
+
     this.viewBillAdminInfoData = [
       {
         key: this.labels.name,
@@ -245,20 +247,19 @@ userId;
       departmentName : data.department,
       designation :data.designation,
       employeeCode : data.employeeCode,
-      email : data.emailAddress,
-      countryCode : data.mobileCode,
+      email : data.email,
+      countryCode : data.mobileNumberCode,
       mobileNo : data.mobileNumber,
       telPhno : data.telephoneNumber,
-      teleCode: data.telephoneCode,
-      offAddress1 : data.officeAddressLine1,
-      offAddress2 : data.officeAddressLine2,
-      offAddress3 : data.officeAddressLine3,
+      teleCode: data.telephoneNumberCode,
+      offAddress1 : data.officialAddress1,
+      offAddress2 : data.officialAddress2,
+      offAddress3 : data.officialAddress3,
       city : data.city,
       state : data.state,
-      pinCode : data.pincode,
+      pinCode : data.pinCode,
       remark: data.remark,
       userId: data.clientId
-
     })
 
   }
@@ -272,8 +273,9 @@ userId;
 
 const departmentListData = this.departmentListData.filter((val)=> {
   return val.key == this.technicaladminform.value.departmentName
+  
 })
-
+console.log("departmentList",this.departmentListData,this.technicaladminform.value.departmentName)
 
     this.viewInfoData = [
       {
@@ -286,7 +288,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
       },
       {
         key  : this.labels.department,
-        value :  departmentListData[0].value
+        value :  departmentListData[0]?departmentListData[0].value:null
       },
       {
         key  : this.labels.designation,
@@ -407,8 +409,9 @@ const departmentListData = this.departmentListData.filter((val)=> {
     this.userInfoService.getBillingAdminDetailById(id).subscribe((response)=> {
 
       console.log("billAdminDetails by id",response)
-      this.utilService.setUserDetails(response["ProcessVariables"]);
-      this.setFormValues(response["ProcessVariables"]);
+      this.utilService.setBillAdminUserDetails(response["ProcessVariables"]);
+
+      this.setBillOwnerFormValues(response["ProcessVariables"]);
     
     },(error) => {
     
@@ -425,9 +428,10 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
     this.userInfoService.getTechAdminDetailById(id).subscribe((response) => {
 
-      console.log("get customer by id",response)
-      this.utilService.setUserDetails(response["ProcessVariables"]);
+      console.log("get TechAdmins by id",response)
+      this.utilService.setTechAdminUserDetails(response["ProcessVariables"]);
       this.setFormValues(response["ProcessVariables"]);
+       
 
     },(error) => {
 
@@ -595,8 +599,11 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
 
 }
+
+
+
  
-
-
+ 
+ 
 
  

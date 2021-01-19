@@ -9,6 +9,8 @@ export class UtilService {
   detectSidNav$: BehaviorSubject<string> = new BehaviorSubject('');
   clearDirty$: BehaviorSubject<string> = new BehaviorSubject('');
   userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
+  techAdminUserDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
+  billAdminUserDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
 
 
     
@@ -31,6 +33,14 @@ export class UtilService {
   setUserDetails(data) {
         this.userDetails$.next(data)
   }
+
+  setTechAdminUserDetails(data) {
+    this.techAdminUserDetails$.next(data)
+ }
+
+ setBillAdminUserDetails(data) {
+  this.billAdminUserDetails$.next(data)
+}
   
    
 

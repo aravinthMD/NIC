@@ -212,12 +212,12 @@ export class ApiService {
     },
     getTechAdminDetailById: {
       workflowId: '8ecc2a9448f111ebb7d2727d5ac274b2',
-      processId: '68ee815849e311ebb80a727d5ac274b2',
+      processId: 'cb9e235c49e411ebb80a727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
     getBillingAdminDetailById: {
       workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
-      processId: '6ad978c04a8711ebb813727d5ac274b2',
+      processId: '11a3b4124a8911ebb813727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
     createBillingDetails: {

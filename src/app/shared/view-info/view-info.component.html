@@ -4,3 +4,17 @@
     <span>{{data?.value}}</span>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of techAdminUserDetails;let i = index">
+    <label for="">{{data?.key}}</label><br>
+    <span>{{data?.value}}</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of billAdminUserDetails;let i = index">
+    <label for="">{{data?.key}}</label><br>
+    <span>{{data?.value}}</span>
+    </div>
+</div>

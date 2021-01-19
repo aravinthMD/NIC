@@ -200,10 +200,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
     
    }
 
+
   ngOnInit() {  
 
    
-
     this.ipValidation = this.ipAddressValiationCheck()
 
     if(!this.user){
