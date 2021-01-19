@@ -129,6 +129,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }[];
  private userPassWord: string;
  projectNo: string;
+ userId: string;
 
   constructor(private formBuilder : FormBuilder,
     private labelsService: LabelsService, 
@@ -615,6 +616,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.userInfoService.getCustomerDetailByCustomerId(id).subscribe((response) => {
 
       console.log("get customer by id",response)
+      const res = response["ProcessVariables"] || '';
+      this.userId = res.userId || '';
       this.utilService.setUserDetails(response["ProcessVariables"]);
       this.setFormValues(response["ProcessVariables"]);
 
@@ -903,7 +906,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.utilService.projectNumber$.subscribe((val) =>{ 
       pno  = val;
     })
-    this.router.navigate(['/users/techAdmin/'+pno])
+    this.router.navigate(['/users/techAdmin/'+ this.userId])
   }
 
   replaceStrar(getPassWord){
