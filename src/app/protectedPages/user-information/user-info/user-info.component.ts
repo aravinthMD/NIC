@@ -124,6 +124,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     msg?: string;
   }[];
  private userPassWord: string;
+ projectNo: string;
 
   constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,
     private utilService: UtilService,
@@ -206,16 +207,19 @@ export class UserInfoComponent implements OnInit,OnChanges {
     console.log(this.activatedRoute)
       if(this.user){
 
-        this.utilService.userDetails$.subscribe((val)=> {
+        this.utilService.userDetails$.subscribe((val: any)=> {
+          console.log('val', val);
 
           this.accountName = val['userId'] || '';
           this.status = val['status'] || '';
+          this.projectNo = val.projectNo || '';
+          this.setFormValues();
         })
 
         // this.setFormValues();
 
         this.existingPreviewUserFlag = true
-        this.setFormValues();
+       
         this.buttonName = 'Edit';
         this.propertyFlag = true;
 
@@ -284,7 +288,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       pinCode : '641008',
       // smsTariffMonthWise : '1000',
       piDuration : '6',
-      projectNo : this.user || '8776',
+      projectNo : this.projectNo || '8776',
       creditAdded : '1000',
       creditApprover : 'Vikash',
       fromDate: new Date(),
