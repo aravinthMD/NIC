@@ -13,6 +13,8 @@ import { MatDialog } from '@angular/material';
 import { SmsCreditDialogComponent } from './sms-credit-dialog/sms-credit-dialog.component'
 import { InvoiceService } from '@services/invoice.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { SearchService } from '../../../../services/search.service';
+import {ApiService} from '../../../../services/api.service'
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -101,7 +103,11 @@ showDataSaveModal: boolean;
     private toasterService:ToasterService,
     private invoiceService : InvoiceService,
     private behser: BehaviourSubjectService,
-    private dialog : MatDialog) { }
+    private dialog : MatDialog,
+    private searchService: SearchService,
+    private apiService:ApiService
+    ) { }
+    
 
   ngOnInit() {
       
@@ -354,7 +360,22 @@ if(response['Error'] == '0' && response['ProcessVariables']['response']['type'] 
  
   onSearch() {
 
-    console.log(this.searchForm.value)
+    console.log(this.searchForm.value);
+     
+    const data = this.apiService.api.smsCreditAllocationSearch;
+
+    const params = {
+        searchKeyword: this.searchForm.get('searchData').value,
+        fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
+        toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
+    }
+
+      this.searchService
+          .searchProjectExecution(data,params).subscribe((value) => {
+            console.log('value', value);
+            this.dataSource = new MatTableDataSource<any>(value["ProcessVariables"]["smscreditlist" ]);
+          })
+
   }
 
   clear() {

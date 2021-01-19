@@ -128,6 +128,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     msg?: string;
   }[];
  private userPassWord: string;
+ projectNo: string;
 
   constructor(private formBuilder : FormBuilder,
     private labelsService: LabelsService, 
@@ -216,15 +217,19 @@ export class UserInfoComponent implements OnInit,OnChanges {
       if(this.user){
         this.getCustomerDetailByCustomerId(this.user);     
 
-        this.utilService.userDetails$.subscribe((val)=> {
+        this.utilService.userDetails$.subscribe((val: any)=> {
+          console.log('val', val);
+
           this.accountName = val['userId'] || '';
           this.status = val['status'] || '';
+          this.projectNo = val.projectNo || '';
+          this.setFormValues();
         })
 
         // this.setFormValues();
 
         this.existingPreviewUserFlag = true
-        this.setFormValues();
+       
         this.buttonName = 'Edit';
         this.propertyFlag = true;
 

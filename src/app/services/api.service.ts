@@ -230,7 +230,18 @@ export class ApiService {
       processId: 'dbba1e864b5011ebb822727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
-
+    
+    taxInvoiceSearch : {
+      processId : 'c471fe564f5b11ebb884727d5ac274b2',
+      projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'c471fe564f5b11ebb884727d5ac274b2'
+    },
+ 
+    smsCreditAllocationSearch : {
+      processId : 'acc4ed484f5d11ebb884727d5ac274b2',
+      projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'acc4ed484f5d11ebb884727d5ac274b2'
+    }
 
   }
 
