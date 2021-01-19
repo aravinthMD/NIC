@@ -10,7 +10,9 @@ import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-o
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
-import { AdminService } from '@services/admin.service'
+import { AdminService } from '@services/admin.service';
+import { SearchService } from '../../../services/search.service';
+import {ApiService } from '../../../services/api.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 
 @Component({
@@ -123,6 +125,8 @@ smsApprovedList : any[] = [
     private router: Router,
     private invoiceService: InvoiceService,
     private adminService: AdminService,
+    private searchService: SearchService,
+    private apiService : ApiService,
     private beheSer : BehaviourSubjectService
     ) { }
 
@@ -293,9 +297,35 @@ smsApprovedList : any[] = [
 
   }
 
-  onSearch() {
+  onSearch() { 
+    
+    const data = this.apiService.api.fetchPurchaseOrder;
 
-    console.log(this.searchForm.value)
+      const params = {
+        searchKeyword: this.searchForm.get('searchData').value,
+        fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
+        toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
+      }
+
+      this.searchService
+          .searchProjectExecution(data,params).subscribe((resp) => {
+
+            const respError=resp["ProcessVariables"]["error" ];
+
+            if(respError.code=="200")
+            {
+              
+              console.log('result',resp['ProcessVariables']);
+              this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["purchaseData" ]);
+            }
+            else 
+            { 
+               this.toasterService.showError(`${respError.code}: ${respError.message}`, 'Technical error..');
+            }
+            
+         
+         
+          })
   }
 
   clear() {
