@@ -353,6 +353,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
         key  :this.labels.applicantEmail,
         value : this.form.value.email
       },
+      // {
+      //   key  :this.labels.mobileNumberCode,
+      //   value : this.form.value.countryCode
+      // },
       {
         key : this.labels.applicantMobile,
         value : this.form.value.mobileNo

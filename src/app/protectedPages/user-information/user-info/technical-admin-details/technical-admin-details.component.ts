@@ -259,7 +259,7 @@ userId;
       state : data.state,
       pinCode : data.pinCode,
       remark: data.remark,
-      userId: data.clientId
+      userId: data.clientUserId
     })
 
   }
@@ -339,7 +339,7 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     }
 
     const techAdminDetails = {
-
+      "selectedTechId":this.technicaladminform.value.Id,
       "name": this.technicaladminform.value.name,
       "department":this.technicaladminform.value.departmentName,
       "designation":this.technicaladminform.value.designation,
