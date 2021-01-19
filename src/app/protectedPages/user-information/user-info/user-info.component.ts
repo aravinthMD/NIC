@@ -289,7 +289,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       applicantName : data.App_name,
       departmentName : data.department,
       designation :  data.FO_designation,
-      countryCode : data.mobileNumberCode,
+      countryCode : data.mobileNoCode,
       email : data.App_email,
       mobileNo : data.App_mobile,
       telPhno : data.Tele_number_OF,
@@ -323,16 +323,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
       intMonSmsTraffic: data.proj_international,
       appSecurAudClear: data.app_security,
       auditDate : data.audit_date,
-      // creditDate : data.credit_date,
-      // creditAddedAgainstPi : data.credit_added_against_pi,
+      creditDate : data.creditDate,
+      creditAddedAgainstPi : data.creditAddedAgainstPI,
       traiSenderId: data.trai_extempted,
       userId: data.userId,
       password: data.password,
       status: data.status,
       remark:data.remark
-      
-      
-
     })
   }
     this.detectAuditTrialObj = this.form.value;
@@ -354,14 +351,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
         key  :this.labels.applicantEmail,
         value : this.form.value.email
       },
-      // {
-      //   key  :this.labels.mobileNumberCode,
-      //   value : this.form.value.countryCode
-      // },
       {
-        key : this.labels.applicantMobile,
-        value : this.form.value.mobileNo
+        key  : this.labels.applicantMobile,
+        value : `${this.form.value.countryCode}${this.form.value.mobileNo}`
       },
+      // {
+      //   key : this.labels.applicantMobile,
+      //   value : this.form.value.mobileNo
+      // },
       {
         key: this.labels.department,
         value : "Ministry of Home Affairs"
@@ -515,7 +512,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "App_name":this.form.value.applicantName,
       "department":this.form.value.departmentName,
       "FO_designation":this.form.value.designation,
-      "mobileNumberCode": this.form.value.countryCode,
+      "mobileNoCode": this.form.value.countryCode,
       "App_email":this.form.value.email,
       "App_mobile":this.form.value.mobileNo,
       "telephoneNumberCode": this.form.value.teleCode,
@@ -542,8 +539,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "proj_domestic":this.form.value.domMonSmsTraffic,
       "app_security":this.form.value.appSecurAudClear,
       "audit_date":this.form.value.auditDate,
-      // "credit_date":this.form.value.creditDate,
-      // "credit_added_against_pi":this.form.value.creditAddedAgainstPi,
+      "creditDate":this.form.value.creditDate,
+      "creditAddedAgainstPI":this.form.value.creditAddedAgainstPi,
       "trai_extempted":this.form.value.traiSenderId,
       "userId":this.form.value.userId,
       "password":this.form.value.password,
