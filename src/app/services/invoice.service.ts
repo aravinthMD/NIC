@@ -501,6 +501,21 @@ updatePurchaseOrder(data) {
     shortPay : form.shortPay,
     paymentStatus : form.paymentStatus,
     remark : form.remark,
+    projectName:form.projectName,
+    projectCordinator : form.projectCordinator,
+    PONoAmendOrder : form.PONoAmendOrder,
+    mail : form.mail,
+    totalSMS : form.totalSMS,
+    counts : form.counts,
+    baseAmount : form.baseAmount,
+    tax : form.tax,
+    recvDate:form.recvDate,
+    book : form.book,
+    dateEstimated : form.dateEstimated,
+    invoiceAmount2 : form.invoiceAmount2,
+    bankReceived : form.bankReceived,
+    interestOnTDSotherDeduction : form.interestOnTDSotherDeduction,
+    receiptDate : form.receiptDate,
     uploadDoc : form.uploadDocument
   }
 

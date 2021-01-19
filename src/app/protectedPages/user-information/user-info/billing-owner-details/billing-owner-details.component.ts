@@ -332,6 +332,19 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   saveCancel() {
     this.showDataSaveModal = false;
-  }
 
+  let pno = '';
+  this.utilService.projectNumber$.subscribe((val)=> {
+    pno = val || '1';
+  })
+
+  if(this.user){
+    this.router.navigate(['/users/techAdmin/'+pno])
+    this.showView = true
+    this.propertyFlag = true
+  }else{
+    this.router.navigate(['/users/techAdmin'])
+  }
+  }
+  
 }

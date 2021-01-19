@@ -125,7 +125,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }[];
  private userPassWord: string;
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,private utilService: UtilService,private userInfoService:UserInfoService,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute, private beheSer : BehaviourSubjectService) {
+  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,
+    private utilService: UtilService,
+    private userInfoService:UserInfoService,
+    private toasterService: ToasterService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute, private beheSer : BehaviourSubjectService) {
 
     this.form =this.formBuilder.group({
       applicantName : [null],
@@ -187,6 +192,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     
     this.activatedRoute.params.subscribe((value)=> {
         this.user = value.id;
+        console.log("user Id",this.user);
     });
 
     this.ipValidation = this.ipAddressValiationCheck()
@@ -521,10 +527,16 @@ export class UserInfoComponent implements OnInit,OnChanges {
       if(response['Error'] == '0' && response) {
 
         this.isDirty=false;
-        this.form.reset()
-        this.toasterService.showSuccess(response,'')
-        console.log('userId........', userInfo.userId);
-        this.beheSer.setUserId(userInfo.userId);
+        this.form.reset()        
+        this.beheSer.setUserId(response['ProcessVariables']['generatedCustomerId']);
+         this.showDataSaveModal = true;
+
+        this.dataValue = {
+          title: "Customer Information Saved Sucessfully",
+          message : "Are you sure you want to proceed to Technical Admin page?"
+        }
+    
+        // this.toasterService.showSuccess('Data Saved Successfully',"");
         // console.log('userId ]]]]]]',this.beheSer.userId);
       }else {
         this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
@@ -543,14 +555,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     // this.detectFormChanges()
 
-    this.showDataSaveModal = true;
-
-    this.dataValue = {
-      title: "Customer Information Saved Sucessfully",
-      message : "Are you sure you want to proceed to Technical Admin page?"
-    }
-
-    this.toasterService.showSuccess('Data Saved Successfully',"");
+   
     
   }
 
@@ -844,7 +849,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   saveCancel() {
     this.showDataSaveModal = false;
-  }
+    this.propertyFlag = true;
+    this.existingPreviewUserFlag  = true;
+    this.existingUserFlag =  false; 
+  
+    
+   }
 
   saveYes(){
     this.utilService.setCurrentUrl('users/techAdmin')
@@ -854,6 +864,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     })
     this.router.navigate(['/users/techAdmin/'+pno])
   }
+
   replaceStrar(getPassWord){
     this.userPassWord = getPassWord;
     return '*'.repeat(this.userPassWord.length)
@@ -862,45 +873,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 }
 
 
-
-// table Data
-
-// applicantEmail: "test@gmail.com"
-// applicantMobile: "8675898756"
-// applicantName: "test"
-// applicantSecurityAudit: "cleared"
-// applicationName: "application"
-// applicationPurpose: "purpose"
-// appurl: "url"
-// auditDate: "2021-01-03T18:30:00.000Z"
-// availableCredits: ""
-// city: "test"
-// credits: ""
-// department: "2"
-// departmentName: "Department Test"
-// foDesignation: "test"
-// foEmail: "test@gmail.com"
-// foMobile: "8576478567"
-// foName: "officername"
-// ipForm: "sms"
-// ipStaging: "23.23.23.23"
-// officeTeleNumber: "9867859"
-// officialAddress1: "line1"
-// officialAddress2: "line2"
-// officialAddress3: "line3"
-// passWord: "demo@123"
-// pincode: ""
-// projectNumber: "12"
-// projectedDomestic: "sms"
-// projectedInternational: "projected"
-// requiredSmsService: "0"
-// serverLocation: "location"
-// smsTraffic: "sms"
-// state: "test"
-// traiExempted: "0"
-// uploadDocument: ""
-// userId: "72"
-
+ 
 
  
 

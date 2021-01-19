@@ -700,19 +700,19 @@
           <div class="row pt-3 pb-3">
             <div class="col-8">
             <button class="btn btn-primary float-left" matRipple type="submit"
-              (click)="Onsubmit()" *ngIf="!propertyFlag">Save & Submit</button>
+              (click)="Onsubmit()" *ngIf="!propertyFlag">Save & Next</button>
               <!-- <button class="btn btn-primary float-left" matRipple type="submit"
               (click)="Onsubmit()" *ngIf="hideEditButton">Save & Submit</button> -->
               <button class="btn btn-primary btn-lg back-btn float-left" *ngIf = "existingPreviewUserFlag"  matRipple (click)="editData()">Edit</button>
             </div>
              
 
-           <div class="col-2" style="float: left;">
-            <button class="btn btn-primary ml-3" *ngIf = "existingPreviewUserFlag" (click)="back()">Back to List</button>
+           <div class="col-2" style="float: right;"> 
+            <button class="btn btn-primary ml-3"  (click)="back()">Back to List</button>
            </div>
 
            <!-- <div class="col-2" style="float: left;">
-            <button class="btn btn-primary ml-3" (click)="next()">Save & Next</button>
+            <button class="btn btn-primary ml-3" *ngIf = "existingPreviewUserFlag"(click)="next()">Save & Next</button>
            </div> -->
         </div>
           
