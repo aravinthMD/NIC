@@ -155,7 +155,7 @@ userId;
       })
 
 
-       this.setFormValues();
+      this.setFormValues();
       this.setBillOwnerFormValues();
       this.propertyFlag = true;
 
@@ -165,9 +165,9 @@ userId;
 
       this.fetchAllTechAdmins();
 
-       this.getTechAdminsById('22');
+       this.getTechAdminsById(this.user);
 
-       this.getBillingAdminDetailById('23');
+       this.getBillingAdminDetailById(this.user);
   }
 
   setBillOwnerFormValues(data?: any){

@@ -89,6 +89,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       key:1,value:'Inactive'
     }
   ]
+
   traiSenderId= [
     {
       key:0,value: 'Yes',
@@ -127,9 +128,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
     rule?: any;
     msg?: string;
   }[];
- private userPassWord: string;
- projectNo: string;
- userId: string;
+
+    private userPassWord: string;
+    projectNo: string;
+    userId: string;
 
   constructor(private formBuilder : FormBuilder,
     private labelsService: LabelsService, 
