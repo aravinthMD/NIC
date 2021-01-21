@@ -205,6 +205,21 @@ export class ApiService {
       processId: '8ef9e00648f111ebb7d2727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
+    getAllTechAdminDetails: {
+      workflowId: '8ecc2a9448f111ebb7d2727d5ac274b2',
+      processId: '2467d2d2490711ebb7dc727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getTechAdminDetailById: {
+      workflowId: '8ecc2a9448f111ebb7d2727d5ac274b2',
+      processId: 'cb9e235c49e411ebb80a727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getBillingAdminDetailById: {
+      workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
+      processId: '11a3b4124a8911ebb813727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
     createBillingDetails: {
       workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
       processId: '9bf8ea3648f111ebb7d2727d5ac274b2',
