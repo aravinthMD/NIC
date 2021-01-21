@@ -381,7 +381,13 @@
             </table>
 
             <!-- <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button> -->
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+            <mat-paginator class="font-paginator" 
+                [hidePageSize]="true" 
+                [pageSize]="pageSize" 
+                [length]="length"
+                (page)="getServerData($event)"
+                 showFirstLastButtons>
+            </mat-paginator>
             <div class="m-5"></div>
         </div>
 

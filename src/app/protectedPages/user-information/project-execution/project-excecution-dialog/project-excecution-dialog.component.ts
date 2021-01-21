@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {LabelsService} from '../../../../services/labels.service';
 import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router'
+import { InvoiceService } from '@services/invoice.service';
 
 
 @Component({
@@ -79,7 +80,9 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     private formBuilder :  FormBuilder,
     private utilService: UtilService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private invoiceService : InvoiceService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
     ) { 
 
     // this.ProjectExcecutionForm = new FormGroup({
@@ -100,21 +103,21 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     // });
 
     this.ProjectExcecutionForm = this.formBuilder.group({
-      userName : ['Suchita'],
-      piNumber : ['4355'],
+      userName : [''],
+      piNumber : [''],
       piDate : new Date(),
-      piAmount : ['50000'],
-      modeOfPayment : ['2'],
-      documentNo : ['3000'],
+      piAmount : [''],
+      modeOfPayment : [''],
+      documentNo : [''],
       dateOfTransaction : new Date(),
-      bankName : ['SBI'],
-      amountReceived : ['30000'],
-      tds : ['2500'],
-      NICSIProjectNo: ['6785'],
+      bankName : [''],
+      amountReceived : [''],
+      tds : [''],
+      NICSIProjectNo: [''],
       invoiceDate : new Date(),
       transactionDate : new Date(),
-      piPaid : ['1'],
-      remark:['User Updated']
+      piPaid : [''],
+      remark:['']
     })
     this.detectAuditTrialObj=this.ProjectExcecutionForm.value
   }
@@ -130,70 +133,110 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.storeProjectNo = value.projectNo || 4535;
     })
 
-    var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
+    this.getProjectExecutionDetailById(this.data)
 
-    this.viewInfoData = [
-      {
-        key: this.labels.userName,
-        value:this.ProjectExcecutionForm.value.userName
-      },
-      {
-        key: this.labels.proformaIN,
-        value:this.ProjectExcecutionForm.value.piNumber
-      },
-      {
-        key: 'Proforma Invoice Date',
-        value:`${day}/${month}/${year}`
-      },
-      {
-        key: this.labels.piAmount,
-        value:this.ProjectExcecutionForm.value.piAmount
-      },
-      {
-        key: this.labels.modeOfPayment,
-        value:'RTGS'
-      },
-      {
-        key: this.labels.documentNo,
-        value:this.ProjectExcecutionForm.value.documentNo
-      },
-      {
-        key: 'Date of Transaction',
-        value:`${day}/${month}/${year}`
-      },
-      {
-        key: this.labels.bankName,
-        value:this.ProjectExcecutionForm.value.bankName
-      },
-      {
-        key: this.labels.amountReceived,
-        value:this.ProjectExcecutionForm.value.amountReceived
-      },
-      {
-        key: this.labels.tds,
-        value:this.ProjectExcecutionForm.value.tds
-      },
-      {
-        key: this.labels.nicsiProjectNumber,
-        value:this.ProjectExcecutionForm.value.NICSIProjectNo
-      },
-      {
-        key: 'PI Paid',
-        value:'Partial Payment'
-      },
-      {
-        key: this.labels.remark,
-        value:this.ProjectExcecutionForm.value.remark
-      },
-      {
-        key: 'Document',
-        value:'invoice.pdf'
-      }
+  }
 
-    ]
+
+  getProjectExecutionDetailById(currentPEId : string){
+
+    this.invoiceService.getProjectExecutionDetailbyId(Number(currentPEId)).subscribe((response) => {
+      console.log(response)
+      const data  = response["ProcessVariables"]
+      this.setFormValues(data);
+
+    },(error) => {
+      console.log(error)
+      this.toasterService.showError(error,'')
+    })
+
+  }
+
+
+  setFormValues(data){
+
+    if(data){
+
+      this.ProjectExcecutionForm.patchValue({
+        userName : data.userName,
+        piNumber : data.invoiceNumber,
+        piDate : data.invoiceDate,
+        piAmount : data.amount,
+        modeOfPayment : data.paymentMode,
+        documentNo : data.documentNumber,
+        dateOfTransaction : data.transactionDate,
+        bankName : data.branchName,
+        amountReceived : data.receivedAmount,
+        tds : data.tds,
+        NICSIProjectNo: data.nicsiProjectNumber,
+        invoiceDate : data.invoiceDate,
+        transactionDate : data.transactionDate,
+        piPaid : data.paidPI,
+        remark :  data.remark
+
+      })
+
+      
+      this.viewInfoData = [
+        {
+          key: this.labels.userName,
+          value:this.ProjectExcecutionForm.controls['userName'].value
+        },
+        {
+          key: this.labels.proformaIN,
+          value:this.ProjectExcecutionForm.controls['piNumber'].value
+        },
+        {
+          key: 'Proforma Invoice Date',
+          value:this.ProjectExcecutionForm.controls['invoiceDate'].value
+        },
+        {
+          key: this.labels.piAmount,
+          value:this.ProjectExcecutionForm.controls['piAmount'].value
+        },
+        {
+          key: this.labels.modeOfPayment,
+          value:this.ProjectExcecutionForm.controls['modeOfPayment'].value
+        },
+        {
+          key: this.labels.documentNo,
+          value:this.ProjectExcecutionForm.controls['documentNo'].value
+        },
+        {
+          key: 'Date of Transaction',
+          value:this.ProjectExcecutionForm.controls['transactionDate'].value
+        },
+        {
+          key: this.labels.bankName,
+          value:this.ProjectExcecutionForm.controls['bankName'].value
+        },
+        {
+          key: this.labels.amountReceived,
+          value:this.ProjectExcecutionForm.controls['amountReceived'].value
+        },
+        {
+          key: this.labels.tds,
+          value:this.ProjectExcecutionForm.controls['tds'].value
+        },
+        {
+          key: this.labels.nicsiProjectNumber,
+          value:this.ProjectExcecutionForm.controls['NICSIProjectNo'].value
+        },
+        {
+          key: 'PI Paid',
+          value:this.ProjectExcecutionForm.controls['piPaid'].value
+        },
+        {
+          key: this.labels.remark,
+          value:this.ProjectExcecutionForm.controls['remark'].value
+        },
+        {
+          key: 'Document',
+          value:'invoice.pdf'
+        }
+  
+      ]
+    }
 
   }
 
@@ -204,7 +247,14 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
   OnUpdate(){
-   
+
+
+    const feildControls = this.ProjectExcecutionForm.controls;
+    const userName  = feildControls.userName.value;
+    const piNumber  = feildControls.piNumber .value;
+    // const 
+
+
    
     this.detectFormChanges();
       
