@@ -1,5 +1,5 @@
 import { Component, OnInit,AfterViewInit,ViewChild } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {DatePipe} from '@angular/common';
 import {LabelsService} from '../../../services/labels.service';
@@ -20,12 +20,15 @@ import {ApiService} from '../../../services/api.service';
   styleUrls: ['./project-execution.component.scss'],
   //providers: [ SearchService]
 })
-export class ProjectExecutionComponent implements OnInit,AfterViewInit {
+export class ProjectExecutionComponent implements OnInit {
 
 
   PurchaseEntryForm : FormGroup;
   isDirty: boolean;
   labels :  any;
+
+  length:number;
+  pageSize:number;
 
   piPaidValues = [
     {
@@ -45,28 +48,9 @@ export class ProjectExecutionComponent implements OnInit,AfterViewInit {
     {key : 3 ,value : "IMPS"}
   ]
 
-  userList : any[] =   [
-    {projectNo:4535, invoiceNumber: 4355, invoiceDate: '12/04/2017', amount: 50000},
-    {projectNo:4535, invoiceNumber: 2313, invoiceDate: '15/06/2018', amount: 45900},
-    {projectNo:4535, invoiceNumber: 6574, invoiceDate: '21/08/2019', amount: 23000},
-    {projectNo:4535, invoiceNumber: 7454, invoiceDate: '07/04/2016', amount: 56000},
-    {projectNo:4535, invoiceNumber: 5667, invoiceDate: '05/05/2017', amount: 45000},
-    {projectNo:4535, invoiceNumber: 5663, invoiceDate: '11/08/2019', amount: 24000},
-    {projectNo:4535, invoiceNumber: 5889, invoiceDate: '04/07/2018', amount: 53000},
-    {projectNo:4535, invoiceNumber: 4500, invoiceDate: '09/09/2019', amount: 12000},
-    {projectNo:4535, invoiceNumber: 7800, invoiceDate: '15/02/2019', amount: 14000},
-    {projectNo:4535, invoiceNumber: 7688, invoiceDate: '02/05/2019', amount: 15000},
-    {projectNo:4535, invoiceNumber: 5322, invoiceDate: '04/08/2018', amount: 12000},
-    {projectNo:4535, invoiceNumber: 5454, invoiceDate: '07/09/2019', amount: 17000},
-    {projectNo:4535, invoiceNumber: 6543, invoiceDate: '18/03/2017', amount: 18000},
-    {projectNo:4535, invoiceNumber: 3445, invoiceDate: '26/05/2016', amount: 67000},
-    {projectNo:4535, invoiceNumber: 7908, invoiceDate: '25/04/2019', amount: 43000}
 
-  ]
 
-  @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
-
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = [];
 
   displayedColumns : string[] = ["ProjectNo","InvoiceNo","InvoiceDate","Amount","Action"]
 
@@ -139,34 +123,9 @@ dataValue: {
     this.activatedRoute.params.subscribe((value)=> {  
 
       this.storeProjectNo = value.projectNo || 4535
-      this.userList =   [
-        {projectNo:value.projectNo || 4535, invoiceNumber: 4355, invoiceDate: '12/04/2017', amount: 50000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 2313, invoiceDate: '15/06/2018', amount: 45900},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 6574, invoiceDate: '21/08/2019', amount: 23000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 7454, invoiceDate: '07/04/2016', amount: 56000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 5667, invoiceDate: '05/05/2017', amount: 45000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 5663, invoiceDate: '11/08/2019', amount: 24000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 5889, invoiceDate: '04/07/2018', amount: 53000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 4500, invoiceDate: '09/09/2019', amount: 12000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 7800, invoiceDate: '15/02/2019', amount: 14000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 7688, invoiceDate: '02/05/2019', amount: 15000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 5322, invoiceDate: '04/08/2018', amount: 12000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 5454, invoiceDate: '07/09/2019', amount: 17000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 6543, invoiceDate: '18/03/2017', amount: 18000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 3445, invoiceDate: '26/05/2016', amount: 67000},
-        {projectNo:value.projectNo || 4535, invoiceNumber: 7908, invoiceDate: '25/04/2019', amount: 43000}
-    
-      ]
-
     })
 
-    // this.dataSource = new MatTableDataSource<any>(this.userList);
-
     this.getProjectExecutionDetails();     //Getting the Project Execution details API
-
-    // this.getProjectExecutionDetailById();
-
-  //  this.deleteProjectExecution();
   }
 
 
@@ -191,7 +150,8 @@ dataValue: {
             {
               
             console.log('result',resp['ProcessVariables']);
-            this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["peList" ]);
+            this.dataSource = resp["ProcessVariables"]["peList"];
+
         }
         else 
         { 
@@ -203,11 +163,6 @@ dataValue: {
 
 
 
-
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-
-  }
 
   PEForm(){
     if(this.PurchaseEntryForm.invalid){
@@ -294,85 +249,28 @@ dataValue: {
 
 
 
-    getProjectExecutionDetails(){   //Fetch All Details
-
+    getProjectExecutionDetails(){ 
       this.invoiceService.getProjectExecutionDetails('INV123').subscribe((response) => {
-
+        const { 
+          ProcessVariables  : { error : {
+            code,
+            message
+          }}
+        } = response;
         console.log(response);
-
-      this.dataSource = new MatTableDataSource<any>(response["ProcessVariables"]["peList" ]);
-
+        if(code == "400"){
+          this.dataSource = response["ProcessVariables"]["peList" ];
+          this.length = response["ProcessVariables"]["totalPages"];
+          this.pageSize = response["ProcessVariables"]["dataPerPage"]
+        }
+        else {
+          this.toasterService.showError(message,'')
+        }
       },(error) => {
-
         console.log(error)
-
-      })
-
-
-    }
-
-    getProjectExecutionDetailById(){
-
-      this.invoiceService.getProjectExecutionDetailbyId('').subscribe((response) => {
-
-        console.log(response)
-
-      },(error) => {
-
-        console.log(error)
-
-      })
-
-    }
-
-
-    updateProjectExecutionDetail(){
-
-
-      const data = {
-              "currentPEId":"26",
-              "userName":"demouser",
-              "invoiceNumber":"INV123",
-              "amount":"2000",
-              "invoiceDate":"17/12/2020",
-              "paymentMode":"cash",
-              "documentNumber":"PE1342343",
-              "transactionDate":"16/12/2020",
-              "branchName":"ABC",
-              "receivedAmount":"200",
-              "tds":"50",
-              "nicsiProjectNumber":"97878978",
-              "paidPI":"180",
-              "remark":"Remarks",
-              "uploadDocument":"Yes",
-              "temp":"update"
-            }
-
-
-
-      this.invoiceService.updateProjectExecutionDetail(data).subscribe((resonse) => {
-
-
-      },(error) => {
-
-
+        this.toasterService.showError(error,'')
       })
     }
-
-
-    deleteProjectExecution(){
-      
-      this.invoiceService.deleteProjectExecution("INV1234").subscribe((response) => {
-
-        console.log(response)
-
-      },(error) => {
-
-        console.log(error)
-      })
-
-    }
-
 
   onSearch() {
 
@@ -390,11 +288,9 @@ dataValue: {
   }
 
 
-  OnEdit(formObj : any){
+  OnEdit(Data : any){
     const dialogRef = this.dialog.open(ProjectExcecutionDialogComponent,{
-      data : {
-        value : 'testing'
-      }
+      data : Data.currentPEId
     })
 
     dialogRef.afterClosed().subscribe(result =>{
@@ -403,7 +299,7 @@ dataValue: {
   }
 
   getDownloadXls(){
-    this.utilService.getDownloadXlsFile(this.userList,'ProjectExecution');
+    // this.utilService.getDownloadXlsFile(this.userList,'ProjectExecution');
   }
 
 
@@ -465,6 +361,11 @@ dataValue: {
  
    this.showDataSaveModal = false;
 
+  }
+
+
+  getServerData(event?:PageEvent){
+      
   }
 
 
