@@ -6,6 +6,7 @@ import { UtilService } from "../../services/util.service";
 import { SearchService } from "../../services/search.service";
 import { ApiService } from "../../services/api.service";
 import { ToasterService } from "@services/toaster.service";
+import { ClientDetailsService } from "@services/client-details.service";
 
 @Component({
   selector: "app-dashboard",
@@ -33,7 +34,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private utilService: UtilService,
     private searchService: SearchService,
     private apiService: ApiService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private clientDetailsService: ClientDetailsService
   ) {}
 
   ngOnInit() {
@@ -54,8 +56,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     this.utilService.setUserDetails(element);
 
+    this.clientDetailsService.setClientId(element.clientId);
+
     this.utilService.setCurrentUrl("users/customerDetails");
-    this.route.navigate(["/users/customerDetails/" + element.customerId]);
+    this.route.navigate(["/users/customerDetails/" + element.clientId]);
   }
   onSearch() {
     const keyword = this.searchKey || "";
@@ -98,7 +102,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               department: value.departmentName,
               state: value.state,
               status: "Active",
-              customerId: value.id,
+              clientId: value.id,
             }
           })
 
