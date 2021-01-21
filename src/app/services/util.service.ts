@@ -9,26 +9,38 @@ export class UtilService {
   detectSidNav$: BehaviorSubject<string> = new BehaviorSubject('');
   clearDirty$: BehaviorSubject<string> = new BehaviorSubject('');
   userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
-  techAdminUserDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
-  billAdminUserDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
+  techAdminUserDetails$:BehaviorSubject<any> = new BehaviorSubject<any>({});
+  billAdminUserDetails$:BehaviorSubject<any> = new BehaviorSubject<any>({});
+  projectNumber$: BehaviorSubject<string> = new BehaviorSubject('');
 
 
- 
+  private customerDetail$:BehaviorSubject<any> =  new BehaviorSubject<any>({});
+
+  public customerDetail:Observable<any> = this.customerDetail$.asObservable();
+
+  private customerId$:BehaviorSubject<any> = new BehaviorSubject<string>('');
+
+  public customerId:Observable<any> = this.customerId$.asObservable();
 
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
     }
 
-    
+    getCurrentUrl(){
+        this.detectSidNav$.value;
+    }
+
     setClearDirty(data) {
         this.clearDirty$.next(data)
     }
 
-    projectNumber$: BehaviorSubject<string> = new BehaviorSubject('');
-    
     setProjectNumber(data) {
         this.projectNumber$.next(data)
+    }
+
+    getProjectNumber(){
+      this.projectNumber$.value;
     }
 
     
@@ -36,12 +48,45 @@ export class UtilService {
         this.userDetails$.next(data)
   }
 
+
+  getUserDetails(){
+    this.userDetails$.value;
+  }
+
+
   setTechAdminUserDetails(data) {
     this.techAdminUserDetails$.next(data)
  }
 
+
+ getTechAdminUserDetails(){
+   this.techAdminUserDetails$.value
+ }
+
  setBillAdminUserDetails(data) {
   this.billAdminUserDetails$.next(data)
+}
+
+getBillAdminUserDetails(){
+  this.billAdminUserDetails$.value;
+}
+
+setCustomerDetails(data : any){
+  localStorage.setItem("currentCustomerDetailObject",JSON.stringify(data))
+  this.customerDetail$.next(data);
+}
+
+getCustomerDetails(){
+  this.customerDetail$.value;
+}
+
+setCustomerId(id : string){
+  localStorage.setItem("currentCustomerId",id);
+  this.customerId$.next(id);
+}
+
+getCustomerId(){
+  this.customerId$.value;
 }
   
    

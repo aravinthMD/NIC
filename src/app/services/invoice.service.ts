@@ -90,7 +90,7 @@ export class InvoiceService {
   }
 
 
-  getProjectExecutionDetailbyId(currentPEId : any){
+  getProjectExecutionDetailbyId(currentPEId : number){
         const {
              api : {
               getProjectExecutionDetailById : {

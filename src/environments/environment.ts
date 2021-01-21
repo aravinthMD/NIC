@@ -7,7 +7,7 @@ export const environment = {
   projectIds: {
     projectId: '2efbdc721cc311ebb6c0727d5ac274b2'
   },
-  version:environmentProd.version,
+  version:environmentProd.version, 
   apiVersion: {
     login: 'v3/',
     api: 'v2/'
