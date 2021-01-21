@@ -239,15 +239,32 @@ export class ApiService {
  
     smsCreditAllocationSearch : {
       processId : 'acc4ed484f5d11ebb884727d5ac274b2',
-      projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : 'acc4ed484f5d11ebb884727d5ac274b2'
     },
     updateTaxnvoice: {
       processId : '642880ce45d311ebb7cc727d5ac274b2',
       projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : '642880ce45d311ebb7cc727d5ac274b2'
+    },
+    getSmsCreditAllocationData: {
+      processId : 'dac048f64b6f11ebb82e727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'dac048f64b6f11ebb82e727d5ac274b2'
+    },
+
+    saveOrUpdateSmsCredit: {
+      processId : 'dbba1e864b5011ebb822727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'dbba1e864b5011ebb822727d5ac274b2'
+    },
+
+    fetchDashboardDetails: {
+      processId : 'b1aaefba4aad11ebb81e727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'b1aaefba4aad11ebb81e727d5ac274b2'
     }
 
-  }
+  };
 
   }

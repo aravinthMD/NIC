@@ -13,60 +13,59 @@ import { UtilService } from '@services/util.service';
   templateUrl: './technical-admin-details.component.html',
   styleUrls: ['./technical-admin-details.component.scss']
 })
+
 export class TechnicalAdminDetailsComponent implements OnInit {
-
  
-  labels:any ;
-  
-  technicaladminform:FormGroup;
+      labels:any ;
+      
+      technicaladminform:FormGroup;
 
-  billOwnerForm  :FormGroup;
+      billOwnerForm  :FormGroup;
 
-  isDirty: boolean;
-  propertyFlag : boolean;
-  showDataSaveModal  :boolean;
-  dataValue  = {};
-  showView: boolean = true;
+      isDirty: boolean;
+      propertyFlag : boolean;
+      showDataSaveModal  :boolean;
+      dataValue  = {};
+      showView: boolean = true;
+      viewInfoData :  any;
 
-  viewInfoData :  any;
+      viewBillAdminInfoData = []
 
-  viewBillAdminInfoData = []
+    departmentListData = [
+      {key:0,value:'Department of Sainik Welfare'},
+      {key:1,value:'Ministry of Minority Affairs'},
+      {key:2,value:'Visakhapatnam Port Trust'},
+      {key:3,value:'Ministry of Tribal Affairs'},
+      {key:4,value:'Bureau of Naviks Mumbai'}
+      ];
 
-  departmentListData = [
-    {key:0,value:'Department of Sainik Welfare'},
-    {key:1,value:'Ministry of Minority Affairs'},
-    {key:2,value:'Visakhapatnam Port Trust'},
-    {key:3,value:'Ministry of Tribal Affairs'},
-    {key:4,value:'Bureau of Naviks Mumbai'}
-];
+    countryCodeValues = [
+      {key:0,value:'+91'},
+      {key:1,value:'+60'},
+      {key:2,value:'+65'}
+    ]
 
-countryCodeValues = [
-  {key:0,value:'+91'},
-  {key:1,value:'+60'},
-  {key:2,value:'+65'}
-]
+    teleCodeValues = [
+      {key:0,value:'+044'},
+      {key:1,value:'+040'},
+      {key:2,value:'+080'}
+    ]
 
-teleCodeValues = [
-  {key:0,value:'+044'},
-  {key:1,value:'+040'},
-  {key:2,value:'+080'}
-]
+    dataSource = new MatTableDataSource<any>();
 
-dataSource = new MatTableDataSource<any>();
+    user: string;
+    name: string;
 
-user: string;
-name: string;
+    accountName: string;
+    status: string;
 
-accountName: string;
-status: string;
+    detectAuditTrialObj: any;
 
-detectAuditTrialObj: any;
+    remarkModal: boolean;
 
-remarkModal: boolean;
-
-hideEditButton: boolean = false;
-showViewBill:boolean = true;
-userId;
+  hideEditButton: boolean = false;
+  showViewBill:boolean = true;
+  userId;
   adminsList: any;
   form: any;
   BillDetailsList: any;
@@ -155,7 +154,7 @@ userId;
       })
 
 
-       this.setFormValues();
+      this.setFormValues();
       this.setBillOwnerFormValues();
       this.propertyFlag = true;
 
@@ -165,9 +164,9 @@ userId;
 
       this.fetchAllTechAdmins();
 
-       this.getTechAdminsById('22');
+       this.getTechAdminsById(this.user);
 
-       this.getBillingAdminDetailById('23');
+       this.getBillingAdminDetailById(this.user);
   }
 
   setBillOwnerFormValues(data?: any){
@@ -244,7 +243,7 @@ userId;
 
     this.technicaladminform.patchValue({
       name : data.name,
-      departmentName : data.department,
+      department : data.department,
       designation :data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
@@ -275,6 +274,7 @@ const departmentListData = this.departmentListData.filter((val)=> {
   return val.key == this.technicaladminform.value.departmentName
   
 })
+
 console.log("departmentList",this.departmentListData,this.technicaladminform.value.departmentName)
 
     this.viewInfoData = [
