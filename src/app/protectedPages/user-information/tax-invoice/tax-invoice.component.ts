@@ -117,6 +117,7 @@ export class TaxInvoiceComponent implements OnInit {
       projectCordinator:new FormControl(null),
       PONoAmendOrder:new FormControl(null),
       mail:new FormControl(null),
+      poBillable: new FormControl(null),
       totalSMS:new FormControl(null),
       counts:new FormControl(null),
       baseAmount : new FormControl(null),
@@ -217,12 +218,12 @@ export class TaxInvoiceComponent implements OnInit {
     const projectCordinator = feildControls.projectCordinator.value;
     const PONoAmendOrder = +feildControls.PONoAmendOrder.value;
     const mail = +feildControls.mail.value;
-    const totalSMS = feildControls.totalSMS.value;
+    const totalSMS = Number(feildControls.totalSMS.value);
     const counts = feildControls.counts.value;
-    const baseAmount = feildControls.baseAmount.value;
-    const tax = feildControls.tax.value;
+    const baseAmount = Number(feildControls.baseAmount.value);
+    const tax = Number(feildControls.tax.value);
     const book = feildControls.book.value;
-    const invoiceAmount2 = feildControls.invoiceAmount2.value;
+    const invoiceAmount2 = Number(feildControls.invoiceAmount2.value);
     const bankReceived = feildControls.bankReceived.value;
     const interestOnTDSotherDeduction = feildControls.interestOnTDSotherDeduction.value;
     const mrn = feildControls.mrn.value;
@@ -277,6 +278,7 @@ export class TaxInvoiceComponent implements OnInit {
 
             console.log(response["ProcessVariables"])
             if(response["ProcessVariables"]){
+              this.isDirty = false;
               this.toasterService.showSuccess('Tax Invoice Form Submitted Sucessfully','');
               this.taxInvoiceForm.reset();
             }
@@ -320,7 +322,7 @@ export class TaxInvoiceComponent implements OnInit {
             console.log('value', resp);
             const respError=resp["ProcessVariables"]["error" ];
 
-            if(respError.code=="500")
+            if(respError.code=="0")
             {
               
               console.log('result',resp['ProcessVariables']);

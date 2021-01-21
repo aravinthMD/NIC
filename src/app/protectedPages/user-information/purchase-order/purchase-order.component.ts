@@ -1,7 +1,7 @@
 import { Component, OnInit,Input, AfterViewInit,ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
+import { Validators, FormBuilder, FormGroup,FormControl, FormArray } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
 import { Router,ActivatedRoute } from '@angular/router'
@@ -34,14 +34,7 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
 
   displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks',"Action"]
 
-  userList : any[] =   [
-    {purchaseNo : 114,projectNumber : 4535,piAmt:24250,reminder:'Send Reminder'},
-    {purchaseNo : 197,projectNumber : 4535,piAmt:25000,reminder:'Send Reminder'},
-    {purchaseNo : 767,projectNumber : 4535,piAmt:45000,reminder:'Send Reminder'},
-    {purchaseNo : 678,projectNumber : 4535,piAmt:24250,reminder:'Send Reminder'},
-    {purchaseNo : 114,projectNumber : 4535,piAmt:28000,reminder:'Send Reminder'},
-    {purchaseNo : 114,projectNumber : 4535,piAmt:34000,reminder:'Send Reminder'},
-  ];
+  userList : any[] =   []
   poStatus: any[] = [
     { key :0, value: 'Received' },
     { key :1,value : 'Not Received'},
@@ -74,8 +67,9 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
     
     dataArray=[]
       
-  dataSource = new MatTableDataSource<any>(this.userList);
+  // dataSource = new MatTableDataSource<any>(this.userList);
 
+  dataSource = new MatTableDataSource<any>([]);
   date = new FormControl();
 
   
@@ -112,6 +106,10 @@ smsApprovedList : any[] = [
   // smsapproved: any;
  
 
+  withoutTaxValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
 
 
 
@@ -127,7 +125,8 @@ smsApprovedList : any[] = [
     private adminService: AdminService,
     private searchService: SearchService,
     private apiService : ApiService,
-    private beheSer : BehaviourSubjectService
+    private beheSer : BehaviourSubjectService,
+    private fb:FormBuilder
     ) { }
 
   ngOnInit() {
@@ -161,7 +160,8 @@ smsApprovedList : any[] = [
 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
-      searchTo: new FormControl(null)
+      searchTo: new FormControl(null),
+      searchFrom: new FormControl(null)
     })
 
     this.formQuantity = new FormGroup({
@@ -191,11 +191,26 @@ smsApprovedList : any[] = [
    this.getSubLovs();
 
    this.dataArray.push(this.formQuantity);
+
+   this.withoutTaxValidation = this.withoutTaxValidationCheck();
   }
 
-  
- 
+  withoutTaxValidationCheck() {
 
+    const withouttax = [
+      {
+        rule: (val) => {
+
+          return val;
+        },
+        msg: 'Amount should greater than without tax',
+      }
+    ];
+    return withouttax;
+  }
+
+
+  
   purchaseForm(){
     this.dataArray.push(this.formQuantity);
   }
@@ -257,7 +272,6 @@ smsApprovedList : any[] = [
 
     this.PurchaseOrderForm = new FormGroup({
       userName: new FormControl(null),
-    
       piNumber: new FormControl(null),
       poNumber: new FormControl(null),
       smsApproved: new FormControl(null),
@@ -303,8 +317,10 @@ smsApprovedList : any[] = [
 
       const params = {
         searchKeyword: this.searchForm.get('searchData').value,
-        fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
-        toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
+        // fromDate: this.DatePipe.transform(this.searchForm.get('searchFrom').value,'dd/MM/yyyy'),
+        // toDate: this.DatePipe.transform(this.searchForm.get('searchTo').value,'dd/MM/yyyy')
+        fromDate: this.searchForm.get('searchFrom').value,
+        toDate: this.searchForm.get('searchTo').value
       }
 
       this.searchService
@@ -312,7 +328,7 @@ smsApprovedList : any[] = [
 
             const respError=resp["ProcessVariables"]["error" ];
 
-            if(respError.code=="200")
+            if(respError.code=="0")
             {
               
               console.log('result',resp['ProcessVariables']);
@@ -320,6 +336,10 @@ smsApprovedList : any[] = [
             }
             else 
             { 
+              if(!resp["ProcessVariables"]["purchaseData" ]) {
+                this.dataSource = new MatTableDataSource<any>([])
+              }
+
                this.toasterService.showError(`${respError.code}: ${respError.message}`, 'Technical error..');
             }
             
@@ -335,6 +355,8 @@ smsApprovedList : any[] = [
       searchFrom:null,
       searchTo:null
     })
+
+    this.fetchPODetails()
   }
 
   OnEdit(element :  any){
@@ -424,6 +446,7 @@ smsApprovedList : any[] = [
     this.PurchaseOrderForm.value['endDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['endDate'],'dd/MM/yyyy')
 
 
+   
     const data = {
       "poNumber":this.PurchaseOrderForm.value.poNumber,
       "projectNumber":this.PurchaseOrderForm.value.projectNo,
@@ -434,14 +457,19 @@ smsApprovedList : any[] = [
       "pi_no":this.PurchaseOrderForm.value.piNumber,
       "smsapproved":this.PurchaseOrderForm.value.smsApproved,
       "validUpto":this.PurchaseOrderForm.value.endDate,
-      "department":this.PurchaseOrderForm.value.departmentName,
       "username":this.PurchaseOrderForm.value.userName,
       "remark":this.PurchaseOrderForm.value.remark,
       "withouttax":this.PurchaseOrderForm.value.withoutTax,
       "userEmail":this.PurchaseOrderForm.value.userEmail,
       "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
       "validFrom":this.PurchaseOrderForm.value.startDate,
-      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax
+      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax,
+      "rate":this.formQuantity.value.rate,
+      "quantity":Number(this.formQuantity.value.quantity),
+      "description":this.formQuantity.value.description,
+      "selectedDepartment":this.PurchaseOrderForm.value.departmentName,
+      "selectedPOStatus":this.PurchaseOrderForm.value.poStatus,
+      "selectedPaymentStatus":this.PurchaseOrderForm.value.paymentStatus
     }
 
 
@@ -454,7 +482,8 @@ smsApprovedList : any[] = [
 
         this.isDirty = false;
 
-        this.PurchaseOrderForm.reset()
+        this.PurchaseOrderForm.reset();
+        this.formQuantity.reset();
         this.beheSer.setPoNumber(data.poNumber);
         this.beheSer.setSmsApproved(data.smsapproved);
 
