@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <div class="form-group">
                         <label for="smsQuotaMetrix">{{labels.smsQuotaMatrix}}</label>
-                        <app-vf-custom-select formControlName="smsQuotaMetrix" [values]="smsQuotaMetrix" [isDirty]="isDirty" [isRequired]="'SMS quota metrix is mandatory'">
+                        <app-vf-custom-select formControlName="smsApprover" [values]="smsQuotaMatrix" [isDirty]="isDirty" [isRequired]="'SMS quota metrix is mandatory'">
                         </app-vf-custom-select>
                     </div>
                     <!-- <app-custom-input formControlName="smsQuotaMetrix" [labelName]="labels.smsQuotaMetrix"
@@ -32,7 +32,7 @@
 
                     <div class="date-picker-error" *ngIf="
               isDirty &&
-              smsCreditAllocation.get('date').errors?.required
+              smsCreditAllocation.get('dateOfRequest').errors?.required
             ">
                                     Please Select Date
                                 </div>
@@ -42,7 +42,7 @@
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="credit" 
+                    <app-custom-input formControlName="totalCredit" 
                       [labelName]="labels.credit" [id]="'credit'" 
                       placeHolder =  "Enter the Credit"
                       [type]="'number'" 
@@ -51,7 +51,7 @@
                       [isRequired]="'Credit is mandatory'" 
                       [mandatoryField]="true">
                     </app-custom-input>
-                    <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
+                    <div *ngIf="smsCreditAllocation.get('totalCredit').errors?.pattern" class="error-feedback">
                         <div>
                             {{'Please Enter Digits'}}
                         </div>
@@ -61,7 +61,7 @@
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="smsTraffic" 
+                    <app-custom-input formControlName="usedCredit" 
                      [labelName]="labels.smsTraffic" [id]="'smstraffic'" 
                      placeHolder =  "Enter the SMS Traffic"
                      [type]="'number'" 
@@ -75,7 +75,7 @@
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="availableCredit" 
+                    <app-custom-input formControlName="balanceCredit" 
                      [labelName]="labels.availableCredit" [id]="'availableCredit'" 
                      placeHolder =  "Enter the Available Credit"
                      [type]="'number'" 
@@ -120,7 +120,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="statusChangedBy" 
+                    <app-custom-input formControlName="approvedBy" 
                      [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" 
                      placeHolder =  "Enter the Name"
                      [maxLength]="labels?.validationData.userName.maxLength" 

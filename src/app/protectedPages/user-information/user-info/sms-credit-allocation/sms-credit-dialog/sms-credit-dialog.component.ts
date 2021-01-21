@@ -1,219 +1,242 @@
-import { Component, OnInit,Optional,Inject } from '@angular/core';
-import { Validators,FormBuilder, FormGroup,FormControl } from '@angular/forms';
-import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Optional, Inject, EventEmitter, OnDestroy } from '@angular/core';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { LabelsService } from '@services/labels.service';
 
 import { ToasterService } from '@services/toaster.service';
 
 import { UtilService } from '@services/util.service';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SmsCreditService } from '@services/sms-credit.service';
+import { SmsCreditAllocation } from '../sms-credit.model';
+import { ClientDetailsService } from '@services/client-details.service';
 
 @Component({
   selector: 'app-sms-credit-dialog',
   templateUrl: './sms-credit-dialog.component.html',
   styleUrls: ['./sms-credit-dialog.component.scss']
 })
-export class SmsCreditDialogComponent implements OnInit {
+export class SmsCreditDialogComponent implements OnInit, OnDestroy {
 
-  smsCreditAllocation : FormGroup;
+  smsCreditAllocation: FormGroup;
 
-  currentDate:any;
+  currentDate: any;
 
   labels: any = {};
 
   propertyFlag: boolean;
 
-  isDirty: boolean = false;
+  isDirty  = false;
 
-  isDisabledInp=true;
+  isDisabledInp = true;
 
   showDataSaveModal: boolean;
 
   dataValue: {
     title: string;
     message: string
-  }
+  };
 
 
-  statusList=[
-    {key:0,value:'Approved'},
-    {key:1,value:'Rejected'},
-    {key:2,value:'Pending'}
-];
+  statusList = [];
 
-smsQuotaMetrix:any[]=[
-  {key:0,value:'arpita.burman@nic.in'},
-  {key:1,value:'dureja.sk@nic.in'},
-  {key:2,value:'sshanker@nic.in'},
-  {key:3,value:'pradeep.garg@nic.in'}
-];
+  smsQuotaMatrix = [];
 
-showView: boolean = true;
+  showView = true;
 
-viewInfoData: any;
+  viewInfoData: any;
+
+  clientId: string;
+
+  edit = new EventEmitter();
+  isDataUpdated: SmsCreditAllocation;
 
 
-  constructor(private dialogRef : MatDialogRef<SmsCreditDialogComponent>,private datePipe: DatePipe,private labelsService :LabelsService,private toasterService: ToasterService,private formBuilder:FormBuilder,  private utilService:UtilService,
-    private router:Router,@Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    private dialogRef: MatDialogRef<SmsCreditDialogComponent>,
+    private datePipe: DatePipe,
+    private labelsService: LabelsService,
+    private toasterService: ToasterService,
+    private formBuilder: FormBuilder,
+    private utilService: UtilService,
+    private router: Router,
+    private smsCreditService: SmsCreditService,
+    private clientDetailsService: ClientDetailsService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
-    this.currentDate=this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	')
-    this.smsCreditAllocation =this.formBuilder.group({
-      smsQuotaMetrix: [''],
-      credit:[null,Validators.pattern("^[0-9]{0,12}$")],
-      smsTraffic:[null],
-      availableCredit:[null],
-      date : [null],
-      status : [''],
-      onApprovalOf : [null],
-      remark : [null],
-      statusChangedBy : ['Akshaya'],
-      timeStamp: [this.currentDate]
-
-    })
+    this.currentDate = this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	');
+    this.initForm();
 
    }
 
   ngOnInit() {
 
-    
+    this.smsQuotaMatrix = this.smsCreditService.getSmsQuotaMatrix();
+    this.clientId = this.clientDetailsService.getClientId();
 
-    this.labelsService.getLabelsData().subscribe((values)=> {
+    console.log('modal data', this.data);
+    this.statusList = this.smsCreditService.getStatusListLov();
+    this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
     });
+    this.viewInfoData = this.getDataForDialogModal();
+  }
 
-
-    this.viewInfoData = [
+  getDataForDialogModal() {
+    const smsApprover = this.smsQuotaMatrix.find((val) => {
+      return val.key === this.data.smsApprover;
+    });
+    return [
       {
         key: this.labels.smsQuotaMatrix,
-        value:'pradeep.garg@nic.in'
+        value: smsApprover.value
       },
       {
         key: this.labels.dateOfRequest,
-        value:'02/12/2020'
+        value: this.data.dateOfRequest
       },
       {
         key: this.labels.credit,
-        value:this.data.credit
+        value: this.data.totalCredit
       },
       {
         key: this.labels.smsTraffic,
-        value:'1000'
+        value: this.data.usedCredit
       },
       {
         key: this.labels.availableCredit,
-        value:(Number(this.data.credit) - 1000)
+        value: (Number(this.data.totalCredit) - 1000)
       },
       {
         key: this.labels.status,
-        value:'Approved'
+        value: this.data.statusValue
       },
       {
         key: this.labels.onApprovalOf,
-        value:'pradeep.garg@nic.in'
+        value: this.data.onApprovalOf
       },
       {
         key: this.labels.remark,
-        value:'Changes in all fields'
+        value: this.data.remark
       },
       {
         key: this.labels.statusChangedBy,
-        value:'Akshaya'
+        value: localStorage.getItem('userName')
       },
-      {
-        key :  "",
-        value :  ""
-      },
-      {
-        key : "",
-        value :  ""
-      },
-      {
-        key :  "",
-        value :  ""
-      },
-      {
-        key  : "",
-        value  : ""
-      }
-     
-   ]
-    
+    ];
   }
 
-  closeDialog(){
-    this.dialogRef.close({event : 'close'});
+  initForm() {
+    const userName = localStorage.getItem('userName');
+    this.smsCreditAllocation = new FormGroup({
+      smsApprover: new FormControl(''),
+      totalCredit: new FormControl(null),
+      dateOfRequest: new FormControl([null]),
+      status: new FormControl([null]),
+      onApprovalOf: new FormControl([null]),
+      remark: new FormControl([null]),
+      usedCredit: new FormControl([null]),
+      balanceCredit: new FormControl([null]),
+      approvedBy: new FormControl(userName),
+      timeStamp: new FormControl(this.currentDate),
+    });
+  }
+
+  closeDialog() {
+    this.dialogRef.close(this.isDataUpdated);
   }
 
   onSubmit() {
-   
-    if(this.smsCreditAllocation.invalid) {
+    if (this.smsCreditAllocation.invalid) {
       this.isDirty = true;
-      // this.toasterService.showError('Please fill all the mandatory fields','')
-      return
+      this.toasterService.showError('Please fill all the mandatory fields', '');
+      return;
     }
 
-    this.toasterService.showSuccess('Data Saved Successfully','')
+    const formValue = this.smsCreditAllocation.getRawValue();
 
-    this.showDataSaveModal = true;
-    this.dataValue= {
-      title: 'SMS Credit Saved Successfully',
-      message: 'Are you sure you want to proceed proforma invoice page?'
-    }
+    const smsCredit: SmsCreditAllocation = {
+      approvedBy: formValue.approvedBy,
+      balanceCredit: formValue.balanceCredit,
+      dateOfRequest: formValue.dateOfRequest,
+      onApprovalOf: formValue.onApprovalOf,
+      remark: formValue.remark,
+      smsApprover: formValue.smsApprover,
+      status: formValue.status,
+      totalCredit: formValue.totalCredit,
+      usedCredit: formValue.usedCredit,
+      clientId: this.clientId,
+      id: Number(this.data.id)
+    };
+
+    console.log('smsCredit', smsCredit);
+
+    this.smsCreditService.saveOrUpdateSmsCreditDetails(smsCredit)
+        .subscribe((res: any) => {
+          const error = res.Error;
+          const errorMessage = res.ErrorMessage;
+          if (error !== '0') {
+            return this.toasterService.showError(errorMessage, '');
+          }
+          const processVariables = res.ProcessVariables;
+          this.isDataUpdated = processVariables;
+          this.edit.emit(processVariables);
+          this.toasterService.showSuccess('Data updated successfully', '');
+        });
+
+    // this.toasterService.showSuccess('Data Saved Successfully','')
+
+    // this.showDataSaveModal = true;
+    // this.dataValue= {
+    //   title: 'SMS Credit Saved Successfully',
+    //   message: 'Are you sure you want to proceed proforma invoice page?'
+    // }
 
   }
 
-  detectDateKeyAction(event,type) {
-
-    console.log(event)
-  
-    if(type == 'date') {
-
+  detectDateKeyAction(event, type) {
+    console.log(event);
+    if (type === 'date') {
       this.smsCreditAllocation.patchValue({
         date: ''
-      })
-      this.toasterService.showError('Please click the date icon to select date','');
+      });
+      this.toasterService.showError('Please click the date icon to select date', '');
     }
-    
   }
 
   saveYes() {
-    this.utilService.setCurrentUrl('users/proformaInvoice')
+    this.utilService.setCurrentUrl('users/proformaInvoice');
     let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
+    this.utilService.projectNumber$.subscribe((val) => {
       pno = val;
-    })
-
-    this. closeDialog()
-    this.router.navigate(['/users/proformaInvoice/'+pno])
+    });
+    this.closeDialog();
+    this.router.navigate(['/users/proformaInvoice/' + pno]);
   }
 
   saveCancel() {
     this.showDataSaveModal = false;
-    this. closeDialog()
+    this.closeDialog();
   }
 
   onEdit() {
-
     this.showView = false;
-
     this.smsCreditAllocation.patchValue({
-      smsQuotaMetrix: '3',
-      credit:this.data.credit,
-      smsTraffic: '1000',
-      availableCredit: (Number(this.data.credit) - 1000),
-      date : new Date('2020-12-02'),
-      status : '1',
-      onApprovalOf : 'pradeep.garg@nic.in',
-      remark : 'Changes in fields',
-      statusChangedBy : 'Akshaya',
+      smsApprover: this.data.smsApprover,
+      totalCredit: this.data.totalCredit,
+      usedCredit: this.data.usedCredit,
+      balanceCredit: (Number(this.data.totalCredit) - 1000),
+      dateOfRequest : new Date(this.data.dateOfRequest),
+      status : this.data.status,
+      onApprovalOf : this.data.onApprovalOf,
+      remark : this.data.remark,
+      statusChangedBy : localStorage.getItem('userName'),
       timeStamp: this.currentDate
-
-    })
-
-
+    });
   }
 
-  
-
+  ngOnDestroy() {
+    this.closeDialog();
+  }
 }
