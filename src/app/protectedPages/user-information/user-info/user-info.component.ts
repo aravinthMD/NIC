@@ -16,6 +16,8 @@ import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.component';
 
 
+
+
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
@@ -41,6 +43,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   panelOpenState = false;
   isDirty: boolean;
   newUserFlag : boolean
+  
 
   dataValue = {}
 
@@ -86,6 +89,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       key:1,value:'Inactive'
     }
   ]
+
   traiSenderId= [
     {
       key:0,value: 'Yes',
@@ -112,6 +116,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   fileName: string = 'invoice.pdf';
   customersList: any;
   
+  
 ;
   fileType: string;
 
@@ -123,19 +128,26 @@ export class UserInfoComponent implements OnInit,OnChanges {
     rule?: any;
     msg?: string;
   }[];
- private userPassWord: string;
- projectNo: string;
 
-  constructor(private formBuilder : FormBuilder,private labelsService: LabelsService, private location: Location,private datePipe : DatePipe,
+    private userPassWord: string;
+    projectNo: string;
+    userId: string;
+
+  constructor(private formBuilder : FormBuilder,
+    private labelsService: LabelsService, 
+    private location: Location,
+    private datePipe : DatePipe,
     private utilService: UtilService,
     private userInfoService:UserInfoService,
     private toasterService: ToasterService,
     private router: Router,
-    private activatedRoute: ActivatedRoute, private beheSer : BehaviourSubjectService) {
+    private activatedRoute: ActivatedRoute, 
+    private beheSer : BehaviourSubjectService) {
 
     this.form =this.formBuilder.group({
+      id: [null],
       applicantName : [null],
-      departmentName : [''],
+      departmentName : [null],
       designation : [null],
       employeeCode : [null],
       email : [null],
@@ -180,12 +192,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
       status:[null],
       remark:[null]    
     });
-
-   }
-
-  ngOnInit() {
-    
-
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     })
@@ -195,7 +201,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
         this.user = value.id;
         console.log("user Id",this.user);
     });
+    
+   }
 
+
+  ngOnInit() {  
+
+   
     this.ipValidation = this.ipAddressValiationCheck()
 
     if(!this.user){
@@ -206,6 +218,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
     console.log(this.activatedRoute)
       if(this.user){
+        this.getCustomerDetailByCustomerId(this.user);     
 
         this.utilService.userDetails$.subscribe((val: any)=> {
           console.log('val', val);
@@ -268,63 +281,59 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
 
-  setFormValues(){
+  setFormValues(data?: any){
   
-    
+    if(data){
+
+   
     this.form.patchValue({
-      applicantName : this.accountName.split('.')[0] || 'Arul',
-      departmentName : '1',
-      designation : 'Senior Engineer',
-      employeeCode : '12008',
-      email : 'authregister@nic.com',
-      mobileNo : '8754809950',
-      telPhno : '2281756',
-      teleCode: '0',
-      offAddress1 : '23, Bhandup West, Mumbai',
-      offAddress2 : 'Bhairavi Voras',
-      offAddress3 : 'Lab West',
-      city : 'Mumbai',
-      state : 'Maharastra',
-      pinCode : '641008',
+      id:Number (data.currentCustomerId),
+      applicantName : data.App_name,
+      departmentName : data.department,
+      designation :  data.FO_designation,
+      countryCode : data.mobileNoCode,
+      email : data.App_email,
+      mobileNo : data.App_mobile,
+      telPhno : data.Tele_number_OF,
+      teleCode: data.telephoneNumberCode,
+      offAddress1 : data.OA_line1,
+      offAddress2 : data.OA_line2,
+      offAddress3 : data.OA_line3,
+      city : data.city,
+      state : data.state,
+      pinCode : data.pincode,
       // smsTariffMonthWise : '1000',
-      piDuration : '6',
-      projectNo : this.projectNo || '8776',
-      creditAdded : '1000',
-      creditApprover : 'Vikash',
-      fromDate: new Date(),
-      toDate: new Date(),
-      creditDate : new Date(),
-      creditAddedAgainstPi : new Date(),
-      countryCode: '0',
-      
-      OfficerName:'Sri Ram',
-      OfficerEmail:'sriram@gmail.com',
-      OfficerMobile:'9768674555',
-     
-      smsServiceReqd: '1',
+      piDuration : data.proj_international,
+      projectNo : data.proj_number,
+      creditAdded : data.FO_email,
+      creditApprover : data.FO_email,
+      // fromDate: new Date(),
+      // toDate: new Date(),
+      OfficerName:data.FO_name,
+      OfficerEmail:data.FO_email,
+      OfficerMobile:data.FO_mobile,
+      smsServiceReqd: data.sms_service,
       // creditsSMSQuota: '4000',
-     
       // availableCredit: '3000',
-      nameOfTheApplication: 'Sathish',
-      applicationUrl: 'www.applicant.com',
-      serverLocation: 'Chennai',
-      purpOfTheApplication: 'Test application',
-      smsGatewayAccess: '175.43.34.344',
-      ipServReqd: '192.168.1.101',
-      domMonSmsTraffic: '1000',
-      intMonSmsTraffic: '1000',
-      appSecurAudClear: 'Secure',
-      auditDate:new Date(),
-      traiSenderId: '0',
-      userId: this.accountName || 'Arul.auth',
-      password: 'nic@123',
-      status: (this.status == 'Active')?'0':'1',
-      remark:'Officer Name Changed'
-      
-      
-
+      nameOfTheApplication: data.name_applicant,
+      applicationUrl: data.App_url,
+      serverLocation: data.server_location,
+      purpOfTheApplication: data.purpose_applicant,
+      smsGatewayAccess: data.Ip_form,
+      ipServReqd: data.Ip_staging,
+      domMonSmsTraffic: data.sms_traffic,
+      intMonSmsTraffic: data.proj_international,
+      appSecurAudClear: data.app_security,
+      auditDate : data.audit_date,
+      creditDate : data.creditDate,
+      creditAddedAgainstPi : data.creditAddedAgainstPI,
+      traiSenderId: data.trai_extempted,
+      userId: data.userId,
+      password: data.password,
+      status: data.status,
+      remark:data.remark
     })
-
+  }
     this.detectAuditTrialObj = this.form.value;
 
     var dateObj = new Date();
@@ -345,9 +354,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
         value : this.form.value.email
       },
       {
-        key : this.labels.applicantMobile,
-        value : this.form.value.mobileNo
+        key  : this.labels.applicantMobile,
+        value : `${this.form.value.countryCode}${this.form.value.mobileNo}`
       },
+      // {
+      //   key : this.labels.applicantMobile,
+      //   value : this.form.value.mobileNo
+      // },
       {
         key: this.labels.department,
         value : "Ministry of Home Affairs"
@@ -473,6 +486,17 @@ export class UserInfoComponent implements OnInit,OnChanges {
   //   console.log('DTAE ******',value)
   }
 
+  // SaveOrUpdate(){
+  //   if( this.form.id == ''){
+
+  //     this.Onsubmit();
+
+  //     } else if (this.form.id !==''){
+
+  //     }
+  // }
+
+
   Onsubmit(){
 
     
@@ -484,17 +508,16 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
       return
     }
+
     const userInfo = {
-      "department":this.form.value.departmentName,
+      "currentCustomerId":this.form.value.id,
       "App_name":this.form.value.applicantName,
+      "department":this.form.value.departmentName,
+      "FO_designation":this.form.value.designation,
+      "mobileNoCode": this.form.value.countryCode,
       "App_email":this.form.value.email,
       "App_mobile":this.form.value.mobileNo,
-      "FO_name":this.form.value.OfficerName,
-      "FO_email":this.form.value.OfficerEmail,
-      "countryCode": "",
-      "FO_mobile":this.form.value.OfficerMobile,
-      "FO_designation":this.form.value.designation,
-      "Tele_number": this.form.value.teleCode,
+      "telephoneNumberCode": this.form.value.teleCode,
       "Tele_number_OF":this.form.value.telPhno,
       "OA_line1":this.form.value.offAddress1,
       "OA_line2":this.form.value.offAddress2,
@@ -502,36 +525,42 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "city":this.form.value.city,
       "state":this.form.value.state,
       "pincode":this.form.value.pinCode,
+      "FO_mobile":this.form.value.OfficerMobile,
+      "FO_name":this.form.value.OfficerName,
+      "FO_email":this.form.value.OfficerEmail,
+      "proj_international":this.form.value.intMonSmsTraffic,
+      "proj_number":this.form.value.projectNo, 
       "sms_service":this.form.value.smsServiceReqd,
-      "credits":this.form.value.creditsSMSQuota,
-      "sms_traffic":this.form.value.domMonSmsTraffic,
       "name_applicant":this.form.value.nameOfTheApplication,
-      "available_credit":this.form.value.userName,
       "App_url":this.form.value.applicationUrl,
       "server_location":this.form.value.serverLocation,
       "purpose_applicant":this.form.value.purpOfTheApplication,
       "Ip_form":this.form.value.smsGatewayAccess,
       "Ip_staging":this.form.value.ipServReqd,
-      "proj_international":this.form.value.intMonSmsTraffic,
+      "sms_traffic":this.form.value.domMonSmsTraffic,
       "proj_domestic":this.form.value.domMonSmsTraffic,
       "app_security":this.form.value.appSecurAudClear,
       "audit_date":this.form.value.auditDate,
+      "creditDate":this.form.value.creditDate,
+      "creditAddedAgainstPI":this.form.value.creditAddedAgainstPi,
       "trai_extempted":this.form.value.traiSenderId,
-      "proj_number":this.form.value.projectNo,
       "userId":this.form.value.userId,
       "password":this.form.value.password,
-      "upload_document":"",
+      "status":this.form.value.status,
       "remark":this.form.value.remark,
-      "creationStatus":"",
+      "credits":this.form.value.creditsSMSQuota,  
+      "available_credit":this.form.value.userName,
+      "upload_document":"",
+      
+       
     }
     this.userInfoService.createCustomerDetails(userInfo).subscribe((response)=> {
 
       console.log('Response',response)
  
-      if(response['Error'] == '0' && response) {
+      if(response['Error'] == '0' && response["ProcessVariables"]["error"]["code"] == 600) {
 
-        this.isDirty=false;
-        this.form.reset()        
+              
         this.beheSer.setUserId(response['ProcessVariables']['generatedCustomerId']);
          this.showDataSaveModal = true;
 
@@ -539,16 +568,18 @@ export class UserInfoComponent implements OnInit,OnChanges {
           title: "Customer Information Saved Sucessfully",
           message : "Are you sure you want to proceed to Technical Admin page?"
         }
-    
+        this.isDirty=false;
+        this.form.reset()  
         // this.toasterService.showSuccess('Data Saved Successfully',"");
         // console.log('userId ]]]]]]',this.beheSer.userId);
       }else {
-        this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
       }
 
     })
 
     this.propertyFlag = false;
+    
     this.buttonName = 'Update';
      
     // this.form.value['creditDate'] = this.datePipe.transform(this.form.value['creditDate'], 'dd/MM/yyyy')
@@ -563,6 +594,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
     
   }
 
+  update(){
+
+  }
+
   fetchAllCustomerDetails() {
 
     this.userInfoService.fetchAllCustomers().subscribe((response)=> {
@@ -575,19 +610,23 @@ export class UserInfoComponent implements OnInit,OnChanges {
     })
   }
 
-  // getCustomerDetailByCustomerId(id:string){
+  getCustomerDetailByCustomerId(id:string){    
 
-  //   this.userInfoService.getCustomerDetailByCustomerId('id').subscribe((data) => {
+    this.userInfoService.getCustomerDetailByCustomerId(id).subscribe((response) => {
 
-  //     console.log(data)
+      console.log("get customer by id",response)
+      const res = response["ProcessVariables"] || '';
+      this.userId = res.userId || '';
+      this.utilService.setUserDetails(response["ProcessVariables"]);
+      this.setFormValues(response["ProcessVariables"]);
 
-  //   },(error) => {
+    },(error) => {
 
-  //     console.log(error)
+      console.log(error)
 
-  //   })
+    })
 
-  // }
+  }
 
 
 
@@ -866,7 +905,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.utilService.projectNumber$.subscribe((val) =>{ 
       pno  = val;
     })
-    this.router.navigate(['/users/techAdmin/'+pno])
+    this.router.navigate(['/users/techAdmin/'+ this.userId])
   }
 
   replaceStrar(getPassWord){
