@@ -66,7 +66,6 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.currentDate = this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	');
-    this.initForm();
 
    }
 
@@ -80,12 +79,32 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
     });
+    this.initForm();
     this.viewInfoData = this.getDataForDialogModal();
+    this.listenerForBalanceCredit();
+  }
+
+  listenerForBalanceCredit() {
+    this.smsCreditAllocation.get('totalCredit')
+         .valueChanges.subscribe((value) => {
+          const usedCredit = Number(this.smsCreditAllocation.get('usedCredit').value || 0);
+          const balanceCredit = Number(value) - usedCredit;
+          this.smsCreditAllocation.get('balanceCredit').setValue(balanceCredit);
+         });
+    this.smsCreditAllocation.get('usedCredit')
+        .valueChanges.subscribe((value) => {
+          const totalCredit = Number(this.smsCreditAllocation.get('totalCredit').value || 0);
+          const balanceCredit = totalCredit - Number(value);
+          this.smsCreditAllocation.get('balanceCredit').setValue(balanceCredit);
+        });
   }
 
   getDataForDialogModal() {
     const smsApprover = this.smsQuotaMatrix.find((val) => {
       return val.key === this.data.smsApprover;
+    }) || {};
+    const status = this.statusList.find(val => {
+      return val.key === this.data.status;
     });
     return [
       {
@@ -106,11 +125,11 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       },
       {
         key: this.labels.availableCredit,
-        value: (Number(this.data.totalCredit) - 1000)
+        value: this.data.balanceCredit
       },
       {
         key: this.labels.status,
-        value: this.data.statusValue
+        value: status.value
       },
       {
         key: this.labels.onApprovalOf,
@@ -137,7 +156,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       onApprovalOf: new FormControl([null]),
       remark: new FormControl([null]),
       usedCredit: new FormControl([null]),
-      balanceCredit: new FormControl([null]),
+      balanceCredit: new FormControl({value: null, disable: true}),
       approvedBy: new FormControl(userName),
       timeStamp: new FormControl(this.currentDate),
     });
@@ -226,7 +245,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       smsApprover: this.data.smsApprover,
       totalCredit: this.data.totalCredit,
       usedCredit: this.data.usedCredit,
-      balanceCredit: (Number(this.data.totalCredit) - 1000),
+      balanceCredit: this.data.balanceCredit,
       dateOfRequest : new Date(this.data.dateOfRequest),
       status : this.data.status,
       onApprovalOf : this.data.onApprovalOf,

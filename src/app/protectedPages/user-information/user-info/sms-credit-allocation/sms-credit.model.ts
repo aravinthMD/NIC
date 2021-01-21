@@ -10,4 +10,5 @@ export interface SmsCreditAllocation {
     onApprovalOf?: string;
     smsApprover?: string;
     id?: number;
+    statusValue?: string;
 }

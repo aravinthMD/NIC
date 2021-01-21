@@ -141,7 +141,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       smsApprover: new FormControl(''),
       totalCredit: new FormControl(null),
       dateOfRequest: new FormControl(null),
-      status: new FormControl(''),
+      status: new FormControl('2'),
       onApprovalOf: new FormControl(null),
       remark: new FormControl(null),
       usedCredit: new FormControl(null),
@@ -157,10 +157,13 @@ export class SmsCreditAllocationComponent implements OnInit {
     });
   }
 
-  getSmsCreditList() {
+  getSmsCreditList(searchKeyword = '', fromDate: string = '', toDate = '') {
       this.smsCreditService.getCreditSmsList(
         {
-          selectedClientId: this.userId
+          selectedClientId: this.userId,
+          searchKeyword,
+          fromDate,
+          toDate
         }
       ).subscribe((res: any) => {
           console.log('fetch data', res);
@@ -338,14 +341,14 @@ export class SmsCreditAllocationComponent implements OnInit {
       clientId: this.userId,
       smsApprover: formValue.smsApprover,
       dateOfRequest: formValue.dateOfRequest,
-      balanceCredit: formValue.balanceCredit,
+      balanceCredit: formValue.totalCredit, // initially full credit is available
       status: formValue.status,
       onApprovalOf: formValue.onApprovalOf,
       remark: formValue.remark,
       approvedBy: formValue.approvedBy,
       id: 0, // for new creation
       totalCredit: formValue.totalCredit,
-      usedCredit: formValue.usedCredit,
+      usedCredit: '0', // initially used credit is zero
     };
 
     console.log('smsCredit', smsCredit);
@@ -360,11 +363,13 @@ export class SmsCreditAllocationComponent implements OnInit {
             }
             this.toasterService.showSuccess('Data saved successfully', '');
             const processVariables = res.ProcessVariables;
+            const status = this.getStatusDescription(processVariables.status);
             const data: SmsCreditAllocation = {
+              statusValue: status,
+              status: processVariables.status,
               smsApprover: processVariables.smsApprover,
               dateOfRequest: processVariables.dateOfRequest,
               balanceCredit: String(processVariables.balanceCredit),
-              status: processVariables.status,
               onApprovalOf: processVariables.onApprovalOf,
               remark: processVariables.remark,
               approvedBy: processVariables.approvedBy,
@@ -377,25 +382,32 @@ export class SmsCreditAllocationComponent implements OnInit {
          });
   }
 
+
+  
+
   onSearch() {
-    console.log(this.searchForm.value);
+    const searchKeyword = this.searchForm.get('searchData').value;
+    const fromDate = this.searchForm.get('searchFrom').value;
+    const toDate = this.searchForm.get('searchTo').value;
+    this.getSmsCreditList(searchKeyword, fromDate, toDate);
+    // console.log(this.searchForm.value);
 
-    const data = this.apiService.api.smsCreditAllocationSearch;
+    // const data = this.apiService.api.smsCreditAllocationSearch;
 
-    const params = {
-      searchKeyword: this.searchForm.get('searchData').value,
-      fromDate: this.searchForm.get('searchFrom').value,
-      toDate: this.searchForm.get('searchTo').value,
-    };
+    // const params = {
+    //   searchKeyword: this.searchForm.get('searchData').value,
+    //   fromDate: this.searchForm.get('searchFrom').value,
+    //   toDate: this.searchForm.get('searchTo').value,
+    // };
 
-    this.searchService
-      .searchProjectExecution(data, params)
-      .subscribe((value) => {
-        console.log('value', value);
-        this.dataSource = new MatTableDataSource<any>(
-          value['ProcessVariables']['smscreditlist']
-        );
-      });
+    // this.searchService
+    //   .searchProjectExecution(data, params)
+    //   .subscribe((value) => {
+    //     console.log('value', value);
+    //     this.dataSource = new MatTableDataSource<any>(
+    //       value['ProcessVariables']['smscreditlist']
+    //     );
+    //   });
   }
 
   clear() {
@@ -444,8 +456,10 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendReminder(element) {
+    if (element.status === '0') {
+      return;
+    }
     this.showEmailModal = true;
-
     this.modalData = {
       title: 'Send Reminder Email',
       request: {
@@ -474,6 +488,8 @@ export class SmsCreditAllocationComponent implements OnInit {
       if (!result) {
         return;
       }
+      const status = this.getStatusDescription(result.status);
+      result.statusValue = status;
       this.updateChangedSmsCredit(result);
     });
   }

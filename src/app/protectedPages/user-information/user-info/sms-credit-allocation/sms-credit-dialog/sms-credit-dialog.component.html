@@ -82,7 +82,8 @@
                      [maxLength]="labels?.validationData.availableCredit.maxLength" 
                      [isDirty]="isDirty" 
                      [isRequired]="'Available credit is mandatory'" 
-                     [mandatoryField]="true">
+                     [mandatoryField]="true"
+                     [isDisabledInp]="true">
                     </app-custom-input>
                 </div>
             </div>
@@ -90,7 +91,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="status">{{labels.status}}</label>
-                    <app-vf-custom-select formControlName="status" [values]="statusList" [isDirty]="isDirty" [isRequired]="'Status is mandatory'">
+                    <app-vf-custom-select formControlName="status" [values]="statusList" [isDirty]="isDirty" [isRequired]="'Status is mandatory'" [isDisabled]="true">
                     </app-vf-custom-select>
                 </div>
             </div>
@@ -106,7 +107,7 @@
                     </app-custom-input>
                 </div>
             </div>
-            <div class="col-4">
+            <!-- <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="remark" 
                      [labelName]="labels.remark" [id]="'remark'" 
@@ -117,7 +118,7 @@
                      [isRequired]="'Remark is mandatory'">
                     </app-custom-input>
                 </div>
-            </div>
+            </div> -->
             <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="approvedBy" 
@@ -141,6 +142,21 @@
                     </app-custom-input>
                 </div>
             </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="remark">{{labels.remark}}</label>
+                    <textarea class="remark" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
+                    <div class="date-picker-error" *ngIf="
+              isDirty &&
+              smsCreditAllocation.get('remark').errors?.required
+            ">
+                                    Please Enter Remark
+                                </div>
+            
+                </div>
+            </div>
+            
         </div>
 
     </form>
