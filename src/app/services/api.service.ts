@@ -241,6 +241,11 @@ export class ApiService {
       processId : 'acc4ed484f5d11ebb884727d5ac274b2',
       projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : 'acc4ed484f5d11ebb884727d5ac274b2'
+    },
+    updateTaxnvoice: {
+      processId : '642880ce45d311ebb7cc727d5ac274b2',
+      projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '642880ce45d311ebb7cc727d5ac274b2'
     }
 
   }

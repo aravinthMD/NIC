@@ -69,12 +69,12 @@
 
                 </section> -->
 
-                <label for="smsApproved">{{labels.smsApproved}}</label>
-                <app-vf-custom-select formControlName="smsApproved" [values]="smsApprovedList" [isRequired]="'Please Select SMS Approved'" [isDirty]="isDirty">
-                </app-vf-custom-select>
+                <!-- <label for="smsApproved">{{labels.smsApproved}}</label> -->
+                <!-- <app-vf-custom-select formControlName="smsApproved" [values]="smsApprovedList" [isRequired]="'Please Select SMS Approved'" [isDirty]="isDirty">
+                </app-vf-custom-select> -->
 
-                                <!-- <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [isDirty]="isDirty">
-                                </app-custom-input> -->
+                                <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [isDirty]="isDirty">
+                                </app-custom-input>
 
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                                    [type]="labels?.validationData?.withoutTax?.type" 
                                    [isDirty]="isDirty">
                                 </app-custom-input>
-
+                            
                             </div>
                         </div>
 
@@ -246,12 +246,13 @@
                                     [isRequired]="'Amount with Tax is Mandatory'" 
                                     [labelName]="labels.poAmountWithTax" 
                                     placeHolder = "Enter the Amount with Tax"
+                                   
                                     [maxLength]="labels?.validationData?.poAmountWithTax?.maxLength" 
                                     [type]="labels?.validationData?.poAmountWithTax?.type"
                                     [isDirty]="isDirty">
                                 </app-custom-input>
 
-
+                               
                             </div>
                         </div>
 
@@ -358,8 +359,8 @@
                      
                      <mat-form-field>
                          <mat-label>From Date</mat-label>
-                       <input matInput [matDatepicker]="picker6" formControlName="searchData"  
-                       (keyup)="detectDateKeyAction($event,'searchData')"
+                       <input matInput [matDatepicker]="picker6" formControlName="searchFrom"  
+                       (keyup)="detectDateKeyAction($event,'searchFrom')"
                       >
                        <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
                        <mat-datepicker #picker6></mat-datepicker>
@@ -376,7 +377,7 @@
                      
                      <mat-form-field>
                          <mat-label floatLabel="float">To Date</mat-label>
-                       <input matInput [min]="searchForm.get('searchData').value" 
+                       <input matInput [min]="searchForm.get('searchFrom').value" 
                        [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
                        <mat-datepicker-toggle matSuffix [for]="picker7" 
                        ></mat-datepicker-toggle>
@@ -428,6 +429,8 @@
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" class="custom-table">
 
+              
+
                 <ng-container matColumnDef="purchaseNo">
                     <th mat-header-cell *matHeaderCellDef>Purchase Order No </th>
                     <td mat-cell *matCellDef="let element" class="value-bold"> {{element.poNumber}} </td>
@@ -466,9 +469,10 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+            <!-- <mat-paginator class="font-paginator" ></mat-paginator> -->
+            <mat-paginator  class="font-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
-
+       
         <!--Materail Table End -->
         <div class="m-5"></div>
 
