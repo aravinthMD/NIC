@@ -205,6 +205,21 @@ export class ApiService {
       processId: '8ef9e00648f111ebb7d2727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
+    getAllTechAdminDetails: {
+      workflowId: '8ecc2a9448f111ebb7d2727d5ac274b2',
+      processId: '2467d2d2490711ebb7dc727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getTechAdminDetailById: {
+      workflowId: '8ecc2a9448f111ebb7d2727d5ac274b2',
+      processId: 'cb9e235c49e411ebb80a727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getBillingAdminDetailById: {
+      workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
+      processId: '11a3b4124a8911ebb813727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
     createBillingDetails: {
       workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
       processId: '9bf8ea3648f111ebb7d2727d5ac274b2',
@@ -224,10 +239,28 @@ export class ApiService {
  
     smsCreditAllocationSearch : {
       processId : 'acc4ed484f5d11ebb884727d5ac274b2',
-      projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : 'acc4ed484f5d11ebb884727d5ac274b2'
+    },
+
+    getSmsCreditAllocationData: {
+      processId : 'dac048f64b6f11ebb82e727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'dac048f64b6f11ebb82e727d5ac274b2'
+    },
+
+    saveOrUpdateSmsCredit: {
+      processId : 'dbba1e864b5011ebb822727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'dbba1e864b5011ebb822727d5ac274b2'
+    },
+
+    fetchDashboardDetails: {
+      processId : 'b1aaefba4aad11ebb81e727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'b1aaefba4aad11ebb81e727d5ac274b2'
     }
 
-  }
+  };
 
   }

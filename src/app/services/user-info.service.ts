@@ -11,8 +11,6 @@ import { HttpClient,HttpHeaders } from "@angular/common/http";
 })
 export class UserInfoService {
   
-  
-
   constructor(private apiService: ApiService,private httpService: HttpClient) { }
 
 
@@ -86,7 +84,7 @@ export class UserInfoService {
   } = this.apiService;
 
   const data = {
-    currentCustomerId  : customerId,
+    currentCustomerId  : Number(customerId),
     temp : "get"
 
   }
@@ -109,7 +107,7 @@ export class UserInfoService {
   }
 
 
-  /// create technical Admin details
+  /// create technical Admin details 
 
   createTechnicalAdmin(data) {
 
@@ -137,6 +135,71 @@ export class UserInfoService {
   
   }
 
+  fetchAllTechAdmins() { 
+
+    const {
+      api : {
+        getAllTechAdminDetails : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : {},
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+
+}
+
+      getTechAdminDetailById(clientId : string){
+
+        const {
+          api : {
+            getTechAdminDetailById : {
+                workflowId,
+                processId,
+                projectId
+            }
+          }
+      } = this.apiService;
+
+      const data = {
+        currentClientId : Number(clientId),
+        temp:'get'
+      }
+
+      const requestEntity  : any  = {
+        processId,
+        ProcessVariables : data,
+        projectId
+      }
+
+      const body = {
+        processVariables : JSON.stringify(requestEntity)
+      };
+
+      const formData = this.transform(body)
+
+      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+      return  this.httpService.post<any>(url,formData);
+
+      }
+
+
    /// create technical Admin details
 
    createBilling(data) {
@@ -162,6 +225,40 @@ export class UserInfoService {
     let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
   
     return this.httpService.post(url,formData);
+  
+  }
+
+  getBillingAdminDetailById(clientId : string){
+
+    const {
+      api : {
+        getBillingAdminDetailById : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+  
+  const data = {
+    currentBillId : Number(clientId),
+    temp: 'get'
+  }
+  
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+  
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+  
+  const formData = this.transform(body)
+  
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
   
   }
   

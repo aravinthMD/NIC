@@ -7,9 +7,16 @@ import { BehaviorSubject } from 'rxjs';
 export class BehaviourSubjectService {
 
    $userId = new BehaviorSubject('');
-    
-    setUserId(userId){
-      this.$userId.next(userId)
+
+   private userId: string;
+
+    setUserId(userId) {
+      this.userId = userId;
+      this.$userId.next(userId);
+    }
+
+    getUserId() {
+      return this.userId;
     }
 
 

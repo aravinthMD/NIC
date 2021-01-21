@@ -5,7 +5,7 @@
 
     <app-account-header [title]="'Technical Admin Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
-    <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
+    <app-view-info [techAdminUserDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
 
    
 
@@ -296,14 +296,14 @@
             
             <div class="row pt-3 pb-3">
                 <div class="col-9">
-                    <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save & Next</button>
+                    <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!showView" (click)="onSubmit()">Save & Next</button>
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="hideEditButton" (click)="onSubmit()">Save & Next</button> -->
-                    <button class="btn btn-primary btn-lg float-left back-btn" *ngIf= "showView" matRipple (click)="editData()"> Edit </button>
+                    <button class="btn btn-primary btn-lg float-left back-btn" *ngIf= "showView" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editData()"> Edit </button>
                 </div>
 
                <div class="col-2" style="float: right;">
-                <button class="btn btn-primary ml-3" *ngIf = "!showView" (click)="back('show')">Back</button>
-                <button class="btn btn-primary ml-3" *ngIf = "showView" (click)="back('view')">Back</button>
+                <button class="btn btn-primary ml-3" *ngIf = "!showView" style="padding-left: 36px; padding-right:36px;" (click)="back('show')">Back</button>
+                <button class="btn btn-primary ml-3" *ngIf = "showView"  style="padding-left: 36px; padding-right:36px;" (click)="back('view')">Back</button>
 
                </div>
 
@@ -326,7 +326,7 @@
             </div>
         </div>
 
-        <app-view-info [userDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
+        <app-view-info [billAdminUserDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
 
 
 
@@ -335,11 +335,11 @@
         <div class="row pt-3 pb-3" *ngIf="user">
             <div class="col-9">
                 <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
-                <button class="btn btn-primary btn-lg float-left back-btn" matRipple (click)="editDataBill()">Edit</button>
+                <button class="btn btn-primary btn-lg float-left back-btn"  style="padding-left: 36px; padding-right:36px;" matRipple (click)="editDataBill()">Edit</button>
             </div>
 
            <div class="col-2" style="float: right;">
-            <button class="btn btn-primary ml-30" (click)="back('billAdmin')">Back</button>
+            <button class="btn btn-primary ml-30" style="padding-left: 36px; padding-right:36px;" (click)="back('billAdmin')">Back</button>
 
            </div>
 
@@ -353,7 +353,6 @@
 
     </mat-card>
         </div>
-
 
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
