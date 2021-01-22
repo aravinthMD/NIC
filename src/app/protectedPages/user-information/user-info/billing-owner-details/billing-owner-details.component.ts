@@ -110,7 +110,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       this.getBillingAdminDetailById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
-        this.accountName = val['userId'] || '';
+        this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
 

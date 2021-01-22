@@ -22,7 +22,6 @@ import {ApiService} from '../../../services/api.service';
 })
 export class ProjectExecutionComponent implements OnInit {
 
-
   PurchaseEntryForm : FormGroup;
   isDirty: boolean;
   labels :  any;
@@ -116,7 +115,7 @@ dataValue: {
 
     this.utilService.userDetails$.subscribe((val)=> {
 
-      this.accountName = val['userId'] || '';
+      this.accountName = val['App_name'] || '';
       this.status = val['status'] || '';
     })
 
@@ -125,7 +124,7 @@ dataValue: {
       this.storeProjectNo = value.projectNo || 4535
     })
 
-    this.getProjectExecutionDetails();     //Getting the Project Execution details API
+    this.getProjectExecutionDetails();    
   }
 
 
@@ -133,25 +132,19 @@ dataValue: {
   searchProjectExecution() {
 
     const data = this.apiService.api.getProjectExecutionDetailsList;
-
       const params = {
         searchKeyword: this.searchForm.get('searchData').value,
         fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
         toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
       }
-
       this.searchService
           .searchProjectExecution(data,params).subscribe((resp) => {
             console.log('value', resp);
-            
             const respError=resp["ProcessVariables"]["error" ];
-
-            if(respError.code=="400")
+            if(respError.code=="0")
             {
-              
             console.log('result',resp['ProcessVariables']);
             this.dataSource = resp["ProcessVariables"]["peList"];
-
         }
         else 
         { 
@@ -159,34 +152,9 @@ dataValue: {
         }
           })
   }
-
-
-
-
-
-  PEForm(){
-    if(this.PurchaseEntryForm.invalid){
-      this.isDirty = true;
-      return
-    }
-
-    this.PurchaseEntryForm.reset();
-
-    this.toasterService.showSuccess('Data Saved Successfully','')
-
-  this.showDataSaveModal = true;
-  this.dataValue= {
-    title: 'Project Execution Saved Successfully',
-    message: 'Are you sure you want to proceed purchase order invoice page?'
-  }
-
-  }
-
     //Create PE
 
     createProjectExecution(){
-      
-      // this.updateProjectExecutionDetail();
         const feildControls =   this.PurchaseEntryForm.controls;
         const userName  = feildControls.userName.value;
         const piNumber =  feildControls.piNumber.value;
@@ -204,12 +172,9 @@ dataValue: {
         const piPaid = feildControls.piPaid.value;
         const remark = feildControls.remark.value;
   
-  
         const formattedProformaInvoiceDate = this.datePipe.transform(invoiceDate,'dd/MM/yyyy')
         const formattedDateOfTransaction = this.datePipe.transform(transactionDate,'dd/MM/yyyy')
  
-
-
         const Data = {
           userName,
           piNumber,
@@ -230,27 +195,35 @@ dataValue: {
         this.invoiceService.createProjectExecution(Data).subscribe(
           (response) => {
                 console.log(response['ProcessVariables']); 
-              if(response['ProcessVariables']){
+                const { 
+                  ProcessVariables  : { error : {
+                    code,
+                    message
+                  }}
+                } = response;
+                
+              if(code == '0'){
                 this.PurchaseEntryForm.reset();
+                this.isDirty = false;
                 this.getProjectExecutionDetails();
                 this.toasterService.showSuccess('Data Saved Successfully','')
-            
-              this.showDataSaveModal = true;
-              this.dataValue= {
+                this.showDataSaveModal = true;
+                this.dataValue= {
                 title: 'Project Execution Saved Successfully',
                 message: 'Are you sure you want to proceed purchase order invoice page?'         
                    } 
+                  }else{
+                this.toasterService.showError(message,'')
                   }
-          },(error) => {
+          },
+         (error) => {
             console.log(error)
+            this.toasterService.showError(error,'')
         })
-  
     }
 
-
-
     getProjectExecutionDetails(){ 
-      this.invoiceService.getProjectExecutionDetails('INV123').subscribe((response) => {
+      this.invoiceService.getProjectExecutionDetails().subscribe((response) => {
         const { 
           ProcessVariables  : { error : {
             code,
@@ -258,7 +231,7 @@ dataValue: {
           }}
         } = response;
         console.log(response);
-        if(code == "400"){
+        if(code == "0"){
           this.dataSource = response["ProcessVariables"]["peList" ];
           this.length = response["ProcessVariables"]["totalPages"];
           this.pageSize = response["ProcessVariables"]["dataPerPage"]
@@ -273,18 +246,12 @@ dataValue: {
     }
 
   onSearch() {
-
     console.log(this.searchForm.value);
-
   }
 
   clear() {
-
-    this.searchForm.patchValue({
-      searchData: null,
-      searchFrom:null,
-      searchTo:null
-    })
+    this.searchForm.reset();
+    this.getProjectExecutionDetails();
   }
 
 
@@ -299,22 +266,17 @@ dataValue: {
   }
 
   getDownloadXls(){
-    // this.utilService.getDownloadXlsFile(this.userList,'ProjectExecution');
   }
 
 
   detectDateKeyAction(event,type) {
-
     console.log(event)
-    
     if(type == 'invoiceDate') {
-
       this.PurchaseEntryForm.patchValue({
         invoiceDate: ''
       })
       this.toasterService.showError('Please click the PI date icon to select date','');
     }else if(type == 'transactionDate') {
-
       this.PurchaseEntryForm.patchValue({
         transactionDate: ''
       })
@@ -330,7 +292,6 @@ dataValue: {
       })
       this.toasterService.showError('Please click the todate icon to select date','');
     }
-    
   }
 
   next() {
@@ -365,9 +326,9 @@ dataValue: {
 
 
   getServerData(event?:PageEvent){
-      
+      let pageNo = event.pageIndex;
+      this.getProjectExecutionDetails();
   }
-
 
   }
 
