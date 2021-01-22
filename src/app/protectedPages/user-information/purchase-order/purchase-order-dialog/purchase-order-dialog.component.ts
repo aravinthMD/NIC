@@ -143,16 +143,33 @@ export class PurchaseOrderDialogComponent implements OnInit {
       })
     })
   }
+  async getSubLovs() {
+
+    let paymentStatus = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const paymentList = response['ProcessVariables']['Lovitems'];
+      paymentList.forEach(element => {
+        
+        paymentStatus.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = paymentStatus
+  }
 
  async ngOnInit() {
     this.labelService.getLabelsData().subscribe((value) =>{
     this.labels = value;
     })
 
+    this.getSubLovs()
 
     this.departmentListData = await this.getDepartmentLov();
 
-    this.poStatus = await this.getStatusLov()
+    this.poStatus = await this.getStatusLov();
 
 
     this.activatedRoute.params.subscribe((value)=> {
@@ -422,10 +439,6 @@ this.closeDialog()
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
-
-    
-
-
       this.detectAuditTrialObj = this.PurchaseOrderForm.value;
      
     }

@@ -13,6 +13,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService} from '../../../services/api.service'
   import { from } from 'rxjs';
+import { AdminService } from '@services/admin.service';
 
 
 @Component({
@@ -51,16 +52,13 @@ export class TaxInvoiceComponent implements OnInit {
     {invoiceNo : 7687,projectNumber : 4535,piAmt:23450,remarks:''}
 
   ];
-  paymentStatus: any[] = [
-    { key: 0, value: 'Pending' },
-    { key: 1, value: 'Received' },
-    { key: 2, value: 'On Hold' }]
+  paymentStatus: any[] = []
 
     invoiceStatusList :  any[] = [
       {key : 0,value : 'Pending'},
       {key : 1,value : 'Paid'},
       {key : 2,value : 'Partially Paid'},
-      {kwy : 3,value : 'Return by NICSI'}
+      {key : 3,value : 'Return by NICSI'}
     ]
 
   dataSource = new MatTableDataSource<any>([]);
@@ -91,7 +89,8 @@ export class TaxInvoiceComponent implements OnInit {
       private router: Router,
       private invoiceService : InvoiceService,
       private searchService: SearchService,
-      private apiService:ApiService
+      private apiService:ApiService,
+      private adminService: AdminService
       ) { }
 
   ngOnInit() {
@@ -177,6 +176,8 @@ export class TaxInvoiceComponent implements OnInit {
 
     })
 
+    this.getSubLovs();
+
     // this.dataSource = new MatTableDataSource<any>(this.userList);
     this.getAllTaxInvoiceDetails();
   }
@@ -186,7 +187,25 @@ export class TaxInvoiceComponent implements OnInit {
 
   }
 
-  getAllTaxInvoiceDetails(){
+  async getSubLovs() {
+
+    let listData = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const submenuList = response['ProcessVariables']['Lovitems'];
+     submenuList.forEach(element => {
+        
+        listData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = listData;
+
+  }
+
+  getAllTaxInvoiceDetails(currentPage?: any){
 
     this.invoiceService.getTaxInvoiceDetails().subscribe((response) => {
 
@@ -253,17 +272,23 @@ export class TaxInvoiceComponent implements OnInit {
     const formattedReceiptDate = this.Datepipe.transform(receiptDate,'dd/MM/yyyy')
     const formattedDateEstimated = this.Datepipe.transform(dateEstimated,'dd/MM/yyyy')
 
+
+    const formattedFromDate = this.Datepipe.transform(fromDate,'dd/MM/yyyy');
+    const formattedToDate = this.Datepipe.transform(toDate,'dd/MM/yyyy');
+    const formattedPoDate = this.Datepipe.transform(poDate,'dd/MM/yyyy');
+    const formattedSubmitedOn = this.Datepipe.transform(submittedOn,'dd/MM/yyyy');
+
     const Data = {
       userName,
       projectNumber : projectNo,
       poNumber,
-      poDate,
-      fromDate,
-      toDate,
+      poDate: formattedPoDate,
+      fromDate: formattedFromDate,
+      toDate : formattedToDate,
       billableAmount : poBillable,
       InvoiceAmount : invoiceAmount,
       TaxInvoiceNumber  : taxIN,
-      submittedDate :  submittedOn,
+      submittedDate :  formattedSubmitedOn,
       InvoiceStatus  : invoiceStatus,
       InvoicePaidAmount : invoiceAmountPaid,
       tds,
@@ -294,14 +319,18 @@ export class TaxInvoiceComponent implements OnInit {
     this.invoiceService.createTaxInvoice(Data).subscribe((response) =>{
 
             console.log(response["ProcessVariables"])
-            if(response["ProcessVariables"]){
+            if(response["ProcessVariables"]['error']['code'] == '0'){
               this.isDirty = false;
               this.toasterService.showSuccess('Tax Invoice Form Submitted Sucessfully','');
               this.taxInvoiceForm.reset();
+            }else {
+              this.toasterService.showError(response["ProcessVariables"]['error']['message'],'');
             }
 
     },(error) => {
       console.log(error)
+
+      this.toasterService.showError(error,'')
     })
     
   }
@@ -364,6 +393,8 @@ export class TaxInvoiceComponent implements OnInit {
       searchFrom:null,
       searchTo:null
     })
+
+    this.getAllTaxInvoiceDetails()
   }
 
   OnEdit(fromObj :  any){
@@ -434,6 +465,10 @@ back() {
 
 pageEventData(event) {
 
+
+  const currentPageIndex  = Number(event.pageIndex) + 1;
+
+  // this.getAllTaxInvoiceDetails(currentPageIndex)
 }
 
 

@@ -42,28 +42,12 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
     { key: 3, value: 'Pending' },
     { key: 4, value: 'Rejected' },
     { key: 5, value: 'On Hold' }]
-  piStatus: any[] = [
-    { key: 0, value: 'Received' },
-    { key: 1, value: 'Pending' },
-    { key: 2, value: 'Approved' },
-    { key: 3, value: 'Rejected' },
-    { key: 4, value: 'On Hold' }]
-    piReceivedIn: any[] = [
-      { key: 0, value: 'Full' },
-      { key: 1, value: 'Partial' }]
+  piStatus: any[] = []
+    piReceivedIn: any[] = []
   
-    paymentStatus: any[] = [
-      { key: 0, value: 'Pending' },
-      { key: 1, value: 'Received' },
-      { key: 2, value: 'On Hold' }]
+    paymentStatus: any[] = []
 
-      departmentListData = [
-        {key:0,value:'Department of Sainik Welfare'},
-        {key:1,value:'Ministry of Minority Affairs'},
-        {key:2,value:'Visakhapatnam Port Trust'},
-        {key:3,value:'Ministry of Tribal Affairs'},
-        {key:4,value:'Bureau of Naviks.Mumbai'}
-    ];
+      departmentListData = [];
     
     dataArray=[]
       
@@ -285,6 +269,48 @@ smsApprovedList : any[] = [
     })
 
     this.poStatus = poData
+
+    let piData = []
+
+    await this.adminService.getLovSubMenuList("2").subscribe((response)=> {
+
+
+      const piList = response['ProcessVariables']['Lovitems'];
+      piList.forEach(element => {
+        
+        poData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.piStatus = piData
+
+    let paymentStatus = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const paymentList = response['ProcessVariables']['Lovitems'];
+      paymentList.forEach(element => {
+        
+        paymentStatus.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = paymentStatus
+
+
+    let piReceivedData = []
+
+    await this.adminService.getLovSubMenuList("4").subscribe((response)=> {
+
+      const piRecList = response['ProcessVariables']['Lovitems'];
+      piRecList.forEach(element => {
+        
+        piReceivedData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.piReceivedIn = piReceivedData
   }
 
   initForm() {
