@@ -276,7 +276,7 @@ export class InvoiceService {
 
     
 
-fetchAllPO() {
+fetchAllPO(currentPage?:any) {
 
           const {
             api : {
@@ -289,12 +289,23 @@ fetchAllPO() {
         } = this.apiService;
 
 
-        const requestEntity  : any  = {
-          processId,
-          ProcessVariables : {},
-          projectId
+        let requestEntity  : any  = {};
+        if(currentPage) {
+              requestEntity = {
+                processId,
+              ProcessVariables : {
+                currentPage: Number(currentPage)
+              },
+              projectId
+            }
+        }else {
+              requestEntity = {
+                processId,
+                ProcessVariables : {},
+                projectId
+              }
         }
-
+          
         const body = {
           processVariables : JSON.stringify(requestEntity)
         };

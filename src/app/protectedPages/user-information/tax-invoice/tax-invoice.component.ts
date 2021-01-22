@@ -1,5 +1,5 @@
 import { Component, OnInit,Input,ViewChild,AfterViewInit } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
@@ -75,6 +75,11 @@ export class TaxInvoiceComponent implements OnInit {
   propertyFlag: boolean;
 
   storeProjectNo: string;
+
+  resultsLength: number;
+  pageEvent: PageEvent;
+
+  datePerPage: number = 0;
 
   constructor(
       private labelsService: LabelsService,
@@ -184,8 +189,20 @@ export class TaxInvoiceComponent implements OnInit {
   getAllTaxInvoiceDetails(){
 
     this.invoiceService.getTaxInvoiceDetails().subscribe((response) => {
-      const DataTaxInvoiceList = response["ProcessVariables"]["TIList"]
-      this.dataSource = new MatTableDataSource<any>(DataTaxInvoiceList);
+
+      if(response['ProcessVariables']['error']['code'] == '0') {
+        const DataTaxInvoiceList = response["ProcessVariables"]["TIList"];
+
+        this.datePerPage = Number(response['ProcessVariables']['dataPerPage']);
+
+        this.resultsLength = Number(response['ProcessVariables']['totalCount'])
+
+        this.dataSource = new MatTableDataSource<any>([]);
+        this.dataSource = new MatTableDataSource<any>(DataTaxInvoiceList);
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
+      
     },(error) =>{
       this.toasterService.showError(error,'')
     })
@@ -327,6 +344,10 @@ export class TaxInvoiceComponent implements OnInit {
               
               console.log('result',resp['ProcessVariables']);
               this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["TIList" ]);
+
+              this.datePerPage = Number(resp['ProcessVariables']['dataPerPage']);
+
+              this.resultsLength = Number(resp['ProcessVariables']['totalCount'])
            }
           else 
             { 
@@ -352,6 +373,8 @@ export class TaxInvoiceComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) =>{
       console.log('The dialog was closed', result);
+
+      this.getAllTaxInvoiceDetails()
 
     })
   }
@@ -406,6 +429,10 @@ back() {
   this.utilService.setCurrentUrl('users/purchaseOrder')
 
   this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
+
+}
+
+pageEventData(event) {
 
 }
 

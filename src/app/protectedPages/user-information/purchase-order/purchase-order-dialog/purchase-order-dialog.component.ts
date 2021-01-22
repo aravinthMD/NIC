@@ -324,14 +324,21 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
       console.log(response)
 
-      
-      this.toasterService.showSuccess('Data Saved Successfully','')
+      if(response['ProcessVariables']['error']['code'] == '0') {
 
-      this.showDataSaveModal = true;
-      this.dataValue= {
-        title: 'Purchase Order Saved Successfully',
-        message: 'Are you sure you want to proceed tax invoice page?'
+        this.toasterService.showSuccess('Data Saved Successfully','')
+
+        this.showDataSaveModal = true;
+        this.dataValue= {
+          title: 'Purchase Order Saved Successfully',
+          message: 'Are you sure you want to proceed tax invoice page?'
+        }
+      }else {
+
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
       }
+      
+     
     })
 
     

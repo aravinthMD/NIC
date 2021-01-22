@@ -79,8 +79,27 @@ export class TaxInvoiceDialogComponent implements OnInit {
       penalty : [''],
       shortPay : [''],
       submittedOn : new Date(),
-      poBillable : ['']
+      poBillable : [''],
+      projectName:[''],
+      projectCordinator:[''],
+      PONoAmendOrder:[''],
+      mail:[''],
+      totalSMS:[''],
+      counts:[''],
+      baseAmount : [''],
+      tax:[''],
+      recvDate : [''],
+      book :  [''],
+      dateEstimated :  [''],
+      invoiceAmount2 : [''],
+      bankReceived : [''],
+      interestOnTDSotherDeduction : [''],
+      receiptDate :  [''],
+      month : [''],
+      year : [''],
+      mrn : ['']
     })
+
     this.detectAuditTrialObj=this.taxInvoiceForm.value
    }
 
@@ -193,16 +212,81 @@ export class TaxInvoiceDialogComponent implements OnInit {
         value:this.taxInvoiceForm.value.remark
       },
       {
-        key :  "",
+        key: this.labels.projectName,
+        value: ''
+      },
+      {
+        key :  this.labels.projectCordinator,
         value  : ""
       },{
-        key :  "",
+        key :  this.labels.PONoAmendOrder,
         value :  ""
+      },
+      {
+        key :  this.labels.mail,
+        value : ""
+      },
+      {
+        key :  this.labels.totalSMS,
+        value : ""
+      },
+      {
+        key :  this.labels.projectCordinator,
+        value : ""
+      },
+      {
+        key :  this.labels.baseAmount,
+        value : ""
+      },
+      {
+        key :  this.labels.tax,
+        value : ""
+      },
+      {
+        key :  this.labels.recvDate,
+        value : ""
+      },
+      {
+        key :  this.labels.book,
+        value : ""
+      },
+      {
+        key :  this.labels.dateEstimated,
+        value : ""
+      },
+      {
+        key :  this.labels.invoiceAmount2,
+        value : ""
+      },
+      {
+        key :  this.labels.bankReceived,
+        value : ""
+      },
+      {
+        key :  this.labels.interestOnTDSotherDeduction,
+        value : ""
+      },
+      {
+        key :  this.labels.receiptDate,
+        value : ""
+      },
+      {
+        key :  this.labels.mrn,
+        value : ""
+      },
+      {
+        key :  "",
+        value : ""
+      },
+      {
+        key :  "",
+        value : ""
       },
       {
         key :  "",
         value : ""
       }
+
     ]   
 
     this.getTaxInvoiceDetailById(this.data)
@@ -244,7 +328,25 @@ export class TaxInvoiceDialogComponent implements OnInit {
       penalty : dataForm['penalty'] || '',
       shortPay : dataForm['shortPay'] || '',
       submittedOn : dataForm['submittedDate'] || '',
-      poBillable : dataForm['billableAmount'] || ''
+      poBillable : dataForm['billableAmount'] || '',
+      projectName:'',
+      projectCordinator:'',
+      PONoAmendOrder:'',
+      mail:'',
+      totalSMS:'',
+      counts:'',
+      baseAmount : '',
+      tax:'',
+      recvDate : '',
+      book :  '',
+      dateEstimated :  '',
+      invoiceAmount2 : '',
+      bankReceived : '',
+      interestOnTDSotherDeduction : '',
+      receiptDate :  '',
+      month : '',
+      year : '',
+      mrn : ''
 
 
     })
@@ -271,6 +373,90 @@ export class TaxInvoiceDialogComponent implements OnInit {
       return;
     }
 
+    // {"userName":"TestUser01","projectNumber":"P1234","poDate":"24/12/2020","fromDate":"23/12/2020","toDate":"24/12/2020","billableAmount":"5000","InvoiceAmount":"3000","TaxInvoiceNumber":"INV3343","submittedDate":"24/12/2020","InvoiceStatus":2,"InvoicePaidAmount":"2000","tds":"100","penalty":"0","shortPay":"2500","paymentStatus":1,"remark":"Remark Column","uploadDocument":"files","temp":"update","selectedPIId":"16","poNumber":"5"}
+
+
+    // userName : [''],
+    // taxIN : [''],
+    // invoiceDate : new Date(),
+    // projectNo : [''],
+    // poNumber : [''],
+    // poDate : new Date(),
+    // fromDate : new Date(),
+    // toDate : new Date(),
+    // invoiceAmount : [''],
+    // remark : [''],
+    // uploadDoc : [''],
+    // paymentStatus : [''],
+    // invoiceStatus : [''],
+    // invoiceAmountPaid : [''],
+    // tds : [''],
+    // penalty : [''],
+    // shortPay : [''],
+    // submittedOn : new Date(),
+    // poBillable : [''],
+    // projectName:[''],
+    // projectCordinator:[''],
+    // PONoAmendOrder:[''],
+    // mail:[''],
+    // totalSMS:[''],
+    // counts:[''],
+    // baseAmount : [''],
+    // tax:[''],
+    // recvDate : [''],
+    // book :  [''],
+    // dateEstimated :  [''],
+    // invoiceAmount2 : [''],
+    // bankReceived : [''],
+    // interestOnTDSotherDeduction : [''],
+    // receiptDate :  [''],
+    // month : [''],
+    // year : [''],
+    // mrn : ['']
+    const taxData = {
+      userName:this.taxInvoiceForm.value.userName,
+      projectNumber:this.taxInvoiceForm.value.projectNo,
+      poDate:this.taxInvoiceForm.value.poDate,
+      fromDate:this.taxInvoiceForm.value,
+      toDate:this.taxInvoiceForm.value,
+      billableAmount:this.taxInvoiceForm.value,
+      InvoiceAmount:this.taxInvoiceForm.value,
+      TaxInvoiceNumber:this.taxInvoiceForm.value,
+      submittedDate:this.taxInvoiceForm.value,
+      InvoiceStatus:this.taxInvoiceForm.value,
+      InvoicePaidAmount:this.taxInvoiceForm.value,
+      tds:this.taxInvoiceForm.value,
+      penalty:this.taxInvoiceForm.value,
+      shortPay:this.taxInvoiceForm.value,
+      paymentStatus:this.taxInvoiceForm.value,
+      remark:this.taxInvoiceForm.value,
+      uploadDocument:'files',
+      temp:'update',
+      selectedPIId:this.taxInvoiceForm.value,
+      poNumber:this.taxInvoiceForm.value,
+      projectName:this.taxInvoiceForm.value,
+      projectCordinator:this.taxInvoiceForm.value,
+      PONoAmendOrder:this.taxInvoiceForm.value,
+      mail:this.taxInvoiceForm.value,
+      totalSMS:this.taxInvoiceForm.value,
+      counts:this.taxInvoiceForm.value,
+      baseAmount : this.taxInvoiceForm.value,
+      tax:this.taxInvoiceForm.value,
+      recvDate : this.taxInvoiceForm.value,
+      book :  this.taxInvoiceForm.value,
+      dateEstimated :  this.taxInvoiceForm.value,
+      invoiceAmount2 : this.taxInvoiceForm.value,
+      bankReceived : this.taxInvoiceForm.value,
+      interestOnTDSotherDeduction : this.taxInvoiceForm.value,
+      receiptDate :  this.taxInvoiceForm.value,
+      month : this.taxInvoiceForm.value,
+      year : this.taxInvoiceForm.value,
+      mrn : this.taxInvoiceForm.value
+    }
+
+    this.invoiceService.updateTaxInvoice(taxData).subscribe((response)=> {
+
+    })
 
   }
 
