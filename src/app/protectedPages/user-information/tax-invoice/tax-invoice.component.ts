@@ -12,7 +12,6 @@ import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService} from '../../../services/api.service'
-  import { from } from 'rxjs';
 
 
 @Component({
@@ -142,7 +141,7 @@ export class TaxInvoiceComponent implements OnInit {
 
     this.utilService.userDetails$.subscribe((val)=> {
 
-      this.accountName = val['userId'] || '';
+      this.accountName = val['App_name'] || '';
       this.status = val['status'] || '';
     })
 

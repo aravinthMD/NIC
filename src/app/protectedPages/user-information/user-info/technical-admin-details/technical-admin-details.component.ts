@@ -149,7 +149,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       this.getTechAdminsById(this.clientId);
       this.utilService.userDetails$.subscribe((val)=> {
 
-        this.accountName = val['userId'] || '';
+        this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
 

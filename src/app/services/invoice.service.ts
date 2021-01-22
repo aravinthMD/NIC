@@ -54,7 +54,7 @@ export class InvoiceService {
       return  this.httpService.post<any>(url,formData);
   }
 
-  getProjectExecutionDetails(invoiceNumber : any){
+  getProjectExecutionDetails(invoiceNumber ?: any){
 
     const {
       api : {
@@ -67,7 +67,6 @@ export class InvoiceService {
   } = this.apiService;
 
   const data = {
-
     selectedInvoiceNumber  : invoiceNumber
 
   }
@@ -351,7 +350,6 @@ updatePurchaseOrder(data) {
   } = this.apiService;
 
   const data = {
-
     AccountName : form.accountName,
     referenceNumber : form.refNumber,
     piNumber : form.invoiceNumber,
@@ -366,7 +364,6 @@ updatePurchaseOrder(data) {
     paymentStatus : form.paymentStatus,
     remark : form.remark,
     uploadDocument : form.uploadDocument
-
   }
 
   const requestEntity  : any  = {
@@ -383,7 +380,6 @@ updatePurchaseOrder(data) {
 
   let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
   return  this.httpService.post<any>(url,formData);
-
   }
 
   getProformaInvoiceDetailById(proformaInvoiceId : string){
