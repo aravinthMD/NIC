@@ -37,6 +37,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
     {key:2,value:'+080'}
   ]
 
+  departmentListData = [
+    {key:0,value:'Department of Sainik Welfare'},
+    {key:1,value:'Ministry of Minority Affairs'},
+    {key:2,value:'Visakhapatnam Port Trust'},
+    {key:3,value:'Ministry of Tribal Affairs'},
+    {key:4,value:'Bureau of Naviks Mumbai'}
+    ];
+
   user: string;
 
   accountName: string;
@@ -49,6 +57,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   showView: boolean = true;
   userId: string;
+ 
 
   constructor(
     private labelsService:LabelsService,
@@ -77,10 +86,10 @@ export class BillingOwnerDetailsComponent implements OnInit {
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
-      countryCode: new FormControl(this.countryCodeValues[0].key),
-      mobileNo :new FormControl (''),
-      telPhno : new FormControl (''),
-      teleCode: new FormControl(this.countryCodeValues[0].key),
+      mobileNumberCode: new FormControl(this.countryCodeValues[0].key),
+      mobileNumber :new FormControl (''),
+      telephoneNumber : new FormControl (''),
+      telephoneCode: new FormControl(this.countryCodeValues[0].key),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -98,13 +107,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
   console.log(this.activatedRoute)
     if(this.user){
 
+      this.getBillingAdminDetailById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['userId'] || '';
         this.status = val['status'] || '';
       })
 
-      this.setFormValues();
+      this.setBillOwnerFormValues();
       // this.propertyFlag = true;
 
       }else  {
@@ -115,28 +125,31 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   }
 
-  setFormValues() {
+  setBillOwnerFormValues(data?: any) {
+ 
+    if(data){
 
     this.billOwnerForm.patchValue({
-      name : 'Sasi',
-      departmentName : '1',
-      designation : 'Chennai',
-      employeeCode : '54534',
-      email : 'test@gmail.com',
-      countryCode: '0',
-      mobileNo : '9754544445',
-      telPhno : '2273422',
-      teleCode:'0',
-      offAddress1 : 'add1',
-      offAddress2 : 'add2',
-      offAddress3 : 'add3',
-      city : 'Chennai',
-      state : 'Tamilnadu',
-      pinCode : '600025',
-      remark: 'Pincode Changed'
-
+      id  : Number (data.id),
+      name : data.name,
+      departmentName : data.department,
+      designation : data.designation,
+      employeeCode : data.employeeCode,
+      email : data.email,
+      mobileNumberCode: data.mobileNumberCode,
+      mobileNumber : data.mobileNumber,
+      telephoneNumber : data.telephoneNumber,
+      telephoneCode:data.telephoneCode,
+      offAddress1 : data.officeAddressLine1,
+      offAddress2 : data.officeAddressLine2,
+      offAddress3 : data.officeAddressLine3,
+      city : data.city,
+      state : data.state,
+      pinCode : data.pincode,
+      remark: data.remarks,
+      userId: data.selectedClient
     })
-
+  }
     this.detectAuditTrialObj = this.billOwnerForm.value;
 
 
@@ -159,11 +172,11 @@ export class BillingOwnerDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:`91${this.billOwnerForm.value.mobileNo}`
+        value:`91${this.billOwnerForm.value.mobileNumber}`
       },
       {
         key: this.labels.teleNumber,
-        value:`044${this.billOwnerForm.value.telPhno}`
+        value:`044${this.billOwnerForm.value.telephoneNumber}`
       },
       {
         key: 'Official Address',
@@ -229,13 +242,6 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   onSubmit(){
 
-    this.showDataSaveModal = true;
-
-    this.dataValue = {
-      title : "Billing Admin Details Updated Successfully",
-      message : "Are you sure you to proceed to SMS Credit Allocation Screen?"
-    }
-
     if(this.billOwnerForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields','')
@@ -245,7 +251,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
     const billingDetails = {
       // "selectedClient":"55",
-      "clientId":this.userId,
+      // "clientId":this.userId,
+      "id":this.billOwnerForm.value.id,
       "selectedClient":this.userId,
       "name":this.billOwnerForm.value.name,
       "city":this.billOwnerForm.value.city,
@@ -253,9 +260,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
       "email":this.billOwnerForm.value.email,
       "employeeCode":this.billOwnerForm.value.employeeCode,
       "mobileNumberCode":this.billOwnerForm.value.mobileNumberCode,
-      "mobileNumber":this.billOwnerForm.value.mobileNo,
-      "telephoneCode":this.billOwnerForm.value.teleCode,
-      "telephoneNumber":this.billOwnerForm.value.telPhno,
+      "mobileNumber":this.billOwnerForm.value.mobileNumber,
+      "telephoneNumberCode":this.billOwnerForm.value.telephoneCode,
+      "telephoneNumber":this.billOwnerForm.value.telephoneNumber,
       "oaLine1":this.billOwnerForm.value.offAddress1,
       "oaLine2":this.billOwnerForm.value.offAddress2,
       "oaLine3":this.billOwnerForm.value.offAddress3,
@@ -272,7 +279,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
       
               this.isDirty=false;
               this.billOwnerForm.reset()
-              this.toasterService.showSuccess(response,'')
+              // this.toasterService.showSuccess(response,'')
+
+              this.showDataSaveModal = true;
+
+    this.dataValue = {
+      title : "Billing Admin Details Updated Successfully",
+      message : "Are you sure you to proceed to SMS Credit Allocation Screen?"
+    }
       
             }else {
               this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
@@ -284,6 +298,24 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
     
   }
+
+  getBillingAdminDetailById(id:string) {
+
+    this.userInfoService.getBillingAdminDetailById(id).subscribe((response)=> {
+
+      console.log("billAdminDetails by id",response)
+      this.utilService.setBillAdminUserDetails(response["ProcessVariables"]);
+
+      this.setBillOwnerFormValues(response["ProcessVariables"]);
+    
+    },(error) => {
+    
+      console.log(error)
+    
+    })
+  }
+
+  
   back() {
 
     this.utilService.setCurrentUrl('users/techAdmin')
@@ -348,3 +380,6 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
   
 }
+
+
+ 

@@ -151,7 +151,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       designation : [null],
       employeeCode : [null],
       email : [null],
-      countryCode: [this.countryCodeValues[0].key],
+      mobileNumberCode: [this.countryCodeValues[0].key],
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
@@ -247,7 +247,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
             });
             
             this.fetchAllCustomerDetails();
-            // this.getCustomerDetailByCustomerId('');
+            // this.getCustomerDetailByCustomerId('62');
 
   }
 
@@ -291,7 +291,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       applicantName : data.App_name,
       departmentName : data.department,
       designation :  data.FO_designation,
-      countryCode : data.mobileNoCode,
+      mobileNumberCode : data.mobileNumberCode,
       email : data.App_email,
       mobileNo : data.App_mobile,
       telPhno : data.Tele_number_OF,
@@ -355,7 +355,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       },
       {
         key  : this.labels.applicantMobile,
-        value : `${this.form.value.countryCode}${this.form.value.mobileNo}`
+        value : `${this.form.value.mobileNumberCode} ${this.form.value.mobileNo}`
       },
       // {
       //   key : this.labels.applicantMobile,
@@ -514,7 +514,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "App_name":this.form.value.applicantName,
       "department":this.form.value.departmentName,
       "FO_designation":this.form.value.designation,
-      "mobileNoCode": this.form.value.countryCode,
+      "mobileNumberCode": this.form.value.mobileNumberCode,
       "App_email":this.form.value.email,
       "App_mobile":this.form.value.mobileNo,
       "telephoneNumberCode": this.form.value.teleCode,
@@ -554,15 +554,16 @@ export class UserInfoComponent implements OnInit,OnChanges {
       
        
     }
+    console.log("bfrUsr", userInfo);
     this.userInfoService.createCustomerDetails(userInfo).subscribe((response)=> {
 
       console.log('Response',response)
  
-      if(response['Error'] == '0' && response["ProcessVariables"]["error"]["code"] == 600) {
+      if(response['Error'] == '0' && response["ProcessVariables"]["error"]["code"] == '0') {
 
-              
+        this.showDataSaveModal = true;  
         this.beheSer.setUserId(response['ProcessVariables']['generatedCustomerId']);
-         this.showDataSaveModal = true;
+         
 
         this.dataValue = {
           title: "Customer Information Saved Sucessfully",
