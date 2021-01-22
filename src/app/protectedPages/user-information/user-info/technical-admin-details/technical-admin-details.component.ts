@@ -63,25 +63,26 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     remarkModal: boolean;
 
-  hideEditButton: boolean = false;
-  showViewBill:boolean = true;
-  userId;
-  adminsList: any;
-  form: any;
-  BillDetailsList: any;
-  clientId: string;
+    hideEditButton: boolean = false;
+    showViewBill:boolean = true;
+    userId;
+    adminsList: any;
+    form: any;
+    BillDetailsList: any;
+    clientId: string;
+  clientUserId: string;
  
 
 
-  constructor(
-    private labelsService:LabelsService,
-    private toasterService:ToasterService,
-    private router:Router,
-    private userInfoService:UserInfoService,
-    private utilService:UtilService,
-    private activatedRoute: ActivatedRoute,
-    private behser: BehaviourSubjectService
-    ) { }
+    constructor(
+      private labelsService:LabelsService,
+      private toasterService:ToasterService,
+      private router:Router,
+      private userInfoService:UserInfoService,
+      private utilService:UtilService,
+      private activatedRoute: ActivatedRoute,
+      private behser: BehaviourSubjectService
+      ) { }
 
   ngOnInit() {
     this.behser.$userId.subscribe( res => {
@@ -99,6 +100,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     
     
     this.technicaladminform=new FormGroup({
+      id : new FormControl ([null]),
       name : new FormControl ([null]),
       departmentName : new FormControl ([null]),
       designation :new FormControl ([null]),
@@ -146,7 +148,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     console.log(this.activatedRoute)
       if(this.user){
       
-      this.getTechAdminsById(this.clientId);
+        this.getTechAdminsById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['userId'] || '';
@@ -164,7 +166,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       this.fetchAllTechAdmins();
 
-       this.getTechAdminsById(this.user);
+       
 
        this.getBillingAdminDetailById(this.user);
   }
@@ -221,7 +223,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: 'Official Address',
-        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`
+        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3} ${this.billOwnerForm.value.city} ${this.billOwnerForm.value.state}  ${this.billOwnerForm.value.pinCode}`
       },
       {
         key: this.labels.remark,
@@ -242,15 +244,16 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     if(data){
 
     this.technicaladminform.patchValue({
+      id  :  Number(data.currentClientId),
       name : data.name,
       department : data.department,
       designation :data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
-      countryCode : data.mobileNumberCode,
+      countryCode : data.mobileCode,
       mobileNo : data.mobileNumber,
       telPhno : data.telephoneNumber,
-      teleCode: data.telephoneNumberCode,
+      teleCode: data.telephoneCode,
       offAddress1 : data.officialAddress1,
       offAddress2 : data.officialAddress2,
       offAddress3 : data.officialAddress3,
@@ -306,9 +309,17 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
         key  : this.labels.teleNumber,
         value :  `044${this.technicaladminform.value.telPhno}`
       },
+      // {
+      //   key  : this.labels.mobileNo,
+      //   value  :  `${this.form.value.countryCode}${this.form.value.mobileNo}`
+      // },
+      // {
+      //   key  : this.labels.teleNumber,
+      //   value :  `${this.form.value.teleCode}${this.form.value.telPhno}`
+      // },
       {
         key  : "Official Address",
-        value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3},${this.technicaladminform.value.city},${this.technicaladminform.value.state} - ${this.technicaladminform.value.pinCode}`
+        value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3} ${this.technicaladminform.value.city} ${this.technicaladminform.value.state}  ${this.technicaladminform.value.pinCode}`
       },
       {
         key  : this.labels.remark,
@@ -339,7 +350,9 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     }
 
     const techAdminDetails = {
-      "selectedTechId":this.technicaladminform.value.Id,
+      // "selectedTechId":this.technicaladminform.value.Id,
+      "currentClientId":this.technicaladminform.value.id,
+      "id":this.technicaladminform.value.id,
       "name": this.technicaladminform.value.name,
       "department":this.technicaladminform.value.departmentName,
       "designation":this.technicaladminform.value.designation,
@@ -385,7 +398,7 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
     
 
-    console.log('billOwnerForm',this.technicaladminform.value)
+    console.log('technicaladminform',this.technicaladminform.value)
 
     // this.detectFormChanges()
   
@@ -495,13 +508,13 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
     if(value  === 'view' || value == 'billAdmin'){
       if(this.user) {
-        this.router.navigate(['/users/customerDetails/'+pno])
+        this.router.navigate(['/users/customerDetails/'+this.user])
       }else {
         this.router.navigate(['/users/customerDetails'])
       }
     }else if(value == 'show'){
       if(this.user){
-        this.router.navigate(['/users/techAdmin/'+pno])
+        this.router.navigate(['/users/techAdmin/'+this.user])
         this.showView = true
         this.propertyFlag = true
       }else{
@@ -594,11 +607,16 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     this.utilService.projectNumber$.subscribe((val) =>{
       pno = val;
     })
-    this.router.navigate(['/users/billingAdmin/'+pno]);
+    this.router.navigate(['/users/billingAdmin/'+this.user]);
   }
 
 
 }
+
+
+
+
+ 
 
 
 

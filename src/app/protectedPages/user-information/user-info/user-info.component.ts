@@ -247,7 +247,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
             });
             
             this.fetchAllCustomerDetails();
-            // this.getCustomerDetailByCustomerId('');
+            // this.getCustomerDetailByCustomerId('62');
 
   }
 
@@ -355,7 +355,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       },
       {
         key  : this.labels.applicantMobile,
-        value : `${this.form.value.countryCode}${this.form.value.mobileNo}`
+        value : `${this.form.value.countryCode} ${this.form.value.mobileNo}`
       },
       // {
       //   key : this.labels.applicantMobile,
@@ -558,11 +558,11 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
       console.log('Response',response)
  
-      if(response['Error'] == '0' && response["ProcessVariables"]["error"]["code"] == 600) {
+      if(response['Error'] == '0' && response["ProcessVariables"]["error"]["code"] == '0') {
 
-              
+        this.showDataSaveModal = true;  
         this.beheSer.setUserId(response['ProcessVariables']['generatedCustomerId']);
-         this.showDataSaveModal = true;
+         
 
         this.dataValue = {
           title: "Customer Information Saved Sucessfully",

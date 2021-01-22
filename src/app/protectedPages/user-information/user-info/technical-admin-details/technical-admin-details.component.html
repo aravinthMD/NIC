@@ -11,6 +11,21 @@
 
     <form (submit)="onSubmit()" [formGroup]="technicaladminform" *ngIf="!showView">
             <div class="row formAlignment">
+
+                <div class="d-none">
+                    <!-- formControlName="id" -->
+                    <div class="form-group">
+                        <app-custom-input
+                        type="hidden" 
+                        formControlName="id"
+                        [labelName]="labels.id" 
+                        [id]="'id'"
+                        placeHolder = "Enter the Id"
+                        >
+                        </app-custom-input>
+                    </div>
+                </div>
+                
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="name" 
