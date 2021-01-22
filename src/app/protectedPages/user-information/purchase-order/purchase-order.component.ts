@@ -1,5 +1,5 @@
 import { Component, OnInit,Input, AfterViewInit,ViewChild } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl, FormArray } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
@@ -42,28 +42,12 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
     { key: 3, value: 'Pending' },
     { key: 4, value: 'Rejected' },
     { key: 5, value: 'On Hold' }]
-  piStatus: any[] = [
-    { key: 0, value: 'Received' },
-    { key: 1, value: 'Pending' },
-    { key: 2, value: 'Approved' },
-    { key: 3, value: 'Rejected' },
-    { key: 4, value: 'On Hold' }]
-    piReceivedIn: any[] = [
-      { key: 0, value: 'Full' },
-      { key: 1, value: 'Partial' }]
+  piStatus: any[] = []
+    piReceivedIn: any[] = []
   
-    paymentStatus: any[] = [
-      { key: 0, value: 'Pending' },
-      { key: 1, value: 'Received' },
-      { key: 2, value: 'On Hold' }]
+    paymentStatus: any[] = []
 
-      departmentListData = [
-        {key:0,value:'Department of Sainik Welfare'},
-        {key:1,value:'Ministry of Minority Affairs'},
-        {key:2,value:'Visakhapatnam Port Trust'},
-        {key:3,value:'Ministry of Tribal Affairs'},
-        {key:4,value:'Bureau of Naviks.Mumbai'}
-    ];
+      departmentListData = [];
     
     dataArray=[]
       
@@ -111,6 +95,11 @@ smsApprovedList : any[] = [
     msg?: string;
   }[];
 
+  resultsLength: number;
+
+  pageEvent: PageEvent;
+
+  datePerPage: number = 0;
 
 
   constructor(
@@ -223,15 +212,30 @@ smsApprovedList : any[] = [
     console.log(this.dataArray);
   }
 
-  fetchPODetails() {
+  fetchPODetails(currentPage?: any) {
 
-    this.invoiceService.fetchAllPO().subscribe((response)=> {
+   
+    this.invoiceService.fetchAllPO(currentPage?currentPage:null).subscribe((response)=> {
 
-      this.userList = response['ProcessVariables']['purchaseData'];
+      if(response['ProcessVariables']['error']['code'] == '0') {
 
-      console.log(response)
+        this.userList = response['ProcessVariables']['purchaseData'];
 
-      this.dataSource = new MatTableDataSource<any>(this.userList);
+          console.log(response)
+
+          this.datePerPage = Number(response['ProcessVariables']['dataPerPage']);
+
+          this.resultsLength = Number(response['ProcessVariables']['totalCount'])
+
+          this.dataSource = new MatTableDataSource<any>([]);
+
+          this.dataSource = new MatTableDataSource<any>(this.userList);
+
+      }else {
+
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
+      
     })
   }
 
@@ -265,6 +269,48 @@ smsApprovedList : any[] = [
     })
 
     this.poStatus = poData
+
+    let piData = []
+
+    await this.adminService.getLovSubMenuList("2").subscribe((response)=> {
+
+
+      const piList = response['ProcessVariables']['Lovitems'];
+      piList.forEach(element => {
+        
+        poData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.piStatus = piData
+
+    let paymentStatus = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const paymentList = response['ProcessVariables']['Lovitems'];
+      paymentList.forEach(element => {
+        
+        paymentStatus.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = paymentStatus
+
+
+    let piReceivedData = []
+
+    await this.adminService.getLovSubMenuList("4").subscribe((response)=> {
+
+      const piRecList = response['ProcessVariables']['Lovitems'];
+      piRecList.forEach(element => {
+        
+        piReceivedData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.piReceivedIn = piReceivedData
   }
 
   initForm() {
@@ -333,14 +379,20 @@ smsApprovedList : any[] = [
               
               console.log('result',resp['ProcessVariables']);
               this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["purchaseData" ]);
+
+              this.datePerPage = Number(resp['ProcessVariables']['dataPerPage']);
+
+              this.resultsLength = Number(resp['ProcessVariables']['totalCount'])
             }
             else 
             { 
               if(!resp["ProcessVariables"]["purchaseData" ]) {
                 this.dataSource = new MatTableDataSource<any>([])
+                this.datePerPage = 0;
+                this.resultsLength = 0;
               }
 
-               this.toasterService.showError(`${respError.code}: ${respError.message}`, 'Technical error..');
+               this.toasterService.showError('No Records Found','Purchase Order');
             }
             
          
@@ -445,7 +497,8 @@ smsApprovedList : any[] = [
 
     this.PurchaseOrderForm.value['endDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['endDate'],'dd/MM/yyyy')
 
-
+    // {"poNumber":"5972112","projectNumber":"11","projectName":"TestABC","poDate":"24/12/2020","uploadDocument":"file","pi_no":"2","smsapproved":"2","validUpto":"30/12/2020","username":"TestUser01","remark":"Remark Column","withouttax":"3","userEmail":"testdemo@appiyo,com","managerEmail":"managerdemo123@gmail,com","validFrom":"24/12/2020","amtWithTax":"52","rate":"220","quantity":4,"description":"Description","selectedDepartment":"37","selectedPOStatus":"6","selectedPaymentStatus":"6"},"projectId":"2efbdc721cc311ebb6c0727d5ac274b2"}
+	
    
     const data = {
       "poNumber":this.PurchaseOrderForm.value.poNumber,
@@ -478,6 +531,8 @@ smsApprovedList : any[] = [
 
       console.log('Response',response)
 
+      if(response['ProcessVariables']['error']['code'] == '0') {
+
         this.showPOModal= false;
 
         this.isDirty = false;
@@ -497,12 +552,21 @@ smsApprovedList : any[] = [
             title: 'Purchase Order Saved Successfully',
             message: 'Are you sure you want to proceed tax invoice page?'
           }
-
-       
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
 
     })
  
 
+  }
+
+  pageEventData(event) {
+
+
+    const currentPageIndex  = Number(event.pageIndex) + 1;
+
+    this.fetchPODetails(currentPageIndex)
   }
 
   

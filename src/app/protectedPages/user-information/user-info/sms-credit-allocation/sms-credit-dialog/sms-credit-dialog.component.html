@@ -146,7 +146,7 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="remark">{{labels.remark}}</label>
-                    <textarea class="remark" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
+                    <textarea class="remark" maxlength="3000" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
                     <div class="date-picker-error" *ngIf="
               isDirty &&
               smsCreditAllocation.get('remark').errors?.required

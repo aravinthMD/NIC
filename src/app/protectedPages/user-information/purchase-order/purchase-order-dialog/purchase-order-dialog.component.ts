@@ -143,16 +143,33 @@ export class PurchaseOrderDialogComponent implements OnInit {
       })
     })
   }
+  async getSubLovs() {
+
+    let paymentStatus = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const paymentList = response['ProcessVariables']['Lovitems'];
+      paymentList.forEach(element => {
+        
+        paymentStatus.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = paymentStatus
+  }
 
  async ngOnInit() {
     this.labelService.getLabelsData().subscribe((value) =>{
     this.labels = value;
     })
 
+    this.getSubLovs()
 
     this.departmentListData = await this.getDepartmentLov();
 
-    this.poStatus = await this.getStatusLov()
+    this.poStatus = await this.getStatusLov();
 
 
     this.activatedRoute.params.subscribe((value)=> {
@@ -324,14 +341,21 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
       console.log(response)
 
-      
-      this.toasterService.showSuccess('Data Saved Successfully','')
+      if(response['ProcessVariables']['error']['code'] == '0') {
 
-      this.showDataSaveModal = true;
-      this.dataValue= {
-        title: 'Purchase Order Saved Successfully',
-        message: 'Are you sure you want to proceed tax invoice page?'
+        this.toasterService.showSuccess('Data Saved Successfully','')
+
+        this.showDataSaveModal = true;
+        this.dataValue= {
+          title: 'Purchase Order Saved Successfully',
+          message: 'Are you sure you want to proceed tax invoice page?'
+        }
+      }else {
+
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
       }
+      
+     
     })
 
     
@@ -415,10 +439,6 @@ this.closeDialog()
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
-
-    
-
-
       this.detectAuditTrialObj = this.PurchaseOrderForm.value;
      
     }
