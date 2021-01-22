@@ -115,8 +115,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
         const respError = resp['ProcessVariables']['error'];
 
-        if (respError.code == '600') {
-          const result: any[] = resp['ProcessVariables']['customerList'];
+        if (respError.code == "0") {
+          const result: any[] = resp["ProcessVariables"]["customerList"];
           //this.dataSource = new MatTableDataSource<any>(result);
           // console.log('result', result);
           // const DashboardList: any[] = [];
