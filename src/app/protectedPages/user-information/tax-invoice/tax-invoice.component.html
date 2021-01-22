@@ -121,7 +121,7 @@
                             <div class="form-group">
                                 <label for="toDate">{{labels?.toDate}}</label>
                                 <mat-form-field floatLabel  =  "never">
-                                    <input matInput formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
+                                    <input matInput [min]="taxInvoiceForm.get('fromDate').value"  formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #toDateId></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
@@ -680,7 +680,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+            <mat-paginator class="font-paginator" [hidePageSize]="true" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
 
         </div>
         <!--Material Table End-->

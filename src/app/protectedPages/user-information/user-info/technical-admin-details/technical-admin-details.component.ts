@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Router,ActivatedRoute } from '@angular/router';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { ClientDetailsService } from '@services/client-details.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
@@ -81,10 +82,13 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       private userInfoService:UserInfoService,
       private utilService:UtilService,
       private activatedRoute: ActivatedRoute,
-      private behser: BehaviourSubjectService
+      private behser: BehaviourSubjectService,
+      private client:ClientDetailsService
       ) { }
 
   ngOnInit() {
+
+    this.clientId=this.client.getClientId();
     this.behser.$userId.subscribe( res => {
       console.log("Cleint ID  ",res)
       this.userId = res;
@@ -106,10 +110,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
-      countryCode : new FormControl(this.countryCodeValues[0].key),
-      mobileNo :new FormControl (''),
-      telPhno : new FormControl (''),
-      teleCode: new FormControl(this.teleCodeValues[0].key),
+      mobileCode : new FormControl(this.countryCodeValues[0].key),
+      mobileNumber :new FormControl (''),
+      telephoneNumber : new FormControl (''),
+      telephoneCode: new FormControl(this.teleCodeValues[0].key),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -127,7 +131,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
       countryCode: new FormControl(null),
-      mobileNo :new FormControl (''),
+      mobileNumber :new FormControl (''),
       telPhno : new FormControl (''),
       teleCode: new FormControl(),
       offAddress1 : new FormControl ([null]),
@@ -181,13 +185,13 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       designation : data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
-      countryCode: data.mobileCode,
-      mobileNo : data.mobileNumber,
-      telPhno : data.telephoneNumber,
-      teleCode:data.telephoneCode,
-      offAddress1 : data.officeAddressLine1,
-      offAddress2 : data.officeAddressLine2,
-      offAddress3 : data.officeAddressLine3,
+      mobileNumberCode: data.mobileNumberCode,
+      mobileNumber : data.mobileNumber,
+      telephoneNumber : data.telephoneNumber,
+      telephoneNumberCode:data.telephoneNumberCode,
+      offAddress1 : data.oaLine1,
+      offAddress2 : data.oaLine1,
+      offAddress3 : data.oaLine1,
       city : data.city,
       state : data.state,
       pinCode : data.pincode,
@@ -215,11 +219,11 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:`91${this.billOwnerForm.value.mobileNo}`
+        value:`91${this.billOwnerForm.value.mobileNumber}`
       },
       {
         key: this.labels.teleNumber,
-        value:`044${this.billOwnerForm.value.telPhno}`
+        value:`044${this.billOwnerForm.value.telephoneNumber}`
       },
       {
         key: 'Official Address',
@@ -250,10 +254,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       designation :data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
-      countryCode : data.mobileCode,
-      mobileNo : data.mobileNumber,
-      telPhno : data.telephoneNumber,
-      teleCode: data.telephoneCode,
+      mobileCode : data.mobileCode,
+      mobileNumber : data.mobileNumber,
+      telephoneNumber : data.telephoneNumber,
+      telephoneCode: data.telephoneCode,
       offAddress1 : data.officialAddress1,
       offAddress2 : data.officialAddress2,
       offAddress3 : data.officialAddress3,
@@ -303,19 +307,19 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
       },
       {
         key  : this.labels.mobileNo,
-        value  :  `91${this.technicaladminform.value.mobileNo}`
+        value  :  `91${this.technicaladminform.value.mobileNumber}`
       },
       {
         key  : this.labels.teleNumber,
-        value :  `044${this.technicaladminform.value.telPhno}`
+        value :  `044${this.technicaladminform.value.telephoneNumber}`
       },
       // {
       //   key  : this.labels.mobileNo,
-      //   value  :  `${this.form.value.countryCode}${this.form.value.mobileNo}`
+      //   value  :  `${this.form.value.mobileCode}${this.form.value.mobileNumber}`
       // },
       // {
       //   key  : this.labels.teleNumber,
-      //   value :  `${this.form.value.teleCode}${this.form.value.telPhno}`
+      //   value :  `${this.form.value.telephoneCode}${this.form.value.telephoneNumber}`
       // },
       {
         key  : "Official Address",
@@ -358,10 +362,10 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
       "designation":this.technicaladminform.value.designation,
       "employeeCode":this.technicaladminform.value.employeeCode,
       "emailAddress":this.technicaladminform.value.email,
-      "mobileCode":this.technicaladminform.value.countryCode,
-      "mobileNumber":this.technicaladminform.value.mobileNo,
-      "telephoneNumber":this.technicaladminform.value.telPhno,
-      "telephoneCode":this.technicaladminform.value.teleCode,
+      "mobileCode":this.technicaladminform.value.mobileCode,
+      "mobileNumber":this.technicaladminform.value.mobileNumber,
+      "telephoneNumber":this.technicaladminform.value.telephoneNumber,
+      "telephoneCode":this.technicaladminform.value.telephoneCode,
       "officeAddressLine1":this.technicaladminform.value.offAddress1,
       "officeAddressLine2":this.technicaladminform.value.offAddress2,
       "officeAddressLine3":this.technicaladminform.value.offAddress3,
@@ -508,13 +512,13 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
     if(value  === 'view' || value == 'billAdmin'){
       if(this.user) {
-        this.router.navigate(['/users/customerDetails/'+this.user])
+        this.router.navigate(['/users/customerDetails/'+this.clientId])
       }else {
         this.router.navigate(['/users/customerDetails'])
       }
     }else if(value == 'show'){
       if(this.user){
-        this.router.navigate(['/users/techAdmin/'+this.user])
+        this.router.navigate(['/users/techAdmin/'+this.clientId])
         this.showView = true
         this.propertyFlag = true
       }else{

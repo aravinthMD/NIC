@@ -37,6 +37,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
     {key:2,value:'+080'}
   ]
 
+  departmentListData = [
+    {key:0,value:'Department of Sainik Welfare'},
+    {key:1,value:'Ministry of Minority Affairs'},
+    {key:2,value:'Visakhapatnam Port Trust'},
+    {key:3,value:'Ministry of Tribal Affairs'},
+    {key:4,value:'Bureau of Naviks Mumbai'}
+    ];
+
   user: string;
 
   accountName: string;
@@ -78,10 +86,10 @@ export class BillingOwnerDetailsComponent implements OnInit {
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
-      countryCode: new FormControl(this.countryCodeValues[0].key),
-      mobileNo :new FormControl (''),
-      telPhno : new FormControl (''),
-      teleCode: new FormControl(this.countryCodeValues[0].key),
+      mobileNumberCode: new FormControl(this.countryCodeValues[0].key),
+      mobileNumber :new FormControl (''),
+      telephoneNumber : new FormControl (''),
+      telephoneCode: new FormControl(this.countryCodeValues[0].key),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -128,10 +136,10 @@ export class BillingOwnerDetailsComponent implements OnInit {
       designation : data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
-      countryCode: data.mobileCode,
-      mobileNo : data.mobileNumber,
-      telPhno : data.telephoneNumber,
-      teleCode:data.telephoneCode,
+      mobileNumberCode: data.mobileNumberCode,
+      mobileNumber : data.mobileNumber,
+      telephoneNumber : data.telephoneNumber,
+      telephoneCode:data.telephoneCode,
       offAddress1 : data.officeAddressLine1,
       offAddress2 : data.officeAddressLine2,
       offAddress3 : data.officeAddressLine3,
@@ -164,11 +172,11 @@ export class BillingOwnerDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:`91${this.billOwnerForm.value.mobileNo}`
+        value:`91${this.billOwnerForm.value.mobileNumber}`
       },
       {
         key: this.labels.teleNumber,
-        value:`044${this.billOwnerForm.value.telPhno}`
+        value:`044${this.billOwnerForm.value.telephoneNumber}`
       },
       {
         key: 'Official Address',
@@ -252,9 +260,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
       "email":this.billOwnerForm.value.email,
       "employeeCode":this.billOwnerForm.value.employeeCode,
       "mobileNumberCode":this.billOwnerForm.value.mobileNumberCode,
-      "mobileNumber":this.billOwnerForm.value.mobileNo,
-      "telephoneNumberCode":this.billOwnerForm.value.teleCode,
-      "telephoneNumber":this.billOwnerForm.value.telPhno,
+      "mobileNumber":this.billOwnerForm.value.mobileNumber,
+      "telephoneNumberCode":this.billOwnerForm.value.telephoneCode,
+      "telephoneNumber":this.billOwnerForm.value.telephoneNumber,
       "oaLine1":this.billOwnerForm.value.offAddress1,
       "oaLine2":this.billOwnerForm.value.offAddress2,
       "oaLine3":this.billOwnerForm.value.offAddress3,
@@ -374,23 +382,4 @@ export class BillingOwnerDetailsComponent implements OnInit {
 }
 
 
-// "city" : "Chennai",
-// "clientId" : "",
-// "designation" : "Designation",
-// "email" : "BillingTest@demo.com",
-// "employeeCode" : "EMP2545345",
-// "existenceId" : 0,
-// "id" : 69,
-// "mobileNumber" : "1234567890",
-// "mobileNumberCode" : "91",
-// "name" : "BillingTestAdmin",
-// "oaLine1" : "OALine1",
-// "oaLine2" : "OALine12",
-// "oaLine3" : "qaline34",
-// "pincode" : "625323",
-// "remark" : "Remark Column",
-// "response" : "Billing Admin Created Successfully",
-// "selectedClient" : "64",
-// "state" : "TamilNadu",
-// "telephoneNumber" : "1234567890",
-// "telephoneNumberCode" : "045"
+ 

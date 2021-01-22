@@ -90,7 +90,7 @@ export class InvoiceService {
   }
 
 
-  getProjectExecutionDetailbyId(currentPEId : any){
+  getProjectExecutionDetailbyId(currentPEId : number){
         const {
              api : {
               getProjectExecutionDetailById : {
@@ -628,6 +628,32 @@ updatePurchaseOrder(data) {
   
     return this.httpService.post(url,formData);
   
+  }
+
+  updateTaxInvoice(data) {
+
+    const processId = this.apiService.api.updateTaxnvoice.processId;
+    const workflowId = this.apiService.api.updateTaxnvoice.workflowId;
+    const projectId = this.apiService.api.updateTaxnvoice.projectId;
+  
+  
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+  
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+  
+    const formData = this.transform(body);
+  
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  
+    return this.httpService.post(url,formData);
+
   }
   
 
