@@ -133,25 +133,19 @@ dataValue: {
   searchProjectExecution() {
 
     const data = this.apiService.api.getProjectExecutionDetailsList;
-
       const params = {
         searchKeyword: this.searchForm.get('searchData').value,
         fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
         toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
       }
-
       this.searchService
           .searchProjectExecution(data,params).subscribe((resp) => {
             console.log('value', resp);
-            
             const respError=resp["ProcessVariables"]["error" ];
-
             if(respError.code=="400")
             {
-              
             console.log('result',resp['ProcessVariables']);
             this.dataSource = resp["ProcessVariables"]["peList"];
-
         }
         else 
         { 
@@ -159,6 +153,7 @@ dataValue: {
         }
           })
   }
+
 
 
 
@@ -279,12 +274,8 @@ dataValue: {
   }
 
   clear() {
-
-    this.searchForm.patchValue({
-      searchData: null,
-      searchFrom:null,
-      searchTo:null
-    })
+    this.searchForm.reset();
+    this.getProjectExecutionDetails();
   }
 
 
@@ -365,7 +356,8 @@ dataValue: {
 
 
   getServerData(event?:PageEvent){
-      
+      let pageNo = event.pageIndex;
+      this.getProjectExecutionDetails();
   }
 
 
