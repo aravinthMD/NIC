@@ -451,6 +451,21 @@ export class TaxInvoiceComponent implements OnInit {
       searchTo: ''
     })
     this.toasterService.showError('Please click the todate icon to select date','');
+  }else if(type == 'recvDate') {
+    this.taxInvoiceForm.patchValue({
+      recvDate: ''
+    })
+    this.toasterService.showError('Please click the recvDate icon to select date','');
+  }else if(type == 'dateEstimated') {
+    this.taxInvoiceForm.patchValue({
+      dateEstimated: ''
+    })
+    this.toasterService.showError('Please click the dateEstimated icon to select date','');
+  }else if(type == 'receiptDate') {
+    this.taxInvoiceForm.patchValue({
+      receiptDate: ''
+    })
+    this.toasterService.showError('Please click the receiptDate icon to select date','');
   }
   
 }

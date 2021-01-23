@@ -278,7 +278,7 @@ smsApprovedList : any[] = [
       const piList = response['ProcessVariables']['Lovitems'];
       piList.forEach(element => {
         
-        poData.push({key:element.key,value:element.name})
+        piData.push({key:element.key,value:element.name})
       });
     })
 

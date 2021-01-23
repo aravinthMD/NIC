@@ -390,14 +390,14 @@
           <label for="dateFor">{{labels?.recvDate}}</label>
 
           <mat-form-field floatLabel  =  "never">
-              <input matInput required formControlName="recvDate" [matDatepicker]="recvDateDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
+              <input matInput required formControlName="recvDate" [matDatepicker]="recvDateDatePicker" (keyup)="detectDateKeyAction($event,'recvDate')">
               <mat-datepicker-toggle matSuffix [for]="recvDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #recvDateDatePicker></mat-datepicker>
               <mat-placeholder>Choose The Date</mat-placeholder>
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('recvDate').errors?.required
 ">
               Please Select Date
           </div>
@@ -423,14 +423,14 @@ taxInvoiceForm.get('submittedOn').errors?.required
           <label for="dateFor">{{labels?.dateEstimated}}</label>
 
           <mat-form-field floatLabel  =  "never">
-              <input matInput required formControlName="dateEstimated" [matDatepicker]="dateEstimatedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
+              <input matInput required formControlName="dateEstimated" [matDatepicker]="dateEstimatedDatePicker" (keyup)="detectDateKeyAction($event,'dateEstimated')">
               <mat-datepicker-toggle matSuffix [for]="dateEstimatedDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dateEstimatedDatePicker></mat-datepicker>
               <mat-placeholder>Choose The Date</mat-placeholder>
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('dateEstimated').errors?.required
 ">
               Please Select Date
           </div>
@@ -480,14 +480,14 @@ taxInvoiceForm.get('submittedOn').errors?.required
           <label for="dateFor">{{labels?.receiptDate}}</label>
 
           <mat-form-field floatLabel  =  "never">
-              <input matInput required formControlName="receiptDate" [matDatepicker]="receiptDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
+              <input matInput required formControlName="receiptDate" [matDatepicker]="receiptDatePicker" (keyup)="detectDateKeyAction($event,'receiptDate')">
               <mat-datepicker-toggle matSuffix [for]="receiptDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #receiptDatePicker></mat-datepicker>
               <mat-placeholder>Choose The Date</mat-placeholder>
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('receiptDate').errors?.required
 ">
               Please Select Date
           </div>
