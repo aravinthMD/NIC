@@ -14,7 +14,7 @@
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Project Execution
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <form (submit)="PEForm()" [formGroup]="PurchaseEntryForm">
+                <form [formGroup]="PurchaseEntryForm">
                     <!--FIRST ROW-->
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                   <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
@@ -227,7 +227,7 @@
 
                         <div class="col-10">
 
-                            <button class="btn btn-primary" (click)="createProjectExecution()" style="float: left;" type="submit">Request PO</button>
+                            <button class="btn btn-primary" (click)="createProjectExecution()" style="float: left;">Request PE</button>
 
                         </div>
 

@@ -140,11 +140,20 @@ export class ProjectExcecutionDialogComponent implements OnInit {
 
   getProjectExecutionDetailById(currentPEId : string){
 
-    this.invoiceService.getProjectExecutionDetailbyId(Number(currentPEId)).subscribe((response) => {
-      console.log(response)
-      const data  = response["ProcessVariables"]
-      this.setFormValues(data);
-
+    this.invoiceService.getProjectExecutionDetailbyId(Number(currentPEId)).subscribe(
+      (response) => {
+      const { 
+        ProcessVariables  : { error : {
+          code,
+          message
+        }}
+      } = response;
+      if(code == '0'){
+        const data  = response["ProcessVariables"]
+        this.setFormValues(data);
+      }else{
+        this.toasterService.showError(message,'')
+      }
     },(error) => {
       console.log(error)
       this.toasterService.showError(error,'')

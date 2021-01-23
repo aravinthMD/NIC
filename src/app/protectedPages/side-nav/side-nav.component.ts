@@ -6,6 +6,7 @@ import { UtilService } from '../../services/util.service'
 import { environment } from '../../../environments/environment';
 
 import { Router } from '@angular/router'
+import { ClientDetailsService } from '@services/client-details.service';
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
@@ -23,7 +24,11 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   isExistingUser: boolean;
 
-  constructor(private location: Location,private utilService: UtilService,private router: Router) { 
+  constructor(
+    private location: Location,
+    private utilService: UtilService,
+    private router: Router,
+    private clientDetailService : ClientDetailsService ) { 
 
     this.version = environment.version;
 
@@ -155,12 +160,14 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   navigateRoute(route: string) {
 
-    let projectNo = ''
-      this.utilService.projectNumber$.subscribe((pno)=> {
-          projectNo = pno;
-      })
-      if(projectNo) {
-        this.router.navigate([`${route}/${projectNo}`])
+    // let projectNo = ''
+      // this.utilService.projectNumber$.subscribe((pno)=> {
+      //     projectNo = pno;
+      // })
+     const clientId =  this.clientDetailService.getClientId();
+
+      if(clientId) {
+        this.router.navigate([`${route}/${clientId}`])
       }else{
       this.router.navigate([route])
       }
@@ -174,6 +181,7 @@ export class SideNavComponent implements OnInit,OnChanges {
     this.accountInfoNav = '1.1'
   }else {
     this.utilService.setProjectNumber(null)
+    this.clientDetailService.setClientId('');
     this.accountInfoNav = ''
   }
 
