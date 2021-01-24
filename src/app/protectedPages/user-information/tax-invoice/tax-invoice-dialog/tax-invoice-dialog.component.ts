@@ -224,11 +224,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
     const psData = this.paymentStatus.filter((val)=> {
 
-      return val.key == this.taxInvoiceForm.value.paymentStatus
+      return val.key == dataForm['paymentStatus']
     })
 
     const invoiceStatusList = this.invoiceStatusList.filter((val)=> {
-      return val.key == this.taxInvoiceForm.value.invoiceStatus
+      return val.key == dataForm['InvoiceStatus']
     })
 
     this.viewInfoData = [
@@ -287,7 +287,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
       },
       {
         key: this.labels.invoiceStatus,
-        value:dataForm['InvoiceStatus'] || ''
+        value: invoiceStatusList[0].value || ''
       },
       {
         key: this.labels.invoiceAmountPaid,
@@ -307,7 +307,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
       },
       {
         key: this.labels.paymentStatus,
-        value:dataForm['paymentStatus'] || ''
+        value: psData[0].value || ''
       },
       {
         key: this.labels.remark,
