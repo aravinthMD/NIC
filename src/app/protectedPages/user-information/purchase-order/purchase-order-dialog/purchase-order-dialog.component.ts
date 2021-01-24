@@ -8,6 +8,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { AdminService } from '@services/admin.service';
 import { InvoiceService } from '@services/invoice.service';
 import {DatePipe} from '@angular/common';
+import { ClientDetailsService } from '@services/client-details.service';
 
 @Component({
   selector: 'app-purchase-order-dialog',
@@ -74,7 +75,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
   poId: string;
 
   constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
-    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService,private DatePipe:DatePipe,) {
+    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService,private DatePipe:DatePipe,private clientDetailsService: ClientDetailsService) {
 
 
       this.poId = this.data.currentPOId;
@@ -172,10 +173,8 @@ export class PurchaseOrderDialogComponent implements OnInit {
     this.poStatus = await this.getStatusLov();
 
 
-    this.activatedRoute.params.subscribe((value)=> {
-
-      this.storeProjectNo = value.projectNo || 4535;
-    })
+    this.storeProjectNo = this.clientDetailsService.getClientId();
+   
 
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12

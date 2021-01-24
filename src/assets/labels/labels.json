@@ -114,7 +114,7 @@
     "baseAmount": "Base Amount",
     "tax":"Tax",
     "recvDate":"Recv Date",
-    "book": "BooK",
+    "book": "Book",
     "dateEstimated": "Date Estimated",
     "invoiceAmount2": "Invoice Amount2",
     "bankReceived": "Bank Received",
@@ -123,6 +123,7 @@
     "month": "Month",
     "year": "Year",
     "mrn": "MRN",
+    "estimation": "Estimation",
     "validationData": {
         "name": {
             "maxLength": {
@@ -557,6 +558,24 @@
                 "rule": "70"
             },
             "type": "alpha-numeric"
+        },
+        "estimation": {
+            "maxLength": {
+                "rule": "10"
+            },
+            "type": "number"
+        },
+        "month": {
+            "maxLength": {
+                "rule": "2"
+            },
+            "type": "number"
+        },
+        "year": {
+            "maxLength": {
+                "rule": "4"
+            },
+            "type": "number"
         }
 
     }

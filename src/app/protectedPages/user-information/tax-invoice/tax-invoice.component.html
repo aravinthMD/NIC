@@ -1,7 +1,8 @@
 <div class="col-md-10 main">
     <div class="tax-invoice">
 
-        <app-account-header [title]="'Tax Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Tax Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'">
+        </app-account-header>
 
 
         <!--Mat Expansion Panel -->
@@ -18,25 +19,20 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="userName" 
-                                  [isRequired]="'UserName is Mandatory'" 
-                                  [labelName]="labels.userName" 
-                                  placeHolder =  "Enter the User Name"
-                                  [maxLength]="labels?.validationData?.userName?.maxLength" 
-                                  [type]="labels?.validationData?.userName?.type" 
-                                  [isDirty]="isDirty">
+                                <app-custom-input formControlName="userName" [isRequired]="'UserName is Mandatory'"
+                                    [labelName]="labels.userName" placeHolder="Enter the User Name"
+                                    [maxLength]="labels?.validationData?.userName?.maxLength"
+                                    [type]="labels?.validationData?.userName?.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="projectNo" 
-                                   [isRequired]="'Project Number is Mandatory'" 
-                                   [labelName]="labels.projectNo" 
-                                   placeHolder =  "Enter the Project Number"
-                                   [maxLength]="labels?.validationData?.projectNo?.maxLength" 
-                                   [isDirty]="isDirty">
+                                <app-custom-input formControlName="projectNo"
+                                    [isRequired]="'Project Number is Mandatory'" [labelName]="labels.projectNo"
+                                    placeHolder="Enter the Project Number"
+                                    [maxLength]="labels?.validationData?.projectNo?.maxLength" [isDirty]="isDirty">
                                 </app-custom-input>
                                 <div *ngIf="taxInvoiceForm.get('projectNo').errors?.pattern" class="error-feedback">
                                     <div>
@@ -48,13 +44,10 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="poNumber" 
-                                  [isRequired]="'PO Number is Mandatory'" 
-                                  [labelName]="labels?.poNumber" 
-                                  placeHolder =  "Enter the PO Number"
-                                  [maxLength]="labels?.validationData?.poNumber?.maxLength" 
-                                  [type]="labels?.validationData?.poNumber?.type" 
-                                  [isDirty]="isDirty">
+                                <app-custom-input formControlName="poNumber" [isRequired]="'PO Number is Mandatory'"
+                                    [labelName]="labels?.poNumber" placeHolder="Enter the PO Number"
+                                    [maxLength]="labels?.validationData?.poNumber?.maxLength"
+                                    [type]="labels?.validationData?.poNumber?.type" [isDirty]="isDirty">
                                 </app-custom-input>
 
                             </div>
@@ -65,13 +58,11 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="InvoiceDate">{{labels?.poDate}}</label>
+                                <label for="poDate">{{labels?.poDate}}</label>
 
-                                <mat-form-field floatLabel  =  "never">
-                                    <input matInput formControlName="poDate" required 
-                                       [matDatepicker]="poDateId" 
-                                       floatLabel =  "always"
-                                       (keyup)="detectDateKeyAction($event,'poDate')">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput formControlName="poDate" required [matDatepicker]="poDateId"
+                                        floatLabel="always" (keyup)="detectDateKeyAction($event,'poDate')">
                                     <mat-datepicker-toggle matSuffix [for]="poDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #poDateId></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
@@ -102,8 +93,9 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="fromDate">{{labels?.fromDate}}</label>
-                                <mat-form-field floatLabel  =  "never">
-                                    <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId" (keyup)="detectDateKeyAction($event,'fromDate')">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId"
+                                        (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="fromDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #fromDateId></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
@@ -120,13 +112,17 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="toDate">{{labels?.toDate}}</label>
-                                <mat-form-field floatLabel  =  "never">
-                                    <input matInput [min]="taxInvoiceForm.get('fromDate').value"  formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput [min]="taxInvoiceForm.get('fromDate').value"
+                                        formControlName="toDate" required [matDatepicker]="toDateId"
+                                        [min]="taxInvoiceForm.get('toDate').value"
+                                        (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
                                     <mat-datepicker #toDateId></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
-                                <div class="date-picker-error" *ngIf="isDirty && taxInvoiceForm.get('toDate').errors?.required">
+                                <div class="date-picker-error"
+                                    *ngIf="isDirty && taxInvoiceForm.get('toDate').errors?.required">
                                     Please Select To Date
                                 </div>
                             </div>
@@ -134,40 +130,55 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="poBillable" 
-                                   [isRequired]="'Billable Amount is Mandatory'" 
-                                   [labelName]="labels?.poBillable" 
-                                   placeHolder =  "Enter the Billable Amount"
-                                   [type]="labels?.validationData?.poBillable.type" 
-                                   [maxLength]="labels?.validationData?.poBillable.maxLength" 
-                                   [isDirty]="isDirty">
+                                <app-custom-input formControlName="poBillable"
+                                    [isRequired]="'Billable Amount is Mandatory'" [labelName]="labels?.poBillable"
+                                    placeHolder="Enter the Billable Amount"
+                                    [type]="labels?.validationData?.poBillable.type"
+                                    [maxLength]="labels?.validationData?.poBillable.maxLength" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="invoiceAmount" 
-                                   [isRequired]="'Invoice Amount is Mandatory'" 
-                                   [labelName]="labels?.invoiceAmount" 
-                                   placeHolder =  "Enter the Invoice Amount"
-                                   [type]="labels?.validationData?.invoiceAmount?.type" 
-                                   [maxLength]="labels?.validationData?.invoiceAmount?.maxLength" 
-                                   [isDirty]="isDirty">
+                                <app-custom-input formControlName="invoiceAmount"
+                                    [isRequired]="'Invoice Amount is Mandatory'" [labelName]="labels?.invoiceAmount"
+                                    placeHolder="Enter the Invoice Amount"
+                                    [type]="labels?.validationData?.invoiceAmount?.type"
+                                    [maxLength]="labels?.validationData?.invoiceAmount?.maxLength" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="taxIN" 
-                                   [isRequired]="'Tax Invoice Number is Mandatory'" 
-                                   [labelName]="labels?.taxIN"
-                                   placeHolder = "Enter the Tax Invoice Number" 
-                                   [maxLength]="labels?.validationData?.taxIN?.maxLength" 
-                                   [type]="labels?.validationData?.taxIN?.type" 
-                                   [isDirty]="isDirty">
+                                <app-custom-input formControlName="taxIN"
+                                    [isRequired]="'Tax Invoice Number is Mandatory'" [labelName]="labels?.taxIN"
+                                    placeHolder="Enter the Tax Invoice Number"
+                                    [maxLength]="labels?.validationData?.taxIN?.maxLength"
+                                    [type]="labels?.validationData?.taxIN?.type" [isDirty]="isDirty">
                                 </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="InvoiceDate">{{labels?.invoiceDate}}</label>
+
+                                <mat-form-field floatLabel="never">
+                                    <input matInput formControlName="invoiceDate" required
+                                        [matDatepicker]="invoiceDateId" floatLabel="always"
+                                        (keyup)="detectDateKeyAction($event,'invoiceDate')">
+                                    <mat-datepicker-toggle matSuffix [for]="invoiceDateId"></mat-datepicker-toggle>
+                                    <mat-datepicker #invoiceDateId></mat-datepicker>
+                                    <mat-placeholder>Choose The Date</mat-placeholder>
+                                </mat-form-field>
+                                <div class="date-picker-error" *ngIf="
+                isDirty &&
+                taxInvoiceForm.get('invoiceDate').errors?.required
+              ">
+                                    Please Select Invoice Date
+                                </div>
                             </div>
                         </div>
 
@@ -175,9 +186,12 @@
                             <div class="form-group">
                                 <label for="dateFor">{{labels?.submittedDate}}</label>
 
-                                <mat-form-field floatLabel  =  "never">
-                                    <input matInput required formControlName="submittedOn" [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
-                                    <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker"></mat-datepicker-toggle>
+                                <mat-form-field floatLabel="never">
+                                    <input matInput required formControlName="submittedOn"
+                                        [matDatepicker]="sumbittedDatePicker"
+                                        (keyup)="detectDateKeyAction($event,'submittedOn')">
+                                    <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker">
+                                    </mat-datepicker-toggle>
                                     <mat-datepicker #sumbittedDatePicker></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
@@ -195,61 +209,50 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">{{labels?.invoiceStatus}}</label>
-                                <app-vf-custom-select formControlName="invoiceAmountPaid" 
-                                  [values]="invoiceStatusList"
-                                  [isRequired]="'Please Select the Invoice Status'" 
-                                  [isDirty]="isDirty"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="invoiceAmountPaid" [values]="invoiceStatusList"
+                                    [isRequired]="'Please Select the Invoice Status'" [isDirty]="isDirty">
+                                </app-vf-custom-select>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="invoiceAmountPaid" 
-                                   [isRequired]="'Invoice Amount Paid is Mandatory'" 
-                                   [labelName]="labels?.invoiceAmountPaid" 
-                                   placeHolder =  "Enter the Invoice Amount Paid"
-                                   [maxLength]="labels?.validationData?.invoiceAmountPaid.maxLength" 
-                                   [type]="labels?.validationData?.invoiceAmountPaid.type"
-                                    [isDirty]="isDirty"></app-custom-input>
+                                <app-custom-input formControlName="invoiceAmountPaid"
+                                    [isRequired]="'Invoice Amount Paid is Mandatory'"
+                                    [labelName]="labels?.invoiceAmountPaid" placeHolder="Enter the Invoice Amount Paid"
+                                    [maxLength]="labels?.validationData?.invoiceAmountPaid.maxLength"
+                                    [type]="labels?.validationData?.invoiceAmountPaid.type" [isDirty]="isDirty">
+                                </app-custom-input>
                             </div>
                         </div>
 
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="tds" 
-                                  [isRequired]="'TDS is Required'" 
-                                  [labelName]="labels?.tds" 
-                                  placeHolder =  "Enter the TDS"
-                                  [maxLength]="labels?.validationData?.tds.maxLength" 
-                                  [type]="labels?.validationData?.tds.type" 
-                                  [isDirty]="isDirty">
+                                <app-custom-input formControlName="tds" [isRequired]="'TDS is Required'"
+                                    [labelName]="labels?.tds" placeHolder="Enter the TDS"
+                                    [maxLength]="labels?.validationData?.tds.maxLength"
+                                    [type]="labels?.validationData?.tds.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="penalty" 
-                                   [isRequired]="'Penalty is Mandatory'" 
-                                   [labelName]="labels?.penalty"
-                                   placeHolder =  "Enter the Penalty" 
-                                   [maxLength]="labels?.validationData?.penalty.maxLength" 
-                                   [type]="labels?.validationData?.penalty.type" 
-                                   [isDirty]="isDirty">
+                                <app-custom-input formControlName="penalty" [isRequired]="'Penalty is Mandatory'"
+                                    [labelName]="labels?.penalty" placeHolder="Enter the Penalty"
+                                    [maxLength]="labels?.validationData?.penalty.maxLength"
+                                    [type]="labels?.validationData?.penalty.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="shortPay" 
-                                   [isRequired]="'Short Pay is Mandatory'" 
-                                   [labelName]="labels?.shortPay" 
-                                   placeHolder =  "Enter the Short Pay"
-                                   [maxLength]="labels?.validationData?.shortPay.maxLength" 
-                                   [type]="labels?.validationData?.shortPay.type" 
-                                   [isDirty]="isDirty">
+                                <app-custom-input formControlName="shortPay" [isRequired]="'Short Pay is Mandatory'"
+                                    [labelName]="labels?.shortPay" placeHolder="Enter the Short Pay"
+                                    [maxLength]="labels?.validationData?.shortPay.maxLength"
+                                    [type]="labels?.validationData?.shortPay.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -257,35 +260,32 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="paymentStatus">{{labels.paymentStatus}}</label>
-                                <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatus" [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatus"
+                                    [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty">
+                                </app-vf-custom-select>
 
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="remark" 
-                                [labelName]="labels.remark" [id]="'remark'" 
-                                placeHolder =  "Enter the Remark"
-                                [isRequired]="'Remark is Mandatory'" 
-                                [maxLength]="labels?.validationData.userName.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
+                                    placeHolder="Enter the Remark" [isRequired]="'Remark is Mandatory'"
+                                    [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="projectName" 
-                                [labelName]="labels.projectName" [id]="'projectName'" 
-                                placeHolder =  "Enter the ProjectName"
-                                [isRequired]="'ProjectName is Mandatory'" 
-                                [maxLength]="labels?.validationData.projectName.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="projectName" [labelName]="labels.projectName"
+                                    [id]="'projectName'" placeHolder="Enter the ProjectName"
+                                    [isRequired]="'ProjectName is Mandatory'"
+                                    [maxLength]="labels?.validationData.projectName.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="projectCordinator" 
                                 [labelName]="labels.projectCordinator" [id]="'projectCordinator'" 
@@ -296,76 +296,62 @@
                                 [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="PONoAmendOrder" 
-                                [labelName]="labels.PONoAmendOrder" [id]="'PONoAmendOrder'" 
-                                placeHolder =  "Enter the PONoAmendOrder"
-                                [isRequired]="'PONoAmendOrder is Mandatory'" 
-                                [maxLength]="labels?.validationData.PONoAmendOrder.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="PONoAmendOrder" [labelName]="labels.PONoAmendOrder"
+                                    [id]="'PONoAmendOrder'" placeHolder="Enter the PONoAmendOrder"
+                                    [isRequired]="'PONoAmendOrder is Mandatory'"
+                                    [maxLength]="labels?.validationData.PONoAmendOrder.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="mail" 
-                                [labelName]="labels.mail" [id]="'mail'" 
-                                placeHolder =  "Enter the mail"
-                                [isRequired]="'mail is Mandatory'" 
-                                [maxLength]="labels?.validationData.mail.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="mail" [labelName]="labels.mail" [id]="'mail'"
+                                    placeHolder="Enter the mail" [isRequired]="'mail is Mandatory'"
+                                    [patternCheck]="labels?.validationData.mail.patternCheck"
+                                    [maxLength]="labels?.validationData.mail.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="totalSMS" 
-                                [labelName]="labels.totalSMS" [id]="'totalSMS'" 
-                                placeHolder =  "Enter the totalSMS"
-                                [isRequired]="'totalSMS is Mandatory'" 
-                                [maxLength]="labels?.validationData.totalSMS.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="totalSMS" [labelName]="labels.totalSMS"
+                                    [id]="'totalSMS'" placeHolder="Enter the totalSMS"
+                                    [isRequired]="'totalSMS is Mandatory'"
+                                    [maxLength]="labels?.validationData.totalSMS.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="counts" 
-                                [labelName]="labels.projectCordinator" [id]="'counts'" 
-                                placeHolder =  "Enter the counts"
-                                [isRequired]="'counts is Mandatory'" 
-                                [maxLength]="labels?.validationData.counts.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="counts" [labelName]="labels.projectCordinator"
+                                    [id]="'counts'" placeHolder="Enter the counts" [isRequired]="'counts is Mandatory'"
+                                    [maxLength]="labels?.validationData.counts.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="baseAmount" 
-                                [labelName]="labels.baseAmount" [id]="'baseAmount'" 
-                                placeHolder =  "Enter the baseAmount"
-                                [isRequired]="'baseAmount is Mandatory'" 
-                                [maxLength]="labels?.validationData.baseAmount.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="baseAmount" [labelName]="labels.baseAmount"
+                                    [id]="'baseAmount'" placeHolder="Enter the baseAmount"
+                                    [isRequired]="'baseAmount is Mandatory'"
+                                    [maxLength]="labels?.validationData.baseAmount.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="tax" 
-                                [labelName]="labels.tax" [id]="'tax'" 
-                                placeHolder =  "Enter the tax"
-                                [isRequired]="'tax is Mandatory'" 
-                                [maxLength]="labels?.validationData.tax.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="tax" [labelName]="labels.tax" [id]="'tax'"
+                                    placeHolder="Enter the tax" [isRequired]="'tax is Mandatory'"
+                                    [maxLength]="labels?.validationData.tax.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -374,8 +360,10 @@
                             <div class="form-group">
                                 <label for="dateFor">{{labels?.recvDate}}</label>
 
-                                <mat-form-field floatLabel  =  "never">
-                                    <input matInput required formControlName="recvDate" [matDatepicker]="recvDateDatePicker" (keyup)="detectDateKeyAction($event,'recvDate')">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput required formControlName="recvDate"
+                                        [matDatepicker]="recvDateDatePicker"
+                                        (keyup)="detectDateKeyAction($event,'recvDate')">
                                     <mat-datepicker-toggle matSuffix [for]="recvDateDatePicker"></mat-datepicker-toggle>
                                     <mat-datepicker #recvDateDatePicker></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
@@ -392,13 +380,10 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="book" 
-                                [labelName]="labels.book" [id]="'book'" 
-                                placeHolder =  "Enter the Book"
-                                [isRequired]="'Book is Mandatory'" 
-                                [maxLength]="labels?.validationData.book.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="book" [labelName]="labels.book" [id]="'book'"
+                                    placeHolder="Enter the Book" [isRequired]="'Book is Mandatory'"
+                                    [maxLength]="labels?.validationData.book.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -407,9 +392,12 @@
                             <div class="form-group">
                                 <label for="dateFor">{{labels?.dateEstimated}}</label>
 
-                                <mat-form-field floatLabel  =  "never">
-                                    <input matInput required formControlName="dateEstimated" [matDatepicker]="dateEstimatedDatePicker" (keyup)="detectDateKeyAction($event,'dateEstimated')">
-                                    <mat-datepicker-toggle matSuffix [for]="dateEstimatedDatePicker"></mat-datepicker-toggle>
+                                <mat-form-field floatLabel="never">
+                                    <input matInput required formControlName="dateEstimated"
+                                        [matDatepicker]="dateEstimatedDatePicker"
+                                        (keyup)="detectDateKeyAction($event,'dateEstimated')">
+                                    <mat-datepicker-toggle matSuffix [for]="dateEstimatedDatePicker">
+                                    </mat-datepicker-toggle>
                                     <mat-datepicker #dateEstimatedDatePicker></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
                                 </mat-form-field>
@@ -425,37 +413,33 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="invoiceAmount2" 
-                                [labelName]="labels.invoiceAmount2" [id]="'invoiceAmount2'" 
-                                placeHolder =  "Enter the InvoiceAmount2"
-                                [isRequired]="'InvoiceAmount2 is Mandatory'" 
-                                [maxLength]="labels?.validationData.invoiceAmount2.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="invoiceAmount2" [labelName]="labels.invoiceAmount2"
+                                    [id]="'invoiceAmount2'" placeHolder="Enter the InvoiceAmount2"
+                                    [isRequired]="'InvoiceAmount2 is Mandatory'"
+                                    [maxLength]="labels?.validationData.invoiceAmount2.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="bankReceived" 
-                                [labelName]="labels.bankReceived" [id]="'bankReceived'" 
-                                placeHolder =  "Enter the BankReceived"
-                                [isRequired]="'Bank Received is Mandatory'" 
-                                [maxLength]="labels?.validationData.bankReceived.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="bankReceived" [labelName]="labels.bankReceived"
+                                    [id]="'bankReceived'" placeHolder="Enter the BankReceived"
+                                    [isRequired]="'Bank Received is Mandatory'"
+                                    [maxLength]="labels?.validationData.bankReceived.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="interestOnTDSotherDeduction" 
-                                [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
-                                placeHolder =  "Enter the interestOnTDSotherDeduction"
-                                [isRequired]="'interest On TDS other Deduction is Mandatory'" 
-                                [maxLength]="labels?.validationData.interestOnTDSotherDeduction.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="interestOnTDSotherDeduction"
+                                    [labelName]="labels.interestOnTDSotherDeduction"
+                                    [id]="'interestOnTDSotherDeduction'"
+                                    placeHolder="Enter the interestOnTDSotherDeduction"
+                                    [isRequired]="'interest On TDS other Deduction is Mandatory'"
+                                    [maxLength]="labels?.validationData.interestOnTDSotherDeduction.maxLength"
+                                    [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -464,8 +448,10 @@
                             <div class="form-group">
                                 <label for="dateFor">{{labels?.receiptDate}}</label>
 
-                                <mat-form-field floatLabel  =  "never">
-                                    <input matInput required formControlName="receiptDate" [matDatepicker]="receiptDatePicker" (keyup)="detectDateKeyAction($event,'receiptDate')">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput required formControlName="receiptDate"
+                                        [matDatepicker]="receiptDatePicker"
+                                        (keyup)="detectDateKeyAction($event,'receiptDate')">
                                     <mat-datepicker-toggle matSuffix [for]="receiptDatePicker"></mat-datepicker-toggle>
                                     <mat-datepicker #receiptDatePicker></mat-datepicker>
                                     <mat-placeholder>Choose The Date</mat-placeholder>
@@ -479,7 +465,7 @@
 
                             </div>
                         </div>
-                    
+
                         <!-- <div class="col-4">
                             <div class="form-group">
                                 <label for="">{{labels?.month}}</label>
@@ -499,23 +485,58 @@
                                   [isDirty]="isDirty"></app-vf-custom-select>
                             </div>
                         </div> -->
+
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="mrn" 
-                                [labelName]="labels.mrn" [id]="'mrn'" 
-                                placeHolder =  "Enter the mrn"
-                                [isRequired]="'mrn is Mandatory'" 
-                                [maxLength]="labels?.validationData.mrn.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
+                                <app-custom-input formControlName="month" [labelName]="labels.month" [id]="'month'"
+                                    placeHolder="Enter the month" [isRequired]="'Month is Mandatory'"
+                                    [custom]="monthValidation" [type]="labels?.validationData.month.type"
+                                    [maxLength]="labels?.validationData.month.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
+                                <app-custom-input formControlName="year" [labelName]="labels.year" [id]="'year'"
+                                    placeHolder="Enter the year" [isRequired]="'Year is Mandatory'"
+                                    [custom]="yearValidation" [type]="labels?.validationData.year.type"
+                                    [maxLength]="labels?.validationData.year.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="mrn" [labelName]="labels.mrn" [id]="'mrn'"
+                                    placeHolder="Enter the mrn" [isRequired]="'Mrn is Mandatory'"
+                                    [maxLength]="labels?.validationData.mrn.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="estimation" [labelName]="labels.estimation"
+                                    [id]="'estimation'" placeHolder="Enter the estimation"
+                                    [isRequired]="'Estimation is Mandatory'"
+                                    [type]="labels?.validationData.estimation.type"
+                                    [maxLength]="labels?.validationData.estimation.maxLength" [isDirty]="isDirty"
+                                    [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-4">
+                            <div class="form-group">
                                 <label for="documentUpload">{{labels?.uploadDoc}}</label>
-                                <input type="file" class="form-control upload-choose-pad" formControlName="uploadDoc" id="documentUpload">
+                                <input type="file" class="form-control upload-choose-pad" formControlName="uploadDoc"
+                                    id="documentUpload">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
@@ -528,19 +549,20 @@
                     </div>
                     <!--Second Row End-->
                     <div class="row pt-3 pb-3 m-0">
-                       
+
 
                         <div class="col-11">
 
-                            <button class="btn btn-primary" style="float:left" (click) = "createTaxInvoice()">Submit & Send Email</button>
+                            <button class="btn btn-primary" style="float:left" (click)="createTaxInvoice()">Submit &
+                                Send Email</button>
                         </div>
 
-                       <div class="col-1" style="float: left;">
-                        <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+                        <div class="col-1" style="float: left;">
+                            <button class="btn btn-primary ml-3" (click)="back()">Back</button>
 
-                       </div>
+                        </div>
 
-                       
+
                     </div>
                 </form>
             </mat-expansion-panel>
@@ -548,100 +570,100 @@
         <!--Mat Expand  Panel End-->
         <mat-card>
             <form [formGroup]="searchForm">
-             <div class="row">
-               <div class="col-3">
-                   <div class="form-group">
-                    <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
-                     <mat-form-field>
-                       <mat-label>Search...</mat-label>
-                       <input matInput type="text" formControlName="searchData">
-                       <button mat-button  matSuffix mat-icon-button aria-label="Clear">
-                         <mat-icon>search</mat-icon>
-                       </button>
-                     </mat-form-field>
-                   
-         
-                     </div>
-                 </div>  
-         
-                 <div class="col-3">
-                   <div class="form-group">
-         
-                    
-                     <label for="dateFor" style="visibility:hidden;">From Date</label>
-                     
-                     <mat-form-field>
-                         <mat-label>From Date</mat-label>
-                       <input matInput 
-                       [matDatepicker]="picker6" formControlName="searchFrom" (keyup)="detectDateKeyAction($event,'searchFrom')">
-                       <mat-datepicker-toggle matSuffix [for]="picker6" 
-                       ></mat-datepicker-toggle>
-                       <mat-datepicker #picker6></mat-datepicker>
-                     </mat-form-field>
-                     
-                   </div>
-                 </div>
-         
-                 <div class="col-3">
-                   <div class="form-group">
-         
-                    
-                     <label for="dateFor" style="visibility:hidden;">To Date</label>
-                     
-                     <mat-form-field>
-                         <mat-label>To Date</mat-label>
-                       <input matInput  [min]="searchForm.get('searchFrom').value"
-                       [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
-                       <mat-datepicker-toggle matSuffix [for]="picker7" 
-                       ></mat-datepicker-toggle>
-                       <mat-datepicker #picker7></mat-datepicker>
-                     </mat-form-field>
-                     
-                   </div>
-                 </div>
-         
-                 <div class="row m-0 col-3">
-                    <div class="col-md-3 form-group">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
+                            <mat-form-field>
+                                <mat-label>Search...</mat-label>
+                                <input matInput type="text" formControlName="searchData">
+                                <button mat-button matSuffix mat-icon-button aria-label="Clear">
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </mat-form-field>
 
-                        <div class="row mt-4 pt-2">
-                            <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
+
                         </div>
-
                     </div>
 
-                    <div class="col-md-3 form-group">
+                    <div class="col-3">
+                        <div class="form-group">
 
-                        <div class="row mt-4 pt-2">
-                            <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
+
+                            <label for="dateFor" style="visibility:hidden;">From Date</label>
+
+                            <mat-form-field>
+                                <mat-label>From Date</mat-label>
+                                <input matInput [matDatepicker]="picker6" formControlName="searchFrom"
+                                    (keyup)="detectDateKeyAction($event,'searchFrom')">
+                                <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+                                <mat-datepicker #picker6></mat-datepicker>
+                            </mat-form-field>
+
                         </div>
-
                     </div>
 
-                    <div class="col-md-6 form-group">
+                    <div class="col-3">
+                        <div class="form-group">
 
-                        <div class="row mt-4 pt-2">
 
-                            <button (click) = "getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
+                            <label for="dateFor" style="visibility:hidden;">To Date</label>
 
+                            <mat-form-field>
+                                <mat-label>To Date</mat-label>
+                                <input matInput [min]="searchForm.get('searchFrom').value" [matDatepicker]="picker7"
+                                    formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
+                                <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                                <mat-datepicker #picker7></mat-datepicker>
+                            </mat-form-field>
 
                         </div>
+                    </div>
+
+                    <div class="row m-0 col-3">
+                        <div class="col-md-3 form-group">
+
+                            <div class="row mt-4 pt-2">
+                                <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3 form-group">
+
+                            <div class="row mt-4 pt-2">
+                                <button class="btn btn-primary" type="submit" (click)="clear()">Clear</button>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 form-group">
+
+                            <div class="row mt-4 pt-2">
+
+                                <button (click)="getDownloadXls()" class="btn btn-primary download" type="button">Export
+                                    as CSV</button>
+
+
+                            </div>
+
+                        </div>
+
 
                     </div>
 
 
                 </div>
-         
-                 
-             </div>
-           </form>
-           </mat-card>
+            </form>
+        </mat-card>
 
         <!-- <button class="btn btn-primary download download-pad" (click)="getDownloadXls()" type="submit">Export as CSV</button> -->
 
 
         <div class="example-table-container mat-elevation-z8">
 
-            <table mat-table [dataSource]="dataSource" class="example-table custom-table" matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+            <table mat-table [dataSource]="dataSource" class="example-table custom-table" matSort
+                matSortActive="created" matSortDisableClear matSortDirection="desc">
 
                 <ng-container matColumnDef="InvoiceNo">
                     <th mat-header-cell *matHeaderCellDef>Tax Invoice No </th>
@@ -665,10 +687,10 @@
 
                 <ng-container matColumnDef="Active">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let element" class="value-bold"> 
-                        <button  matTooltip = "View And Edit" (click)="OnEdit(element)" class="background-none">
+                    <td mat-cell *matCellDef="let element" class="value-bold">
+                        <button matTooltip="View And Edit" (click)="OnEdit(element)" class="background-none">
                             <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
-                        </button> 
+                        </button>
                     </td>
                 </ng-container>
 
@@ -677,7 +699,8 @@
             </table>
 
 
-            <mat-paginator class="font-paginator" [length]="resultsLength" (page)="pageEventData($event)" [hidePageSize]='true' [pageSize]="datePerPage" showFirstLastButtons></mat-paginator>
+            <mat-paginator class="font-paginator" [length]="resultsLength" (page)="pageEventData($event)"
+                [hidePageSize]='true' [pageSize]="datePerPage" showFirstLastButtons></mat-paginator>
         </div>
 
 

@@ -14,6 +14,7 @@ import { AdminService } from '@services/admin.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService } from '../../../services/api.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { ClientDetailsService } from '@services/client-details.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -115,7 +116,8 @@ smsApprovedList : any[] = [
     private searchService: SearchService,
     private apiService : ApiService,
     private beheSer : BehaviourSubjectService,
-    private fb:FormBuilder
+    private fb:FormBuilder,
+    private clientDetailsService: ClientDetailsService
     ) { }
 
   ngOnInit() {
@@ -182,6 +184,9 @@ smsApprovedList : any[] = [
    this.dataArray.push(this.formQuantity);
 
    this.withoutTaxValidation = this.withoutTaxValidationCheck();
+
+   this.storeProjectNo = this.clientDetailsService.getClientId();
+   
   }
 
   withoutTaxValidationCheck() {
@@ -426,7 +431,21 @@ smsApprovedList : any[] = [
 
   } 
   getDownloadXls(){
-    this.utilService.getDownloadXlsFile(this.userList,'PurchaseOrder')
+
+    let currentPage = null;
+    this.invoiceService.fetchAllPO(currentPage?currentPage:null).subscribe((response)=> {
+
+      if(response['ProcessVariables']['error']['code'] == '0') {
+
+        const exportPurchaseData = response['ProcessVariables']['purchaseData'];
+
+        this.utilService.getDownloadXlsFile(exportPurchaseData,'')
+
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
+
+    })
   }
 
   detectDateKeyAction(event,type) {

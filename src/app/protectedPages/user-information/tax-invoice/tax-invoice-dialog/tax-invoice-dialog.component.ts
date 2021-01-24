@@ -6,6 +6,8 @@ import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router'
 import { InvoiceService } from '@services/invoice.service';
+import { ClientDetailsService } from '@services/client-details.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -48,6 +50,16 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   showEdit: boolean;
 
+  monthValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
+
+  yearValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
+
   constructor(
       private formBuilder : FormBuilder,
       private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
@@ -58,8 +70,12 @@ export class TaxInvoiceDialogComponent implements OnInit {
       private utilService: UtilService,
       private invoiceService : InvoiceService,
       @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
+      private clientDetailsService: ClientDetailsService,
+      private Datepipe:DatePipe,
       ) {
 
+
+        console.log('TI Data', data)
     this.taxInvoiceForm = this.formBuilder.group({
       userName : [''],
       taxIN : [''],
@@ -97,7 +113,8 @@ export class TaxInvoiceDialogComponent implements OnInit {
       receiptDate :  [''],
       month : [''],
       year : [''],
-      mrn : ['']
+      mrn : [''],
+      estimation: ['']
     })
 
     this.detectAuditTrialObj=this.taxInvoiceForm.value
@@ -121,10 +138,83 @@ export class TaxInvoiceDialogComponent implements OnInit {
       this.labels = value;
     })
 
-    this.activatedRoute.params.subscribe((value)=> {
+    
+    this.storeProjectNo = this.clientDetailsService.getClientId();
+   
+    this.monthValidation = this.monthValidationCheck();
+    this.yearValidation = this.yearValidationCheck();
 
-      this.storeProjectNo = value.projectNo || 4535;
+    this.getTaxInvoiceDetailById(this.data)
+  }
+
+  monthValidationCheck() {
+
+    const month = [
+      {
+        rule: (val) => {
+
+          
+
+          return (val > 0 && val < 11) ? false: true;
+        },
+        msg: 'Please enter the month between range of 0 to 11',
+      }
+    ];
+    return month;
+  }
+
+  yearValidationCheck() {
+
+    const year = [
+      {
+        rule: (val) => {
+
+          let year = val;
+          var text = /^[0-9]+$/;
+      if (year != 0) {
+        if ((year != "") && (!text.test(year))) {
+            return true;
+        }
+
+        if (year.length != 4) {
+            return true;
+        }
+        var current_year=new Date().getFullYear();
+        if((year < 1920) || (year > current_year))
+            {
+            return true;
+            }
+        return false;
+          }
+        },
+        msg: 'Please enter the valid year',
+      }
+    ];
+    return year;
+  }
+
+  getTaxInvoiceDetailById(currentTiId :  string){
+
+    this.invoiceService.getTaxInvoiceDetailById(currentTiId).subscribe((response) => {
+        console.log(response);
+
+        if(response['ProcessVariables']['error']['code'] == '0') {
+          this.dataForm = response['ProcessVariables'];
+          this.currentTIId = response['ProcessVariables']['id'];
+          this.assignToForm(this.dataForm);
+          this.assignToViewData(this.dataForm);
+        }else {
+          this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+        }
+        
+    },
+    (error) => {
+      this.toasterService.showError('Failed to Fetch the Tax Invoice Detail','')
     })
+
+  }
+
+  assignToViewData(dataForm) {
 
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -144,138 +234,150 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.viewInfoData = [
       {
         key: this.labels.userName,
-        value:this.taxInvoiceForm.value.userName
+        value: dataForm['userName'] || ''
       },
       {
         key: this.labels.projectNo,
-        value:this.taxInvoiceForm.value.projectNo
+        value:dataForm['projectNumber'] || ''
       },
       {
         key: this.labels.poNumber,
-        value:this.taxInvoiceForm.value.poNumber
+        value:dataForm['poNumber'] || ''
       },
       {
         key: this.labels.poDate,
-        value:`${day}/${month}/${year}`
+        value:dataForm['poDate'] || ''
       },
       {
         key: this.labels.fromDate,
-        value:`${day}/${month}/${year}`
+        value:dataForm['fromDate'] || ''
       },
       {
         key: this.labels.toDate,
-        value:`${day}/${month}/${year}`
+        value:dataForm['toDate'] || ''
       },
       {
         key: this.labels.poBillable,
-        value:this.taxInvoiceForm.value.poBillable
+        value:dataForm['billableAmount'] || ''
       },
       {
         key: this.labels.invoiceAmount,
-        value:this.taxInvoiceForm.value.invoiceAmount
+        value:dataForm['InvoiceAmount'] || ''
       },
 
       {
         key: this.labels.taxIN,
-        value:this.taxInvoiceForm.value.taxIN
+        value:dataForm['TaxInvoiceNumber'] || ''
+      },
+      {
+        key: this.labels.invoiceDate,
+        value:dataForm['invoiceDate'] || ''
+      },
+      {
+        key: this.labels.month,
+        value:dataForm['month'] || ''
+      },
+      {
+        key: this.labels.year,
+        value:dataForm['year'] || ''
       },
       {
         key: this.labels.submittedDate,
-        value:`${day}/${month}/${year}`
+        value:dataForm['submittedDate'] || ''
       },
       {
         key: this.labels.invoiceStatus,
-        value:invoiceStatusList[0].value
+        value:dataForm['InvoiceStatus'] || ''
       },
       {
         key: this.labels.invoiceAmountPaid,
-        value:this.taxInvoiceForm.value.invoiceAmountPaid
+        value:dataForm['InvoicePaidAmount'] || ''
       },
       {
         key: this.labels.tds,
-        value:this.taxInvoiceForm.value.tds
+        value:dataForm['tds'] || ''
       },
       {
         key: this.labels.penalty,
-        value:this.taxInvoiceForm.value.penalty
+        value:dataForm['penalty'] || ''
       },
       {
         key: this.labels.shortPay,
-        value:this.taxInvoiceForm.value.shortPay
+        value:dataForm['shortPay'] || ''
       },
       {
         key: this.labels.paymentStatus,
-        value:psData[0].value
+        value:dataForm['paymentStatus'] || ''
       },
       {
         key: this.labels.remark,
-        value:this.taxInvoiceForm.value.remark
+        value:dataForm['remark'] || ''
       },
       {
         key: this.labels.projectName,
-        value: ''
+        value: dataForm['projectName'] || ''
       },
       {
         key :  this.labels.projectCordinator,
-        value  : ""
+        value  : dataForm['projectCodinator'] || ''
       },{
         key :  this.labels.PONoAmendOrder,
-        value :  ""
+        value :  dataForm['PONoAmendOrder'] || ''
       },
       {
         key :  this.labels.mail,
-        value : ""
+        value : dataForm['userEmail'] || ''
       },
       {
         key :  this.labels.totalSMS,
-        value : ""
-      },
-      {
-        key :  this.labels.projectCordinator,
-        value : ""
+        value : dataForm['totalSMS'] || ''
       },
       {
         key :  this.labels.baseAmount,
-        value : ""
+        value : dataForm['baseAmount'] || ''
       },
       {
         key :  this.labels.tax,
-        value : ""
+        value : dataForm['tax'] || ''
       },
       {
         key :  this.labels.recvDate,
-        value : ""
+        value : dataForm['receiveDate'] || ''
       },
       {
         key :  this.labels.book,
-        value : ""
+        value : dataForm['book'] || ''
       },
       {
         key :  this.labels.dateEstimated,
-        value : ""
+        value : dataForm['dateEstimated'] || ''
       },
       {
         key :  this.labels.invoiceAmount2,
-        value : ""
+        value : dataForm['invoiceAmount2'] || ''
       },
       {
         key :  this.labels.bankReceived,
-        value : ""
+        value : dataForm['bankReceived'] || ''
       },
       {
         key :  this.labels.interestOnTDSotherDeduction,
-        value : ""
+        value : dataForm['interestOnTds'] || ''
       },
       {
         key :  this.labels.receiptDate,
-        value : ""
+        value : dataForm['receiptDate1'] || ''
       },
       {
         key :  this.labels.mrn,
-        value : ""
+        value : dataForm['mrnNumber'] || ''
       },
       {
-        key :  "",
+        key :  this.labels.estimation,
+        value : dataForm['Estimation'] || ''
+      },
+      {
+        key : "",
         value : ""
       },
       {
@@ -288,31 +390,14 @@ export class TaxInvoiceDialogComponent implements OnInit {
       }
 
     ]   
-
-    this.getTaxInvoiceDetailById(this.data)
-  }
-
-  getTaxInvoiceDetailById(currentTiId :  string){
-
-    this.invoiceService.getTaxInvoiceDetailById(currentTiId).subscribe((response) => {
-        console.log(response);
-        this.dataForm = response['ProcessVariables'];
-        this.currentTIId = response['ProcessVariables']['currentTiIds'];
-        this.assignToForm(this.dataForm);
-    },
-    (error) => {
-      this.toasterService.showError('Failed to Fetch the Tax Invoice Detail','')
-    })
-
   }
 
   assignToForm(dataForm  :any){
 
     this.taxInvoiceForm.patchValue({
-
       userName : dataForm['userName'] || '',
       taxIN : dataForm["TaxInvoiceNumber"] || '',
-      invoiceDate : dataForm["poDate"] || '',
+      invoiceDate : dataForm["invoiceDate"] || '',
       projectNo : dataForm["projectNumber"] || '',
       poNumber : dataForm["poNumber"] || '',
       poDate : dataForm["poDate"] || '',
@@ -329,24 +414,24 @@ export class TaxInvoiceDialogComponent implements OnInit {
       shortPay : dataForm['shortPay'] || '',
       submittedOn : dataForm['submittedDate'] || '',
       poBillable : dataForm['billableAmount'] || '',
-      projectName:'',
-      projectCordinator:'',
-      PONoAmendOrder:'',
-      mail:'',
-      totalSMS:'',
-      counts:'',
-      baseAmount : '',
-      tax:'',
-      recvDate : '',
-      book :  '',
-      dateEstimated :  '',
-      invoiceAmount2 : '',
-      bankReceived : '',
-      interestOnTDSotherDeduction : '',
-      receiptDate :  '',
-      month : '',
-      year : '',
-      mrn : ''
+      projectName:dataForm['projectName'] || '',
+      projectCordinator:dataForm['projectCodinator'] || '',
+      PONoAmendOrder:dataForm['PONoAmendOrder'] || '',
+      mail:dataForm['userEmail'] || '',
+      totalSMS:dataForm['totalSMS'] || '',
+      counts:dataForm['counts1'] || '',
+      baseAmount : dataForm['baseAmount'] || '',
+      tax:dataForm['tax'] || '',
+      recvDate : dataForm['receiveDate'] || '',
+      book :  dataForm['book'] || '',
+      dateEstimated :  dataForm['dateEstimated'] || '',
+      invoiceAmount2 : dataForm['invoiceAmount2'] || '',
+      bankReceived : dataForm['bankReceived'] || '',
+      interestOnTDSotherDeduction : dataForm['interestOnTds'] || '',
+      receiptDate :  dataForm['receiptDate1'] || '',
+      month : dataForm['month'] || '',
+      year : dataForm['year'] || '',
+      mrn : dataForm['mrnNumber'] || ''
 
 
     })
@@ -373,89 +458,110 @@ export class TaxInvoiceDialogComponent implements OnInit {
       return;
     }
 
-    // {"userName":"TestUser01","projectNumber":"P1234","poDate":"24/12/2020","fromDate":"23/12/2020","toDate":"24/12/2020","billableAmount":"5000","InvoiceAmount":"3000","TaxInvoiceNumber":"INV3343","submittedDate":"24/12/2020","InvoiceStatus":2,"InvoicePaidAmount":"2000","tds":"100","penalty":"0","shortPay":"2500","paymentStatus":1,"remark":"Remark Column","uploadDocument":"files","temp":"update","selectedPIId":"16","poNumber":"5"}
+
+    const feildControls = this.taxInvoiceForm.controls;
+    const userName = feildControls.userName.value;
+    const taxIN  = feildControls.taxIN.value;
+    const invoiceDate = feildControls.invoiceDate.value;
+    const projectNo = feildControls.projectNo.value;
+    const poNumber = feildControls.poNumber.value;
+    const poDate = feildControls.poDate.value;
+    const fromDate = feildControls.fromDate.value;
+    const toDate = feildControls.toDate.value;
+    const invoiceAmount = feildControls.invoiceAmount.value;
+    const remark = feildControls.remark.value;
+    const uploadDoc = feildControls.uploadDoc.value;
+    const paymentStatus = +feildControls.paymentStatus.value;
+    const invoiceStatus = +feildControls.invoiceStatus.value;
+    const invoiceAmountPaid = feildControls.invoiceAmountPaid.value;
+    const tds = feildControls.tds.value;
+    const penalty = feildControls.penalty.value;
+    const shortPay = feildControls.shortPay.value;
+    const submittedOn = feildControls.submittedOn.value;
+    const poBillable = feildControls.poBillable.value;
+    const projectName = feildControls.projectName.value;
+    const projectCordinator = feildControls.projectCordinator.value;
+    const PONoAmendOrder = +feildControls.PONoAmendOrder.value;
+    const mail = +feildControls.mail.value;
+    const totalSMS = Number(feildControls.totalSMS.value);
+    const counts = feildControls.counts.value;
+    const baseAmount = Number(feildControls.baseAmount.value);
+    const tax = Number(feildControls.tax.value);
+    const book = feildControls.book.value;
+    const invoiceAmount2 = Number(feildControls.invoiceAmount2.value);
+    const bankReceived = feildControls.bankReceived.value;
+    const interestOnTDSotherDeduction = feildControls.interestOnTDSotherDeduction.value;
+    const mrn = feildControls.mrn.value;
+    const recvDate = feildControls.recvDate.value;
+    const receiptDate = feildControls.receiptDate.value;
+    const dateEstimated = feildControls.dateEstimated.value;
+    const estimation = feildControls.estimation.value;
+
+    const month = feildControls.month.value;
+    const year = feildControls.year.value;
+
+    
+    const formattedRecvDate = this.Datepipe.transform(recvDate,'dd/MM/yyyy')
+    const formattedReceiptDate = this.Datepipe.transform(receiptDate,'dd/MM/yyyy')
+    const formattedDateEstimated = this.Datepipe.transform(dateEstimated,'dd/MM/yyyy')
 
 
-    // userName : [''],
-    // taxIN : [''],
-    // invoiceDate : new Date(),
-    // projectNo : [''],
-    // poNumber : [''],
-    // poDate : new Date(),
-    // fromDate : new Date(),
-    // toDate : new Date(),
-    // invoiceAmount : [''],
-    // remark : [''],
-    // uploadDoc : [''],
-    // paymentStatus : [''],
-    // invoiceStatus : [''],
-    // invoiceAmountPaid : [''],
-    // tds : [''],
-    // penalty : [''],
-    // shortPay : [''],
-    // submittedOn : new Date(),
-    // poBillable : [''],
-    // projectName:[''],
-    // projectCordinator:[''],
-    // PONoAmendOrder:[''],
-    // mail:[''],
-    // totalSMS:[''],
-    // counts:[''],
-    // baseAmount : [''],
-    // tax:[''],
-    // recvDate : [''],
-    // book :  [''],
-    // dateEstimated :  [''],
-    // invoiceAmount2 : [''],
-    // bankReceived : [''],
-    // interestOnTDSotherDeduction : [''],
-    // receiptDate :  [''],
-    // month : [''],
-    // year : [''],
-    // mrn : ['']
+    const formattedFromDate = this.Datepipe.transform(fromDate,'dd/MM/yyyy');
+    const formattedToDate = this.Datepipe.transform(toDate,'dd/MM/yyyy');
+    const formattedPoDate = this.Datepipe.transform(poDate,'dd/MM/yyyy');
+    const formattedSubmitedOn = this.Datepipe.transform(submittedOn,'dd/MM/yyyy');
+
+    const formattedInvoiceDate = this.Datepipe.transform(invoiceDate,'dd/MM/yyyy');
+
     const taxData = {
-      userName:this.taxInvoiceForm.value.userName,
-      projectNumber:this.taxInvoiceForm.value.projectNo,
-      poDate:this.taxInvoiceForm.value.poDate,
-      fromDate:this.taxInvoiceForm.value,
-      toDate:this.taxInvoiceForm.value,
-      billableAmount:this.taxInvoiceForm.value,
-      InvoiceAmount:this.taxInvoiceForm.value,
-      TaxInvoiceNumber:this.taxInvoiceForm.value,
-      submittedDate:this.taxInvoiceForm.value,
-      InvoiceStatus:this.taxInvoiceForm.value,
-      InvoicePaidAmount:this.taxInvoiceForm.value,
-      tds:this.taxInvoiceForm.value,
-      penalty:this.taxInvoiceForm.value,
-      shortPay:this.taxInvoiceForm.value,
-      paymentStatus:this.taxInvoiceForm.value,
-      remark:this.taxInvoiceForm.value,
-      uploadDocument:'files',
-      temp:'update',
-      selectedPIId:this.taxInvoiceForm.value,
-      poNumber:this.taxInvoiceForm.value,
-      projectName:this.taxInvoiceForm.value,
-      projectCordinator:this.taxInvoiceForm.value,
-      PONoAmendOrder:this.taxInvoiceForm.value,
-      mail:this.taxInvoiceForm.value,
-      totalSMS:this.taxInvoiceForm.value,
-      counts:this.taxInvoiceForm.value,
-      baseAmount : this.taxInvoiceForm.value,
-      tax:this.taxInvoiceForm.value,
-      recvDate : this.taxInvoiceForm.value,
-      book :  this.taxInvoiceForm.value,
-      dateEstimated :  this.taxInvoiceForm.value,
-      invoiceAmount2 : this.taxInvoiceForm.value,
-      bankReceived : this.taxInvoiceForm.value,
-      interestOnTDSotherDeduction : this.taxInvoiceForm.value,
-      receiptDate :  this.taxInvoiceForm.value,
-      month : this.taxInvoiceForm.value,
-      year : this.taxInvoiceForm.value,
-      mrn : this.taxInvoiceForm.value
+      "userName":userName,
+      "projectNumber":projectNo,
+      "poNumber":poNumber,
+      "poDate":formattedPoDate,
+      "fromDate":formattedFromDate,
+      "toDate":formattedToDate,
+      "billableAmount":poBillable,
+      "InvoiceAmount":invoiceAmount,
+      "TaxInvoiceNumber":taxIN,
+      "submittedDate":formattedSubmitedOn,
+      "InvoiceStatus":invoiceStatus,
+      "InvoicePaidAmount":invoiceAmountPaid,
+      "tds":tds,
+      "penalty":penalty,
+      "shortPay":shortPay,
+      "paymentStatus":paymentStatus,
+      "remark":remark,
+      "uploadDocument":"File",
+      "userEmail":mail,
+      "totalSMS":totalSMS,
+      "counts1":counts,
+      "baseAmount":baseAmount,
+      "tax":tax,
+      "invoiceDate":formattedInvoiceDate,
+      "receiveDate":formattedRecvDate,
+      "book":book,
+      "dateEstimated":formattedDateEstimated,
+      "invoiceAmount2":invoiceAmount2,
+      "bankReceived":bankReceived,
+      "receiptDate1":formattedReceiptDate,
+      "month":month,
+      "year":year,
+      "mrnNumber":mrn,
+      "projectName":projectName,
+      "Estimation":estimation,
+      "id": this.currentTIId
     }
 
     this.invoiceService.updateTaxInvoice(taxData).subscribe((response)=> {
+      console.log(response)
 
+      if(response['ProcessVariables']['error']['code'] == '0') {
+
+        this.toasterService.showSuccess('Data Saved Successfully','')
+      }else {
+
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
     })
 
   }
@@ -671,6 +777,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
         receiptDate: ''
       })
       this.toasterService.showError('Please click the receiptDate icon to select date','');
+    }else if(type == 'invoiceDate') {
+      this.taxInvoiceForm.patchValue({
+        invoiceDate: ''
+      })
+      this.toasterService.showError('Please click the invoiceDate icon to select date','');
     }
     
   }

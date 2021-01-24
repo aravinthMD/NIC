@@ -588,7 +588,7 @@ updatePurchaseOrder(data) {
   } = this.apiService;
 
   const data = {
-    currentTiId ,
+    id: currentTiId ,
     temp : "get"
   }
 
@@ -607,7 +607,7 @@ updatePurchaseOrder(data) {
   let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
   return  this.httpService.post<any>(url,formData);
   }
-
+  
 
   // creating sms credit allocation
 

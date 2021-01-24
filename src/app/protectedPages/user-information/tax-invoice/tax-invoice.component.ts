@@ -13,6 +13,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService} from '../../../services/api.service'
 import { AdminService } from '@services/admin.service';
+import { ClientDetailsService } from '@services/client-details.service';
 
 @Component({
   selector: 'app-tax-invoice',
@@ -77,6 +78,16 @@ export class TaxInvoiceComponent implements OnInit {
 
   datePerPage: number = 0;
 
+  monthValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
+
+  yearValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
+
   constructor(
       private labelsService: LabelsService,
       private Datepipe:DatePipe,
@@ -88,7 +99,8 @@ export class TaxInvoiceComponent implements OnInit {
       private invoiceService : InvoiceService,
       private searchService: SearchService,
       private apiService:ApiService,
-      private adminService: AdminService
+      private adminService: AdminService,
+      private clientDetailsService: ClientDetailsService
       ) { }
 
   ngOnInit() {
@@ -133,7 +145,8 @@ export class TaxInvoiceComponent implements OnInit {
       receiptDate :  new FormControl(null),
       month : new FormControl(null),
       year : new FormControl(null),
-      mrn : new FormControl(null)
+      mrn : new FormControl(null),
+      estimation: new FormControl(null)
     })
 
     this.searchForm = new FormGroup({
@@ -142,37 +155,14 @@ export class TaxInvoiceComponent implements OnInit {
       searchTo: new FormControl(null)
     })
 
+    this.monthValidation = this.monthValidationCheck();
+    this.yearValidation = this.yearValidationCheck();
     this.utilService.userDetails$.subscribe((val)=> {
-
       this.accountName = val['App_name'] || '';
       this.status = val['status'] || '';
     })
 
-    this.activatedRoute.params.subscribe((value)=> {
-
-      this.storeProjectNo = value.projectNo || 4535;
-
-      this.userList =   [
-   
-        {invoiceNo : 1343,projectNumber : value.projectNo || 4535,piAmt:24250,remarks:''},
-        {invoiceNo : 5464,projectNumber : value.projectNo || 4535,piAmt:35000,remarks:''},
-        {invoiceNo : 7687,projectNumber : value.projectNo || 4535,piAmt:23450,remarks:''},
-        {invoiceNo : 9867,projectNumber : value.projectNo || 4535,piAmt:13000,remarks:''},
-        {invoiceNo : 6563,projectNumber : value.projectNo || 4535,piAmt:1000,remarks:''},
-        {invoiceNo : 5535,projectNumber : value.projectNo || 4535,piAmt:9000,remarks:''},
-        {invoiceNo : 5435,projectNumber : value.projectNo || 4535,piAmt:6600,remarks:''},
-        {invoiceNo : 8887,projectNumber : value.projectNo || 4535,piAmt:6767,remarks:''},
-        {invoiceNo : 6555,projectNumber : value.projectNo || 4535,piAmt:6774,remarks:''},
-        {invoiceNo : 5445,projectNumber : value.projectNo || 4535,piAmt:5666,remarks:''},
-        {invoiceNo : 7766,projectNumber : value.projectNo || 4535,piAmt:8787,remarks:''},
-        {invoiceNo : 5443,projectNumber : value.projectNo || 4535,piAmt:5465,remarks:''},
-        {invoiceNo : 9088,projectNumber : value.projectNo || 4535,piAmt:6566,remarks:''},
-        {invoiceNo : 7756,projectNumber : value.projectNo || 4535,piAmt:5566,remarks:''},
-        {invoiceNo : 9787,projectNumber : value.projectNo || 4535,piAmt:6555,remarks:''}
-    
-      ];
-
-    })
+    this.storeProjectNo = this.clientDetailsService.getClientId();
 
     this.getSubLovs();
 
@@ -183,6 +173,52 @@ export class TaxInvoiceComponent implements OnInit {
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
+  }
+
+  monthValidationCheck() {
+
+    const month = [
+      {
+        rule: (val) => {
+
+          
+
+          return (val > 0 && val < 11) ? false: true;
+        },
+        msg: 'Please enter the month between range of 0 to 11',
+      }
+    ];
+    return month;
+  }
+
+  yearValidationCheck() {
+
+    const year = [
+      {
+        rule: (val) => {
+
+          let year = val;
+          var text = /^[0-9]+$/;
+      if (year != 0) {
+        if ((year != "") && (!text.test(year))) {
+            return true;
+        }
+
+        if (year.length != 4) {
+            return true;
+        }
+        var current_year=new Date().getFullYear();
+        if((year < 1920) || (year > current_year))
+            {
+            return true;
+            }
+        return false;
+          }
+        },
+        msg: 'Please enter the valid year',
+      }
+    ];
+    return year;
   }
 
   async getSubLovs() {
@@ -228,6 +264,14 @@ export class TaxInvoiceComponent implements OnInit {
 
 
   createTaxInvoice(){
+
+
+    if(this.taxInvoiceForm.invalid) {
+      this.isDirty = true;
+      return;
+    }
+
+
     const feildControls = this.taxInvoiceForm.controls;
     const userName = feildControls.userName.value;
     const taxIN  = feildControls.taxIN.value;
@@ -264,6 +308,10 @@ export class TaxInvoiceComponent implements OnInit {
     const recvDate = feildControls.recvDate.value;
     const receiptDate = feildControls.receiptDate.value;
     const dateEstimated = feildControls.dateEstimated.value;
+    const estimation = feildControls.estimation.value;
+
+    const month = feildControls.month.value;
+    const year = feildControls.year.value;
 
     
     const formattedRecvDate = this.Datepipe.transform(recvDate,'dd/MM/yyyy')
@@ -276,43 +324,84 @@ export class TaxInvoiceComponent implements OnInit {
     const formattedPoDate = this.Datepipe.transform(poDate,'dd/MM/yyyy');
     const formattedSubmitedOn = this.Datepipe.transform(submittedOn,'dd/MM/yyyy');
 
-    const Data = {
-      userName,
-      projectNumber : projectNo,
-      poNumber,
-      poDate: formattedPoDate,
-      fromDate: formattedFromDate,
-      toDate : formattedToDate,
-      billableAmount : poBillable,
-      InvoiceAmount : invoiceAmount,
-      TaxInvoiceNumber  : taxIN,
-      submittedDate :  formattedSubmitedOn,
-      InvoiceStatus  : invoiceStatus,
-      InvoicePaidAmount : invoiceAmountPaid,
-      tds,
-      penalty,
-      shortPay,
-      paymentStatus,
-      remark,
-      projectName,
-      projectCordinator,
-      PONoAmendOrder,
-      mail,
-      totalSMS,
-      counts,
-      baseAmount,
-      tax,
-      book,
-      invoiceAmount2,
-      bankReceived,
-      interestOnTDSotherDeduction,
-      mrn,
-      receiptDate : formattedReceiptDate,
-      recvDate :formattedRecvDate,
-      dateEstimated :formattedDateEstimated,
-		  uploadDocument  : "file"
+    const formattedInvoiceDate = this.Datepipe.transform(invoiceDate,'dd/MM/yyyy');
 
+    const Data = {
+      "userName":userName,
+      "projectNumber":projectNo,
+      "poNumber":poNumber,
+      "poDate":formattedPoDate,
+      "fromDate":formattedFromDate,
+      "toDate":formattedToDate,
+      "billableAmount":poBillable,
+      "InvoiceAmount":invoiceAmount,
+      "TaxInvoiceNumber":taxIN,
+      "submittedDate":formattedSubmitedOn,
+      "InvoiceStatus":invoiceStatus,
+      "InvoicePaidAmount":invoiceAmountPaid,
+      "tds":tds,
+      "penalty":penalty,
+      "shortPay":shortPay,
+      "paymentStatus":paymentStatus,
+      "remark":remark,
+      "uploadDocument":"File",
+      "userEmail":mail,
+      "totalSMS":totalSMS,
+      "counts1":counts,
+      "baseAmount":baseAmount,
+      "tax":tax,
+      "invoiceDate":formattedInvoiceDate,
+      "receiveDate":formattedRecvDate,
+      "book":book,
+      "dateEstimated":formattedDateEstimated,
+      "invoiceAmount2":invoiceAmount2,
+      "bankReceived":bankReceived,
+      "receiptDate1":formattedReceiptDate,
+      "month":month,
+      "year":year,
+      "mrnNumber":mrn,
+      "projectName":projectName,
+      "Estimation":estimation,
+      "id": ""
     }
+
+    // const Data = {
+    //   userName,
+    //   projectNumber : projectNo,
+    //   poNumber,
+    //   poDate: formattedPoDate,
+    //   fromDate: formattedFromDate,
+    //   toDate : formattedToDate,
+    //   billableAmount : poBillable,
+    //   InvoiceAmount : invoiceAmount,
+    //   TaxInvoiceNumber  : taxIN,
+    //   submittedDate :  formattedSubmitedOn,
+    //   InvoiceStatus  : invoiceStatus,
+    //   InvoicePaidAmount : invoiceAmountPaid,
+    //   tds,
+    //   penalty,
+    //   shortPay,
+    //   paymentStatus,
+    //   remark,
+    //   projectName,
+    //   projectCordinator,
+    //   PONoAmendOrder,
+    //   mail,
+    //   totalSMS,
+    //   counts,
+    //   baseAmount,
+    //   tax,
+    //   book,
+    //   invoiceAmount2,
+    //   bankReceived,
+    //   interestOnTDSotherDeduction,
+    //   mrn,
+    //   receiptDate : formattedReceiptDate,
+    //   recvDate :formattedRecvDate,
+    //   dateEstimated :formattedDateEstimated,
+		//   uploadDocument  : "file"
+
+    // }
 
     this.invoiceService.createTaxInvoice(Data).subscribe((response) =>{
 
@@ -320,6 +409,7 @@ export class TaxInvoiceComponent implements OnInit {
             if(response["ProcessVariables"]['error']['code'] == '0'){
               this.isDirty = false;
               this.toasterService.showSuccess('Tax Invoice Form Submitted Sucessfully','');
+              this.getAllTaxInvoiceDetails();
               this.taxInvoiceForm.reset();
             }else {
               this.toasterService.showError(response["ProcessVariables"]['error']['message'],'');
@@ -366,11 +456,19 @@ export class TaxInvoiceComponent implements OnInit {
             console.log('value', resp);
             const respError=resp["ProcessVariables"]["error" ];
 
-            if(respError.code=="0")
+            if(respError['code'] =="0")
             {
               
               console.log('result',resp['ProcessVariables']);
+
+              if(resp["ProcessVariables"]["TIList" ]){
               this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["TIList" ]);
+
+              }else {
+
+              this.dataSource = new MatTableDataSource<any>([]);
+
+              }
 
               this.datePerPage = Number(resp['ProcessVariables']['dataPerPage']);
 
@@ -402,13 +500,12 @@ export class TaxInvoiceComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) =>{
       console.log('The dialog was closed', result);
-
       this.getAllTaxInvoiceDetails()
 
     })
   }
  getDownloadXls(){
-   this.utilService.getDownloadXlsFile(this.userList,"TaxInvoice");
+   this.utilService.getDownloadXlsFile(this.userList,"");
  }
 
  detectDateKeyAction(event,type) {
@@ -464,6 +561,11 @@ export class TaxInvoiceComponent implements OnInit {
       receiptDate: ''
     })
     this.toasterService.showError('Please click the receiptDate icon to select date','');
+  }else if(type == 'invoiceDate') {
+    this.taxInvoiceForm.patchValue({
+      invoiceDate: ''
+    })
+    this.toasterService.showError('Please click the invoiceDate icon to select date','');
   }
   
 }
