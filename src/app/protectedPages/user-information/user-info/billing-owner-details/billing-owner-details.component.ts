@@ -89,7 +89,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       mobileNumberCode: new FormControl(this.countryCodeValues[0].key),
       mobileNumber :new FormControl (''),
       telephoneNumber : new FormControl (''),
-      telephoneCode: new FormControl(this.countryCodeValues[0].key),
+      telephoneNumberCode: new FormControl(this.countryCodeValues[0].key),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -127,29 +127,29 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   setBillOwnerFormValues(data?: any) {
  
-    if(data){
+      if(data){
 
-    this.billOwnerForm.patchValue({
-      id  : Number (data.id),
-      name : data.name,
-      departmentName : data.department,
-      designation : data.designation,
-      employeeCode : data.employeeCode,
-      email : data.email,
-      mobileNumberCode: data.mobileNumberCode,
-      mobileNumber : data.mobileNumber,
-      telephoneNumber : data.telephoneNumber,
-      telephoneCode:data.telephoneCode,
-      offAddress1 : data.officeAddressLine1,
-      offAddress2 : data.officeAddressLine2,
-      offAddress3 : data.officeAddressLine3,
-      city : data.city,
-      state : data.state,
-      pinCode : data.pincode,
-      remark: data.remarks,
-      userId: data.selectedClient
-    })
-  }
+      this.billOwnerForm.patchValue({
+        id  : Number (data.id),
+        name : data.name,
+        departmentName : data.department,
+        designation : data.designation,
+        employeeCode : data.employeeCode,
+        email : data.email,
+        mobileNumberCode: data.mobileNumberCode,
+        mobileNumber : data.mobileNumber,
+        telephoneNumber : data.telephoneNumber,
+        telephoneNumberCode: data.telephoneNumberCode,
+        offAddress1 : data.oaLine1,
+        offAddress2 : data.oaLine1,
+        offAddress3 : data.oaLine1,
+        city : data.city,
+        state : data.state,
+        pinCode : data.pincode,
+        remark: data.remarks,
+        userId: data.selectedClient
+      })
+   }
     this.detectAuditTrialObj = this.billOwnerForm.value;
 
 
@@ -172,12 +172,20 @@ export class BillingOwnerDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:`91${this.billOwnerForm.value.mobileNumber}`
+        value:`${this.billOwnerForm.value.mobileNumberCode}${this.billOwnerForm.value.mobileNumber}`
       },
+      // {
+      //   key: this.labels.mobileNo,
+      //   value:`91${this.billOwnerForm.value.mobileNumber}`
+      // },
       {
-        key: this.labels.teleNumber,
-        value:`044${this.billOwnerForm.value.telephoneNumber}`
+        key  : this.labels.teleNumber,
+        value : `${this.billOwnerForm.value.telephoneNumberCode}${this.billOwnerForm.value.telephoneNumber}`
       },
+      // {
+      //   key: this.labels.teleNumber,
+      //   value:`044${this.billOwnerForm.value.telephoneNumber}`
+      // },
       {
         key: 'Official Address',
         value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`
@@ -261,7 +269,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       "employeeCode":this.billOwnerForm.value.employeeCode,
       "mobileNumberCode":this.billOwnerForm.value.mobileNumberCode,
       "mobileNumber":this.billOwnerForm.value.mobileNumber,
-      "telephoneNumberCode":this.billOwnerForm.value.telephoneCode,
+      "telephoneNumberCode":this.billOwnerForm.value.telephoneNumberCode,
       "telephoneNumber":this.billOwnerForm.value.telephoneNumber,
       "oaLine1":this.billOwnerForm.value.offAddress1,
       "oaLine2":this.billOwnerForm.value.offAddress2,
