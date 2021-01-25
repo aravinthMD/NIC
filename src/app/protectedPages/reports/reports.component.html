@@ -37,12 +37,18 @@
                                 <option value="4">Payment Status</option>
                                 <option value="5">All</option>
                               </select> -->
+                              <select formControlName="reports" class="form-control mandatory" (change)="onReportChange()">
+                                <option value="">-- Select One --</option>
+                                <ng-container *ngFor="let val of reportsList">
+                                    <option [value]="val.key">{{val.value}}</option>
+                                </ng-container>
+                            </select>
 
-                                <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Report'"></app-vf-custom-select>
+                                <!-- <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Report'"></app-vf-custom-select> -->
                             </div>
                         </div>
 
-                        <div class="col-4" *ngIf="reportKey <= 4 || reportKey == 10">
+                        <div class="col-4" *ngIf="reportKey >= 4">
                             <div class="form-group" optionValue>
                                 <label for="mobile">Status</label>
                                 <!-- <select class="form-control">
@@ -53,7 +59,7 @@
                                 
                               </select> -->
 
-                                <app-vf-custom-select formControlName="status" [values]="optionValue" ></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="status" [values]="this.reportStatus" ></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -67,7 +73,14 @@
                                 <option value="2">Department</option>
                                 <option value="3">Status</option> -->
                                 <!-- </select> -->
-                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter"></app-vf-custom-select>
+                                <!-- <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilterList"></app-vf-custom-select> -->
+
+                                <select formControlName="reportFilter" class="form-control mandatory" (change)="onReportFilterChange($event)">
+                                    <option value="">-- Select One --</option>
+                                    <ng-container *ngFor="let val of reportFilterList">
+                                        <option [value]="val.key">{{val.value}}</option>
+                                    </ng-container>
+                                </select>
 
                             </div>
                         </div>
@@ -104,13 +117,13 @@
                         </div> -->
 
 
-                        <div class="col-4" *ngIf = "accountFilterFlag">
-                            <label for="mobile">Account Name</label>
+                        <div class="col-4" *ngIf = "reportLovDetails.length > 0">
+                            <label for="mobile">{{reportFilterLabelName}}</label>
                             <div class="form-group">
                             <ng-multiselect-dropdown
                             [placeholder]="'Choose Account'"
                             formControlName ="accountFilter"
-                            [data]="options"
+                            [data]="reportLovDetails"
                             [settings]="dropdownSettings"
                             (onSelectAll)="onSelectAll('1')"
                             (onDeSelect) = "onItemDeSelect('1')"
@@ -120,7 +133,7 @@
                         </div>
                         </div>
 
-                        <div class="col-4" *ngIf = "projectNoFilterFlag">
+                        <!-- <div class="col-4" *ngIf = "projectNoFilterFlag">
                             <label for="mobile">Project No</label>
                             <div class="form-group">
                             <ng-multiselect-dropdown
@@ -134,10 +147,10 @@
                             >
                             </ng-multiselect-dropdown>
                         </div>
-                            </div>
+                            </div> -->
 
 
-                        <div class="col-4" *ngIf = "departMentFilterFlag">
+                        <!-- <div class="col-4" *ngIf = "departMentFilterFlag">
                             <label for="">Department</label>
                             <div class="form-group">
                                 <ng-multiselect-dropdown
@@ -151,9 +164,9 @@
                                 >
                                 </ng-multiselect-dropdown>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-4" *ngIf = "stateFilterFlag">
+                        <!-- <div class="col-4" *ngIf = "stateFilterFlag">
                             <label for="">State</label>
                             <div class="form-group">
                                 <ng-multiselect-dropdown
@@ -167,7 +180,7 @@
                                 >
                                 </ng-multiselect-dropdown>
                             </div>
-                        </div>
+                        </div> -->
 
 
                         <div class="col-4">
@@ -203,7 +216,13 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="">User Status</label>
-                                <app-vf-custom-select formControlName="userStatus" [values]="userStatus" [isRequired]="'Please Select the Status'"></app-vf-custom-select>
+                                <select formControlName="userStatus" class="form-control mandatory">
+                                    <option value="">-- Select One --</option>
+                                    <ng-container *ngFor="let val of statusList">
+                                        <option [value]="val.key">{{val.value}}</option>
+                                    </ng-container>
+                                </select>
+                                <!-- <app-vf-custom-select formControlName="userStatus" [values]="statusList" [isRequired]="'Please Select the Status'"></app-vf-custom-select> -->
                             </div>
                         </div>
 

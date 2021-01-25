@@ -1,13 +1,16 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatAccordion} from '@angular/material/expansion';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
+import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
+
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+import { ReportsService } from '@services/reports.service';
+
 
 
 @Component({
@@ -17,12 +20,33 @@ import { ToasterService } from '@services/toaster.service';
 })
 export class ReportsComponent implements OnInit {
 
-  id :  number = 1;
-  dataList : any[] = [];
 
-  filterTabButtonName :  string  = null
+  reportFilterLabelName: string;
+  reportsList = [];
+  reportFilterList = [];
+  reportLovDetails = [];
+  reportStatus = [];
+  statusList = [
+    {
+      key: '0',
+      value: 'Active'
+    },
+    {
+      key: '1',
+      value: 'InActive'
+    },
+    {
+      key: '',
+      value: 'All'
+    }
+  ];
 
-  @ViewChild(MatAccordion,{static:true}) accordion: MatAccordion;
+  id: number = 1;
+  dataList: any[] = [];
+
+  filterTabButtonName: string  = null
+
+  @ViewChild(MatAccordion, { static: true}) accordion: MatAccordion;
 
 
 
@@ -156,83 +180,21 @@ export class ReportsComponent implements OnInit {
 
   form: FormGroup;
 
-  reportKey: number
+  reportKey: number;
+
 paymnettrackkey:any[]=[
 {  PODATE:'08/12/2020',ProjectNumber:2626,From:'Raja',To:'Arvind',TotalSMS:100,Counts:65,BaseAmount:2100,Tax:15.44,InvoiceAmount:12000,Invoiceno:'65215',InvoiceDate:'07/10/2012',RecvDate:'07/10/2012',BOOK:'Booked',InvoiceSubmission:'07/10/2012',DateEstimated:'05/05/2012',InvoiceRaised:'12/05/2021',invoicestatus:'Approved',InvoiceAmount2:'15000',TDS:'15',BankReceived:'Confirm',Shortfall:'yes',InterestonTDSOtherdeduction:'nill',ReceiptDate:'14/05/2012',Month:'April',Year:'2012'
 },{  PODATE:'05/2/2020',ProjectNumber:1254,From:'Arun',To:'Raja',TotalSMS:30,Counts:265,BaseAmount:55600,Tax:16.44,InvoiceAmount:62000,Invoiceno:'65262',InvoiceDate:'06/6/2061',RecvDate:'07/10/2012',BOOK:'Booked',InvoiceSubmission:'07/10/2012',DateEstimated:'05/05/2012',InvoiceRaised:'12/05/2021',invoicestatus:'Approved',InvoiceAmount2:'15000',TDS:'15',BankReceived:'Confirm',Shortfall:'yes',InterestonTDSOtherdeduction:'nill',ReceiptDate:'14/05/2012',Month:'April',Year:'2012'
 }  
 ]
 
-  reportsList = [{
-    key : 6,
-    value : "Payments Tracking"
-  },{
-    key : 7,
-    value : "Payments Received"
-  },
-  {
-    key : 8,
-    value : "Payments Shortpay"
-  },
-  {
-    key : 9,
-    value : "Paid and Unpaid"
-  },
-  {
-    key : 10,
-    value : "SMS Credit Allocation"
-  },
-  {
-    key: 1,
-    value:'Proforma Invoice Raised'
-  },
-  {
-    key: 2,
-    value:'Purchase Order Raised'
-  },
-  {
-    key: 3,
-    value:'Invoice Raised'
-  },
-  {
-    key: 4,
-    value:'Payment Status'
-  },
-  {
-    key: 5,
-    value:'All'
-  }
-
-];
-
-reportFilter = [
-  {
-    key: '1',
-    value:'Account'
-  },
-  {
-    key:'2',
-    value:'Project No'
-  },
-  {
-    key:'3',
-     value:'Department'
-   },
-  {
-    key:'4',
-    value:'State'
-  }
-]
-
-userStatus  = [
-  {"key":'1',"value" :"All"},
-  {"key":"2","value":"Active"},
-  {"key":"3","value":"Inactive"}
-]
-  
 
 
-  constructor(private formBuilder: FormBuilder,private utilService: UtilService,private toasterService: ToasterService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private utilService: UtilService,
+    private toasterService: ToasterService,
+    private reportsService: ReportsService) {
 
     this.form = this.formBuilder.group({
       reports: [''],
@@ -252,6 +214,8 @@ userStatus  = [
 
   ngOnInit() {
 
+    this.getReportsLov();
+
     this.dropdownSettings  = {
       singleSelection: false,
       selectAllText: 'Select All',
@@ -270,6 +234,45 @@ userStatus  = [
     );
 
     this.dataList = this.userList;
+  }
+
+  getReportsLov() {
+    this.reportsService.getLovForReports()
+        .subscribe((res: any) => {
+            console.log('lov', res);
+            const processVariables = res.ProcessVariables;
+            if(res.Error === '0') {
+              this.reportsList = processVariables.reportsLov;
+              this.reportFilterList = processVariables.reportFilterLov;
+            }
+        });
+  }
+
+  onReportFilterChange(event) {
+    const selectedReportFilter = this.form.get('reportFilter').value;
+    // console.log('event', selectedReportFilter);
+    // return;
+
+    if (selectedReportFilter === '0') {
+
+      this.reportFilterLabelName = 'Account Name';
+
+    } else if (selectedReportFilter === '1') {
+
+      this.reportFilterLabelName = 'Project Number';
+
+    } else if (selectedReportFilter === '2') {
+      this.reportFilterLabelName = 'Department';
+    }
+
+    this.reportsService.getLovForReports(selectedReportFilter)
+        .subscribe((res: any) => {
+          console.log('onReportFilterChange', res);
+          if (res.Error === '0') {
+            const processVariables = res.ProcessVariables;
+            this.reportLovDetails = processVariables.reportFilterDetails;
+          }
+        });
   }
 
   private _filter(value: string): string[] {
@@ -299,7 +302,10 @@ userStatus  = [
 
 
 
-  OnFilter(){
+  OnFilter() {
+    const formValue = this.form.value;
+    console.log('formValue', formValue);
+    return;
 
     const reportVal = this.form.controls['reports'].value;
 
@@ -336,6 +342,14 @@ userStatus  = [
     console.log(this.myControl.value)
     this.filterTabButtonName = "Filter Applied";
     this.accordion.closeAll()
+  }
+
+  onReportChange( ) {
+    const reportValue = this.form.get('reports').value;
+    this.reportKey = Number(reportValue);
+
+    this.reportStatus = this.reportsService.getStatusList(this.reportKey);
+
   }
 
   onSelect(event) {
