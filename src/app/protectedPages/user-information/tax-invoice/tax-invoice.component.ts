@@ -1,10 +1,10 @@
-import { Component, OnInit,Input,ViewChild,AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
 import { UtilService } from '@services/util.service';
@@ -21,7 +21,7 @@ import { AdminService } from '@services/admin.service';
 })
 export class TaxInvoiceComponent implements OnInit {
 
-  @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
+  @ViewChild(MatPaginator, {static : true}) paginator: MatPaginator;
 
   @Input('userObj') user : any; 
 
@@ -96,45 +96,45 @@ export class TaxInvoiceComponent implements OnInit {
       this.labels = values;
 
     });
-    this.taxInvoiceForm=new FormGroup({
+    this.taxInvoiceForm = new FormGroup({
       userName: new FormControl(null),
-      taxIN:new FormControl(null),
-      invoiceDate:new FormControl(null),
-      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
-      poNumber:new FormControl(null),
-      poDate:new FormControl(null),
-      fromDate:new FormControl(null),
-      toDate:new FormControl(null),
-      invoiceAmount:new FormControl(null),
-      remark:new FormControl(null),
-      uploadDoc:new FormControl(null),
-      paymentStatus:new FormControl(null),
-      invoiceStatus : new FormControl(null),
-      invoiceAmountPaid : new FormControl(null),
-      tds :  new FormControl(null),
-      penalty :  new FormControl(null),
-      shortPay : new FormControl(null),
-      submittedOn : new FormControl(null),
-      projectName:new FormControl(null),
-      projectCordinator:new FormControl(null),
-      PONoAmendOrder:new FormControl(null),
-      mail:new FormControl(null),
-      poBillable: new FormControl(null),
-      totalSMS:new FormControl(null),
-      counts:new FormControl(null),
-      baseAmount : new FormControl(null),
-      tax:new FormControl(null),
-      recvDate : new FormControl(null),
-      book :  new FormControl(null),
-      dateEstimated :  new FormControl(null),
-      invoiceAmount2 : new FormControl(null),
-      bankReceived : new FormControl(null),
-      interestOnTDSotherDeduction : new FormControl(null),
-      receiptDate :  new FormControl(null),
-      month : new FormControl(null),
-      year : new FormControl(null),
-      mrn : new FormControl(null)
-    })
+      projectNumber: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
+      poNumber: new FormControl(null),
+      poDate: new FormControl(null),
+      fromDate: new FormControl(null),
+      toDate: new FormControl(null),
+      billableAmount: new FormControl(null),
+      invoiceAmount: new FormControl(null),
+      taxInvoiceNumber: new FormControl(null),
+      invoiceDate: new FormControl(null),
+      submittedDate: new FormControl(null),
+      invoiceStatus: new FormControl(null),
+      invoiceAmountPaid: new FormControl(null),
+      tds:  new FormControl(null),
+      penalty:  new FormControl(null),
+      shortPay: new FormControl(null),
+      paymentStatus: new FormControl(null),
+      remark: new FormControl(null),
+      uploadDocument: new FormControl(null),
+      userEmail: new FormControl(null),
+      totalSMS: new FormControl(null),
+      counts1: new FormControl(null),
+      baseAmount: new FormControl(null),
+      tax: new FormControl(null),
+      receiveDate: new FormControl(null),
+      book:  new FormControl(null),
+      dateEstimated:  new FormControl(null),
+      invoiceAmount2: new FormControl(null),
+      bankReceived: new FormControl(null),
+      receiptDate:  new FormControl(null),
+      month: new FormControl(null),
+      year: new FormControl(null),
+      mrnNumber: new FormControl(null),
+      projectName: new FormControl(null),
+      projectCoordinator: new FormControl(null), // not available in api
+      PONoAmendOrder: new FormControl(null), // not available in api
+      interestOnTDSOtherDeduction : new FormControl(null), // not available in api
+    });
 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
