@@ -28,6 +28,7 @@ export class ProjectExecutionComponent implements OnInit {
 
   length:number;
   pageSize:number;
+  currentPage  = 1;
 
   piPaidValues = [
     {
@@ -124,7 +125,7 @@ dataValue: {
       this.storeProjectNo = value.projectNo || 4535
     })
 
-    this.getProjectExecutionDetails();    
+    this.getProjectExecutionDetails(this.currentPage);    
   }
 
 
@@ -158,11 +159,9 @@ dataValue: {
         const feildControls =   this.PurchaseEntryForm.controls;
         const userName  = feildControls.userName.value;
         const piNumber =  feildControls.piNumber.value;
-        const piDate = feildControls.piDate.value;
         const piAmount = feildControls.piAmount.value;
         const modeOfPayment = feildControls.modeOfPayment.value;
         const documentNo = feildControls.documentNo.value;
-        const dateOfTransaction = feildControls.dateOfTransaction.value;
         const bankName = feildControls.bankName.value;
         const amountReceived = feildControls.amountReceived.value;
         const tds = feildControls.tds.value;
@@ -205,7 +204,7 @@ dataValue: {
               if(code == '0'){
                 this.PurchaseEntryForm.reset();
                 this.isDirty = false;
-                this.getProjectExecutionDetails();
+                this.getProjectExecutionDetails(this.currentPage);
                 this.toasterService.showSuccess('Data Saved Successfully','')
                 this.showDataSaveModal = true;
                 this.dataValue= {
@@ -222,8 +221,8 @@ dataValue: {
         })
     }
 
-    getProjectExecutionDetails(){ 
-      this.invoiceService.getProjectExecutionDetails().subscribe((response) => {
+    getProjectExecutionDetails(currentPage:any){ 
+      this.invoiceService.getProjectExecutionDetails(currentPage).subscribe((response) => {
         const { 
           ProcessVariables  : { error : {
             code,
@@ -232,8 +231,19 @@ dataValue: {
         } = response;
         console.log(response);
         if(code == "0"){
-          this.dataSource = response["ProcessVariables"]["peList" ];
-          this.length = response["ProcessVariables"]["totalPages"];
+
+          const peList = (response["ProcessVariables"]["peList" ] || []).map((value) => {
+                    return {
+                      projectNumber : value.projectNumber,
+                      invoiceNumber  :value.invoiceNumber,
+                      invoiceDate  : value.invoiceDate,
+                      Amount  : value.Amount,
+                      id  : value.currentPEId
+                    }
+          });
+
+          this.dataSource = peList;
+          this.length = response["ProcessVariables"]["totalCount"];
           this.pageSize = response["ProcessVariables"]["dataPerPage"]
         }
         else {
@@ -251,17 +261,18 @@ dataValue: {
 
   clear() {
     this.searchForm.reset();
-    this.getProjectExecutionDetails();
+    this.getProjectExecutionDetails(this.currentPage);
   }
 
 
   OnEdit(Data : any){
     const dialogRef = this.dialog.open(ProjectExcecutionDialogComponent,{
-      data : Data.currentPEId
+      data : Data.id
     })
 
     dialogRef.afterClosed().subscribe(result =>{
       console.log('The dialog was Closed',result);
+      this.getProjectExecutionDetails(this.currentPage);
     })
   }
 
@@ -326,8 +337,8 @@ dataValue: {
 
 
   getServerData(event?:PageEvent){
-      let pageNo = event.pageIndex;
-      this.getProjectExecutionDetails();
+     let currentPageIndex  = Number(event.pageIndex) + 1;
+      this.getProjectExecutionDetails(currentPageIndex);
   }
 
   }

@@ -54,7 +54,7 @@ export class InvoiceService {
       return  this.httpService.post<any>(url,formData);
   }
 
-  getProjectExecutionDetails(invoiceNumber ?: any){
+  getProjectExecutionDetails(currentPage : any){
 
     const {
       api : {
@@ -67,8 +67,7 @@ export class InvoiceService {
   } = this.apiService;
 
   const data = {
-    selectedInvoiceNumber  : invoiceNumber
-
+    currentPage 
   }
 
   const requestEntity  : any  = {
@@ -89,7 +88,7 @@ export class InvoiceService {
   }
 
 
-  getProjectExecutionDetailbyId(currentPEId : number){
+  getProjectExecutionDetailbyId(id : number){
         const {
              api : {
               getProjectExecutionDetailById : {
@@ -101,8 +100,7 @@ export class InvoiceService {
        } = this.apiService;
 
        const data = {
-        currentPEId  : currentPEId,
-        temp : 'get'
+        id,
        }
 
 
@@ -125,11 +123,11 @@ export class InvoiceService {
         }
 
 
-        updateProjectExecutionDetail(form  :any){
+  updateProjectExecutionDetail(data  :any){
 
           const {
             api : {
-             getProjectExecutionDetailById : {
+              updateProjectExecutionDetail : {
            workflowId,
            processId,
            projectId
@@ -137,28 +135,6 @@ export class InvoiceService {
        }
       } = this.apiService;
 
-      const data = {
-
-        currentPEId : form.currentPEId,
-        userName : form.userName,
-        invoiceNumber : form.invoiceNumber,
-        amount : form.amount,
-        invoiceDate  :form.invoiceDate,
-        paymentMode : form.paymentMode,
-        documentNumber : form.documentNumber,
-        transactionDate : form.transactionDate,
-        branchName : form.branchName,
-        receivedAmount : form.receivedAmount,
-        tds : form.tds,
-        nicsiProjectNumber  : form.nicsiProjectNumber,
-        paidPI : form.paidPI,
-        remark : form.remark,
-        uploadDocument : form.uploadDocument,
-        temp : form.temp
-      }
-
-
-      
       const requestEntity  : any  = {
         processId,
         ProcessVariables : data,
@@ -168,14 +144,11 @@ export class InvoiceService {
       const body = {
         processVariables : JSON.stringify(requestEntity)
       };
-    
       const formData = this.transform(body);
     
       let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
       return  this.httpService.post<any>(url,formData);
-    
-
-        }
+      }
 
 
   deleteProjectExecution(invoiceNumber : string){
@@ -211,7 +184,7 @@ export class InvoiceService {
 
   }
 
-  fetchAllProformaInvoice(){  
+  fetchAllProformaInvoice(currentPage:any,selectedClientId:string){  
 
     const {
       api : {
@@ -223,7 +196,10 @@ export class InvoiceService {
       }
   } = this.apiService;
 
-    const data = {}
+    const data = {
+      currentPage,
+      selectedClientId
+    }
 
     const requestEntity  : any  = {
       processId,
@@ -348,7 +324,7 @@ updatePurchaseOrder(data) {
 
 }
   
-  createProformaInvoice(form : any){
+  createProformaInvoice(data : any){
 
     const {
       api : {
@@ -359,23 +335,6 @@ updatePurchaseOrder(data) {
         }
       }
   } = this.apiService;
-
-  const data = {
-    AccountName : form.accountName,
-    referenceNumber : form.refNumber,
-    piNumber : form.invoiceNumber,
-    owner : form.piOwner,
-    piAmount : form.piAmount,
-    traffic : form.piTraffic,
-    date : form.date,
-    nicsiManager : form.nicsiManager,
-    startDate : form.startDate,
-    endDate : form.endDate,
-    piStatus : form.piStatus,
-    paymentStatus : form.paymentStatus,
-    remark : form.remark,
-    uploadDocument : form.uploadDocument
-  }
 
   const requestEntity  : any  = {
     processId,
@@ -393,7 +352,7 @@ updatePurchaseOrder(data) {
   return  this.httpService.post<any>(url,formData);
   }
 
-  getProformaInvoiceDetailById(proformaInvoiceId : string){
+  getProformaInvoiceDetailById(id : number){
 
     const {
       api : {
@@ -406,9 +365,7 @@ updatePurchaseOrder(data) {
   } = this.apiService;
 
   const data = {
-    currentPIId  : proformaInvoiceId,
-    temp : "get"
-
+    id 
   }
 
   const requestEntity  : any  = {
@@ -428,7 +385,7 @@ updatePurchaseOrder(data) {
 
   }
 
-  updateProformaInvoice(form : any){
+  updateProformaInvoice(data : any){
 
       const {
         api : {
@@ -439,27 +396,6 @@ updatePurchaseOrder(data) {
          }
         }
       } = this.apiService;
-
-      const data = {
-        AccountName : form.AccountName,
-        referenceNumber : form.referenceNumber,
-        piNumber : form.piNumber,
-        ReferenceNumber : form.ReferenceNumber,
-        piAmount : form.piAmount,
-        Owner : form.Owner,
-        currentPIId : form.currentPIId,
-        Traffic : form.Traffic,
-        piDate : form.piDate,
-        NICSIManager : form.NICSIManager,
-        remark : form.remark,
-        uploads : form.uploads,
-        startDate : form.startDate,
-        endDate  : form.endDate,
-        piStatus : form.piStatus,
-        paymentStatus  : form.paymentStatus,
-        temp : form.temp,
-        selectedPIId : form.selectedPIId
-      }
 
       const requestEntity  : any  = {
         processId,
