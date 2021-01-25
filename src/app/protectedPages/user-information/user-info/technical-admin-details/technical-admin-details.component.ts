@@ -71,7 +71,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     form: any;
     BillDetailsList: any;
     clientId: string;
-  clientUserId: string;
+    clientUserId: string;
  
 
 
@@ -110,10 +110,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
-      mobileCode : new FormControl(this.countryCodeValues[0].key),
+      mobileNumberCode : new FormControl(this.countryCodeValues[0].key),
       mobileNumber :new FormControl (''),
       telephoneNumber : new FormControl (''),
-      telephoneCode: new FormControl(this.teleCodeValues[0].key),
+      telephoneNumberCode: new FormControl(this.teleCodeValues[0].key),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -188,7 +188,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       mobileNumberCode: data.mobileNumberCode,
       mobileNumber : data.mobileNumber,
       telephoneNumber : data.telephoneNumber,
-      telephoneNumberCode:data.telephoneNumberCode,
+      telephoneNumberCode: data.telephoneNumberCode,
       offAddress1 : data.oaLine1,
       offAddress2 : data.oaLine1,
       offAddress3 : data.oaLine1,
@@ -196,7 +196,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       state : data.state,
       pinCode : data.pincode,
       remark: data.remarks,
-      userId: data.clientId
+      userId: data.selectedClient
     })
   }
 
@@ -219,12 +219,20 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:`91${this.billOwnerForm.value.mobileNumber}`
+        value:`${this.billOwnerForm.value.mobileNumberCode}${this.billOwnerForm.value.mobileNumber}`
       },
+      // {
+      //   key: this.labels.mobileNo,
+      //   value:`91${this.billOwnerForm.value.mobileNumber}`
+      // },
       {
-        key: this.labels.teleNumber,
-        value:`044${this.billOwnerForm.value.telephoneNumber}`
+        key  : this.labels.teleNumber,
+        value : `${this.billOwnerForm.value.telephoneNumberCode}${this.billOwnerForm.value.telephoneNumber}`
       },
+      // {
+      //   key: this.labels.teleNumber,
+      //   value:`044${this.billOwnerForm.value.telephoneNumber}`
+      // },
       {
         key: 'Official Address',
         value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3} ${this.billOwnerForm.value.city} ${this.billOwnerForm.value.state}  ${this.billOwnerForm.value.pinCode}`
@@ -254,10 +262,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       designation :data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
-      mobileCode : data.mobileCode,
+      mobileNumberCode : data.mobileNumberCode,
       mobileNumber : data.mobileNumber,
       telephoneNumber : data.telephoneNumber,
-      telephoneCode: data.telephoneCode,
+      telephoneNumberCode: data.telephoneNumberCode,
       offAddress1 : data.officialAddress1,
       offAddress2 : data.officialAddress2,
       offAddress3 : data.officialAddress3,
@@ -305,22 +313,22 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
         key  : this.labels.employeeCode,
         value :  this.technicaladminform.value.employeeCode
       },
-      {
-        key  : this.labels.mobileNo,
-        value  :  `91${this.technicaladminform.value.mobileNumber}`
-      },
-      {
-        key  : this.labels.teleNumber,
-        value :  `044${this.technicaladminform.value.telephoneNumber}`
-      },
       // {
       //   key  : this.labels.mobileNo,
-      //   value  :  `${this.form.value.mobileCode}${this.form.value.mobileNumber}`
+      //   value  :  `91${this.technicaladminform.value.mobileNumber}`
       // },
       // {
       //   key  : this.labels.teleNumber,
-      //   value :  `${this.form.value.telephoneCode}${this.form.value.telephoneNumber}`
+      //   value :  `044${this.technicaladminform.value.telephoneNumber}`
       // },
+      {
+        key  : this.labels.mobileNo,
+        value  :  `${this.technicaladminform.value.mobileNumberCode}${this.technicaladminform.value.mobileNumber}`
+      },
+      {
+        key  : this.labels.teleNumber,
+        value :  `${this.technicaladminform.value.telephoneNumberCode}${this.technicaladminform.value.telephoneNumber}`
+      },
       {
         key  : "Official Address",
         value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3} ${this.technicaladminform.value.city} ${this.technicaladminform.value.state}  ${this.technicaladminform.value.pinCode}`
@@ -355,17 +363,17 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
     const techAdminDetails = {
       // "selectedTechId":this.technicaladminform.value.Id,
-      "currentClientId":this.technicaladminform.value.id,
+      // "currentClientId":this.technicaladminform.value.id,
       "id":this.technicaladminform.value.id,
       "name": this.technicaladminform.value.name,
       "department":this.technicaladminform.value.departmentName,
       "designation":this.technicaladminform.value.designation,
       "employeeCode":this.technicaladminform.value.employeeCode,
       "emailAddress":this.technicaladminform.value.email,
-      "mobileCode":this.technicaladminform.value.mobileCode,
+      "mobileNumberCode":this.technicaladminform.value.mobileNumberCode,
       "mobileNumber":this.technicaladminform.value.mobileNumber,
       "telephoneNumber":this.technicaladminform.value.telephoneNumber,
-      "telephoneCode":this.technicaladminform.value.telephoneCode,
+      "telephoneNumberCode":this.technicaladminform.value.telephoneNumberCode,
       "officeAddressLine1":this.technicaladminform.value.offAddress1,
       "officeAddressLine2":this.technicaladminform.value.offAddress2,
       "officeAddressLine3":this.technicaladminform.value.offAddress3,
