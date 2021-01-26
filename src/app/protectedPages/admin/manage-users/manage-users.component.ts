@@ -45,9 +45,12 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   deleteUserId: string;
 
-  constructor(private dialog: MatDialog,private loginService : LoginService,private adminService: AdminService,private toasterService: ToasterService) {
-
-   }
+  constructor(
+    private dialog: MatDialog,
+    private loginService : LoginService,
+    private adminService: AdminService,
+    private toasterService: ToasterService
+    ) {}
 
   async ngOnInit() {
     await this.fetchManageUsers();

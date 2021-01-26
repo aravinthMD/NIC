@@ -375,6 +375,7 @@ export class SmsCreditAllocationComponent implements OnInit {
               approvedBy: processVariables.approvedBy,
               totalCredit: String(processVariables.totalCredit),
               usedCredit: String(processVariables.usedCredit),
+              id: processVariables.id
             };
             this.smsCreditList.push(data);
             this.dataSource = new MatTableDataSource<any>(this.smsCreditList);

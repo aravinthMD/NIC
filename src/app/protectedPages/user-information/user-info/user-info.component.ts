@@ -228,13 +228,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
         this.utilService.userDetails$.subscribe((val: any)=> {
           console.log('val', val);
 
-          this.accountName = val['userId'] || '';
+          this.accountName = val['App_name'] || '';
           this.status = val['status'] || '';
           this.projectNo = val.projectNo || '';
-          this.setFormValues();
         })
-
-        // this.setFormValues();
 
         this.existingPreviewUserFlag = true
        

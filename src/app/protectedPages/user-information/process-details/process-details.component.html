@@ -282,17 +282,17 @@
 
                         <div class="col-10">
 
-                            <button class="btn btn-primary btn-lg" style="float: left; padding-bottom: 10px; margin-top: 10px;" (click)="createProformaInvoice()">Submit</button>
+                            <button class="btn btn-primary btn-lg pb-4" style="float: left;" (click)="createProformaInvoice()">Raise PI</button>
 
                         </div>
 
                        <div class="col-1" style="float: left;">
-                        <button class="btn btn-primary btn-lg ml-3" (click)="back()">Back</button>
+                        <button class="btn btn-primary btn-lg ml-3 pb-4" (click)="back()">Back</button>
 
                        </div>
 
                        <div class="col-1" style="float: left;">
-                        <button class="btn btn-primary btn-lg ml-3" (click)="next()">Next</button>
+                        <button class="btn btn-primary btn-lg ml-3 pb-4" (click)="next()">Next</button>
 
                        </div>
 
@@ -457,7 +457,13 @@
             </table>
 
            
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+            <mat-paginator class="font-paginator"  
+                 [hidePageSize]= "true" 
+                 [pageSize]="pageSize"
+                 [length] = "length"
+                 (page) = getServerData($event)
+                 showFirstLastButtons>
+            </mat-paginator>
         </div>
         <!--Material Table End-->
         <div class="m-5"></div>

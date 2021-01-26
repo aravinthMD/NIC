@@ -90,7 +90,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   navigateToUser(element) {
     this.utilService.setProjectNumber(element.projectNo);
 
-    this.utilService.setUserDetails(element);
+    // this.utilService.setUserDetails(element);
 
     this.clientDetailsService.setClientId(element.clientId);
 
