@@ -83,7 +83,7 @@ export class TaxInvoiceComponent implements OnInit {
   datePerPage: number = 0;
 
   selectedClientId;
-  taxInvoiceList: TaxInvoice[];
+  taxInvoiceList: TaxInvoice[] = [];
 
   constructor(
       private labelsService: LabelsService,
@@ -260,8 +260,12 @@ export class TaxInvoiceComponent implements OnInit {
   }
 
   onSubmit(value) {
+    this.isDirty = true;
     let formValue;
     if (!value) {
+       if (!this.taxInvoiceForm.valid) {
+         return this.toasterService.showError('Please fill all the fields', '');
+       }
        formValue = this.taxInvoiceForm.value;
     } else {
       formValue = value;
@@ -303,6 +307,7 @@ export class TaxInvoiceComponent implements OnInit {
             if (error !== '0') {
               return this.toasterService.showError(errorMsg, '');
             }
+            this.isDirty = false;
             const taxInvoiceData: TaxInvoice = res.ProcessVariables;
             this.updateGrid(taxInvoiceData);
         });

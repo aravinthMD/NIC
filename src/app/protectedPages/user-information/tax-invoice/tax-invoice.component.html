@@ -336,6 +336,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="counts1" 
+                                [type]="'number'"
                                 [labelName]="labels.counts" [id]="'counts'" 
                                 placeHolder =  "Enter the counts"
                                 [isRequired]="'counts is Mandatory'" 
@@ -348,6 +349,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="baseAmount" 
+                                [type]="'number'"
                                 [labelName]="labels.baseAmount" [id]="'baseAmount'" 
                                 placeHolder =  "Enter the baseAmount"
                                 [isRequired]="'baseAmount is Mandatory'" 
@@ -360,6 +362,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="tax" 
+                                [type]="'number'"
                                 [labelName]="labels.tax" [id]="'tax'" 
                                 placeHolder =  "Enter the tax"
                                 [isRequired]="'tax is Mandatory'" 
@@ -425,7 +428,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="invoiceAmount2" 
+                                <app-custom-input formControlName="invoiceAmount2"
+                                [type]="'number'" 
                                 [labelName]="labels.invoiceAmount2" [id]="'invoiceAmount2'" 
                                 placeHolder =  "Enter the InvoiceAmount2"
                                 [isRequired]="'InvoiceAmount2 is Mandatory'" 
@@ -450,6 +454,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="interestOnTds" 
+                                [type]="'number'"
                                 [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
                                 placeHolder =  "Enter the interestOnTDSotherDeduction"
                                 [isRequired]="'interest On TDS other Deduction is Mandatory'" 

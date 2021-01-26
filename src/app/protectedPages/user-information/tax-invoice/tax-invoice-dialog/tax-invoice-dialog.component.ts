@@ -612,6 +612,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
   }
 
   OnUpdate() {
+
+    if (!this.taxInvoiceForm.invalid) {
+      this.isDirty = true;
+      return this.toasterService.showError('Please fill all the fields', '');
+    }
     this.updateEmitter.emit({
       id: Number(this.data.id),
       ...this.taxInvoiceForm.value
