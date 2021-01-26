@@ -6,7 +6,7 @@
     "applicantMobile": "Applicant Mobile",
     "OfficerName": "Reporting/Nodal/Forwarding Officer Name",
     "OfficerEmail": "Reporting/Nodal/Forwarding Officer Email",
-    "OfficerMobile": "Reporting/Nodal/Forwarding Officer Mobile",
+    "OfficerMobile": "Reporting/Nodal/Officer Mobile",
     "smsServiceReqd": "SMS Service Required",
     "credits_SMSQuota": "Credits (SMS Quota)",
     "availableCredit": "Available Credit",
@@ -252,11 +252,11 @@
         },
         "telephoneNumber": {
             "maxLength": {
-                "rule": 7
+                "rule": 8
             },
             "type": "number",
             "patternCheck": {
-                "rule": "^[0-9]{7}",
+                "rule": "^[0-9]{8}",
                 "msg": "Invalid telephone number"
             }
         },

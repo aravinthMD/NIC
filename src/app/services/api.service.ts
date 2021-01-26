@@ -57,7 +57,7 @@ export class ApiService {
     getProjectExecutionDetailById : {
 
       workflowId : 'e4537964406711ebb7bf727d5ac274b2',
-      processId : '2082717240f111ebb7bf727d5ac274b2',
+      processId : '30509328407311ebb7bf727d5ac274b2',
       projectId  : environment.projectIds.projectId
 
     },
@@ -65,7 +65,7 @@ export class ApiService {
     updateProjectExecutionDetail : {
 
       workflowId : 'e4537964406711ebb7bf727d5ac274b2',
-      processId  : '2082717240f111ebb7bf727d5ac274b2',
+      processId  : 'e487eb40406711ebb7bf727d5ac274b2',
       projectId  : environment.projectIds.projectId
 
     },
@@ -147,12 +147,12 @@ export class ApiService {
     },
     getProformaInvoiceDetailById : {
       workflowId :  '640f2fe8442a11ebb7bf727d5ac274b2',
-      processId :  '8e09c75444fc11ebb7cb727d5ac274b2',
+      processId :  '5bc34f9044f711ebb7cb727d5ac274b2',
       projectId :  environment.projectIds.projectId
     },
     updateProformaInvoice : { 
       workflowId : '640f2fe8442a11ebb7bf727d5ac274b2',
-      processId :  '8e09c75444fc11ebb7cb727d5ac274b2',
+      processId :  '6438ef36442a11ebb7bf727d5ac274b2',
       projectId  : environment.projectIds.projectId
     },
     createTaxInvoice : {

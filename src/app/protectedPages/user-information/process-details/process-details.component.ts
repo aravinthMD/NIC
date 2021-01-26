@@ -12,6 +12,7 @@ import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import{ApiService} from '../../../services/api.service'
+import { ClientDetailsService } from '@services/client-details.service';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -20,11 +21,13 @@ import{ApiService} from '../../../services/api.service'
 })
 export class ProcessDetailsComponent implements OnInit{
 
-  @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
+  userId:string ;
   @Input('userObj') user : any;
 
   length: number;
   pageSize : number;
+  currentPage = 1;
+
   storeProjectNo: string;
   displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt',"reminder","Escalation","Action"]
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
@@ -81,7 +84,8 @@ export class ProcessDetailsComponent implements OnInit{
         private router: Router,
         private invoiceService : InvoiceService,
         private searchService: SearchService,
-        private apiService:ApiService
+        private apiService:ApiService,
+        private clientDetailService:ClientDetailsService
         ) { 
 
 
@@ -91,11 +95,11 @@ export class ProcessDetailsComponent implements OnInit{
       refNumber: [null],
       piTraffic: [null],
       piOwner: [null],
-      date: [null],
+      date: [''],
       nicsiManager: [''],
       piAmount: [null],
-      startDate:[null],
-      endDate:[null],
+      startDate:[''],
+      endDate:[''],
       piStatus: [''],
       paymentStatus:[''],
       remark:['']
@@ -107,7 +111,6 @@ export class ProcessDetailsComponent implements OnInit{
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
     })
-
 
   }
 
@@ -126,24 +129,26 @@ export class ProcessDetailsComponent implements OnInit{
     this.activatedRoute.params.subscribe((value)=> {
       this.storeProjectNo = value.projectNo || 4535;
   });
+  this.userId = this.clientDetailService.getClientId();
 
-  this.fetchAllProformaInvoice();
+  this.fetchAllProformaInvoice(this.currentPage,this.userId);
+
   }
 
   OnEdit(Data : any){
     const dialogRef = this.dialog.open(ProformaInvoiceDialogFormComponent,{
-      data: Data.piNumber
+      data: Data.selectedPIId
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.fetchAllProformaInvoice();
+      this.fetchAllProformaInvoice(this.currentPage,this.userId);
     });
 
   }
 
-  fetchAllProformaInvoice(){
-      this.invoiceService.fetchAllProformaInvoice().subscribe(
+  fetchAllProformaInvoice(currentPage:any,selectedClientId :string){
+      this.invoiceService.fetchAllProformaInvoice(currentPage,selectedClientId).subscribe(
         (response) => {
           const { 
             ProcessVariables  : { error : {
@@ -154,7 +159,7 @@ export class ProcessDetailsComponent implements OnInit{
           console.log(`API Response for Get ALL PI List ${response}`);
           if(code == '0'){
             this.dataSource = response['ProcessVariables']['piDataList'] ? response['ProcessVariables']['piDataList'] : null;
-            this.length = response["ProcessVariables"]["totalPages"];
+            this.length = response["ProcessVariables"]["totalCount"];
             this.pageSize = response["ProcessVariables"]["dataPerPage"];
           }else{
             this.toasterService.showError(message,'')
@@ -188,11 +193,11 @@ export class ProcessDetailsComponent implements OnInit{
 
   createProformaInvoice(){
       const feildControls = this.form.controls;
-      const accountName  = feildControls.accountName.value;
-      const invoiceNumber = feildControls.invoiceNumber.value;
-      const refNumber  = feildControls.refNumber.value;
-      const piTraffic = feildControls.piTraffic.value;
-      const piOwner = feildControls.piOwner.value;
+      const AccountName  = feildControls.accountName.value;
+      const piNumber = feildControls.invoiceNumber.value;
+      const referenceNumber  = feildControls.refNumber.value;
+      const traffic = feildControls.piTraffic.value;
+      const owner = feildControls.piOwner.value;
       const date = feildControls.date.value;
       const nicsiManager = feildControls.nicsiManager.value;
       const piAmount = feildControls.piAmount.value;
@@ -206,12 +211,13 @@ export class ProcessDetailsComponent implements OnInit{
       const formattedStartDate = this.datePipe.transform(startDate,'dd/MM/yyyy')
       const formattedEndDate = this.datePipe.transform(endDate,'dd/MM/yyyy')
 
+      const userId = this.userId;
       const Data = {
-        accountName,
-        invoiceNumber,
-        refNumber,
-        piTraffic,
-        piOwner,
+        AccountName,
+        piNumber,
+        referenceNumber,
+        traffic,
+        owner,
         date : formattedDate,     
         nicsiManager,
         piAmount,
@@ -220,7 +226,8 @@ export class ProcessDetailsComponent implements OnInit{
         piStatus,
         paymentStatus,
         remark,
-        uploadDocument : 'yes'
+        uploadDocument : 'yes',
+        userId : Number(userId)
       }
 
       this.invoiceService.createProformaInvoice(Data).subscribe(
@@ -236,7 +243,7 @@ export class ProcessDetailsComponent implements OnInit{
             this.form.reset();
             this.isDirty = false;
             this.toasterService.showSuccess('proforma Invoice Updated SucessFully','')
-            this.fetchAllProformaInvoice();
+            this.fetchAllProformaInvoice(this.currentPage,this.userId);
           }else {
             this.toasterService.showError(message,'');
           }
@@ -382,7 +389,7 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   getServerData(event?:PageEvent){
-    let pageNo = event.pageIndex;
-    this.fetchAllProformaInvoice();
+    let currentPageIndex  = Number(event.pageIndex) + 1;
+    this.fetchAllProformaInvoice(currentPageIndex,this.userId);
   }
 }

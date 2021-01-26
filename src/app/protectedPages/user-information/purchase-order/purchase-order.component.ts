@@ -1,10 +1,10 @@
 import { Component, OnInit,Input, AfterViewInit,ViewChild } from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { Validators, FormBuilder, FormGroup,FormControl, FormArray } from "@angular/forms";
+import { Validators,FormGroup,FormControl} from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router} from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
 import { UtilService } from '@services/util.service';
@@ -50,9 +50,6 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
       departmentListData = [];
     
     dataArray=[]
-      
-  // dataSource = new MatTableDataSource<any>(this.userList);
-
   dataSource = new MatTableDataSource<any>([]);
   date = new FormControl();
 
@@ -105,7 +102,6 @@ smsApprovedList : any[] = [
   constructor(
     private labelsService: LabelsService,
     private DatePipe:DatePipe,
-    private activatedRoute: ActivatedRoute,
     private dialog : MatDialog,
     private utilService: UtilService,
     private toasterService: ToasterService,
@@ -115,7 +111,6 @@ smsApprovedList : any[] = [
     private searchService: SearchService,
     private apiService : ApiService,
     private beheSer : BehaviourSubjectService,
-    private fb:FormBuilder
     ) { }
 
   ngOnInit() {

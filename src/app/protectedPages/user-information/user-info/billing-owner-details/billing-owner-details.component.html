@@ -115,7 +115,7 @@
                     [maxLength]="labels?.validationData.telephoneNumber.maxLength" 
                     [isDirty]="isDirty"
                     [isDisabledInp]="propertyFlag"
-                    >
+                    >telephoneCode
                     </app-custom-input>
                 </div>
             </div> -->
@@ -126,7 +126,7 @@
                 <div class="form-group">
                    
                     <label for="department">Code<span style="color:red">*</span></label>
-                    <app-vf-custom-select formControlName="telephoneCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues"
+                    <app-vf-custom-select formControlName="telephoneNumberCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues"
                     [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                     [isDirty]="isDirty">
                 </app-vf-custom-select>

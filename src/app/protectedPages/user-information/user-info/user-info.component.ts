@@ -69,6 +69,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
     {key:1,value:'Post-Paid'}
   ]
 
+ 
+
   countryCodeValues = [
     {key:0,value:'+91'},
     {key:1,value:'+60'},
@@ -115,6 +117,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
   fileSize: string = 'Size - 109.4 KB';
   fileName: string = 'invoice.pdf';
   customersList: any;
+  applicantUrl: any;
+  _applicantUrl: any;
   
   
 ;
@@ -155,6 +159,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
+      officerMobileCode:[null],
       OfficerMobile:[null],
       telPhno : [null],
       teleCode: [this.teleCodeValues[0].key],
@@ -183,10 +188,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
       password: [null],
       piDuration : [null],
       projectNo : [null,Validators.pattern("^[0-9]{0,15}$")],
-      creditAdded : [null],
-      creditApprover : [null],
-      creditDate : [null],
-      creditAddedAgainstPi : [null],
+      // creditAdded : [null],
+      // creditApprover : [null],
+      // creditDate : [null],
+      // creditAddedAgainstPi : [null],
       fromDate: [null],
       toDate: [null],
       status:[null],
@@ -289,6 +294,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       departmentName : data.department,
       designation :  data.FO_designation,
       mobileNumberCode : data.mobileNumberCode,
+      // mobileNumberCode : 0,
       email : data.App_email,
       mobileNo : data.App_mobile,
       telPhno : data.Tele_number_OF,
@@ -303,11 +309,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
       piDuration : data.proj_international,
       projectNo : data.proj_number,
       creditAdded : data.FO_email,
-      creditApprover : data.FO_email,
+      // creditApprover : data.FO_email,
       // fromDate: new Date(),
       // toDate: new Date(),
       OfficerName:data.FO_name,
       OfficerEmail:data.FO_email,
+      officerMobileCode:data.officerMobileCode,
       OfficerMobile:data.FO_mobile,
       smsServiceReqd: data.sms_service,
       // creditsSMSQuota: '4000',
@@ -322,12 +329,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
       intMonSmsTraffic: data.proj_international,
       appSecurAudClear: data.app_security,
       auditDate : data.audit_date,
-      creditDate : data.creditDate,
-      creditAddedAgainstPi : data.creditAddedAgainstPI,
+      // creditDate : data.creditDate,
+      // creditAddedAgainstPi : data.creditAddedAgainstPI,
       traiSenderId: data.trai_extempted,
       userId: data.userId,
       password: data.password,
-      status: data.status,
+      // status: data.status,
       remark:data.remark
     })
   }
@@ -388,8 +395,12 @@ export class UserInfoComponent implements OnInit,OnChanges {
       },
       {
         key  :"Officer Mobile",
-        value :this.form.value.OfficerMobile
+        value : `${this.form.value.officerMobileCode} ${this.form.value.OfficerMobile}`
       },
+      // {
+      //   key  :"Officer Mobile",
+      //   value :this.form.value.OfficerMobile
+      // },
       {
         key  : "Official Address",
         value  : `${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3},${this.form.value.city},${this.form.value.state} - ${this.form.value.pinCode}`
@@ -398,7 +409,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
         key  : this.labels.teleNumber,
         value : `${this.form.value.teleCode}${this.form.value.telPhno}`
       },
-    
       {
         key  : this.labels.smsServiceReqd,
         value : 'Post Paid'
@@ -446,30 +456,30 @@ export class UserInfoComponent implements OnInit,OnChanges {
         key : "TRAI Exempted Sender ID",
         value : "No"
       },
-      {
-        key  : this.labels.creditAdded,
-        value  : this.form.value.creditAdded
-      },
-      {
-        key  :this.labels.creditApprover,
-        value :  this.form.value.creditApprover
-      },
-      {
-        key  : this.labels.creditDate,
-        value :    `${day}/${month}/${year}`
-      },
-      {
-        key :  "Credit Against PI",
-        value :    `${day}/${month}/${year}`
-      },
+      // {
+      //   key  : this.labels.creditAdded,
+      //   value  : this.form.value.creditAdded
+      // },
+      // {
+      //   key  :this.labels.creditApprover,
+      //   value :  this.form.value.creditApprover
+      // },
+      // {
+      //   key  : this.labels.creditDate,
+      //   value :    `${day}/${month}/${year}`
+      // },
+      // {
+      //   key :  "Credit Against PI",
+      //   value :    `${day}/${month}/${year}`
+      // },
       {
         key  : this.labels.uploadDoc,
         value  : 'Invoice.pdf'
       },
-      {
-        key  : this.labels.status,
-        value  : 'Active'
-      },
+      // {
+      //   key  : this.labels.status,
+      //   value  : 'Active'
+      // },
       {
         key  : this.labels.remark,
         value :  this.form.value.remark
@@ -522,6 +532,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "city":this.form.value.city,
       "state":this.form.value.state,
       "pincode":this.form.value.pinCode,
+      "officerMobileCode":this.form.value.officerMobileCode,
       "FO_mobile":this.form.value.OfficerMobile,
       "FO_name":this.form.value.OfficerName,
       "FO_email":this.form.value.OfficerEmail,
@@ -538,15 +549,15 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "proj_domestic":this.form.value.domMonSmsTraffic,
       "app_security":this.form.value.appSecurAudClear,
       "audit_date":this.form.value.auditDate,
-      "creditDate":this.form.value.creditDate,
-      "creditAddedAgainstPI":this.form.value.creditAddedAgainstPi,
+      // "creditDate":this.form.value.creditDate,
+      // "creditAddedAgainstPI":this.form.value.creditAddedAgainstPi,
       "trai_extempted":this.form.value.traiSenderId,
       "userId":this.form.value.userId,
       "password":this.form.value.password,
-      "status":this.form.value.status,
+      // "status":this.form.value.status,
       "remark":this.form.value.remark,
       "credits":this.form.value.creditsSMSQuota,  
-      "available_credit":this.form.value.userName,
+      // "available_credit":this.form.value.userName,
       "upload_document":"",
       
        
