@@ -125,15 +125,16 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
 
     this.billOwnerForm = new FormGroup({
+      id : new FormControl ([null]),
       name : new FormControl ([null]),
       departmentName : new FormControl ([null]),
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
-      countryCode: new FormControl(null),
+      mobileNumberCode: new FormControl(null),
       mobileNumber :new FormControl (''),
-      telPhno : new FormControl (''),
-      teleCode: new FormControl(),
+      telephoneNumber : new FormControl (''),
+      telephoneNumberCode: new FormControl(),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -153,6 +154,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       if(this.user){
       
         this.getTechAdminsById(this.user);
+        this.getBillingAdminDetailById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['App_name'] || '';
@@ -168,11 +170,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
         this.showView = false;
       }
 
-      this.fetchAllTechAdmins();
-
-       
-
-       this.getBillingAdminDetailById(this.user);
+      // this.fetchAllTechAdmins();
+  
   }
 
   setBillOwnerFormValues(data?: any){
@@ -180,6 +179,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     if(data){
     
     this.billOwnerForm.patchValue({
+      id  : Number (data.currentBillId),
       name : data.name,
       departmentName : data.department,
       designation : data.designation,
@@ -258,11 +258,11 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     this.technicaladminform.patchValue({
       id  :  Number(data.currentClientId),
       name : data.name,
-      department : data.department,
+      departmentName : data.department,
       designation :data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
-      mobileNumberCode : data.mobileNumberCode,
+      mobileNumberCode : data.mobileNumberCode, 
       mobileNumber : data.mobileNumber,
       telephoneNumber : data.telephoneNumber,
       telephoneNumberCode: data.telephoneNumberCode,

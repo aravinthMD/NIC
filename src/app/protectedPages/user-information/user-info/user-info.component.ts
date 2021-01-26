@@ -159,7 +159,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
-      officerMobileCode:[null],
+      FO_mobilecode:[null],
       OfficerMobile:[null],
       telPhno : [null],
       teleCode: [this.teleCodeValues[0].key],
@@ -314,7 +314,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       // toDate: new Date(),
       OfficerName:data.FO_name,
       OfficerEmail:data.FO_email,
-      officerMobileCode:data.officerMobileCode,
+      FO_mobilecode:data.FO_mobilecode,
       OfficerMobile:data.FO_mobile,
       smsServiceReqd: data.sms_service,
       // creditsSMSQuota: '4000',
@@ -345,7 +345,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-  
+    const departmentListData = this.departmentListData.filter((val)=> {
+      return val.key == this.form.value.departmentName
+      
+    })
     
     this.viewInfoData = [
       
@@ -365,9 +368,13 @@ export class UserInfoComponent implements OnInit,OnChanges {
       //   key : this.labels.applicantMobile,
       //   value : this.form.value.mobileNo
       // },
+      // {
+      //   key: this.labels.department,
+      //   value : "Ministry of Home Affairs"
+      // },
       {
-        key: this.labels.department,
-        value : "Ministry of Home Affairs"
+        key  : this.labels.department,
+        value :  departmentListData[0]?departmentListData[0].value:null
       },
       {
         key  :this.labels.designation,
@@ -395,7 +402,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       },
       {
         key  :"Officer Mobile",
-        value : `${this.form.value.officerMobileCode} ${this.form.value.OfficerMobile}`
+        value : `${this.form.value.FO_mobilecode} ${this.form.value.OfficerMobile}`
       },
       // {
       //   key  :"Officer Mobile",
@@ -532,7 +539,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "city":this.form.value.city,
       "state":this.form.value.state,
       "pincode":this.form.value.pinCode,
-      "officerMobileCode":this.form.value.officerMobileCode,
+      "FO_mobilecode":this.form.value.FO_mobilecode,
       "FO_mobile":this.form.value.OfficerMobile,
       "FO_name":this.form.value.OfficerName,
       "FO_email":this.form.value.OfficerEmail,

@@ -22,7 +22,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   showDataSaveModal : boolean;
   dataValue  = {}
 
-  viewInfoData  : any;
+  viewBillAdminInfoData  : any;
 
 
   countryCodeValues = [
@@ -81,6 +81,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       this.labels = values;
     });
     this.billOwnerForm=new FormGroup({
+      id : new FormControl ([null]),
       name : new FormControl ([null]),
       departmentName : new FormControl ([null]),
       designation :new FormControl ([null]),
@@ -120,9 +121,6 @@ export class BillingOwnerDetailsComponent implements OnInit {
       }else  {
        this.showView = false
       }
-
-
-
   }
 
   setBillOwnerFormValues(data?: any) {
@@ -130,7 +128,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       if(data){
 
       this.billOwnerForm.patchValue({
-        id  : Number (data.id),
+        id  : Number (data.currentBillId),
         name : data.name,
         departmentName : data.department,
         designation : data.designation,
@@ -153,7 +151,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     this.detectAuditTrialObj = this.billOwnerForm.value;
 
 
-    this.viewInfoData = [
+    this.viewBillAdminInfoData = [
       {
         key: this.labels.name,
         value:this.billOwnerForm.value.name
