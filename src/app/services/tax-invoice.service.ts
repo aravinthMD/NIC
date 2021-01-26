@@ -18,8 +18,9 @@ export class TaxInvoiceService {
 
     }
 
+
     getTaxInvoiceList(data) {
-        const creditSmsList = this.apiService.api.getSmsCreditAllocationData;
+        const creditSmsList = this.apiService.api.fetchAllTaxInvoiceDetails;
         const { processId, projectId, workflowId } = creditSmsList;
         const requestEntity: any = {
           processId,
@@ -43,7 +44,7 @@ export class TaxInvoiceService {
 
       saveOrUpdateTaxInvoiceDetails(data: TaxInvoice) {
 
-        const creditSmsList = this.apiService.api.saveOrUpdateSmsCredit;
+        const creditSmsList = this.apiService.api.saveOrUpdateTaxInvoice;
         const { processId, projectId, workflowId } = creditSmsList;
         const requestEntity: any = {
           processId,

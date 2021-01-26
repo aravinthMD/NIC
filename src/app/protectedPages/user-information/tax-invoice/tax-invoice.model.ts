@@ -1,4 +1,5 @@
 export interface TaxInvoice {
+    amendOrderNo?: string;
     userName?: string;
     projectNumber?: string;
     poNumber?: string;
@@ -6,11 +7,11 @@ export interface TaxInvoice {
     fromDate?: string;
     toDate?: string;
     billableAmount?: string;
-    InvoiceAmount?: string;
-    TaxInvoiceNumber?: string;
+    invoiceAmount?: string;
+    taxInvoiceNumber?: string;
     submittedDate?: string;
-    InvoiceStatus?: number;
-    InvoicePaidAmount?: string;
+    invoiceStatus?: number;
+    invoicePaidAmount?: string;
     tds?: string;
     penalty?: string;
     shortPay?: string;
@@ -29,10 +30,13 @@ export interface TaxInvoice {
     invoiceAmount2?: number;
     bankReceived?: string;
     receiptDate1?: string;
+    receiptDate?: string;
     month?: string;
     year?: string;
     mrnNumber?: string;
     projectName?: string;
-    Estimation?: string; // not available in form
     id?: number;
+    userId?: number;
+    interestOnTds?: number;
+    projectCoordinator?: string;
 }

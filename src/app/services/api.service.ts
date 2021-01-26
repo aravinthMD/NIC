@@ -263,6 +263,18 @@ export class ApiService {
       processId : 'b1aaefba4aad11ebb81e727d5ac274b2',
       projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : 'b1aaefba4aad11ebb81e727d5ac274b2'
+    },
+
+    saveOrUpdateTaxInvoice: {
+      processId : '117f0f5245c211ebb7cc727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '117f0f5245c211ebb7cc727d5ac274b2'
+    },
+
+    fetchAllTaxInvoiceDetails: {
+      processId : '842375d045d011ebb7cc727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '842375d045d011ebb7cc727d5ac274b2'
     }
 
   };
