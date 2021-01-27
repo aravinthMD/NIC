@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
       localStorage.setItem('userName',data.username)
 
-      this.loginService.getLogin(data).subscribe((response)=> {
+      this.loginService.getLogin(data).subscribe((response: any)=> {
 
 
         console.log(response)
@@ -63,6 +63,8 @@ export class LoginComponent implements OnInit {
         else if(response['ProcessVariables']['countUser'] === '1') {
 
           this.toasterService.showSuccess(response['ProcessVariables']['response'],'')
+          const processVariables = response.ProcessVariables;
+          localStorage.setItem('roleName', processVariables.roleName);
           this.router.navigate(["users/Dashboard/"]);
 
 
