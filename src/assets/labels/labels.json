@@ -197,12 +197,14 @@
         "projectNum": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type":"alpha-numeric"
         },
         "projectName": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha-numeric"
         },
         "userId": {
             "maxLength": {
@@ -334,7 +336,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "piAmount": {
             "maxLength": {
@@ -538,7 +540,7 @@
             "maxLength": {
                 "rule": "12"
             },
-            "type": "numeric"
+            "type": "number"
         },
         "bankReceived": {
             "maxLength": {

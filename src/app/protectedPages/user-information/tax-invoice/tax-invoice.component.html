@@ -32,6 +32,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="projectNumber" 
+                                   [type] = "labels?.validationData?.projectNo?.type"
                                    [isRequired]="'Project Number is Mandatory'" 
                                    [labelName]="labels.projectNo" 
                                    placeHolder =  "Enter the Project Number"
@@ -279,6 +280,7 @@
                                 [labelName]="labels.projectName" [id]="'projectName'" 
                                 placeHolder =  "Enter the ProjectName"
                                 [isRequired]="'ProjectName is Mandatory'" 
+                                [type]="labels?.validationData.projectName.type"
                                 [maxLength]="labels?.validationData.projectName.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -291,6 +293,7 @@
                                 [labelName]="labels.projectCordinator" [id]="'projectCordinator'" 
                                 placeHolder =  "Enter the projectCoOrdinator"
                                 [isRequired]="'projectCordinator is Mandatory'" 
+                                [type]="labels?.validationData.projectCordinator.type"
                                 [maxLength]="labels?.validationData.projectCordinator.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -303,6 +306,7 @@
                                 [labelName]="labels.PONoAmendOrder" [id]="'PONoAmendOrder'" 
                                 placeHolder =  "Enter the PONoAmendOrder"
                                 [isRequired]="'PONoAmendOrder is Mandatory'" 
+                                [type]="labels?.validationData.PONoAmendOrder.type"
                                 [maxLength]="labels?.validationData.PONoAmendOrder.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -326,7 +330,8 @@
                                 <app-custom-input formControlName="totalSMS" 
                                 [labelName]="labels.totalSMS" [id]="'totalSMS'" 
                                 placeHolder =  "Enter the totalSMS"
-                                [isRequired]="'totalSMS is Mandatory'" 
+                                [isRequired]="'totalSMS is Mandatory'"
+                                [type]="labels?.validationData.totalSMS.type" 
                                 [maxLength]="labels?.validationData.totalSMS.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -340,6 +345,7 @@
                                 [labelName]="labels.counts" [id]="'counts'" 
                                 placeHolder =  "Enter the counts"
                                 [isRequired]="'counts is Mandatory'" 
+                                [type]="labels?.validationData.counts.type"
                                 [maxLength]="labels?.validationData.counts.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -349,7 +355,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="baseAmount" 
-                                [type]="'number'"
+                                [type]="labels?.validationData.baseAmount.type"
                                 [labelName]="labels.baseAmount" [id]="'baseAmount'" 
                                 placeHolder =  "Enter the baseAmount"
                                 [isRequired]="'baseAmount is Mandatory'" 
@@ -362,7 +368,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="tax" 
-                                [type]="'number'"
+                                [type]="labels?.validationData.tax.type"
                                 [labelName]="labels.tax" [id]="'tax'" 
                                 placeHolder =  "Enter the tax"
                                 [isRequired]="'tax is Mandatory'" 
@@ -399,6 +405,7 @@
                                 [labelName]="labels.book" [id]="'book'" 
                                 placeHolder =  "Enter the Book"
                                 [isRequired]="'Book is Mandatory'" 
+                                [type]="labels?.validationData.book.type"
                                 [maxLength]="labels?.validationData.book.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -429,10 +436,11 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="invoiceAmount2"
-                                [type]="'number'" 
+                                
                                 [labelName]="labels.invoiceAmount2" [id]="'invoiceAmount2'" 
                                 placeHolder =  "Enter the InvoiceAmount2"
                                 [isRequired]="'InvoiceAmount2 is Mandatory'" 
+                                [type]="labels?.validationData.invoiceAmount2.type" 
                                 [maxLength]="labels?.validationData.invoiceAmount2.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -445,6 +453,7 @@
                                 [labelName]="labels.bankReceived" [id]="'bankReceived'" 
                                 placeHolder =  "Enter the BankReceived"
                                 [isRequired]="'Bank Received is Mandatory'" 
+                                [type]="labels?.validationData.bankReceived.type"
                                 [maxLength]="labels?.validationData.bankReceived.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
@@ -454,11 +463,11 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="interestOnTds" 
-                                [type]="'number'"
                                 [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
                                 placeHolder =  "Enter the interestOnTDSotherDeduction"
                                 [isRequired]="'interest On TDS other Deduction is Mandatory'" 
                                 [maxLength]="labels?.validationData.interestOnTDSotherDeduction.maxLength" 
+                                [type]="labels?.validationData.interestOnTDSotherDeduction.type"
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
@@ -509,7 +518,8 @@
                                 <app-custom-input formControlName="mrnNumber" 
                                 [labelName]="labels.mrn" [id]="'mrn'" 
                                 placeHolder =  "Enter the mrn"
-                                [isRequired]="'mrn is Mandatory'" 
+                                [isRequired]="'mrn is Mandatory'"
+                                [type]="labels?.validationData.mrn.type" 
                                 [maxLength]="labels?.validationData.mrn.maxLength" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
