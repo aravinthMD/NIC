@@ -1,4 +1,4 @@
-import { Injectable, Pipe, PipeTransform } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Injectable({
