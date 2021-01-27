@@ -11,11 +11,20 @@ import { TaxInvoice } from '../protectedPages/user-information/tax-invoice/tax-i
     providedIn: 'root'
 })
 export class TaxInvoiceService {
+    private paymentList: any[];
     constructor(
         private httpService: HttpService,
         private apiService: ApiService
     ) {
 
+    }
+
+    setPaymentList(value: any[]) {
+        this.paymentList = value;
+    }
+
+    getPaymentList() {
+      return this.paymentList;
     }
 
 

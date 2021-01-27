@@ -120,12 +120,12 @@ export class TaxInvoiceComponent implements OnInit {
       taxInvoiceNumber: new FormControl(null),
       invoiceDate: new FormControl(null),
       submittedDate: new FormControl(null),
-      invoiceStatus: new FormControl(null),
+      invoiceStatus: new FormControl(''),
       invoicePaidAmount: new FormControl(null),
       tds:  new FormControl(null),
       penalty:  new FormControl(null),
       shortPay: new FormControl(null),
-      paymentStatus: new FormControl(null),
+      paymentStatus: new FormControl(''),
       remark: new FormControl(null),
       uploadDocument: new FormControl(null),
       userEmail: new FormControl(null),
@@ -190,7 +190,6 @@ export class TaxInvoiceComponent implements OnInit {
 
     // this.dataSource = new MatTableDataSource<any>(this.userList);
     // this.getAllTaxInvoiceDetails();
-    this.getAllTaxInvoiceList();
   }
 
   getAllTaxInvoiceList(data = {}) {
@@ -207,7 +206,7 @@ export class TaxInvoiceComponent implements OnInit {
         return this.toasterService.showError(errorMsg, '');
       }
       const processVariables = res.ProcessVariables;
-      this.taxInvoiceList = processVariables.TIList;
+      this.taxInvoiceList = processVariables.TIList || [];
       this.dataSource = new MatTableDataSource<any>(this.taxInvoiceList);
       this.dataSource.paginator = this.paginator;
     });
@@ -220,19 +219,29 @@ export class TaxInvoiceComponent implements OnInit {
 
   async getSubLovs() {
 
-    let listData = []
+    // let listData = []
 
-    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+    await this.adminService.getLovSubMenuList('3')
+    .subscribe((response: any) => {
 
+     const paymentList = response.ProcessVariables.Lovitems;
+     this.paymentStatus = paymentList.map((value) => {
+       return {
+         key: value.key,
+         value: value.name
+       };
+     });
+     this.taxInvoiceService.setPaymentList(this.paymentStatus);
+     this.getAllTaxInvoiceList();
 
-      const submenuList = response['ProcessVariables']['Lovitems'];
-     submenuList.forEach(element => {
-        
-        listData.push({key:element.key,value:element.name})
+    //   const submenuList = response['ProcessVariables']['Lovitems'];
+    //  submenuList.forEach(element => {
+
+    //     listData.push({key:element.key,value:element.name})
+    //   });
       });
-    })
 
-    this.paymentStatus = listData;
+    // this.paymentStatus = listData;
 
   }
 

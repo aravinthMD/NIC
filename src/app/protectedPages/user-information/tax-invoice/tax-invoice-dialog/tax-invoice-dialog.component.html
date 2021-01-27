@@ -30,6 +30,7 @@
             [isRequired]="'Project Number is Mandatory'" 
             [labelName]="labels.projectNo" 
             placeHolder = "Enter the Project Number"
+            [type] = "labels?.validationData?.projectNo?.type"
             [maxLength]="labels?.validationData?.projectNo?.maxLength"
             [isDirty]="isDirty"
             [isDisabledInp]="enableFlag" 
@@ -44,6 +45,7 @@
               [isRequired]="'PO Number is Mandatory'" 
               [labelName]="labels?.poNumber" 
               placeHolder =  "Enter the PO Number"
+              [type]="labels?.validationData?.poNumber?.type" 
               [maxLength]="labels?.validationData?.poNumber?.maxLength"
               [isDirty]="isDirty"
               [isDisabledInp]="enableFlag" 
@@ -161,6 +163,7 @@
       [labelName]="labels?.taxIN" 
       placeHolder =  "Enter the Tax Invoice Number"
       [maxLength]="labels?.validationData?.taxIN?.maxLength"
+      [type]="labels?.validationData?.taxIN?.type"
       [isDirty]="isDirty"
       [isDisabledInp]="enableFlag" 
       >
@@ -293,6 +296,7 @@
           [labelName]="labels.projectName" [id]="'projectName'" 
           placeHolder =  "Enter the ProjectName"
           [isRequired]="'ProjectName is Mandatory'" 
+          [type]="labels?.validationData.projectName.type"
           [maxLength]="labels?.validationData.projectName.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -305,6 +309,7 @@
           [labelName]="labels.projectCordinator" [id]="'projectCordinator'" 
           placeHolder =  "Enter the projectCordinator"
           [isRequired]="'projectCordinator is Mandatory'" 
+          [type]="labels?.validationData.projectCordinator.type"
           [maxLength]="labels?.validationData.projectCordinator.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -317,6 +322,7 @@
           [labelName]="labels.PONoAmendOrder" [id]="'PONoAmendOrder'" 
           placeHolder =  "Enter the PONoAmendOrder"
           [isRequired]="'PONoAmendOrder is Mandatory'" 
+          [type]="labels?.validationData.PONoAmendOrder.type"
           [maxLength]="labels?.validationData.PONoAmendOrder.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -340,7 +346,8 @@
           <app-custom-input formControlName="totalSMS" 
           [labelName]="labels.totalSMS" [id]="'totalSMS'" 
           placeHolder =  "Enter the totalSMS"
-          [isRequired]="'totalSMS is Mandatory'" 
+          [isRequired]="'totalSMS is Mandatory'"
+          [type]="labels?.validationData.totalSMS.type"  
           [maxLength]="labels?.validationData.totalSMS.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -353,6 +360,7 @@
           [labelName]="labels.projectCordinator" [id]="'counts'" 
           placeHolder =  "Enter the counts"
           [isRequired]="'counts is Mandatory'" 
+          [type]="labels?.validationData.counts.type"
           [maxLength]="labels?.validationData.counts.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -362,6 +370,7 @@
   <div class="col-4">
       <div class="form-group">
           <app-custom-input formControlName="baseAmount" 
+          [type]="labels?.validationData.baseAmount.type"
           [labelName]="labels.baseAmount" [id]="'baseAmount'" 
           placeHolder =  "Enter the baseAmount"
           [isRequired]="'baseAmount is Mandatory'" 
@@ -374,6 +383,7 @@
   <div class="col-4">
       <div class="form-group">
           <app-custom-input formControlName="tax" 
+          [type]="labels?.validationData.tax.type"
           [labelName]="labels.tax" [id]="'tax'" 
           placeHolder =  "Enter the tax"
           [isRequired]="'tax is Mandatory'" 
@@ -407,6 +417,7 @@ taxInvoiceForm.get('receiveDate').errors?.required
   <div class="col-4">
       <div class="form-group">
           <app-custom-input formControlName="book" 
+          [type]="labels?.validationData.book.type"
           [labelName]="labels.book" [id]="'book'" 
           placeHolder =  "Enter the Book"
           [isRequired]="'Book is Mandatory'" 
@@ -429,7 +440,7 @@ taxInvoiceForm.get('receiveDate').errors?.required
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('dateEstimated').errors?.required
 ">
               Please Select Date
           </div>
@@ -443,6 +454,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           [labelName]="labels.invoiceAmount2" [id]="'invoiceAmount2'" 
           placeHolder =  "Enter the InvoiceAmount2"
           [isRequired]="'InvoiceAmount2 is Mandatory'" 
+          [type]="labels?.validationData.invoiceAmount2.type" 
           [maxLength]="labels?.validationData.invoiceAmount2.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -455,6 +467,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           [labelName]="labels.bankReceived" [id]="'bankReceived'" 
           placeHolder =  "Enter the BankReceived"
           [isRequired]="'Bank Received is Mandatory'" 
+          [type]="labels?.validationData.bankReceived.type"
           [maxLength]="labels?.validationData.bankReceived.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -467,6 +480,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
           placeHolder =  "Enter the interestOnTDSotherDeduction"
           [isRequired]="'interest On TDS other Deduction is Mandatory'" 
+          [type]="labels?.validationData.interestOnTDSotherDeduction.type"
           [maxLength]="labels?.validationData.interestOnTDSotherDeduction.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -486,7 +500,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('receiptDate').errors?.required
 ">
               Please Select Date
           </div>
@@ -501,6 +515,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           [labelName]="labels.mrn" [id]="'mrn'" 
           placeHolder =  "Enter the mrn"
           [isRequired]="'mrn is Mandatory'" 
+          [type]="labels?.validationData.mrn.type" 
           [maxLength]="labels?.validationData.mrn.maxLength" 
           [isDirty]="isDirty" 
           >

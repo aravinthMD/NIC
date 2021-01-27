@@ -9,6 +9,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { TaxInvoice } from '../tax-invoice.model';
 
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
+import { TaxInvoiceService } from '@services/tax-invoice.service';
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -54,15 +55,16 @@ export class TaxInvoiceDialogComponent implements OnInit {
   updateEmitter = new EventEmitter();
 
   constructor(
-      private formBuilder : FormBuilder,
-      private dialogRef : MatDialogRef<TaxInvoiceDialogComponent>,
-      private labelService : LabelsService,
+      private formBuilder: FormBuilder,
+      private dialogRef: MatDialogRef<TaxInvoiceDialogComponent>,
+      private labelService: LabelsService,
       private toasterService: ToasterService,
       private router: Router,
       private activatedRoute: ActivatedRoute,
       private utilService: UtilService,
-      private invoiceService : InvoiceService,
+      private invoiceService: InvoiceService,
       private customDateAdapter: CustomDateAdapter,
+      private taxInvoiceService: TaxInvoiceService,
       @Optional() @Inject(MAT_DIALOG_DATA) public data: TaxInvoice,
       ) {
 
@@ -119,12 +121,10 @@ export class TaxInvoiceDialogComponent implements OnInit {
   ]
   detectAuditTrialObj:any;
   remarkModal:boolean;
-  paymentStatus: any[] = [
-    { key: 0, value: 'Pending' },
-    { key: 1, value: 'Received' },
-    { key: 2, value: 'On Hold' }]
+  paymentStatus: any[] = [];
 
   ngOnInit() {
+    this.paymentStatus = this.taxInvoiceService.getPaymentList();
     this.labelService.getLabelsData().subscribe((value) => {
       this.labels = value;
       this.initForm();
@@ -319,12 +319,12 @@ export class TaxInvoiceDialogComponent implements OnInit {
       taxInvoiceNumber: new FormControl(null),
       invoiceDate: new FormControl(null),
       submittedDate: new FormControl(null),
-      invoiceStatus: new FormControl(null),
+      invoiceStatus: new FormControl(''),
       invoicePaidAmount: new FormControl(null),
       tds:  new FormControl(null),
       penalty:  new FormControl(null),
       shortPay: new FormControl(null),
-      paymentStatus: new FormControl(null),
+      paymentStatus: new FormControl(''),
       remark: new FormControl(null),
       uploadDocument: new FormControl(null),
       userEmail: new FormControl(null),
@@ -353,8 +353,8 @@ export class TaxInvoiceDialogComponent implements OnInit {
         return val.key === this.data.invoiceStatus;
     });
     const paymentStatusDesc = this.paymentStatus.find((val) => {
-      return val.key === this.data.paymentStatus;
-    })
+      return Number(val.key) === Number(this.data.paymentStatus);
+    });
     this.viewInfoData = [
       {
         key: this.labels.userName,
@@ -395,7 +395,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
       },
       {
         key: this.labels.submittedDate,
-        value: ''
+        value: this.data.submittedDate
       },
       {
         key: this.labels.invoiceStatus,
@@ -419,7 +419,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
       },
       {
         key: this.labels.paymentStatus,
-        value: paymentStatusDesc
+        value: paymentStatusDesc.value
       },
       {
         key: this.labels.remark,
@@ -530,6 +530,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
         projectName: this.data.projectName,
         amendOrderNo: this.data.amendOrderNo,
         interestOnTds: this.data.interestOnTds,
+        projectCoordinator: this.data.projectCoordinator,
         fromDate,
         toDate,
         invoiceDate,
@@ -613,7 +614,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   OnUpdate() {
 
-    if (!this.taxInvoiceForm.invalid) {
+    if (!this.taxInvoiceForm.valid) {
       this.isDirty = true;
       return this.toasterService.showError('Please fill all the fields', '');
     }
