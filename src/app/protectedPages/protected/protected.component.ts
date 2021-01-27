@@ -13,12 +13,14 @@ export class ProtectedComponent implements OnInit {
 
 
   userName : string;
+  userType: string;
   constructor(private router :Router,private utilService:UtilService,private ngxUiLoaderService: NgxUiLoaderService) { 
 
     this.userName = localStorage.getItem('userName') || 'Admin User'
   }
 
   ngOnInit() {
+    this.userType = localStorage.getItem('roleName');
   }
 
   newUserMethod(){

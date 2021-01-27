@@ -106,7 +106,7 @@
     "rate": "Rate",
     "quantity": "Quantity",
     "description": "Description",
-    "projectCordinator":"Project Cordinator",
+    "projectCordinator":"Project Coordinator",
     "PONoAmendOrder":"PO NO/Amend Order",
     "mail": "Mail",
     "totalSMS": "Total SMS",
@@ -114,7 +114,7 @@
     "baseAmount": "Base Amount",
     "tax":"Tax",
     "recvDate":"Recv Date",
-    "book": "BooK",
+    "book": "Book",
     "dateEstimated": "Date Estimated",
     "invoiceAmount2": "Invoice Amount2",
     "bankReceived": "Bank Received",
@@ -197,12 +197,14 @@
         "projectNum": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type":"alpha-numeric"
         },
         "projectName": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha-numeric"
         },
         "userId": {
             "maxLength": {
@@ -334,7 +336,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "piAmount": {
             "maxLength": {
@@ -538,7 +540,7 @@
             "maxLength": {
                 "rule": "12"
             },
-            "type": "numeric"
+            "type": "number"
         },
         "bankReceived": {
             "maxLength": {

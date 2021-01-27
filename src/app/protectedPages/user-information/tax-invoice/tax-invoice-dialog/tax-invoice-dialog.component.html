@@ -26,10 +26,11 @@
 
         <div class="col-4">
           <div class="form-group">
-            <app-custom-input formControlName="projectNo" 
+            <app-custom-input formControlName="projectNumber" 
             [isRequired]="'Project Number is Mandatory'" 
             [labelName]="labels.projectNo" 
             placeHolder = "Enter the Project Number"
+            [type] = "labels?.validationData?.projectNo?.type"
             [maxLength]="labels?.validationData?.projectNo?.maxLength"
             [isDirty]="isDirty"
             [isDisabledInp]="enableFlag" 
@@ -44,6 +45,7 @@
               [isRequired]="'PO Number is Mandatory'" 
               [labelName]="labels?.poNumber" 
               placeHolder =  "Enter the PO Number"
+              [type]="labels?.validationData?.poNumber?.type" 
               [maxLength]="labels?.validationData?.poNumber?.maxLength"
               [isDirty]="isDirty"
               [isDisabledInp]="enableFlag" 
@@ -126,7 +128,7 @@
 
   <div class="col-4">
     <div class="form-group">
-        <app-custom-input  formControlName="poBillable" 
+        <app-custom-input  formControlName="billableAmount" 
         [isRequired]="'Billable Amount is Mandatory'" 
         [labelName]="labels?.poBillable"
         placeHolder  =  "Enter the Billable Amount"
@@ -156,11 +158,12 @@
 
 <div class="col-4">
   <div class="form-group">
-      <app-custom-input formControlName="taxIN" 
+      <app-custom-input formControlName="taxInvoiceNumber" 
       [isRequired]="'Tax Invoice Number is Mandatory'" 
       [labelName]="labels?.taxIN" 
       placeHolder =  "Enter the Tax Invoice Number"
       [maxLength]="labels?.validationData?.taxIN?.maxLength"
+      [type]="labels?.validationData?.taxIN?.type"
       [isDirty]="isDirty"
       [isDisabledInp]="enableFlag" 
       >
@@ -173,7 +176,7 @@
   <label for="dateFor">{{labels?.submittedDate}}</label>
  
   <mat-form-field>
-    <input matInput required formControlName="submittedOn" 
+    <input matInput required formControlName="submittedDate" 
     [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')" [disabled] = "enableFlag">
     <mat-datepicker-toggle matSuffix [for]="sumbittedDatePicker" 
     ></mat-datepicker-toggle>
@@ -181,7 +184,7 @@
   </mat-form-field>
   <div class="date-picker-error"  *ngIf="
   isDirty &&
-  taxInvoiceForm.get('submittedOn').errors?.required
+  taxInvoiceForm.get('submittedDate').errors?.required
 ">
     Please select date
 </div>
@@ -203,7 +206,7 @@
 
         <div class="col-4">
           <div class="form-group">
-            <app-custom-input formControlName = "invoiceAmountPaid"
+            <app-custom-input formControlName = "invoicePaidAmount"
             [isRequired] = "'Invoice Amount Paid is Mandatory'"
             [labelName] = "labels?.invoiceAmountPaid"
             placeHolder =  "Enter the Invoice Paid Amount"
@@ -293,6 +296,7 @@
           [labelName]="labels.projectName" [id]="'projectName'" 
           placeHolder =  "Enter the ProjectName"
           [isRequired]="'ProjectName is Mandatory'" 
+          [type]="labels?.validationData.projectName.type"
           [maxLength]="labels?.validationData.projectName.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -301,10 +305,11 @@
   </div>
   <div class="col-4">
       <div class="form-group">
-          <app-custom-input formControlName="projectCordinator" 
+          <app-custom-input formControlName="projectCoordinator" 
           [labelName]="labels.projectCordinator" [id]="'projectCordinator'" 
           placeHolder =  "Enter the projectCordinator"
           [isRequired]="'projectCordinator is Mandatory'" 
+          [type]="labels?.validationData.projectCordinator.type"
           [maxLength]="labels?.validationData.projectCordinator.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -313,10 +318,11 @@
   </div>
   <div class="col-4">
       <div class="form-group">
-          <app-custom-input formControlName="PONoAmendOrder" 
+          <app-custom-input formControlName="amendOrderNo" 
           [labelName]="labels.PONoAmendOrder" [id]="'PONoAmendOrder'" 
           placeHolder =  "Enter the PONoAmendOrder"
           [isRequired]="'PONoAmendOrder is Mandatory'" 
+          [type]="labels?.validationData.PONoAmendOrder.type"
           [maxLength]="labels?.validationData.PONoAmendOrder.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -325,7 +331,7 @@
   </div>
   <div class="col-4">
       <div class="form-group">
-          <app-custom-input formControlName="mail" 
+          <app-custom-input formControlName="userEmail" 
           [labelName]="labels.mail" [id]="'mail'" 
           placeHolder =  "Enter the mail"
           [isRequired]="'mail is Mandatory'" 
@@ -340,7 +346,8 @@
           <app-custom-input formControlName="totalSMS" 
           [labelName]="labels.totalSMS" [id]="'totalSMS'" 
           placeHolder =  "Enter the totalSMS"
-          [isRequired]="'totalSMS is Mandatory'" 
+          [isRequired]="'totalSMS is Mandatory'"
+          [type]="labels?.validationData.totalSMS.type"  
           [maxLength]="labels?.validationData.totalSMS.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -349,10 +356,11 @@
   </div>
   <div class="col-4">
       <div class="form-group">
-          <app-custom-input formControlName="counts" 
+          <app-custom-input formControlName="counts1" 
           [labelName]="labels.projectCordinator" [id]="'counts'" 
           placeHolder =  "Enter the counts"
           [isRequired]="'counts is Mandatory'" 
+          [type]="labels?.validationData.counts.type"
           [maxLength]="labels?.validationData.counts.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -362,6 +370,7 @@
   <div class="col-4">
       <div class="form-group">
           <app-custom-input formControlName="baseAmount" 
+          [type]="labels?.validationData.baseAmount.type"
           [labelName]="labels.baseAmount" [id]="'baseAmount'" 
           placeHolder =  "Enter the baseAmount"
           [isRequired]="'baseAmount is Mandatory'" 
@@ -374,6 +383,7 @@
   <div class="col-4">
       <div class="form-group">
           <app-custom-input formControlName="tax" 
+          [type]="labels?.validationData.tax.type"
           [labelName]="labels.tax" [id]="'tax'" 
           placeHolder =  "Enter the tax"
           [isRequired]="'tax is Mandatory'" 
@@ -389,14 +399,14 @@
           <label for="dateFor">{{labels?.recvDate}}</label>
 
           <mat-form-field floatLabel  =  "never">
-              <input matInput required formControlName="recvDate" [matDatepicker]="recvDateDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
+              <input matInput required formControlName="receiveDate" [matDatepicker]="recvDateDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
               <mat-datepicker-toggle matSuffix [for]="recvDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #recvDateDatePicker></mat-datepicker>
               <mat-placeholder>Choose The Date</mat-placeholder>
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('receiveDate').errors?.required
 ">
               Please Select Date
           </div>
@@ -407,6 +417,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
   <div class="col-4">
       <div class="form-group">
           <app-custom-input formControlName="book" 
+          [type]="labels?.validationData.book.type"
           [labelName]="labels.book" [id]="'book'" 
           placeHolder =  "Enter the Book"
           [isRequired]="'Book is Mandatory'" 
@@ -429,7 +440,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('dateEstimated').errors?.required
 ">
               Please Select Date
           </div>
@@ -443,6 +454,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           [labelName]="labels.invoiceAmount2" [id]="'invoiceAmount2'" 
           placeHolder =  "Enter the InvoiceAmount2"
           [isRequired]="'InvoiceAmount2 is Mandatory'" 
+          [type]="labels?.validationData.invoiceAmount2.type" 
           [maxLength]="labels?.validationData.invoiceAmount2.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -455,6 +467,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           [labelName]="labels.bankReceived" [id]="'bankReceived'" 
           placeHolder =  "Enter the BankReceived"
           [isRequired]="'Bank Received is Mandatory'" 
+          [type]="labels?.validationData.bankReceived.type"
           [maxLength]="labels?.validationData.bankReceived.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -463,10 +476,11 @@ taxInvoiceForm.get('submittedOn').errors?.required
   </div>
   <div class="col-4">
       <div class="form-group">
-          <app-custom-input formControlName="interestOnTDSotherDeduction" 
+          <app-custom-input formControlName="interestOnTds" 
           [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
           placeHolder =  "Enter the interestOnTDSotherDeduction"
           [isRequired]="'interest On TDS other Deduction is Mandatory'" 
+          [type]="labels?.validationData.interestOnTDSotherDeduction.type"
           [maxLength]="labels?.validationData.interestOnTDSotherDeduction.maxLength" 
           [isDirty]="isDirty" 
           >
@@ -486,7 +500,7 @@ taxInvoiceForm.get('submittedOn').errors?.required
           </mat-form-field>
           <div class="date-picker-error" *ngIf="
 isDirty &&
-taxInvoiceForm.get('submittedOn').errors?.required
+taxInvoiceForm.get('receiptDate').errors?.required
 ">
               Please Select Date
           </div>
@@ -497,10 +511,11 @@ taxInvoiceForm.get('submittedOn').errors?.required
   
   <div class="col-4">
       <div class="form-group">
-          <app-custom-input formControlName="mrn" 
+          <app-custom-input formControlName="mrnNumber" 
           [labelName]="labels.mrn" [id]="'mrn'" 
           placeHolder =  "Enter the mrn"
           [isRequired]="'mrn is Mandatory'" 
+          [type]="labels?.validationData.mrn.type" 
           [maxLength]="labels?.validationData.mrn.maxLength" 
           [isDirty]="isDirty" 
           >
