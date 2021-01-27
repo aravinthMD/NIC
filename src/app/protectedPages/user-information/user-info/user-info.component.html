@@ -636,29 +636,19 @@
                                         <div class="form-group">
                                             <label for="poBillable">{{labels.uploadDoc}}</label>
                                             <input type="file" class="form-control upload-choose-pad" id="poBillable"
-                                                aria-describedby="poBillableHelp">
+                                                aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
                                             <small id="poBillableHelp" class="form-text text-muted"></small>
                                         </div>
                                     </div>
 
                                 </div>
-                            <div class="row formAlignment">
 
-                                <div class="col-4" *ngIf="existingUserFlag" style="margin-top: 40px; padding-bottom:30px;">
-
-                                    <div class="form-group" style="margin-top: -20px;">
-                                    <label for="document">Document</label>
-                                    <div class="pd-2">
-                                        <span style="font-size:16px;"> {{'invoice.pdf'}} </span>
-                            
-                                        <button class="btn btn-primary" style="position: absolute;
-                                                left: 150px;
-                                                bottom: 30px;" (click)="viewDoc()">View</button>
+                                <div class="col-4" *ngIf="existingUserFlag" style="padding-bottom:30px;">
+                                    <label for="document">Document</label><br>
+                                    <div class="pb-2">
+                                        <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="viewDoc()">View PDF</button>
                                     </div>
-                            
-                            </div>
-                            
-                                    </div>
+                                </div>
                                 
                                 
                                 
@@ -678,7 +668,6 @@
                                     </div>
                                 </div> -->
                                 
-                            </div>
 
                             
                     
@@ -771,15 +760,12 @@
                     <div class="form-group" style="cursor: pointer;" (click)="showPDF()">
         
                         <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'"
-                        height="80px" width="80px" />
+                        height="80px" width="80px" title="Click to preview the Document" />
                     </div>
                     </div>
                     <div class="col-12 pt-3 ">
-                    <div class="form-group ml-1">
-                        {{fileName}}
-                    </div>
                     <div class="form-group small ml-1 pt-2 pb-3">
-                        {{fileSize}}
+                            Click the Icon to preview
                     </div>
                     <div class="form-group row" style="margin-left: 5px">
                         
@@ -858,8 +844,8 @@
                 <h4 class="modal-title">View PDF</h4>
                 <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
             </div>
-            <div class="modal-body" style="height:500px">
-        
+            <div class="modal-body" style="height: 500px;">
+                <iframe [src]= "previewUrl | secure | async" style="height:464px;width: 763px;" type="application/pdf"></iframe>
             </div>
         </div>
         </div>
