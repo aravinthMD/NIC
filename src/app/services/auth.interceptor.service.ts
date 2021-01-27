@@ -221,6 +221,7 @@ import { Observable, throwError } from 'rxjs';
 
 import { map, tap, first, catchError } from 'rxjs/operators';
 import { ToasterService } from '@services/toaster.service'
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -228,6 +229,8 @@ import { ToasterService } from '@services/toaster.service'
 export class AuthInterceptor implements HttpInterceptor {
 
   apiCount: number = 0;
+
+  url = environment.appiyoDrive
 
   constructor(private toasterService: ToasterService,private ngxUiLoaderService:NgxUiLoaderService) { }
 
@@ -242,8 +245,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     console.log("request ",req);
     const httpMethod = req.method
-    if (httpMethod == 'POST') {
-      if (req.url.includes('appiyo')) {
+    // if (httpMethod == 'POST') {
+      if (req.url.includes('appiyo') && !req.url.includes(this.url) ) {
       req = req.clone({
         setHeaders: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -329,7 +332,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     );
 
-      }
+      // }
     }
 
     checkApiCount() {

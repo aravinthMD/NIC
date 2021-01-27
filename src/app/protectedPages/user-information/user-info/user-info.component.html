@@ -553,90 +553,6 @@
                             
                         </div>
                     
-                    
-                            <div class="row formAlignment">
-                                <!-- <div class="col-4" *ngIf="existingUserFlag">
-                                    <div class="form-group">
-                                        <app-custom-input formControlName="creditAdded" 
-                                            [labelName]="labels.creditAdded"
-                                            placeHolder =  "Enter the Credit Added"
-                                            [id]="'creditAdded'" 
-                                            [isRequired]="'CreditAdded is Mandatory'"
-                                            [maxLength]="labels?.validationData.creditAdded.maxLength"
-                                            [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
-                                        </app-custom-input>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-4" *ngIf="existingUserFlag">
-                                    <div class="form-group">
-                                        <app-custom-input formControlName="creditApprover" 
-                                            [labelName]="labels.creditApprover"
-                                            placeHolder =  "Enter the Credit Approver"
-                                            [id]="'creditApprover'" 
-                                            [isRequired]="'CreditApprover is Mandatory'"
-                                            [maxLength]="labels?.validationData.creditApprover.maxLength"
-                                            [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
-                                        </app-custom-input>
-                                    </div>
-                                </div> -->
-
-                                <!-- <div class="col-4">
-                                    <div class="form-group">
-                                        <app-custom-input formControlName="remark" 
-                                            [labelName]="labels.remark" 
-                                            placeHolder =  "Enter the Remark"
-                                            [id]="'remark'"
-                                            [maxLength]="labels?.validationData.remark.maxLength" 
-                                            [isRequired]="'Remark is Mandatory'"
-                                            [isDisabledInp]="propertyFlag"
-                                            [isDirty]="isDirty">
-                                        </app-custom-input>
-                                    </div>
-                                </div>  -->
-                                <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="remark">{{labels.remark}}</label>
-                                                <textarea class="remark" maxlength="3000" 
-                                                formControlName='remark' id="remark" 
-                                                placeHolder =  "Enter the Remark" required></textarea>
-                                                <div class="date-picker-error" *ngIf="
-                                        isDirty &&
-                                        form.get('remark').errors?.required
-                                        ">
-                                                                Please Enter Remark
-                                                            </div>
-                                            </div>
-                                </div>
-                                <!-- <div class="col-4" *ngIf="existingUserFlag">
-                                    <div class="form-group">
-                                        <label for="creditDate">{{labels.creditDate}}</label>
-                                        <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                                            <input matInput [matDatepicker]="picker3" formControlName="creditDate" (keyup)="detectDateKeyAction($event,'creditDate')" required>
-                                            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker3></mat-datepicker>
-                                        </mat-form-field>
-
-                                        <div class="date-picker-error" *ngIf="
-                                isDirty &&
-                                form.get('creditDate').errors?.required
-                                ">
-                                            Please select date
-                                        </div>
-
-
-                                    </div>
-                                </div> -->
-
-
-                                <div class="col-4"  *ngIf="!existingUserFlag">
-                                    <div class="form-group">
-                                        <label for="poBillable">{{labels.uploadDoc}}</label>
-                                        <input type="file" class="form-control upload-choose-pad" id="poBillable"
-                                            aria-describedby="poBillableHelp">
-                                        <small id="poBillableHelp" class="form-text text-muted"></small>
-                                    </div>
-                                </div>
-                            </div> 
                                 <div class="row formAlignment1"> 
                                     <!-- <div class="col-4" *ngIf="existingUserFlag">
                                         <div class="form-group">
@@ -670,28 +586,43 @@
                                         </div>
                                         </div> -->
 
+<<<<<<< HEAD
                                         
 
                                     
+=======
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <app-custom-input formControlName="remark" 
+                                                [labelName]="labels.remark" 
+                                                placeHolder =  "Enter the Remark"
+                                                [id]="'remark'"
+                                                [maxLength]="labels?.validationData.remark.maxLength" 
+                                                [isRequired]="'Remark is Mandatory'"
+                                                [isDisabledInp]="propertyFlag"
+                                                [isDirty]="isDirty">
+                                            </app-custom-input>
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-4"  *ngIf="!existingUserFlag">
+                                        <div class="form-group">
+                                            <label for="poBillable">{{labels.uploadDoc}}</label>
+                                            <input type="file" class="form-control upload-choose-pad" id="poBillable"
+                                                aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
+                                            <small id="poBillableHelp" class="form-text text-muted"></small>
+                                        </div>
+                                    </div>
+>>>>>>> 937bac975aedbb0329f5e3daff72c91c89916db2
 
                                 </div>
-                            <div class="row formAlignment">
 
-                                <div class="col-4" *ngIf="existingUserFlag" style="margin-top: 40px; padding-bottom:30px;">
-
-                                    <div class="form-group" style="margin-top: -20px;">
-                                    <label for="document">Document</label>
-                                    <div class="pd-2">
-                                        <span style="font-size:16px;"> {{'invoice.pdf'}} </span>
-                            
-                                        <button class="btn btn-primary" style="position: absolute;
-                                                left: 150px;
-                                                bottom: 30px;" (click)="viewDoc()">View</button>
+                                <div class="col-4" *ngIf="existingUserFlag" style="padding-bottom:30px;">
+                                    <label for="document">Document</label><br>
+                                    <div class="pb-2">
+                                        <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="viewDoc()">View PDF</button>
                                     </div>
-                            
-                            </div>
-                            
-                                    </div>
+                                </div>
                                 
                                 
                                 
@@ -711,7 +642,6 @@
                                     </div>
                                 </div> -->
                                 
-                            </div>
 
                             
                     
@@ -804,15 +734,12 @@
                     <div class="form-group" style="cursor: pointer;" (click)="showPDF()">
         
                         <img [src]="imageUrl ? 'data:image/jpeg;base64,' + imageUrl : 'assets/images/upload-icon.png'"
-                        height="80px" width="80px" />
+                        height="80px" width="80px" title="Click to preview the Document" />
                     </div>
                     </div>
                     <div class="col-12 pt-3 ">
-                    <div class="form-group ml-1">
-                        {{fileName}}
-                    </div>
                     <div class="form-group small ml-1 pt-2 pb-3">
-                        {{fileSize}}
+                            Click the Icon to preview
                     </div>
                     <div class="form-group row" style="margin-left: 5px">
                         
@@ -891,8 +818,8 @@
                 <h4 class="modal-title">View PDF</h4>
                 <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
             </div>
-            <div class="modal-body" style="height:500px">
-        
+            <div class="modal-body" style="height: 500px;">
+                <iframe [src]= "previewUrl | secure | async" style="height:464px;width: 763px;" type="application/pdf"></iframe>
             </div>
         </div>
         </div>

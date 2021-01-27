@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
+import { AdminService } from './admin.service';
 
 @Injectable({
   providedIn: 'root'
@@ -160,5 +161,65 @@ getCustomerId(){
       }
 
 
-  constructor() { }
+    // async uploadToAppiyoDrive(file : Blob) {
+    //     let uploadStatus :boolean = false;
+    //     let documentUploadId  = null;
+    //    this.adminService.uploadToAppiyoDrive(file).subscribe((response) =>{
+    //           if(response['ok']){
+    //             uploadStatus = true;
+    //               documentUploadId = response['info']['id'];
+    //               return {
+    //                 uploadStatus,
+    //                 documentUploadId
+    //               }
+    //           }else{
+    //             uploadStatus = false;
+    //               documentUploadId = null;
+    //               return {
+    //                 uploadStatus,
+    //                 documentUploadId
+    //               }
+    //           }
+    //   })
+    // }
+
+    uploadToAppiyoDrive(file : Blob) {
+
+      return new Promise((resolve,reject)=> {
+  
+          let uploadStatus :boolean = false;
+          let documentUploadId  = null;
+         this.adminService.uploadToAppiyoDrive(file).subscribe((response) =>{
+                if(response['ok']){
+                  uploadStatus = true;
+                    documentUploadId = response['info']['id'];
+                    const output =  {
+                      uploadStatus,
+                      documentUploadId
+                    }
+  
+                    resolve(output)
+                }else{
+                  uploadStatus = false;
+                    documentUploadId = null;
+                     const output =  {
+                      uploadStatus,
+                      documentUploadId
+                    }
+  
+                    resolve(output)
+                }
+        },
+          error => {
+            console.log('error', error);
+            reject(error);
+          })
+  
+  
+      })
+          
+      }
+
+
+  constructor(private adminService : AdminService) { }
 }

@@ -301,6 +301,26 @@ deleteAdminUser(id) {
 
 }
 
+
+
+uploadToAppiyoDrive(file : any)
+{
+  let uri = environment.host + environment.appiyoDrive;
+  let headers = {
+    headers: new HttpHeaders({
+     // 'Content-Type': 'application/json'
+    })
+    
+  };
+//  const headers = {
+//     'Content-Type': 'application/json'
+//   }
+  const formData = new FormData();
+  formData.append('file[]',file,file.name); 
+  return this.httpService.post(uri,formData,headers);
+}
+
+
 transform(data: any) {
   return new HttpParams({ fromObject: data });
 }
