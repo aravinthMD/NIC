@@ -61,7 +61,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
       {key:0,value:'Department of Sainik Welfare'},
       {key:1,value:'Ministry of Minority Affairs'},
       {key:2,value:'Visakhapatnam Port Trust'},
-      {key:13,value:'Ministry of Tribal Affairs'},
+      {key:3,value:'Ministry of Tribal Affairs'},
       {key:4,value:'Bureau of Naviks Mumbai'}
   ];
   smsServiceReqd=[

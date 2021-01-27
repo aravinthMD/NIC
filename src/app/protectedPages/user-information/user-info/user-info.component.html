@@ -596,7 +596,9 @@
                                 <div class="col-4">
                                             <div class="form-group">
                                                 <label for="remark">{{labels.remark}}</label>
-                                                <textarea class="remark" maxlength="3000" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
+                                                <textarea class="remark" maxlength="3000" 
+                                                formControlName='remark' id="remark" 
+                                                placeHolder =  "Enter the Remark" required></textarea>
                                                 <div class="date-picker-error" *ngIf="
                                         isDirty &&
                                         form.get('remark').errors?.required
@@ -636,39 +638,39 @@
                                 </div>
                             </div> 
                                 <div class="row formAlignment1"> 
-                                <!-- <div class="col-4" *ngIf="existingUserFlag">
-                                    <div class="form-group">
-                                        <label for="creditAddedAgainstPi">{{labels.creditPI}}</label>
-                                        <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                                            <input matInput [matDatepicker]="picker4" formControlName="creditAddedAgainstPi" (keyup)="detectDateKeyAction($event,'creditAddedAgainstPi')" 
-                                                required>
-                                            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker4></mat-datepicker>
-                                        </mat-form-field>
+                                    <!-- <div class="col-4" *ngIf="existingUserFlag">
+                                        <div class="form-group">
+                                            <label for="creditAddedAgainstPi">{{labels.creditPI}}</label>
+                                            <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
+                                                <input matInput [matDatepicker]="picker4" formControlName="creditAddedAgainstPi" (keyup)="detectDateKeyAction($event,'creditAddedAgainstPi')" 
+                                                    required>
+                                                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker4></mat-datepicker>
+                                            </mat-form-field>
 
-                                        <div class="date-picker-error" *ngIf="
-                                isDirty &&
-                                form.get('creditAddedAgainstPi').errors?.required
-                                ">
-                                            Please select date
+                                            <div class="date-picker-error" *ngIf="
+                                    isDirty &&
+                                    form.get('creditAddedAgainstPi').errors?.required
+                                    ">
+                                                Please select date
+                                            </div>
+
                                         </div>
-
-                                    </div>
-                                </div> -->
-                                <!-- <div class="col-4" *ngIf="existingUserFlag">
-                                    <div class="form-group">
-                                        <label for="department">{{labels.status}}</label>
-                                        <app-vf-custom-select formControlName="status" 
-                                        [values]="statusList"
-                                        [isRequired]="'Please Select Status'" 
-                                        (valueChange)="statusChange($event)"
-                                        [isDisabled]="propertyFlag"
-                                        [isDirty]="isDirty">
-                                        </app-vf-custom-select>
-                                    </div>
                                     </div> -->
+                                    <!-- <div class="col-4" *ngIf="existingUserFlag">
+                                        <div class="form-group">
+                                            <label for="department">{{labels.status}}</label>
+                                            <app-vf-custom-select formControlName="status" 
+                                            [values]="statusList"
+                                            [isRequired]="'Please Select Status'" 
+                                            (valueChange)="statusChange($event)"
+                                            [isDisabled]="propertyFlag"
+                                            [isDirty]="isDirty">
+                                            </app-vf-custom-select>
+                                        </div>
+                                        </div> -->
 
-                                    
+                                        
 
                                     
 
