@@ -1,11 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class CustomDateAdapter extends DatePipe {
+export class CustomDateAdapter  {
+
+        constructor(private datePipe: DatePipe) {}
+
+        transform(value: string, format: string) {
+            return this.datePipe.transform(value, format);
+        }
+
         parseToDateObj(value: any): Date | Error | string {
             if (typeof value === 'string' && value.indexOf('/') > -1) {
 
