@@ -268,7 +268,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   }
 
-  onSubmit(value) {
+  onSubmit(value?: any) {
     this.isDirty = true;
     let formValue;
     if (!value) {
