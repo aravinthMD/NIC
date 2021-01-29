@@ -61,13 +61,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   newAppiyoDrive  = environment.previewDocappiyoDrive;
   previewUrl : string = ''
 
-  departmentListData = [
-      {key:0,value:'Department of Sainik Welfare'},
-      {key:1,value:'Ministry of Minority Affairs'},
-      {key:2,value:'Visakhapatnam Port Trust'},
-      {key:13,value:'Ministry of Tribal Affairs'},
-      {key:4,value:'Bureau of Naviks Mumbai'}
-  ];
+  departmentListData = [];
   smsServiceReqd=[
     {key:0,value:'Prepaid'},
     {key:1,value:'Post-Paid'}
@@ -75,33 +69,25 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
  
 
-  countryCodeValues = [
-    {key:0,value:'+91'},
-    {key:1,value:'+60'},
-    {key:2,value:'+65'}
-  ]
+  countryCodeValues = []
 
-  teleCodeValues = [
-    {key:0,value:'+044'},
-    {key:1,value:'+040'},
-    {key:2,value:'+080'}
-  ]
+  teleCodeValues = []
 
   statusList= [
     {
-      key:0,value: 'Active',
+      value:0,label: 'Active',
     },
     {
-      key:1,value:'Inactive'
+      value:1,label:'Inactive'
     }
   ]
 
   traiSenderId= [
     {
-      key:0,value: 'Yes',
+      value:0,label: 'Yes',
     },
     {
-      key:1,value:'No'
+      value:1,label:'No'
     }
   ]
 
@@ -150,24 +136,27 @@ export class UserInfoComponent implements OnInit,OnChanges {
     private router: Router,
     private activatedRoute: ActivatedRoute, 
     private beheSer : BehaviourSubjectService,
-    private clientDetailService  : ClientDetailsService,
-    private adminService : AdminService) {
+    private clientDetailService  : ClientDetailsService) {
+
+      this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
+      this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
+      this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
 
     this.form =this.formBuilder.group({
       id: [null],
       applicantName : [null],
-      departmentName : [null],
+      departmentName : [''],
       designation : [null],
       employeeCode : [null],
       email : [null],
-      mobileNumberCode: [this.countryCodeValues[0].key],
+      mobileNumberCode: [this.countryCodeValues[0].value],
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
-      officerMobileCode:[null],
+      officerMobileCode:[this.countryCodeValues[0].value],
       OfficerMobile:[null],
       telPhno : [null],
-      teleCode: [this.teleCodeValues[0].key],
+      teleCode: [this.teleCodeValues[0].value],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
