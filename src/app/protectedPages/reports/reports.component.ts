@@ -1,13 +1,16 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatAccordion} from '@angular/material/expansion';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import {FormControl, FormGroup,FormBuilder} from '@angular/forms';
+import {FormControl, FormGroup, FormBuilder} from '@angular/forms';
+
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
+import { ReportsService } from '@services/reports.service';
+import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 
 
 @Component({
@@ -229,28 +232,53 @@ userStatus  = [
   {"key":"2","value":"Active"},
   {"key":"3","value":"Inactive"}
 ]
-  
 
 
-  constructor(private formBuilder: FormBuilder,private utilService: UtilService,private toasterService: ToasterService) {
+  reportsForm: FormGroup;
+  reportsLov = [];
+  reportFilterLov = [];
+  reportDisplayName: string;
+  reportsFilterDetails = [];
+  selectedReport: string;
+  gridValues = [];
+  reportsId: string;
+  status = [];
+  allStatus: {
+    smsCreditStatusLov: any[],
+    piRaisedStatusLov: any[],
+    poRaisedStatusLov: any[],
+    invoiceRaisedStatusLov: any[],
+    paymentStatusLov: any[]
+  };
 
-    this.form = this.formBuilder.group({
-      reports: [''],
-      status:[''],
-      reportFilter:[''],
-      state:[''],
-      fromDate:[null],
-      toDate:[null],
-      accountFilter : [''],
-      projectNoFilter : [''],
-      departMentFilter : [''],
-      stateFilter : [''],
-      userStatus : ['']
-    })
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private utilService: UtilService,
+    private toasterService: ToasterService,
+    private reportsService: ReportsService,
+    private customDateAdapter: CustomDateAdapter) {
+
+    // this.form = this.formBuilder.group({
+    //   reports: [''],
+    //   status:[''],
+    //   reportFilter:[''],
+    //   state:[''],
+    //   fromDate:[null],
+    //   toDate:[null],
+    //   accountFilter : [''],
+    //   projectNoFilter : [''],
+    //   departMentFilter : [''],
+    //   stateFilter : [''],
+    //   userStatus : ['']
+    // })
 
    }
 
   ngOnInit() {
+
+    this.initForm();
+    this.fetchReportsLov();
 
     this.dropdownSettings  = {
       singleSelection: false,
@@ -270,6 +298,42 @@ userStatus  = [
     );
 
     this.dataList = this.userList;
+  }
+
+  initForm() {
+      this.reportsForm = new FormGroup({
+          reports: new FormControl(''),
+          reportsFilter: new FormControl(''),
+          reportsFilterDetails: new FormControl(''),
+          status: new FormControl(''),
+          fromDate: new FormControl(''),
+          toDate: new FormControl(''),
+          userStatus: new FormControl('')
+      });
+  }
+
+  fetchReportsLov() {
+
+    this.reportsService.getReportsLov()
+        .subscribe((res: any) => {
+            console.log('reports lov', res);
+            const error = res.Error;
+            const errorMessage = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
+            }
+            const processVariables = res.ProcessVariables;
+            this.allStatus = {
+              invoiceRaisedStatusLov: processVariables.invoiceRaisedStatusLov,
+              paymentStatusLov: processVariables.paymentStatusLov,
+              piRaisedStatusLov: processVariables.piRaisedStatusLov,
+              poRaisedStatusLov: processVariables.poRaisedStatusLov,
+              smsCreditStatusLov: processVariables.smsCreditStatusLov
+            };
+            this.reportsLov = processVariables.reportsLov || [];
+            this.reportFilterLov = processVariables.reportFilterLov || [];
+        });
+
   }
 
   private _filter(value: string): string[] {
@@ -299,138 +363,227 @@ userStatus  = [
 
 
 
-  OnFilter(){
+  OnFilter() {
+    const formValue = this.reportsForm.value;
+    console.log('formValue', formValue);
+    // const report  = formValue.reports;
+    const fromDate = this.customDateAdapter.transform(formValue.fromDate, 'dd/MM/yyyy');
+    const toDate = this.customDateAdapter.transform(formValue.toDate, 'dd/MM/yyyy');
 
-    const reportVal = this.form.controls['reports'].value;
+    const data = {
+      ...formValue,
+      fromDate,
+      toDate,
+    };
 
-    if(reportVal >= 1 && reportVal <= 5){
-      this.dataList = this.userList;
-      this.id = Number(reportVal);
-    }
-    if(reportVal == 6){
-      this.id = Number(reportVal);
-      this.dataList = this.userListPT
-    }
-    if(reportVal == 7){
-      this.id = Number(reportVal)
-      this.dataList = this.userListPR
-    }
-    if(reportVal == 8){
-      this.id = Number(reportVal)
-      this.dataList = this.userListshort;
-    }
+    console.log('data', data);
 
-    if(reportVal == 9){
-      this.id = Number(reportVal)
-      this.dataList = this.userListpaid;
-    }
+    return;
 
-    if(reportVal == 10){
-      this.id = Number(reportVal)
-      this.dataList = this.smsCreditList;
-    }
+    this.reportsService.getReportsGridValue(data)
+        .subscribe((res: any) => {
+            const error = res.Error;
+            const errorMessage = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
+            }
+            const processVariables = res.ProcessVariables;
+            console.log('processVariables', processVariables);
+            this.setGridValues(processVariables);
+        });
+
+    // const reportVal = this.form.controls['reports'].value;
+
+    // if(reportVal >= 1 && reportVal <= 5){
+    //   this.dataList = this.userList;
+    //   this.id = Number(reportVal);
+    // }
+    // if(reportVal == 6){
+    //   this.id = Number(reportVal);
+    //   this.dataList = this.userListPT
+    // }
+    // if(reportVal == 7){
+    //   this.id = Number(reportVal)
+    //   this.dataList = this.userListPR
+    // }
+    // if(reportVal == 8){
+    //   this.id = Number(reportVal)
+    //   this.dataList = this.userListshort;
+    // }
+
+    // if(reportVal == 9){
+    //   this.id = Number(reportVal)
+    //   this.dataList = this.userListpaid;
+    // }
+
+    // if(reportVal == 10){
+    //   this.id = Number(reportVal)
+    //   this.dataList = this.smsCreditList;
+    // }
 
 
-    console.log(this.form.value)
+    // console.log(this.form.value)
 
-    console.log(this.myControl.value)
-    this.filterTabButtonName = "Filter Applied";
-    this.accordion.closeAll()
+    // console.log(this.myControl.value)
+    // this.filterTabButtonName = "Filter Applied";
+    // this.accordion.closeAll()
   }
 
-  onSelect(event) {
-
-    const data = event.target.value;
-    this.reportKey = Number(data);
-    if(data == '1') {
-      this.optionValue = [
-        {value:'Valid',key:'1'},
-        {value:'Invalid',key:'2'},
-        {value:'Paid',key:'3'},
-        {value:'Unpaid',key:'4'},
-        {value:'PO generated ',key:'5'},
-        {value:'PO not generated',key:'6'}
-      ]
-
-    }else if(data == '2') {
-      this.optionValue = [
-        {value:'Valid',key:'1'},
-        {value:'Invalid',key:'2'},
-        {value:'Invoice Raised',key:'3'},
-        {value:'Not Raised',key:'4'},
-        {value:'PO Claim Full',key:'5'},
-        {value:'PO Claim Partially',key:'6'},
-        {value:'PO Need to Amend',key:'7'},
-        {value:'PO Need Cancelled',key:'8'}
-      ]
-
-    }else if(data == '3') {
-      this.optionValue = [
-        {value:'Validated',key:'1'},
-        {value:'Pending for Validation',key:'2'},
-        {value:'On Hold',key:'3'},
-        {value:'Submitted to NIICSI',key:'4'},
-        {value:'Not Submitted to NICSI',key:'5'},
-        {value:'Paid',key:'6'},
-        {value:'Unpaid',key:'7'}
-      ]
-
-    }else if(data == '4') {
-
-      this.optionValue = [
-        {value:'Received',key:'1'},
-        {value:'Pending',key:'2'}
-      ]
-    }else if(data == '10') {
-      this.optionValue = [
-        {value:'Approved',key:'1'},
-        {value:'Rejected',key:'2'},
-        {value:'Pending',key:'3'}
-      ]
-    }else if(data == '5'){
-      this.optionValue = [];
-    }else if(data == '6'){
-      this.optionValue = [];
-    }else if(data == '7'){
-      this.optionValue = [];
-    }else if(data == '8'){
-      this.optionValue = [];
+  setGridValues(res: any) {
+    const reports = this.reportsForm.get('reports').value;
+    this.reportsId = reports;
+    if (reports === '0') {
+      return this.gridValues = res.paymentsTrackingReportList || [];
+    }
+    if (reports === '1') {
+      return this.gridValues = res.paymentReceivedReportList || [];
+    }
+    if (reports === '2') {
+      return this.gridValues = res.paymentsShortPayReportList || [];
+    }
+    if (reports === '3') {
+      return this.gridValues = res.paidUnpaidReportList || [];
     }
   }
 
-
-
-
-
-  onRepFilter(event) {
-    const data = event.target.value;
-
-    console.log(this.myControl.value)
-
-    if(this.myControl.value) {
-      this.myControl.reset()
+  onReportChange(event) {
+    const key = event.key;
+    this.reportKey = Number(key);
+    if ( key === '4') {
+        return this.status = this.allStatus.smsCreditStatusLov;
+    }
+    if (key === '5') {
+      return this.status = this.allStatus.piRaisedStatusLov;
+    }
+    if (key === '6') {
+      return this.status = this.allStatus.poRaisedStatusLov;
+    }
+    if (key === '7') {
+      return this.status = this.allStatus.invoiceRaisedStatusLov;
+    }
+    if (key === '8') {
+      return this.status = this.allStatus.paymentStatusLov;
     }
 
-    this.isDepartment = false;
-    if(data == '1') {
-      this.dropDownFlagFunc('1')
-    }else if(data == '2') {
-      this.dropDownFlagFunc('2')
-    }else if(data == '3') {
-      this.dropDownFlagFunc('3')
-    }else if(data == '4') {
-      this.dropDownFlagFunc('4')
-     }
-     this.reset();
+    // const data = event.target.value;
+    // this.reportKey = Number(data);
+    // if(data == '1') {
+    //   this.optionValue = [
+    //     {value:'Valid',key:'1'},
+    //     {value:'Invalid',key:'2'},
+    //     {value:'Paid',key:'3'},
+    //     {value:'Unpaid',key:'4'},
+    //     {value:'PO generated ',key:'5'},
+    //     {value:'PO not generated',key:'6'}
+    //   ]
 
+    // }else if(data == '2') {
+    //   this.optionValue = [
+    //     {value:'Valid',key:'1'},
+    //     {value:'Invalid',key:'2'},
+    //     {value:'Invoice Raised',key:'3'},
+    //     {value:'Not Raised',key:'4'},
+    //     {value:'PO Claim Full',key:'5'},
+    //     {value:'PO Claim Partially',key:'6'},
+    //     {value:'PO Need to Amend',key:'7'},
+    //     {value:'PO Need Cancelled',key:'8'}
+    //   ]
+
+    // }else if(data == '3') {
+    //   this.optionValue = [
+    //     {value:'Validated',key:'1'},
+    //     {value:'Pending for Validation',key:'2'},
+    //     {value:'On Hold',key:'3'},
+    //     {value:'Submitted to NIICSI',key:'4'},
+    //     {value:'Not Submitted to NICSI',key:'5'},
+    //     {value:'Paid',key:'6'},
+    //     {value:'Unpaid',key:'7'}
+    //   ]
+
+    // }else if(data == '4') {
+
+    //   this.optionValue = [
+    //     {value:'Received',key:'1'},
+    //     {value:'Pending',key:'2'}
+    //   ]
+    // }else if(data == '10') {
+    //   this.optionValue = [
+    //     {value:'Approved',key:'1'},
+    //     {value:'Rejected',key:'2'},
+    //     {value:'Pending',key:'3'}
+    //   ]
+    // }else if(data == '5'){
+    //   this.optionValue = [];
+    // }else if(data == '6'){
+    //   this.optionValue = [];
+    // }else if(data == '7'){
+    //   this.optionValue = [];
+    // }else if(data == '8'){
+    //   this.optionValue = [];
+    // }
   }
 
-  reset(){
-    this.form.controls['accountFilter'].reset();
-    this.form.controls['projectNoFilter'].reset();
-    this.form.controls['departMentFilter'].reset()
-    this.form.controls['stateFilter'].reset();
+
+
+onReportFilterChange(event) {
+  console.log('filter change', event.target.value);
+  this.reportsForm.get('reportsFilterDetails').setValue('');
+  const selectedReportValue = event.target.value;
+  this.selectedReport = selectedReportValue;
+  if (selectedReportValue === '') {
+    this.reportsFilterDetails = null;
+    this.reportDisplayName = '';
+    return;
   }
+  if (selectedReportValue === '0') {
+    this.reportDisplayName = 'Account Name';
+  } else if (selectedReportValue === '1') {
+    this.reportDisplayName = 'Project Number';
+  } else if (selectedReportValue === '2') {
+    this.reportDisplayName = 'Department';
+  }
+  this.reportsService.getReportsLov({selectedReportValue})
+      .subscribe((res: any) => {
+          console.log('filter details', res);
+          const error = res.Error;
+          const errorMessage = res.ErrorMessage;
+          if (error !== '0') {
+            return this.toasterService.showError(errorMessage, '');
+          }
+          const processVariables = res.ProcessVariables;
+          this.reportsFilterDetails = processVariables.reportFilterDetails || [];
+      });
+}
+
+  // onRepFilter(event) {
+  //   const data = event.target.value;
+
+  //   console.log(this.myControl.value)
+
+  //   if(this.myControl.value) {
+  //     this.myControl.reset()
+  //   }
+
+  //   this.isDepartment = false;
+  //   if(data == '1') {
+  //     this.dropDownFlagFunc('1')
+  //   }else if(data == '2') {
+  //     this.dropDownFlagFunc('2')
+  //   }else if(data == '3') {
+  //     this.dropDownFlagFunc('3')
+  //   }else if(data == '4') {
+  //     this.dropDownFlagFunc('4')
+  //    }
+  //    this.reset();
+
+  // }
+
+  // reset(){
+  //   this.form.controls['accountFilter'].reset();
+  //   this.form.controls['projectNoFilter'].reset();
+  //   this.form.controls['departMentFilter'].reset()
+  //   this.form.controls['stateFilter'].reset();
+  // }
 
   dropDownFlagFunc(id ? :string){
     this.accountFilterFlag = id === '1' ? true : false;

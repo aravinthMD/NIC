@@ -275,7 +275,20 @@ export class ApiService {
       processId : '842375d045d011ebb7cc727d5ac274b2',
       projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : '842375d045d011ebb7cc727d5ac274b2'
-    }
+    },
+
+    getReportsLov: {
+      processId : '9341403e5d4911eb8bcf727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '9341403e5d4911eb8bcf727d5ac274b2'
+    },
+
+    getReportsGridValue: {
+      processId : '5f3336105d5511eb8bcf727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '5f3336105d5511eb8bcf727d5ac274b2'
+    },
+
 
   };
 
