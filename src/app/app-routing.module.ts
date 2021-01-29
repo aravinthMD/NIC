@@ -33,6 +33,7 @@ import { LoaderService } from '@services/loader.service'
 import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
 import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
+import { LovResolverService } from '@services/lov-resolver.service';
 
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
     path : "users",
     component : ProtectedComponent,
     canActivateChild: [LoaderService],
+    resolve :  { listOfValue : LovResolverService },
   children : [
     { 
       path : "Dashboard" ,

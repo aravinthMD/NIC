@@ -275,6 +275,18 @@ export class ApiService {
       processId : '842375d045d011ebb7cc727d5ac274b2',
       projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : '842375d045d011ebb7cc727d5ac274b2'
+    },
+
+    adminEmailManageAPI :  {
+      processId :  '0ec35a14609011eb8c53727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId  : '4e04d4101cd311ebb6c2727d5ac274b2'
+    },
+
+    lovListAPI :  {
+      processId   : "c1993588612511eb8c5d727d5ac274b2",
+      projectId :  "2efbdc721cc311ebb6c0727d5ac274b2",
+      workflowId : "bfb43590408411ebb7bf727d5ac274b2"
     }
 
   };
