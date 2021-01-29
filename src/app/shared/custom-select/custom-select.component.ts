@@ -37,8 +37,8 @@ export class CustomSelectComponent
   @Input() values: any[];
   @Input() isRequired: string;
 
-  @Input() keyField = 'key';
-  @Input() valueField = 'value';
+  @Input() keyField = 'value';
+  @Input() valueField = 'label';
   @Input() isDefaultDisabled = true;
 
   @Output() valueChange = new EventEmitter();

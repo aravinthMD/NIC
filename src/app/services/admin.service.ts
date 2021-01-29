@@ -301,6 +301,94 @@ deleteAdminUser(id) {
 
 }
 
+
+
+uploadToAppiyoDrive(file : any)
+{
+  let uri = environment.host + environment.appiyoDrive;
+  let headers = {
+    headers: new HttpHeaders({
+     // 'Content-Type': 'application/json'
+    })
+    
+  };
+//  const headers = {
+//     'Content-Type': 'application/json'
+//   }
+  const formData = new FormData();
+  formData.append('file[]',file,file.name); 
+  return this.httpService.post(uri,formData,headers);
+}
+
+adminEmailManager(id : number,userId  :string,screenStatus ?: string){
+  const {
+    api : {
+      adminEmailManageAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+
+const data = {
+    id,
+    userId,
+    screenStatus,
+}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+const body = {
+  processVariables : JSON.stringify(requestEntity)
+};
+
+const formData = this.transform(body)
+
+let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+return  this.httpService.post<any>(url,formData);
+
+}
+
+getAllLov(userId : string){
+
+  const {
+    api : {
+      lovListAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const data = {
+  userId
+}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+const body = {
+  processVariables : JSON.stringify(requestEntity)
+};
+
+const formData = this.transform(body)
+
+let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+return  this.httpService.post<any>(url,formData);
+
+}
+
+
 transform(data: any) {
   return new HttpParams({ fromObject: data });
 }

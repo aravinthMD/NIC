@@ -1,19 +1,17 @@
 import { Component, OnInit ,ViewChild,Input, OnChanges} from '@angular/core';
-// import {MatAccordion} from '@angular/material/expansion';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import { UtilService } from '../../../services/util.service';
 import { Location } from '@angular/common';
-
-import { DatePipe } from '@angular/common';
-
 import {ToasterService} from '@services/toaster.service';
 
 import { Router,ActivatedRoute } from '@angular/router'
 import { UserInfoService } from '@services/user-info.service';
 import { MatTableDataSource } from '@angular/material';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
-import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.component';
+import { ClientDetailsService } from '@services/client-details.service';
+import { AdminService } from '@services/admin.service';
+import { environment } from 'src/environments/environment.prod';
 
 
 
@@ -26,8 +24,9 @@ import { ResetPasswordComponent } from 'src/app/reset-password/reset-password.co
 export class UserInfoComponent implements OnInit,OnChanges {
 
 
-  // @ViewChild(MatAccordion,{ static: true }) accordion: MatAccordion; 
   @Input('userObj') user : any;
+
+
 
   showDataSaveModal:boolean;
      
@@ -51,19 +50,18 @@ export class UserInfoComponent implements OnInit,OnChanges {
   type:String;
   applicantName:string;
 
-  // deparmentList : any[] = ['','Department of Sainik Welfare',
-  //  'Minstry of minority affairs',
-  //   'Vishakhapatnam port Trust' ,
-  //   'minstry of trible affairs',
-  //   'Bureasu of Naviks.Mumbai'];
+  file : any;
 
-  departmentListData = [
-      {key:0,value:'Department of Sainik Welfare'},
-      {key:1,value:'Ministry of Minority Affairs'},
-      {key:2,value:'Visakhapatnam Port Trust'},
-      {key:13,value:'Ministry of Tribal Affairs'},
-      {key:4,value:'Bureau of Naviks Mumbai'}
-  ];
+  documentUploadId : string = '';
+  previewDocumentId : string = '';
+
+  uploadedData : any = {}
+
+  host  = environment.host;
+  newAppiyoDrive  = environment.previewDocappiyoDrive;
+  previewUrl : string = ''
+
+  departmentListData = [];
   smsServiceReqd=[
     {key:0,value:'Prepaid'},
     {key:1,value:'Post-Paid'}
@@ -71,33 +69,25 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
  
 
-  countryCodeValues = [
-    {key:0,value:'+91'},
-    {key:1,value:'+60'},
-    {key:2,value:'+65'}
-  ]
+  countryCodeValues = []
 
-  teleCodeValues = [
-    {key:0,value:'+044'},
-    {key:1,value:'+040'},
-    {key:2,value:'+080'}
-  ]
+  teleCodeValues = []
 
   statusList= [
     {
-      key:0,value: 'Active',
+      value:0,label: 'Active',
     },
     {
-      key:1,value:'Inactive'
+      value:1,label:'Inactive'
     }
   ]
 
   traiSenderId= [
     {
-      key:0,value: 'Yes',
+      value:0,label: 'Yes',
     },
     {
-      key:1,value:'No'
+      value:1,label:'No'
     }
   ]
 
@@ -140,29 +130,33 @@ export class UserInfoComponent implements OnInit,OnChanges {
   constructor(private formBuilder : FormBuilder,
     private labelsService: LabelsService, 
     private location: Location,
-    private datePipe : DatePipe,
     private utilService: UtilService,
     private userInfoService:UserInfoService,
     private toasterService: ToasterService,
     private router: Router,
     private activatedRoute: ActivatedRoute, 
-    private beheSer : BehaviourSubjectService) {
+    private beheSer : BehaviourSubjectService,
+    private clientDetailService  : ClientDetailsService) {
+
+      this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
+      this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
+      this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
 
     this.form =this.formBuilder.group({
       id: [null],
       applicantName : [null],
-      departmentName : [null],
+      departmentName : [''],
       designation : [null],
       employeeCode : [null],
       email : [null],
-      mobileNumberCode: [this.countryCodeValues[0].key],
+      mobileNumberCode: [this.countryCodeValues[0].value],
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
-      officerMobileCode:[null],
+      officerMobileCode:[this.countryCodeValues[0].value],
       OfficerMobile:[null],
       telPhno : [null],
-      teleCode: [this.teleCodeValues[0].key],
+      teleCode: [this.teleCodeValues[0].value],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
@@ -305,7 +299,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
       city : data.city,
       state : data.state,
       pinCode : data.pincode,
-      // smsTariffMonthWise : '1000',
       piDuration : data.proj_international,
       projectNo : data.proj_number,
       creditAdded : data.FO_email,
@@ -317,8 +310,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
       officerMobileCode:data.officerMobileCode,
       OfficerMobile:data.FO_mobile,
       smsServiceReqd: data.sms_service,
-      // creditsSMSQuota: '4000',
-      // availableCredit: '3000',
       nameOfTheApplication: data.name_applicant,
       applicationUrl: data.App_url,
       serverLocation: data.server_location,
@@ -337,6 +328,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       // status: data.status,
       remark:data.remark
     })
+
+    
   }
     this.detectAuditTrialObj = this.form.value;
 
@@ -558,29 +551,24 @@ export class UserInfoComponent implements OnInit,OnChanges {
       "remark":this.form.value.remark,
       "credits":this.form.value.creditsSMSQuota,  
       // "available_credit":this.form.value.userName,
-      "upload_document":"",
-      
+       "upload_document": this.documentUploadId
        
     }
-    console.log("bfrUsr", userInfo);
+    console.log("User Creation Form :", userInfo);
     this.userInfoService.createCustomerDetails(userInfo).subscribe((response)=> {
 
       console.log('Response',response)
- 
       if(response['Error'] == '0' && response["ProcessVariables"]["error"]["code"] == '0') {
-
         this.showDataSaveModal = true;  
         this.beheSer.setUserId(response['ProcessVariables']['generatedCustomerId']);
-         
 
         this.dataValue = {
           title: "Customer Information Saved Sucessfully",
           message : "Are you sure you want to proceed to Technical Admin page?"
         }
-        this.isDirty=false;
+        this.isDirty = false;
         this.form.reset()  
-        // this.toasterService.showSuccess('Data Saved Successfully',"");
-        // console.log('userId ]]]]]]',this.beheSer.userId);
+        this.documentUploadId =  "";
       }else {
         this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
       }
@@ -588,18 +576,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
     })
 
     this.propertyFlag = false;
-    
     this.buttonName = 'Update';
-     
-    // this.form.value['creditDate'] = this.datePipe.transform(this.form.value['creditDate'], 'dd/MM/yyyy')
-    // this.form.value['creditAddedAgainstPi'] = this.datePipe.transform(this.form.value['creditAddedAgainstPi'], 'dd/MM/yyyy')
-    // this.form.value['auditDate'] = this.datePipe.transform(this.form.value['auditDate'], 'dd/MM/yyyy')
-    // console.log(this.fromDate)
     console.log(this.form.value)
-
-    // this.detectFormChanges()
-
-   
     
   }
 
@@ -628,6 +606,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
       this.userId = res.userId || '';
       this.utilService.setUserDetails(response["ProcessVariables"]);
       this.setFormValues(response["ProcessVariables"]);
+      if(response['ProcessVariables']['upload_document']){
+          this.previewDocumentId = response['ProcessVariables']['upload_document'];
+      }
 
     },(error) => {
 
@@ -867,6 +848,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   showPDF() {
     this.showUploadModal = false;
     this.showPdfModal = true;
+    this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`;
   }
 
   download() {
@@ -917,9 +899,31 @@ export class UserInfoComponent implements OnInit,OnChanges {
     this.router.navigate(['/users/techAdmin/'+ this.userId])
   }
 
+
+
   replaceStrar(getPassWord){
     this.userPassWord = getPassWord;
     return '*'.repeat(this.userPassWord.length)
+  }
+
+
+ async uploadFile(files  :FileList){
+      this.file = files.item(0);
+      if(this.file){
+        const userId : string = this.clientDetailService.getClientId();
+        const modifiedFile = Object.defineProperty(this.file, "name", {
+          writable: true,
+          value: this.file["name"]
+        });
+        modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+       this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
+       if(this.uploadedData['uploadStatus']){
+          this.documentUploadId = this.uploadedData['documentUploadId'];
+         this.toasterService.showSuccess('File upload Success','')
+       }else{
+         this.toasterService.showError('File upload Failed','')
+       }
+      }
   }
 
 }
