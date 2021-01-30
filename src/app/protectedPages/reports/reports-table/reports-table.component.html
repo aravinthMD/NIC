@@ -72,7 +72,7 @@
 
         <ng-container matColumnDef="InvoiceNo">
             <th mat-header-cell *matHeaderCellDef>Invoice Number</th>
-            <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="TDS">
@@ -87,7 +87,7 @@
 
         <ng-container matColumnDef="ActualPayment">
             <th mat-header-cell *matHeaderCellDef>Actual Payment</th>
-            <td mat-cell *matCellDef="let element"> {{element.actualPayment}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="ShortPay">
@@ -133,7 +133,7 @@
 
          <ng-container matColumnDef="InvoicePaid">
             <th mat-header-cell *matHeaderCellDef>Invoice Amount Paid</th>
-            <td mat-cell *matCellDef="let element"> {{element.invoiceAmountPaid}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.invoicePaidAmount}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="InvoiceUnpaid">
@@ -167,7 +167,7 @@
         <ng-container matColumnDef="Navigate">
             <th mat-header-cell *matHeaderCellDef>Navigate</th>
             <td mat-cell *matCellDef="let element"> 
-                <button class="navigate" matTooltip = "Navigate" (click) = "Navigate(element)">
+                <button class="navigate" matTooltip = "Navigate" (click) = "navigate(element)">
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </button>
             </td>

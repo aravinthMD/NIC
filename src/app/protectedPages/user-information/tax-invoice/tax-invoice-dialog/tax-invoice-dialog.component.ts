@@ -17,20 +17,20 @@ import { TaxInvoiceService } from '@services/tax-invoice.service';
 })
 export class TaxInvoiceDialogComponent implements OnInit {
 
-  labels :  any;
-  buttonName : string = 'Edit';
-  taxInvoiceForm : FormGroup;
-  enableFlag : boolean = true;
-  isDirty : boolean;
+  labels: any;
+  buttonName = 'Edit';
+  taxInvoiceForm: FormGroup;
+  enableFlag = true;
+  isDirty: boolean;
 
-  dataForm  : any = {}
-  currentTIId  : string = ''
+  dataForm: any = {};
+  currentTIId = '';
 
   showUploadModal: boolean;
 
   imageUrl: string;
-  fileSize: string = 'Size - 109.4 KB';
-  fileName: string = 'invoice.pdf';;
+  fileSize = 'Size - 109.4 KB';
+  fileName = 'invoice.pdf';
   fileType: string;
 
   showPdfModal: boolean;
@@ -44,7 +44,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
   dataValue: {
     title: string;
     message: string
-  }
+  };
 
   storeProjectNo: string;
 
@@ -114,13 +114,13 @@ export class TaxInvoiceDialogComponent implements OnInit {
    }
 
    invoiceStatusList  = [
-    {key : 0,value : 'Pending'},
-    {key : 1,value : 'Paid'},
-    {key : 2,value : 'Partially Paid'},
-    {key : 3,value : 'Return by NICSI'}
-  ]
-  detectAuditTrialObj:any;
-  remarkModal:boolean;
+    {key : 0, value : 'Pending'},
+    {key : 1, value : 'Paid'},
+    {key : 2, value : 'Partially Paid'},
+    {key : 3, value : 'Return by NICSI'}
+  ];
+  detectAuditTrialObj: any;
+  remarkModal: boolean;
   paymentStatus: any[] = [];
 
   ngOnInit() {
@@ -541,66 +541,66 @@ export class TaxInvoiceDialogComponent implements OnInit {
        });
   }
 
-  getTaxInvoiceDetailById(currentTiId :  string){
+  // getTaxInvoiceDetailById(currentTiId :  string){
 
-    this.invoiceService.getTaxInvoiceDetailById(currentTiId).subscribe((response) => {
-        console.log(response);
-        this.dataForm = response['ProcessVariables'];
-        this.currentTIId = response['ProcessVariables']['currentTiIds'];
-        this.assignToForm(this.dataForm);
-    },
-    (error) => {
-      this.toasterService.showError('Failed to Fetch the Tax Invoice Detail','')
-    })
+  //   this.invoiceService.getTaxInvoiceDetailById(currentTiId).subscribe((response) => {
+  //       console.log(response);
+  //       this.dataForm = response['ProcessVariables'];
+  //       this.currentTIId = response['ProcessVariables']['currentTiIds'];
+  //       this.assignToForm(this.dataForm);
+  //   },
+  //   (error) => {
+  //     this.toasterService.showError('Failed to Fetch the Tax Invoice Detail','')
+  //   })
 
-  }
+  // }
 
-  assignToForm(dataForm  :any){
+  // assignToForm(dataForm  :any){
 
-    this.taxInvoiceForm.patchValue({
+  //   this.taxInvoiceForm.patchValue({
 
-      userName : dataForm['userName'] || '',
-      taxIN : dataForm["TaxInvoiceNumber"] || '',
-      invoiceDate : dataForm["poDate"] || '',
-      projectNo : dataForm["projectNumber"] || '',
-      poNumber : dataForm["poNumber"] || '',
-      poDate : dataForm["poDate"] || '',
-      fromDate : dataForm["fromDate"] || '',
-      toDate : dataForm["toDate"] || '',
-      invoiceAmount : dataForm["InvoiceAmount"] || '',
-      remark : dataForm["remark"] || '',
-      // uploadDoc : [''],
-      paymentStatus : dataForm['paymentStatus'] || '',
-      invoiceStatus : dataForm['InvoiceStatus'] || '',
-      invoiceAmountPaid : dataForm['InvoicePaidAmount'] || '',
-      tds : dataForm['tds'] || '',
-      penalty : dataForm['penalty'] || '',
-      shortPay : dataForm['shortPay'] || '',
-      submittedOn : dataForm['submittedDate'] || '',
-      poBillable : dataForm['billableAmount'] || '',
-      projectName:'',
-      projectCordinator:'',
-      PONoAmendOrder:'',
-      mail:'',
-      totalSMS:'',
-      counts:'',
-      baseAmount : '',
-      tax:'',
-      recvDate : '',
-      book :  '',
-      dateEstimated :  '',
-      invoiceAmount2 : '',
-      bankReceived : '',
-      interestOnTDSotherDeduction : '',
-      receiptDate :  '',
-      month : '',
-      year : '',
-      mrn : ''
+  //     userName : dataForm['userName'] || '',
+  //     taxIN : dataForm["TaxInvoiceNumber"] || '',
+  //     invoiceDate : dataForm["poDate"] || '',
+  //     projectNo : dataForm["projectNumber"] || '',
+  //     poNumber : dataForm["poNumber"] || '',
+  //     poDate : dataForm["poDate"] || '',
+  //     fromDate : dataForm["fromDate"] || '',
+  //     toDate : dataForm["toDate"] || '',
+  //     invoiceAmount : dataForm["InvoiceAmount"] || '',
+  //     remark : dataForm["remark"] || '',
+  //     // uploadDoc : [''],
+  //     paymentStatus : dataForm['paymentStatus'] || '',
+  //     invoiceStatus : dataForm['InvoiceStatus'] || '',
+  //     invoiceAmountPaid : dataForm['InvoicePaidAmount'] || '',
+  //     tds : dataForm['tds'] || '',
+  //     penalty : dataForm['penalty'] || '',
+  //     shortPay : dataForm['shortPay'] || '',
+  //     submittedOn : dataForm['submittedDate'] || '',
+  //     poBillable : dataForm['billableAmount'] || '',
+  //     projectName:'',
+  //     projectCordinator:'',
+  //     PONoAmendOrder:'',
+  //     mail:'',
+  //     totalSMS:'',
+  //     counts:'',
+  //     baseAmount : '',
+  //     tax:'',
+  //     recvDate : '',
+  //     book :  '',
+  //     dateEstimated :  '',
+  //     invoiceAmount2 : '',
+  //     bankReceived : '',
+  //     interestOnTDSotherDeduction : '',
+  //     receiptDate :  '',
+  //     month : '',
+  //     year : '',
+  //     mrn : ''
 
 
-    })
+  //   })
 
-  }
+  // }
 
 
 
@@ -728,50 +728,50 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.showUploadModal = true;
   }
 
-  download(){
+  download() {
   
   }
-  detectFormChanges() {
+  // detectFormChanges() {
 
-    let iRemark = false;
+  //   let iRemark = false;
 
-    const formObject = this.taxInvoiceForm.value;
+  //   const formObject = this.taxInvoiceForm.value;
 
-    const keyArr = Object.keys(formObject);
+  //   const keyArr = Object.keys(formObject);
 
-    const index = keyArr.findIndex((val)=> {
-      return val == 'remark'
-    })
+  //   const index = keyArr.findIndex((val)=> {
+  //     return val == 'remark'
+  //   })
     
-    keyArr.splice(index,1)
+  //   keyArr.splice(index,1)
 
-    const found = keyArr.find((element) => {
-              return formObject[element] != this.detectAuditTrialObj[element]
+  //   const found = keyArr.find((element) => {
+  //             return formObject[element] != this.detectAuditTrialObj[element]
         
-    });
+  //   });
 
 
-    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
-      iRemark = true;
-    // this.toasterService.showError('Please enter the remark','')
-    this.remarkModal = true;
-    this.taxInvoiceForm.patchValue({
-      remark: ''
-    })
+  //   if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
+  //     iRemark = true;
+  //   // this.toasterService.showError('Please enter the remark','')
+  //   this.remarkModal = true;
+  //   this.taxInvoiceForm.patchValue({
+  //     remark: ''
+  //   })
     
-    }else {
+  //   }else {
 
-      // if(!found && !iRemark) {
+  //     // if(!found && !iRemark) {
 
-      //   this.form.patchValue({
-      //     remark: this.detectAuditTrialObj.remark
-      //   })
-      // }
+  //     //   this.form.patchValue({
+  //     //     remark: this.detectAuditTrialObj.remark
+  //     //   })
+  //     // }
 
-      this.detectAuditTrialObj = this.taxInvoiceForm.value;
-      this.toasterService.showSuccess('Data Saved Successfully','')
-    }
-  }
+  //     this.detectAuditTrialObj = this.taxInvoiceForm.value;
+  //     this.toasterService.showSuccess('Data Saved Successfully','')
+  //   }
+  // }
 
   remarkOkay() {
     this.remarkModal = false;

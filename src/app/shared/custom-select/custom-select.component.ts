@@ -37,8 +37,8 @@ export class CustomSelectComponent
   @Input() values: any[];
   @Input() isRequired: string;
 
-  @Input() keyField = 'value';
-  @Input() valueField = 'label';
+  @Input() keyField = 'key';
+  @Input() valueField = 'value';
   @Input() isDefaultDisabled = true;
 
   @Output() valueChange = new EventEmitter();
@@ -144,7 +144,7 @@ export class CustomSelectComponent
   onBlurMethod(event) {
     const newValue = event.target.value;
 
-    if (!newValue && this.isRequired) {
+    if ((newValue === null || newValue === undefined || newValue === '') && this.isRequired) {
       this.displayError(this.isRequired);
       return;
     }
