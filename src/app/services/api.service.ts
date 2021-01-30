@@ -287,7 +287,7 @@ export class ApiService {
       processId   : "c1993588612511eb8c5d727d5ac274b2",
       projectId :  "2efbdc721cc311ebb6c0727d5ac274b2",
       workflowId : "bfb43590408411ebb7bf727d5ac274b2"
-    }
+    },
 
     getReportsLov: {
       processId : '9341403e5d4911eb8bcf727d5ac274b2',
