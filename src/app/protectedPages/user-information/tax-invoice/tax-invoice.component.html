@@ -262,18 +262,7 @@
 
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <app-custom-input formControlName="remark" 
-                                [labelName]="labels.remark" [id]="'remark'" 
-                                placeHolder =  "Enter the Remark"
-                                [isRequired]="'Remark is Mandatory'" 
-                                [maxLength]="labels?.validationData.userName.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
-                                </app-custom-input>
-                            </div>
-                        </div>
+                        
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="projectName" 
@@ -319,7 +308,8 @@
                                 [labelName]="labels.mail" [id]="'mail'" 
                                 placeHolder =  "Enter the mail"
                                 [isRequired]="'mail is Mandatory'" 
-                                [maxLength]="labels?.validationData.mail.maxLength" 
+                                [maxLength]="labels?.validationData.mail.maxLength"
+                                [patternCheck]="labels?.validationData.mail.patternCheck" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
@@ -533,6 +523,28 @@
                                 <input type="file" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
+                        </div>
+
+                        <div class="col-4">
+                                <div class="form-group">
+                                    <label for="remark">{{labels.remark}}</label>
+                                    <textarea class="remark" maxlength="3000" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
+                                    <div class="date-picker-error" *ngIf="
+                              isDirty &&
+                              taxInvoiceForm.get('remark').errors?.required
+                            ">
+                                                    Please Enter Remark
+                                                </div>
+                                </div>
+                                <!-- <app-custom-input formControlName="remark" 
+                                [labelName]="labels.remark" [id]="'remark'" 
+                                placeHolder =  "Enter the Remark"
+                                [isRequired]="'Remark is Mandatory'" 
+                                [maxLength]="labels?.validationData.userName.maxLength" 
+                                [isDirty]="isDirty" 
+                                [isDisabledInp]="propertyFlag">
+                                </app-custom-input> -->
+                            <!-- </div> -->
                         </div>
                     </div>
 

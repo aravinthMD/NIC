@@ -1,11 +1,11 @@
-import { Component, OnInit ,ViewChild,Input, OnChanges} from '@angular/core';
-import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
+import { Component, OnInit, ViewChild, Input, OnChanges} from '@angular/core';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { LabelsService } from '../../../services/labels.service';
 import { UtilService } from '../../../services/util.service';
 import { Location } from '@angular/common';
 import {ToasterService} from '@services/toaster.service';
 
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { UserInfoService } from '@services/user-info.service';
 import { MatTableDataSource } from '@angular/material';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
@@ -21,34 +21,31 @@ import { environment } from 'src/environments/environment.prod';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit,OnChanges {
+export class UserInfoComponent implements OnInit, OnChanges {
 
 
-  @Input('userObj') user : any;
+  @Input('userObj') user: any;
 
 
 
-  showDataSaveModal:boolean;
-     
+  showDataSaveModal: boolean;
   hide = true;
 
-  form : FormGroup
-  existingUserFlag : boolean = false;
-  hideEditButton : boolean = false;
-  existingPreviewUserFlag :  boolean;
-  buttonName : any = "Save";
-  propertyFlag : boolean;
+  form: FormGroup;
+  existingUserFlag: boolean = false;
+  hideEditButton: boolean = false;
+  existingPreviewUserFlag: boolean;
+  buttonName: any = 'Save';
+  propertyFlag: boolean;
   labels: any = {};
   panelOpenState = false;
   isDirty: boolean;
-  newUserFlag : boolean
-  
+  newUserFlag: boolean
+  dataValue = {};
 
-  dataValue = {}
-
-  viewInfoData : any;
-  type:String;
-  applicantName:string;
+  viewInfoData: any;
+  type: string;
+  applicantName: string;
 
   file : any;
 
@@ -69,7 +66,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
  
 
-  countryCodeValues = []
+  mobileNumberCodeList = []
 
   teleCodeValues = []
 
@@ -97,7 +94,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   modalMsg: string;
 
   accountName: string;
-  status:string;
+  status: string;
 
   showUploadModal: boolean;
   showPdfModal: boolean;
@@ -127,7 +124,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
     projectNo: string;
     userId: string;
 
-  constructor(private formBuilder : FormBuilder,
+  constructor(
+    private formBuilder : FormBuilder,
     private labelsService: LabelsService, 
     private location: Location,
     private utilService: UtilService,
@@ -138,9 +136,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
     private beheSer : BehaviourSubjectService,
     private clientDetailService  : ClientDetailsService) {
 
-      this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
-      this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
-      this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
+      // this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
+      // this.mobileNumberCodeList = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
+      // this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
 
     this.form =this.formBuilder.group({
       id: [null],
@@ -149,14 +147,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
       designation : [null],
       employeeCode : [null],
       email : [null],
-      mobileNumberCode: [this.countryCodeValues[0].value],
+      mobileNumberCode: [''],
       mobileNo : [null],
-      OfficerName:[null],
-      OfficerEmail:[null],
-      officerMobileCode:[this.countryCodeValues[0].value],
-      OfficerMobile:[null],
+      OfficerName: [null],
+      OfficerEmail: [null],
+      officerMobileCode: [''],
+      OfficerMobile: [null],
       telPhno : [null],
-      teleCode: [this.teleCodeValues[0].value],
+      teleCode: [''],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
@@ -164,8 +162,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       state : [null],
       pinCode : [null],
       smsServiceReqd: [''],
-      creditsSMSQuota: [null,Validators.pattern("^[0-9]{0,12}$")],
-      smsTariffMonthWise : [null,Validators.pattern("^[0-9]{0,12}$")],
+      creditsSMSQuota: [null, Validators.pattern('^[0-9]{0,12}$')],
+      smsTariffMonthWise : [null, Validators.pattern('^[0-9]{0,12}$')],
       availableCredit: [null],
       nameOfTheApplication: [null],
       applicationUrl: [null],
@@ -176,35 +174,45 @@ export class UserInfoComponent implements OnInit,OnChanges {
       domMonSmsTraffic: [null],
       intMonSmsTraffic: [null],
       appSecurAudClear: [null],
-      auditDate:[null],
+      auditDate: [null],
       traiSenderId: [''],
       userId: [null],
       password: [null],
       piDuration : [null],
-      projectNo : [null,Validators.pattern("^[0-9]{0,15}$")],
+      projectNo : [null, Validators.pattern('^[0-9]{0,15}$')],
       // creditAdded : [null],
       // creditApprover : [null],
       // creditDate : [null],
       // creditAddedAgainstPi : [null],
       fromDate: [null],
       toDate: [null],
-      status:[null],
-      remark:[null]    
+      status: [null],
+      remark: [null]
     });
-    this.labelsService.getLabelsData().subscribe((values)=> {
+    this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
-    })
+    });
     this.user = '';
-    
     this.activatedRoute.params.subscribe((value)=> {
         this.user = value.id;
         console.log("user Id",this.user);
     });
-    
    }
 
 
-  ngOnInit() {  
+   patchLovValues() {
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
+    this.departmentListData = processVariables.departmentList || [];
+    this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+   }
+
+
+  ngOnInit() {
+
+    this.patchLovValues();
 
    
     this.ipValidation = this.ipAddressValiationCheck()
