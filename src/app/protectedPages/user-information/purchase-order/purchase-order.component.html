@@ -261,11 +261,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="department">{{labels.department}}</label>
-
-
                                 <app-vf-custom-select formControlName="departmentName" [values]="departmentListData" [isRequired]="'Please Select Department'" [isDisabled]="propertyFlag" [isDirty]="isDirty"></app-vf-custom-select>
-
-
                             </div>
                         </div>
 
@@ -284,7 +280,7 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" 
                                 [labelName]="labels.remark" [id]="'remark'"
@@ -293,6 +289,16 @@
                                 [maxLength]="labels?.validationData.userName.maxLength" 
                                 [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
+                            </div>
+                        </div> -->
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="mb-0" for="remarks">{{labels.remark}}</label>
+                                <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                                    <div class="date-picker-error" *ngIf="isDirty && PurchaseOrderForm.controls['remark'].errors?.required">
+                                        Please Enter Remark
+                                    </div>
                             </div>
                         </div>
 

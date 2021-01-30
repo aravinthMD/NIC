@@ -147,23 +147,14 @@
                                     </app-custom-input>
                                 </div>
                             </div>
+
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="remark">{{labels.remark}}</label>
-                                    <textarea class="remark" maxlength="3000" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
-                                    <div class="date-picker-error" *ngIf="
-                              isDirty &&
-                              smsCreditForm.get('remark').errors?.required
-                            ">
-                                                    Please Enter Remark
-                                                </div>
-                                    <!-- <app-custom-input formControlName="remark" 
-                                    [labelName]="labels.remark" [id]="'remark'" 
-                                    placeHolder =  "Enter the Remark"
-                                    [maxLength]="labels?.validationData.userName.maxLength" 
-                                    [isDirty]="isDirty"  
-                                    [isRequired]="'Remark is mandatory'">
-                                    </app-custom-input> -->
+                                    <label for="remarks">{{labels.remark}}</label>
+                                    <textarea class="form-control" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                                        <div class="date-picker-error" *ngIf="isDirty && smsCreditForm.controls['remark'].errors?.required">
+                                            Please Enter Remark
+                                        </div>
                                 </div>
                             </div>
                         </div>

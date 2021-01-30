@@ -32,27 +32,13 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       viewBillAdminInfoData = []
 
-    departmentListData = [
-      {key:0,value:'Department of Sainik Welfare'},
-      {key:1,value:'Ministry of Minority Affairs'},
-      {key:2,value:'Visakhapatnam Port Trust'},
-      {key:3,value:'Ministry of Tribal Affairs'},
-      {key:4,value:'Bureau of Naviks Mumbai'}
-      ];
+    departmentListData = [];
 
-    countryCodeValues = [
-      {key:0,value:'+91'},
-      {key:1,value:'+60'},
-      {key:2,value:'+65'}
-    ]
+    countryCodeValues = []
 
-    teleCodeValues = [
-      {key:0,value:'+044'},
-      {key:1,value:'+040'},
-      {key:2,value:'+080'}
-    ]
+    teleCodeValues = []
 
-    dataSource = new MatTableDataSource<any>();
+    dataSource = [];
 
     user: string;
     name: string;
@@ -88,6 +74,11 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
   ngOnInit() {
 
+    this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
+    this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
+    this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
+
+
     this.clientId=this.client.getClientId();
     this.behser.$userId.subscribe( res => {
       console.log("Cleint ID  ",res)
@@ -106,7 +97,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     this.technicaladminform=new FormGroup({
       id : new FormControl ([null]),
       name : new FormControl ([null]),
-      departmentName : new FormControl ([null]),
+      departmentName : new FormControl (''),
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
@@ -151,28 +142,17 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     console.log(this.activatedRoute)
       if(this.user){
-      
         this.getTechAdminsById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
-
-
-      this.setFormValues();
-      this.setBillOwnerFormValues();
       this.propertyFlag = true;
-
+      this.getBillingAdminDetailById(this.user);
       }else {
         this.showView = false;
       }
-
-      this.fetchAllTechAdmins();
-
-       
-
-       this.getBillingAdminDetailById(this.user);
   }
 
   setBillOwnerFormValues(data?: any){
@@ -425,7 +405,7 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
       this.adminsList = response['ProcessVariables'];
 
-      this.dataSource = new MatTableDataSource<any>(this.adminsList);
+      this.dataSource = this.adminsList;
     })
   }
 

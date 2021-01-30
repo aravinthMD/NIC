@@ -317,7 +317,7 @@
                     </div>
                 </div>
 
-                <div class="col-4">
+                <!-- <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="remark" 
                             [labelName]="labels.remark" 
@@ -328,6 +328,16 @@
                             [isDisabledInp]="propertyFlag"
                             [isDirty]="isDirty">
                         </app-custom-input>
+                    </div>
+                </div> -->
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="remarks">{{labels.remark}}</label>
+                        <textarea class="form-control ml-0 mb-1" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="10"></textarea>
+                            <div class="date-picker-error" *ngIf="isDirty && form.controls['remark'].errors?.required">
+                                Please Enter Remark
+                            </div>
                     </div>
                 </div>
              

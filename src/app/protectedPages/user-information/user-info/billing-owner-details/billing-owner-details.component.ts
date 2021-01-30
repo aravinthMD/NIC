@@ -25,25 +25,11 @@ export class BillingOwnerDetailsComponent implements OnInit {
   viewInfoData  : any;
 
 
-  countryCodeValues = [
-    {key:0,value:'+91'},
-    {key:1,value:'+60'},
-    {key:2,value:'+65'}
-  ]
+  countryCodeValues = [];
 
-  teleCodeValues = [
-    {key:0,value:'+044'},
-    {key:1,value:'+040'},
-    {key:2,value:'+080'}
-  ]
+  teleCodeValues = [];
 
-  departmentListData = [
-    {key:0,value:'Department of Sainik Welfare'},
-    {key:1,value:'Ministry of Minority Affairs'},
-    {key:2,value:'Visakhapatnam Port Trust'},
-    {key:3,value:'Ministry of Tribal Affairs'},
-    {key:4,value:'Bureau of Naviks Mumbai'}
-    ];
+  departmentListData = [];
 
   user: string;
 
@@ -71,6 +57,10 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   ngOnInit() {
 
+    this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
+    this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
+    this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
+
     this.behser.$userId.subscribe( res => {
       this.userId = res;
     });
@@ -82,7 +72,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     });
     this.billOwnerForm=new FormGroup({
       name : new FormControl ([null]),
-      departmentName : new FormControl ([null]),
+      departmentName : new FormControl (['']),
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
@@ -115,14 +105,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
       })
 
       this.setBillOwnerFormValues();
-      // this.propertyFlag = true;
-
       }else  {
        this.showView = false
       }
-
-
-
   }
 
   setBillOwnerFormValues(data?: any) {
@@ -228,12 +213,6 @@ export class BillingOwnerDetailsComponent implements OnInit {
     
     }else {
 
-      // if(!found && !iRemark) {
-
-      //   this.form.patchValue({
-      //     remark: this.detectAuditTrialObj.remark
-      //   })
-      // }
       this.detectAuditTrialObj = this.billOwnerForm.value;
       this.toasterService.showSuccess('Data Saved Successfully','')
     }

@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Validators,FormGroup,FormControl} from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
-import { Router} from '@angular/router'
+import { ActivatedRoute, Router} from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
 import { UtilService } from '@services/util.service';
@@ -45,7 +45,10 @@ export class PurchaseOrderComponent implements OnInit,AfterViewInit {
   piStatus: any[] = []
     piReceivedIn: any[] = []
   
-    paymentStatus: any[] = []
+    paymentStatus: any[] = [
+      { key : "3",value : 'Received' }
+    ]
+    
 
       departmentListData = [];
     
@@ -111,7 +114,11 @@ smsApprovedList : any[] = [
     private searchService: SearchService,
     private apiService : ApiService,
     private beheSer : BehaviourSubjectService,
-    ) { }
+    private route : ActivatedRoute
+    ) {
+
+      this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
+     }
 
   ngOnInit() {
 
@@ -172,7 +179,7 @@ smsApprovedList : any[] = [
 
    this.fetchPODetails();
 
-   this.getSubLovs();
+  //  this.getSubLovs();
 
    this.dataArray.push(this.formQuantity);
 
@@ -236,48 +243,48 @@ smsApprovedList : any[] = [
 
   async getSubLovs() {
 
-    let listData = []
+    // let listData = []
 
-    await this.adminService.getLovSubMenuList("0").subscribe((response)=> {
+    // await this.adminService.getLovSubMenuList("0").subscribe((response)=> {
 
 
-      const submenuList = response['ProcessVariables']['Lovitems'];
-     submenuList.forEach(element => {
+    //   const submenuList = response['ProcessVariables']['Lovitems'];
+    //  submenuList.forEach(element => {
         
-        listData.push({key:element.key,value:element.name})
-      });
-    })
+    //     listData.push({key:element.key,value:element.name})
+    //   });
+    // })
 
-    this.departmentListData = listData;
-
-
-    let poData = []
-
-    await this.adminService.getLovSubMenuList("1").subscribe((response)=> {
+    // this.departmentListData = listData;
 
 
-      const poList = response['ProcessVariables']['Lovitems'];
-      poList.forEach(element => {
+    // let poData = []
+
+    // await this.adminService.getLovSubMenuList("1").subscribe((response)=> {
+
+
+    //   const poList = response['ProcessVariables']['Lovitems'];
+    //   poList.forEach(element => {
         
-        poData.push({key:element.key,value:element.name})
-      });
-    })
+    //     poData.push({key:element.key,value:element.name})
+    //   });
+    // })
 
-    this.poStatus = poData
+    // this.poStatus = poData
 
-    let piData = []
+    // let piData = []
 
-    await this.adminService.getLovSubMenuList("2").subscribe((response)=> {
+    // await this.adminService.getLovSubMenuList("2").subscribe((response)=> {
 
 
-      const piList = response['ProcessVariables']['Lovitems'];
-      piList.forEach(element => {
+    //   const piList = response['ProcessVariables']['Lovitems'];
+    //   piList.forEach(element => {
         
-        poData.push({key:element.key,value:element.name})
-      });
-    })
+    //     poData.push({key:element.key,value:element.name})
+    //   });
+    // })
 
-    this.piStatus = piData
+    // this.piStatus = piData
 
     let paymentStatus = []
 
@@ -339,9 +346,7 @@ smsApprovedList : any[] = [
   POForm(){
 
     if(this.PurchaseOrderForm.invalid) {
-     
       this.isDirty = true;
-
       return
     }
 
@@ -533,6 +538,9 @@ smsApprovedList : any[] = [
         this.isDirty = false;
 
         this.PurchaseOrderForm.reset();
+        this.PurchaseOrderForm.controls['paymentStatus'].setValue("");
+        this.PurchaseOrderForm.controls['departmentName'].setValue("");
+        this.PurchaseOrderForm.controls['poStatus'].setValue("");
         this.formQuantity.reset();
         this.beheSer.setPoNumber(data.poNumber);
         this.beheSer.setSmsApproved(data.smsapproved);

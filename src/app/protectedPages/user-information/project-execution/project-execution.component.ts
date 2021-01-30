@@ -111,7 +111,7 @@ dataValue: {
       invoiceDate :  new FormControl(null),
       transactionDate : new FormControl(null),
       piPaid: new FormControl(''),
-      remark:new FormControl('')
+      remark:new FormControl('',Validators.required)
     });
 
     this.utilService.userDetails$.subscribe((val)=> {
@@ -156,6 +156,12 @@ dataValue: {
     //Create PE
 
     createProjectExecution(){
+
+        if(this.PurchaseEntryForm.invalid){
+          this.isDirty = true;
+          return
+        }
+
         const feildControls =   this.PurchaseEntryForm.controls;
         const userName  = feildControls.userName.value;
         const piNumber =  feildControls.piNumber.value;
@@ -203,6 +209,8 @@ dataValue: {
                 
               if(code == '0'){
                 this.PurchaseEntryForm.reset();
+                this.PurchaseEntryForm.controls['modeOfPayment'].setValue("");
+                this.PurchaseEntryForm.controls['piPaid'].setValue("");
                 this.isDirty = false;
                 this.getProjectExecutionDetails(this.currentPage);
                 this.toasterService.showSuccess('Data Saved Successfully','')

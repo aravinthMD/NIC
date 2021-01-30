@@ -13,6 +13,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import{ApiService} from '../../../services/api.service'
 import { ClientDetailsService } from '@services/client-details.service';
+import { MatInput } from '@angular/material';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -23,6 +24,8 @@ export class ProcessDetailsComponent implements OnInit{
 
   userId:string ;
   @Input('userObj') user : any;
+
+  @ViewChild('dateFeild', { read: MatInput,static  :true}) input: MatInput;
 
   length: number;
   pageSize : number;
@@ -102,7 +105,7 @@ export class ProcessDetailsComponent implements OnInit{
       endDate:[''],
       piStatus: [''],
       paymentStatus:[''],
-      remark:['']
+      remark:['',[Validators.required]]
 
     })
 
@@ -192,6 +195,12 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   createProformaInvoice(){
+
+      if(this.form.invalid){
+        this.isDirty = true;
+        return;
+      }
+
       const feildControls = this.form.controls;
       const AccountName  = feildControls.accountName.value;
       const piNumber = feildControls.invoiceNumber.value;
@@ -241,6 +250,10 @@ export class ProcessDetailsComponent implements OnInit{
           console.log(`API response for the Create PI :${response}`)
           if(code == '0'){
             this.form.reset();
+            this.input.value = ''
+            this.form.controls['piStatus'].setValue("");
+            this.form.controls['paymentStatus'].setValue("");
+            this.form.controls['startDate'].setValue("");
             this.isDirty = false;
             this.toasterService.showSuccess('proforma Invoice Updated SucessFully','')
             this.fetchAllProformaInvoice(this.currentPage,this.userId);

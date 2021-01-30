@@ -75,19 +75,19 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   statusList= [
     {
-      value:0,label: 'Active',
+      key:0,value: 'Active',
     },
     {
-      value:1,label:'Inactive'
+      key:1,value:'Inactive'
     }
   ]
 
   traiSenderId= [
     {
-      value:0,label: 'Yes',
+      key:0,value: 'Yes',
     },
     {
-      value:1,label:'No'
+      key:1,value:'No'
     }
   ]
 
@@ -138,9 +138,9 @@ export class UserInfoComponent implements OnInit,OnChanges {
     private beheSer : BehaviourSubjectService,
     private clientDetailService  : ClientDetailsService) {
 
-      this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
-      this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
-      this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
+      this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
+      this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
+      this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
 
     this.form =this.formBuilder.group({
       id: [null],
@@ -149,14 +149,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
       designation : [null],
       employeeCode : [null],
       email : [null],
-      mobileNumberCode: [this.countryCodeValues[0].value],
+      mobileNumberCode: [this.countryCodeValues[0].key],
       mobileNo : [null],
       OfficerName:[null],
       OfficerEmail:[null],
-      officerMobileCode:[this.countryCodeValues[0].value],
+      officerMobileCode:[this.countryCodeValues[0].key],
       OfficerMobile:[null],
       telPhno : [null],
-      teleCode: [this.teleCodeValues[0].value],
+      teleCode: [this.teleCodeValues[0].key],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
@@ -176,20 +176,16 @@ export class UserInfoComponent implements OnInit,OnChanges {
       domMonSmsTraffic: [null],
       intMonSmsTraffic: [null],
       appSecurAudClear: [null],
-      auditDate:[null],
+      auditDate:[null,Validators.required],
       traiSenderId: [''],
       userId: [null],
       password: [null],
       piDuration : [null],
       projectNo : [null,Validators.pattern("^[0-9]{0,15}$")],
-      // creditAdded : [null],
-      // creditApprover : [null],
-      // creditDate : [null],
-      // creditAddedAgainstPi : [null],
       fromDate: [null],
       toDate: [null],
       status:[null],
-      remark:[null]    
+      remark:[null,Validators.required]    
     });
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -242,9 +238,6 @@ export class UserInfoComponent implements OnInit,OnChanges {
                 // this.detectFormChanges()
             });
             
-            this.fetchAllCustomerDetails();
-            // this.getCustomerDetailByCustomerId('62');
-
   }
 
   ipAddressValiationCheck() {

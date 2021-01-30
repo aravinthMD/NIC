@@ -153,15 +153,12 @@
                     <small id="dateHelp" class="form-text text-muted"></small> -->
 
                                 <mat-form-field floatLabel  =  "never">
-                                    <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" >
+                                    <input #dateFeild matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" >
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                     <mat-placeholder>Select Date</mat-placeholder>
                                 </mat-form-field>
-                                <div class="date-picker-error" *ngIf="
-            isDirty &&
-            form.get('date').errors?.required
-          ">
+                                <div class="date-picker-error" *ngIf="isDirty && form.get('date').errors?.required">
                                     Please Select Date
                                 </div>
 
@@ -254,7 +251,7 @@
                             </div>
 
                         </div>
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" 
                                    [labelName]="labels.remark" [id]="'remark'" 
@@ -265,11 +262,21 @@
                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
+                        </div> -->
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="mb-0" for="remarks">{{labels.remark}}</label>
+                                <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                                    <div class="date-picker-error" *ngIf="isDirty && form.controls['remark'].errors?.required">
+                                        Please Enter Remark
+                                    </div>
+                            </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="poBillable" style="margin-bottom: -1em">Upload Document</label>
+                                <label for="poBillable" class="mb-0">Upload Document</label>
                                 <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
