@@ -1,12 +1,14 @@
 import { Component, OnInit,OnChanges, Input } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+
 
 import { UtilService } from '../../services/util.service'
 
 import { environment } from '../../../environments/environment';
 
-import { Router } from '@angular/router'
 import { ClientDetailsService } from '@services/client-details.service';
+import { ToasterService } from '@services/toaster.service';
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
@@ -28,7 +30,8 @@ export class SideNavComponent implements OnInit,OnChanges {
     private location: Location,
     private utilService: UtilService,
     private router: Router,
-    private clientDetailService : ClientDetailsService ) { 
+    private clientDetailService: ClientDetailsService,
+    private toasterService: ToasterService ) { 
 
     this.version = environment.version;
 
@@ -166,12 +169,20 @@ export class SideNavComponent implements OnInit,OnChanges {
       // })
      const clientId =  this.clientDetailService.getClientId();
 
-      if(clientId) {
-        this.router.navigate([`${route}/${clientId}`])
-      }else{
-      this.router.navigate([route])
-      }
-    
+
+     if (!clientId && (route.includes('billingAdmin') || route.includes('techAdmin'))) {
+       this.toasterService.showError(
+         `Can't proceed without submitting customer details`,
+         ''
+       );
+       return;
+     }
+
+     if (clientId) {
+       this.router.navigate([`${route}/${clientId}`]);
+     } else {
+       this.router.navigate([route]);
+     }
   }
 
   navigation(route: string) {

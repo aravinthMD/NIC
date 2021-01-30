@@ -79,14 +79,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
     }
   ]
 
-  traiSenderId= [
+  traiSenderId = [
     {
-      value:0,label: 'Yes',
+      key: 0, value: 'Yes',
     },
     {
-      value:1,label:'No'
+      key: 1, value: 'No'
     }
-  ]
+  ];
 
   dataSource = new MatTableDataSource<any>();
 
@@ -123,13 +123,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
     private userPassWord: string;
     projectNo: string;
     userId: string;
+    clientId: string;
 
   constructor(
     private formBuilder : FormBuilder,
     private labelsService: LabelsService, 
     private location: Location,
     private utilService: UtilService,
-    private userInfoService:UserInfoService,
+    private userInfoService: UserInfoService,
     private toasterService: ToasterService,
     private router: Router,
     private activatedRoute: ActivatedRoute, 
@@ -213,19 +214,27 @@ export class UserInfoComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this.patchLovValues();
+    this.ipValidation = this.ipAddressValiationCheck();
+    this.activatedRoute.params.subscribe((value)=> {
+      this.user = value.id;
+      this.clientId = value.id;
+      console.log("user Id",this.user);
+      if (this.clientId) {
+        this.clientDetailService.setClientId(this.clientId);
+        this.getCustomerDetailByCustomerId(this.clientId);
+      } else {
+        this.newUserFlag = true;
+        this.existingPreviewUserFlag = false;
+      }
 
-   
-    this.ipValidation = this.ipAddressValiationCheck()
+      if(!this.user){
+        this.newUserFlag = true;
+        this.existingPreviewUserFlag = false;
+  
+      }
 
-    if(!this.user){
-      this.newUserFlag = true;
-      this.existingPreviewUserFlag = false;
-
-    }
-
-    console.log(this.activatedRoute)
       if(this.user){
-        this.getCustomerDetailByCustomerId(this.user);     
+           
 
         this.utilService.userDetails$.subscribe((val: any)=> {
           console.log('val', val);
@@ -249,8 +258,16 @@ export class UserInfoComponent implements OnInit, OnChanges {
          
                 // this.detectFormChanges()
             });
+  });
+
+
+   
+
+    
+
+      
             
-            this.fetchAllCustomerDetails();
+           // this.fetchAllCustomerDetails();
             // this.getCustomerDetailByCustomerId('62');
 
   }
@@ -293,17 +310,24 @@ export class UserInfoComponent implements OnInit, OnChanges {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-    const mobileNumberCode = this.mobileNumberCodeList.find(code => String(code.value) === String(data.mobileNumberCode)).label;
+    const mobileNumberCode = (this.mobileNumberCodeList.find(code => String(code.key)
+                                === String(data.mobileNumberCode)) || {value: ''}).value;
     const mobile = `${mobileNumberCode} ${data.App_mobile}`;
-    const department = this.departmentListData.find(value => String(value.value) ===  String(data.department)).label;
+    const department = (this.departmentListData.find(value => String(value.key)
+                             ===  String(data.department)) || {value: ''}).value;
    // const department = data.department;
-    const officeMobile = data.FO_mobile;
+    const officeMobileCode = (this.mobileNumberCodeList.find(value => String(value.key)
+                                === String(data.foMobileCode)) || {value: ''}).value;
+    const officeMobile = `${officeMobileCode} ${data.FO_mobile}`;
     const officeAddress = `${data.OA_line1}, ${data.OA_line2}, ${data.OA_line3},
     ${data.city}, ${data.state} - ${data.pincode}`;
-    const teleNumberCode = this.teleCodeValues.find(value => String(value.value) === String(data.telephoneNumberCode)).label;
+    const teleNumberCode = (this.teleCodeValues.find(value => String(value.key) 
+                              === String(data.telephoneNumberCode)) || {value: ''}).value;
     const teleNumber = `${teleNumberCode} ${data.Tele_number_OF}`;
-    const smsService = '';
-    const trai = data.trai_extempted;
+    const smsService = (this.smsServiceReqd.find(value => String(value.key) 
+                            === String(data.sms_service)) || {value: ''}).value;
+    const trai = (this.traiSenderId.find(value => String(value.key) 
+                      === String(data.trai_extempted)) || {value: ''}).value;
 
 
 
@@ -445,10 +469,10 @@ export class UserInfoComponent implements OnInit, OnChanges {
       // creditApprover : data.FO_email,
       // fromDate: new Date(),
       // toDate: new Date(),
-      OfficerName:data.FO_name,
-      OfficerEmail:data.FO_email,
-      officerMobileCode:data.officerMobileCode,
-      OfficerMobile:data.FO_mobile,
+      OfficerName: data.FO_name,
+      OfficerEmail: data.FO_email,
+      officerMobileCode: data.foMobileCode,
+      OfficerMobile: data.FO_mobile,
       smsServiceReqd: data.sms_service,
       nameOfTheApplication: data.name_applicant,
       applicationUrl: data.App_url,
@@ -523,7 +547,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       city: this.form.value.city,
       state: this.form.value.state,
       pincode: this.form.value.pinCode,
-      officerMobileCode: this.form.value.officerMobileCode,
+      FO_mobilecode: this.form.value.officerMobileCode,
       FO_mobile: this.form.value.OfficerMobile,
       FO_name: this.form.value.OfficerName,
       FO_email: this.form.value.OfficerEmail,
@@ -569,6 +593,13 @@ export class UserInfoComponent implements OnInit, OnChanges {
       }
       this.showDataSaveModal = true;
       this.beheSer.setUserId(processVariables.generatedCustomerId);
+      if (processVariables.generatedCustomerId) {
+        this.clientId = processVariables.generatedCustomerId;
+      } else if (processVariables.currentCustomerId) {
+        this.clientId = processVariables.currentCustomerId;
+      }
+      
+      this.clientDetailService.setClientId(this.clientId);
       this.dataValue = {
         title: 'Customer Information Saved Sucessfully',
         message : 'Are you sure you want to proceed to Technical Admin page?'
@@ -585,17 +616,17 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
   }
 
-  fetchAllCustomerDetails() {
+  // fetchAllCustomerDetails() {
 
-    this.userInfoService.fetchAllCustomers().subscribe((response)=> {
+  //   this.userInfoService.fetchAllCustomers().subscribe((response)=> {
 
-      this.customersList = response['ProcessVariables']['customerList'];
+  //     this.customersList = response['ProcessVariables']['customerList'];
 
-      console.log(response)
+  //     console.log(response)
 
-      this.dataSource = new MatTableDataSource<any>(this.customersList);
-    })
-  }
+  //     this.dataSource = new MatTableDataSource<any>(this.customersList);
+  //   })
+  // }
 
   getCustomerDetailByCustomerId(id:string){    
 
@@ -891,13 +922,13 @@ export class UserInfoComponent implements OnInit, OnChanges {
     this.existingUserFlag =  false;
   }
 
-  saveYes(){
-    this.utilService.setCurrentUrl('users/techAdmin')
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) =>{ 
-      pno  = val;
-    })
-    this.router.navigate(['/users/techAdmin/'+ this.userId])
+  saveYes() {
+    // this.utilService.setCurrentUrl('users/techAdmin')
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) =>{ 
+    //   pno  = val;
+    // })
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
   }
 
 

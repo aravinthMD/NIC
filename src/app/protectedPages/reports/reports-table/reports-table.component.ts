@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { UtilService } from '@services/util.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
+import { ClientDetailsService } from '@services/client-details.service';
+
 @Component({
   selector: 'app-reports-table',
   templateUrl: './reports-table.component.html',
@@ -32,12 +34,17 @@ export class ReportsTableComponent implements OnInit, OnChanges {
   PAYMENT_SHORT_PAY_COLUMNS = ['InvoiceNo', 'InvoicePaid', 'ShortPay'];
 
   PAID_UNPAID_COLUMNS = ['UserName', 'projectNumber', 'InvoiceNo', 'InvoiceAmount', 'InvoicePaid', 'InvoiceUnpaid'];
+  SMS_CREDIT_ALLOCATION = ['smsMatrix', 'DateOfRequest', 'Credits', 'Status', 'Navigate'];
+  PROFORMA_INVOICE = ['piNumber', 'piAmount', 'piDate'];
+  PURCHASE_ORDER_RAISED = ['piNumber', 'poNumber', 'poDate', 'projectNumber'];
+  INVOICE_RAISED = ['projectNumber', 'poNumber', 'poDate', 'InvoiceNo', 'InvoiceDate'];
 
   smsColumns: string[] = ['smsMatrix','Credits','Date','Status','Navigate']
   constructor(
     private ngxUiLoaderService: NgxUiLoaderService,
     private utilService: UtilService,
-    private router: Router
+    private router: Router,
+    private clientDetailService: ClientDetailsService
     ) {
    }
 
@@ -55,6 +62,14 @@ export class ReportsTableComponent implements OnInit, OnChanges {
       this.displayedColumns = this.PAYMENT_SHORT_PAY_COLUMNS;
     } else if (this.reportsId === '3') {
       this.displayedColumns = this.PAID_UNPAID_COLUMNS;
+    } else if (this.reportsId === '4') {
+      this.displayedColumns = this.SMS_CREDIT_ALLOCATION;
+    } else if (this.reportsId === '5') {
+      this.displayedColumns = this.PROFORMA_INVOICE;
+    } else if (this.reportsId === '6') {
+      this.displayedColumns = this.PURCHASE_ORDER_RAISED;
+    } else if (this.reportsId === '7') {
+      this.displayedColumns = this.INVOICE_RAISED;
     }
 
 
@@ -105,13 +120,15 @@ export class ReportsTableComponent implements OnInit, OnChanges {
 
   navigate(obj: any) {
 
-    const projectNo = obj.projectNo;
+    const id = obj.smsCreditId;
 
-    this.utilService.setProjectNumber(projectNo);
+   // this.utilService.setProjectNumber(projectNo);
+
+    this.clientDetailService.setClientId(id);
 
     this.utilService.setCurrentUrl('users/smsCredit');
 
-    this.router.navigate([`/users/smsCredit/${projectNo}`]);
+    this.router.navigate([`/users/smsCredit/${id}`]);
 
   }
 

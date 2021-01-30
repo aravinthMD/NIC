@@ -11,6 +11,7 @@ import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { ReportsService } from '@services/reports.service';
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
+import { SmsCreditService } from '@services/sms-credit.service';
 
 
 @Component({
@@ -228,10 +229,10 @@ reportFilter = [
 ]
 
 userStatus  = [
-  {"key":'1',"value" :"All"},
-  {"key":"2","value":"Active"},
-  {"key":"3","value":"Inactive"}
-]
+  {key:'2',value :'All'},
+  {key:'1',value:'Active'},
+  {key:'0',value:'Inactive'}
+];
 
 
   reportsForm: FormGroup;
@@ -250,6 +251,8 @@ userStatus  = [
     invoiceRaisedStatusLov: any[],
     paymentStatusLov: any[]
   };
+  smsQuotaApprovalMatrix = [];
+  smsCreditStatus = [];
 
 
   constructor(
@@ -257,7 +260,8 @@ userStatus  = [
     private utilService: UtilService,
     private toasterService: ToasterService,
     private reportsService: ReportsService,
-    private customDateAdapter: CustomDateAdapter) {
+    private customDateAdapter: CustomDateAdapter,
+    private smsCreditService: SmsCreditService) {
 
     // this.form = this.formBuilder.group({
     //   reports: [''],
@@ -276,7 +280,8 @@ userStatus  = [
    }
 
   ngOnInit() {
-
+    this.smsQuotaApprovalMatrix = this.smsCreditService.getSmsQuotaMatrix();
+    this.smsCreditStatus = this.smsCreditService.getStatusListLov();
     this.initForm();
     this.fetchReportsLov();
 
@@ -369,16 +374,17 @@ userStatus  = [
     // const report  = formValue.reports;
     const fromDate = this.customDateAdapter.transform(formValue.fromDate, 'dd/MM/yyyy');
     const toDate = this.customDateAdapter.transform(formValue.toDate, 'dd/MM/yyyy');
+    const activeStatus = formValue.userStatus;
 
     const data = {
       ...formValue,
+      activeStatus,
       fromDate,
       toDate,
     };
 
     console.log('data', data);
 
-    return;
 
     this.reportsService.getReportsGridValue(data)
         .subscribe((res: any) => {
@@ -390,6 +396,9 @@ userStatus  = [
             const processVariables = res.ProcessVariables;
             console.log('processVariables', processVariables);
             this.setGridValues(processVariables);
+            if (this.gridValues.length === 0) {
+              return this.toasterService.showInfo('No records to display', '');
+            }
         });
 
     // const reportVal = this.form.controls['reports'].value;
@@ -444,6 +453,32 @@ userStatus  = [
     if (reports === '3') {
       return this.gridValues = res.paidUnpaidReportList || [];
     }
+    if (reports === '4') {
+      const values = (res.smsCreditAllocationReportList || []).map((value) => {
+          return {
+            ...value,
+            SMSQuotaApprovalMatrix: (this.smsQuotaApprovalMatrix.find(sms => sms.key === value.SMSQuotaApprovalMatrix ) || {}).value,
+            status: (this.smsCreditStatus.find(sms => sms.key === value.status) || {}).value
+          };
+      });
+      return this.gridValues = values || [];
+    }
+    if (reports === '5') {
+      return this.gridValues = res.piRaisedReportList || [];
+    }
+    if (reports === '6') {
+      return this.gridValues = res.poRaisedReportList || [];
+    }
+    if (reports === '7') {
+      return this.gridValues = res.invoiceRaisedReportList || [];
+    }
+
+   
+    // if (reports === '8') {
+    //   return this.gridValues = res.paidUnpaidReportList || [];
+    // }
+
+
   }
 
   onReportChange(event) {

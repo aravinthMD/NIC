@@ -69,8 +69,6 @@
                                     [className]="'form-control Mandatory code-pad'"
                                     [isDisabled]="propertyFlag"
                                     [isDirty]="isDirty"
-                                    [valueField]="'label'"
-                                    [keyField]="'value'"
                                     >
                                 </app-vf-custom-select>
                                 </div>
@@ -100,8 +98,6 @@
                                     <label for="department">{{labels.department}}</label>
                                     <app-vf-custom-select formControlName="departmentName" 
                                     [values]="departmentListData"
-                                    [valueField]="'label'"
-                                    [keyField]="'value'"
                                     [isRequired]="'Please Select Department'" 
                                     [isDisabled]="propertyFlag"
                                     [isDirty]="isDirty">
@@ -219,8 +215,6 @@
                                     <label for="department">Code<span style="color:red">*</span></label>
                                     <app-vf-custom-select class="code" formControlName="officerMobileCode"  
                                     [values]="mobileNumberCodeList"
-                                    [valueField]="'label'"
-                                    [keyField]="'value'"
                                     [isRequired]="'Select code'" 
                                     [className]="'form-control Mandatory code-pad'"
                                     [isDisabled]="propertyFlag"
@@ -343,8 +337,6 @@
                                 <div class="form-group">
                                     <label for="department">Code<span style="color:red">*</span></label>
                                     <app-vf-custom-select formControlName="teleCode"
-                                    [valueField]="'label'"
-                                    [keyField]="'value'" 
                                     [values]="teleCodeValues"
                                     [isRequired]="'Select code'" 
                                     [className]="'form-control Mandatory code-pad'" 
@@ -543,8 +535,6 @@
                                     <label for="department">{{labels.doYouHaveTRAIexemptedSenderId}} <span style="color:red">*</span></label>
                                     <app-vf-custom-select formControlName="traiSenderId" 
                                     [values]="traiSenderId"
-                                    [valueField]="'label'"
-                                    [keyField]="'value'"
                                     [isRequired]="'Please Select Value'" 
                                     [isDisabled]="propertyFlag"
                                     [isDirty]="isDirty">

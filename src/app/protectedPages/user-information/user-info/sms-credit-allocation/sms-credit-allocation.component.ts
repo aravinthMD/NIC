@@ -157,6 +157,10 @@ export class SmsCreditAllocationComponent implements OnInit {
     });
   }
 
+  onQuotaMatrixChange(event) {
+    this.smsCreditForm.get('onApprovalOf').setValue(event.value);
+  }
+
   getSmsCreditList(searchKeyword = '', fromDate: string = '', toDate = '') {
       this.smsCreditService.getCreditSmsList(
         {
