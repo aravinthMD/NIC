@@ -30,6 +30,9 @@ export class TaxInvoiceComponent implements OnInit {
 
   @Input('userObj') user : any; 
 
+  proformaInvoicesList =  [];
+  purchaseOrderNumberList  = [];
+
 //    monthList = [ "January", "February", "March", "April", "May", "June",
 // "July", "August", "September", "October", "November", "December" ];
 
@@ -94,12 +97,10 @@ export class TaxInvoiceComponent implements OnInit {
       private toasterService: ToasterService,
       private router: Router,
       private invoiceService: InvoiceService,
-      private searchService: SearchService,
-      private apiService: ApiService,
       private adminService: AdminService,
       private taxInvoiceService: TaxInvoiceService,
       private clientDetailsService: ClientDetailsService,
-      private customDateAdapter: CustomDateAdapter
+      private customDateAdapter: CustomDateAdapter,
       ) { }
 
   ngOnInit() {
@@ -111,7 +112,7 @@ export class TaxInvoiceComponent implements OnInit {
     this.taxInvoiceForm = new FormGroup({
       userName: new FormControl(null),
       projectNumber: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
-      poNumber: new FormControl(null),
+      poNumber: new FormControl(null,Validators.required),
       poDate: new FormControl(null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null),
@@ -146,6 +147,7 @@ export class TaxInvoiceComponent implements OnInit {
       projectCoordinator: new FormControl(null), // not available in api
       amendOrderNo: new FormControl(null), // not available in api
       interestOnTds : new FormControl(null), // not available in api
+      piNumber : new FormControl(null)
     });
 
     this.searchForm = new FormGroup({
@@ -160,6 +162,7 @@ export class TaxInvoiceComponent implements OnInit {
       }
       this.accountName = val.App_name || '';
       this.status = val.status || '';
+      this.taxInvoiceForm.controls['userName'].setValue(this.accountName);
     });
 
     this.activatedRoute.params.subscribe((value)=> {
@@ -187,10 +190,24 @@ export class TaxInvoiceComponent implements OnInit {
 
     });
 
+    this.getAutoPopulatePI(this.selectedClientId);
+
     this.getSubLovs();
 
     // this.dataSource = new MatTableDataSource<any>(this.userList);
     // this.getAllTaxInvoiceDetails();
+
+    this.taxInvoiceForm.controls['piNumber'].valueChanges.subscribe((value) =>{
+              if(!value)
+                return
+              this.getAutoPopulatePO(value,this.selectedClientId);
+    })
+
+    this.taxInvoiceForm.controls['poNumber'].valueChanges.subscribe((value) =>{
+              if(!value)
+              return
+          this.getOnChangePO(value);
+    })
   }
 
   getAllTaxInvoiceList(data = {}) {
@@ -229,7 +246,7 @@ export class TaxInvoiceComponent implements OnInit {
      this.paymentStatus = paymentList.map((value) => {
        return {
          key: value.key,
-         value: value.name
+         value: value.value
        };
      });
      this.taxInvoiceService.setPaymentList(this.paymentStatus);
@@ -319,6 +336,10 @@ export class TaxInvoiceComponent implements OnInit {
             }
             this.isDirty = false;
             const taxInvoiceData: TaxInvoice = res.ProcessVariables;
+            this.toasterService.showSuccess('Data Saved Sucessfully','');
+            this.taxInvoiceForm.reset();
+            this.taxInvoiceForm.controls['userName'].setValue(this.accountName);
+            this.taxInvoiceForm.controls['invoiceStatus'].setValue('');
             this.updateGrid(taxInvoiceData);
         });
   }
@@ -534,6 +555,56 @@ export class TaxInvoiceComponent implements OnInit {
     this.toasterService.showError('Please click the to date icon to select date','');
   }
 }
+
+
+getAutoPopulatePI(clientId  :string){
+  this.invoiceService.getPIAutoPopulationAPI(clientId).subscribe(
+    (response) =>{
+      console.log(`API Response for the Get PI Auto Populate ${response}`);
+      this.proformaInvoicesList = response['ProcessVariables']['piList'] || [];
+  },(error) =>{
+      console.log('Error');
+      this.toasterService.showError('Failed to fetch data','');
+  })
+}
+
+getAutoPopulatePO(piNumber : string,clientId : number){
+  this.invoiceService.getTaxInvoiceOnLoad(clientId,piNumber).subscribe(
+    (response) =>{
+      this.purchaseOrderNumberList = response['ProcessVariables']['poNumberList']  ? response['ProcessVariables']['poNumberList'] :  [];
+  },(error) =>{
+      this.toasterService.showError('Failed to fetch the data','');
+  })
+}
+
+getOnChangePO(poNumber : string){
+  this.invoiceService.getTIOnChange(poNumber).subscribe(
+    (response) =>{
+      const projectName = response['ProcessVariables']['projectName'] ? response['ProcessVariables']['projectName'] : '';
+      const purchaseOrderDate = response['ProcessVariables']['poDate'] ? response['ProcessVariables']['poDate'] : '';
+      const fromDate = response['ProcessVariables']['fromDate'] ? response['ProcessVariables']['fromDate'] : '';
+      const toDate = response['ProcessVariables']['toDate'] ? response['ProcessVariables']['toDate'] : '';
+      const billableAmount = response['ProcessVariables']['billableAmount'] ? response['ProcessVariables']['billableAmount'] : '';
+      const projectNumber = response['ProcessVariables']['projectNumber'];
+      this.taxInvoiceForm.controls['poDate'].setValue(new Date(this.changeDateFormat(purchaseOrderDate)));
+      this.taxInvoiceForm.controls['fromDate'].setValue(new Date(this.changeDateFormat(fromDate)));
+      this.taxInvoiceForm.controls['toDate'].setValue((new Date(this.changeDateFormat(toDate))));
+      this.taxInvoiceForm.controls['billableAmount'].setValue(billableAmount);
+      this.taxInvoiceForm.controls['projectName'].setValue(projectName);
+      this.taxInvoiceForm.controls['projectNumber'].setValue(projectNumber);
+  },(error) =>{
+      this.toasterService.showError('Failed to fetch data','');
+  })
+}
+
+changeDateFormat(date) {
+
+  const splitDate = date.split('/');
+
+  return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+ }
+
 
 back() {
 

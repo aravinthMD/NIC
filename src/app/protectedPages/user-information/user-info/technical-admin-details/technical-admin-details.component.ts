@@ -32,7 +32,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       viewBillAdminInfoData = [];
 
-    dataSource = new MatTableDataSource<any>();
+    teleCodeValues = []
+
+    dataSource = [];
 
     user: string;
     name: string;
@@ -54,7 +56,6 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     clientUserId: string;
     mobileNumberCodeList = [];
     departmentListData = [];
-    teleCodeValues = [];
  
 
 
@@ -143,28 +144,17 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     console.log(this.activatedRoute)
       if(this.user){
-      
         this.getTechAdminsById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
-
-
-      this.setFormValues();
-      this.setBillOwnerFormValues();
       this.propertyFlag = true;
-
+      this.getBillingAdminDetailById(this.user);
       }else {
         this.showView = false;
       }
-
-      this.fetchAllTechAdmins();
-
-       
-
-       this.getBillingAdminDetailById(this.user);
   }
 
   patchLovValues() {
@@ -424,7 +414,7 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
       this.adminsList = response['ProcessVariables'];
 
-      this.dataSource = new MatTableDataSource<any>(this.adminsList);
+      this.dataSource = this.adminsList;
     })
   }
 

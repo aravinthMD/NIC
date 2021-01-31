@@ -13,6 +13,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import{ApiService} from '../../../services/api.service'
 import { ClientDetailsService } from '@services/client-details.service';
+import { MatInput } from '@angular/material';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -23,6 +24,8 @@ export class ProcessDetailsComponent implements OnInit{
 
   userId:string ;
   @Input('userObj') user : any;
+
+  @ViewChild('dateFeild', { read: MatInput,static  :true}) input: MatInput;
 
   length: number;
   pageSize : number;
@@ -102,7 +105,7 @@ export class ProcessDetailsComponent implements OnInit{
       endDate:[''],
       piStatus: [''],
       paymentStatus:[''],
-      remark:['']
+      remark:['',[Validators.required]]
 
     })
 
@@ -124,12 +127,14 @@ export class ProcessDetailsComponent implements OnInit{
 
       this.accountName = val['App_name'] || '';
       this.status = val['status'] || '';
+      this.form.controls['accountName'].setValue(this.accountName);
     })
 
     this.activatedRoute.params.subscribe((value)=> {
       this.storeProjectNo = value.projectNo || 4535;
   });
   this.userId = this.clientDetailService.getClientId();
+  
 
   this.fetchAllProformaInvoice(this.currentPage,this.userId);
 
@@ -192,6 +197,12 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   createProformaInvoice(){
+
+      if(this.form.invalid){
+        this.isDirty = true;
+        return;
+      }
+
       const feildControls = this.form.controls;
       const AccountName  = feildControls.accountName.value;
       const piNumber = feildControls.invoiceNumber.value;
@@ -241,8 +252,18 @@ export class ProcessDetailsComponent implements OnInit{
           console.log(`API response for the Create PI :${response}`)
           if(code == '0'){
             this.form.reset();
+            this.input.value = ''
+            this.form.controls['piStatus'].setValue("");
+            this.form.controls['paymentStatus'].setValue("");
+            this.form.controls['startDate'].setValue("");
+            this.form.controls['accountName'].setValue(this.accountName);
             this.isDirty = false;
-            this.toasterService.showSuccess('proforma Invoice Updated SucessFully','')
+            this.toasterService.showSuccess('Proforma Invoice Updated SucessFully','');
+            this.showDataSaveModal = true
+            this.dataValue = {
+                title : 'Proforma Invoice Saved Successfully',
+                message  : "Are you sure you want to proceed proforma invoice page?"
+            }
             this.fetchAllProformaInvoice(this.currentPage,this.userId);
           }else {
             this.toasterService.showError(message,'');
@@ -351,23 +372,23 @@ export class ProcessDetailsComponent implements OnInit{
       this.form.patchValue({
         startDate: ''
       })
-      this.toasterService.showError('Please click the startDate icon to select date','');
+      this.toasterService.showError('Please click the start date icon to select date','');
     }else if(type == 'endDate') {
 
       this.form.patchValue({
         endDate: ''
       })
-      this.toasterService.showError('Please click the endDate icon to select date','');
+      this.toasterService.showError('Please click the end date icon to select date','');
     }else if(type == 'searchFrom') {
       this.searchForm.patchValue({
         searchFrom: ''
       })
-      this.toasterService.showError('Please click the fromdate icon to select date','');
+      this.toasterService.showError('Please click the from date icon to select date','');
     }else if(type == 'searchTo') {
       this.searchForm.patchValue({
         searchTo: ''
       })
-      this.toasterService.showError('Please click the todate icon to select date','');
+      this.toasterService.showError('Please click the to date icon to select date','');
     }
     
   }
@@ -387,6 +408,24 @@ export class ProcessDetailsComponent implements OnInit{
     this.router.navigate([`/users/smsCredit/${this.storeProjectNo}`])
 
   }
+
+
+  // getPIAutoPopulate(clientId : string){
+  //       this.invoiceService.getPIAutoPopulationAPI(clientId).subscribe(
+  //         (response) => {
+  //           const { 
+  //             ProcessVariables  : { error : {
+  //               code,
+  //               message
+  //             }}
+  //           } = response;
+
+  //           console.log(`API Response for the Get PI Auto Populate ${response}`);
+  //           if(code == '0'){
+              
+  //           }
+  //       })
+  // }
 
   getServerData(event?:PageEvent){
     let currentPageIndex  = Number(event.pageIndex) + 1;
