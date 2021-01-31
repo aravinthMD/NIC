@@ -185,7 +185,7 @@ export class LovsComponent implements OnInit {
       const submenuList = response['ProcessVariables']['Lovitems'];
      submenuList.forEach(element => {
         
-        listData.push({key:element.key,value:element.name})
+        listData.push({key:element.key,value:element.value})
       });
     })
 

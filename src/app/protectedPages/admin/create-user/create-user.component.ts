@@ -45,10 +45,10 @@ export class CreateUserComponent implements OnInit {
     private route : ActivatedRoute
     ) {
 
-    this.deparmentList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
-    this.countryCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
-    this.teleCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
-    this.roleList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['rolesList']
+    this.deparmentList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
+    this.countryCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
+    this.teleCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
+    this.roleList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['rolesList'] || [];
 
     this.form =this.formBuilder.group({
       userName: [null],

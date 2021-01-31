@@ -54,7 +54,7 @@ export class InvoiceService {
       return  this.httpService.post<any>(url,formData);
   }
 
-  getProjectExecutionDetails(currentPage : any){
+  getProjectExecutionDetails(currentPage : any,selectedClientId : any){
 
     const {
       api : {
@@ -67,6 +67,7 @@ export class InvoiceService {
   } = this.apiService;
 
   const data = {
+    selectedClientId,
     currentPage 
   }
 
@@ -251,7 +252,7 @@ export class InvoiceService {
 
     
 
-fetchAllPO(currentPage?:any) {
+fetchAllPO(selectedClientId : string,currentPage?:any) {
 
           const {
             api : {
@@ -269,6 +270,7 @@ fetchAllPO(currentPage?:any) {
               requestEntity = {
                 processId,
               ProcessVariables : {
+                selectedClientId,
                 currentPage: Number(currentPage)
               },
               projectId
@@ -276,7 +278,7 @@ fetchAllPO(currentPage?:any) {
         }else {
               requestEntity = {
                 processId,
-                ProcessVariables : {},
+                ProcessVariables : {selectedClientId},
                 projectId
               }
         }
@@ -597,6 +599,140 @@ updatePurchaseOrder(data) {
   
     return this.httpService.post(url,formData);
 
+  }
+
+
+  getPIAutoPopulationAPI(clientId : string){
+
+      const {
+        api : {
+          PIonLoadAPI : {
+              workflowId,
+              processId,
+              projectId
+          }
+        }
+    } = this.apiService;
+  
+    const data = {
+      clientId
+    }
+  
+    const requestEntity  : any  = {
+      processId,
+      ProcessVariables : data,
+      projectId
+    }
+  
+    const body = {
+      processVariables : JSON.stringify(requestEntity)
+    };
+  
+    const formData = this.transform(body)
+  
+    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+    return  this.httpService.post<any>(url,formData);
+  
+  }
+
+  getProformaInvoiceOnChangeData(piNumber : number){
+      
+    const {
+      api : {
+        PIonChangeAPI : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  const data = {
+    piNumber
+  }
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+
+  }
+
+  getTaxInvoiceOnLoad(clientId : number,piNumber ?: string){
+      
+    const {
+      api : {
+        TIonLoadAPI : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  const data = {
+    clientId,
+    piNumber
+  }
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+  }
+
+  getTIOnChange(poNumber : string){
+    
+      
+    const {
+      api : {
+        TIonChangeAPI : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  const data = {
+    poNumber
+  }
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : data,
+    projectId
+  }
+
+  const body = {
+    processVariables : JSON.stringify(requestEntity)
+  };
+
+  const formData = this.transform(body)
+
+  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  return  this.httpService.post<any>(url,formData);
+  
   }
   
 

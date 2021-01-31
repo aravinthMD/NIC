@@ -27,12 +27,13 @@
                                   placeHolder =  "Enter the User Name"
                                   [maxLength]="labels?.validationData?.userName?.maxLength" 
                                   [type]="labels?.validationData?.userName?.type" 
-                                  [isDirty]="isDirty">
+                                  [isDirty]="isDirty"
+                                  isDisabledInp = true>
                                 </app-custom-input>
 
                             </div>
                         </div>
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
 
                                 <app-custom-input formControlName="piNumber" 
@@ -46,7 +47,29 @@
                                 
 
                             </div>
+                        </div> -->
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="department">{{labels.proformaIN}}</label>
+                                <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
+                                class="form-control mb-3"
+                                placeholder="click to select the Proforma Invoice Number"
+                                [formControl]="PurchaseOrderForm.controls['piNumber']"
+                                formControlName = "piNumber"
+                                [matAutocomplete]="auto" 
+                               >
+                               <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let proformaInvoice of proformaInvoicesList" [value]="proformaInvoice.name">
+                                  {{proformaInvoice.name}}
+                                </mat-option>
+                              </mat-autocomplete>
+                              <div class="date-picker-error" *ngIf="isDirty && PurchaseOrderForm.controls['piNumber'].errors?.required">
+                                    Please Enter the Proforma Invoice Number
+                                </div>
+                            </div>
                         </div>
+
                         <div class="col-4">
                             <div class="form-group">
 
