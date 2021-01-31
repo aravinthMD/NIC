@@ -178,6 +178,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
    }
 
   setBillOwnerFormValues(data?: any){
+
+    if (!data) {
+      return;
+    }
      
     if(data){
     
@@ -221,7 +225,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:`${this.billOwnerForm.value.mobileNumberCode}${this.billOwnerForm.value.mobileNumber}`
+        value:data.mobileNumber
       },
       // {
       //   key: this.labels.mobileNo,
@@ -229,7 +233,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       // },
       {
         key  : this.labels.teleNumber,
-        value : `${this.billOwnerForm.value.telephoneNumberCode}${this.billOwnerForm.value.telephoneNumber}`
+        value : data.telephoneNumber,
       },
       // {
       //   key: this.labels.teleNumber,
@@ -241,7 +245,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.remark,
-        value:this.billOwnerForm.value.remark
+        value: data.remark
       }]
 
   
@@ -537,41 +541,40 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
   next() {
 
-    if(!this.user) {
+    // if(!this.user) {
 
-      this.utilService.setCurrentUrl('users/billingAdmin')
+    //   this.utilService.setCurrentUrl('users/billingAdmin')
 
-      let pno = '';
-      this.utilService.projectNumber$.subscribe((val)=> {
-        pno = val || '1';
-      })
-  
-  
-      if(this.user) {
-        this.router.navigate(['/users/billingAdmin/'+pno])
-      }else {
-        this.router.navigate(['/users/billingAdmin'])
-      }
+    //   let pno = '';
+    //   this.utilService.projectNumber$.subscribe((val)=> {
+    //     pno = val || '1';
+    //   })
 
-    }else {
+    //   if(this.user) {
+        this.router.navigate(['/users/billingAdmin/' + this.clientId]);
+         //   }else {
+    //     this.router.navigate(['/users/billingAdmin'])
+    //   }
 
-      this.utilService.setCurrentUrl('users/smsCredit')
+    // }else {
 
-      let pno = '';
-      this.utilService.projectNumber$.subscribe((val)=> {
-        pno = val || '1';
-      })
+    //   this.utilService.setCurrentUrl('users/smsCredit')
+
+    //   let pno = '';
+    //   this.utilService.projectNumber$.subscribe((val)=> {
+    //     pno = val || '1';
+    //   })
 
 
-      if(this.user) {
-      this.router.navigate(['/users/smsCredit/'+pno])
+    //   if(this.user) {
+    //   this.router.navigate(['/users/smsCredit/'+pno])
 
-      }else {
-      this.router.navigate(['/users/smsCredit'])
+    //   }else {
+    //   this.router.navigate(['/users/smsCredit'])
 
-     }
+    //  }
 
-    }
+    // }
    
 
        
@@ -582,30 +585,29 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     this.remarkModal = false;
   }
 
-  saveYes(){
-    this.utilService.setCurrentUrl('users/billingAdmin');
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) =>{
-      pno = val;
-    })
-    this.router.navigate(['/users/billingAdmin/'+pno]);
+  saveYes() {
+    // this.utilService.setCurrentUrl('users/billingAdmin');
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) =>{
+    //   pno = val;
+    // })
+    this.router.navigate(['/users/billingAdmin/' + this.clientId]);
   }
 
   saveCancel() {
     this.showDataSaveModal = false;
-    
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val || '1';
-    })
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val)=> {
+    //   pno = val || '1';
+    // })
 
-    if(this.user){
-      this.router.navigate(['/users/techAdmin/'+pno])
-      this.showView = true
-      this.propertyFlag = true
-    }else{
-      this.router.navigate(['/users/techAdmin'])
-    }
+   // if(this.user){
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
+    this.showView = true;
+    this.propertyFlag = true;
+    // }else{
+    //   this.router.navigate(['/users/techAdmin'])
+    // }
 
   }
 

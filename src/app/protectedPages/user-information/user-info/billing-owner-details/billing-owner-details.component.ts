@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { BillingAdminService } from '@services/billing-admin.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
@@ -53,7 +54,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
     private utilService: UtilService,
     private userInfoService: UserInfoService,
     private activatedRoute: ActivatedRoute,
-    private behser: BehaviourSubjectService
+    private behser: BehaviourSubjectService,
+    private billingAdminService: BillingAdminService
     ) { }
 
   ngOnInit() {
@@ -158,7 +160,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
           city: data.city,
           state: data.state,
           pinCode: data.pincode,
-          remark: data.remarks,
+          remark: data.remark,
           userId: this.clientId,
         });
       }
@@ -268,26 +270,28 @@ export class BillingOwnerDetailsComponent implements OnInit {
     }
     // console.log('billOwnerForm', this.billOwnerForm.value);
 
+    const formValue = this.billOwnerForm.value;
+
     const billingDetails = {
-      // "selectedClient":"55",
       clientId: this.clientId,
      // id: this.billOwnerForm.value.id,
-      selectedClient: this.userId,
-      name: this.billOwnerForm.value.name,
-      city: this.billOwnerForm.value.city,
-      designation: this.billOwnerForm.value.designation,
-      email: this.billOwnerForm.value.email,
-      employeeCode: this.billOwnerForm.value.employeeCode,
-      mobileNumberCode: this.billOwnerForm.value.mobileNumberCode,
-      mobileNumber: this.billOwnerForm.value.mobileNumber,
-      telephoneNumberCode: this.billOwnerForm.value.telephoneNumberCode,
-      telephoneNumber: this.billOwnerForm.value.telephoneNumber,
-      oaLine1: this.billOwnerForm.value.offAddress1,
-      oaLine2: this.billOwnerForm.value.offAddress2,
-      oaLine3: this.billOwnerForm.value.offAddress3,
-      state: this.billOwnerForm.value.state,
-      pincode: this.billOwnerForm.value.pinCode,
-      remark: this.billOwnerForm.value.remark,
+      currentClientId: this.clientId,
+      selectedClient: this.clientId,
+      name: formValue.name,
+      city: formValue.city,
+      designation: formValue.designation,
+      email: formValue.email,
+      employeeCode: formValue.employeeCode,
+      mobileNumberCode: formValue.mobileNumberCode,
+      mobileNumber: formValue.mobileNumber,
+      telephoneNumberCode: formValue.telephoneNumberCode,
+      telephoneNumber: formValue.telephoneNumber,
+      oaLine1: formValue.offAddress1,
+      oaLine2: formValue.offAddress2,
+      oaLine3: formValue.offAddress3,
+      state: formValue.state,
+      pincode: formValue.pinCode,
+      remark: formValue.remark,
     };
     console.log('billingDetails', billingDetails);
     this.userInfoService.createBilling(billingDetails).subscribe((response: any) => {
@@ -333,15 +337,22 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   getBillingAdminDetailById(id) {
 
-    this.userInfoService.getBillingAdminDetailById(id).subscribe((response: any) => {
-      console.log('billAdminDetails by id', response);
-      const processVariables = response.ProcessVariables;
-      this.utilService.setBillAdminUserDetails(processVariables);
-      this.setBillOwnerFormValues(processVariables);
-    });
+    this.billingAdminService.getBillingAdminDetailsById({ currentClientId: id})
+        .subscribe((res: any) => {
+          console.log('billAdminDetails by id', res);
+          const processVariables = res.ProcessVariables;
+          this.utilService.setBillAdminUserDetails(processVariables);
+          this.setBillOwnerFormValues(processVariables);
+        });
+
+    // this.userInfoService.getBillingAdminDetailById(id).subscribe((response: any) => {
+    //   // console.log('billAdminDetails by id', response);
+    //   const processVariables = response.ProcessVariables;
+    //   this.utilService.setBillAdminUserDetails(processVariables);
+    //   this.setBillOwnerFormValues(processVariables);
+    // });
   }
 
-  
   back() {
 
     this.utilService.setCurrentUrl('users/techAdmin')
@@ -361,48 +372,48 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   next() {
-    this.utilService.setCurrentUrl('users/smsCredit')
+    // this.utilService.setCurrentUrl('users/smsCredit')
 
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val || '1';
-    })
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val)=> {
+    //   pno = val || '1';
+    // })
 
 
-    if(this.user) {
-    this.router.navigate(['/users/smsCredit/'+pno])
+    // if(this.user) {
+    this.router.navigate(['/users/smsCredit/' + this.clientId]);
 
-    }else {
-    this.router.navigate(['/users/smsCredit'])
+    // }else {
+    // this.router.navigate(['/users/smsCredit'])
 
-    }
+    // }
   }
 
-  saveYes(){
-    this.utilService.setCurrentUrl('users/smsCredit')
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) =>{
-      pno = val || '1';
-    })
+  saveYes() {
+    this.utilService.setCurrentUrl('users/smsCredit');
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) =>{
+    //   pno = val || '1';
+    // })
 
-    this.router.navigate(['/users/smsCredit/'+pno])
+    this.router.navigate(['/users/smsCredit/' + this.clientId]);
   }
 
   saveCancel() {
     this.showDataSaveModal = false;
 
-  let pno = '';
-  this.utilService.projectNumber$.subscribe((val)=> {
-    pno = val || '1';
-  })
+  // let pno = '';
+  // this.utilService.projectNumber$.subscribe((val)=> {
+  //   pno = val || '1';
+  // })
 
-  if(this.user){
-    this.router.navigate(['/users/techAdmin/'+pno])
-    this.showView = true
-    this.propertyFlag = true
-  }else{
-    this.router.navigate(['/users/techAdmin'])
-  }
+  // if(this.user){
+    this.router.navigate(['/users/techAdmin/'+this.clientId])
+    this.showView = true;
+    this.propertyFlag = true;
+  // }else{
+  //   this.router.navigate(['/users/techAdmin'])
+  // }
   }
   
 }
