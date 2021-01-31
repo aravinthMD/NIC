@@ -64,11 +64,12 @@
                         
                                     <label for="department">Code<span style="color:red">*</span></label>
                                     <app-vf-custom-select class="code" formControlName="mobileNumberCode"  
-                                    [values]="countryCodeValues"
+                                    [values]="mobileNumberCodeList"
                                     [isRequired]="'Select code'" 
                                     [className]="'form-control Mandatory code-pad'"
                                     [isDisabled]="propertyFlag"
-                                    [isDirty]="isDirty">
+                                    [isDirty]="isDirty"
+                                    >
                                 </app-vf-custom-select>
                                 </div>
                             </div>
@@ -213,7 +214,7 @@
                         
                                     <label for="department">Code<span style="color:red">*</span></label>
                                     <app-vf-custom-select class="code" formControlName="officerMobileCode"  
-                                    [values]="countryCodeValues"
+                                    [values]="mobileNumberCodeList"
                                     [isRequired]="'Select code'" 
                                     [className]="'form-control Mandatory code-pad'"
                                     [isDisabled]="propertyFlag"
@@ -335,7 +336,7 @@
                             <div class="col-1 pr-2 mr-0">
                                 <div class="form-group">
                                     <label for="department">Code<span style="color:red">*</span></label>
-                                    <app-vf-custom-select formControlName="teleCode" 
+                                    <app-vf-custom-select formControlName="teleCode"
                                     [values]="teleCodeValues"
                                     [isRequired]="'Select code'" 
                                     [className]="'form-control Mandatory code-pad'" 
@@ -366,8 +367,8 @@
                         
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="department">{{labels.smsServiceReqd}}</label>
-                                    <app-vf-custom-select formControlName="smsServiceReqd" 
+                                    <label for="department">{{labels.smsServiceReqd}}<span style="color:red">*</span></label>
+                                    <app-vf-custom-select formControlName="smsServiceReqd"
                                     [values]="smsServiceReqd"
                                     [isRequired]="'Please Select SMS Service'" 
                                     [isDisabled]="propertyFlag"
@@ -522,7 +523,7 @@
                                         <mat-placeholder>Choose The Date</mat-placeholder>
                                     </mat-form-field>
 
-                                    <div class="date-picker-error" *ngIf="isDirty && form.get('creditDate').errors?.required">
+                                    <div class="date-picker-error" *ngIf="isDirty && form.get('auditDate').errors?.required">
                                         Please select date
                                     </div>
 
@@ -531,7 +532,7 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="department">{{labels.doYouHaveTRAIexemptedSenderId}}</label>
+                                    <label for="department">{{labels.doYouHaveTRAIexemptedSenderId}} <span style="color:red">*</span></label>
                                     <app-vf-custom-select formControlName="traiSenderId" 
                                     [values]="traiSenderId"
                                     [isRequired]="'Please Select Value'" 
@@ -587,7 +588,9 @@
 
                                     <!-- <div class="col-4">
                                         <div class="form-group">
-                                            <app-custom-input formControlName="remark" 
+                                            <label for="remark">{{labels.remark}}</label>
+                                            <textarea class="remark" maxlength="3000" formControlName="remark"  placeHolder =  "Enter the Remark"></textarea>
+                                             <app-custom-input formControlName="remark" 
                                                 [labelName]="labels.remark" 
                                                 placeHolder =  "Enter the Remark"
                                                 [id]="'remark'"
@@ -596,6 +599,12 @@
                                                 [isDisabledInp]="propertyFlag"
                                                 [isDirty]="isDirty">
                                             </app-custom-input>
+                                            <div class="date-picker-error" *ngIf="
+                                            isDirty &&
+                                            form.get('remark').errors?.required
+                                            ">
+                                                Please Enter Remark
+                                            </div>
                                         </div>
                                     </div>  -->
 

@@ -144,7 +144,7 @@ export class CustomSelectComponent
   onBlurMethod(event) {
     const newValue = event.target.value;
 
-    if (!newValue && this.isRequired) {
+    if ((newValue === null || newValue === undefined || newValue === '') && this.isRequired) {
       this.displayError(this.isRequired);
       return;
     }

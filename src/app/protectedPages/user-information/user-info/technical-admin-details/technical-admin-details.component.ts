@@ -28,13 +28,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       showDataSaveModal  :boolean;
       dataValue  = {};
       showView: boolean = true;
-      viewInfoData :  any;
+      viewInfoData  = [];
 
-      viewBillAdminInfoData = []
-
-    departmentListData = [];
-
-    countryCodeValues = []
+      viewBillAdminInfoData = [];
 
     teleCodeValues = []
 
@@ -50,36 +46,42 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     remarkModal: boolean;
 
-    hideEditButton: boolean = false;
-    showViewBill:boolean = true;
+    hideEditButton = false;
+    showViewBill = true;
     userId;
     adminsList: any;
     form: any;
     BillDetailsList: any;
-    clientId: string;
+    clientId: number;
     clientUserId: string;
+    mobileNumberCodeList = [];
+    departmentListData = [];
  
 
 
     constructor(
-      private labelsService:LabelsService,
-      private toasterService:ToasterService,
-      private router:Router,
-      private userInfoService:UserInfoService,
-      private utilService:UtilService,
+      private labelsService: LabelsService,
+      private toasterService: ToasterService,
+      private router: Router,
+      private userInfoService: UserInfoService,
+      private utilService: UtilService,
       private activatedRoute: ActivatedRoute,
       private behser: BehaviourSubjectService,
-      private client:ClientDetailsService
+      private client: ClientDetailsService
       ) { }
 
   ngOnInit() {
 
-    this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
-    this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
-    this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
+    this.patchLovValues();
 
+    this.activatedRoute.params.subscribe((value) => {
+      if (!value) {
+        return;
+      }
+      this.clientId = Number(value.id || 0);
+    });
 
-    this.clientId=this.client.getClientId();
+    // this.clientId = Number(this.client.getClientId());
     this.behser.$userId.subscribe( res => {
       console.log("Cleint ID  ",res)
       this.userId = res;
@@ -101,10 +103,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
-      mobileNumberCode : new FormControl(this.countryCodeValues[0].key),
+      mobileNumberCode : new FormControl(''),
       mobileNumber :new FormControl (''),
       telephoneNumber : new FormControl (''),
-      telephoneNumberCode: new FormControl(this.teleCodeValues[0].key),
+      telephoneNumberCode: new FormControl(''),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -155,7 +157,21 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       }
   }
 
+  patchLovValues() {
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    console.log('listOfValue', processVariables);
+    this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
+    this.departmentListData = processVariables.departmentList || [];
+    this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+   }
+
   setBillOwnerFormValues(data?: any){
+
+    if (!data) {
+      return;
+    }
      
     if(data){
     
@@ -199,7 +215,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:`${this.billOwnerForm.value.mobileNumberCode}${this.billOwnerForm.value.mobileNumber}`
+        value:data.mobileNumber
       },
       // {
       //   key: this.labels.mobileNo,
@@ -207,7 +223,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       // },
       {
         key  : this.labels.teleNumber,
-        value : `${this.billOwnerForm.value.telephoneNumberCode}${this.billOwnerForm.value.telephoneNumber}`
+        value : data.telephoneNumber,
       },
       // {
       //   key: this.labels.teleNumber,
@@ -219,7 +235,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.remark,
-        value:this.billOwnerForm.value.remark
+        value: data.remark
       }]
 
   
@@ -229,6 +245,71 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     this.propertyFlag = false;
     this.showView = false;
     // this.hideEditButton = true;
+  }
+
+  setViewPageDataForTechAdminDetails(data) {
+    if (!data) {
+      return;
+    }
+
+    const department = (this.departmentListData.find( value =>
+                          String(value.key) === String(data.department)) || {}).value;
+
+    this.viewInfoData = [
+      {
+        key : this.labels.name,
+        value : data.name
+      },
+      {
+        key  : this.labels.email,
+        value  : data.email
+      },
+      {
+        key  : this.labels.department,
+        value :  department
+      },
+      {
+        key  : this.labels.designation,
+        value :  data.designation
+      },
+      {
+        key  : this.labels.employeeCode,
+        value :  data.employeeCode
+      },
+      {
+        key  : this.labels.mobileNo,
+        value  :  data.mobileNumber
+      },
+      {
+        key  : this.labels.teleNumber,
+        value :  data.telephoneNumber
+      },
+      {
+        key  : 'Official Address',
+        value :  `${data.officialAddress1}
+        ${data.officialAddress2}
+        ${data.officialAddress3}
+        ${data.city} ${data.state}
+        ${data.pinCode}`
+      },
+      {
+        key  : this.labels.remark,
+        value  : data.remark
+      },
+      {
+        key : '',
+        value :  ''
+      },
+      {
+        key :  '',
+        value :  ''
+      },
+      {
+        key  : '',
+        value :  ''
+      }
+    ];
+
   }
 
   setFormValues(data?: any) {
@@ -272,129 +353,57 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
 console.log("departmentList",this.departmentListData,this.technicaladminform.value.departmentName)
 
-    this.viewInfoData = [
-      {
-        key : this.labels.name,
-        value : this.technicaladminform.value.name
-      },
-      {
-        key  : this.labels.email,
-        value  : this.technicaladminform.value.email
-      },
-      {
-        key  : this.labels.department,
-        value :  departmentListData[0]?departmentListData[0].value:null
-      },
-      {
-        key  : this.labels.designation,
-        value :  this.technicaladminform.value.designation
-      },
-      {
-        key  : this.labels.employeeCode,
-        value :  this.technicaladminform.value.employeeCode
-      },
-      // {
-      //   key  : this.labels.mobileNo,
-      //   value  :  `91${this.technicaladminform.value.mobileNumber}`
-      // },
-      // {
-      //   key  : this.labels.teleNumber,
-      //   value :  `044${this.technicaladminform.value.telephoneNumber}`
-      // },
-      {
-        key  : this.labels.mobileNo,
-        value  :  `${this.technicaladminform.value.mobileNumberCode}${this.technicaladminform.value.mobileNumber}`
-      },
-      {
-        key  : this.labels.teleNumber,
-        value :  `${this.technicaladminform.value.telephoneNumberCode}${this.technicaladminform.value.telephoneNumber}`
-      },
-      {
-        key  : "Official Address",
-        value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3} ${this.technicaladminform.value.city} ${this.technicaladminform.value.state}  ${this.technicaladminform.value.pinCode}`
-      },
-      {
-        key  : this.labels.remark,
-        value  : this.technicaladminform.value.remark
-      },
-      {
-        key : "",
-        value :  ""
-      },
-      {
-        key :  "",
-        value :  ""
-      },
-      {
-        key  : "",
-        value :  ""
-      }
-    ]
+    
 
 
   }
 
-  onSubmit(){
-    if(this.technicaladminform.invalid) {
+  onSubmit() {
+    if (this.technicaladminform.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields','')
-      return
+      return;
     }
 
     const techAdminDetails = {
-      // "selectedTechId":this.technicaladminform.value.Id,
-      // "currentClientId":this.technicaladminform.value.id,
-      "id":this.technicaladminform.value.id,
-      "name": this.technicaladminform.value.name,
-      "department":this.technicaladminform.value.departmentName,
-      "designation":this.technicaladminform.value.designation,
-      "employeeCode":this.technicaladminform.value.employeeCode,
-      "emailAddress":this.technicaladminform.value.email,
-      "mobileNumberCode":this.technicaladminform.value.mobileNumberCode,
-      "mobileNumber":this.technicaladminform.value.mobileNumber,
-      "telephoneNumber":this.technicaladminform.value.telephoneNumber,
-      "telephoneNumberCode":this.technicaladminform.value.telephoneNumberCode,
-      "officeAddressLine1":this.technicaladminform.value.offAddress1,
-      "officeAddressLine2":this.technicaladminform.value.offAddress2,
-      "officeAddressLine3":this.technicaladminform.value.offAddress3,
-      "city":this.technicaladminform.value.city,
-      "state":this.technicaladminform.value.state,
-      "pincode":this.technicaladminform.value.pinCode,
-      "remark":this.technicaladminform.value.remark, 
-      "clientUserId":this.userId,
-      
-    }
-      this.userInfoService.createTechnicalAdmin(techAdminDetails).subscribe((response)=> {
-  
-        console.log('Response',response)
-  
-         
-        if(response['Error'] == '0' && response) {
-       
-          this.isDirty=false;
+      // id: this.technicaladminform.value.id,
+      name: this.technicaladminform.value.name,
+      department: this.technicaladminform.value.departmentName,
+      designation: this.technicaladminform.value.designation,
+      employeeCode: this.technicaladminform.value.employeeCode,
+      emailAddress: this.technicaladminform.value.email,
+      mobileCode: this.technicaladminform.value.mobileNumberCode,
+      mobileNumber: this.technicaladminform.value.mobileNumber,
+      telephoneNumber: this.technicaladminform.value.telephoneNumber,
+      telephoneCode: this.technicaladminform.value.telephoneNumberCode,
+      officeAddressLine1: this.technicaladminform.value.offAddress1,
+      officeAddressLine2: this.technicaladminform.value.offAddress2,
+      officeAddressLine3: this.technicaladminform.value.offAddress3,
+      city: this.technicaladminform.value.city,
+      state: this.technicaladminform.value.state,
+      pincode: this.technicaladminform.value.pinCode,
+      remark: this.technicaladminform.value.remark,
+      clientUserId: this.clientId,
+    };
+    console.log('techAdminDetails', techAdminDetails);
+    this.userInfoService
+      .createTechnicalAdmin(techAdminDetails)
+      .subscribe((response: any) => {
+        const error = response.Error;
+        const errorMessage = response.ErrorMessage;
 
-          this.technicaladminform.reset()
-          // this.toasterService.showSuccess(response,'')
-          this.showDataSaveModal = true;   
-
-          this.dataValue = {
-            title : "Technical Admin details saved Sucessfully",
-            message : "Are you sure want to proceed to Billing Admin Detail?"
-          }
-                
-        }else {
-          this.toasterService.showError(response['ErrorMessage'],'')
+        if (error !== '0') {
+          return this.toasterService.showError(errorMessage, '');
         }
-  
-      })
+        this.isDirty = false;
+        this.showDataSaveModal = true;
+        this.dataValue = {
+          title: 'Technical Admin details saved Successfully',
+          message: 'Are you sure want to proceed to Billing Admin Detail?',
+        };
+      });
 
-    
-
-    console.log('technicaladminform',this.technicaladminform.value)
-
-    // this.detectFormChanges()
-  
-  
+    console.log('technicaladminform',this.technicaladminform.value);
   }
 
   fetchAllTechAdmins() {
@@ -434,8 +443,10 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     this.userInfoService.getTechAdminDetailById(id).subscribe((response) => {
 
       console.log("get TechAdmins by id",response)
-      this.utilService.setTechAdminUserDetails(response["ProcessVariables"]);
-      this.setFormValues(response["ProcessVariables"]);
+      const processVariables = response.ProcessVariables;
+      this.utilService.setTechAdminUserDetails(processVariables);
+      this.setFormValues(processVariables);
+      this.setViewPageDataForTechAdminDetails(processVariables);
        
 
     },(error) => {
@@ -520,41 +531,40 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
   next() {
 
-    if(!this.user) {
+    // if(!this.user) {
 
-      this.utilService.setCurrentUrl('users/billingAdmin')
+    //   this.utilService.setCurrentUrl('users/billingAdmin')
 
-      let pno = '';
-      this.utilService.projectNumber$.subscribe((val)=> {
-        pno = val || '1';
-      })
-  
-  
-      if(this.user) {
-        this.router.navigate(['/users/billingAdmin/'+pno])
-      }else {
-        this.router.navigate(['/users/billingAdmin'])
-      }
+    //   let pno = '';
+    //   this.utilService.projectNumber$.subscribe((val)=> {
+    //     pno = val || '1';
+    //   })
 
-    }else {
+    //   if(this.user) {
+        this.router.navigate(['/users/billingAdmin/' + this.clientId]);
+         //   }else {
+    //     this.router.navigate(['/users/billingAdmin'])
+    //   }
 
-      this.utilService.setCurrentUrl('users/smsCredit')
+    // }else {
 
-      let pno = '';
-      this.utilService.projectNumber$.subscribe((val)=> {
-        pno = val || '1';
-      })
+    //   this.utilService.setCurrentUrl('users/smsCredit')
+
+    //   let pno = '';
+    //   this.utilService.projectNumber$.subscribe((val)=> {
+    //     pno = val || '1';
+    //   })
 
 
-      if(this.user) {
-      this.router.navigate(['/users/smsCredit/'+pno])
+    //   if(this.user) {
+    //   this.router.navigate(['/users/smsCredit/'+pno])
 
-      }else {
-      this.router.navigate(['/users/smsCredit'])
+    //   }else {
+    //   this.router.navigate(['/users/smsCredit'])
 
-     }
+    //  }
 
-    }
+    // }
    
 
        
@@ -565,30 +575,29 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     this.remarkModal = false;
   }
 
-  saveYes(){
-    this.utilService.setCurrentUrl('users/billingAdmin');
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) =>{
-      pno = val;
-    })
-    this.router.navigate(['/users/billingAdmin/'+pno]);
+  saveYes() {
+    // this.utilService.setCurrentUrl('users/billingAdmin');
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) =>{
+    //   pno = val;
+    // })
+    this.router.navigate(['/users/billingAdmin/' + this.clientId]);
   }
 
   saveCancel() {
     this.showDataSaveModal = false;
-    
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val || '1';
-    })
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val)=> {
+    //   pno = val || '1';
+    // })
 
-    if(this.user){
-      this.router.navigate(['/users/techAdmin/'+pno])
-      this.showView = true
-      this.propertyFlag = true
-    }else{
-      this.router.navigate(['/users/techAdmin'])
-    }
+   // if(this.user){
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
+    this.showView = true;
+    this.propertyFlag = true;
+    // }else{
+    //   this.router.navigate(['/users/techAdmin'])
+    // }
 
   }
 
