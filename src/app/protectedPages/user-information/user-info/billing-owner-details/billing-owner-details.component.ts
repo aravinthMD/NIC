@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { BillingAdminService } from '@services/billing-admin.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
@@ -25,25 +26,11 @@ export class BillingOwnerDetailsComponent implements OnInit {
   viewInfoData  : any;
 
 
-  countryCodeValues = [
-    {key:0,value:'+91'},
-    {key:1,value:'+60'},
-    {key:2,value:'+65'}
-  ]
+  mobileNumberCodeList = [];
 
-  teleCodeValues = [
-    {key:0,value:'+044'},
-    {key:1,value:'+040'},
-    {key:2,value:'+080'}
-  ]
+  teleCodeValues = [];
 
-  departmentListData = [
-    {key:0,value:'Department of Sainik Welfare'},
-    {key:1,value:'Ministry of Minority Affairs'},
-    {key:2,value:'Visakhapatnam Port Trust'},
-    {key:3,value:'Ministry of Tribal Affairs'},
-    {key:4,value:'Bureau of Naviks Mumbai'}
-    ];
+  departmentListData = [];
 
   user: string;
 
@@ -55,21 +42,36 @@ export class BillingOwnerDetailsComponent implements OnInit {
   remarkModal: boolean;
 
 
-  showView: boolean = true;
+  showView = true;
   userId: string;
+  clientId: number;
  
 
   constructor(
-    private labelsService:LabelsService,
-    private toasterService:ToasterService,
-    private router:Router,
-    private utilService:UtilService,
-    private userInfoService:UserInfoService,
+    private labelsService: LabelsService,
+    private toasterService: ToasterService,
+    private router: Router,
+    private utilService: UtilService,
+    private userInfoService: UserInfoService,
     private activatedRoute: ActivatedRoute,
-    private behser: BehaviourSubjectService
+    private behser: BehaviourSubjectService,
+    private billingAdminService: BillingAdminService
     ) { }
 
   ngOnInit() {
+
+    this.initForm();
+    this.patchLovValues();
+
+    this.activatedRoute.params.subscribe((value) => {
+       if (!value) {
+         return;
+       }
+       this.clientId = Number(value.id || 0);
+       this.getBillingAdminDetailById(this.clientId);
+    });
+
+
 
     this.behser.$userId.subscribe( res => {
       this.userId = res;
@@ -80,24 +82,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
-    this.billOwnerForm=new FormGroup({
-      name : new FormControl ([null]),
-      departmentName : new FormControl ([null]),
-      designation :new FormControl ([null]),
-      employeeCode : new FormControl ([null]),
-      email : new FormControl (''),
-      mobileNumberCode: new FormControl(this.countryCodeValues[0].key),
-      mobileNumber :new FormControl (''),
-      telephoneNumber : new FormControl (''),
-      telephoneNumberCode: new FormControl(this.countryCodeValues[0].key),
-      offAddress1 : new FormControl ([null]),
-      offAddress2 : new FormControl ([null]),
-      offAddress3 : new FormControl ([null]),
-      city : new FormControl ([null]),
-      state : new FormControl ([null]),
-      pinCode : new FormControl (''),
-      remark: new FormControl('')
-    })
+    
 
     this.user = ''
     this.activatedRoute.params.subscribe((value)=> {
@@ -107,7 +92,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   console.log(this.activatedRoute)
     if(this.user){
 
-      this.getBillingAdminDetailById(this.user);
+      //this.getBillingAdminDetailById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['App_name'] || '';
@@ -125,76 +110,104 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   }
 
+  initForm() {
+    this.billOwnerForm = new FormGroup({
+      name : new FormControl ([null]),
+      departmentName : new FormControl ([null]),
+      designation: new FormControl ([null]),
+      employeeCode : new FormControl ([null]),
+      email : new FormControl (''),
+      mobileNumberCode: new FormControl(''),
+      mobileNumber : new FormControl (''),
+      telephoneNumber : new FormControl (''),
+      telephoneNumberCode: new FormControl(''),
+      offAddress1 : new FormControl ([null]),
+      offAddress2 : new FormControl ([null]),
+      offAddress3 : new FormControl ([null]),
+      city : new FormControl ([null]),
+      state : new FormControl ([null]),
+      pinCode : new FormControl (''),
+      remark: new FormControl('')
+    });
+  }
+
+  patchLovValues() {
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    console.log('listOfValue', processVariables);
+    this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
+    this.departmentListData = processVariables.departmentList || [];
+    this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+  }
+
   setBillOwnerFormValues(data?: any) {
- 
-      if(data){
-
-      this.billOwnerForm.patchValue({
-        id  : Number (data.id),
-        name : data.name,
-        departmentName : data.department,
-        designation : data.designation,
-        employeeCode : data.employeeCode,
-        email : data.email,
-        mobileNumberCode: data.mobileNumberCode,
-        mobileNumber : data.mobileNumber,
-        telephoneNumber : data.telephoneNumber,
-        telephoneNumberCode: data.telephoneNumberCode,
-        offAddress1 : data.oaLine1,
-        offAddress2 : data.oaLine1,
-        offAddress3 : data.oaLine1,
-        city : data.city,
-        state : data.state,
-        pinCode : data.pincode,
-        remark: data.remarks,
-        userId: data.selectedClient
-      })
-   }
-    this.detectAuditTrialObj = this.billOwnerForm.value;
-
-
-    this.viewInfoData = [
-      {
-        key: this.labels.name,
-        value:this.billOwnerForm.value.name
-      },
-      {
-        key: this.labels.email,
-        value:this.billOwnerForm.value.email
-      },
-      {
-        key: this.labels.designation,
-        value:this.billOwnerForm.value.designation
-      },
-      {
-        key: this.labels.employeeCode,
-        value:this.billOwnerForm.value.employeeCode
-      },
-      {
-        key: this.labels.mobileNo,
-        value:`${this.billOwnerForm.value.mobileNumberCode}${this.billOwnerForm.value.mobileNumber}`
-      },
-      // {
-      //   key: this.labels.mobileNo,
-      //   value:`91${this.billOwnerForm.value.mobileNumber}`
-      // },
-      {
-        key  : this.labels.teleNumber,
-        value : `${this.billOwnerForm.value.telephoneNumberCode}${this.billOwnerForm.value.telephoneNumber}`
-      },
-      // {
-      //   key: this.labels.teleNumber,
-      //   value:`044${this.billOwnerForm.value.telephoneNumber}`
-      // },
-      {
-        key: 'Official Address',
-        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`
-      },
-      {
-        key: this.labels.remark,
-        value:this.billOwnerForm.value.remark
+      if (data) {
+        this.billOwnerForm.patchValue({
+          id: Number(data.id),
+          name: data.name,
+          departmentName: data.department,
+          designation: data.designation,
+          employeeCode: data.employeeCode,
+          email: data.email,
+          mobileNumberCode: data.mobileNumberCode,
+          mobileNumber: data.mobileNumber,
+          telephoneNumber: data.telephoneNumber,
+          telephoneNumberCode: data.telephoneNumberCode,
+          offAddress1: data.oaLine1,
+          offAddress2: data.oaLine1,
+          offAddress3: data.oaLine1,
+          city: data.city,
+          state: data.state,
+          pinCode: data.pincode,
+          remark: data.remark,
+          userId: this.clientId,
+        });
       }
-    ]
+      this.detectAuditTrialObj = this.billOwnerForm.value;
+
+      this.viewInfoData = [
+        {
+          key: this.labels.name,
+          value: this.billOwnerForm.value.name,
+        },
+        {
+          key: this.labels.email,
+          value: this.billOwnerForm.value.email,
+        },
+        {
+          key: this.labels.designation,
+          value: this.billOwnerForm.value.designation,
+        },
+        {
+          key: this.labels.employeeCode,
+          value: this.billOwnerForm.value.employeeCode,
+        },
+        {
+          key: this.labels.mobileNo,
+          value: `${this.billOwnerForm.value.mobileNumberCode}${this.billOwnerForm.value.mobileNumber}`,
+        },
+        // {
+        //   key: this.labels.mobileNo,
+        //   value:`91${this.billOwnerForm.value.mobileNumber}`
+        // },
+        {
+          key: this.labels.teleNumber,
+          value: `${this.billOwnerForm.value.telephoneNumberCode}${this.billOwnerForm.value.telephoneNumber}`,
+        },
+        // {
+        //   key: this.labels.teleNumber,
+        //   value:`044${this.billOwnerForm.value.telephoneNumber}`
+        // },
+        {
+          key: 'Official Address',
+          value: `${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`,
+        },
+        {
+          key: this.labels.remark,
+          value: this.billOwnerForm.value.remark,
+        },
+      ];
 
   }
 
@@ -248,82 +261,98 @@ export class BillingOwnerDetailsComponent implements OnInit {
     this.showView = false;
   }
 
-  onSubmit(){
+  onSubmit() {
 
-    if(this.billOwnerForm.invalid) {
+    if (this.billOwnerForm.invalid) {
       this.isDirty = true;
-      this.toasterService.showError('Please fill all the mandatory fields','')
-      return
+      this.toasterService.showError('Please fill all the mandatory fields', '');
+      return;
     }
-    console.log('billOwnerForm',this.billOwnerForm.value)
+    // console.log('billOwnerForm', this.billOwnerForm.value);
+
+    const formValue = this.billOwnerForm.value;
 
     const billingDetails = {
-      // "selectedClient":"55",
-      // "clientId":this.userId,
-      "id":this.billOwnerForm.value.id,
-      "selectedClient":this.userId,
-      "name":this.billOwnerForm.value.name,
-      "city":this.billOwnerForm.value.city,
-      "designation":this.billOwnerForm.value.designation,
-      "email":this.billOwnerForm.value.email,
-      "employeeCode":this.billOwnerForm.value.employeeCode,
-      "mobileNumberCode":this.billOwnerForm.value.mobileNumberCode,
-      "mobileNumber":this.billOwnerForm.value.mobileNumber,
-      "telephoneNumberCode":this.billOwnerForm.value.telephoneNumberCode,
-      "telephoneNumber":this.billOwnerForm.value.telephoneNumber,
-      "oaLine1":this.billOwnerForm.value.offAddress1,
-      "oaLine2":this.billOwnerForm.value.offAddress2,
-      "oaLine3":this.billOwnerForm.value.offAddress3,
-      "state":this.billOwnerForm.value.state,
-      "pincode":this.billOwnerForm.value.pinCode,
-      "remark":this.billOwnerForm.value.remark, 
-    }
-     this.userInfoService.createBilling(billingDetails).subscribe((response)=> {
-      
-            console.log('Response',response)
-      
-             
-            if(response['Error'] == '0' && response) {
-      
-              this.isDirty=false;
-              this.billOwnerForm.reset()
-              // this.toasterService.showSuccess(response,'')
+      clientId: this.clientId,
+     // id: this.billOwnerForm.value.id,
+      currentClientId: this.clientId,
+      selectedClient: this.clientId,
+      name: formValue.name,
+      city: formValue.city,
+      designation: formValue.designation,
+      email: formValue.email,
+      employeeCode: formValue.employeeCode,
+      mobileNumberCode: formValue.mobileNumberCode,
+      mobileNumber: formValue.mobileNumber,
+      telephoneNumberCode: formValue.telephoneNumberCode,
+      telephoneNumber: formValue.telephoneNumber,
+      oaLine1: formValue.offAddress1,
+      oaLine2: formValue.offAddress2,
+      oaLine3: formValue.offAddress3,
+      state: formValue.state,
+      pincode: formValue.pinCode,
+      remark: formValue.remark,
+    };
+    console.log('billingDetails', billingDetails);
+    this.userInfoService.createBilling(billingDetails).subscribe((response: any) => {
+      const error = response.Error;
+      const errorMessage = response.ErrorMessage;
 
-              this.showDataSaveModal = true;
+      if (error !== '0') {
+         return this.toasterService.showError(errorMessage, '');
+      }
+      this.showDataSaveModal = true;
+      this.dataValue = {
+        title: 'Billing Admin Details Updated Successfully',
+        message:
+          'Are you sure you to proceed to SMS Credit Allocation Screen?',
+      };
 
-    this.dataValue = {
-      title : "Billing Admin Details Updated Successfully",
-      message : "Are you sure you to proceed to SMS Credit Allocation Screen?"
-    }
-      
-            }else {
-              this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
-            }
-      
-          })
+      console.log('Response', response);
+
+      // if (response["Error"] == "0" && response) {
+      //   this.isDirty = false;
+      //   this.billOwnerForm.reset();
+      //   // this.toasterService.showSuccess(response,'')
+
+      //   this.showDataSaveModal = true;
+
+      //   this.dataValue = {
+      //     title: "Billing Admin Details Updated Successfully",
+      //     message:
+      //       "Are you sure you to proceed to SMS Credit Allocation Screen?",
+      //   };
+      // } else {
+      //   this.toasterService.showError(
+      //     response["ProcessVariables"]["response"]["value"],
+      //     ""
+      //   );
+      // }
+    });
 
     // this.detectFormChanges();
 
     
   }
 
-  getBillingAdminDetailById(id:string) {
+  getBillingAdminDetailById(id) {
 
-    this.userInfoService.getBillingAdminDetailById(id).subscribe((response)=> {
+    this.billingAdminService.getBillingAdminDetailsById({ currentClientId: id})
+        .subscribe((res: any) => {
+          console.log('billAdminDetails by id', res);
+          const processVariables = res.ProcessVariables;
+          this.utilService.setBillAdminUserDetails(processVariables);
+          this.setBillOwnerFormValues(processVariables);
+        });
 
-      console.log("billAdminDetails by id",response)
-      this.utilService.setBillAdminUserDetails(response["ProcessVariables"]);
-
-      this.setBillOwnerFormValues(response["ProcessVariables"]);
-    
-    },(error) => {
-    
-      console.log(error)
-    
-    })
+    // this.userInfoService.getBillingAdminDetailById(id).subscribe((response: any) => {
+    //   // console.log('billAdminDetails by id', response);
+    //   const processVariables = response.ProcessVariables;
+    //   this.utilService.setBillAdminUserDetails(processVariables);
+    //   this.setBillOwnerFormValues(processVariables);
+    // });
   }
 
-  
   back() {
 
     this.utilService.setCurrentUrl('users/techAdmin')
@@ -343,48 +372,48 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   next() {
-    this.utilService.setCurrentUrl('users/smsCredit')
+    // this.utilService.setCurrentUrl('users/smsCredit')
 
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val || '1';
-    })
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val)=> {
+    //   pno = val || '1';
+    // })
 
 
-    if(this.user) {
-    this.router.navigate(['/users/smsCredit/'+pno])
+    // if(this.user) {
+    this.router.navigate(['/users/smsCredit/' + this.clientId]);
 
-    }else {
-    this.router.navigate(['/users/smsCredit'])
+    // }else {
+    // this.router.navigate(['/users/smsCredit'])
 
-    }
+    // }
   }
 
-  saveYes(){
-    this.utilService.setCurrentUrl('users/smsCredit')
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) =>{
-      pno = val || '1';
-    })
+  saveYes() {
+    this.utilService.setCurrentUrl('users/smsCredit');
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) =>{
+    //   pno = val || '1';
+    // })
 
-    this.router.navigate(['/users/smsCredit/'+pno])
+    this.router.navigate(['/users/smsCredit/' + this.clientId]);
   }
 
   saveCancel() {
     this.showDataSaveModal = false;
 
-  let pno = '';
-  this.utilService.projectNumber$.subscribe((val)=> {
-    pno = val || '1';
-  })
+  // let pno = '';
+  // this.utilService.projectNumber$.subscribe((val)=> {
+  //   pno = val || '1';
+  // })
 
-  if(this.user){
-    this.router.navigate(['/users/techAdmin/'+pno])
-    this.showView = true
-    this.propertyFlag = true
-  }else{
-    this.router.navigate(['/users/techAdmin'])
-  }
+  // if(this.user){
+    this.router.navigate(['/users/techAdmin/'+this.clientId])
+    this.showView = true;
+    this.propertyFlag = true;
+  // }else{
+  //   this.router.navigate(['/users/techAdmin'])
+  // }
   }
   
 }
