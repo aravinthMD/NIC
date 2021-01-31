@@ -1,11 +1,11 @@
-import { Component, OnInit ,ViewChild,Input, OnChanges} from '@angular/core';
-import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
+import { Component, OnInit, ViewChild, Input, OnChanges} from '@angular/core';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { LabelsService } from '../../../services/labels.service';
 import { UtilService } from '../../../services/util.service';
 import { Location } from '@angular/common';
 import {ToasterService} from '@services/toaster.service';
 
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { UserInfoService } from '@services/user-info.service';
 import { MatTableDataSource } from '@angular/material';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
@@ -21,34 +21,31 @@ import { environment } from 'src/environments/environment.prod';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
 })
-export class UserInfoComponent implements OnInit,OnChanges {
+export class UserInfoComponent implements OnInit, OnChanges {
 
 
-  @Input('userObj') user : any;
+  @Input('userObj') user: any;
 
 
 
-  showDataSaveModal:boolean;
-     
+  showDataSaveModal: boolean;
   hide = true;
 
-  form : FormGroup
-  existingUserFlag : boolean = false;
-  hideEditButton : boolean = false;
-  existingPreviewUserFlag :  boolean;
-  buttonName : any = "Save";
-  propertyFlag : boolean;
+  form: FormGroup;
+  existingUserFlag: boolean = false;
+  hideEditButton: boolean = false;
+  existingPreviewUserFlag: boolean;
+  buttonName: any = 'Save';
+  propertyFlag: boolean;
   labels: any = {};
   panelOpenState = false;
   isDirty: boolean;
-  newUserFlag : boolean
-  
+  newUserFlag: boolean
+  dataValue = {};
 
-  dataValue = {}
-
-  viewInfoData : any;
-  type:String;
-  applicantName:string;
+  viewInfoData: any;
+  type: string;
+  applicantName: string;
 
   file : any;
 
@@ -69,7 +66,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
  
 
-  countryCodeValues = []
+  mobileNumberCodeList = []
 
   teleCodeValues = []
 
@@ -82,14 +79,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
     }
   ]
 
-  traiSenderId= [
+  traiSenderId = [
     {
-      value:0,label: 'Yes',
+      key: 0, value: 'Yes',
     },
     {
-      value:1,label:'No'
+      key: 1, value: 'No'
     }
-  ]
+  ];
 
   dataSource = new MatTableDataSource<any>();
 
@@ -97,7 +94,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
   modalMsg: string;
 
   accountName: string;
-  status:string;
+  status: string;
 
   showUploadModal: boolean;
   showPdfModal: boolean;
@@ -126,21 +123,23 @@ export class UserInfoComponent implements OnInit,OnChanges {
     private userPassWord: string;
     projectNo: string;
     userId: string;
+    clientId: string;
 
-  constructor(private formBuilder : FormBuilder,
+  constructor(
+    private formBuilder : FormBuilder,
     private labelsService: LabelsService, 
     private location: Location,
     private utilService: UtilService,
-    private userInfoService:UserInfoService,
+    private userInfoService: UserInfoService,
     private toasterService: ToasterService,
     private router: Router,
     private activatedRoute: ActivatedRoute, 
     private beheSer : BehaviourSubjectService,
     private clientDetailService  : ClientDetailsService) {
 
-      this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
-      this.countryCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
-      this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
+      // this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
+      // this.mobileNumberCodeList = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
+      // this.teleCodeValues = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'];
 
     this.form =this.formBuilder.group({
       id: [null],
@@ -149,14 +148,14 @@ export class UserInfoComponent implements OnInit,OnChanges {
       designation : [null],
       employeeCode : [null],
       email : [null],
-      mobileNumberCode: [this.countryCodeValues[0].value],
+      mobileNumberCode: [''],
       mobileNo : [null],
-      OfficerName:[null],
-      OfficerEmail:[null],
-      officerMobileCode:[this.countryCodeValues[0].value],
-      OfficerMobile:[null],
+      OfficerName: [null],
+      OfficerEmail: [null],
+      officerMobileCode: [''],
+      OfficerMobile: [null],
       telPhno : [null],
-      teleCode: [this.teleCodeValues[0].value],
+      teleCode: [''],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
@@ -164,8 +163,8 @@ export class UserInfoComponent implements OnInit,OnChanges {
       state : [null],
       pinCode : [null],
       smsServiceReqd: [''],
-      creditsSMSQuota: [null,Validators.pattern("^[0-9]{0,12}$")],
-      smsTariffMonthWise : [null,Validators.pattern("^[0-9]{0,12}$")],
+      creditsSMSQuota: [null, Validators.pattern('^[0-9]{0,12}$')],
+      smsTariffMonthWise : [null, Validators.pattern('^[0-9]{0,12}$')],
       availableCredit: [null],
       nameOfTheApplication: [null],
       applicationUrl: [null],
@@ -176,48 +175,66 @@ export class UserInfoComponent implements OnInit,OnChanges {
       domMonSmsTraffic: [null],
       intMonSmsTraffic: [null],
       appSecurAudClear: [null],
-      auditDate:[null],
+      auditDate: [null],
       traiSenderId: [''],
       userId: [null],
       password: [null],
       piDuration : [null],
-      projectNo : [null,Validators.pattern("^[0-9]{0,15}$")],
+      projectNo : [null, Validators.pattern('^[0-9]{0,15}$')],
       // creditAdded : [null],
       // creditApprover : [null],
       // creditDate : [null],
       // creditAddedAgainstPi : [null],
       fromDate: [null],
       toDate: [null],
-      status:[null],
-      remark:[null]    
+      status: [null],
+      remark: [null]
     });
-    this.labelsService.getLabelsData().subscribe((values)=> {
+    this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
-    })
+    });
     this.user = '';
-    
     this.activatedRoute.params.subscribe((value)=> {
         this.user = value.id;
         console.log("user Id",this.user);
     });
-    
    }
 
 
-  ngOnInit() {  
+   patchLovValues() {
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
+    this.departmentListData = processVariables.departmentList || [];
+    this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+   }
 
-   
-    this.ipValidation = this.ipAddressValiationCheck()
 
-    if(!this.user){
-      this.newUserFlag = true;
-      this.existingPreviewUserFlag = false;
+  ngOnInit() {
 
-    }
+    this.patchLovValues();
+    this.ipValidation = this.ipAddressValiationCheck();
+    this.activatedRoute.params.subscribe((value)=> {
+      this.user = value.id;
+      this.clientId = value.id;
+      console.log("user Id",this.user);
+      if (this.clientId) {
+        this.clientDetailService.setClientId(this.clientId);
+        this.getCustomerDetailByCustomerId(this.clientId);
+      } else {
+        this.newUserFlag = true;
+        this.existingPreviewUserFlag = false;
+      }
 
-    console.log(this.activatedRoute)
+      if(!this.user){
+        this.newUserFlag = true;
+        this.existingPreviewUserFlag = false;
+  
+      }
+
       if(this.user){
-        this.getCustomerDetailByCustomerId(this.user);     
+           
 
         this.utilService.userDetails$.subscribe((val: any)=> {
           console.log('val', val);
@@ -241,8 +258,16 @@ export class UserInfoComponent implements OnInit,OnChanges {
          
                 // this.detectFormChanges()
             });
+  });
+
+
+   
+
+    
+
+      
             
-            this.fetchAllCustomerDetails();
+           // this.fetchAllCustomerDetails();
             // this.getCustomerDetailByCustomerId('62');
 
   }
@@ -277,6 +302,145 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
 
+  setValueForViewPage(data: any) {
+    console.log('view page data', data);
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    const mobileNumberCode = (this.mobileNumberCodeList.find(code => String(code.key)
+                                === String(data.mobileNumberCode)) || {value: ''}).value;
+    const mobile = `${mobileNumberCode} ${data.App_mobile}`;
+    const department = (this.departmentListData.find(value => String(value.key)
+                             ===  String(data.department)) || {value: ''}).value;
+   // const department = data.department;
+    const officeMobileCode = (this.mobileNumberCodeList.find(value => String(value.key)
+                                === String(data.foMobileCode)) || {value: ''}).value;
+    const officeMobile = `${officeMobileCode} ${data.FO_mobile}`;
+    const officeAddress = `${data.OA_line1}, ${data.OA_line2}, ${data.OA_line3},
+    ${data.city}, ${data.state} - ${data.pincode}`;
+    const teleNumberCode = (this.teleCodeValues.find(value => String(value.key) 
+                              === String(data.telephoneNumberCode)) || {value: ''}).value;
+    const teleNumber = `${teleNumberCode} ${data.Tele_number_OF}`;
+    const smsService = (this.smsServiceReqd.find(value => String(value.key) 
+                            === String(data.sms_service)) || {value: ''}).value;
+    const trai = (this.traiSenderId.find(value => String(value.key) 
+                      === String(data.trai_extempted)) || {value: ''}).value;
+
+
+
+    this.viewInfoData = [
+      {
+        key : this.labels.applicantName,
+        value : data.App_name
+      },
+      {
+        key: this.labels.applicantEmail,
+        value : data.App_email
+      },
+      {
+        key  : this.labels.applicantMobile,
+        value : mobile
+      },
+      {
+        key: this.labels.department,
+        value : department
+      },
+      {
+        key : this.labels.designation,
+        value : data.FO_designation
+      },
+      {
+        key  : this.labels.projectNo,
+        value : data.proj_number
+      },
+      {
+        key : this.labels.password,
+        value : this.replaceStrar(data.password)
+      },
+      {
+        key : 'Officer Name',
+        value : data.FO_name
+      },
+      {
+        key : 'Officer Email',
+        value : data.FO_email
+      },
+      {
+        key  : 'Officer Mobile',
+        value : officeMobile
+      },
+      {
+        key  : 'Official Address',
+        value  : officeAddress
+      },
+      {
+        key  : this.labels.teleNumber,
+        value : teleNumber
+      },
+      {
+        key  : this.labels.smsServiceReqd,
+        value : smsService
+      },
+      {
+        key  : this.labels.nameOfTheApplication,
+        value  : data.name_applicant
+      },
+      {
+        key : this.labels.applicationUrl,
+        value : data.App_url
+      },
+      {
+        key  : this.labels.serverLocation,
+        value : data.server_location
+      },
+      {
+        key : this.labels.purpOfTheApplication,
+        value : data.purpose_applicant
+      },
+      {
+        key  : 'SMS GateWay IP',
+        value : data.Ip_form
+      },
+      {
+        key  : 'IP of Staging Server',
+        value  : data.Ip_staging
+      },
+      {
+        key : 'PDMST',
+        value : data.proj_domestic
+      },
+      {
+        key : 'PIMST',
+        value  : data.proj_international
+      },
+      {
+        key : this.labels.applicationsecurAuditCleared,
+        value : data.app_security
+      },
+      {
+        key  : 'Audit Date Cleared',
+        value  :   data.audit_date
+      },
+      {
+        key : 'TRAI Exempted Sender ID',
+        value : trai
+      },
+      {
+        key  : this.labels.uploadDoc,
+        value  : data.upload_document
+      },
+      {
+        key  : this.labels.remark,
+        value :  this.form.value.remark
+      }
+    ]
+
+  }
+
+
   setFormValues(data?: any){
   
     if(data){
@@ -305,10 +469,10 @@ export class UserInfoComponent implements OnInit,OnChanges {
       // creditApprover : data.FO_email,
       // fromDate: new Date(),
       // toDate: new Date(),
-      OfficerName:data.FO_name,
-      OfficerEmail:data.FO_email,
-      officerMobileCode:data.officerMobileCode,
-      OfficerMobile:data.FO_mobile,
+      OfficerName: data.FO_name,
+      OfficerEmail: data.FO_email,
+      officerMobileCode: data.foMobileCode,
+      OfficerMobile: data.FO_mobile,
       smsServiceReqd: data.sms_service,
       nameOfTheApplication: data.name_applicant,
       applicationUrl: data.App_url,
@@ -340,144 +504,7 @@ export class UserInfoComponent implements OnInit,OnChanges {
 
   
     
-    this.viewInfoData = [
-      
-      {
-        key : this.labels.applicantName,
-        value : this.form.value.applicantName
-      },
-      {
-        key  :this.labels.applicantEmail,
-        value : this.form.value.email
-      },
-      {
-        key  : this.labels.applicantMobile,
-        value : `${this.form.value.mobileNumberCode} ${this.form.value.mobileNo}`
-      },
-      // {
-      //   key : this.labels.applicantMobile,
-      //   value : this.form.value.mobileNo
-      // },
-      {
-        key: this.labels.department,
-        value : "Ministry of Home Affairs"
-      },
-      {
-        key  :this.labels.designation,
-        value : this.form.value.designation
-      },
-      {
-        key  : this.labels.projectNo,
-        value : this.form.value.projectNo
-      },
-      // {
-      //   key  : this.labels.userId,
-      //   value  :  this.form.value.userId
-      // },
-      {
-        key : this.labels.password,
-        value : this.form.value.password?this.replaceStrar( this.form.value.password) : null
-      },
-      {
-        key : "Officer Name",
-        value : this.form.value.OfficerName
-      },
-      {
-        key : "Officer Email",
-        value : this.form.value.OfficerEmail
-      },
-      {
-        key  :"Officer Mobile",
-        value : `${this.form.value.officerMobileCode} ${this.form.value.OfficerMobile}`
-      },
-      // {
-      //   key  :"Officer Mobile",
-      //   value :this.form.value.OfficerMobile
-      // },
-      {
-        key  : "Official Address",
-        value  : `${this.form.value.offAddress1} ${this.form.value.offAddress2} ${this.form.value.offAddress3},${this.form.value.city},${this.form.value.state} - ${this.form.value.pinCode}`
-      },
-      {
-        key  : this.labels.teleNumber,
-        value : `${this.form.value.teleCode}${this.form.value.telPhno}`
-      },
-      {
-        key  : this.labels.smsServiceReqd,
-        value : 'Post Paid'
-      },
-      {
-        key  : this.labels.nameOfTheApplication,
-        value  : this.form.value.nameOfTheApplication
-      },
-      {
-        key : this.labels.applicationUrl,
-        value : this.form.value.applicationUrl
-      },
-      {
-        key  : this.labels.serverLocation,
-        value : this.form.value.serverLocation
-      },
-      {
-        key : this.labels.purpOfTheApplication,
-        value : this.form.value.purpOfTheApplication
-      },
-      {
-        key  : "SMS GateWay IP",
-        value : this.form.value.smsGatewayAccess
-      },
-      {
-        key  : "IP of Staging Server",
-        value  : this.form.value.ipServReqd
-      },{
-        key : "PDMST",
-        value : this.form.value.domMonSmsTraffic
-      },
-      {
-        key : "PIMST",
-        value  : this.form.value.intMonSmsTraffic
-      },
-      {
-        key : this.labels.applicationsecurAuditCleared,
-        value : this.form.value.appSecurAudClear
-      },
-      {
-        key  : "Audit Date Cleared",
-        value  :   `${day}/${month}/${year}`
-      },
-      {
-        key : "TRAI Exempted Sender ID",
-        value : "No"
-      },
-      // {
-      //   key  : this.labels.creditAdded,
-      //   value  : this.form.value.creditAdded
-      // },
-      // {
-      //   key  :this.labels.creditApprover,
-      //   value :  this.form.value.creditApprover
-      // },
-      // {
-      //   key  : this.labels.creditDate,
-      //   value :    `${day}/${month}/${year}`
-      // },
-      // {
-      //   key :  "Credit Against PI",
-      //   value :    `${day}/${month}/${year}`
-      // },
-      {
-        key  : this.labels.uploadDoc,
-        value  : 'Invoice.pdf'
-      },
-      // {
-      //   key  : this.labels.status,
-      //   value  : 'Active'
-      // },
-      {
-        key  : this.labels.remark,
-        value :  this.form.value.remark
-      }
-    ]
+    
 
   }
 
@@ -497,115 +524,121 @@ export class UserInfoComponent implements OnInit,OnChanges {
   // }
 
 
-  Onsubmit(){
-
-    
-
-    if(this.form.invalid) {
-     
+  Onsubmit() {
+    if (this.form.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields','')
-
-      return
+      return;
     }
 
     const userInfo = {
-      "currentCustomerId":this.form.value.id,
-      "App_name":this.form.value.applicantName,
-      "department":this.form.value.departmentName,
-      "FO_designation":this.form.value.designation,
-      "mobileNumberCode": this.form.value.mobileNumberCode,
-      "App_email":this.form.value.email,
-      "App_mobile":this.form.value.mobileNo,
-      "telephoneNumberCode": this.form.value.teleCode,
-      "Tele_number_OF":this.form.value.telPhno,
-      "OA_line1":this.form.value.offAddress1,
-      "OA_line2":this.form.value.offAddress2,
-      "OA_line3":this.form.value.offAddress3,
-      "city":this.form.value.city,
-      "state":this.form.value.state,
-      "pincode":this.form.value.pinCode,
-      "officerMobileCode":this.form.value.officerMobileCode,
-      "FO_mobile":this.form.value.OfficerMobile,
-      "FO_name":this.form.value.OfficerName,
-      "FO_email":this.form.value.OfficerEmail,
-      "proj_international":this.form.value.intMonSmsTraffic,
-      "proj_number":this.form.value.projectNo, 
-      "sms_service":this.form.value.smsServiceReqd,
-      "name_applicant":this.form.value.nameOfTheApplication,
-      "App_url":this.form.value.applicationUrl,
-      "server_location":this.form.value.serverLocation,
-      "purpose_applicant":this.form.value.purpOfTheApplication,
-      "Ip_form":this.form.value.smsGatewayAccess,
-      "Ip_staging":this.form.value.ipServReqd,
-      "sms_traffic":this.form.value.domMonSmsTraffic,
-      "proj_domestic":this.form.value.domMonSmsTraffic,
-      "app_security":this.form.value.appSecurAudClear,
-      "audit_date":this.form.value.auditDate,
-      // "creditDate":this.form.value.creditDate,
-      // "creditAddedAgainstPI":this.form.value.creditAddedAgainstPi,
-      "trai_extempted":this.form.value.traiSenderId,
-      "userId":this.form.value.userId,
-      "password":this.form.value.password,
-      // "status":this.form.value.status,
-      "remark":this.form.value.remark,
-      "credits":this.form.value.creditsSMSQuota,  
-      // "available_credit":this.form.value.userName,
-       "upload_document": this.documentUploadId
-       
-    }
-    console.log("User Creation Form :", userInfo);
-    this.userInfoService.createCustomerDetails(userInfo).subscribe((response)=> {
+      currentCustomerId: this.form.value.id,
+      App_name: this.form.value.applicantName,
+      department: this.form.value.departmentName,
+      FO_designation: this.form.value.designation,
+      mobileNumberCode: this.form.value.mobileNumberCode,
+      App_email: this.form.value.email,
+      App_mobile: this.form.value.mobileNo,
+      telephoneNumberCode: this.form.value.teleCode,
+      Tele_number_OF: this.form.value.telPhno,
+      OA_line1: this.form.value.offAddress1,
+      OA_line2: this.form.value.offAddress2,
+      OA_line3: this.form.value.offAddress3,
+      city: this.form.value.city,
+      state: this.form.value.state,
+      pincode: this.form.value.pinCode,
+      FO_mobilecode: this.form.value.officerMobileCode,
+      FO_mobile: this.form.value.OfficerMobile,
+      FO_name: this.form.value.OfficerName,
+      FO_email: this.form.value.OfficerEmail,
+      proj_international: this.form.value.intMonSmsTraffic,
+      proj_number: this.form.value.projectNo, 
+      sms_service: this.form.value.smsServiceReqd,
+      name_applicant: this.form.value.nameOfTheApplication,
+      App_url: this.form.value.applicationUrl,
+      server_location: this.form.value.serverLocation,
+      purpose_applicant: this.form.value.purpOfTheApplication,
+      Ip_form: this.form.value.smsGatewayAccess,
+      Ip_staging: this.form.value.ipServReqd,
+      sms_traffic: this.form.value.domMonSmsTraffic,
+      proj_domestic: this.form.value.domMonSmsTraffic,
+      app_security: this.form.value.appSecurAudClear,
+      audit_date: this.form.value.auditDate,
+      // creditDate: this.form.value.creditDate,
+      // creditAddedAgainstPI: this.form.value.creditAddedAgainstPi,
+      trai_extempted: this.form.value.traiSenderId,
+      userId: this.form.value.userId,
+      password: this.form.value.password,
+      // status: this.form.value.status,
+      remark: this.form.value.remark,
+      credits: this.form.value.creditsSMSQuota,
+      // available_credit: this.form.value.userName,
+       upload_document: this.documentUploadId
+    };
 
-      console.log('Response',response)
-      if(response['Error'] == '0' && response["ProcessVariables"]["error"]["code"] == '0') {
-        this.showDataSaveModal = true;  
-        this.beheSer.setUserId(response['ProcessVariables']['generatedCustomerId']);
 
-        this.dataValue = {
-          title: "Customer Information Saved Sucessfully",
-          message : "Are you sure you want to proceed to Technical Admin page?"
-        }
-        this.isDirty = false;
-        this.form.reset()  
-        this.documentUploadId =  "";
-      }else {
-        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+    console.log('User Creation Form:', userInfo);
+
+    this.userInfoService.createCustomerDetails(userInfo).subscribe((response: any) => {
+
+      const error = response.Error;
+      const errorMessage = response.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMessage, '');
       }
-
-    })
+      const processVariables = response.ProcessVariables;
+      const errorDes = processVariables.error;
+      if (errorDes.code !== '0') {
+        return this.toasterService.showError(errorDes.message, '');
+      }
+      this.showDataSaveModal = true;
+      this.beheSer.setUserId(processVariables.generatedCustomerId);
+      if (processVariables.generatedCustomerId) {
+        this.clientId = processVariables.generatedCustomerId;
+      } else if (processVariables.currentCustomerId) {
+        this.clientId = processVariables.currentCustomerId;
+      }
+      
+      this.clientDetailService.setClientId(this.clientId);
+      this.dataValue = {
+        title: 'Customer Information Saved Sucessfully',
+        message : 'Are you sure you want to proceed to Technical Admin page?'
+      };
+      this.isDirty = false;
+    });
 
     this.propertyFlag = false;
     this.buttonName = 'Update';
-    console.log(this.form.value)
-    
+    console.log(this.form.value);
   }
 
   update(){
 
   }
 
-  fetchAllCustomerDetails() {
+  // fetchAllCustomerDetails() {
 
-    this.userInfoService.fetchAllCustomers().subscribe((response)=> {
+  //   this.userInfoService.fetchAllCustomers().subscribe((response)=> {
 
-      this.customersList = response['ProcessVariables']['customerList'];
+  //     this.customersList = response['ProcessVariables']['customerList'];
 
-      console.log(response)
+  //     console.log(response)
 
-      this.dataSource = new MatTableDataSource<any>(this.customersList);
-    })
-  }
+  //     this.dataSource = new MatTableDataSource<any>(this.customersList);
+  //   })
+  // }
 
   getCustomerDetailByCustomerId(id:string){    
 
-    this.userInfoService.getCustomerDetailByCustomerId(id).subscribe((response) => {
+    this.userInfoService.getCustomerDetailByCustomerId(id).subscribe((response: any) => {
 
       console.log("get customer by id",response)
       const res = response["ProcessVariables"] || '';
       this.userId = res.userId || '';
-      this.utilService.setUserDetails(response["ProcessVariables"]);
-      this.setFormValues(response["ProcessVariables"]);
+      const processVariables = response.ProcessVariables;
+      this.utilService.setUserDetails(processVariables);
+      this.setFormValues(processVariables);
+      this.setValueForViewPage(processVariables);
       if(response['ProcessVariables']['upload_document']){
           this.previewDocumentId = response['ProcessVariables']['upload_document'];
       }
@@ -882,21 +915,20 @@ export class UserInfoComponent implements OnInit,OnChanges {
   }
 
   saveCancel() {
+    this.form.disable();
     this.showDataSaveModal = false;
-    this.propertyFlag = true;
+    // this.propertyFlag = true;
     this.existingPreviewUserFlag  = true;
-    this.existingUserFlag =  false; 
-  
-    
-   }
+    this.existingUserFlag =  false;
+  }
 
-  saveYes(){
-    this.utilService.setCurrentUrl('users/techAdmin')
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) =>{ 
-      pno  = val;
-    })
-    this.router.navigate(['/users/techAdmin/'+ this.userId])
+  saveYes() {
+    // this.utilService.setCurrentUrl('users/techAdmin')
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) =>{ 
+    //   pno  = val;
+    // })
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
   }
 
 

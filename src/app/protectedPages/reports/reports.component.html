@@ -11,7 +11,7 @@
 
         <mat-accordion>
             <mat-expansion-panel>
-                <mat-expansion-panel-header matRipple>
+                <mat-expansion-panel-header matRipple expanded>
                     <mat-panel-title>
                         <mat-icon>filter_alt</mat-icon><span class="panel-title">Filter Report</span>
                     </mat-panel-title>
@@ -20,7 +20,7 @@
                         <!-- <mat-icon>filter_alt</mat-icon> -->
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <form [formGroup]="form">
+                <form [formGroup]="reportsForm">
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                 <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
               </div>  -->
@@ -38,11 +38,11 @@
                                 <option value="5">All</option>
                               </select> -->
 
-                                <app-vf-custom-select (change)="onSelect($event)" formControlName="reports" [values]="reportsList" [isRequired]="'Please Select Report'"></app-vf-custom-select>
+                                <app-vf-custom-select (valueChange)="onReportChange($event)" formControlName="reports" [values]="reportsLov" [isRequired]="'Please Select Report'"></app-vf-custom-select>
                             </div>
                         </div>
 
-                        <div class="col-4" *ngIf="reportKey <= 4 || reportKey == 10">
+                        <div class="col-4" *ngIf="reportKey >= 4">
                             <div class="form-group" optionValue>
                                 <label for="mobile">Status</label>
                                 <!-- <select class="form-control">
@@ -53,7 +53,7 @@
                                 
                               </select> -->
 
-                                <app-vf-custom-select formControlName="status" [values]="optionValue" ></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="status" [values]="status" ></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -61,13 +61,14 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="mobile">Report Filter</label>
-                                <!-- <select class="form-control" (change)="onRepFilter($event)">
-                                <option  value = '0' disabled>--select--</option>
-                                <option value="1">User Id</option>
+                                <select formControlName="reportsFilter" class="form-control" (change)="onReportFilterChange($event)">
+                                <option  value = '' >-- select one --</option>
+                                <option *ngFor="let value of reportFilterLov" [value]="value.key">{{value.value}}</option>
+                                <!-- <option value="1">User Id</option>
                                 <option value="2">Department</option>
                                 <option value="3">Status</option> -->
-                                <!-- </select> -->
-                                <app-vf-custom-select formControlName="reportFilter" (change)="onRepFilter($event)" [values]="reportFilter"></app-vf-custom-select>
+                                </select> 
+                                <!-- <app-vf-custom-select formControlName="reportFilter" (valueChange)="onReportFilterChange($event)" [values]="reportFilterLov"></app-vf-custom-select> -->
 
                             </div>
                         </div>
@@ -104,71 +105,19 @@
                         </div> -->
 
 
-                        <div class="col-4" *ngIf = "accountFilterFlag">
-                            <label for="mobile">Account Name</label>
+                        <div class="col-4" *ngIf = "reportDisplayName">
+                            <label for="mobile">{{reportDisplayName}}</label>
                             <div class="form-group">
                             <ng-multiselect-dropdown
-                            [placeholder]="'Choose Account'"
-                            formControlName ="accountFilter"
-                            [data]="options"
+                            placeholder="Choose {{reportDisplayName}}"
+                            formControlName ="reportsFilterDetails"
+                            [data]="reportsFilterDetails"
                             [settings]="dropdownSettings"
-                            (onSelectAll)="onSelectAll('1')"
-                            (onDeSelect) = "onItemDeSelect('1')"
                             (onDeSelectAll) = "onItemDeSelect('1')"
                             >
                             </ng-multiselect-dropdown>
                         </div>
                         </div>
-
-                        <div class="col-4" *ngIf = "projectNoFilterFlag">
-                            <label for="mobile">Project No</label>
-                            <div class="form-group">
-                            <ng-multiselect-dropdown
-                            [placeholder]="'Choose Project No'"
-                            formControlName ="projectNoFilter"
-                            [data]="projectNoDropDownList"
-                            [settings]="dropdownSettings"
-                            (onSelectAll)="onSelectAll('2')"
-                            (onDeSelect) = "onItemDeSelect('2')"
-                            (onDeSelectAll) = "onItemDeSelect('2')"
-                            >
-                            </ng-multiselect-dropdown>
-                        </div>
-                            </div>
-
-
-                        <div class="col-4" *ngIf = "departMentFilterFlag">
-                            <label for="">Department</label>
-                            <div class="form-group">
-                                <ng-multiselect-dropdown
-                                [placeholder]="'Choose Department'"
-                                formControlName ="departMentFilter"
-                                [data]="departMentDropDownList"
-                                [settings]="dropdownSettings"
-                                (onSelectAll)="onSelectAll('3')"
-                                (onDeSelect) = "onItemDeSelect('3')"
-                                (onDeSelectAll) = "onItemDeSelect('3')"
-                                >
-                                </ng-multiselect-dropdown>
-                            </div>
-                        </div>
-
-                        <div class="col-4" *ngIf = "stateFilterFlag">
-                            <label for="">State</label>
-                            <div class="form-group">
-                                <ng-multiselect-dropdown
-                                [placeholder]="'Choose State'"
-                                formControlName ="stateFilter"
-                                [data]="stateDropDownList"
-                                [settings]="dropdownSettings"
-                                (onSelectAll)="onSelectAll()"
-                                (onDeSelect) = "onItemDeSelect('4')"
-                                (onDeSelectAll) = "onItemDeSelect('4')"
-                                >
-                                </ng-multiselect-dropdown>
-                            </div>
-                        </div>
-
 
                         <div class="col-4">
                             <div class="form-group">
@@ -178,7 +127,7 @@
 
                                 <mat-form-field floatLabel = "never">
                                     <mat-placeholder>dd-mm-yyyy</mat-placeholder>
-                                    <input matInput [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'fromDate')" formControlName="fromDate" [max]="form.get('toDate').value">
+                                    <input matInput [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'fromDate')" formControlName="fromDate" [max]="reportsForm.get('toDate').value">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
@@ -192,7 +141,7 @@
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
                                 <mat-form-field floatLabel =  "never">
                                     <mat-placeholder>dd-mm-yyyy</mat-placeholder>
-                                    <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="form.get('fromDate').value" formControlName="toDate">
+                                    <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="reportsForm.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
@@ -267,7 +216,7 @@
             </mat-expansion-panel>
         </mat-accordion>
         <!--Material Table-->
-        <app-reports-table [dataList] = "dataList" [id] = "id">
+        <app-reports-table [gridValues] = "gridValues" [reportsId] = "reportsId" *ngIf="gridValues.length > 0">
             <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         </app-reports-table>
 
