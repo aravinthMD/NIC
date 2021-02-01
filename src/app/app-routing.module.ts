@@ -51,7 +51,6 @@ const routes: Routes = [
   {
     path : "users",
     component : ProtectedComponent,
-    canActivateChild: [LoaderService],
     resolve :  { listOfValue : LovResolverService },
   children : [
     { 
@@ -145,7 +144,7 @@ const routes: Routes = [
   {
     path:"admin",
     component : AdminComponent,
-    canActivateChild: [LoaderService],
+    resolve :  { listOfValue : LovResolverService },
     children : [
       {
         path: "manageUser", 

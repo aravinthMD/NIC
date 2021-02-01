@@ -9,6 +9,7 @@ import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router'
 import { InvoiceService } from '@services/invoice.service';
 import { ClientDetailsService } from '@services/client-details.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-proforma-invoice-dialog-form',
@@ -38,6 +39,14 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   showPdfModal: boolean;
 
   showDeleteModal: boolean;
+
+  previewDocumentId : string = '';
+
+  host  = environment.host;
+  newAppiyoDrive  = environment.previewDocappiyoDrive;
+  previewUrl : string = ''
+
+  docAvailFlag : boolean
 
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
 
@@ -163,6 +172,10 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       if(code == '0'){
          this.dataForm =  response['ProcessVariables'];
          this.currentPIId = response['ProcessVariables']['id'];
+         if(response.ProcessVariables.upload_document){
+            this.previewDocumentId = response.ProcessVariables.upload_document;
+            this.docAvailFlag = true;
+         }
       this.assignToForm(this.dataForm);
       }else{
         this.toasterService.showError("Unable to fetch the PI Detail",'')
@@ -262,12 +275,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       {
         key: this.labels.remark,
         value: this.form.controls['remark'].value
-      },
-      {
-        key: 'Document',
-        value:'invoice.pdf'
-      },
-
+      }
     ]
 
   }
@@ -574,6 +582,7 @@ download(){
 showPDF() {
   this.showUploadModal = false;
   this.showPdfModal = true;
+  this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`
 }
 
 detectDateKeyAction(event,type) {

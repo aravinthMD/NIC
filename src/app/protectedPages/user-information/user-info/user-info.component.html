@@ -586,11 +586,11 @@
                                     </div>
                                     </div> -->
 
-                                    <div class="col-4">
+                                    <!-- <div class="col-4">
                                         <div class="form-group">
                                             <label for="remark">{{labels.remark}}</label>
                                             <textarea class="remark" maxlength="3000" formControlName="remark"  placeHolder =  "Enter the Remark"></textarea>
-                                            <!-- <app-custom-input formControlName="remark" 
+                                             <app-custom-input formControlName="remark" 
                                                 [labelName]="labels.remark" 
                                                 placeHolder =  "Enter the Remark"
                                                 [id]="'remark'"
@@ -598,7 +598,7 @@
                                                 [isRequired]="'Remark is Mandatory'"
                                                 [isDisabledInp]="propertyFlag"
                                                 [isDirty]="isDirty">
-                                            </app-custom-input> -->
+                                            </app-custom-input>
                                             <div class="date-picker-error" *ngIf="
                                             isDirty &&
                                             form.get('remark').errors?.required
@@ -606,7 +606,17 @@
                                                 Please Enter Remark
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>  -->
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="remarks">{{labels.remark}}</label>
+                                            <textarea class="form-control ml-0 mb-1" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="10"></textarea>
+                                                <div class="date-picker-error" *ngIf="isDirty && form.controls['remark'].errors?.required">
+                                                    Please Enter Remark
+                                                </div>
+                                        </div>
+                                    </div>
 
                                     <div class="col-4"  *ngIf="!existingUserFlag">
                                         <div class="form-group">
@@ -617,14 +627,16 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-4" *ngIf="existingUserFlag && docAvailFlag" style="padding-bottom:30px;">
+                                        <label for="document">Document</label><br>
+                                        <div class="pb-2">
+                                            <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="viewDoc()">View PDF</button>
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                                <div class="col-4" *ngIf="existingUserFlag" style="padding-bottom:30px;">
-                                    <label for="document">Document</label><br>
-                                    <div class="pb-2">
-                                        <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="viewDoc()">View PDF</button>
-                                    </div>
-                                </div>
+                                
                                 
                                 
                                 
@@ -750,12 +762,12 @@
                     </div>
                     <div class="form-group row" style="margin-left: 5px">
                         
-                        <div class="pt-2 pr-2 pb-3">
+                        <!-- <div class="pt-2 pr-2 pb-3">
                         <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="download()">Download</button>
-                        </div>
-                        <div class="pt-2 pb-3">
+                        </div> -->
+                        <!-- <div class="pt-2 pb-3">
                         <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
-                        </div>
+                        </div> -->
                     </div>
                     </div>
                     <!-- <div class="col-12 small pr-2">
