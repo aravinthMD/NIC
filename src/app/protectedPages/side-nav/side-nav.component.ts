@@ -76,7 +76,10 @@ export class SideNavComponent implements OnInit,OnChanges {
     })
 
 
-    let path = this.location.path()
+    const path = this.location.path();
+    // this.highlightsSideMenu(path);
+
+    this.listenerForLocationChange();
 
     if(path.includes('users/Dashboard')){
       this.isLocation = '0'
@@ -144,6 +147,8 @@ export class SideNavComponent implements OnInit,OnChanges {
 
     }
 
+    
+
     this.utilService.projectNumber$.subscribe((pno)=> {
       if(pno){
         this.isExistingUser = true
@@ -153,6 +158,47 @@ export class SideNavComponent implements OnInit,OnChanges {
   })
    
     
+  }
+
+
+  listenerForLocationChange() {
+    this.location.onUrlChange((url) => {
+        this.highlightsSideMenu(url);
+    });
+  }
+
+  highlightsSideMenu(user) {
+    if(user == 'newuser') {
+      this.isLocation = '1'
+    }else if(user == 'dashboard') {
+      this.parentLocation= ''
+      this.isLocation = '0'
+    }else if(user.includes('users/customerDetails')){
+      this.parentLocation= '1'
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.1'
+    }else if(user.includes('users/techAdmin')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.2'
+    }else if(user.includes('users/billingAdmin')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.3'
+    }else if(user.includes('users/smsCredit')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.4'
+    }else if(user.includes('users/projectExecution')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.3'
+    }else if(user.includes('users/proformaInvoice')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.2'
+    }else if(user.includes('users/purchaseOrder')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.4'
+    }else if(user.includes('users/taxInvoice')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.5'
+    }
   }
 
   ngOnChanges(){

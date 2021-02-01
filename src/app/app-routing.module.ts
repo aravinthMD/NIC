@@ -99,7 +99,7 @@ const routes: Routes = [
       component: ProcessDetailsComponent,
     },
     {
-      path:'proformaInvoice/:projectNo', 
+      path:'proformaInvoice/:id', 
       component: ProcessDetailsComponent,
     },
     {

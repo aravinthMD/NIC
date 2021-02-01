@@ -912,6 +912,15 @@ export class UserInfoComponent implements OnInit, OnChanges {
     
   }
 
+  onNext() {
+
+    if (!this.clientId) {
+       return this.toasterService.showError(`Can't proceed without submitting customer details`, '');
+    }
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
+
+  }
+
   saveCancel() {
     this.form.disable();
     this.showDataSaveModal = false;

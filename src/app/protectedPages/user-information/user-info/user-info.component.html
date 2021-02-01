@@ -700,9 +700,14 @@
                     </div>
                     
 
-                    <div class="col-2" style="float: right;"> 
+                    <div class="col-4" style="float: right;"> 
+                        <button class="btn btn-primary ml-3"  (click)="onNext()">Next</button>
                         <button class="btn btn-primary ml-3"  (click)="back()">Back to List</button>
+
                     </div>
+                    <!-- <div class="col-2" style="float: left;"> 
+                        <button class="btn btn-primary ml-3"  (click)="back()">Next</button>
+                    </div> -->
 
                 <!-- <div class="col-2" style="float: left;">
                     <button class="btn btn-primary ml-3" *ngIf = "existingPreviewUserFlag"(click)="next()">Save & Next</button>
