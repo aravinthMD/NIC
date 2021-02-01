@@ -23,3 +23,5 @@ describe('TechnicalAdminDetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+ 

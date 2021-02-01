@@ -1,20 +1,36 @@
 <div class="col-md-10 main"> 
-    <mat-card>
+    <mat-card class="pt-2">
 <div class="technical_admin">
     <!-- <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Technical Admin Details</h1> -->
 
     <app-account-header [title]="'Technical Admin Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
-    <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
+    <app-view-info [techAdminUserDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
 
    
 
     <form (submit)="onSubmit()" [formGroup]="technicaladminform" *ngIf="!showView">
-            <div class="row">
+            <div class="row formAlignment">
+
+                <div class="d-none">
+                    <!-- formControlName="id" -->
+                    <div class="form-group">
+                        <app-custom-input
+                        type="hidden" 
+                        formControlName="id"
+                        [labelName]="labels.id" 
+                        [id]="'id'"
+                        placeHolder = "Enter the Id"
+                        >
+                        </app-custom-input>
+                    </div>
+                </div>
+                
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="name" 
                         [labelName]="labels.name" [id]="'Name'" 
+                        placeHolder = "Enter the Name"
                         [isRequired]="'Name is Mandatory'" 
                         [mandatoryField]="true"
                         [maxLength]="labels?.validationData.name.maxLength" 
@@ -27,6 +43,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="email" 
+                        placeHolder =  "Enter the Email Address"
                         [labelName]="labels.email" [id]="'email'" 
                         [isRequired]="'Email is Mandatory'" 
                         [mandatoryField]="true"
@@ -49,11 +66,14 @@
                         ></app-vf-custom-select>
                     </div>
                 </div>
+            </div>
+                <div class="row formAlignment">  
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input 
                         formControlName="designation" 
                         [labelName]="labels.designation" 
+                        placeHolder =  "Enter the Designation"
                         [id]="'designation'" 
                         [mandatoryField]="true"
                         [isRequired]="'Designation is Mandatory'" 
@@ -68,8 +88,9 @@
                     <div class="form-group">
                         <app-custom-input formControlName="employeeCode" 
                         [labelName]="labels.employeeCode" 
+                        placeHolder =  "Enter the Employee Code"
                         [id]="'employeeCode'" 
-                        [maxLength]="labels?.validationData.employeeCode.maxLength" 
+                        [maxLength]="labels?.validationData.employeeCode.maxLength"  
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -80,13 +101,12 @@
                 <div class="col-1 pr-2">
                     <div class="form-group">
                         <label for="">Code<span style="color: red;">*</span></label>
-                        <app-vf-custom-select formControlName = "countryCode"
+                        <app-vf-custom-select formControlName = "mobileNumberCode"
                         [values] = "countryCodeValues"
                         [className]="'form-control Mandatory code-pad'"
                         [isRequired] = "'Select Code'"
                         [isDisabled] = "propertyFlag"
                         [isDirty] = "isDirty"
-                        [isDisabled]="propertyFlag"
                         >
                     </app-vf-custom-select>
                     </div>
@@ -95,9 +115,10 @@
 
                 <div class="col-3">
                     <div class="form-group">
-                        <app-custom-input formControlName="mobileNo" 
+                        <app-custom-input formControlName="mobileNumber" 
                         [labelName]="labels.mobileNo" 
-                        [id]="'mobileNo'" 
+                        placeHolder =  "Enter the Mobile Number"
+                        [id]="'mobileNumber'" 
                         [mandatoryField]="true"
                         [type]="labels?.validationData.mobile.type" 
                         [patternCheck]="labels?.validationData.mobile.patternCheck" 
@@ -108,6 +129,8 @@
                         </app-custom-input>
                     </div>
                 </div>
+                </div>
+                
                 <!-- <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="telPhno" 
@@ -125,12 +148,12 @@
                     </div>
                 </div> -->
 
-
+                <div class="row formAlignment"> 
                 <div class="col-1 pr-2 mr-0">
                     <div class="form-group">
                        
                         <label for="department">Code<span style="color:red">*</span></label>
-                        <app-vf-custom-select formControlName="teleCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues"
+                        <app-vf-custom-select formControlName="telephoneNumberCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues"
                         [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                         [isDirty]="isDirty">
                     </app-vf-custom-select>
@@ -138,14 +161,16 @@
                 </div>
                 <div class="col-3 pl-2 ml-0">
                     <div class="form-group">
-                        <app-custom-input formControlName="telPhno" 
-                        [labelName]="labels.teleNumber" [id]="'telPhno'"
+                        <app-custom-input formControlName="telephoneNumber" 
+                        [labelName]="labels.teleNumber" [id]="'telephoneNumber'"
+                        placeHolder =  "Enter the Telephone Number"
                         [isRequired]="'Telephone Number is Mandatory'" 
                         [mandatoryField]="true"
                         [type]="labels?.validationData.telephoneNumber.type"
                         [patternCheck]="labels?.validationData.telephoneNumber.patternCheck"
                         [maxLength]="labels?.validationData.telephoneNumber.maxLength"
-                        [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
+                        [isDisabledInp]="propertyFlag" 
+                        [isDirty]="isDirty">
                         </app-custom-input>
                     </div>
 
@@ -156,6 +181,7 @@
                     <div class="form-group">
                         <app-custom-input formControlName="offAddress1" 
                         [labelName]="labels.officialAdd1" 
+                        placeHolder =  "Enter the Address1"
                         [id]="'offcAddressLine1'" 
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine1 is Mandatory'" 
@@ -170,6 +196,7 @@
                     <div class="form-group">
                         <app-custom-input formControlName="offAddress2" 
                         [labelName]="labels.officialAdd2" 
+                        placeHolder =  "Enter the Address2"
                         [id]="'offcAddressLine2'" 
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine2 is Mandatory'" 
@@ -180,10 +207,13 @@
                         </app-custom-input>
                     </div>
                 </div>
+                </div>
+                <div class="row formAlignment"> 
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="offAddress3" 
                         [labelName]="labels.officialAdd3" 
+                        placeHolder =  "Enter the Address3"
                         [id]="'offcAddressLine3'" 
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine3 is Mandatory'" 
@@ -198,6 +228,7 @@
                     <div class="form-group">
                         <app-custom-input formControlName="city" 
                         [labelName]="labels.city" 
+                        placeHolder =  "Enter the City Name"
                         [id]="'city'" 
                         [mandatoryField]="true"
                         [isRequired]="'City is Mandatory'" 
@@ -212,6 +243,7 @@
                     <div class="form-group">
                         <app-custom-input formControlName="state" 
                         [labelName]="labels.state" 
+                        placeHolder =  "Enter the State"
                         [id]="'state'" 
                         [mandatoryField]="true"
                         [isRequired]="'State is Mandatory'" 
@@ -222,10 +254,13 @@
                         </app-custom-input>
                     </div>
                 </div>
+            </div>
+            <div class="row formAlignment"> 
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="pinCode" 
                         [labelName]="labels.pincode" 
+                        placeHolder=   "Enter the PinCode"
                         [id]="'pincode'" 
                         [mandatoryField]="true"
                         [isRequired]="'Pincode is Mandatory'" 
@@ -240,7 +275,10 @@
 
                 <div class="col-4">
                     <div class="form-group">
-                        <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
+                        <app-custom-input formControlName="remark" 
+                            [labelName]="labels.remark" 
+                            placeHolder =  "Enter the Remark"
+                            [id]="'remark'"
                             [maxLength]="labels?.validationData.remark.maxLength" 
                             [isRequired]="'Remark is Mandatory'"
                             [isDisabledInp]="propertyFlag"
@@ -251,6 +289,7 @@
 
 
             </div>
+       
             </form>
             <!-- <div class="row pt-3 pb-3 m-0">
                 <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button>
@@ -270,21 +309,19 @@
 
             
             <div class="row pt-3 pb-3">
-              
-                <div class="col-10">
-                    <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button>
-                    <button class="btn btn-primary float-left back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+                <div class="col-9">
+                    <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!showView" (click)="onSubmit()">Save & Next</button>
+                    <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="hideEditButton" (click)="onSubmit()">Save & Next</button> -->
+                    <button class="btn btn-primary btn-lg float-left back-btn" *ngIf= "showView" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editData()"> Edit </button>
                 </div>
 
-               <div class="col-1" style="float: left;">
-                <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+               <div class="col-2" style="float: right;">
+                <button class="btn btn-primary ml-3" *ngIf = "!showView" style="padding-left: 36px; padding-right:36px;" (click)="back('show')">Back</button>
+                <button class="btn btn-primary ml-3" *ngIf = "showView"  style="padding-left: 36px; padding-right:36px;" (click)="back('view')">Back</button>
 
                </div>
 
-               <div class="col-1" style="float: left;">
-                <button class="btn btn-primary ml-3" (click)="next()">Next</button>
-
-               </div>
+              
             </div>
 
         </div>
@@ -294,32 +331,42 @@
            <button mat-raised-button (click)="back()" class="float-right" matRipple style="background-color:#0e4d92;color: #fff;" (click)="next()">Next</button>
         </div> -->
 
-        <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header>
-        <app-view-info [userDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
+        <!-- <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header> -->
+
+        <div *ngIf = "showView">
+        <div class="dashBoard" *ngIf = "user">
+            <div>
+                Billing Admin Details
+            </div>
+        </div>
+
+        <app-view-info [billAdminUserDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
+
+
+
 
 
         <div class="row pt-3 pb-3" *ngIf="user">
-              
-            <div class="col-10">
+            <div class="col-9">
                 <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
-                <button class="btn btn-primary float-left back-btn" matRipple (click)="editDataBill()">Edit</button>
+                <button class="btn btn-primary btn-lg float-left back-btn"  style="padding-left: 36px; padding-right:36px;" matRipple (click)="editDataBill()">Edit</button>
             </div>
 
-           <div class="col-1" style="float: left;">
-            <button class="btn btn-primary ml-3" (click)="back()">Back</button>
+           <div class="col-2" style="float: right;">
+            <button class="btn btn-primary ml-30" style="padding-left: 36px; padding-right:36px;" (click)="back('billAdmin')">Back</button>
 
            </div>
 
-           <div class="col-1" style="float: left;">
-            <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+           <div class="col-2" style="float: left;">
+            <!-- <button class="btn btn-primary ml-3" (click)="next()">Save & Next</button> -->
 
            </div>
         </div>
+    </div>
 
 
     </mat-card>
         </div>
-
 
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

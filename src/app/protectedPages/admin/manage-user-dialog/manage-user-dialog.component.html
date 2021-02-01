@@ -18,7 +18,15 @@
                         <input type="text" class="form-control" [disabled]="enableflag" value="ajith"  id="Name" aria-describedby="nameHelp">
                         <small id="nameHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="name" [labelName]="labels.name" [mandatoryField]="true" [id]="'Name'" [isRequired]="'Name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDisabledInp]="enableflag"></app-custom-input>
+                    <app-custom-input formControlName="name" 
+                        [labelName]="labels.name" 
+                        placeHolder =  "Enter the Name"
+                        [mandatoryField]="true" 
+                        [id]="'Name'" 
+                        [isRequired]="'Name is mandatory'" 
+                        [maxLength]="labels?.validationData.name.maxLength" 
+                        [isDisabledInp]="enableflag">
+                    </app-custom-input>
 
 
 
@@ -48,7 +56,11 @@
                 <div class="form-group">
                     <label for="department">Role<span style="color:red">*</span></label>
 
-                    <app-vf-custom-select formControlName="roleName" [values]="roleList" [isRequired]="'Please Select Department'" [isDisabled]="enableflag"></app-vf-custom-select>
+                    <app-vf-custom-select formControlName="roleName" 
+                        [values]="roleList" 
+                        [isRequired]="'Please Select Department'" 
+                        [isDisabled]="enableflag">
+                    </app-vf-custom-select>
 
 
                     <!-- <small id="emailHelp" class="form-text text-muted"></small> -->
@@ -61,7 +73,14 @@
                     <input type="text" [disabled]="enableflag"  value="desigation" class="form-control" id="designation" aria-describedby="designationHelp">
                     <small id="designationHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="designation" [labelName]="labels.designation" [mandatoryField]="true" [id]="'designation'" [isRequired]="'Designation is mandatory'" [maxLength]="labels?.validationData.designation.maxLength" [isDisabledInp]="enableflag">
+                    <app-custom-input formControlName="designation" 
+                        [labelName]="labels.designation" 
+                        placeHolder =  "Enter the Designation"
+                        [mandatoryField]="true" 
+                        [id]="'designation'" 
+                        [isRequired]="'Designation is mandatory'" 
+                        [maxLength]="labels?.validationData.designation.maxLength" 
+                        [isDisabledInp]="enableflag">
 
                     </app-custom-input>
 
@@ -76,7 +95,14 @@
                     <input type="text" class="form-control" value='NIC004567' [disabled]="enableflag"  id="empCode" aria-describedby="empCodeHelp">
                     <small id="empCodeHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" [id]="'employeeCode'" [isRequired]="'Employee code is mandatory'" [maxLength]="labels?.validationData.employeeCode.maxLength" [mandatoryField]="true" [isDisabledInp]="enableflag">
+                    <app-custom-input formControlName="employeeCode" 
+                        [labelName]="labels.employeeCode" 
+                        placeHolder =  "Enter the Employee Code"
+                        [id]="'employeeCode'" 
+                        [isRequired]="'Employee code is mandatory'" 
+                        [maxLength]="labels?.validationData.employeeCode.maxLength" 
+                        [mandatoryField]="true" 
+                        [isDisabledInp]="enableflag">
 
                     </app-custom-input>
 
@@ -90,7 +116,13 @@
                     <input type="email" class="form-control" value='emailcheck@nic.in' [disabled]="enableflag"  id="emailAddress" aria-describedby="emailAddressHelp">
                     <small id="emailAddressHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="email" [labelName]="labels.email" [id]="'email'" [isRequired]="'Email is mandatory'" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [mandatoryField]="true"
+                    <app-custom-input formControlName="email" 
+                        [labelName]="labels.email" [id]="'email'" 
+                        placeHolder =  "Enter the Email"
+                        [isRequired]="'Email is mandatory'" 
+                        [patternCheck]="labels?.validationData.email.patternCheck" 
+                        [maxLength]="labels?.validationData.email.maxLength" 
+                        [mandatoryField]="true"
                         [isDisabledInp]="enableflag">
 
                     </app-custom-input>
@@ -129,6 +161,7 @@
                 
                     <app-custom-input formControlName="mobileNo" 
                     [labelName]="labels.mobileNo" 
+                    placeHolder =  "Enter the Mobile Number"
                     [id]="'mobileNo'" 
                     [isRequired]="'Mobile number is Mandatory'" 
                     [type]="labels?.validationData.mobile.type" 
@@ -171,6 +204,7 @@
                 <div class="form-group">
                     <app-custom-input formControlName="telPhno" 
                     [labelName]="labels.teleNumber" [id]="'telPhno'"
+                    placeHolder = "Enter the Telephone Number"
                     [isRequired]="'Telephone number is Mandatory'" 
                     [mandatoryField]="true"
                     [type]="labels?.validationData.telephoneNumber.type"
@@ -192,7 +226,13 @@
                     <!-- <label for="offcAddressLine1">Official Address line 1<span style="color:red">*</span></label>
                     <input type="text" class="form-control" value='chennai' [disabled]="enableflag"  id="offcAddressLine1" aria-describedby="offcAddressLine1Help">
                     <small id="offcAddressLineHelp" class="form-text text-muted"></small> -->
-                    <app-custom-input formControlName="offAddress1" [labelName]="labels.officialAdd1" [id]="'offcAddressLine1'" [isRequired]="'Office AddressLine1 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true" [isDisabledInp]="enableflag">
+                    <app-custom-input formControlName="offAddress1" 
+                      [labelName]="labels.officialAdd1" [id]="'offcAddressLine1'" 
+                      placeHolder =  "Enter the Address1"
+                      [isRequired]="'Office AddressLine1 is mandatory'" 
+                      [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                      [mandatoryField]="true" 
+                      [isDisabledInp]="enableflag">
 
                     </app-custom-input>
 
@@ -205,7 +245,13 @@
                     <input type="text" class="form-control" value='trichy' [disabled]="enableflag"  id="offcAddressLine1" aria-describedby="offcAddressLine2Help">
                     <small id="offcAddressLine2Help" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="offAddress2" [labelName]="labels.officialAdd2" [id]="'offcAddressLine2'" [isRequired]="'Office AddressLine2 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true" [isDisabledInp]="enableflag">
+                    <app-custom-input formControlName="offAddress2" 
+                      [labelName]="labels.officialAdd2" [id]="'offcAddressLine2'" 
+                      placeHolder =  "Enter the Address2"
+                      [isRequired]="'Office AddressLine2 is mandatory'" 
+                      [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                      [mandatoryField]="true" 
+                      [isDisabledInp]="enableflag">
 
                     </app-custom-input>
 
@@ -219,7 +265,14 @@
                     <input type="text" class="form-control" value='pondicherry' [disabled]="enableflag"    id="offcAddressLine3" aria-describedby="offcAddressLine3Help">
                     <small id="offcAddressLine3Help" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3" [id]="'offcAddressLine3'" [isRequired]="'Office AddressLine3 is mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength" [mandatoryField]="true" [isDisabledInp]="enableflag">
+                    <app-custom-input formControlName="offAddress3" 
+                       [labelName]="labels.officialAdd3" 
+                       placeHolder =  "Enter the Address3"
+                       [id]="'offcAddressLine3'" 
+                       [isRequired]="'Office AddressLine3 is mandatory'" 
+                       [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                       [mandatoryField]="true" 
+                       [isDisabledInp]="enableflag">
 
                     </app-custom-input>
 
@@ -232,7 +285,13 @@
                     <input type="text" class="form-control" value='Chennai' [disabled]="enableflag"   id="city" aria-describedby="cityHelp">
                     <small id="cityHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="city" [labelName]="labels.city" [id]="'city'" [isRequired]="'City is mandatory'" [maxLength]="labels?.validationData.city.maxLength" [mandatoryField]="true" [isDisabledInp]="enableflag">
+                    <app-custom-input formControlName="city" 
+                       [labelName]="labels.city" [id]="'city'" 
+                       placeHolder =  "Enter the City Name"
+                       [isRequired]="'City is mandatory'" 
+                       [maxLength]="labels?.validationData.city.maxLength" 
+                       [mandatoryField]="true" 
+                       [isDisabledInp]="enableflag">
 
                     </app-custom-input>
 
@@ -245,7 +304,13 @@
                     <input type="text" class="form-control"  value='TamilNadu' [disabled]="enableflag"  id="State" aria-describedby="StateHelp">
                     <small id="StateHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="state" [labelName]="labels.state" [id]="'state'" [isRequired]="'State is mandatory'" [maxLength]="labels?.validationData.state.maxLength" [mandatoryField]="true" [isDisabledInp]="enableflag">
+                    <app-custom-input formControlName="state" 
+                     [labelName]="labels.state" [id]="'state'" 
+                     placeHolder =  "Enter the State"
+                     [isRequired]="'State is mandatory'" 
+                     [maxLength]="labels?.validationData.state.maxLength" 
+                     [mandatoryField]="true" 
+                     [isDisabledInp]="enableflag">
 
                     </app-custom-input>
 
@@ -260,7 +325,13 @@
                     <input type="text" class="form-control" value='600026' [disabled]="enableflag" id="PinCode" aria-describedby="PinCodeHelp">
                     <small id="PinCodeHelp" class="form-text text-muted"></small> -->
 
-                    <app-custom-input formControlName="pinCode" [labelName]="labels.pincode" [id]="'pincode'" [isRequired]="'Pincode is mandatory'" [maxLength]="labels?.validationData.pincode.maxLength" [type]="labels?.validationData.pincode.type" [mandatoryField]="true"
+                    <app-custom-input formControlName="pinCode" 
+                        [labelName]="labels.pincode" [id]="'pincode'" 
+                        placeHolder =  "Enter the PinCode"
+                        [isRequired]="'Pincode is mandatory'" 
+                        [maxLength]="labels?.validationData.pincode.maxLength" 
+                        [type]="labels?.validationData.pincode.type" 
+                        [mandatoryField]="true"
                         [isDisabledInp]="enableflag">
 
                     </app-custom-input>
@@ -271,7 +342,9 @@
 
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'"
+                    <app-custom-input formControlName="remark" 
+                        [labelName]="labels.remark" [id]="'remark'"
+                        placeHolder =  "Enter the Remark"
                         [maxLength]="labels?.validationData.remark.maxLength" 
                         [isRequired]="'Remark is mandatory'"
                         [isDisabledInp]="enableflag"

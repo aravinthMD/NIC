@@ -6,7 +6,7 @@
     "applicantMobile": "Applicant Mobile",
     "OfficerName": "Reporting/Nodal/Forwarding Officer Name",
     "OfficerEmail": "Reporting/Nodal/Forwarding Officer Email",
-    "OfficerMobile": "Reporting/Nodal/Forwarding Officer Mobile",
+    "OfficerMobile": "Reporting/Nodal/Officer Mobile",
     "smsServiceReqd": "SMS Service Required",
     "credits_SMSQuota": "Credits (SMS Quota)",
     "availableCredit": "Available Credit",
@@ -106,6 +106,23 @@
     "rate": "Rate",
     "quantity": "Quantity",
     "description": "Description",
+    "projectCordinator":"Project Coordinator",
+    "PONoAmendOrder":"PO NO/Amend Order",
+    "mail": "Mail",
+    "totalSMS": "Total SMS",
+    "counts": "Counts",
+    "baseAmount": "Base Amount",
+    "tax":"Tax",
+    "recvDate":"Recv Date",
+    "book": "Book",
+    "dateEstimated": "Date Estimated",
+    "invoiceAmount2": "Invoice Amount2",
+    "bankReceived": "Bank Received",
+    "interestOnTDSotherDeduction": "interest On TDS/OtherDeduction",
+    "receiptDate": "Receipt Date",
+    "month": "Month",
+    "year": "Year",
+    "mrn": "MRN",
     "validationData": {
         "name": {
             "maxLength": {
@@ -180,12 +197,14 @@
         "projectNum": {
             "maxLength": {
                 "rule": 15
-            }
+            },
+            "type":"alpha-numeric"
         },
         "projectName": {
             "maxLength": {
-                "rule": 25
-            }
+                "rule": 50
+            },
+            "type": "alpha-numeric"
         },
         "userId": {
             "maxLength": {
@@ -266,11 +285,11 @@
         },
         "telephoneNumber": {
             "maxLength": {
-                "rule": 7
+                "rule": 8
             },
             "type": "number",
             "patternCheck": {
-                "rule": "^[0-9]{7}",
+                "rule": "^[0-9]{8}",
                 "msg": "Invalid telephone number"
             }
         },
@@ -348,7 +367,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "piAmount": {
             "maxLength": {
@@ -496,7 +515,81 @@
             "maxLength": {
                 "rule": "2000"
             }
+        },
+        "projectCordinator": {
+            "maxLength": {
+                "rule": "50"
+            },
+            "type": "alpha"
+        },
+        "PONoAmendOrder": {
+            "maxLength": {
+                "rule": "25"
+            },
+            "type": "alpha-numeric"
+        },
+        "mail": {
+            "maxLength": {
+                "rule": 50
+            },
+            "patternCheck": {
+                "rule": "^\\w+([.-]?\\w+)@\\w+([.-]?\\w+)(\\.\\w{2,10})+$",
+                "msg": "Invalid email"
+            }
+        },
+        "totalSMS": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type" : "number"
+        },
+        "counts": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "baseAmount": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "tax": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "book": {
+            "maxLength": {
+                "rule": "25"
+            },
+            "type": "alpha-numeric"
+        },
+        "invoiceAmount2": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "bankReceived": {
+            "maxLength": {
+                "rule": "25"
+            },
+            "type": "alpha-numeric"
+        },
+        "interestOnTDSotherDeduction": {
+            "maxLength": {
+                "rule": "12"
+            },
+            "type": "number"
+        },
+        "mrn": {
+            "maxLength": {
+                "rule": "70"
+            },
+            "type": "alpha-numeric"
         }
-        
     }
 }

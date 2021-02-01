@@ -1,16 +1,23 @@
-import { Component, OnInit,Input,ViewChild,AfterViewInit } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
+import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { LabelsService } from 'src/app/services/labels.service';
 import {DatePipe} from '@angular/common';
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { TaxInvoiceDialogComponent } from './tax-invoice-dialog/tax-invoice-dialog.component';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
+import { SearchService } from '../../../services/search.service';
+import {ApiService} from '../../../services/api.service'
+import { AdminService } from '@services/admin.service';
+import { TaxInvoice } from './tax-invoice.model';
+import { TaxInvoiceService } from '@services/tax-invoice.service';
+import { ClientDetailsService } from '@services/client-details.service';
 
+import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 
 @Component({
   selector: 'app-tax-invoice',
@@ -19,9 +26,15 @@ import { InvoiceService } from '@services/invoice.service';
 })
 export class TaxInvoiceComponent implements OnInit {
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static : true}) paginator: MatPaginator;
 
-  @Input('userObj') user: any;
+  @Input('userObj') user : any; 
+
+//    monthList = [ "January", "February", "March", "April", "May", "June",
+// "July", "August", "September", "October", "November", "December" ];
+
+//  yearList = [ "2020", "2021", "2022", "2023", "2024", "2025",
+// "2026", "2027", "2028", "2029", "2030", "2031" ];
 
   displayedColumns : string[] = ['InvoiceNo','projectNo','piAmt','remarks','Active']
 
@@ -42,16 +55,13 @@ export class TaxInvoiceComponent implements OnInit {
     {invoiceNo : 7687,projectNumber : 4535,piAmt:23450,remarks:''}
 
   ];
-  paymentStatus: any[] = [
-    { key: 0, value: 'Pending' },
-    { key: 1, value: 'Received' },
-    { key: 2, value: 'On Hold' }]
+  paymentStatus: any[] = []
 
     invoiceStatusList :  any[] = [
       {key : 0,value : 'Pending'},
       {key : 1,value : 'Paid'},
       {key : 2,value : 'Partially Paid'},
-      {kwy : 3,value : 'Return by NICSI'}
+      {key : 3,value : 'Return by NICSI'}
     ]
 
   dataSource = new MatTableDataSource<any>([]);
@@ -67,43 +77,76 @@ export class TaxInvoiceComponent implements OnInit {
 
   storeProjectNo: string;
 
+  resultsLength: number;
+  pageEvent: PageEvent;
+
+  datePerPage: number = 0;
+
+  selectedClientId;
+  taxInvoiceList: TaxInvoice[] = [];
+
   constructor(
       private labelsService: LabelsService,
-      private Datepipe:DatePipe,
+      private Datepipe: DatePipe,
       private activatedRoute: ActivatedRoute,
-      private dialog : MatDialog,
+      private dialog: MatDialog,
       private utilService: UtilService,
       private toasterService: ToasterService,
       private router: Router,
-      private invoiceService : InvoiceService
+      private invoiceService: InvoiceService,
+      private searchService: SearchService,
+      private apiService: ApiService,
+      private adminService: AdminService,
+      private taxInvoiceService: TaxInvoiceService,
+      private clientDetailsService: ClientDetailsService,
+      private customDateAdapter: CustomDateAdapter
       ) { }
 
   ngOnInit() {
-    this.labelsService.getLabelsData().subscribe((values)=> {
+    this.selectedClientId = Number(this.clientDetailsService.getClientId());
+    this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
 
     });
-    this.taxInvoiceForm=new FormGroup({
+    this.taxInvoiceForm = new FormGroup({
       userName: new FormControl(null),
-      taxIN:new FormControl(null),
-      invoiceDate:new FormControl(null),
-      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
-      poNumber:new FormControl(null),
-      poDate:new FormControl(null),
-      fromDate:new FormControl(null),
-      toDate:new FormControl(null),
-      invoiceAmount:new FormControl(null),
-      remark:new FormControl(null),
-      uploadDoc:new FormControl(null),
-      paymentStatus:new FormControl(null),
-      invoiceStatus : new FormControl(null),
-      invoiceAmountPaid : new FormControl(null),
-      tds :  new FormControl(null),
-      penalty :  new FormControl(null),
-      shortPay : new FormControl(null),
-      submittedOn : new FormControl(null),
-      poBillable : new FormControl(null)
-    })
+      projectNumber: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
+      poNumber: new FormControl(null),
+      poDate: new FormControl(null),
+      fromDate: new FormControl(null),
+      toDate: new FormControl(null),
+      billableAmount: new FormControl(null),
+      invoiceAmount: new FormControl(null),
+      taxInvoiceNumber: new FormControl(null),
+      invoiceDate: new FormControl(null),
+      submittedDate: new FormControl(null),
+      invoiceStatus: new FormControl(''),
+      invoicePaidAmount: new FormControl(null),
+      tds:  new FormControl(null),
+      penalty:  new FormControl(null),
+      shortPay: new FormControl(null),
+      paymentStatus: new FormControl(''),
+      remark: new FormControl(null),
+      uploadDocument: new FormControl(null),
+      userEmail: new FormControl(null),
+      totalSMS: new FormControl(null),
+      counts1: new FormControl(null),
+      baseAmount: new FormControl(null),
+      tax: new FormControl(null),
+      receiveDate: new FormControl(null),
+      book:  new FormControl(null),
+      dateEstimated:  new FormControl(null),
+      invoiceAmount2: new FormControl(null),
+      bankReceived: new FormControl(null),
+      receiptDate:  new FormControl(null),
+      month: new FormControl(null),
+      year: new FormControl(null),
+      mrnNumber: new FormControl(null),
+      projectName: new FormControl(null),
+      projectCoordinator: new FormControl(null), // not available in api
+      amendOrderNo: new FormControl(null), // not available in api
+      interestOnTds : new FormControl(null), // not available in api
+    });
 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
@@ -113,7 +156,7 @@ export class TaxInvoiceComponent implements OnInit {
 
     this.utilService.userDetails$.subscribe((val)=> {
 
-      this.accountName = val['userId'] || '';
+      this.accountName = val['App_name'] || '';
       this.status = val['status'] || '';
     })
 
@@ -143,28 +186,157 @@ export class TaxInvoiceComponent implements OnInit {
 
     })
 
+    this.getSubLovs();
+
     // this.dataSource = new MatTableDataSource<any>(this.userList);
-    this.getAllTaxInvoiceDetails();
+    // this.getAllTaxInvoiceDetails();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  getAllTaxInvoiceList(data = {}) {
+    this.taxInvoiceService.getTaxInvoiceList(
+      {
+        selectedClientId: this.selectedClientId,
+        ...data
+      }
+    ).subscribe((res: any) => {
+      console.log('get list', res);
+      const error = res.Error;
+      const errorMsg = res.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMsg, '');
+      }
+      const processVariables = res.ProcessVariables;
+      this.taxInvoiceList = processVariables.TIList || [];
+      this.dataSource = new MatTableDataSource<any>(this.taxInvoiceList);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  // ngAfterViewInit(){
+  //   this.dataSource.paginator = this.paginator;
+
+  // }
+
+  async getSubLovs() {
+
+    // let listData = []
+
+    await this.adminService.getLovSubMenuList('3')
+    .subscribe((response: any) => {
+
+     const paymentList = response.ProcessVariables.Lovitems;
+     this.paymentStatus = paymentList.map((value) => {
+       return {
+         key: value.key,
+         value: value.name
+       };
+     });
+     this.taxInvoiceService.setPaymentList(this.paymentStatus);
+     this.getAllTaxInvoiceList();
+
+    //   const submenuList = response['ProcessVariables']['Lovitems'];
+    //  submenuList.forEach(element => {
+
+    //     listData.push({key:element.key,value:element.name})
+    //   });
+      });
+
+    // this.paymentStatus = listData;
 
   }
 
-  getAllTaxInvoiceDetails(){
+  getAllTaxInvoiceDetails(currentPage?: any){
 
     this.invoiceService.getTaxInvoiceDetails().subscribe((response) => {
-      const DataTaxInvoiceList = response["ProcessVariables"]["TIList"]
-      this.dataSource = new MatTableDataSource<any>(DataTaxInvoiceList);
+
+      if(response['ProcessVariables']['error']['code'] == '0') {
+        const DataTaxInvoiceList = response["ProcessVariables"]["TIList"];
+
+        this.datePerPage = Number(response['ProcessVariables']['dataPerPage']);
+
+        this.resultsLength = Number(response['ProcessVariables']['totalCount'])
+
+        this.dataSource = new MatTableDataSource<any>([]);
+        this.dataSource = new MatTableDataSource<any>(DataTaxInvoiceList);
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
+      
     },(error) =>{
       this.toasterService.showError(error,'')
     })
 
   }
 
+  onSubmit(value?: any) {
+    this.isDirty = true;
+    let formValue;
+    if (!value) {
+       if (!this.taxInvoiceForm.valid) {
+         return this.toasterService.showError('Please fill all the fields', '');
+       }
+       formValue = this.taxInvoiceForm.value;
+    } else {
+      formValue = value;
+    }
+    const poDate = this.customDateAdapter.transform(formValue.poDate, 'dd/MM/yyyy');
+    const fromDate = this.customDateAdapter.transform(formValue.fromDate, 'dd/MM/yyyy');
+    const toDate = this.customDateAdapter.transform(formValue.toDate, 'dd/MM/yyyy');
+    const submittedDate = this.customDateAdapter.transform(formValue.submittedDate, 'dd/MM/yyyy');
+    const invoiceDate = this.customDateAdapter.transform(formValue.invoiceDate, 'dd/MM/yyyy');
+    const receiveDate = this.customDateAdapter.transform(formValue.receiveDate, 'dd/MM/yyyy');
+    const dateEstimated = this.customDateAdapter.transform(formValue.dateEstimated, 'dd/MM/yyyy');
+    const receiptDate = this.customDateAdapter.transform(formValue.receiptDate, 'dd/MM/yyyy');
+    const requestData = {
+      ...formValue,
+      poDate,
+      fromDate,
+      toDate,
+      submittedDate,
+      invoiceDate,
+      receiveDate,
+      dateEstimated,
+      receiptDate,
+      invoiceStatus: Number(formValue.invoiceStatus),
+      taxInvoiceNumber: formValue.taxInvoiceNumber,
+      baseAmount: Number(formValue.baseAmount) || '',
+      counts1: Number(formValue.counts1) || '',
+      paymentStatus: Number(formValue.paymentStatus),
+      tax: Number(formValue.tax) || '',
+      totalSMS: Number(formValue.totalSMS) || '',
+      interestOnTds: Number(formValue.interestOnTds) || '',
+      userId: this.selectedClientId
+    };
+    console.log('requestData', requestData);
+    this.taxInvoiceService.saveOrUpdateTaxInvoiceDetails(requestData)
+        .subscribe((res: any) => {
+            console.log('res', res);
+            const error = res.Error;
+            const errorMsg = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMsg, '');
+            }
+            this.isDirty = false;
+            const taxInvoiceData: TaxInvoice = res.ProcessVariables;
+            this.updateGrid(taxInvoiceData);
+        });
+  }
 
-  createTaxInvoice(){
+  updateGrid(taxInvoiceData: TaxInvoice) {
+     const index = this.taxInvoiceList.findIndex((value) => {
+       return value.id === taxInvoiceData.id;
+     });
+     if (index === -1) {
+        this.taxInvoiceList.unshift(taxInvoiceData);
+     } else {
+        this.taxInvoiceList[index] = taxInvoiceData;
+     }
+     this.dataSource = new MatTableDataSource<any>(this.taxInvoiceList);
+     this.dataSource.paginator = this.paginator;
+  }
+
+
+  createTaxInvoice() {
     const feildControls = this.taxInvoiceForm.controls;
     const userName = feildControls.userName.value;
     const taxIN  = feildControls.taxIN.value;
@@ -185,19 +357,45 @@ export class TaxInvoiceComponent implements OnInit {
     const shortPay = feildControls.shortPay.value;
     const submittedOn = feildControls.submittedOn.value;
     const poBillable = feildControls.poBillable.value;
+    const projectName = feildControls.projectName.value;
+    const projectCordinator = feildControls.projectCordinator.value;
+    const PONoAmendOrder = +feildControls.PONoAmendOrder.value;
+    const mail = +feildControls.mail.value;
+    const totalSMS = Number(feildControls.totalSMS.value);
+    const counts = feildControls.counts.value;
+    const baseAmount = Number(feildControls.baseAmount.value);
+    const tax = Number(feildControls.tax.value);
+    const book = feildControls.book.value;
+    const invoiceAmount2 = Number(feildControls.invoiceAmount2.value);
+    const bankReceived = feildControls.bankReceived.value;
+    const interestOnTDSotherDeduction = feildControls.interestOnTDSotherDeduction.value;
+    const mrn = feildControls.mrn.value;
+    const recvDate = feildControls.recvDate.value;
+    const receiptDate = feildControls.receiptDate.value;
+    const dateEstimated = feildControls.dateEstimated.value;
+
     
+    const formattedRecvDate = this.Datepipe.transform(recvDate,'dd/MM/yyyy')
+    const formattedReceiptDate = this.Datepipe.transform(receiptDate,'dd/MM/yyyy')
+    const formattedDateEstimated = this.Datepipe.transform(dateEstimated,'dd/MM/yyyy')
+
+
+    const formattedFromDate = this.Datepipe.transform(fromDate,'dd/MM/yyyy');
+    const formattedToDate = this.Datepipe.transform(toDate,'dd/MM/yyyy');
+    const formattedPoDate = this.Datepipe.transform(poDate,'dd/MM/yyyy');
+    const formattedSubmitedOn = this.Datepipe.transform(submittedOn,'dd/MM/yyyy');
 
     const Data = {
       userName,
       projectNumber : projectNo,
       poNumber,
-      poDate,
-      fromDate,
-      toDate,
+      poDate: formattedPoDate,
+      fromDate: formattedFromDate,
+      toDate : formattedToDate,
       billableAmount : poBillable,
       InvoiceAmount : invoiceAmount,
       TaxInvoiceNumber  : taxIN,
-      submittedDate :  submittedOn,
+      submittedDate :  formattedSubmitedOn,
       InvoiceStatus  : invoiceStatus,
       InvoicePaidAmount : invoiceAmountPaid,
       tds,
@@ -205,6 +403,22 @@ export class TaxInvoiceComponent implements OnInit {
       shortPay,
       paymentStatus,
       remark,
+      projectName,
+      projectCordinator,
+      PONoAmendOrder,
+      mail,
+      totalSMS,
+      counts,
+      baseAmount,
+      tax,
+      book,
+      invoiceAmount2,
+      bankReceived,
+      interestOnTDSotherDeduction,
+      mrn,
+      receiptDate : formattedReceiptDate,
+      recvDate :formattedRecvDate,
+      dateEstimated :formattedDateEstimated,
 		  uploadDocument  : "file"
 
     }
@@ -212,13 +426,18 @@ export class TaxInvoiceComponent implements OnInit {
     this.invoiceService.createTaxInvoice(Data).subscribe((response) =>{
 
             console.log(response["ProcessVariables"])
-            if(response["ProcessVariables"]){
+            if(response["ProcessVariables"]['error']['code'] == '0'){
+              this.isDirty = false;
               this.toasterService.showSuccess('Tax Invoice Form Submitted Sucessfully','');
               this.taxInvoiceForm.reset();
+            }else {
+              this.toasterService.showError(response["ProcessVariables"]['error']['message'],'');
             }
 
     },(error) => {
       console.log(error)
+
+      this.toasterService.showError(error,'')
     })
     
   }
@@ -240,8 +459,12 @@ export class TaxInvoiceComponent implements OnInit {
   }
 
   onSearch() {
-
-    console.log(this.searchForm.value)
+    const params = {
+        searchKeyword: this.searchForm.get('searchData').value,
+        fromDate: this.searchForm.get('searchFrom').value,
+        toDate: this.searchForm.get('searchTo').value
+    };
+    this.getAllTaxInvoiceList(params);
   }
 
   clear() {
@@ -251,17 +474,26 @@ export class TaxInvoiceComponent implements OnInit {
       searchFrom:null,
       searchTo:null
     })
+
+    this.getAllTaxInvoiceDetails()
   }
 
-  OnEdit(fromObj :  any){
+  onEdit(selectedTaxInvoice: TaxInvoice) {
     const dialogRef = this.dialog.open(TaxInvoiceDialogComponent, {
-      data : fromObj.currentTIId
-    })
+      data : selectedTaxInvoice
+    });
 
-    dialogRef.afterClosed().subscribe((result) =>{
+    dialogRef.componentInstance.updateEmitter.subscribe((value) => {
+        console.log('updateEmitter', value);
+        this.onSubmit(value);
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
 
-    })
+      // this.getAllTaxInvoiceDetails()
+
+    });
   }
  getDownloadXls(){
    this.utilService.getDownloadXlsFile(this.userList,"TaxInvoice");
@@ -315,6 +547,14 @@ back() {
 
   this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
 
+}
+
+pageEventData(event) {
+
+
+  const currentPageIndex  = Number(event.pageIndex) + 1;
+
+  // this.getAllTaxInvoiceDetails(currentPageIndex)
 }
 
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
+import { AdminService } from './admin.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,28 +8,89 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 export class UtilService {
 
   detectSidNav$: BehaviorSubject<string> = new BehaviorSubject('');
+  clearDirty$: BehaviorSubject<string> = new BehaviorSubject('');
+  userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
+  techAdminUserDetails$:BehaviorSubject<any> = new BehaviorSubject<any>({});
+  billAdminUserDetails$:BehaviorSubject<any> = new BehaviorSubject<any>({});
+  projectNumber$: BehaviorSubject<string> = new BehaviorSubject('');
+
+
+  private customerDetail$:BehaviorSubject<any> =  new BehaviorSubject<any>({});
+
+  public customerDetail:Observable<any> = this.customerDetail$.asObservable();
+
+  private customerId$:BehaviorSubject<any> = new BehaviorSubject<string>('');
+
+  public customerId:Observable<any> = this.customerId$.asObservable();
+
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
     }
 
-    clearDirty$: BehaviorSubject<string> = new BehaviorSubject('');
-    
+    getCurrentUrl(){
+        this.detectSidNav$.value;
+    }
+
     setClearDirty(data) {
         this.clearDirty$.next(data)
     }
 
-    projectNumber$: BehaviorSubject<string> = new BehaviorSubject('');
-    
     setProjectNumber(data) {
         this.projectNumber$.next(data)
     }
 
-    userDetails$:BehaviorSubject<string> = new BehaviorSubject<any>({});
-    
-    setUserDetails(data) {
-        this.userDetails$.next(data)
+    getProjectNumber(){
+      this.projectNumber$.value;
     }
+
+    
+  setUserDetails(data) {
+        this.userDetails$.next(data)
+  }
+
+
+  getUserDetails(){
+    this.userDetails$.value;
+  }
+
+
+  setTechAdminUserDetails(data) {
+    this.techAdminUserDetails$.next(data)
+ }
+
+
+ getTechAdminUserDetails(){
+   this.techAdminUserDetails$.value
+ }
+
+ setBillAdminUserDetails(data) {
+  this.billAdminUserDetails$.next(data)
+}
+
+getBillAdminUserDetails(){
+  this.billAdminUserDetails$.value;
+}
+
+setCustomerDetails(data : any){
+  localStorage.setItem("currentCustomerDetailObject",JSON.stringify(data))
+  this.customerDetail$.next(data);
+}
+
+getCustomerDetails(){
+  this.customerDetail$.value;
+}
+
+setCustomerId(id : string){
+  localStorage.setItem("currentCustomerId",id);
+  this.customerId$.next(id);
+}
+
+getCustomerId(){
+  this.customerId$.value;
+}
+  
+   
 
     getDownloadXlsFile(tabledata:any[],type?:string){
       
@@ -99,5 +161,65 @@ export class UtilService {
       }
 
 
-  constructor() { }
+    // async uploadToAppiyoDrive(file : Blob) {
+    //     let uploadStatus :boolean = false;
+    //     let documentUploadId  = null;
+    //    this.adminService.uploadToAppiyoDrive(file).subscribe((response) =>{
+    //           if(response['ok']){
+    //             uploadStatus = true;
+    //               documentUploadId = response['info']['id'];
+    //               return {
+    //                 uploadStatus,
+    //                 documentUploadId
+    //               }
+    //           }else{
+    //             uploadStatus = false;
+    //               documentUploadId = null;
+    //               return {
+    //                 uploadStatus,
+    //                 documentUploadId
+    //               }
+    //           }
+    //   })
+    // }
+
+    uploadToAppiyoDrive(file : Blob) {
+
+      return new Promise((resolve,reject)=> {
+  
+          let uploadStatus :boolean = false;
+          let documentUploadId  = null;
+         this.adminService.uploadToAppiyoDrive(file).subscribe((response) =>{
+                if(response['ok']){
+                  uploadStatus = true;
+                    documentUploadId = response['info']['id'];
+                    const output =  {
+                      uploadStatus,
+                      documentUploadId
+                    }
+  
+                    resolve(output)
+                }else{
+                  uploadStatus = false;
+                    documentUploadId = null;
+                     const output =  {
+                      uploadStatus,
+                      documentUploadId
+                    }
+  
+                    resolve(output)
+                }
+        },
+          error => {
+            console.log('error', error);
+            reject(error);
+          })
+  
+  
+      })
+          
+      }
+
+
+  constructor(private adminService : AdminService) { }
 }

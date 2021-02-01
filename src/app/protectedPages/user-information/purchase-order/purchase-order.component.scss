@@ -190,5 +190,53 @@ td.mat-cell {
     margin-top: 1vw;
 }
 
+label {
+    display: inline-block;
+    margin-bottom: -0.1rem;
+    font-size: 16px;
+}
+
+
+.btn-success {
+ 
+    color: #fff;
+   
+    background-color: #28a745;
+   
+    border-radius: 35px;
+   
+    border: 1px solid rgba(21, 87, 36, 0.75);
+   
+}
+
+.btn-warning {
+ 
+    color: #212529;
+   
+    background-color: #ffc107;
+   
+    border-radius: 90%;
+   
+    border: 1px solid rgba(255, 193, 7, 0.75);   
+   
+}
+
+
+.btn-info {
+ 
+    color: #ffffff;
+   
+    background-color: #007bff;
+   
+    border-radius: 25%;
+   
+    border: 1px solid rgba(82, 138, 223, 0.75);   
+   
+}
+
+.plus
+{
+    margin-top:25px;
+}
 
 

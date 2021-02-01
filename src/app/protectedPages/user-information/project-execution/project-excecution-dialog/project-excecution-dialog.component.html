@@ -13,6 +13,7 @@
             <app-custom-input formControlName="userName" 
             [isRequired]="'UserName is Mandatory'" 
             [labelName]="labels.userName" 
+            placeHolder =  "Enter the User Name"
             [maxLength]="labels?.validationData?.name?.maxLength"
             [type]="labels?.validationData?.name?.type"
             [isDirty]="isDirty"
@@ -26,6 +27,7 @@
            <app-custom-input formControlName = "piNumber" 
            [isRequired] = "'PI Number is Mandatory'"
            [labelName] ="labels.proformaIN"
+           placeHolder =  "Enter the Proforma Invoice Number"
            [maxLength] ="labels?.validationData?.proformaIN?.maxLength"
            [type] ="labels?.validationData?.proformaIN?.type"
            [isDirty] ="isDirty"
@@ -75,6 +77,7 @@
                 <app-custom-input formControlName = "piAmount"
                 [isRequired] = "'Purchase Invoice Number is Mandatory'"
                 [labelName] = "labels.piAmount"
+                PlaceHolder =  "Enter the Proforma Invoice Amount"
                 [maxLength] = "labels?.validationData?.piAmount.maxLength"
                 [type] = "labels?.validationData?.piAmount.type"
                 [isDirty] = "isDirty"
@@ -95,6 +98,7 @@
                 <app-custom-input formControlName = "documentNo"
                 [isRequired] = "'Document Number is Mandatory'"
                 [labelName] = "labels.documentNo"
+                placeHolder = "Enter the Document Number"
                 [maxLength] = "labels?.validationData?.documentNo.maxLength"
                 [type] = "labels?.validationData?.documentNo.type"
                 [isDirty] = "isDirty"
@@ -131,6 +135,7 @@
               <app-custom-input formControlName = "bankName"
               [isRequired] = "'Bank Name/Branch is Mandatory'"
               [labelName] = "labels.bankName"
+              placeHolder =  "Enter the Bank Name"
               [maxLength] = "labels?.validationData?.bankName.maxLength"
               [type] = "labels?.validationData?.bankName.type"
               [isDirty] = "isDirty"
@@ -145,6 +150,7 @@
                 formControlName = "amountReceived"
                 [isRequired] = "'Amount Received is Required'"
                 [labelName] = "labels.amountReceived"
+                placeHolder =  "Enter the Amount Received"
                 [maxLength] = "labels?.validationData?.amountReceived.maxLength"
                 [type] = "labels?.validationData?.amountReceived.type"
                 [isDirty] = "isDirty"
@@ -158,6 +164,7 @@
                 <app-custom-input formControlName = "tds"
                 [isRequired] = "'TDS is Required'"
                 [labelName] = "labels?.tds"
+                placeHolder = "Enter the TDS"
                 [maxLength] = "labels?.validationData?.tds.maxLength"
                 [type] = "labels?.validationData?.tds.type"
                 [isDirty] = "isDirty"
@@ -171,6 +178,7 @@
                 <app-custom-input formControlName = "NICSIProjectNo"
                 [isRequired] = "'NICSI Project Number is Required'"
                 [labelName] = "labels?.nicsiProjectNumber"
+                placeHolder =  "Enter the NICSI Project Number"
                 [maxLength] = "labels?.validationData?.nicsiProjectNumber.maxLength"
                 [type] = "labels?.validationData?.nicsiProjectNumber.type"
                 [isDisabledInp]="enableflag"
@@ -191,6 +199,7 @@
             <app-custom-input formControlName="remark"
             [isDisabledInp]="enableflag"
             [labelName]="labels.remark" [id]="'remark'" 
+            placeHolder =  "Enter the Remark"
             [maxLength]="labels?.validationData.userName.maxLength" 
             [isDirty]="isDirty"
             [isRequired] = "'Please enter the remark'">
@@ -395,4 +404,7 @@ id="deleteModal"
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>
 
-<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>
+<app-data-saved-modal *ngIf="showDataSaveModal" 
+    [showSavedModal]="showDataSaveModal" 
+    [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()">
+</app-data-saved-modal>

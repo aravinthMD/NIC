@@ -14,10 +14,11 @@ import { UserInfoFormComponent } from './preview/user-info-form/user-info-form.c
 import { DataSavedModalComponent } from './data-saved-modal/data-saved-modal.component';
 import { ViewInfoComponent } from './view-info/view-info.component';
 import { BorderDirective } from './border.directive';
+import { SecurePipe } from './secure.pipe';
 
 
 @NgModule({
-  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent, ViewInfoComponent, BorderDirective],
+  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent, ViewInfoComponent, BorderDirective, SecurePipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -34,7 +35,8 @@ import { BorderDirective } from './border.directive';
     RemarkModalComponent,
     UserInfoFormComponent,
     DataSavedModalComponent,
-    ViewInfoComponent
+    ViewInfoComponent,
+    SecurePipe
   ],
   providers : [],
   entryComponents : [AuditTrailDialogComponent]

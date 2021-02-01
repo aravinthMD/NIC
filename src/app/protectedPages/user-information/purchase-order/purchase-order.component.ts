@@ -1,16 +1,19 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { Validators, FormBuilder, FormGroup, FormControl } from "@angular/forms";
+import { Component, OnInit,Input, AfterViewInit,ViewChild } from '@angular/core';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import { Validators,FormGroup,FormControl} from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
-import { Router,ActivatedRoute } from '@angular/router'
+import { Router} from '@angular/router'
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
 import { UtilService } from '@services/util.service';
 import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
-import { AdminService } from '@services/admin.service'
+import { AdminService } from '@services/admin.service';
+import { SearchService } from '../../../services/search.service';
+import {ApiService } from '../../../services/api.service';
+import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -21,6 +24,9 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  poNumber : any = 'Saikumar';
+  smsapproved: any = 'Yes';
+
   
   @Input('userObj') user : any
 
@@ -28,14 +34,7 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
 
   displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks',"Action"]
 
-  userList : any[] =   [
-    {purchaseNo : 114,projectNumber : 4535,piAmt:24250,reminder:'Send Reminder'},
-    {purchaseNo : 197,projectNumber : 4535,piAmt:25000,reminder:'Send Reminder'},
-    {purchaseNo : 767,projectNumber : 4535,piAmt:45000,reminder:'Send Reminder'},
-    {purchaseNo : 678,projectNumber : 4535,piAmt:24250,reminder:'Send Reminder'},
-    {purchaseNo : 114,projectNumber : 4535,piAmt:28000,reminder:'Send Reminder'},
-    {purchaseNo : 114,projectNumber : 4535,piAmt:34000,reminder:'Send Reminder'},
-  ];
+  userList : any[] =   []
   poStatus: any[] = [
     { key :0, value: 'Received' },
     { key :1,value : 'Not Received'},
@@ -43,35 +42,21 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
     { key: 3, value: 'Pending' },
     { key: 4, value: 'Rejected' },
     { key: 5, value: 'On Hold' }]
-  piStatus: any[] = [
-    { key: 0, value: 'Received' },
-    { key: 1, value: 'Pending' },
-    { key: 2, value: 'Approved' },
-    { key: 3, value: 'Rejected' },
-    { key: 4, value: 'On Hold' }]
-    piReceivedIn: any[] = [
-      { key: 0, value: 'Full' },
-      { key: 1, value: 'Partial' }]
+  piStatus: any[] = []
+    piReceivedIn: any[] = []
   
-    paymentStatus: any[] = [
-      { key: 0, value: 'Pending' },
-      { key: 1, value: 'Received' },
-      { key: 2, value: 'On Hold' }]
+    paymentStatus: any[] = []
 
-      departmentListData = [
-        {key:0,value:'Department of Sainik Welfare'},
-        {key:1,value:'Ministry of Minority Affairs'},
-        {key:2,value:'Visakhapatnam Port Trust'},
-        {key:3,value:'Ministry of Tribal Affairs'},
-        {key:4,value:'Bureau of Naviks.Mumbai'}
-    ];
+      departmentListData = [];
     
-      
-  dataSource = new MatTableDataSource<any>(this.userList);
-
+    dataArray=[]
+  dataSource = new MatTableDataSource<any>([]);
   date = new FormControl();
+
+  
   PurchaseOrderForm:FormGroup;
-  formQuantity: FormGroup;
+   formQuantity: FormGroup;
+  
   labels: any = {};
   isDirty: boolean;
 
@@ -94,31 +79,38 @@ dataValue: {
   message: string
 }
 
-smsApprovedList = [
-      {
-      key: '1',
-      value: 'Yes'
-    },
-    {
-      key: '0',
-      value: 'No'
-    }
+smsApprovedList : any[] = [
+        {key: '0', value: 'No'},
+        {key: '1',value: 'Yes'}
+              ]
+  // poNumber: string;
+  // smsapproved: any;
+ 
 
-]
+  withoutTaxValidation: {
+    rule?: any;
+    msg?: string;
+  }[];
 
+  resultsLength: number;
 
+  pageEvent: PageEvent;
+
+  datePerPage: number = 0;
 
 
   constructor(
     private labelsService: LabelsService,
     private DatePipe:DatePipe,
-    private activatedRoute: ActivatedRoute,
     private dialog : MatDialog,
     private utilService: UtilService,
     private toasterService: ToasterService,
     private router: Router,
     private invoiceService: InvoiceService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private searchService: SearchService,
+    private apiService : ApiService,
+    private beheSer : BehaviourSubjectService,
     ) { }
 
   ngOnInit() {
@@ -152,8 +144,8 @@ smsApprovedList = [
 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
-      searchFrom: new FormControl(null),
-      searchTo: new FormControl(null)
+      searchTo: new FormControl(null),
+      searchFrom: new FormControl(null)
     })
 
     this.formQuantity = new FormGroup({
@@ -164,25 +156,81 @@ smsApprovedList = [
 
     this.utilService.userDetails$.subscribe((val)=> {
 
-      this.accountName = val['userId'] || '';
+      this.accountName = val['App_name'] || '';
       this.status = val['status'] || '';
     })
+
+    this.beheSer.$poNumber.subscribe( res => {
+      this.poNumber = res;
+       this.poNumber =this.poNumber;
+    });
+
+    this.beheSer.$smsapproved.subscribe( res => {
+      this.smsapproved = res;
+      this.smsapproved = this.smsapproved;
+    });
 
    this.fetchPODetails();
 
    this.getSubLovs();
-    
-}
 
-  fetchPODetails() {
+   this.dataArray.push(this.formQuantity);
 
-    this.invoiceService.fetchAllPO().subscribe((response)=> {
+   this.withoutTaxValidation = this.withoutTaxValidationCheck();
+  }
 
-      this.userList = response['ProcessVariables']['purchaseData'];
+  withoutTaxValidationCheck() {
 
-      console.log(response)
+    const withouttax = [
+      {
+        rule: (val) => {
 
-      this.dataSource = new MatTableDataSource<any>(this.userList);
+          return val;
+        },
+        msg: 'Amount should greater than without tax',
+      }
+    ];
+    return withouttax;
+  }
+
+
+  
+  purchaseForm(){
+    this.dataArray.push(this.formQuantity);
+  }
+
+  deleteRow(index){
+    this.dataArray.splice(index);
+  }
+
+  submit(){
+    console.log(this.dataArray);
+  }
+
+  fetchPODetails(currentPage?: any) {
+
+   
+    this.invoiceService.fetchAllPO(currentPage?currentPage:null).subscribe((response)=> {
+
+      if(response['ProcessVariables']['error']['code'] == '0') {
+
+        this.userList = response['ProcessVariables']['purchaseData'];
+
+          console.log(response)
+
+          this.datePerPage = Number(response['ProcessVariables']['dataPerPage']);
+
+          this.resultsLength = Number(response['ProcessVariables']['totalCount'])
+
+          this.dataSource = new MatTableDataSource<any>([]);
+
+          this.dataSource = new MatTableDataSource<any>(this.userList);
+
+      }else {
+
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
+      
     })
   }
 
@@ -216,6 +264,48 @@ smsApprovedList = [
     })
 
     this.poStatus = poData
+
+    let piData = []
+
+    await this.adminService.getLovSubMenuList("2").subscribe((response)=> {
+
+
+      const piList = response['ProcessVariables']['Lovitems'];
+      piList.forEach(element => {
+        
+        poData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.piStatus = piData
+
+    let paymentStatus = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const paymentList = response['ProcessVariables']['Lovitems'];
+      paymentList.forEach(element => {
+        
+        paymentStatus.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = paymentStatus
+
+
+    let piReceivedData = []
+
+    await this.adminService.getLovSubMenuList("4").subscribe((response)=> {
+
+      const piRecList = response['ProcessVariables']['Lovitems'];
+      piRecList.forEach(element => {
+        
+        piReceivedData.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.piReceivedIn = piReceivedData
   }
 
   initForm() {
@@ -223,7 +313,6 @@ smsApprovedList = [
 
     this.PurchaseOrderForm = new FormGroup({
       userName: new FormControl(null),
-    
       piNumber: new FormControl(null),
       poNumber: new FormControl(null),
       smsApproved: new FormControl(null),
@@ -246,6 +335,7 @@ smsApprovedList = [
 
 
   }
+  
   POForm(){
 
     if(this.PurchaseOrderForm.invalid) {
@@ -262,9 +352,47 @@ smsApprovedList = [
 
   } 
 
-  onSearch() {
+  onSearch() { 
+    
+    const data = this.apiService.api.fetchPurchaseOrder;
 
-    console.log(this.searchForm.value)
+      const params = {
+        searchKeyword: this.searchForm.get('searchData').value,
+        // fromDate: this.DatePipe.transform(this.searchForm.get('searchFrom').value,'dd/MM/yyyy'),
+        // toDate: this.DatePipe.transform(this.searchForm.get('searchTo').value,'dd/MM/yyyy')
+        fromDate: this.searchForm.get('searchFrom').value,
+        toDate: this.searchForm.get('searchTo').value
+      }
+
+      this.searchService
+          .searchProjectExecution(data,params).subscribe((resp) => {
+
+            const respError=resp["ProcessVariables"]["error" ];
+
+            if(respError.code=="0")
+            {
+              
+              console.log('result',resp['ProcessVariables']);
+              this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["purchaseData" ]);
+
+              this.datePerPage = Number(resp['ProcessVariables']['dataPerPage']);
+
+              this.resultsLength = Number(resp['ProcessVariables']['totalCount'])
+            }
+            else 
+            { 
+              if(!resp["ProcessVariables"]["purchaseData" ]) {
+                this.dataSource = new MatTableDataSource<any>([])
+                this.datePerPage = 0;
+                this.resultsLength = 0;
+              }
+
+               this.toasterService.showError('No Records Found','Purchase Order');
+            }
+            
+         
+         
+          })
   }
 
   clear() {
@@ -274,6 +402,8 @@ smsApprovedList = [
       searchFrom:null,
       searchTo:null
     })
+
+    this.fetchPODetails()
   }
 
   OnEdit(element :  any){
@@ -353,6 +483,8 @@ smsApprovedList = [
       return;
     }
 
+   
+
 
     this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
 
@@ -360,7 +492,9 @@ smsApprovedList = [
 
     this.PurchaseOrderForm.value['endDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['endDate'],'dd/MM/yyyy')
 
-
+    // {"poNumber":"5972112","projectNumber":"11","projectName":"TestABC","poDate":"24/12/2020","uploadDocument":"file","pi_no":"2","smsapproved":"2","validUpto":"30/12/2020","username":"TestUser01","remark":"Remark Column","withouttax":"3","userEmail":"testdemo@appiyo,com","managerEmail":"managerdemo123@gmail,com","validFrom":"24/12/2020","amtWithTax":"52","rate":"220","quantity":4,"description":"Description","selectedDepartment":"37","selectedPOStatus":"6","selectedPaymentStatus":"6"},"projectId":"2efbdc721cc311ebb6c0727d5ac274b2"}
+	
+   
     const data = {
       "poNumber":this.PurchaseOrderForm.value.poNumber,
       "projectNumber":this.PurchaseOrderForm.value.projectNo,
@@ -371,14 +505,19 @@ smsApprovedList = [
       "pi_no":this.PurchaseOrderForm.value.piNumber,
       "smsapproved":this.PurchaseOrderForm.value.smsApproved,
       "validUpto":this.PurchaseOrderForm.value.endDate,
-      "department":this.PurchaseOrderForm.value.departmentName,
       "username":this.PurchaseOrderForm.value.userName,
       "remark":this.PurchaseOrderForm.value.remark,
       "withouttax":this.PurchaseOrderForm.value.withoutTax,
       "userEmail":this.PurchaseOrderForm.value.userEmail,
       "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
       "validFrom":this.PurchaseOrderForm.value.startDate,
-      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax
+      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax,
+      "rate":this.formQuantity.value.rate,
+      "quantity":Number(this.formQuantity.value.quantity),
+      "description":this.formQuantity.value.description,
+      "selectedDepartment":this.PurchaseOrderForm.value.departmentName,
+      "selectedPOStatus":this.PurchaseOrderForm.value.poStatus,
+      "selectedPaymentStatus":this.PurchaseOrderForm.value.paymentStatus
     }
 
 
@@ -387,11 +526,16 @@ smsApprovedList = [
 
       console.log('Response',response)
 
+      if(response['ProcessVariables']['error']['code'] == '0') {
+
         this.showPOModal= false;
 
         this.isDirty = false;
 
-        this.PurchaseOrderForm.reset()
+        this.PurchaseOrderForm.reset();
+        this.formQuantity.reset();
+        this.beheSer.setPoNumber(data.poNumber);
+        this.beheSer.setSmsApproved(data.smsapproved);
 
 
           this.toasterService.showSuccess('Data Saved Successfully','')
@@ -403,11 +547,28 @@ smsApprovedList = [
             title: 'Purchase Order Saved Successfully',
             message: 'Are you sure you want to proceed tax invoice page?'
           }
+      }else {
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+      }
 
     })
-    
+ 
 
   }
+
+  pageEventData(event) {
+
+
+    const currentPageIndex  = Number(event.pageIndex) + 1;
+
+    this.fetchPODetails(currentPageIndex)
+  }
+
+  
+
+  
+
+  
 
   cancelPO() {
     this.showPOModal= false;

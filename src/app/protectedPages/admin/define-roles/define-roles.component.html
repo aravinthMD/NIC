@@ -30,34 +30,35 @@
 
         <div class="mat-elevation-z8">
 
-        <table mat-table [dataSource]="dataSource">
+        <table mat-table [dataSource]="dataSource" class="custom-table">
 
           
             <ng-container matColumnDef="ScreenName">
               <th mat-header-cell *matHeaderCellDef> Screen Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.screenName}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.screenName}} </td>
             </ng-container>
           
             <ng-container matColumnDef="Mapping">
               <th mat-header-cell *matHeaderCellDef> Mapping </th>
-              <td mat-cell *matCellDef="let element"> {{element.mappingStatus}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.mappingStatus}} </td>
             </ng-container>
           
             <ng-container matColumnDef="Modify">
               <th mat-header-cell *matHeaderCellDef> Modify </th>
-              <td mat-cell *matCellDef="let element"> 
-                  <button (click) = "mappingMethod()">Modify</button>
+              <td mat-row mat-cell *matCellDef="let element"> 
+                
+                  <button (click) = "mappingMethod()"> Modify</button>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.status}} </td>
             </ng-container>
 
             <ng-container matColumnDef="email">
               <th mat-header-cell *matHeaderCellDef> Email </th>
-              <td mat-cell *matCellDef="let element"> {{element.emailFlag}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{element.emailFlag}} </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -6,14 +6,7 @@ button.mat-button.mat-button-base {
     font-size: 13px;
     
 }
-.mat-dialog-title {
-    margin: 0 0 20px;
-    background-color: #0e4d92 !important;
-    border: 1px solid #0e4d92 !important;
-    display: block;
-    padding: 10px;
-    color: white;
-}
+
 
 
 ::ng-deep .inp-date,.mat-form-field-flex{
@@ -25,6 +18,37 @@ button.mat-button.mat-button-base {
 .dis-block {
     display: block;
   }
+
+label {
+    display: inline-block;
+    margin-bottom: -0.1rem;
+    font-size: 16px;
+}
+
+mat-form-field {
+    margin-top: -0.4vw;
+}
+
+
+.mat-form-field-label-wrapper {
+    top: -1.5em !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label {
+    top: 1em !important;
+}
+
+.mat-form-field-label-wrapper {
+    margin-top: -9px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: .4375em 0 13px 0px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: .4375em 0 13px 0px !important;
+}
 
   
 

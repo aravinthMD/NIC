@@ -3,7 +3,12 @@
 
     <div class="col-md-12 reports p-0">
         <!--Reports Tag Start-->
-        <h1 class="h3  text-gray-800 mb-2">Reports</h1>
+        <!-- <h1 class="h3  text-gray-800 mb-2">Reports</h1> -->
+
+        <div class="dashBoard mt-2">
+            <div>Reports</div>
+        </div> 
+
         <mat-accordion>
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple>
@@ -171,7 +176,8 @@
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
-                                <mat-form-field>
+                                <mat-form-field floatLabel = "never">
+                                    <mat-placeholder>dd-mm-yyyy</mat-placeholder>
                                     <input matInput [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'fromDate')" formControlName="fromDate" [max]="form.get('toDate').value">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
@@ -184,7 +190,8 @@
                                 <label for="invoiceDate">To Date</label>
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
-                                <mat-form-field>
+                                <mat-form-field floatLabel =  "never">
+                                    <mat-placeholder>dd-mm-yyyy</mat-placeholder>
                                     <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="form.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
@@ -259,9 +266,10 @@
 
             </mat-expansion-panel>
         </mat-accordion>
-        <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
         <!--Material Table-->
-        <app-reports-table [dataList] = "dataList" [id] = "id"></app-reports-table>
+        <app-reports-table [dataList] = "dataList" [id] = "id">
+            <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
+        </app-reports-table>
 
     </div>
     <!--Reports Tag close-->

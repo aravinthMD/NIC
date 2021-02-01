@@ -6,7 +6,8 @@ import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { AdminService } from '@services/admin.service';
-import { InvoiceService } from '@services/invoice.service'
+import { InvoiceService } from '@services/invoice.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-purchase-order-dialog',
@@ -73,7 +74,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
   poId: string;
 
   constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
-    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService) {
+    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService,private DatePipe:DatePipe,) {
 
 
       this.poId = this.data.currentPOId;
@@ -94,7 +95,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
         projectNo : [this.data.projectNumber],
         poAmountWithTax : [this.data.amountWithTax],
         departmentName : [this.data.department],
-        paymentStatus : [''],
+        paymentStatus : [this.data.paymentStatus],
         remark:[this.data.remark],
         uploadDoc : ['']
       })
@@ -142,16 +143,33 @@ export class PurchaseOrderDialogComponent implements OnInit {
       })
     })
   }
+  async getSubLovs() {
+
+    let paymentStatus = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const paymentList = response['ProcessVariables']['Lovitems'];
+      paymentList.forEach(element => {
+        
+        paymentStatus.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = paymentStatus
+  }
 
  async ngOnInit() {
     this.labelService.getLabelsData().subscribe((value) =>{
     this.labels = value;
     })
 
+    this.getSubLovs()
 
     this.departmentListData = await this.getDepartmentLov();
 
-    this.poStatus = await this.getStatusLov()
+    this.poStatus = await this.getStatusLov();
 
 
     this.activatedRoute.params.subscribe((value)=> {
@@ -252,7 +270,14 @@ const departmentListData = this.departmentListData.filter((val)=> {
       {
         key: 'Document',
         value:'invoice.pdf'
+      },{
+        key :  "",
+        value :  ""
       },
+      {
+        key :  "",
+        value :  ""
+      }
     ]
   }
 
@@ -274,29 +299,41 @@ const departmentListData = this.departmentListData.filter((val)=> {
     }
       
 
+    this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
+
+    this.PurchaseOrderForm.value['startDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['startDate'],'dd/MM/yyyy')
+
+    this.PurchaseOrderForm.value['endDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['endDate'],'dd/MM/yyyy')
+
+
+
     const poObject = {
 
       "uploads":"file",
-      "paymentStatus":2,
+      // "paymentStatus":2,
       "selectedPOId":this.poId,
       "temp":"update",
       "poNumber":this.PurchaseOrderForm.value.poNumber,
       "projectNumber":this.PurchaseOrderForm.value.projectNo,
       "projectName": this.PurchaseOrderForm.value.projectName,
       "poDate": this.PurchaseOrderForm.value.date,
-      "poStatus":Number(this.PurchaseOrderForm.value.poStatus),
+      // "poStatus":Number(this.PurchaseOrderForm.value.poStatus),
       "uploadDocument":"file",
       "piNumber":this.PurchaseOrderForm.value.piNumber,
       "smsApproved":this.PurchaseOrderForm.value.smsApproved,
       "validUpto":this.PurchaseOrderForm.value.endDate,
-      "department":this.PurchaseOrderForm.value.departmentName,
+      // "department":this.PurchaseOrderForm.value.departmentName,
       "userName":this.PurchaseOrderForm.value.userName,
       "remark":this.PurchaseOrderForm.value.remark,
       "withoutTax":this.PurchaseOrderForm.value.withoutTax,
       "userEmail":this.PurchaseOrderForm.value.userEmail,
       "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
       "validFrom":this.PurchaseOrderForm.value.startDate,
-      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax
+      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax,
+
+      "selectedDepartment":this.PurchaseOrderForm.value.departmentName,
+      "selectedPOStatus":Number(this.PurchaseOrderForm.value.poStatus),
+      "selectedPaymentStatus":this.PurchaseOrderForm.value.paymentStatus
     }
 
 
@@ -304,14 +341,21 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
       console.log(response)
 
-      
-      this.toasterService.showSuccess('Data Saved Successfully','')
+      if(response['ProcessVariables']['error']['code'] == '0') {
 
-      this.showDataSaveModal = true;
-      this.dataValue= {
-        title: 'Purchase Order Saved Successfully',
-        message: 'Are you sure you want to proceed tax invoice page?'
+        this.toasterService.showSuccess('Data Saved Successfully','')
+
+        this.showDataSaveModal = true;
+        this.dataValue= {
+          title: 'Purchase Order Saved Successfully',
+          message: 'Are you sure you want to proceed tax invoice page?'
+        }
+      }else {
+
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
       }
+      
+     
     })
 
     
@@ -395,10 +439,6 @@ this.closeDialog()
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
-
-    
-
-
       this.detectAuditTrialObj = this.PurchaseOrderForm.value;
      
     }

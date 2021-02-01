@@ -30,8 +30,8 @@ h1.h3.text-gray-800.mb-2 {
 
 label {
     display: inline-block;
-    margin-bottom: .5rem;
-    // color: #858796 !important;
+    margin-bottom: -0.1rem;
+    font-size: 16px;
 }
 
 h2 {
@@ -48,9 +48,7 @@ button.btn.btn-primary {
     font-size: 13px;
 }
 
-label {
-    font-size: 16px;
-}
+ 
 
 .mat-tab-group {
     display: flex;
@@ -77,3 +75,6 @@ h2 {
  mat-card {
     width: 100% !important;
 }
+
+
+ 

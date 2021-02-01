@@ -30,15 +30,15 @@ export class CustomSelectComponent
   @Input() className = 'form-control mandatory';
   @Input() defaultOption = {
     key: '',
-    value: '-Select One-',
+    value: '-- Select One --',
   };
   @Input() isDisabled: boolean;
   @Input('selectedOption') val: any;
   @Input() values: any[];
   @Input() isRequired: string;
 
-  @Input() keyField = 'key';
-  @Input() valueField = 'value';
+  @Input() keyField = 'value';
+  @Input() valueField = 'label';
   @Input() isDefaultDisabled = true;
 
   @Output() valueChange = new EventEmitter();

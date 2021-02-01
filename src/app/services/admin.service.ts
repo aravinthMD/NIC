@@ -5,12 +5,14 @@ import { environment } from 'src/environments/environment';
 import { HttpService } from '@services/http.service'
 import { HttpParams } from '@angular/common/http';
 import { HttpClient,HttpHeaders } from "@angular/common/http";
+import RequestEntity from '@model/request.entity';
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
 
-  constructor(private apiService: ApiService,private httpService: HttpClient) { }
+  constructor(private apiService: ApiService,
+              private httpService: HttpService) { }
 
 
   fetchLovsList(){
@@ -25,17 +27,11 @@ export class AdminService {
       ProcessVariables: data,
       workflowId,
       projectId,
-    };
-
-    const body = {
-      processVariables: JSON.stringify(requestEntity),
-    };
-
-    const formData = this.transform(body);
+    }; 
 
     let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
 
-    return this.httpService.post(url,formData);
+    return this.httpService.post(url,requestEntity);
 
 
 }
@@ -57,15 +53,11 @@ getLovSubMenuList(menuId) {
     projectId,
   };
 
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
-
-  const formData = this.transform(body);
+  
 
   let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
 
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 
 }
@@ -300,6 +292,96 @@ deleteAdminUser(id) {
   return this.httpService.post(url,formData);
 
 }
+
+
+
+uploadToAppiyoDrive(file : any)
+{
+  let uri = environment.host + environment.appiyoDrive;
+  let headers = {
+    headers: new HttpHeaders({
+     // 'Content-Type': 'application/json'
+    })
+    
+  };
+//  const headers = {
+//     'Content-Type': 'application/json'
+//   }
+  const formData = new FormData();
+  formData.append('file[]',file,file.name); 
+  return this.httpService.post(uri,formData,headers);
+}
+
+adminEmailManager(id : number,userId  :string,screenStatus ?: string){
+  const {
+    api : {
+      adminEmailManageAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+
+const data = {
+    id,
+    userId,
+    screenStatus,
+}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+const body = {
+  processVariables : JSON.stringify(requestEntity)
+};
+
+const formData = this.transform(body)
+
+let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+return  this.httpService.post(url,formData);
+
+}
+
+getAllLov(userId : string){
+
+  const {
+    api : {
+      lovListAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const data = {
+  userId
+}
+
+const requestEntity  : RequestEntity  = {
+  processId,
+  ProcessVariables : data,
+  projectId,
+  workflowId
+}
+
+// const body = {
+//   processVariables : JSON.stringify(requestEntity)
+// };
+
+// const formData = this.transform(body)
+
+let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+
+return  this.httpService.post(url,requestEntity);
+
+}
+
 
 transform(data: any) {
   return new HttpParams({ fromObject: data });

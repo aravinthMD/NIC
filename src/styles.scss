@@ -66,16 +66,16 @@ body {
 }
 
 .main {
-    margin-top: 1vw;
+    margin-top: 0vw;
     margin-left: 225px;
     font-size: 20px;
     /* Increased text to enable scrolling */
     padding: 10px;
     display: flex;
-    padding-right: 2.5rem;
-    padding-left: 2.5rem;
+    padding-right: 1.0rem;
+    padding-left: 1.0rem;
     position: absolute;
-    top: 52px;
+    top: 49px;
     z-index: 0;
     background: #eff6fd !important;
     margin-bottom: 50px;
@@ -278,4 +278,149 @@ label {
 
 .logo_header {
     background: #ffffffb3;
+}
+
+
+.mat-calendar-body-selected {
+    background-color: #0e4d92;
+    color: #fff;
+}
+
+
+
+
+// tr {
+//     td {
+//         vertical-align: middle;
+//         font-size: 16px !important;
+//         color: #0e4d92de !important;
+//         font-weight: 500 !important;
+//         a {
+//             cursor: pointer;
+//             // font-size: 14px;
+//         }
+//         a:hover {
+//             text-decoration: underline;
+//         }
+//     }
+//     th {
+//         vertical-align: middle;
+//         font-size: 17px !important;
+//         font-weight: 500 !important;
+//     }
+//     height: 65px;
+// }
+
+
+
+
+
+.mat-row:hover > .mat-cell {
+    
+    // background-color:#e2d9d9 ;
+    background-color: #41b1c791 !important;
+}
+
+.formAlignment {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-top: 5px;
+  }
+
+
+  .mat-dialog-title {
+    margin: 0 0 20px;
+    background-color: #0e4d92 !important;
+    border: 1px solid #0e4d92 !important;
+    display: block;
+    padding: 5px;
+    color: white;
+    font-size: 18px !important;
+    font-weight: 420;
+}
+
+// mat-table:not(.mat-calendar-table){
+
+// }
+
+.custom-table td {
+
+    
+    
+        vertical-align: middle;
+        font-size: 16px !important;
+        color: #0e4d92de !important;
+        font-weight: 500 !important;
+
+}
+
+
+   .custom-table a {
+            cursor: pointer;
+            // font-size: 14px;
+        }
+        
+       .custom-table a:hover {
+            text-decoration: underline;
+        }
+    
+    
+    
+    
+    .custom-table th{
+        
+        vertical-align: middle;
+        font-size: 17px !important;
+        font-weight: 500 !important;
+    
+    }
+    
+    
+  .custom-table tr{
+        height: 65px;
+    
+    }
+
+
+
+// .table-td{
+    
+//     vertical-align: middle;
+//     font-size: 16px !important;
+//     color: #0e4d92de !important;
+//     font-weight: 500 !important;
+//     a {
+//         cursor: pointer;
+//     }
+//     a:hover {
+//         text-decoration: underline;
+//     }
+
+// }
+
+// .table-th{
+    
+//     vertical-align: middle;
+//     font-size: 17px !important;
+//     font-weight: 500 !important;
+
+// }
+
+
+// .table-tr{
+//     height: 65px;
+
+// }
+
+
+.custom-label  {
+    
+        display: inline-block;
+        margin-bottom: -0.1rem;
+        font-size: 16px;
+}
+.bold-lable{
+    font-weight:bold;
 }

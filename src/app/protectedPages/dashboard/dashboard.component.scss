@@ -1,22 +1,3 @@
-tr {
-    td {
-        vertical-align: middle;
-        font-size: 15px;
-        a {
-            cursor: pointer;
-            font-size: 14px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    }
-    th {
-        vertical-align: middle;
-        font-size: 17px;
-        font-weight: 500;
-    }
-    height: 65px;
-}
 
 table {
     margin-bottom: 0rem !important;
@@ -89,8 +70,8 @@ th {
 }
 
 .border-left-success {
-    background: #1cc88a !important;
-    border-left: .25rem solid #1cc88a !important;
+    background: #361cc8a8 !important;
+    // border-left: .25rem solid #1cc88a !important;
 }
 
 .border-left-info {
@@ -103,9 +84,9 @@ th {
     border-left: .25rem solid #f6c23e !important;
 }
 
-tr.example-element-row:hover {
-    background: whitesmoke;
-}
+// tr.example-element-row:hover {    <!--- Commented For Later Use ----->
+//     background: whitesmoke;
+// }
 
 
 ::ng-deep .mat-select-value {
@@ -145,6 +126,7 @@ mat-form-field {
     flex: 0 20% !important;
     width: 20% !important;
     line-height: 20px !important;
+    padding: 8px;
     // word-break: break-all;
 }
 
@@ -158,10 +140,10 @@ mat-form-field {
 .dashBoard {
     background: #0e4d92 !important;
     color: #fff!important;
-    margin-bottom: 17px;
-    height: 44px;
-    padding-top: 13px;
-    padding-left: 10px;
+    // margin-bottom: 17px;
+    // height: 44px;
+    // padding-top: 13px;
+    // padding-left: 10px;
     font-size: 21px;
     font-weight: 500;
     border-color: #0e4d92;
@@ -171,7 +153,7 @@ mat-form-field {
 }
 
 #mySearch {
-    width: 24%;
+    width: 34%;
     font-size: 17px;
     padding: 7px;
     border: 1px solid #ddd;
@@ -195,25 +177,37 @@ mat-form-field {
 
   .input-icons { 
     width: 100%; 
-    margin-bottom: 10px; 
+    margin-bottom: 0px; 
 } 
 
 .input-icons i { 
     position: absolute; 
     padding-top: 10px;
-    padding-left: 16px;
+    // padding-left: 16px;
+    padding-right: 8px !important;
     color: #747677 !important;
 } 
 
-.input-icons { 
-    width: 100%; 
-    margin-bottom: 10px; 
-} 
+// .input-icons { 
+//     width: 100%; 
+//     margin-bottom: 10px; 
+// } 
 
 .icon { 
     padding: 10px; 
     min-width: 40px; 
 } 
   
+
+.dashb  {
+    font-size: 25px;
+    font-weight: 450;
+    padding-bottom: 15px;
+
+}
+
+::ng-deep.cdk-column-Department  {
+     padding-left: 0px !important;
+}
 
   

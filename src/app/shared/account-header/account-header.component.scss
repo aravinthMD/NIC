@@ -8,8 +8,8 @@
 .account-info {
     text-align: right;
     color:white;
-    font-size: 16px;
-    font-weight: 450;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .label-color {
@@ -19,13 +19,21 @@
 .icons {
     color: white;
     line-height : 0px !important;
-    padding-bottom: 30px;
+    // padding-bottom: 30px;
 }
 
-mat-card {
+.accountHeader{
     padding: 10px;
-    background: #0d4d92 !important;
+    background: #0e4d92 !important;
     margin-bottom: 20px !important;
+    font-size: 20px;
+    font-weight: 500;
+    border-color: #0e4d92;
+    border-style: solid;
+    vertical-align: middle !important;
+    width  :100;
+    color: #fff; 
+    padding-bottom: 9px;
 }
 
 
@@ -61,3 +69,23 @@ mat-card {
     background-color: #f8f9fa !important;
     color: #0b4d92 !important;
   }
+
+  .dashBoard {
+    background: #0e4d92 !important;
+    color: #fff!important;
+    margin-bottom: 17px;
+    // height: 44px;
+    // padding-top: 10px;
+    // padding-left: 10px;
+    font-size: 21px;
+    font-weight: 500;
+    border-color: #0e4d92;
+    border-style: solid;
+    vertical-align: middle !important;
+    padding: 10px;
+}
+
+
+.material-icons{
+  font-size : 22px !important;
+}

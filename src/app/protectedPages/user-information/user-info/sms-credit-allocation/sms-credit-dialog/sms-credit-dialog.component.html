@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <div class="form-group">
                         <label for="smsQuotaMetrix">{{labels.smsQuotaMatrix}}</label>
-                        <app-vf-custom-select formControlName="smsQuotaMetrix" [values]="smsQuotaMetrix" [isDirty]="isDirty" [isRequired]="'SMS quota metrix is mandatory'">
+                        <app-vf-custom-select formControlName="smsApprover" [values]="smsQuotaMatrix" [isDirty]="isDirty" [isRequired]="'SMS quota metrix is mandatory'">
                         </app-vf-custom-select>
                     </div>
                     <!-- <app-custom-input formControlName="smsQuotaMetrix" [labelName]="labels.smsQuotaMetrix"
@@ -23,15 +23,16 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="creditDate">{{labels.dateOfRequest}}</label>
-                    <mat-form-field [ngClass]="{'inp-date':propertyFlag}">
-                        <input matInput [matDatepicker]="picker3" formControlName="date" (keyup)="detectDateKeyAction($event,'date')" required>
+                    <mat-form-field [ngClass]="{'inp-date':propertyFlag}" floatLabel  =  "never">
+                        <input matInput [matDatepicker]="picker3" formControlName="dateOfRequest" (keyup)="detectDateKeyAction($event,'dateOfRequest')" required>
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
+                        <mat-placeholder>Choose The Date</mat-placeholder>
                     </mat-form-field>
 
                     <div class="date-picker-error" *ngIf="
               isDirty &&
-              smsCreditAllocation.get('date').errors?.required
+              smsCreditAllocation.get('dateOfRequest').errors?.required
             ">
                                     Please Select Date
                                 </div>
@@ -41,9 +42,16 @@
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="credit" [labelName]="labels.credit" [id]="'credit'" [type]="'number'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'" [mandatoryField]="true">
+                    <app-custom-input formControlName="totalCredit" 
+                      [labelName]="labels.credit" [id]="'credit'" 
+                      placeHolder =  "Enter the Credit"
+                      [type]="'number'" 
+                      [maxLength]="labels?.validationData.userName.maxLength" 
+                      [isDirty]="isDirty" 
+                      [isRequired]="'Credit is mandatory'" 
+                      [mandatoryField]="true">
                     </app-custom-input>
-                    <div *ngIf="smsCreditAllocation.get('credit').errors?.pattern" class="error-feedback">
+                    <div *ngIf="smsCreditAllocation.get('totalCredit').errors?.pattern" class="error-feedback">
                         <div>
                             {{'Please Enter Digits'}}
                         </div>
@@ -53,14 +61,29 @@
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="smsTraffic" [labelName]="labels.smsTraffic" [id]="'smstraffic'" [type]="'number'" [maxLength]="labels?.validationData.smsTraffic.maxLength" [isDirty]="isDirty" [isRequired]="'SMS traffic is mandatory'" [mandatoryField]="true">
+                    <app-custom-input formControlName="usedCredit" 
+                     [labelName]="labels.smsTraffic" [id]="'smstraffic'" 
+                     placeHolder =  "Enter the SMS Traffic"
+                     [type]="'number'" 
+                     [maxLength]="labels?.validationData.smsTraffic.maxLength" 
+                     [isDirty]="isDirty" 
+                     [isRequired]="'SMS traffic is mandatory'" 
+                     [mandatoryField]="true">
                     </app-custom-input>
                 </div>
             </div>
 
             <div class="col-4 pb-0">
                 <div class="form-group">
-                    <app-custom-input formControlName="availableCredit" [labelName]="labels.availableCredit" [id]="'availableCredit'" [type]="'number'" [maxLength]="labels?.validationData.availableCredit.maxLength" [isDirty]="isDirty" [isRequired]="'Available credit is mandatory'" [mandatoryField]="true">
+                    <app-custom-input formControlName="balanceCredit" 
+                     [labelName]="labels.availableCredit" [id]="'availableCredit'" 
+                     placeHolder =  "Enter the Available Credit"
+                     [type]="'number'" 
+                     [maxLength]="labels?.validationData.availableCredit.maxLength" 
+                     [isDirty]="isDirty" 
+                     [isRequired]="'Available credit is mandatory'" 
+                     [mandatoryField]="true"
+                     [isDisabledInp]="true">
                     </app-custom-input>
                 </div>
             </div>
@@ -68,34 +91,72 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="status">{{labels.status}}</label>
-                    <app-vf-custom-select formControlName="status" [values]="statusList" [isDirty]="isDirty" [isRequired]="'Status is mandatory'">
+                    <app-vf-custom-select formControlName="status" [values]="statusList" [isDirty]="isDirty" [isRequired]="'Status is mandatory'" [isDisabled]="true">
                     </app-vf-custom-select>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="onApprovalOf" [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" [maxLength]="labels?.validationData.userName.maxLength"  [isRequired]="'OnApproval is mandatory'" [mandatoryField]="true" [isDirty]="isDirty">
+                    <app-custom-input formControlName="onApprovalOf" 
+                     [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" 
+                     placeHolder =  "Enter the Email"
+                     [maxLength]="labels?.validationData.userName.maxLength"  
+                     [isRequired]="'OnApproval is mandatory'" 
+                     [mandatoryField]="true" 
+                     [isDirty]="isDirty">
+                    </app-custom-input>
+                </div>
+            </div>
+            <!-- <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="remark" 
+                     [labelName]="labels.remark" [id]="'remark'" 
+                     placeHolder =  "Enter the Remark"
+                     [maxLength]="labels?.validationData.userName.maxLength" 
+                     [isDirty]="isDirty" 
+                     [mandatoryField]="true"  
+                     [isRequired]="'Remark is mandatory'">
+                    </app-custom-input>
+                </div>
+            </div> -->
+            <div class="col-4">
+                <div class="form-group">
+                    <app-custom-input formControlName="approvedBy" 
+                     [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" 
+                     placeHolder =  "Enter the Name"
+                     [maxLength]="labels?.validationData.userName.maxLength" 
+                     [isDirty]="isDirty" 
+                     [isDisabledInp]="isDisabledInp">
                     </app-custom-input>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="remark" [labelName]="labels.remark" [id]="'remark'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [mandatoryField]="true"  [isRequired]="'Remark is mandatory'">
+                    <app-custom-input formControlName="timeStamp" 
+                    [labelName]="labels.timeStamp" [id]="'timeStamp'" 
+                    placeHolder =  "Enter the Time"
+                    [maxLength]="labels?.validationData.name.maxLength" 
+                    [isDirty]="isDirty" 
+                    [isDisabledInp]="isDisabledInp" 
+                    [isDisabledInp]="propertyFlag">
                     </app-custom-input>
                 </div>
             </div>
+
             <div class="col-4">
                 <div class="form-group">
-                    <app-custom-input formControlName="statusChangedBy" [labelName]="labels.statusChangedBy" [id]="'statusChangedBy'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp">
-                    </app-custom-input>
+                    <label for="remark">{{labels.remark}}</label>
+                    <textarea class="remark" maxlength="3000" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
+                    <div class="date-picker-error" *ngIf="
+              isDirty &&
+              smsCreditAllocation.get('remark').errors?.required
+            ">
+                                    Please Enter Remark
+                                </div>
+            
                 </div>
             </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input formControlName="timeStamp" [labelName]="labels.timeStamp" [id]="'timeStamp'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp" [isDisabledInp]="propertyFlag">
-                    </app-custom-input>
-                </div>
-            </div>
+            
         </div>
 
     </form>

@@ -170,12 +170,13 @@ mat-form-field {
 // }
 
 button {
-    height: 30px;
     border-radius: 5px;
     color: #ffffff !important;
     background-color: #0e4d92 !important;
     border-style: none;
     font-weight: 400;
+    font-size: 14px !important;
+    padding: 6px !important;
 }
 
 .dis-block {
@@ -257,9 +258,19 @@ td.mat-cell {
   }
 
   .row  {
-    margin-bottom: 35px;
-  }
+    margin-bottom: 12px;
+    margin-top: -10px;
+}
+ 
 
   mat-card.defineRoles {
     width: 100% !important;
 }
+
+.mat-row:hover > .mat-cell {
+    background-color:#d8d0d0 ;
+}
+label {
+    display: inline-block;
+    margin-bottom: -0.2rem;
+  }

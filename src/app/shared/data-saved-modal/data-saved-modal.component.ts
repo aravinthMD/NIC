@@ -28,6 +28,10 @@ export class DataSavedModalComponent implements OnInit {
   onSaveCancel() {
 
     this.cancel.emit()
+
+    // this.back()
+     
+
   }
 
 }
