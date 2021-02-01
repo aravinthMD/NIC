@@ -5,8 +5,14 @@ import { Injectable } from '@angular/core';
 })
 export class POService {
     private departmentList = [];
-    private statusList = [];
-    private paymentList = [];
+    private statusList = [
+        { key :0, value: 'Received' },
+    { key :1,value : 'Not Received'},
+    { key :2,value : 'Raised'},
+    { key: 3, value: 'Pending' },
+    { key: 4, value: 'Rejected' },
+    { key: 5, value: 'On Hold' }]
+    private paymentList = [{ key : "3",value : 'Received' }];
     private poData;
     constructor() {}
 

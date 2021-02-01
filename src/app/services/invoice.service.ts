@@ -256,10 +256,14 @@ export class InvoiceService {
 fetchAllPO(selectedClientId : string,currentPage?:any) {
 
           const {
-            api: {
-              fetchPurchaseOrder: { workflowId, processId, projectId },
-            },
-          } = this.apiService;
+            api : {
+              fetchPurchaseOrder : {
+                  workflowId,
+                  processId,
+                  projectId
+              }
+            }
+        } = this.apiService;
 
 
         let requestEntity  : any  = {};
@@ -284,14 +288,10 @@ fetchAllPO(selectedClientId : string,currentPage?:any) {
           processVariables : JSON.stringify(requestEntity)
         };
 
-          const body = {
-            processVariables: JSON.stringify(requestEntity),
-          };
+        const formData = this.transform(body)
 
-          const formData = this.transform(body);
-
-          const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-          return this.httpService.post<any>(url, formData);
+        let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+        return  this.httpService.post<any>(url,formData);
 
 }
 
@@ -700,6 +700,29 @@ updatePurchaseOrder(data) {
 
   let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
   return  this.httpService.post<any>(url,formData);
+  }
+
+  updatePopupModal(data) {
+    const dashboardDetails = this.apiService.api.poPopupModalDataUpdate;
+    const { processId, projectId, workflowId } = dashboardDetails;
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: {
+        ...data
+      },
+      workflowId,
+      projectId,
+    };
+  
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+  
+    const formData = this.transform(body);
+  
+    const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  
+    return this.httpService.post(url, formData);
   }
 
   getTIOnChange(poNumber : string){

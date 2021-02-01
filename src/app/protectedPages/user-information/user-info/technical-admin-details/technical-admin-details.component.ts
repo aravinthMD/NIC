@@ -33,7 +33,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       viewBillAdminInfoData = [];
 
-    teleCodeValues = []
+    // teleCodeValues = []
 
     dataSource = [];
 

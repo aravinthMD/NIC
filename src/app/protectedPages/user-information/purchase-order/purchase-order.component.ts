@@ -106,6 +106,9 @@ smsApprovedList : any[] = [
 
   clientId: string;
   proformaInvoicesList = [];
+  purchaseOrderId: number;
+  quantityIsDirty: boolean;
+
 
 
 
@@ -122,20 +125,22 @@ smsApprovedList : any[] = [
     private apiService : ApiService,
     private beheSer : BehaviourSubjectService,
     private route : ActivatedRoute,
-    private clientDetailService : ClientDetailsService
+    private clientDetailService : ClientDetailsService,
+    private poDataService: POService
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
+      this.poDataService.setDepartmentList(this.departmentListData);
      }
 
   ngOnInit() {
 
-    this.activatedRoute.params.subscribe((param) => {
+    this.route.params.subscribe((param) => {
         if (!param) {
           return;
         }
         this.clientId = param.projectNo;
-        this.fetchPODetails();
+//        this.fetchPODetails();
 
     });
 
@@ -475,7 +480,10 @@ smsApprovedList : any[] = [
       panelClass: 'full-width-dialog'
     });
 
-    dialogRef.afterClosed().subscribe((result) =>{
+    // dialogRef.componentInstance.updateEmitter
+    //          .subscribe((res) => {})
+
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
 
       this.fetchPODetails(this.clientId);
@@ -535,11 +543,51 @@ next() {
 
     this.utilService.setCurrentUrl('users/projectExecution')
 
-    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
+    this.router.navigate([`/users/projectExecution/${this.clientId}`])
 
   }
 
-  submitPO() {}
+  submitPOData() {
+    if (this.formQuantity.invalid) {
+      this.quantityIsDirty = true;
+      return this.toasterService.showError('Please fill the mandatory fields', '');
+    }
+    const formValue = this.formQuantity.get('items').value;
+    console.log('submitPOData', formValue);
+    const data = formValue.map((value) => {
+      return {
+        ...value,
+        quantity: Number(value.quantity || 0),
+        po_number: this.purchaseOrderId,
+        user_id: Number(this.clientId)
+      };
+    });
+    console.log('data', data);
+    this.invoiceService.updatePopupModal(data)
+        .subscribe((res: any) => {
+          this.quantityIsDirty = false;
+          const error = res.Error;
+          const errorMessage = res.ErrorMessage;
+
+          if (error !== '0') {
+            return this.toasterService.showError(errorMessage, '');
+          }
+
+          const processVariables = res.ProcessVariables;
+
+          const errorObj = processVariables.error;
+
+          if (errorObj.code !== '0') {
+            return this.toasterService.showError(errorObj.message, '');
+          }
+          this.showDataSaveModal = true;
+          this.dataValue = {
+            title: 'Purchase Order Saved Successfully',
+                message: 'Are you sure you want to proceed tax invoice page?'
+          };
+
+        });
+  }
 
   submitFormData() {
 
@@ -581,7 +629,8 @@ next() {
       description: this.formQuantity.value.description,
       selectedDepartment: this.PurchaseOrderForm.value.departmentName,
       selectedPOStatus: this.PurchaseOrderForm.value.poStatus,
-      selectedPaymentStatus: this.PurchaseOrderForm.value.paymentStatus
+      selectedPaymentStatus: this.PurchaseOrderForm.value.paymentStatus,
+      userId: Number(this.clientId)
     };
     this.invoiceService.createPurchaseOrder(data).subscribe((response: any) => {
       const processVariables = response.ProcessVariables;
@@ -609,9 +658,11 @@ next() {
 
       this.toasterService.showSuccess('Data Saved Successfully', '');
 
-      this.userList.unshift(processVariables);
+     
 
-          this.fetchPODetails(this.clientId)
+      this.updateGridData(this.userList);
+
+          // this.fetchPODetails(this.clientId);
 
           // this.showDataSaveModal = true;
           this.dataValue= {
@@ -622,6 +673,17 @@ next() {
     });
  
 
+  }
+
+  updateGridData(data) {
+    this.showPOModal = true;
+    this.userList = this.userList || [];
+    console.log('processVariables', data);
+    this.purchaseOrderId = data.id;
+    this.userList.unshift(data);
+    this.dataSource = new MatTableDataSource<any>([]);
+
+    this.dataSource = new MatTableDataSource<any>(this.userList);
   }
 
   pageEventData(event) {
