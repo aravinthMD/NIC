@@ -1,7 +1,7 @@
 import { Component, OnInit,Input, AfterViewInit,ViewChild } from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { Validators,FormGroup,FormControl} from "@angular/forms";
+import { Validators,FormGroup,FormControl, FormArray} from "@angular/forms";
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router'
@@ -14,6 +14,7 @@ import { AdminService } from '@services/admin.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService } from '../../../services/api.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { POService } from '@services/po-service';
 // import value from '*.json';
 
 @Component({
@@ -100,6 +101,9 @@ smsApprovedList : any[] = [
   datePerPage: number = 0;
 
   clientId: string;
+  purchaseOrderId: number;
+
+  quantityIsDirty: boolean;
 
 
   constructor(
@@ -114,10 +118,15 @@ smsApprovedList : any[] = [
     private searchService: SearchService,
     private apiService : ApiService,
     private beheSer : BehaviourSubjectService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private poDataService: POService
     ) { }
 
   ngOnInit() {
+
+    this.formQuantity = new FormGroup({
+      items: new FormArray([this.createQuantityFormControls()])
+    });
 
     this.activatedRoute.params.subscribe((param) => {
         if (!param) {
@@ -161,11 +170,7 @@ smsApprovedList : any[] = [
       searchFrom: new FormControl(null)
     })
 
-    this.formQuantity = new FormGroup({
-      rate: new FormControl(null),
-      quantity: new FormControl(null),
-      description: new FormControl(null)
-    })
+    
 
     this.utilService.userDetails$.subscribe((val)=> {
 
@@ -206,13 +211,24 @@ smsApprovedList : any[] = [
   }
 
 
-  
-  purchaseForm(){
-    this.dataArray.push(this.formQuantity);
+  createQuantityFormControls(): FormGroup {
+    return new FormGroup({
+      description: new FormControl('', [ Validators.required]),
+      quantity: new FormControl('', [, Validators.required]),
+      rate: new FormControl('', [Validators.required]),
+    });
   }
 
-  deleteRow(index){
-    this.dataArray.splice(index);
+
+  
+  purchaseForm() {
+    const formArray = this.formQuantity.get('items') as FormArray;
+    formArray.push(this.createQuantityFormControls());
+  }
+
+  deleteRow(index) {
+    const formArray = this.formQuantity.get('items') as FormArray;
+    formArray.removeAt(index);
   }
 
   submit() {
@@ -258,9 +274,12 @@ smsApprovedList : any[] = [
         
         listData.push({key:element.key,value:element.name})
       });
+      this.poDataService.setDepartmentList(listData);
     })
 
     this.departmentListData = listData;
+
+   
 
 
     let poData = []
@@ -271,11 +290,13 @@ smsApprovedList : any[] = [
       const poList = response['ProcessVariables']['Lovitems'];
       poList.forEach(element => {
         
-        poData.push({key:element.key,value:element.name})
+        poData.push({key:element.key,value:element.value})
       });
+      this.poDataService.setStatusList(poData);
     })
 
     this.poStatus = poData
+    
 
     let piData = []
 
@@ -285,11 +306,12 @@ smsApprovedList : any[] = [
       const piList = response['ProcessVariables']['Lovitems'];
       piList.forEach(element => {
         
-        poData.push({key:element.key,value:element.name})
+        poData.push({key:element.key,value:element.value})
       });
     })
 
     this.piStatus = piData
+    
 
     let paymentStatus = []
 
@@ -299,9 +321,12 @@ smsApprovedList : any[] = [
       const paymentList = response['ProcessVariables']['Lovitems'];
       paymentList.forEach(element => {
         
-        paymentStatus.push({key:element.key,value:element.name})
+        paymentStatus.push({key:element.key,value:element.value})
       });
+      this.poDataService.setPaymentList(paymentStatus);
     })
+
+    
 
     this.paymentStatus = paymentStatus
 
@@ -313,7 +338,7 @@ smsApprovedList : any[] = [
       const piRecList = response['ProcessVariables']['Lovitems'];
       piRecList.forEach(element => {
         
-        piReceivedData.push({key:element.key,value:element.name})
+        piReceivedData.push({key:element.key,value:element.value})
       });
     })
 
@@ -420,17 +445,23 @@ smsApprovedList : any[] = [
 
   OnEdit(element :  any){
 
-    const dialogRef = this.dialog.open(PurchaseOrderDialogComponent,{
-      data : element,
-      panelClass: 'full-width-dialog'
+
+    const dialogRef = this.dialog.open(PurchaseOrderDialogComponent, {
+      data : element
     });
 
-    dialogRef.afterClosed().subscribe((result) =>{
-      console.log('The dialog was closed', result);
+    dialogRef.componentInstance.updateEmitter
+             .subscribe((res) => {
+                dialogRef.close();
+                this.updateGridData(res);
+             });
 
-      this.fetchPODetails();
+    // dialogRef.afterClosed().subscribe((result) =>{
+    //   console.log('The dialog was closed', result);
 
-    })
+    //   this.fetchPODetails();
+
+    // })
 
   } 
   getDownloadXls(){
@@ -489,7 +520,47 @@ next() {
 
   }
 
-  submitPO() {}
+  submitPOData() {
+    if (this.formQuantity.invalid) {
+      this.quantityIsDirty = true;
+      return this.toasterService.showError('Please fill the mandatory fields', '');
+    }
+    const formValue = this.formQuantity.get('items').value;
+    console.log('submitPOData', formValue);
+    const data = formValue.map((value) => {
+      return {
+        ...value,
+        quantity: Number(value.quantity || 0),
+        po_number: this.purchaseOrderId,
+        user_id: Number(this.clientId)
+      };
+    });
+    console.log('data', data);
+    this.invoiceService.updatePopupModal(data)
+        .subscribe((res: any) => {
+          this.quantityIsDirty = false;
+          const error = res.Error;
+          const errorMessage = res.ErrorMessage;
+
+          if (error !== '0') {
+            return this.toasterService.showError(errorMessage, '');
+          }
+
+          const processVariables = res.ProcessVariables;
+
+          const errorObj = processVariables.error;
+
+          if (errorObj.code !== '0') {
+            return this.toasterService.showError(errorObj.message, '');
+          }
+          this.showDataSaveModal = true;
+          this.dataValue = {
+            title: 'Purchase Order Saved Successfully',
+                message: 'Are you sure you want to proceed tax invoice page?'
+          };
+
+        });
+  }
 
   submitFormData() {
 
@@ -542,7 +613,6 @@ next() {
       }
 
 
-      this.showPOModal = false;
 
       this.isDirty = false;
 
@@ -554,19 +624,22 @@ next() {
 
       this.toasterService.showSuccess('Data Saved Successfully', '');
 
-      this.userList.unshift(processVariables);
-
-          // this.fetchPODetails()
-
-      this.showDataSaveModal = true;
-      this.dataValue = {
-        title: 'Purchase Order Saved Successfully',
-            message: 'Are you sure you want to proceed tax invoice page?'
-      };
+      this.updateGridData(processVariables);
 
     });
  
 
+  }
+
+  updateGridData(data) {
+    this.showPOModal = true;
+    this.userList = this.userList || [];
+    console.log('processVariables', data);
+    this.purchaseOrderId = data.id;
+    this.userList.unshift(data);
+    this.dataSource = new MatTableDataSource<any>([]);
+
+    this.dataSource = new MatTableDataSource<any>(this.userList);
   }
 
   pageEventData(event) {
@@ -584,7 +657,7 @@ next() {
   
 
   cancelPO() {
-    this.showPOModal= false;
+    this.showPOModal = false;
   }
 
   saveYes()
@@ -595,7 +668,7 @@ next() {
 
   this.utilService.setCurrentUrl('users/taxInvoice')
 
-  this.router.navigate([`/users/taxInvoice/${this.storeProjectNo}`])
+  this.router.navigate([`/users/taxInvoice/${this.clientId}`])
 
 
  }
