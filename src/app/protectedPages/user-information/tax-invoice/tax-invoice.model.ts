@@ -39,4 +39,5 @@ export interface TaxInvoice {
     userId?: number;
     interestOnTds?: number;
     projectCoordinator?: string;
+    upload_document  ?: string
 }
