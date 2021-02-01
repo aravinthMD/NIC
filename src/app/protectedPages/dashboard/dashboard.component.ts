@@ -9,6 +9,8 @@ import { ToasterService } from '@services/toaster.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { DashboardService } from '@services/dashboard.service';
 
+import { CsvDataService } from '@services/csv-data.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -80,6 +82,41 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  onCsvDownload(id) {
+    this.dashboardService.getCsvDataForDashboard(id)
+        .subscribe((res: any) => {
+            const error = res.Error;
+            const errorMessage = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
+            }
+            const processVariables = res.ProcessVariables;
+            let resData = [];
+            if (id === 'pi') {
+               resData = processVariables.piList;
+            } else if (id === 'po') {
+              resData = processVariables.poList;
+            } else if (id === 'invoicePending') {
+              resData = processVariables.TotalInvoice;
+            } else if (id === 'partialBill') {
+              resData = processVariables.partialBill;
+            }
+
+            if (!resData) {
+              return;
+            }
+
+            const attachment = processVariables.attachment;
+
+            const fileName = attachment.name;
+            // const header = Object.keys(resData[0]);
+
+            CsvDataService.exportToCsv(fileName, resData);
+
+            // console.log('arrayToCsv', arrayToCsv.convertArrayToCSV(resData));
+        });
   }
 
   addUser() {

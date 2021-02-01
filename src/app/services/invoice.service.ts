@@ -702,6 +702,29 @@ updatePurchaseOrder(data) {
   return  this.httpService.post<any>(url,formData);
   }
 
+  updatePopupModal(data) {
+    const dashboardDetails = this.apiService.api.poPopupModalDataUpdate;
+    const { processId, projectId, workflowId } = dashboardDetails;
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: {
+        ...data
+      },
+      workflowId,
+      projectId,
+    };
+  
+    const body = {
+      processVariables: JSON.stringify(requestEntity),
+    };
+  
+    const formData = this.transform(body);
+  
+    const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  
+    return this.httpService.post(url, formData);
+  }
+
   getTIOnChange(poNumber : string){
     
       

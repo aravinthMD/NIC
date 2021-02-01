@@ -45,6 +45,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   showView = true;
   userId: string;
   clientId: number;
+  isShowViewPage = false;
  
 
   constructor(
@@ -290,6 +291,14 @@ export class BillingOwnerDetailsComponent implements OnInit {
       if (error !== '0') {
          return this.toasterService.showError(errorMessage, '');
       }
+
+      const processVariables = response.ProcessVariables;
+      const err = processVariables.error || {};
+
+      if (err.code !== '0') {
+        return this.toasterService.showError(err.message, '');
+      }
+
       this.showDataSaveModal = true;
       this.dataValue = {
         title: 'Billing Admin Details Updated Successfully',
@@ -324,12 +333,19 @@ export class BillingOwnerDetailsComponent implements OnInit {
     
   }
 
+  editDataBill() {
+    this.isShowViewPage = false;
+  }
+
   getBillingAdminDetailById(id) {
 
     this.billingAdminService.getBillingAdminDetailsById({ currentClientId: id})
         .subscribe((res: any) => {
           console.log('billAdminDetails by id', res);
           const processVariables = res.ProcessVariables;
+          if (processVariables.selectedClient) {
+            this.isShowViewPage = true;
+          }
           this.utilService.setBillAdminUserDetails(processVariables);
           this.setBillOwnerFormValues(processVariables);
         });
@@ -342,26 +358,28 @@ export class BillingOwnerDetailsComponent implements OnInit {
     // });
   }
 
+
   back() {
 
-    this.utilService.setCurrentUrl('users/techAdmin')
+    this.utilService.setCurrentUrl('users/techAdmin');
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
 
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val || '1';
-    })
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val)=> {
+    //   pno = val || '1';
+    // })
 
 
-    if(this.user) {
-      this.router.navigate(['/users/techAdmin/'+pno])
-    }else {
-      this.router.navigate(['/users/techAdmin'])
-    }
+    // if(this.user) {
+    //   this.router.navigate(['/users/techAdmin/'+pno])
+    // }else {
+    //   this.router.navigate(['/users/techAdmin'])
+    // }
     
   }
 
-  next() {
-    // this.utilService.setCurrentUrl('users/smsCredit')
+  onNext() {
+     this.utilService.setCurrentUrl('users/smsCredit')
 
     // let pno = '';
     // this.utilService.projectNumber$.subscribe((val)=> {

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Router,ActivatedRoute } from '@angular/router';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { BillingAdminService } from '@services/billing-admin.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
@@ -32,7 +33,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       viewBillAdminInfoData = [];
 
-    teleCodeValues = []
+    // teleCodeValues = []
 
     dataSource = [];
 
@@ -56,6 +57,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     clientUserId: string;
     mobileNumberCodeList = [];
     departmentListData = [];
+    teleCodeValues = [];
+
+    isShowTechViewPage  = true;
  
 
 
@@ -67,7 +71,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       private utilService: UtilService,
       private activatedRoute: ActivatedRoute,
       private behser: BehaviourSubjectService,
-      private client: ClientDetailsService
+      private client: ClientDetailsService,
+      private billAdminService: BillingAdminService
       ) { }
 
   ngOnInit() {
@@ -79,6 +84,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
         return;
       }
       this.clientId = Number(value.id || 0);
+      this.getTechAdminsById(this.clientId);
+
+      // this.getBillingAdminDetailById(this.clientId);
     });
 
     // this.clientId = Number(this.client.getClientId());
@@ -177,7 +185,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     
     this.billOwnerForm.patchValue({
       name : data.name,
-      departmentName : data.department,
+      departmentName : Number(data.department),
       designation : data.designation,
       employeeCode : data.employeeCode,
       email : data.email,
@@ -242,6 +250,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     }
 
   editData() {
+    this.isShowTechViewPage = false;
     this.propertyFlag = false;
     this.showView = false;
     // this.hideEditButton = true;
@@ -318,22 +327,22 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     this.technicaladminform.patchValue({
       id  :  Number(data.currentClientId),
-      name : data.name,
-      department : data.department,
-      designation :data.designation,
-      employeeCode : data.employeeCode,
-      email : data.email,
-      mobileNumberCode : data.mobileNumberCode,
-      mobileNumber : data.mobileNumber,
-      telephoneNumber : data.telephoneNumber,
-      telephoneNumberCode: data.telephoneNumberCode,
-      offAddress1 : data.officialAddress1,
-      offAddress2 : data.officialAddress2,
-      offAddress3 : data.officialAddress3,
-      city : data.city,
-      state : data.state,
-      pinCode : data.pinCode,
-      remark: data.remark,
+      name : data.name || '',
+      departmentName : data.department || '',
+      designation : data.designation || '',
+      employeeCode : data.employeeCode || '',
+      email : data.email || '',
+      mobileNumberCode : data.mobileNumberCode || '',
+      mobileNumber : data.mobileNumber || '',
+      telephoneNumber : data.telephoneNumber || '',
+      telephoneNumberCode: data.telephoneNumberCode || '',
+      offAddress1 : data.officialAddress1 || '',
+      offAddress2 : data.officialAddress2 || '',
+      offAddress3 : data.officialAddress3 || '',
+      city : data.city || '',
+      state : data.state || '',
+      pinCode : data.pinCode || '',
+      remark: data.remark || '',
       userId: data.clientUserId
     })
 
@@ -346,12 +355,12 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     var year = dateObj.getUTCFullYear();
 
 
-const departmentListData = this.departmentListData.filter((val)=> {
-  return val.key == this.technicaladminform.value.departmentName
+// const departmentListData = this.departmentListData.filter((val)=> {
+//   return val.key == this.technicaladminform.value.departmentName
   
-})
+// })
 
-console.log("departmentList",this.departmentListData,this.technicaladminform.value.departmentName)
+// console.log("departmentList",this.departmentListData,this.technicaladminform.value.departmentName)
 
     
 
@@ -406,6 +415,10 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     console.log('technicaladminform',this.technicaladminform.value);
   }
 
+  onNext() {
+    this.router.navigate(['/users/billingAdmin/' + this.clientId]);
+  }
+
   fetchAllTechAdmins() {
 
     this.userInfoService.fetchAllTechAdmins().subscribe((response)=> {
@@ -418,32 +431,43 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
     })
   }
 
-  getBillingAdminDetailById(id:string) {
+  getBillingAdminDetailById(id) {
 
-    this.userInfoService.getBillingAdminDetailById(id).subscribe((response)=> {
+    this.billAdminService.getBillingAdminDetailsById({ currentClientId: id})
+        .subscribe((res: any) => {
+              const processVariables = res.ProcessVariables;
+              this.utilService.setBillAdminUserDetails(processVariables);
+              this.setBillOwnerFormValues(processVariables);
+        });
 
-      console.log("billAdminDetails by id",response)
-      this.utilService.setBillAdminUserDetails(response["ProcessVariables"]);
+    // this.userInfoService.getBillingAdminDetailById(id).subscribe((response)=> {
 
-      this.setBillOwnerFormValues(response["ProcessVariables"]);
+    //   console.log("billAdminDetails by id",response)
+    //   this.utilService.setBillAdminUserDetails(response["ProcessVariables"]);
+
+    //   this.setBillOwnerFormValues(response["ProcessVariables"]);
     
-    },(error) => {
+    // },(error) => {
     
-      console.log(error)
+    //   console.log(error)
     
-    })
+    // })
   }
 
   
   
 
 
-  getTechAdminsById(id:string){    
+  getTechAdminsById(id){    
 
     this.userInfoService.getTechAdminDetailById(id).subscribe((response) => {
 
       console.log("get TechAdmins by id",response)
       const processVariables = response.ProcessVariables;
+      if (!processVariables.clientId) {
+          this.isShowTechViewPage = false;
+          this.propertyFlag = false;
+      }
       this.utilService.setTechAdminUserDetails(processVariables);
       this.setFormValues(processVariables);
       this.setViewPageDataForTechAdminDetails(processVariables);
