@@ -3,6 +3,7 @@ import { Router} from '@angular/router';
 import {FormGroup,FormBuilder} from '@angular/forms';
 import { ToasterService } from '@services/toaster.service';
 import { LoginService } from '@services/login.service'
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,11 @@ export class LoginComponent implements OnInit {
   errroMsg: string;
 
 
-  constructor(private router : Router,private formBuilder: FormBuilder,private toasterService: ToasterService,private loginService: LoginService) {
+  constructor(private router : Router,
+              private formBuilder: FormBuilder,
+              private toasterService: ToasterService,
+              private loginService: LoginService,
+              private utilityService: UtilityService) {
 
     this.form = this.formBuilder.group({
       userName: [null],
@@ -38,17 +43,27 @@ export class LoginComponent implements OnInit {
     }else {
 
       const data = {
-        username: 'akshaya.venkataraman@appiyo.com',
-        password: 'inswit@123'      
+        // username: 'akshaya.venkataraman@appiyo.com',
+        // password: 'inswit@123' 
+        username: this.form.value.userName,
+        password: this.form.value.password     
       }
-
+      this.utilityService.setUserDetail(this.form.value);
       // localStorage.setItem('userName',data.username)
 
       this.loginService.loginApplication(data).subscribe(res => 
-          { console.log("login Response",res)
+          { 
+            if(res['status'] ==  true){
+            console.log("login Response",res)
             localStorage.setItem("token",res["token"]);
-            this.getUserDetails({username:'akshaya',
-            password: 'inswit@123'})
+            const userData = this.utilityService.getUserData()
+            console.log("user Data",userData)
+            this.getUserDetails({username: 'akshaya',
+              password:userData.password,
+            })
+          }else{
+            this.toasterService.showError("Invalid user",'Login')
+          }
           }
         )     
       

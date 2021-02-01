@@ -33,7 +33,8 @@ export class LoginService {
 
     let myData =  {
       username : data.username,
-      password : data.password,
+      password: data.password,
+      longTermToken: true      
     }
 
 
