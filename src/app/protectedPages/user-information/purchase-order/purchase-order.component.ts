@@ -591,15 +591,11 @@ next() {
 
   submitFormData() {
 
-    if (this.formQuantity.invalid) {
-      this.isQuantityDirty = true;
+    if (this.PurchaseOrderForm.invalid) {
+      this.isDirty = true;
       return;
     }
-
     const formValue = this.PurchaseOrderForm.value;
-
-   
-
 
     this.PurchaseOrderForm.value['date']=this.DatePipe.transform(formValue.date, 'dd/MM/yyyy');
 
@@ -633,11 +629,16 @@ next() {
       userId: Number(this.clientId)
     };
     this.invoiceService.createPurchaseOrder(data).subscribe((response: any) => {
+      const error = response.Error;
+      const errorMessage = response.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMessage, '');
+      }
       const processVariables = response.ProcessVariables;
-      const error = processVariables.error;
+      const errorObj = processVariables.error;
 
-      if (error.code !== '0') {
-        return this.toasterService.showError(error.message, '');
+      if (errorObj.code !== '0') {
+        return this.toasterService.showError(errorObj.message, '');
       }
 
 
