@@ -31,6 +31,11 @@ export class ProjectExecutionComponent implements OnInit {
   pageSize:number;
   currentPage  = 1;
 
+  file : any;
+  documentUploadId : string = '';
+  uploadedData : any = {}
+
+
   piPaidValues = [
     {
     key: 0, 
@@ -117,7 +122,8 @@ dataValue: {
       invoiceDate :  new FormControl(null),
       transactionDate : new FormControl(null),
       piPaid: new FormControl(''),
-      remark:new FormControl('',Validators.required)
+      remark:new FormControl('',Validators.required),
+      importFile : new FormControl(null)
     });
 
 
@@ -141,7 +147,8 @@ dataValue: {
 
 
     this.PurchaseEntryForm.controls['piNumber'].valueChanges.subscribe((value) => {
-       
+        if(!value)
+          return
         this.getPIAutoPopulateonChange(value);
     })
 
@@ -213,8 +220,9 @@ dataValue: {
           NICSIProjectNo,
           piPaid,
           remark,
-          uploadDocument : "file"
-        }
+          upload_document : this.documentUploadId,
+          userId : this.clientId ?  Number(this.clientId) : 0
+                }
   
         this.invoiceService.createProjectExecution(Data).subscribe(
           (response) => {
@@ -233,10 +241,11 @@ dataValue: {
                 this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
                 this.PurchaseEntryForm.controls['piAmount'].setValue('');
                 this.PurchaseEntryForm.controls['piDate'].setValue('');
+                this.documentUploadId = '';
                 this.isDirty = false;
                 this.getProjectExecutionDetails(this.currentPage,this.clientId);
                 this.toasterService.showSuccess('Data Saved Successfully','')
-                this.showDataSaveModal = true;
+                // this.showDataSaveModal = true;
                 this.dataValue= {
                 title: 'Project Execution Saved Successfully',
                 message: 'Are you sure you want to proceed purchase order invoice page?'         
@@ -403,6 +412,29 @@ dataValue: {
           this.toasterService.showError('Failed to fetch data','');
         })
   }
+
+
+  async uploadFile(files : FileList){
+    this.file = files.item(0);
+    if(this.file){
+        const userId : string = this.clientDetailService.getClientId();
+        const modifiedFile = Object.defineProperty(this.file, "name", {
+          writable: true,
+          value: this.file["name"]
+        });
+        modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+        this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
+        if(this.uploadedData['uploadStatus']){
+          this.documentUploadId = this.uploadedData['documentUploadId'];
+          this.toasterService.showSuccess('File upload Success','')
+        }else { 
+          this.toasterService.showError('File upload Failed','')
+        }
+    }
+
+  }
+
+
 
 
   getServerData(event?:PageEvent){

@@ -33,6 +33,12 @@ export class TaxInvoiceComponent implements OnInit {
   proformaInvoicesList =  [];
   purchaseOrderNumberList  = [];
 
+  file : any;
+  uploadedData = {};
+  documentUploadId : string = '';
+
+
+
 //    monthList = [ "January", "February", "March", "April", "May", "June",
 // "July", "August", "September", "October", "November", "December" ];
 
@@ -323,7 +329,8 @@ export class TaxInvoiceComponent implements OnInit {
       tax: Number(formValue.tax) || '',
       totalSMS: Number(formValue.totalSMS) || '',
       interestOnTds: Number(formValue.interestOnTds) || '',
-      userId: this.selectedClientId
+      userId: this.selectedClientId,
+      upload_document : this.documentUploadId
     };
     console.log('requestData', requestData);
     this.taxInvoiceService.saveOrUpdateTaxInvoiceDetails(requestData)
@@ -338,6 +345,7 @@ export class TaxInvoiceComponent implements OnInit {
             const taxInvoiceData: TaxInvoice = res.ProcessVariables;
             this.toasterService.showSuccess('Data Saved Sucessfully','');
             this.taxInvoiceForm.reset();
+            this.documentUploadId = ''
             this.taxInvoiceForm.controls['userName'].setValue(this.accountName);
             this.taxInvoiceForm.controls['invoiceStatus'].setValue('');
             this.updateGrid(taxInvoiceData);
@@ -532,17 +540,17 @@ export class TaxInvoiceComponent implements OnInit {
     this.taxInvoiceForm.patchValue({
       fromDate: ''
     });
-    this.toasterService.showError('Please click the fromDate icon to select date','');
+    this.toasterService.showError('Please click the from date icon to select date','');
   } else if (type === 'toDate') {
     this.taxInvoiceForm.patchValue({
       toDate: ''
     });
-    this.toasterService.showError('Please click the toDate icon to select date','');
+    this.toasterService.showError('Please click the to date icon to select date','');
   } else if (type === 'submittedOn') {
     this.taxInvoiceForm.patchValue({
       submittedOn: ''
     });
-    this.toasterService.showError('Please click the submittedOn icon to select date','');
+    this.toasterService.showError('Please click the submitted on icon to select date','');
   } else if (type === 'searchFrom') {
     this.searchForm.patchValue({
       searchFrom: ''
@@ -604,6 +612,27 @@ changeDateFormat(date) {
   return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
 
  }
+
+
+ async uploadFile(files : FileList){
+  this.file = files.item(0);
+  if(this.file){
+      const userId : string = this.clientDetailsService.getClientId();
+      const modifiedFile = Object.defineProperty(this.file, "name", {
+        writable: true,
+        value: this.file["name"]
+      });
+      modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+      this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
+      if(this.uploadedData['uploadStatus']){
+        this.documentUploadId = this.uploadedData['documentUploadId'];
+        this.toasterService.showSuccess('File upload Success','')
+      }else { 
+        this.toasterService.showError('File upload Failed','')
+      }
+  }
+
+}
 
 
 back() {

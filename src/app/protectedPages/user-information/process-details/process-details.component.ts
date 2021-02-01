@@ -25,11 +25,16 @@ export class ProcessDetailsComponent implements OnInit{
   userId:string ;
   @Input('userObj') user : any;
 
+  file : any;
+  documentUploadId : string = ''
+
   @ViewChild('dateFeild', { read: MatInput,static  :true}) input: MatInput;
 
   length: number;
   pageSize : number;
   currentPage = 1;
+
+  uploadedData : any = {}
 
   storeProjectNo: string;
   displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt',"reminder","Escalation","Action"]
@@ -73,7 +78,7 @@ export class ProcessDetailsComponent implements OnInit{
   showDataSaveModal: boolean;
   dataValue: {
     title: string;
-    message: string
+    message ?: string
   }
 
   constructor(
@@ -105,7 +110,8 @@ export class ProcessDetailsComponent implements OnInit{
       endDate:[''],
       piStatus: [''],
       paymentStatus:[''],
-      remark:['',[Validators.required]]
+      remark:['',[Validators.required]],
+      importFile : [null]
 
     })
 
@@ -237,7 +243,7 @@ export class ProcessDetailsComponent implements OnInit{
         piStatus,
         paymentStatus,
         remark,
-        uploadDocument : 'yes',
+        upload_document : this.documentUploadId,
         userId : Number(userId)
       }
 
@@ -252,17 +258,18 @@ export class ProcessDetailsComponent implements OnInit{
           console.log(`API response for the Create PI :${response}`)
           if(code == '0'){
             this.form.reset();
+            this.documentUploadId = '';
             this.input.value = ''
             this.form.controls['piStatus'].setValue("");
             this.form.controls['paymentStatus'].setValue("");
             this.form.controls['startDate'].setValue("");
             this.form.controls['accountName'].setValue(this.accountName);
             this.isDirty = false;
-            this.toasterService.showSuccess('Proforma Invoice Updated SucessFully','');
-            this.showDataSaveModal = true
+            this.toasterService.showSuccess('Proforma Invoice Saved Sucessfully','');
+            // this.showDataSaveModal = true
             this.dataValue = {
                 title : 'Proforma Invoice Saved Successfully',
-                message  : "Are you sure you want to proceed proforma invoice page?"
+                // message  : "Are you sure you want to proceed proforma invoice page?"
             }
             this.fetchAllProformaInvoice(this.currentPage,this.userId);
           }else {
@@ -430,5 +437,26 @@ export class ProcessDetailsComponent implements OnInit{
   getServerData(event?:PageEvent){
     let currentPageIndex  = Number(event.pageIndex) + 1;
     this.fetchAllProformaInvoice(currentPageIndex,this.userId);
+  }
+
+
+  async uploadFile(files : FileList){
+    this.file = files.item(0);
+    if(this.file){
+        const userId : string = this.clientDetailService.getClientId();
+        const modifiedFile = Object.defineProperty(this.file, "name", {
+          writable: true,
+          value: this.file["name"]
+        });
+        modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+        this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
+        if(this.uploadedData['uploadStatus']){
+          this.documentUploadId = this.uploadedData['documentUploadId'];
+          this.toasterService.showSuccess('File upload Success','')
+        }else { 
+          this.toasterService.showError('File upload Failed','')
+        }
+    }
+
   }
 }
