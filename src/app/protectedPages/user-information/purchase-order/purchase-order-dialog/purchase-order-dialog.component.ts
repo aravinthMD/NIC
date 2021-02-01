@@ -1,4 +1,4 @@
-import { Component, OnInit,Optional, Inject, EventEmitter } from '@angular/core';
+import { Component, OnInit,Optional, Inject, } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
 import {LabelsService } from '../../../../services/labels.service'
@@ -8,7 +8,6 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { AdminService } from '@services/admin.service';
 import { InvoiceService } from '@services/invoice.service';
 import {DatePipe} from '@angular/common';
-import { POService } from '@services/po-service';
 
 @Component({
   selector: 'app-purchase-order-dialog',
@@ -73,20 +72,9 @@ export class PurchaseOrderDialogComponent implements OnInit {
   ]
 
   poId: string;
-  updateEmitter = new EventEmitter();
 
-  constructor(
-    private labelService:  LabelsService,
-    private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,
-    private toasterService: ToasterService,
-    private router: Router, private activatedRoute: ActivatedRoute,
-    private utilService: UtilService,
-    private adminService: AdminService,
-    private invoiceService: InvoiceService,
-    private DatePipe: DatePipe,
-    private poService: POService
-    ) {
+  constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
+    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService,private DatePipe:DatePipe,) {
 
 
       this.poId = this.data.currentPOId;
@@ -177,13 +165,11 @@ export class PurchaseOrderDialogComponent implements OnInit {
     this.labels = value;
     })
 
-    // this.getSubLovs()
+    this.getSubLovs()
 
-    this.departmentListData = this.poService.getDepartmentList();
-    
+    this.departmentListData = await this.getDepartmentLov();
 
-    this.poStatus = this.poService.getStatusList();
-    this.paymentStatus = this.poService.getPaymentList();
+    this.poStatus = await this.getStatusLov();
 
 
     this.activatedRoute.params.subscribe((value)=> {
@@ -359,14 +345,11 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
         this.toasterService.showSuccess('Data Saved Successfully','')
 
-        const processVariables = response.ProcessVariables;
-
-        this.updateEmitter.emit({
-          ...processVariables,
-          id: Number(processVariables.selectedPOId)
-        });
-
-       
+        this.showDataSaveModal = true;
+        this.dataValue= {
+          title: 'Purchase Order Saved Successfully',
+          message: 'Are you sure you want to proceed tax invoice page?'
+        }
       }else {
 
         this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
