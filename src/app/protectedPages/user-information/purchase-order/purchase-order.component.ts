@@ -272,12 +272,13 @@ smsApprovedList : any[] = [
       const submenuList = response['ProcessVariables']['Lovitems'];
      submenuList.forEach(element => {
         
-        listData.push({key:element.key,value:element.name})
+        listData.push({key:element.key,value:element.value})
       });
       this.poDataService.setDepartmentList(listData);
+      this.departmentListData = listData;
     })
 
-    this.departmentListData = listData;
+    
 
    
 
@@ -293,9 +294,10 @@ smsApprovedList : any[] = [
         poData.push({key:element.key,value:element.value})
       });
       this.poDataService.setStatusList(poData);
+      this.poStatus = poData
     })
 
-    this.poStatus = poData
+    
     
 
     let piData = []
@@ -324,11 +326,12 @@ smsApprovedList : any[] = [
         paymentStatus.push({key:element.key,value:element.value})
       });
       this.poDataService.setPaymentList(paymentStatus);
+      this.paymentStatus = paymentStatus
     })
 
     
 
-    this.paymentStatus = paymentStatus
+    //this.paymentStatus = paymentStatus
 
 
     let piReceivedData = []
