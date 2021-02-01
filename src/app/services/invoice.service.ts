@@ -35,7 +35,8 @@ export class InvoiceService {
         nicsiProjectNumber : form.NICSIProjectNo,
         paidPI : form.piPaid,
         remark  :form.remark,
-        uploadDocument : form.uploadDocument
+        upload_document : form.upload_document,
+        userId  :form.userId
       }
 
       const requestEntity  : any  = {

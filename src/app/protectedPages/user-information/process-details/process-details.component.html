@@ -278,7 +278,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="poBillable" class="mb-0">Upload Document</label>
-                                <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
+                                <input type="file" class="form-control upload-choose-pad" formControlName = "importFile" id="poBillable" aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
@@ -290,7 +290,7 @@
 
                         <div class="col-10">
 
-                            <button class="btn btn-primary btn-lg pb-4" style="float: left;" (click)="createProformaInvoice()">submit</button>
+                            <button class="btn btn-primary btn-lg pb-4" style="float: left;" (click)="createProformaInvoice()">Submit</button>
 
                         </div>
 
@@ -482,4 +482,4 @@
 <app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="modalData" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
 
 
-<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="showDataSaveModal = !showDataSaveModal"></app-data-saved-modal>

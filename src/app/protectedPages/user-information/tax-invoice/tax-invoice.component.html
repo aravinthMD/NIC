@@ -500,7 +500,7 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="interestOnTds" 
                                 [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
-                                placeHolder =  "Enter the interestOnTDSotherDeduction"
+                                placeHolder =  "Enter the InterestOnTDSotherDeduction"
                                 [isRequired]="'interest On TDS other Deduction is Mandatory'" 
                                 [maxLength]="labels?.validationData.interestOnTDSotherDeduction.maxLength" 
                                 [type]="labels?.validationData.interestOnTDSotherDeduction.type"
@@ -566,7 +566,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="documentUpload">{{labels?.uploadDoc}}</label>
-                                <input type="file" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload">
+                                <input type="file" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload" (change) = "uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>

@@ -593,7 +593,7 @@ smsApprovedList : any[] = [
 
           this.fetchPODetails(this.clientId)
 
-          this.showDataSaveModal = true;
+          // this.showDataSaveModal = true;
           this.dataValue= {
             title: 'Purchase Order Saved Successfully',
             message: 'Are you sure you want to proceed tax invoice page?'

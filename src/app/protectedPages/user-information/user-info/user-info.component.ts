@@ -27,6 +27,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
   @Input('userObj') user: any;
 
 
+  docAvailFlag : boolean;
 
   showDataSaveModal: boolean;
   hide = true;
@@ -429,10 +430,6 @@ export class UserInfoComponent implements OnInit, OnChanges {
         value : trai
       },
       {
-        key  : this.labels.uploadDoc,
-        value  : data.upload_document
-      },
-      {
         key  : this.labels.remark,
         value :  this.form.value.remark
       }
@@ -641,6 +638,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.setValueForViewPage(processVariables);
       if(response['ProcessVariables']['upload_document']){
           this.previewDocumentId = response['ProcessVariables']['upload_document'];
+          this.docAvailFlag = true;
       }
 
     },(error) => {
@@ -897,19 +895,19 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.form.patchValue({
         creditAddedAgainstPi: ''
       })
-      this.toasterService.showError('Please click the creditAddedAgainstPi icon to select date','');
+      this.toasterService.showError('Please click the credit added against PI icon to select date','');
     }else if(type == 'auditDate') {
   
       this.form.patchValue({
         auditDate: ''
       })
-      this.toasterService.showError('Please click the auditDate icon to select date','');
+      this.toasterService.showError('Please click the audit date icon to select date','');
     }else if(type == 'creditDate') {
   
       this.form.patchValue({
         creditDate: ''
       })
-      this.toasterService.showError('Please click the creditDate icon to select date','');
+      this.toasterService.showError('Please click the credit date icon to select date','');
     }
     
   }
