@@ -33,7 +33,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       viewBillAdminInfoData = [];
 
-    dataSource = new MatTableDataSource<any>();
+    teleCodeValues = []
+
+    dataSource = [];
 
     user: string;
     name: string;
@@ -58,6 +60,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     teleCodeValues = [];
 
     isShowTechViewPage  = true;
+
  
 
 
@@ -150,25 +153,19 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     console.log(this.activatedRoute)
       if(this.user){
-      
+
+        this.getTechAdminsById(this.user);
+
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
-
-
-      this.setFormValues();
-      this.setBillOwnerFormValues();
       this.propertyFlag = true;
-
+      this.getBillingAdminDetailById(this.user);
       }else {
         this.showView = false;
       }
-
-      // this.fetchAllTechAdmins();
-
-       
 
   }
 
@@ -434,7 +431,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       this.adminsList = response['ProcessVariables'];
 
-      this.dataSource = new MatTableDataSource<any>(this.adminsList);
+      this.dataSource = this.adminsList;
     })
   }
 
@@ -467,7 +464,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
   getTechAdminsById(id){    
 
-    this.userInfoService.getTechAdminDetailById(id).subscribe((response) => {
+    this.userInfoService.getTechAdminDetailById(id).subscribe((response: any) => {
 
       console.log("get TechAdmins by id",response)
       const processVariables = response.ProcessVariables;

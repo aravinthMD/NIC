@@ -12,6 +12,7 @@ import { ToasterService } from '@services/toaster.service';
 import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService} from '../../../services/api.service';
+import { ClientDetailsService } from '@services/client-details.service';
 
 
 @Component({
@@ -30,6 +31,11 @@ export class ProjectExecutionComponent implements OnInit {
   pageSize:number;
   currentPage  = 1;
 
+  file : any;
+  documentUploadId : string = '';
+  uploadedData : any = {}
+
+
   piPaidValues = [
     {
     key: 0, 
@@ -39,6 +45,8 @@ export class ProjectExecutionComponent implements OnInit {
     key: 1, 
     value: 'Partial Payment'
   }]
+
+  proformaInvoicesList = [];
 
 
   modeOfPaymentList = [
@@ -65,6 +73,8 @@ export class ProjectExecutionComponent implements OnInit {
 
   showDataSaveModal: boolean;
 
+  clientId: string = '';
+
 dataValue: {
   title: string;
   message: string
@@ -80,7 +90,8 @@ dataValue: {
               private invoiceService : InvoiceService,
               private datePipe:DatePipe,
               private searchService: SearchService,
-              private apiService:ApiService
+              private apiService:ApiService,
+              private clientDetailService : ClientDetailsService
               ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
@@ -98,7 +109,7 @@ dataValue: {
 
     this.PurchaseEntryForm = new FormGroup({
       userName : new FormControl(null),
-      piNumber : new FormControl(null),
+      piNumber : new FormControl('',Validators.required),
       piDate : new FormControl(null),
       piAmount : new FormControl(null),
       modeOfPayment : new FormControl(''),
@@ -111,13 +122,19 @@ dataValue: {
       invoiceDate :  new FormControl(null),
       transactionDate : new FormControl(null),
       piPaid: new FormControl(''),
-      remark:new FormControl('')
+      remark:new FormControl('',Validators.required),
+      importFile : new FormControl(null)
     });
+
+
+    this.clientId = this.clientDetailService.getClientId();
 
     this.utilService.userDetails$.subscribe((val)=> {
 
       this.accountName = val['App_name'] || '';
       this.status = val['status'] || '';
+
+      this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
     })
 
     this.activatedRoute.params.subscribe((value)=> {  
@@ -125,7 +142,16 @@ dataValue: {
       this.storeProjectNo = value.projectNo || 4535
     })
 
-    this.getProjectExecutionDetails(this.currentPage);    
+    this.getProjectExecutionDetails(this.currentPage,this.clientId);    
+    this.getPIAutoPopulate(this.clientId);
+
+
+    this.PurchaseEntryForm.controls['piNumber'].valueChanges.subscribe((value) => {
+        if(!value)
+          return
+        this.getPIAutoPopulateonChange(value);
+    })
+
   }
 
 
@@ -156,6 +182,12 @@ dataValue: {
     //Create PE
 
     createProjectExecution(){
+
+        if(this.PurchaseEntryForm.invalid){
+          this.isDirty = true;
+          return
+        }
+
         const feildControls =   this.PurchaseEntryForm.controls;
         const userName  = feildControls.userName.value;
         const piNumber =  feildControls.piNumber.value;
@@ -188,11 +220,12 @@ dataValue: {
           NICSIProjectNo,
           piPaid,
           remark,
-          uploadDocument : "file"
-        }
+          upload_document : this.documentUploadId,
+          userId : this.clientId ?  Number(this.clientId) : 0
+                }
   
         this.invoiceService.createProjectExecution(Data).subscribe(
-          (response) => {
+          (response: any) => {
                 console.log(response['ProcessVariables']); 
                 const { 
                   ProcessVariables  : { error : {
@@ -203,10 +236,16 @@ dataValue: {
                 
               if(code == '0'){
                 this.PurchaseEntryForm.reset();
+                this.PurchaseEntryForm.controls['modeOfPayment'].setValue("");
+                this.PurchaseEntryForm.controls['piPaid'].setValue("");
+                this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
+                this.PurchaseEntryForm.controls['piAmount'].setValue('');
+                this.PurchaseEntryForm.controls['piDate'].setValue('');
+                this.documentUploadId = '';
                 this.isDirty = false;
-                this.getProjectExecutionDetails(this.currentPage);
+                this.getProjectExecutionDetails(this.currentPage,this.clientId);
                 this.toasterService.showSuccess('Data Saved Successfully','')
-                this.showDataSaveModal = true;
+                // this.showDataSaveModal = true;
                 this.dataValue= {
                 title: 'Project Execution Saved Successfully',
                 message: 'Are you sure you want to proceed purchase order invoice page?'         
@@ -221,8 +260,9 @@ dataValue: {
         })
     }
 
-    getProjectExecutionDetails(currentPage:any){ 
-      this.invoiceService.getProjectExecutionDetails(currentPage).subscribe((response) => {
+    getProjectExecutionDetails(currentPage:any,selectedClientId : string){ 
+      this.invoiceService.getProjectExecutionDetails(currentPage,selectedClientId).
+      subscribe((response: any) => {
         const { 
           ProcessVariables  : { error : {
             code,
@@ -261,7 +301,7 @@ dataValue: {
 
   clear() {
     this.searchForm.reset();
-    this.getProjectExecutionDetails(this.currentPage);
+    this.getProjectExecutionDetails(this.currentPage,this.clientId);
   }
 
 
@@ -272,7 +312,7 @@ dataValue: {
 
     dialogRef.afterClosed().subscribe(result =>{
       console.log('The dialog was Closed',result);
-      this.getProjectExecutionDetails(this.currentPage);
+      this.getProjectExecutionDetails(this.currentPage,this.clientId);
     })
   }
 
@@ -296,12 +336,12 @@ dataValue: {
       this.searchForm.patchValue({
         searchFrom: ''
       })
-      this.toasterService.showError('Please click the fromdate icon to select date','');
+      this.toasterService.showError('Please click the from date icon to select date','');
     }else if(type == 'searchTo') {
       this.searchForm.patchValue({
         searchTo: ''
       })
-      this.toasterService.showError('Please click the todate icon to select date','');
+      this.toasterService.showError('Please click the to date icon to select date','');
     }
   }
 
@@ -336,9 +376,71 @@ dataValue: {
   }
 
 
+  getPIAutoPopulate(clientId : string){
+        this.invoiceService.getPIAutoPopulationAPI(clientId).subscribe(
+          (response) => {
+            // const { 
+            //   ProcessVariables  : { error : {
+            //     code,
+            //     message
+            //   }}
+            // } = response;
+
+            console.log(`API Response for the Get PI Auto Populate ${response}`);
+            if(true){
+                this.proformaInvoicesList = response['ProcessVariables']['piList'] || [];
+            }
+        })
+  }
+
+  changeDateFormat(date) {
+
+    const splitDate = date.split('/');
+
+    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+   }
+
+  getPIAutoPopulateonChange(piNumber : any){
+      this.invoiceService.getProformaInvoiceOnChangeData(Number(piNumber)).subscribe(
+        (response) =>{
+          const date = response['ProcessVariables']['date'];
+          const amount = response['ProcessVariables']['piAmount'];
+          this.PurchaseEntryForm.controls['invoiceDate'].setValue(new Date(this.changeDateFormat(date)));
+          this.PurchaseEntryForm.controls['piAmount'].setValue(amount || '')
+        },(error) =>{
+          console.log(`Failed to fetch data`);
+          this.toasterService.showError('Failed to fetch data','');
+        })
+  }
+
+
+  async uploadFile(files : FileList){
+    this.file = files.item(0);
+    if(this.file){
+        const userId : string = this.clientDetailService.getClientId();
+        const modifiedFile = Object.defineProperty(this.file, "name", {
+          writable: true,
+          value: this.file["name"]
+        });
+        modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+        this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
+        if(this.uploadedData['uploadStatus']){
+          this.documentUploadId = this.uploadedData['documentUploadId'];
+          this.toasterService.showSuccess('File upload Success','')
+        }else { 
+          this.toasterService.showError('File upload Failed','')
+        }
+    }
+
+  }
+
+
+
+
   getServerData(event?:PageEvent){
      let currentPageIndex  = Number(event.pageIndex) + 1;
-      this.getProjectExecutionDetails(currentPageIndex);
+      this.getProjectExecutionDetails(currentPageIndex,this.clientId);
   }
 
   }

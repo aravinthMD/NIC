@@ -294,6 +294,29 @@ export class ApiService {
       workflowId : "bfb43590408411ebb7bf727d5ac274b2"
     },
 
+    PIonLoadAPI :  {
+      processId :  "0713298261eb11eb8c9d727d5ac274b2",
+      projectId :  "2efbdc721cc311ebb6c0727d5ac274b2",
+      workflowId :  "bfb43590408411ebb7bf727d5ac274b2"
+    },
+
+    PIonChangeAPI :  {
+      processId  : "7324b1ec621b11eb8cc2727d5ac274b2",
+      projectId :  "2efbdc721cc311ebb6c0727d5ac274b2",
+      workflowId :  "bfb43590408411ebb7bf727d5ac274b2"
+    },
+
+    TIonLoadAPI  :{
+      processId  : 'ac6255fc621d11eb8cc2727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  'bfb43590408411ebb7bf727d5ac274b2'
+    },
+
+    TIonChangeAPI : {
+      processId :  '5fa59d2a622011eb8cc2727d5ac274b2',
+      projectId  : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId  : 'bfb43590408411ebb7bf727d5ac274b2'
+    },
     getReportsLov: {
       processId : '9341403e5d4911eb8bcf727d5ac274b2',
       projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
@@ -311,6 +334,8 @@ export class ApiService {
       workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
     }
 
+
+    
 
   };
 

@@ -274,17 +274,13 @@
                 </div>
 
                 <div class="col-4">
-                    <div class="form-group">
-                        <app-custom-input formControlName="remark" 
-                            [labelName]="labels.remark" 
-                            placeHolder =  "Enter the Remark"
-                            [id]="'remark'"
-                            [maxLength]="labels?.validationData.remark.maxLength" 
-                            [isRequired]="'Remark is Mandatory'"
-                            [isDisabledInp]="propertyFlag"
-                            [isDirty]="isDirty">
-                        </app-custom-input>
-                    </div>
+                        <div class="form-group">
+                            <label for="remarks">{{labels.remark}}</label>
+                            <textarea class="form-control" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                                <div class="date-picker-error" *ngIf="isDirty && technicaladminform.controls['remark'].errors?.required">
+                                    Please Enter Remark
+                                </div>
+                        </div>
                 </div>
 
 

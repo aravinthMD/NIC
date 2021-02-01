@@ -101,14 +101,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
       })
 
       this.setBillOwnerFormValues();
-      // this.propertyFlag = true;
-
       }else  {
        this.showView = false
       }
-
-
-
   }
 
   initForm() {
@@ -242,12 +237,6 @@ export class BillingOwnerDetailsComponent implements OnInit {
     
     }else {
 
-      // if(!found && !iRemark) {
-
-      //   this.form.patchValue({
-      //     remark: this.detectAuditTrialObj.remark
-      //   })
-      // }
       this.detectAuditTrialObj = this.billOwnerForm.value;
       this.toasterService.showSuccess('Data Saved Successfully','')
     }

@@ -118,7 +118,7 @@
     "dateEstimated": "Date Estimated",
     "invoiceAmount2": "Invoice Amount2",
     "bankReceived": "Bank Received",
-    "interestOnTDSotherDeduction": "interest On TDS/OtherDeduction",
+    "interestOnTDSotherDeduction": "Interest On TDS/OtherDeduction",
     "receiptDate": "Receipt Date",
     "month": "Month",
     "year": "Year",
@@ -205,6 +205,37 @@
                 "rule": 50
             },
             "type": "alpha-numeric"
+        },
+        "userId": {
+            "maxLength": {
+                "rule": 50
+            }
+        },
+        "poAmount": {
+            "maxLength": {
+                "rule": 12
+            },
+            "type": "number"
+        },
+        "remark": {
+            "maxLength": {
+                "rule": 150
+            }
+        },
+        "purchaseON": {
+            "maxLength": {
+                "rule": 10
+            }
+        },
+        "projectNum": {
+            "maxLength": {
+                "rule": 15
+            }
+        },
+        "projectName": {
+            "maxLength": {
+                "rule": 50
+            }
         },
         "userId": {
             "maxLength": {
@@ -560,6 +591,5 @@
             },
             "type": "alpha-numeric"
         }
-
     }
 }

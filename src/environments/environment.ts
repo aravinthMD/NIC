@@ -13,6 +13,7 @@ export const environment = {
     api: 'v2/'
   },
   host:'http://178.128.125.44/appiyo/',
+  // host: 'https://hetrauat.equitasbank.com/appiyodev/',
   appiyoDrive: "d/drive/upload/",
   previewDocappiyoDrive :  "d/drive/docs/",
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',

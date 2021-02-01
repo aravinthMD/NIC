@@ -425,6 +425,7 @@ label {
     font-weight:bold;
 }
 
+
 .full-width-dialog .mat-dialog-container {
     max-width: 700px !important;
   }
@@ -436,4 +437,12 @@ label {
 
 .fa-eye {
     font-size: 16px;
+}
+
+.remark {
+    width: 90%;
+    border: 1px solid #a5b0bb;
+    border-radius: 5px;
+    padding: 5px;
+  margin-bottom: 8px;
 }

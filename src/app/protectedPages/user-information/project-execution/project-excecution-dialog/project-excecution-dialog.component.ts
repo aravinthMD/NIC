@@ -7,6 +7,7 @@ import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router'
 import { InvoiceService } from '@services/invoice.service';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -22,6 +23,15 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   buttonName : any = 'Edit';
   enableflag :boolean = true;
   showDeleteModal: boolean;
+
+  previewDocumentId : string = '';
+
+  host  = environment.host;
+  newAppiyoDrive  = environment.previewDocappiyoDrive;
+  previewUrl : string = ''
+
+  docAvailFlag : boolean
+
 
   modeOfPaymentList = [
     {key : 0 ,value : 'DD'},
@@ -131,7 +141,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   getProjectExecutionDetailById(currentPEId : string){
 
     this.invoiceService.getProjectExecutionDetailbyId(Number(currentPEId)).subscribe(
-      (response) => {
+      (response: any) => {
       const { 
         ProcessVariables  : { error : {
           code,
@@ -142,6 +152,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
         const data  = response["ProcessVariables"];
         this.selectedPEId = response["ProcessVariables"]["id"] ? response["ProcessVariables"]["id"] : ""; 
         this.setFormValues(data);
+        if(response.ProcessVariables.upload_document){
+          this.previewDocumentId = response.ProcessVariables.upload_document;
+          this.docAvailFlag = true;
+        }
       }else{
         this.toasterService.showError(message,'')
       }
@@ -235,10 +249,6 @@ export class ProjectExcecutionDialogComponent implements OnInit {
         {
           key: this.labels.remark,
           value:this.ProjectExcecutionForm.controls['remark'].value
-        },
-        {
-          key: 'Document',
-          value:'invoice.pdf'
         }
   
       ]
@@ -290,7 +300,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     }
 
     this.invoiceService.updateProjectExecutionDetail(Data).subscribe(
-      (response) =>{
+      (response: any) =>{
         const { 
           ProcessVariables  : { error : {
             code,
@@ -503,6 +513,8 @@ this.closeDialog()
   showPDF() {
     this.showUploadModal = false;
     this.showPdfModal = true;
+    this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`
+
   }
 
   detectDateKeyAction(event,type) {
