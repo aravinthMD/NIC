@@ -15,17 +15,17 @@ export class SearchService {
          projectId ;
         workflowId 
 
-        let body: any= JSON.stringify({ 
+        let requestEntity: any= { 
             processId,
             projectId,
             workflowId,
             ProcessVariables: data,
           }
-        );
-          body = 'processVariables=' + body;
+        ;
+
     
-          const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-          return this.httpService.post(url,body);
+          const url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+          return this.httpService.post(url,requestEntity);
     }
     
 }

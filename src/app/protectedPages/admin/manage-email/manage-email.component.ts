@@ -47,8 +47,9 @@ export class ManageEmailComponent implements OnInit {
 
   submitDialog(){
     const screenStatus = this.emailValue;
-    this.adminService.adminEmailManager(+this.selectedID,this.userId,screenStatus).subscribe((response) => {
-      const { 
+    this.adminService.adminEmailManager(+this.selectedID,this.userId,screenStatus).
+      subscribe((response: any) => {
+      const {
         ProcessVariables  : { error : {
           code,
           message

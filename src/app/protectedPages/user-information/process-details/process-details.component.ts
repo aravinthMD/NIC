@@ -160,7 +160,7 @@ export class ProcessDetailsComponent implements OnInit{
 
   fetchAllProformaInvoice(currentPage:any,selectedClientId :string){
       this.invoiceService.fetchAllProformaInvoice(currentPage,selectedClientId).subscribe(
-        (response) => {
+        (response: any) => {
           const { 
             ProcessVariables  : { error : {
               code,
@@ -248,7 +248,7 @@ export class ProcessDetailsComponent implements OnInit{
       }
 
       this.invoiceService.createProformaInvoice(Data).subscribe(
-        (response) => {
+        (response: any) => {
           const { 
             ProcessVariables  : { error : {
               code,

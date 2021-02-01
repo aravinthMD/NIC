@@ -2,13 +2,15 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvoiceService {
 
-  constructor(private apiService  : ApiService,private httpService : HttpClient) { }
+  constructor(private apiService  : ApiService,
+          private httpService : HttpService) { }
 
   createProjectExecution(form : any){
       const {
@@ -45,14 +47,10 @@ export class InvoiceService {
         projectId
       }
 
-      const body = {
-        processVariables : JSON.stringify(requestEntity)
-      };
+     
 
-      const formData = this.transform(body)
-
-      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-      return  this.httpService.post<any>(url,formData);
+      let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+      return  this.httpService.post(url,requestEntity);
   }
 
   getProjectExecutionDetails(currentPage : any,selectedClientId : any){
@@ -78,14 +76,10 @@ export class InvoiceService {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
+  
 
-  const formData = this.transform(body);
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
 
   }
 
@@ -112,14 +106,10 @@ export class InvoiceService {
         projectId
       }
     
-      const body = {
-        processVariables : JSON.stringify(requestEntity)
-      };
+      
     
-      const formData = this.transform(body);
-    
-      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-      return  this.httpService.post<any>(url,formData);
+      let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+      return  this.httpService.post(url,requestEntity);
     
        
         }
@@ -143,13 +133,10 @@ export class InvoiceService {
         projectId
       }
     
-      const body = {
-        processVariables : JSON.stringify(requestEntity)
-      };
-      const formData = this.transform(body);
+      
     
-      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-      return  this.httpService.post<any>(url,formData);
+      let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+      return  this.httpService.post(url,requestEntity);
       }
 
 
@@ -175,14 +162,10 @@ export class InvoiceService {
       projectId
     }
   
-    const body = {
-      processVariables : JSON.stringify(requestEntity)
-    };
+    
   
-    const formData = this.transform(body);
-  
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-    return  this.httpService.post<any>(url,formData);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    return  this.httpService.post(url,requestEntity);
 
   }
 
@@ -210,14 +193,10 @@ export class InvoiceService {
     }
   
 
-    const body = {
-      processVariables : JSON.stringify(requestEntity)
-    };
+    
 
-    const formData = this.transform(body)
-
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-    return  this.httpService.post<any>(url,formData);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    return  this.httpService.post(url,requestEntity);
 }
 
   createPurchaseOrder(data : any){
@@ -237,15 +216,10 @@ export class InvoiceService {
       ProcessVariables : data,
       projectId
     }
+      
   
-    const body = {
-      processVariables : JSON.stringify(requestEntity)
-    };
-  
-    const formData = this.transform(body);
-  
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-    return  this.httpService.post<any>(url,formData);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    return  this.httpService.post(url,requestEntity);
   
     
   }
@@ -284,14 +258,9 @@ fetchAllPO(selectedClientId : string,currentPage?:any) {
               }
         }
           
-        const body = {
-          processVariables : JSON.stringify(requestEntity)
-        };
-
-        const formData = this.transform(body)
-
-        let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-        return  this.httpService.post<any>(url,formData);
+        
+        let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return  this.httpService.post(url,requestEntity);
 
 }
 
@@ -314,15 +283,10 @@ updatePurchaseOrder(data) {
         ProcessVariables : data,
         projectId
       }
+     
 
-      const body = {
-        processVariables : JSON.stringify(requestEntity)
-      };
-
-      const formData = this.transform(body)
-
-      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-      return  this.httpService.post<any>(url,formData);
+      let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+      return  this.httpService.post(url,requestEntity);
 
 
 }
@@ -345,14 +309,9 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
-
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
   }
 
   getProformaInvoiceDetailById(id : number){
@@ -377,14 +336,10 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
+  
 
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
 
   }
 
@@ -406,14 +361,10 @@ updatePurchaseOrder(data) {
         projectId
       }
 
-      const body = {
-        processVariables : JSON.stringify(requestEntity)
-      };
+     
 
-      const formData = this.transform(body)
-
-      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-      return  this.httpService.post<any>(url,formData);
+      let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+      return  this.httpService.post(url,requestEntity);
   }
 
 
@@ -471,14 +422,10 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
+  
 
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
 
   }
 
@@ -503,14 +450,10 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
+ 
 
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
 
   }
 
@@ -537,14 +480,10 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
+ 
 
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
   }
 
 
@@ -564,15 +503,11 @@ updatePurchaseOrder(data) {
       projectId,
     };
   
-    const body = {
-      processVariables: JSON.stringify(requestEntity),
-    };
+    
   
-    const formData = this.transform(body);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
   
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  
-    return this.httpService.post(url,formData);
+    return this.httpService.post(url,requestEntity);
   
   }
 
@@ -590,15 +525,11 @@ updatePurchaseOrder(data) {
       projectId,
     };
   
-    const body = {
-      processVariables: JSON.stringify(requestEntity),
-    };
+    
   
-    const formData = this.transform(body);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
   
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  
-    return this.httpService.post(url,formData);
+    return this.httpService.post(url,requestEntity);
 
   }
 
@@ -625,14 +556,10 @@ updatePurchaseOrder(data) {
       projectId
     }
   
-    const body = {
-      processVariables : JSON.stringify(requestEntity)
-    };
+    
   
-    const formData = this.transform(body)
-  
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-    return  this.httpService.post<any>(url,formData);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    return  this.httpService.post(url,requestEntity);
   
   }
 
@@ -658,14 +585,9 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
-
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
 
   }
 
@@ -692,14 +614,9 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
-
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+ 
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
   }
 
   getTIOnChange(poNumber : string){
@@ -725,14 +642,9 @@ updatePurchaseOrder(data) {
     projectId
   }
 
-  const body = {
-    processVariables : JSON.stringify(requestEntity)
-  };
-
-  const formData = this.transform(body)
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-  return  this.httpService.post<any>(url,formData);
+  
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
   
   }
   
