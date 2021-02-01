@@ -24,30 +24,58 @@
                                   placeHolder =  "Enter the User Name"
                                   [maxLength]="labels?.validationData?.userName?.maxLength" 
                                   [type]="labels?.validationData?.userName?.type" 
-                                  [isDirty]="isDirty">
+                                  [isDirty]="isDirty"
+                                  isDisabledInp = 'true'>
                                 </app-custom-input>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="projectNumber" 
-                                   [type] = "labels?.validationData?.projectNo?.type"
-                                   [isRequired]="'Project Number is Mandatory'" 
-                                   [labelName]="labels.projectNo" 
-                                   placeHolder =  "Enter the Project Number"
-                                   [maxLength]="labels?.validationData?.projectNo?.maxLength" 
-                                   [isDirty]="isDirty">
-                                </app-custom-input>
-                                <div *ngIf="taxInvoiceForm.get('projectNumber').errors?.pattern" class="error-feedback">
-                                    <div>
-                                        {{'Please Enter Digits'}}
-                                    </div>
+                                <label for="department">{{labels.proformaIN}}</label>
+                                <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
+                                class="form-control mb-3"
+                                placeholder="click to select the Proforma Invoice Number"
+                                [formControl]="taxInvoiceForm.controls['piNumber']"
+                                formControlName = "piNumber"
+                                [matAutocomplete]="auto1" 
+                               >
+                               <mat-autocomplete #auto1="matAutocomplete">
+                                <mat-option *ngFor="let proformaInvoice of proformaInvoicesList" [value]="proformaInvoice.name">
+                                  {{proformaInvoice.name}}
+                                </mat-option>
+                              </mat-autocomplete>
+                              <div class="date-picker-error" *ngIf="isDirty && taxInvoiceForm.controls['piNumber'].errors?.required">
+                                    Please Enter the Proforma Invoice Number
                                 </div>
                             </div>
                         </div>
 
+
                         <div class="col-4">
+                            <div class="form-group">
+                                <label for="department">{{labels.poNumber}}</label>
+                                <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
+                                class="form-control mb-3"
+                                placeholder="click to select the Purchase Order Number"
+                                [formControl]="taxInvoiceForm.controls['poNumber']"
+                                formControlName = "poNumber"
+                                [matAutocomplete]="auto" 
+                               >
+                               <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let po of purchaseOrderNumberList" [value]="po.Name">
+                                  {{po.Name}}
+                                </mat-option>
+                              </mat-autocomplete>
+                              <div class="date-picker-error" *ngIf="isDirty && taxInvoiceForm.controls['poNumber'].errors?.required">
+                                    Please Enter the Proforma Invoice Number
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="poNumber" 
                                   [isRequired]="'PO Number is Mandatory'" 
@@ -59,7 +87,7 @@
                                 </app-custom-input>
 
                             </div>
-                        </div>
+                        </div> -->
 
 
 
@@ -129,6 +157,24 @@
                                 </mat-form-field>
                                 <div class="date-picker-error" *ngIf="isDirty && taxInvoiceForm.get('toDate').errors?.required">
                                     Please Select To Date
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="projectNumber" 
+                                   [type] = "labels?.validationData?.projectNo?.type"
+                                   [isRequired]="'Project Number is Mandatory'" 
+                                   [labelName]="labels.projectNo" 
+                                   placeHolder =  "Enter the Project Number"
+                                   [maxLength]="labels?.validationData?.projectNo?.maxLength" 
+                                   [isDirty]="isDirty">
+                                </app-custom-input>
+                                <div *ngIf="taxInvoiceForm.get('projectNumber').errors?.pattern" class="error-feedback">
+                                    <div>
+                                        {{'Please Enter Digits'}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -262,18 +308,7 @@
 
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <app-custom-input formControlName="remark" 
-                                [labelName]="labels.remark" [id]="'remark'" 
-                                placeHolder =  "Enter the Remark"
-                                [isRequired]="'Remark is Mandatory'" 
-                                [maxLength]="labels?.validationData.userName.maxLength" 
-                                [isDirty]="isDirty" 
-                                [isDisabledInp]="propertyFlag">
-                                </app-custom-input>
-                            </div>
-                        </div>
+                        
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="projectName" 
@@ -317,9 +352,10 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="userEmail" 
                                 [labelName]="labels.mail" [id]="'mail'" 
-                                placeHolder =  "Enter the mail"
+                                placeHolder =  "Enter the Mail"
                                 [isRequired]="'mail is Mandatory'" 
-                                [maxLength]="labels?.validationData.mail.maxLength" 
+                                [maxLength]="labels?.validationData.mail.maxLength"
+                                [patternCheck]="labels?.validationData.mail.patternCheck" 
                                 [isDirty]="isDirty" 
                                 [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
@@ -329,7 +365,7 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="totalSMS" 
                                 [labelName]="labels.totalSMS" [id]="'totalSMS'" 
-                                placeHolder =  "Enter the totalSMS"
+                                placeHolder =  "Enter the Total SMS"
                                 [isRequired]="'totalSMS is Mandatory'"
                                 [type]="labels?.validationData.totalSMS.type" 
                                 [maxLength]="labels?.validationData.totalSMS.maxLength" 
@@ -357,7 +393,7 @@
                                 <app-custom-input formControlName="baseAmount" 
                                 [type]="labels?.validationData.baseAmount.type"
                                 [labelName]="labels.baseAmount" [id]="'baseAmount'" 
-                                placeHolder =  "Enter the baseAmount"
+                                placeHolder =  "Enter the Base Amount"
                                 [isRequired]="'baseAmount is Mandatory'" 
                                 [maxLength]="labels?.validationData.baseAmount.maxLength" 
                                 [isDirty]="isDirty" 
@@ -438,7 +474,7 @@
                                 <app-custom-input formControlName="invoiceAmount2"
                                 
                                 [labelName]="labels.invoiceAmount2" [id]="'invoiceAmount2'" 
-                                placeHolder =  "Enter the InvoiceAmount2"
+                                placeHolder =  "Enter the Invoice Amount2"
                                 [isRequired]="'InvoiceAmount2 is Mandatory'" 
                                 [type]="labels?.validationData.invoiceAmount2.type" 
                                 [maxLength]="labels?.validationData.invoiceAmount2.maxLength" 
@@ -451,7 +487,7 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="bankReceived" 
                                 [labelName]="labels.bankReceived" [id]="'bankReceived'" 
-                                placeHolder =  "Enter the BankReceived"
+                                placeHolder =  "Enter the Bank Received"
                                 [isRequired]="'Bank Received is Mandatory'" 
                                 [type]="labels?.validationData.bankReceived.type"
                                 [maxLength]="labels?.validationData.bankReceived.maxLength" 
@@ -464,7 +500,7 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="interestOnTds" 
                                 [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
-                                placeHolder =  "Enter the interestOnTDSotherDeduction"
+                                placeHolder =  "Enter the InterestOnTDSotherDeduction"
                                 [isRequired]="'interest On TDS other Deduction is Mandatory'" 
                                 [maxLength]="labels?.validationData.interestOnTDSotherDeduction.maxLength" 
                                 [type]="labels?.validationData.interestOnTDSotherDeduction.type"
@@ -530,9 +566,31 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="documentUpload">{{labels?.uploadDoc}}</label>
-                                <input type="file" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload">
+                                <input type="file" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload" (change) = "uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
+                        </div>
+
+                        <div class="col-4">
+                                <div class="form-group">
+                                    <label for="remark">{{labels.remark}}</label>
+                                    <textarea class="remark" maxlength="3000" formControlName='remark' id="remark" placeHolder =  "Enter the Remark" required></textarea>
+                                    <div class="date-picker-error" *ngIf="
+                              isDirty &&
+                              taxInvoiceForm.get('remark').errors?.required
+                            ">
+                                                    Please Enter Remark
+                                                </div>
+                                </div>
+                                <!-- <app-custom-input formControlName="remark" 
+                                [labelName]="labels.remark" [id]="'remark'" 
+                                placeHolder =  "Enter the Remark"
+                                [isRequired]="'Remark is Mandatory'" 
+                                [maxLength]="labels?.validationData.userName.maxLength" 
+                                [isDirty]="isDirty" 
+                                [isDisabledInp]="propertyFlag">
+                                </app-custom-input> -->
+                            <!-- </div> -->
                         </div>
                     </div>
 
@@ -692,7 +750,7 @@
             </table>
 
 
-            <mat-paginator class="font-paginator"  [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+            <mat-paginator class="font-paginator" [hidePageSize] = 'true'  showFirstLastButtons></mat-paginator>
         </div>
 
 

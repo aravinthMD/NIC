@@ -28,9 +28,24 @@
             <td mat-cell *matCellDef="let element"> {{element.piNumber}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="piAmount">
+            <th mat-header-cell *matHeaderCellDef> PI Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.piAmount}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="piDate">
             <th mat-header-cell *matHeaderCellDef> PI Date </th>
             <td mat-cell *matCellDef="let element"> {{element.piDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="poNumber">
+            <th mat-header-cell *matHeaderCellDef> PO Number </th>
+            <td mat-cell *matCellDef="let element"> {{element.poNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="poDate">
+            <th mat-header-cell *matHeaderCellDef> PO Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.poDate}} </td>
         </ng-container>
 
 
@@ -72,7 +87,7 @@
 
         <ng-container matColumnDef="InvoiceNo">
             <th mat-header-cell *matHeaderCellDef>Invoice Number</th>
-            <td mat-cell *matCellDef="let element"> {{element.invoiceNo}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.invoiceNumber}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="TDS">
@@ -87,7 +102,7 @@
 
         <ng-container matColumnDef="ActualPayment">
             <th mat-header-cell *matHeaderCellDef>Actual Payment</th>
-            <td mat-cell *matCellDef="let element"> {{element.actualPayment}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="ShortPay">
@@ -133,7 +148,7 @@
 
          <ng-container matColumnDef="InvoicePaid">
             <th mat-header-cell *matHeaderCellDef>Invoice Amount Paid</th>
-            <td mat-cell *matCellDef="let element"> {{element.invoiceAmountPaid}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.invoicePaidAmount}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="InvoiceUnpaid">
@@ -146,17 +161,22 @@
 
         <ng-container matColumnDef="smsMatrix">
             <th mat-header-cell *matHeaderCellDef>SMS Quota Approval Matrix</th>
-            <td mat-cell *matCellDef="let element"> {{element.smsQuotaApprovalMetrix}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.SMSQuotaApprovalMatrix}} </td>
+        </ng-container> 
+
+        <ng-container matColumnDef="DateOfRequest">
+            <th mat-header-cell *matHeaderCellDef>Date Of Request</th>
+            <td mat-cell *matCellDef="let element"> {{element.dateOfRequest}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="Credits">
             <th mat-header-cell *matHeaderCellDef>Credits</th>
-            <td mat-cell *matCellDef="let element"> {{element.credits}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.credit}} </td>
         </ng-container> 
 
         <ng-container matColumnDef="Date">
             <th mat-header-cell *matHeaderCellDef>Date</th>
-            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.dateOfRequestx}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Status">
@@ -167,7 +187,7 @@
         <ng-container matColumnDef="Navigate">
             <th mat-header-cell *matHeaderCellDef>Navigate</th>
             <td mat-cell *matCellDef="let element"> 
-                <button class="navigate" matTooltip = "Navigate" (click) = "Navigate(element)">
+                <button class="navigate" matTooltip = "Navigate" (click) = "navigate(element)">
                     <i class="fa fa-link" aria-hidden="true"></i>
                 </button>
             </td>

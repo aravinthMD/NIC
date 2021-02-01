@@ -113,6 +113,10 @@ export class SmsCreditAllocationComponent implements OnInit {
     });
     this.initForm();
 
+    this.utilService.userDetails$.subscribe((val  :any) => {
+        this.accountName = val.App_name || '';
+    })
+
     if (this.userId) {
       this.getSmsCreditList();
     }
@@ -143,7 +147,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       dateOfRequest: new FormControl(null),
       status: new FormControl('2'),
       onApprovalOf: new FormControl(null),
-      remark: new FormControl(null),
+      remark: new FormControl(''),
       usedCredit: new FormControl(null),
       balanceCredit: new FormControl(null),
       approvedBy: new FormControl(userName),
@@ -155,6 +159,10 @@ export class SmsCreditAllocationComponent implements OnInit {
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null),
     });
+  }
+
+  onQuotaMatrixChange(event) {
+    this.smsCreditForm.get('onApprovalOf').setValue(event.value);
   }
 
   getSmsCreditList(searchKeyword = '', fromDate: string = '', toDate = '') {
@@ -362,6 +370,7 @@ export class SmsCreditAllocationComponent implements OnInit {
               return this.toasterService.showError(errorMessage, '');
             }
             this.toasterService.showSuccess('Data saved successfully', '');
+            this.isDirty = false
             const processVariables = res.ProcessVariables;
             const status = this.getStatusDescription(processVariables.status);
             const data: SmsCreditAllocation = {

@@ -10,8 +10,14 @@ import { HttpClient,HttpHeaders } from "@angular/common/http";
   providedIn: 'root'
 })
 export class UserInfoService {
+
+ // Admin Department, Sales Department, Operations Department and Finance Department
+
   
+
   constructor(private apiService: ApiService,private httpService: HttpClient) { }
+
+
 
 
   createCustomerDetails(data) {

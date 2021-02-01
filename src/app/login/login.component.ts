@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
         }
         else if(response['ProcessVariables']['countUser'] === '1') {
 
-          this.toasterService.showSuccess(response['ProcessVariables']['response'],'')
+          this.toasterService.showSuccess('Logged Successfully','')
           const processVariables = response.ProcessVariables;
           localStorage.setItem('roleName', processVariables.roleName);
           this.router.navigate(["users/Dashboard/"]);
