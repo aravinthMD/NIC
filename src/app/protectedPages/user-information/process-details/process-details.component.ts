@@ -129,9 +129,15 @@ export class ProcessDetailsComponent implements OnInit{
     this.activatedRoute.params.subscribe((value)=> {
       this.storeProjectNo = value.projectNo || 4535;
   });
-  this.userId = this.clientDetailService.getClientId();
+   // this.userId = this.clientDetailService.getClientId();
 
-  this.fetchAllProformaInvoice(this.currentPage,this.userId);
+    this.activatedRoute.params.subscribe((value) => {
+      if (!value) {
+        return;
+      }
+      this.userId = value.id;
+      this.fetchAllProformaInvoice(this.currentPage,this.userId);
+    });
 
   }
 
@@ -374,9 +380,9 @@ export class ProcessDetailsComponent implements OnInit{
 
   next() {
 
-    this.utilService.setCurrentUrl('users/projectExecution')
+    // this.utilService.setCurrentUrl('users/projectExecution')
 
-    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
+    this.router.navigate([`/users/projectExecution/${this.userId}`])
 
   }
 
