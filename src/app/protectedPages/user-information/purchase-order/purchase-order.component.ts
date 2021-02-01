@@ -14,6 +14,7 @@ import { AdminService } from '@services/admin.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService } from '../../../services/api.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { POService } from '@services/po-service';
 // import value from '*.json';
 
 @Component({
@@ -114,7 +115,8 @@ smsApprovedList : any[] = [
     private searchService: SearchService,
     private apiService : ApiService,
     private beheSer : BehaviourSubjectService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private poDataService: POService
     ) { }
 
   ngOnInit() {
@@ -273,7 +275,7 @@ smsApprovedList : any[] = [
       const poList = response['ProcessVariables']['Lovitems'];
       poList.forEach(element => {
         
-        poData.push({key:element.key,value:element.name})
+        poData.push({key:element.key,value:element.value})
       });
       this.poDataService.setStatusList(poData);
       this.poStatus = poData
@@ -304,7 +306,7 @@ smsApprovedList : any[] = [
       const paymentList = response['ProcessVariables']['Lovitems'];
       paymentList.forEach(element => {
         
-        paymentStatus.push({key:element.key,value:element.name})
+        paymentStatus.push({key:element.key,value:element.value})
       });
       this.poDataService.setPaymentList(paymentStatus);
       this.paymentStatus = paymentStatus
