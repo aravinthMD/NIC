@@ -424,3 +424,16 @@ label {
 .bold-lable{
     font-weight:bold;
 }
+
+.full-width-dialog .mat-dialog-container {
+    max-width: 700px !important;
+  }
+
+.modal-dialog {
+    max-width: 700px !important;
+    margin: 1.75rem auto;
+}
+
+.fa-eye {
+    font-size: 16px;
+}

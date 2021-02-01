@@ -251,44 +251,40 @@ export class InvoiceService {
 
     
 
-fetchAllPO(currentPage?:any) {
+fetchAllPO(currentPage = null, clientId: any) {
 
           const {
-            api : {
-              fetchPurchaseOrder : {
-                  workflowId,
-                  processId,
-                  projectId
-              }
-            }
-        } = this.apiService;
+            api: {
+              fetchPurchaseOrder: { workflowId, processId, projectId },
+            },
+          } = this.apiService;
 
-
-        let requestEntity  : any  = {};
-        if(currentPage) {
-              requestEntity = {
-                processId,
-              ProcessVariables : {
-                currentPage: Number(currentPage)
+          let requestEntity: any = {};
+          if (currentPage) {
+            requestEntity = {
+              processId,
+              ProcessVariables: {
+                currentPage: Number(currentPage),
+                selectedClientId: clientId,
               },
-              projectId
-            }
-        }else {
-              requestEntity = {
-                processId,
-                ProcessVariables : {},
-                projectId
-              }
-        }
-          
-        const body = {
-          processVariables : JSON.stringify(requestEntity)
-        };
+              projectId,
+            };
+          } else {
+            requestEntity = {
+              processId,
+              ProcessVariables: {},
+              projectId,
+            };
+          }
 
-        const formData = this.transform(body)
+          const body = {
+            processVariables: JSON.stringify(requestEntity),
+          };
 
-        let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-        return  this.httpService.post<any>(url,formData);
+          const formData = this.transform(body);
+
+          const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+          return this.httpService.post<any>(url, formData);
 
 }
 

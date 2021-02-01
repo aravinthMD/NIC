@@ -101,7 +101,14 @@ export class SmsCreditAllocationComponent implements OnInit {
   ngOnInit() {
     this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
     this.statusList = this.smsCreditService.getStatusListLov();
-    this.userId = this.clientDetailsService.getClientId();
+    this.activatedRoute.params.subscribe((value) => {
+      if (!value) {
+        return;
+      }
+      this.userId = Number(value.id);
+      this.getSmsCreditList();
+    });
+    // this.userId = this.clientDetailsService.getClientId();
     console.log('userId>>>>in >> sms', this.userId);
 
     this.currentDate = this.datePipe.transform(
@@ -113,9 +120,9 @@ export class SmsCreditAllocationComponent implements OnInit {
     });
     this.initForm();
 
-    if (this.userId) {
-      this.getSmsCreditList();
-    }
+    // if (this.userId) {
+    //   this.getSmsCreditList();
+    // }
 
     // this.user = "";
     // this.activatedRoute.params.subscribe((value) => {
@@ -311,12 +318,12 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   next() {
-    this.utilService.setCurrentUrl('users/proformaInvoice');
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) => {
-      pno = val || '1';
-    });
-    this.router.navigate(['/users/proformaInvoice/' + pno]);
+    // this.utilService.setCurrentUrl('users/proformaInvoice');
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) => {
+    //   pno = val || '1';
+    // });
+    this.router.navigate(['/users/proformaInvoice/' + this.userId]);
   }
 
   back() {
