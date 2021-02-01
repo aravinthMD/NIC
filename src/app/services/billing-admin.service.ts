@@ -26,12 +26,9 @@ export class BillingAdminService {
           workflowId,
           projectId,
         };
-        const body = {
-          processVariables: JSON.stringify(requestEntity),
-        };
-        const formData = this.transform(body);
-        const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-        return this.httpService.post(url, formData);
+    
+        const url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return this.httpService.post(url, requestEntity);
       }
 
       saveOrUpdateBillingAdminDetails(data) {
@@ -45,12 +42,9 @@ export class BillingAdminService {
           workflowId,
           projectId,
         };
-        const body = {
-          processVariables: JSON.stringify(requestEntity),
-        };
-        const formData = this.transform(body);
-        const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-        return this.httpService.post(url, formData);
+        
+        const url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return this.httpService.post(url, requestEntity);
       }
 
       private transform(data: any) {

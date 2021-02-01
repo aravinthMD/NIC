@@ -162,7 +162,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   getProformaInvoiceDetailById(currentPIId : string){
     
     this.invoiceServoice.getProformaInvoiceDetailById(Number(currentPIId)).subscribe(
-      (response) => {
+      (response: any) => {
         const { 
           ProcessVariables  : { error : {
             code,
@@ -325,7 +325,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
 
     this.invoiceServoice.updateProformaInvoice(Data).subscribe(
-      (response) => {
+      (response: any) => {
       const { 
         ProcessVariables  : { error : {
           code,

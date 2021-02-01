@@ -25,10 +25,10 @@ export class HttpService {
     headers?: any
   ) {
     let requestData;
-    let newUrl
+    
     if (url.includes('login')) {
       requestData = requestEntity;
-      newUrl = url
+      
     } else {
       const body: RequestEntity = {
         processId: requestEntity.processId,
@@ -37,15 +37,15 @@ export class HttpService {
         projectId: requestEntity.projectId,
       }
       requestData = body;
-      newUrl = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+     
     }
     if (headers) {
-      return this.http.post(newUrl, requestData, {
+      return this.http.post(url, requestData, {
         headers: headers,
       });
     }
     // const body = requestEntity
-    return this.http.post(newUrl, requestData);
+    return this.http.post(url, requestData);
 
   }
 

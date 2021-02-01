@@ -225,7 +225,7 @@ dataValue: {
                 }
   
         this.invoiceService.createProjectExecution(Data).subscribe(
-          (response) => {
+          (response: any) => {
                 console.log(response['ProcessVariables']); 
                 const { 
                   ProcessVariables  : { error : {
@@ -261,7 +261,8 @@ dataValue: {
     }
 
     getProjectExecutionDetails(currentPage:any,selectedClientId : string){ 
-      this.invoiceService.getProjectExecutionDetails(currentPage,selectedClientId).subscribe((response) => {
+      this.invoiceService.getProjectExecutionDetails(currentPage,selectedClientId).
+      subscribe((response: any) => {
         const { 
           ProcessVariables  : { error : {
             code,

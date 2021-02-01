@@ -29,7 +29,7 @@ export class AdminService {
       projectId,
     }; 
 
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
     return this.httpService.post(url,requestEntity);
 
@@ -55,7 +55,7 @@ getLovSubMenuList(menuId) {
 
   
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
   return this.httpService.post(url,requestEntity);
 
@@ -82,15 +82,10 @@ updateLov(lov) {
         projectId,
       };
 
-      const body = {
-        processVariables: JSON.stringify(requestEntity),
-      };
 
-      const formData = this.transform(body);
-
-      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-      return this.httpService.post(url,formData);
+      
+      let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+      return this.httpService.post(url,requestEntity);
 
 }
 
@@ -114,16 +109,11 @@ deleteLov(lov) {
     projectId,
   };
 
-  console.log('RE',requestEntity)
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
+ 
 
-  const formData = this.transform(body);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 }
 
@@ -146,15 +136,9 @@ insertLov(lov) {
     projectId,
   };
 
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-  const formData = this.transform(body);
-
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 }
 
@@ -173,15 +157,11 @@ createAdminUser(data) {
     projectId,
   };
 
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
+  
 
-  const formData = this.transform(body);
+  let url =`${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 } 
 
@@ -199,15 +179,11 @@ fetchAllAdminUser() {
     projectId,
   };
 
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
+ 
 
-  const formData = this.transform(body);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 }
 
@@ -227,15 +203,11 @@ getParticularAdminUser(id) {
     projectId,
   };
 
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
+  
 
-  const formData = this.transform(body);
+  let url =`${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 }
 
@@ -253,15 +225,11 @@ updateAdminUser(data) {
     projectId,
   };
 
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
 
-  const formData = this.transform(body);
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 }
 
@@ -281,15 +249,10 @@ deleteAdminUser(id) {
     projectId,
   };
 
-  const body = {
-    processVariables: JSON.stringify(requestEntity),
-  };
 
-  const formData = this.transform(body);
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;;
 
-  let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-  return this.httpService.post(url,formData);
+  return this.httpService.post(url,requestEntity);
 
 }
 
@@ -336,14 +299,10 @@ const requestEntity  : any  = {
   projectId
 }
 
-const body = {
-  processVariables : JSON.stringify(requestEntity)
-};
 
-const formData = this.transform(body)
 
-let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-return  this.httpService.post(url,formData);
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
 
 }
 
@@ -370,13 +329,8 @@ const requestEntity  : RequestEntity  = {
   workflowId
 }
 
-// const body = {
-//   processVariables : JSON.stringify(requestEntity)
-// };
 
-// const formData = this.transform(body)
-
-let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
 return  this.httpService.post(url,requestEntity);
 

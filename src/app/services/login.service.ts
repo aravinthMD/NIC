@@ -79,15 +79,11 @@ loginApplication(data){
         projectId,
       };
   
-      const body = {
-        processVariables: JSON.stringify(requestEntity),
-      };
+     
   
-      const formData = this.transform(body);
-  
-      let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
+      let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-      return this.httpService.post(url,formData);
+      return this.httpService.post(url,requestEntity);
 
 
   }
@@ -110,15 +106,11 @@ loginApplication(data){
       projectId,
     };
 
-    const body = {
-      processVariables: JSON.stringify(requestEntity),
-    };
+   
 
-    const formData = this.transform(body);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-    return this.httpService.post(url,formData);
+    return this.httpService.post(url,requestEntity);
 
 
 
@@ -142,15 +134,11 @@ loginApplication(data){
       projectId,
     };
 
-    const body = {
-      processVariables: JSON.stringify(requestEntity),
-    };
+   
 
-    const formData = this.transform(body);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-    return this.httpService.post(url,formData);
+    return this.httpService.post(url,requestEntity);
 
 
 
@@ -175,15 +163,11 @@ loginApplication(data){
       projectId,
     };
 
-    const body = {
-      processVariables: JSON.stringify(requestEntity),
-    };
+   
 
-    const formData = this.transform(body);
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-    let url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-    return this.httpService.post(url,formData);
+    return this.httpService.post(url,requestEntity);
 
 
 

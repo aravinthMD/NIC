@@ -22,14 +22,9 @@ export class DashboardService {
       workflowId,
       projectId,
     };
-
-  
-
-    // const formData = this.transform(body);
-
-    // const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-    const url = `${environment.host}d/workflows/${processId}/${environment.apiVersion.api}execute?projectId=${projectId}`;
-    // const url = `${environment.host}d/workflows/${workflowId}/${environment.apiVersion.api}execute?projectId=${projectId}`;
+    
+    const url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+   
     return this.httpService.post(url, requestEntity);
   }
 
