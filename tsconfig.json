@@ -15,7 +15,8 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "paths": {
-      "@services/*": ["src/app/services/*"]
+      "@services/*": ["src/app/services/*"],
+      "@model/*": ["src/app/model/*"]
     },
     "typeRoots": [
       "node_modules/@types",

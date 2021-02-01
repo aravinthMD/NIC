@@ -440,7 +440,7 @@ console.log("departmentList",this.departmentListData,this.technicaladminform.val
 
   getTechAdminsById(id:string){    
 
-    this.userInfoService.getTechAdminDetailById(id).subscribe((response) => {
+    this.userInfoService.getTechAdminDetailById(id).subscribe((response: any) => {
 
       console.log("get TechAdmins by id",response)
       const processVariables = response.ProcessVariables;

@@ -141,7 +141,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   getProjectExecutionDetailById(currentPEId : string){
 
     this.invoiceService.getProjectExecutionDetailbyId(Number(currentPEId)).subscribe(
-      (response) => {
+      (response: any) => {
       const { 
         ProcessVariables  : { error : {
           code,
@@ -300,7 +300,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     }
 
     this.invoiceService.updateProjectExecutionDetail(Data).subscribe(
-      (response) =>{
+      (response: any) =>{
         const { 
           ProcessVariables  : { error : {
             code,

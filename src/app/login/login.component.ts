@@ -38,19 +38,28 @@ export class LoginComponent implements OnInit {
     }else {
 
       const data = {
-        // email: 'akshaya.venkataraman@appiyo.com',
-        // password: 'inswit@123',
-        // longTermToken: true
-        username: this.form.value.userName,
-        password: this.form.value.password
+        username: 'akshaya.venkataraman@appiyo.com',
+        password: 'inswit@123'      
       }
 
-      localStorage.setItem('userName',data.username)
+      // localStorage.setItem('userName',data.username)
 
-      this.loginService.getLogin(data).subscribe((response: any)=> {
+      this.loginService.loginApplication(data).subscribe(res => 
+          { console.log("login Response",res)
+            localStorage.setItem("token",res["token"]);
+            this.getUserDetails({username:'akshaya',
+            password: 'inswit@123'})
+          }
+        )     
+      
+    }
+    
+   
+  }
 
+  getUserDetails(data){
 
-        console.log(response)
+    this.loginService.getLogin(data).subscribe((response: any)=> {    
         if(response['ProcessVariables']['countUser'] === ''){
           // this.errroMsg = response['ProcessVariables']['response']
           const errMsg  = response['ProcessVariables']['response']
@@ -66,17 +75,10 @@ export class LoginComponent implements OnInit {
           const processVariables = response.ProcessVariables;
           localStorage.setItem('roleName', processVariables.roleName);
           this.router.navigate(["users/Dashboard/"]);
-
-
        }
-
-          console.log(response)
+          
       })
 
-      
-    }
-    
-   
   }
 
   forgotPassword() {

@@ -39,7 +39,7 @@ import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.service';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '@services/auth.interceptor.service';
+import { AuthInterceptorService } from '@services/auth.interceptor.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
@@ -190,7 +190,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: AuthInterceptorService,
       multi: true,
     },
     {provide: LocationStrategy, useClass: HashLocationStrategy},

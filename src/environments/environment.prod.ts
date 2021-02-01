@@ -6,7 +6,7 @@ export const environment = {
   },
   apiVersion: {
     login: 'v3/',
-    api: 'v2/'
+    api: 'v2/',
   },
   host:'http://178.128.125.44/appiyo/',
   appiyoDrive: "d/drive/upload/",

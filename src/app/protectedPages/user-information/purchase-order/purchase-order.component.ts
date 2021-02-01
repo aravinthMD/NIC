@@ -21,9 +21,9 @@ import { ClientDetailsService } from '@services/client-details.service';
   templateUrl: './purchase-order.component.html',
   styleUrls: ['./purchase-order.component.scss']
 })
-export class PurchaseOrderComponent implements OnInit,AfterViewInit {
+export class PurchaseOrderComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   poNumber : any = 'Saikumar';
   smsapproved: any = 'Yes';
@@ -128,7 +128,7 @@ smsApprovedList : any[] = [
 
   ngOnInit() {
 
-    this.labelsService.getLabelsData().subscribe((values)=> {
+    this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
       console.log('label',this.labels)
     })
@@ -375,7 +375,7 @@ smsApprovedList : any[] = [
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
 
-  }
+  } 
 
   onSearch() { 
     
