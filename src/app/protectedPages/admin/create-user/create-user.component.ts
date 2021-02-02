@@ -45,10 +45,7 @@ export class CreateUserComponent implements OnInit {
     private route : ActivatedRoute
     ) {
 
-    this.deparmentList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
-    this.countryCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
-    this.teleCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
-    this.roleList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['rolesList'] || [];
+    
 
     this.form =this.formBuilder.group({
       userName: [null],
@@ -59,10 +56,10 @@ export class CreateUserComponent implements OnInit {
       designation : [null],
       employeeCode : [null],
       email : [null],
-      countryCode : [this.countryCodeValues[0].key],
+      countryCode : [''],
       mobileNo : [null],
       telPhno : [null],
-      teleCode: [this.teleCodeValues[0].key],
+      teleCode: [''],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
@@ -74,7 +71,24 @@ export class CreateUserComponent implements OnInit {
 
    }
 
+   pathLOVvalues(){
+     const data = this.route.parent.snapshot.data || {}
+     const listOfValue = data.listOfValue || {};
+     const ProcessVariables = listOfValue.ProcessVariables || {};
+     this.deparmentList = ProcessVariables.admindepartment || [];
+     this.countryCodeValues = ProcessVariables.mobileNumberCodeList || [];
+     this.teleCodeValues = ProcessVariables.telephoneNumberCodeList || [];
+     this.roleList = ProcessVariables.rolesList || [];
+
+    //  this.deparmentList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['admindepartment'] || [];
+    // this.countryCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
+    // this.teleCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
+    // this.roleList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['rolesList'] || [];
+   }
+
   ngOnInit() {
+
+    this.pathLOVvalues();
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -139,6 +153,10 @@ export class CreateUserComponent implements OnInit {
 
         this.isDirty=false;
         this.form.reset()
+        this.form.controls['departmentName'].setValue("");
+        this.form.controls['roleName'].setValue("");
+        this.form.controls['countryCode'].setValue("");
+        this.form.controls['teleCode'].setValue("");
         this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
 
       }else {

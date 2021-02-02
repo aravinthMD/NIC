@@ -118,7 +118,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       invoiceDate : new Date(),
       transactionDate : new Date(),
       piPaid : [''],
-      remark:['']
+      remark:['',Validators.required]
     })
   }
 

@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import { AdminRolesMappingDialogComponent } from './admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-define-roles',
@@ -99,7 +100,8 @@ export class DefineRolesComponent implements OnInit {
 
   constructor(
     private adminService: AdminService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private activatedRoute : ActivatedRoute
     ) { }
 
   rolesList: any;
@@ -112,24 +114,35 @@ export class DefineRolesComponent implements OnInit {
   subtasks = []
 
 
-  async ngOnInit() {
+   ngOnInit() {
+     
+    this.initForm();
+    this.pathLOVvalues();
+    // let roleData = []
+    // await this.adminService.getLovSubMenuList("5").subscribe((response)=> {
 
+
+    //   const rolesList = response['ProcessVariables']['Lovitems'];
+    //   rolesList.forEach(element => {
+    //     roleData.push({key:element.key,value:element.name})
+    //   });
+    // })
+
+    // this.rolesList = roleData
+  }
+
+  initForm(){
     this.rolesControl=new FormGroup({
       rolesList:new FormControl(''),
     })
 
-    let roleData = []
+  }
 
-    await this.adminService.getLovSubMenuList("5").subscribe((response)=> {
-
-
-      const rolesList = response['ProcessVariables']['Lovitems'];
-      rolesList.forEach(element => {
-        roleData.push({key:element.key,value:element.name})
-      });
-    })
-
-    this.rolesList = roleData
+  pathLOVvalues(){
+      const data = this.activatedRoute.parent.snapshot.data || {};
+      const listOfValues = data.listOfValue || {}
+      const ProcessVariables = listOfValues.ProcessVariables || {};
+      this.rolesList = ProcessVariables.rolesList || []
   }
 
   onChangeRole(event) {
