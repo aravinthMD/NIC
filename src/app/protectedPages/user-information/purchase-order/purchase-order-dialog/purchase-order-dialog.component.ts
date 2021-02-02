@@ -1,5 +1,5 @@
 import { Component, OnInit,Optional, Inject, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
 import {LabelsService } from '../../../../services/labels.service'
 import {ToasterService} from '@services/toaster.service';
@@ -108,7 +108,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
         poAmountWithTax : [this.data.amountWithTax],
         departmentName : [this.data.department],
         paymentStatus : [this.data.paymentStatus],
-        remark:[this.data.remark],
+        remark:[this.data.remark,Validators.required],
         uploadDoc : ['']
       })
       this.detectAuditTrialObj=this.PurchaseOrderForm.value

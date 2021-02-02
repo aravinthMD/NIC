@@ -99,7 +99,8 @@ export class SmsCreditAllocationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
+    // this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
+    this.pathLovValue();
     this.statusList = this.smsCreditService.getStatusListLov();
     this.activatedRoute.params.subscribe((value) => {
       if (!value) {
@@ -166,6 +167,13 @@ export class SmsCreditAllocationComponent implements OnInit {
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null),
     });
+  }
+
+  pathLovValue(){
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    this.smsQuotaMetrix = processVariables.SMSApproval || [];
   }
 
   onQuotaMatrixChange(event) {
