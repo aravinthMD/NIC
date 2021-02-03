@@ -62,15 +62,8 @@ export class DashboardService {
       projectId,
     };
 
-    const body = {
-      processVariables: JSON.stringify(requestEntity),
-    };
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-    const formData = this.transform(body);
-
-    const url = `${environment.host}d/workflows/${processId}/execute?projectId=${projectId}`;
-
-    return this.httpService.post(url, formData);
-
+    return this.httpService.post(url, requestEntity);
   }
 }
