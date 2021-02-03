@@ -336,6 +336,28 @@ return  this.httpService.post(url,requestEntity);
 
 }
 
+sendEmailRemainder(data){
+
+  const {
+    api : {
+      sendEmailRemainderAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+}
+
 
 transform(data: any) {
   return new HttpParams({ fromObject: data });
