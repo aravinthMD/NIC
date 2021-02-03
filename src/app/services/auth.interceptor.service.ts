@@ -13,6 +13,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, tap, first, catchError } from 'rxjs/operators';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ToasterService } from './toaster.service';
+import { UtilityService } from './utility.service';
 // import { UtilityService } from './utility.service';
 // import { ToastrService } from 'ngx-toastr';
 
@@ -26,7 +27,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     private encrytionService: EncryptService,
     private ngxUiLoaderService: NgxUiLoaderService,
     private toasterService: ToasterService,
-    // private utilityService: UtilityService
+    private utilityService: UtilityService
   ) { }
 
   intercept(
@@ -41,9 +42,10 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     if (reqBody && reqBody.showLoader !== false) {
       this.ngxUiLoaderService.start();
-    }    
+    } 
+    console.log("********************************************");  
     console.log('Before Encryption', req.body);  
-
+    console.log("********************************************");
     let token = '';
 
     if (reqBody && reqBody.headers !== undefined) {
@@ -108,10 +110,12 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.ngxUiLoaderService.stop();
             if (err.status != 401 && err.status != 500) {
               if (err.status === 0) {
-                // this.toasterService.showError(`${err.status}: Connection not available! Please try again later.`, 'Technical error..');
+                this.toasterService.showError(`${err.status}: Connection not available! Please try again later.`, 'Technical error..');
               } else {
-                // this.toasterService.error(`${err.status}: ${err.statusText}`, 'Technical error..');
+                this.toasterService.showError(`${err.status}: ${err.statusText}`, 'Technical error..');
               }
+            }else if(err.status == 401){
+              this.toasterService.showError(`${err.status}: ${err.statusText}-invalid user`, 'Technical error..');
             }
           }
         }
@@ -137,11 +141,13 @@ export class AuthInterceptorService implements HttpInterceptor {
               }
               if (res && res['login_required']) {
                 this.toasterService.showError('Session Expired.Please Login Again','');
-                // this.utilityService.logOut();
+                this.utilityService.logOut();
                 // this.utilityService.removeAllLocalStorage();
               }
             }
+            console.log("********************************************");
             console.log('after Encryption: ', event.body);
+            console.log("********************************************");
 
             if (res && res['Error'] === '1') {
               alert(res['ErrorMessage']);
