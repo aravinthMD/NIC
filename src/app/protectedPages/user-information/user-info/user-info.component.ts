@@ -60,10 +60,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
   previewUrl : string = ''
 
   departmentListData = [];
-  smsServiceReqd=[
-    {key:0,value:'Prepaid'},
-    {key:1,value:'Post-Paid'}
-  ]
+  smsServiceReqd=[]
 
  
 
@@ -80,14 +77,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
     }
   ]
 
-  traiSenderId = [
-    {
-      key: 0, value: 'Yes',
-    },
-    {
-      key: 1, value: 'No'
-    }
-  ];
+  traiSenderId = [];
 
   dataSource = new MatTableDataSource<any>();
 
@@ -209,6 +199,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
     this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
     this.departmentListData = processVariables.departmentList || [];
     this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+    this.smsServiceReqd = processVariables.smsservice  || [];
+    this.traiSenderId = processVariables.Bool || []
    }
 
 
@@ -910,6 +902,15 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.toasterService.showError('Please click the credit date icon to select date','');
     }
     
+  }
+
+  onNext() {
+
+    if (!this.clientId) {
+       return this.toasterService.showError(`Can't proceed without submitting customer details`, '');
+    }
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
+
   }
 
   saveCancel() {

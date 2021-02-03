@@ -347,7 +347,7 @@ dataValue: {
 
   next() {
 
-    this.utilService.setCurrentUrl('users/purchaseOrder')
+    // this.utilService.setCurrentUrl('users/purchaseOrder')
 
     this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
 

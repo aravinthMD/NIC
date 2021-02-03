@@ -557,21 +557,10 @@ taxInvoiceForm.get('remark').errors?.required
         </div> -->
 
 
-        <div class="col-4">
-
-          <div class="form-group">
-            <label for="document">Document</label>
-            <div class="pd-2">
-              <span> {{'invoice.pdf'}} </span>
-  
-              <button class="btn btn-primary" style="position: absolute;left: 8vw;bottom: 0.5vw;"  (click)="viewDoc()">View</button>
-            </div>
-  
-  
-  
-          </div>
+        <div *ngIf = "docAvailFlag" class="col-4">
+          <label for="document">Document</label><br>
+            <button class="btn btn-primary" style="float: left;" (click)="viewDoc()">View</button>
         </div>
-
 
       </div>
     </form>
@@ -607,17 +596,21 @@ taxInvoiceForm.get('remark').errors?.required
             </div>
           </div>
           <div class="col-12 pt-3">
-            <div class="form-group ">
+
+            <div class="form-group small ml-1 pt-2 pb-3">
+              Click the Icon to preview
+            </div>
+            <!-- <div class="form-group ">
               {{fileName}}
-            </div>
-            <div class="form-group small pt-2 pb-3">
+            </div> -->
+            <!-- <div class="form-group small pt-2 pb-3">
               {{fileSize}}
-            </div>
+            </div> -->
             <div class="form-group row" style="margin-left: 5px">
               
-              <div class="pt-2 pr-2 pb-3">
+              <!-- <div class="pt-2 pr-2 pb-3">
                 <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="download()">Download</button>
-              </div>
+              </div> -->
               <div class="pt-2 pb-3">
                 <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
               </div>
@@ -674,7 +667,7 @@ taxInvoiceForm.get('remark').errors?.required
           <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
         </div>
         <div class="modal-body" style="height:500px">
-  
+          <iframe [src]= "previewUrl | secure | async" style="height:464px;width: 763px;" type="application/pdf"></iframe>
         </div>
   </div>
   </div>

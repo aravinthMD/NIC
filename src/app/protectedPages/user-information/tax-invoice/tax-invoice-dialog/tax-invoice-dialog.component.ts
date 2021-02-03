@@ -10,6 +10,7 @@ import { TaxInvoice } from '../tax-invoice.model';
 
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 import { TaxInvoiceService } from '@services/tax-invoice.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -53,6 +54,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
   showEdit: boolean;
 
   updateEmitter = new EventEmitter();
+
+  docAvailFlag : boolean;
+  host  = environment.host;
+  newAppiyoDrive  = environment.previewDocappiyoDrive;
+  previewUrl : string = ''
 
   constructor(
       private formBuilder: FormBuilder,
@@ -130,6 +136,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
       this.initForm();
       this.setValueForView();
       this.setFormValue();
+      this.filePreview();
     });
 
 
@@ -490,6 +497,14 @@ export class TaxInvoiceDialogComponent implements OnInit {
         value : this.data.mrnNumber
       },
     ];
+
+  }
+
+  filePreview(){
+    if(this.data.upload_document){
+      this.docAvailFlag = true;
+      this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.data.upload_document}`
+    }
   }
 
 

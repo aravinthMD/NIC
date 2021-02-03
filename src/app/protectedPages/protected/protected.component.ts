@@ -28,13 +28,19 @@ export class ProtectedComponent implements OnInit {
   }
 
   newUserMethod(){
-    this.ngxUiLoaderService.start();
+    // this.ngxUiLoaderService.start();
 
     this.utilService.setProjectNumber(null)
     this.utilService.setCurrentUrl('users/customerDetails');
     this.router.navigate(['/users/customerDetails']);
-    this.ngxUiLoaderService.stop()
+    // this.ngxUiLoaderService.stop()
   }
+
+  navigateToEmail(){
+    this.utilService.setCurrentUrl('users/sendemail');
+    this.router.navigate(['/users/sendemail']);
+  }
+
   logOut(){
     this.utilityService.logOut()
   }

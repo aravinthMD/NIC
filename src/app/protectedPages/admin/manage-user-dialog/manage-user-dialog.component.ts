@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {ToasterService} from '@services/toaster.service';
 
 import { AdminService } from '@services/admin.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -36,31 +37,15 @@ showEdit:boolean;
 
 viewInfoData: any;
 
-deparmentList : any[] = [
-    {key:0,value:'Admin User'},
-    {key:1,value:'Operation User'},
-    {key:2,value:'Finance User'},
-    {key:3,value:'Sales User'}
-  ];
+mobileNumberCodeList   = [];
 
-roleList: any[] = [
-  {key:0,value:'Admin User'},
-  {key:1,value:'Operation User'},
-  {key:2,value:'Finance User'},
-  {key:3,value:'Sales User'}
-];
+deparmentList  = [];
 
-countryCodeValues = [
-  {key:0,value:'+91'},
-  {key:1,value:'+60'},
-  {key:2,value:'+65'}
-]
+roleList  = []
 
-teleCodeValues = [
-  {key:0,value:'+044'},
-  {key:1,value:'+040'},
-  {key:2,value:'+080'}
-]
+countryCodeValues = []
+
+teleCodeValues = []
 
   constructor(
     private labelsService: LabelsService,
@@ -69,7 +54,8 @@ teleCodeValues = [
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     private toasterService: ToasterService,
     private adminService: AdminService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute, 
     ) {
 
 //       address1: ""
@@ -94,6 +80,7 @@ teleCodeValues = [
 // userId: "1"
 // userName: "akshaya"
 
+
     this.form =this.formBuilder.group({
       name : [`${data.name || ''}`],
       departmentName : [`${data.departmentId || ''}`],
@@ -117,18 +104,26 @@ teleCodeValues = [
     this.detectAuditTrialObj = this.form.value;
    }
 
+  //  patchLovValues(){
+  //    const data  = this.activatedRoute.parent.snapshot.data || {};
+  //    const listOfValue = data.listOfValue || {};
+  //    const processVariables = listOfValue.ProcessVariables;
+  //    this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
+  //    this.departmentListData = processVariables.departmentList || [];
+  //    this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+  //   }
+
    ngAfterViewInit() {
     this.cdr.detectChanges();
   }
 
-  async ngOnInit() {
+   ngOnInit() {
 
+    // this.patchLovValues();
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     })
-    this.getSubLovs()
-
-    
+    // this.getSubLovs()
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
@@ -196,7 +191,6 @@ teleCodeValues = [
         value : ""
       }
     ]
-
     
   }
 

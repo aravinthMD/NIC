@@ -329,6 +329,12 @@ export class ApiService {
       workflowId : '5f3336105d5511eb8bcf727d5ac274b2'
     },
 
+    poPopupModalDataUpdate: {
+      processId : 'de5c8230645c11eb8ddf727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
+    }
+
 
     
 

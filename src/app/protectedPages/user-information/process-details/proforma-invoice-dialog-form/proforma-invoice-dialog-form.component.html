@@ -233,7 +233,7 @@
         </div>
 
       </div>
-      <div class="col-4">
+      <!-- <div class="col-4">
         <div class="form-group">
             <app-custom-input formControlName="remark"
             [isDisabledInp]="enableflag"
@@ -245,7 +245,18 @@
             [isRequired]="'Please enter the remark'">
             </app-custom-input>
         </div>
-    </div>
+    </div> -->
+
+    <div class="col-4">
+      <div class="form-group">
+          <label class="mb-0" for="remarks">{{labels.remark}}</label>
+          <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+              <div class="date-picker-error" *ngIf="isDirty && form.controls['remark'].errors?.required">
+                  Please Enter Remark
+              </div>
+      </div>
+  </div>
+
 
       <div *ngIf = "docAvailFlag" class="col-4">
           <label for="document">Document</label><br>
