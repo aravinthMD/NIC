@@ -89,7 +89,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
     ) {
 
 
-      this.poId = this.data.currentPOId;
+      this.poId = this.data.currentPOId || this.data.id;
 
       this.PurchaseOrderForm = this.formBuilder.group({
         userName : [this.data.userName],
@@ -117,6 +117,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
    }
 
    changeDateFormat(date) {
+
+    if (!date) {
+      return;
+    }
 
     const splitDate = date.split('/');
 
@@ -303,80 +307,16 @@ const departmentListData = this.departmentListData.filter((val)=> {
     this.showEdit = true;
   }
 
-  OnUpdate(){
-  
-      this.detectFormChanges();
+  OnUpdate() {
+     if (this.PurchaseOrderForm.invalid) {
+       this.isDirty = true;
+       return;
+     }
 
-    if(this.PurchaseOrderForm.invalid) {
-      this.isDirty = true;
-      return;
-    }
-      
-
-    this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
-
-    this.PurchaseOrderForm.value['startDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['startDate'],'dd/MM/yyyy')
-
-    this.PurchaseOrderForm.value['endDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['endDate'],'dd/MM/yyyy')
-
-
-
-    const poObject = {
-
-      "uploads":"file",
-      // "paymentStatus":2,
-      "selectedPOId":this.poId,
-      "temp":"update",
-      "poNumber":this.PurchaseOrderForm.value.poNumber,
-      "projectNumber":this.PurchaseOrderForm.value.projectNo,
-      "projectName": this.PurchaseOrderForm.value.projectName,
-      "poDate": this.PurchaseOrderForm.value.date,
-      // "poStatus":Number(this.PurchaseOrderForm.value.poStatus),
-      "uploadDocument":"file",
-      "piNumber":this.PurchaseOrderForm.value.piNumber,
-      "smsApproved":this.PurchaseOrderForm.value.smsApproved,
-      "validUpto":this.PurchaseOrderForm.value.endDate,
-      // "department":this.PurchaseOrderForm.value.departmentName,
-      "userName":this.PurchaseOrderForm.value.userName,
-      "remark":this.PurchaseOrderForm.value.remark,
-      "withoutTax":this.PurchaseOrderForm.value.withoutTax,
-      "userEmail":this.PurchaseOrderForm.value.userEmail,
-      "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
-      "validFrom":this.PurchaseOrderForm.value.startDate,
-      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax,
-
-      "selectedDepartment":this.PurchaseOrderForm.value.departmentName,
-      "selectedPOStatus":Number(this.PurchaseOrderForm.value.poStatus),
-      "selectedPaymentStatus":this.PurchaseOrderForm.value.paymentStatus
-    }
-
-
-    this.invoiceService.updatePurchaseOrder(poObject).subscribe((response : any)=> {
-
-      console.log(response)
-
-      if(response['ProcessVariables']['error']['code'] == '0') {
-
-        this.toasterService.showSuccess('Data Saved Successfully','')
-
-        const processVariables = response.ProcessVariables;
-
-        this.updateEmitter.emit({
-          ...processVariables,
-          id: Number(processVariables.selectedPOId)
-        });
-
-       
-      }else {
-
-        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
-      }
-      
-     
-    })
-
-    
-
+     this.updateEmitter.emit({
+       ...this.PurchaseOrderForm.value,
+       id: Number(this.poId),
+     });
   }
 
   saveYes()
