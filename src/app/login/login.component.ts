@@ -83,6 +83,7 @@ export class LoginComponent implements OnInit {
           this.toasterService.showSuccess('Logged Successfully','')
           const processVariables = response.ProcessVariables;
           localStorage.setItem('userName', processVariables.username);
+          localStorage.setItem('roleName',processVariables.roleName);
           this.router.navigate(["users/Dashboard/"]);
        }
           
