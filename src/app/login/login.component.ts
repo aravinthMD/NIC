@@ -58,9 +58,8 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("token",res["token"]);
             const userData = this.utilityService.getUserData()
             console.log("user Data",userData)
-            this.getUserDetails({username: 'akshaya',
-              password:userData.password,
-            })
+            this.getUserDetails({username: userData.userName              
+              })
           }else{
             this.toasterService.showError("Invalid user",'Login')
           }
