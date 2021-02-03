@@ -758,10 +758,12 @@ export class UserInfoComponent implements OnInit, OnChanges {
     }
   }
 
-  viewDoc() {
+  // viewDoc() {
 
-    this.showUploadModal = true;
-  }
+  //   this.showUploadModal = true;
+  // }
+
+
 
 
   async onFileSelect(event) {
@@ -869,7 +871,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
 
   showPDF() {
-    this.showUploadModal = false;
+    // this.showUploadModal = false;
     this.showPdfModal = true;
     this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`;
   }
