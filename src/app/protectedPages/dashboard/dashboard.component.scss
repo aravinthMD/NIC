@@ -1,4 +1,3 @@
-
 table {
     margin-bottom: 0rem !important;
     // border-radius: 5px;
@@ -48,7 +47,7 @@ table {
 }
 
 th {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     background-color: #0e4d92;
     color: #fff;
@@ -59,7 +58,7 @@ th {
 //       pointer-events: none;
 //   }
 .font-size {
-    font-size: 16px !important;
+    font-size: 14px !important;
     font-weight: 580;
     line-height: 18px;
 }
@@ -87,8 +86,6 @@ th {
 // tr.example-element-row:hover {    <!--- Commented For Later Use ----->
 //     background: whitesmoke;
 // }
-
-
 ::ng-deep .mat-select-value {
     font-size: 15px !important;
 }
@@ -134,9 +131,6 @@ mat-form-field {
     color: #fff !important
 }
 
-
-
-
 .dashBoard {
     background: #0e4d92 !important;
     color: #fff!important;
@@ -149,7 +143,7 @@ mat-form-field {
     border-color: #0e4d92;
     border-style: solid;
     vertical-align: middle !important;
-    width  :103%
+    width: 103%
 }
 
 #mySearch {
@@ -159,59 +153,51 @@ mat-form-field {
     border: 1px solid #ddd;
     margin-bottom: 0px;
     border-radius: 3px 3px 3px 3px;
-    text-align: center; 
+    text-align: center;
     color: #212121;
+}
 
-  }
-
-  #mySearch.active{
+#mySearch.active {
     border-color: #0e4d92 !important;
-  }
+}
 
 // #mySearch { 
 //     width: 24%; 
 //     padding: 10px; 
 //     text-align: center; 
 // } 
+.input-icons {
+    width: 100%;
+    margin-bottom: 0px;
+}
 
-
-  .input-icons { 
-    width: 100%; 
-    margin-bottom: 0px; 
-} 
-
-.input-icons i { 
-    position: absolute; 
+.input-icons i {
+    position: absolute;
     padding-top: 10px;
     // padding-left: 16px;
     padding-right: 8px !important;
     color: #747677 !important;
-} 
+}
 
 // .input-icons { 
 //     width: 100%; 
 //     margin-bottom: 10px; 
 // } 
+.icon {
+    padding: 10px;
+    min-width: 40px;
+}
 
-.icon { 
-    padding: 10px; 
-    min-width: 40px; 
-} 
-  
-
-.dashb  {
+.dashb {
     font-size: 25px;
     font-weight: 450;
     padding-bottom: 15px;
-
 }
 
-::ng-deep.cdk-column-Department  {
-     padding-left: 0px !important;
+::ng-deep.cdk-column-Department {
+    padding-left: 0px !important;
 }
 
 .cursor-pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
-
-  
