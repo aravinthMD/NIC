@@ -261,8 +261,6 @@
                                     [labelName]="labels.officialAdd2"
                                     placeHolder = "Enter the Address2"
                                     [id]="'offcAddressLine2'" 
-                                    [mandatoryField]="true"
-                                    [isRequired]="'Office AddressLine2 is Mandatory'"
                                     [maxLength]="labels?.validationData.officeAddress.maxLength"
                                     [isDisabledInp]="propertyFlag" 
                                     [isDirty]="isDirty">
@@ -276,8 +274,6 @@
                                     [labelName]="labels.officialAdd3"
                                     placeHolder =  "Enter the Address3"
                                     [id]="'offcAddressLine3'" 
-                                    [mandatoryField]="true"
-                                    [isRequired]="'Office AddressLine3 is Mandatory'"
                                     [maxLength]="labels?.validationData.officeAddress.maxLength"
                                     [isDisabledInp]="propertyFlag" 
                                     [isDirty]="isDirty">
@@ -700,9 +696,14 @@
                     </div>
                     
 
-                    <div class="col-2" style="float: right;"> 
+                    <div class="col-4" style="float: right;"> 
+                        <button class="btn btn-primary ml-3"  (click)="onNext()">Next</button>
                         <button class="btn btn-primary ml-3"  (click)="back()">Back to List</button>
+
                     </div>
+                    <!-- <div class="col-2" style="float: left;"> 
+                        <button class="btn btn-primary ml-3"  (click)="back()">Next</button>
+                    </div> -->
 
                 <!-- <div class="col-2" style="float: left;">
                     <button class="btn btn-primary ml-3" *ngIf = "existingPreviewUserFlag"(click)="next()">Save & Next</button>

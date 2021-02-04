@@ -131,7 +131,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       endDate:new Date(),
       piStatus: [''],
       paymentStatus:[''],
-      remark:['']
+      remark:['',Validators.required]
     })
     this.detectAuditTrialObj=this.form.value
   }

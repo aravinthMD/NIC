@@ -58,9 +58,8 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("token",res["token"]);
             const userData = this.utilityService.getUserData()
             console.log("user Data",userData)
-            this.getUserDetails({username: userData.userName,
-              password: userData.password
-            })
+            this.getUserDetails({username: userData.userName              
+              })
           }else{
             this.toasterService.showError("Invalid user",'Login')
           }
@@ -75,20 +74,15 @@ export class LoginComponent implements OnInit {
   getUserDetails(data){
 
     this.loginService.getLogin(data).subscribe((response: any)=> {    
-        if(response['ProcessVariables']['countUser'] === ''){
+        if(response['Error'] !== '0' && response['ProcessVariables']['error']['code'] !== '0'){
           // this.errroMsg = response['ProcessVariables']['response']
-          const errMsg  = response['ProcessVariables']['response']
+          const errMsg  = response['ProcessVariables']['error']['message']
           this.toasterService.showError(errMsg,'')
-        } else if(response['ProcessVariables']['countUser'] === '0'){
-          const errMsg  = response['ProcessVariables']['response'];
-          this.toasterService.showError(errMsg,'');
-          // this.errroMsg = response['ProcessVariables']['response']
         }
-        else if(response['ProcessVariables']['countUser'] === '1') {
-
+        else {
           this.toasterService.showSuccess('Logged Successfully','')
           const processVariables = response.ProcessVariables;
-          localStorage.setItem('roleName', processVariables.roleName);
+          localStorage.setItem('userName', processVariables.username);
           this.router.navigate(["users/Dashboard/"]);
        }
           

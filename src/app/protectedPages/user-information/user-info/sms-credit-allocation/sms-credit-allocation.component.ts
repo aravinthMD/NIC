@@ -99,9 +99,17 @@ export class SmsCreditAllocationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
+    // this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
+    this.pathLovValue();
     this.statusList = this.smsCreditService.getStatusListLov();
-    this.userId = this.clientDetailsService.getClientId();
+    this.activatedRoute.params.subscribe((value) => {
+      if (!value) {
+        return;
+      }
+      this.userId = Number(value.id);
+      this.getSmsCreditList();
+    });
+    // this.userId = this.clientDetailsService.getClientId();
     console.log('userId>>>>in >> sms', this.userId);
 
     this.currentDate = this.datePipe.transform(
@@ -159,6 +167,13 @@ export class SmsCreditAllocationComponent implements OnInit {
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null),
     });
+  }
+
+  pathLovValue(){
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    this.smsQuotaMetrix = processVariables.SMSApproval || [];
   }
 
   onQuotaMatrixChange(event) {
@@ -315,12 +330,12 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   next() {
-    this.utilService.setCurrentUrl('users/proformaInvoice');
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) => {
-      pno = val || '1';
-    });
-    this.router.navigate(['/users/proformaInvoice/' + pno]);
+    // this.utilService.setCurrentUrl('users/proformaInvoice');
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) => {
+    //   pno = val || '1';
+    // });
+    this.router.navigate(['/users/proformaInvoice/' + this.userId]);
   }
 
   back() {

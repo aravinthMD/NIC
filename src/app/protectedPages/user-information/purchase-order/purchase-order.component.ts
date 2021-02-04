@@ -1,10 +1,10 @@
-import { Component, OnInit,Input, AfterViewInit,ViewChild } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { Validators,FormGroup,FormControl} from "@angular/forms";
+import { Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { LabelsService } from '../../../services/labels.service';
 import {DatePipe} from '@angular/common';
-import { ActivatedRoute, Router} from '@angular/router'
+import { ActivatedRoute, Router} from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { PurchaseOrderDialogComponent } from './purchase-order-dialog/purchase-order-dialog.component';
 import { UtilService } from '@services/util.service';
@@ -14,7 +14,10 @@ import { AdminService } from '@services/admin.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService } from '../../../services/api.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { POService } from '@services/po-service';
 import { ClientDetailsService } from '@services/client-details.service';
+
+
 
 @Component({
   selector: 'app-purchase-order',
@@ -25,42 +28,34 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  poNumber : any = 'Saikumar';
+  poNumber: any;
   smsapproved: any = 'Yes';
 
-  
-  @Input('userObj') user : any
+  @Input('userObj') user: any
 
   storeProjectNo: string;
 
-  displayedColumns : string[] = ['purchaseNo','projectNo','piAmt','remarks',"Action"]
+  displayedColumns: string[] = ['purchaseNo', 'projectNo', 'piAmt', 'remarks', 'Action'];
 
-  userList : any[] =   []
+  userList: any[] =   [];
   poStatus: any[] = [
-    { key :0, value: 'Received' },
-    { key :1,value : 'Not Received'},
-    { key :2,value : 'Raised'},
+    { key : 0, value: 'Received' },
+    { key : 1, value : 'Not Received'},
+    { key : 2, value : 'Raised'},
     { key: 3, value: 'Pending' },
     { key: 4, value: 'Rejected' },
-    { key: 5, value: 'On Hold' }]
-  piStatus: any[] = []
-    piReceivedIn: any[] = []
-  
-    paymentStatus: any[] = [
-      { key : "3",value : 'Received' }
-    ]
-    
-
-      departmentListData = [];
-    
-    dataArray=[]
+    { key: 5, value: 'On Hold' }];
+  piStatus: any[] = [];
+  piReceivedIn: any[] = [];
+  paymentStatus: any[] = [
+      { key : '3', value : 'Received' }
+  ];
+  departmentListData = [];
+  dataArray = [];
   dataSource = new MatTableDataSource<any>([]);
   date = new FormControl();
-
-  
-  PurchaseOrderForm:FormGroup;
-   formQuantity: FormGroup;
-  
+  PurchaseOrderForm: FormGroup;
+  formQuantity: FormGroup;
   labels: any = {};
   isDirty: boolean;
 
@@ -81,12 +76,12 @@ showDataSaveModal: boolean;
 dataValue: {
   title: string;
   message: string
-}
+};
 
-smsApprovedList : any[] = [
+smsApprovedList: any[] = [
         {key: '0', value: 'No'},
-        {key: '1',value: 'Yes'}
-              ]
+        {key: '1', value: 'Yes'}
+      ];
   // poNumber: string;
   // smsapproved: any;
  
@@ -100,111 +95,128 @@ smsApprovedList : any[] = [
 
   pageEvent: PageEvent;
 
-  datePerPage: number = 0;
+  datePerPage = 0;
 
+  clientId: string;
   proformaInvoicesList = [];
+  purchaseOrderId: number;
+  quantityIsDirty: boolean;
 
-  clientId :string = ''
+
 
 
   constructor(
     private labelsService: LabelsService,
-    private DatePipe:DatePipe,
-    private dialog : MatDialog,
+    private DatePipe: DatePipe,
+    private dialog: MatDialog,
     private utilService: UtilService,
     private toasterService: ToasterService,
     private router: Router,
     private invoiceService: InvoiceService,
     private adminService: AdminService,
     private searchService: SearchService,
-    private apiService : ApiService,
-    private beheSer : BehaviourSubjectService,
-    private route : ActivatedRoute,
-    private clientDetailService : ClientDetailsService
+    private apiService: ApiService,
+    private beheSer: BehaviourSubjectService,
+    private route: ActivatedRoute,
+    private clientDetailService: ClientDetailsService,
+    private poDataService: POService
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
+      this.poDataService.setDepartmentList(this.departmentListData);
      }
 
   ngOnInit() {
 
-    this.labelsService.getLabelsData().subscribe((values) => {
-      this.labels = values;
-      console.log('label',this.labels)
-    })
-    this.PurchaseOrderForm = new FormGroup({
-      userName: new FormControl(null),
-    
-      piNumber: new FormControl(null),
-      poNumber: new FormControl(null),
-      smsApproved: new FormControl(null),
-      projectName:new FormControl(null),
-      date:new FormControl(null),
-      withoutTax: new FormControl(null),
-      poStatus:new FormControl(''),
-      startDate: new FormControl(null),
-      endDate: new FormControl(null),
-      userEmail:new FormControl(null),
-      poManagerEmail: new FormControl(null),
-      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
-      poAmountWithTax: new FormControl(null),
-      departmentName: new FormControl(''),
-      paymentStatus:new FormControl(''),
-      uploadDoc:new FormControl(null),
-      remark:new FormControl('')
+    this.route.params.subscribe((param) => {
+        if (!param) {
+          return;
+        }
+        this.clientId = param.projectNo;
+//        this.fetchPODetails();
 
-    })
-
-    this.clientId = this.clientDetailService.getClientId();
-
-    this.searchForm = new FormGroup({
-      searchData: new FormControl(null),
-      searchTo: new FormControl(null),
-      searchFrom: new FormControl(null)
-    })
-
-    this.formQuantity = new FormGroup({
-      rate: new FormControl(null),
-      quantity: new FormControl(null),
-      description: new FormControl(null)
-    })
-
-    this.utilService.userDetails$.subscribe((val)=> {
-
-      this.accountName = val['App_name'] || '';
-      this.status = val['status'] || '';
-
-      this.PurchaseOrderForm.controls['userName'].setValue(this.accountName);
-    })
-
-    this.beheSer.$poNumber.subscribe( res => {
-      this.poNumber = res;
-       this.poNumber =this.poNumber;
     });
 
-    this.beheSer.$smsapproved.subscribe( res => {
+    this.labelsService.getLabelsData().subscribe((values) => {
+      this.labels = values;
+      console.log('label', this.labels);
+    });
+    this.initForm();
+    // this.PurchaseOrderForm = new FormGroup({
+    //   userName: new FormControl(null),
+    //   piNumber: new FormControl(null),
+    //   poNumber: new FormControl(null),
+    //   smsApproved: new FormControl(null),
+    //   projectName:new FormControl(null),
+    //   date:new FormControl(null),
+    //   withoutTax: new FormControl(null),
+    //   poStatus:new FormControl(''),
+    //   startDate: new FormControl(null),
+    //   endDate: new FormControl(null),
+    //   userEmail:new FormControl(null),
+    //   poManagerEmail: new FormControl(null),
+    //   projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
+    //   poAmountWithTax: new FormControl(null),
+    //   departmentName: new FormControl(''),
+    //   paymentStatus:new FormControl(''),
+    //   uploadDoc:new FormControl(null),
+    //   remark:new FormControl('')
+
+    // })
+
+    // this.clientId = this.clientDetailService.getClientId();
+
+    // this.searchForm = new FormGroup({
+    //   searchData: new FormControl(null),
+    //   searchTo: new FormControl(null),
+    //   searchFrom: new FormControl(null)
+    // })
+
+    // this.formQuantity = new FormGroup({
+    //   rate: new FormControl(null),
+    //   quantity: new FormControl(null),
+    //   description: new FormControl(null)
+    // })
+
+    this.utilService.userDetails$.subscribe((val: any) => {
+
+      this.accountName = val.App_name || '';
+      this.status = val.status || '';
+
+      this.PurchaseOrderForm.get('userName').setValue(this.accountName);
+    });
+
+    this.beheSer.$poNumber.subscribe((res) => {
+      this.poNumber = res;
+      this.poNumber = this.poNumber;
+    });
+
+    this.beheSer.$smsapproved.subscribe((res) => {
       this.smsapproved = res;
       this.smsapproved = this.smsapproved;
     });
 
-   this.fetchPODetails(this.clientId);
+    this.fetchPODetails(this.clientId);
 
 
-   this.getAutoPopulatePI(this.clientId);
+    this.getAutoPopulatePI(this.clientId);
 
   //  this.getSubLovs();
 
-   this.dataArray.push(this.formQuantity);
+    this.dataArray.push(this.formQuantity);
 
-   this.withoutTaxValidation = this.withoutTaxValidationCheck();
+    this.withoutTaxValidation = this.withoutTaxValidationCheck();
 
-   this.PurchaseOrderForm.controls['piNumber'].valueChanges.subscribe((value) =>{
-     if(!value)
+    this.PurchaseOrderForm.get('piNumber').valueChanges.subscribe((value) => {
+     if (!value) {
       return;
-      this.getPIAutoPopulateonChange(value);
-   })
+     }
+     this.getPIAutoPopulateonChange(value);
+    });
 
   }
+
+
 
   withoutTaxValidationCheck() {
 
@@ -221,390 +233,428 @@ smsApprovedList : any[] = [
   }
 
 
-  
-  purchaseForm(){
-    this.dataArray.push(this.formQuantity);
-  }
 
-  deleteRow(index){
-    this.dataArray.splice(index);
-  }
+  // purchaseForm(){
+  //   this.dataArray.push(this.formQuantity);
+  // }
 
-  submit(){
+  // deleteRow(index){
+  //   this.dataArray.splice(index);
+  // }
+
+  submit() {
     console.log(this.dataArray);
   }
 
-  fetchPODetails(selectedClientId : string,currentPage?: any) {
-
-   
-    this.invoiceService.fetchAllPO(selectedClientId,currentPage?currentPage:null).subscribe((response)=> {
-
-      if(response['ProcessVariables']['error']['code'] == '0') {
-
-        this.userList = response['ProcessVariables']['purchaseData'];
-
-          console.log(response)
-
-          this.datePerPage = Number(response['ProcessVariables']['dataPerPage']);
-
-          this.resultsLength = Number(response['ProcessVariables']['totalCount'])
-
-          this.dataSource = new MatTableDataSource<any>([]);
-
-          this.dataSource = new MatTableDataSource<any>(this.userList);
-
-      }else {
-
-        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
-      }
-      
-    })
+  fetchPODetails(selectedClientId: string, currentPage?: any) {
+    this.invoiceService.fetchAllPO(selectedClientId, currentPage || null).subscribe((response: any) => {
+        const processVariables = response.ProcessVariables;
+        this.userList = processVariables.purchaseData || [];
+        console.log('response', response);
+        this.datePerPage = Number(processVariables.dataPerPage || 0);
+        this.resultsLength = Number(processVariables.totalCount || 0);
+        this.dataSource = new MatTableDataSource<any>(this.userList);
+        this.dataSource.paginator = this.paginator;
+    });
   }
 
   async getSubLovs() {
 
-    // let listData = []
+    const paymentStatus = [];
 
-    // await this.adminService.getLovSubMenuList("0").subscribe((response)=> {
-
-
-    //   const submenuList = response['ProcessVariables']['Lovitems'];
-    //  submenuList.forEach(element => {
-        
-    //     listData.push({key:element.key,value:element.name})
-    //   });
-    // })
-
-    // this.departmentListData = listData;
-
-
-    // let poData = []
-
-    // await this.adminService.getLovSubMenuList("1").subscribe((response)=> {
-
-
-    //   const poList = response['ProcessVariables']['Lovitems'];
-    //   poList.forEach(element => {
-        
-    //     poData.push({key:element.key,value:element.name})
-    //   });
-    // })
-
-    // this.poStatus = poData
-
-    // let piData = []
-
-    // await this.adminService.getLovSubMenuList("2").subscribe((response)=> {
-
-
-    //   const piList = response['ProcessVariables']['Lovitems'];
-    //   piList.forEach(element => {
-        
-    //     poData.push({key:element.key,value:element.name})
-    //   });
-    // })
-
-    // this.piStatus = piData
-
-    let paymentStatus = []
-
-    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
-
-
-      const paymentList = response['ProcessVariables']['Lovitems'];
+    await this.adminService.getLovSubMenuList('3').subscribe((response: any) => {
+      const processVariables = response.ProcessVariables;
+      const paymentList = processVariables.Lovitems;
       paymentList.forEach(element => {
-        
-        paymentStatus.push({key:element.key,value:element.name})
+        paymentStatus.push({key: element.key, value: element.value});
       });
-    })
+      this.poDataService.setPaymentList(paymentStatus);
+      this.paymentStatus = paymentStatus;
+    });
 
-    this.paymentStatus = paymentStatus
+
+    // this.paymentStatus = paymentStatus
 
 
-    let piReceivedData = []
+    const piReceivedData = [];
 
-    await this.adminService.getLovSubMenuList("4").subscribe((response)=> {
+    await this.adminService.getLovSubMenuList('4').subscribe((response: any) => {
 
-      const piRecList = response['ProcessVariables']['Lovitems'];
+      const processVariables = response.ProcessVariables;
+
+      const piRecList = processVariables.Lovitems;
       piRecList.forEach(element => {
-        
-        piReceivedData.push({key:element.key,value:element.name})
+        piReceivedData.push({key: element.key, value: element.name});
       });
-    })
+    });
 
-    this.piReceivedIn = piReceivedData
+    this.piReceivedIn = piReceivedData;
   }
 
   initForm() {
-
-
     this.PurchaseOrderForm = new FormGroup({
       userName: new FormControl(null),
       piNumber: new FormControl(null),
       poNumber: new FormControl(null),
       smsApproved: new FormControl(null),
-      projectName:new FormControl(null),
-      date:new FormControl(null),
+      projectName: new FormControl(null),
+      date: new FormControl(null),
       withoutTax: new FormControl(null),
-      poStatus:new FormControl(''),
+      poStatus: new FormControl(''),
       startDate: new FormControl(null),
       endDate: new FormControl(null),
-      userEmail:new FormControl(null),
+      userEmail: new FormControl(null),
       poManagerEmail: new FormControl(null),
-      projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
+      projectNo: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
       poAmountWithTax: new FormControl(null),
       departmentName: new FormControl(''),
-      paymentStatus:new FormControl(''),
-      uploadDoc:new FormControl(null),
-      remark:new FormControl('')
-
-    })
-
-
+      paymentStatus: new FormControl(''),
+      uploadDoc: new FormControl(null),
+      remark: new FormControl('')
+    });
+    this.searchForm = new FormGroup({
+      searchData: new FormControl(null),
+      searchTo: new FormControl(null),
+      searchFrom: new FormControl(null)
+    });
+    this.formQuantity = new FormGroup({
+      items: new FormArray([this.addFormQuantityFormControl()])
+    });
   }
-  
-  POForm(){
 
-    if(this.PurchaseOrderForm.invalid) {
+  addControlForQuantity() {
+    const formArray = this.formQuantity.get('items') as FormArray;
+    formArray.push(this.addFormQuantityFormControl());
+  }
+
+  removeControlFromQuantityForm(index: number) {
+    const formArray = this.formQuantity.get('items') as FormArray;
+    formArray.removeAt(index);
+  }
+
+  // onQuantityFormSubmit() {
+  //   const formValue = this.formQuantity.get('items').value;
+
+  // }
+
+  addFormQuantityFormControl(): FormGroup {
+    return new FormGroup({
+      rate: new FormControl(null),
+      quantity: new FormControl(null),
+      description: new FormControl(null)
+    });
+  }
+
+  POForm() {
+    if (this.PurchaseOrderForm.invalid) {
       this.isDirty = true;
-      return
+      return;
     }
-
     this.showPOModal = true;
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
 
-  } 
+  }
 
-  onSearch() { 
-    
+  onSearch() {
     const data = this.apiService.api.fetchPurchaseOrder;
 
-      const params = {
+    const params = {
         searchKeyword: this.searchForm.get('searchData').value,
-        // fromDate: this.DatePipe.transform(this.searchForm.get('searchFrom').value,'dd/MM/yyyy'),
-        // toDate: this.DatePipe.transform(this.searchForm.get('searchTo').value,'dd/MM/yyyy')
         fromDate: this.searchForm.get('searchFrom').value,
         toDate: this.searchForm.get('searchTo').value
-      }
+    };
 
-      this.searchService
-          .searchProjectExecution(data,params).subscribe((resp) => {
-
-            const respError=resp["ProcessVariables"]["error" ];
-
-            if(respError.code=="0")
-            {
-              
-              console.log('result',resp['ProcessVariables']);
-              this.dataSource = new MatTableDataSource<any>(resp["ProcessVariables"]["purchaseData" ]);
-
-              this.datePerPage = Number(resp['ProcessVariables']['dataPerPage']);
-
-              this.resultsLength = Number(resp['ProcessVariables']['totalCount'])
+    this.searchService
+          .searchProjectExecution(data, params).subscribe((resp: any) => {
+            const error = resp.Error;
+            const errorMessage = resp.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
             }
-            else 
-            { 
-              if(!resp["ProcessVariables"]["purchaseData" ]) {
-                this.dataSource = new MatTableDataSource<any>([])
-                this.datePerPage = 0;
-                this.resultsLength = 0;
-              }
-
-               this.toasterService.showError('No Records Found','Purchase Order');
+            const processVariables = resp.ProcessVariables;
+            const errorObj = processVariables.error;
+            if (errorObj.code !== '0') {
+              return this.toasterService.showError(errorObj.message, '');
             }
-            
-         
-         
-          })
+            const purchaseData = processVariables.purchaseData || [];
+            this.dataSource = new MatTableDataSource<any>(purchaseData);
+            this.datePerPage = Number(processVariables.dataPerPage || 0);
+            this.resultsLength = Number(processVariables.totalCount || 0);
+
+            if (purchaseData.length === 0) {
+              this.toasterService.showError('No Records Found', 'Purchase Order');
+            }
+          });
   }
 
-  getAutoPopulatePI(clientId  :string){
+  getAutoPopulatePI(clientId: string) {
       this.invoiceService.getPIAutoPopulationAPI(clientId).subscribe(
-        (response) =>{
+        (response: any) => {
           console.log(`API Response for the Get PI Auto Populate ${response}`);
-          this.proformaInvoicesList = response['ProcessVariables']['piList'] || [];
-      },(error) =>{
+          const processVariables = response.ProcessVariables;
+          this.proformaInvoicesList = processVariables.piList || [];
+      }, (error) => {
           console.log('Error');
-          this.toasterService.showError('Failed to fetch data','');
-      })
+          this.toasterService.showError('Failed to fetch data', '');
+      });
   }
 
-  getPIAutoPopulateonChange(piNumber : any){
+  getPIAutoPopulateonChange(piNumber: any) {
     this.invoiceService.getProformaInvoiceOnChangeData(Number(piNumber)).subscribe(
-      (response) =>{
-        const projectNumber = response['ProcessVariables']['projectNumber'] ? response['ProcessVariables']['projectNumber'] : '';
-        const smsApproved = response['ProcessVariables']['traffic'] ? response['ProcessVariables']['traffic'] : '';
-
-        this.PurchaseOrderForm.controls['projectNo'].setValue(projectNumber);
-        this.PurchaseOrderForm.controls['smsApproved'].setValue(smsApproved);
-    })
+      (response: any) => {
+        const processVariables = response.ProcessVariables;
+        const projectNumber = processVariables.projectNumber ||  '';
+        const smsApproved = processVariables.traffic || '';
+        this.PurchaseOrderForm.get('projectNo').setValue(projectNumber);
+        this.PurchaseOrderForm.get('smsApproved').setValue(smsApproved);
+    });
   }
 
   clear() {
 
     this.searchForm.patchValue({
       searchData: null,
-      searchFrom:null,
-      searchTo:null
-    })
+      searchFrom: null,
+      searchTo: null
+    });
 
     this.fetchPODetails(this.clientId);
   }
 
-  OnEdit(element :  any){
+  OnEdit(element: any) {
 
-    const dialogRef = this.dialog.open(PurchaseOrderDialogComponent,{
-      data : element
-    })
+    const dialogRef = this.dialog.open(PurchaseOrderDialogComponent, {
+      data : element,
+      panelClass: 'full-width-dialog'
+    });
 
-    dialogRef.afterClosed().subscribe((result) =>{
-      console.log('The dialog was closed', result);
+    dialogRef.componentInstance.updateEmitter
+             .subscribe((res: any) => {
+                  console.log('updateEmitter', res);
+                  this.submitFormData(res);
+                  dialogRef.close();
+             });
 
-      this.fetchPODetails(this.clientId);
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed', result);
 
-    })
+    //   this.fetchPODetails(this.clientId);
 
-  } 
-  getDownloadXls(){
-    this.utilService.getDownloadXlsFile(this.userList,'PurchaseOrder')
+    // })
+
+  }
+  getDownloadXls() {
+    this.utilService.getDownloadXlsFile(this.userList, 'PurchaseOrder');
   }
 
-  detectDateKeyAction(event,type) {
+  detectDateKeyAction(event, type) {
 
-    console.log(event)
-    
-    if(type == 'date') {
+    console.log(event);
+    if (type === 'date') {
 
       this.PurchaseOrderForm.patchValue({
         date: ''
-      })
-      this.toasterService.showError('Please click the date icon to select date','');
-    }else if(type == 'startDate') {
+      });
+      this.toasterService.showError('Please click the date icon to select date', '');
+    } else if (type === 'startDate') {
 
       this.PurchaseOrderForm.patchValue({
         startDate: ''
-      })
-      this.toasterService.showError('Please click the valid from icon to select date','');
-    }else if(type == 'endDate') {
+      });
+      this.toasterService.showError('Please click the valid from icon to select date', '');
+    } else if (type === 'endDate') {
 
       this.PurchaseOrderForm.patchValue({
         endDate: ''
-      })
-      this.toasterService.showError('Please click the valid upto icon to select date','');
-    }else if(type == 'searchFrom') {
+      });
+      this.toasterService.showError('Please click the valid upto icon to select date', '');
+    } else if (type === 'searchFrom') {
       this.searchForm.patchValue({
         searchFrom: ''
-      })
-      this.toasterService.showError('Please click the from date icon to select date','');
-    }else if(type == 'searchTo') {
+      });
+      this.toasterService.showError('Please click the from date icon to select date', '');
+    } else if (type === 'searchTo') {
       this.searchForm.patchValue({
         searchTo: ''
-      })
-      this.toasterService.showError('Please click the to date icon to select date','');
+      });
+      this.toasterService.showError('Please click the to date icon to select date', '');
     }
-    
   }
 
-  next() {
+next() {
 
-    this.utilService.setCurrentUrl('users/taxInvoice')
+    //  this.utilService.setCurrentUrl('users/taxInvoice')
 
-    this.router.navigate([`/users/taxInvoice/${this.storeProjectNo}`])
+    this.router.navigate([`/users/taxInvoice/${this.clientId}`]);
 
   }
 
   back() {
 
-    this.utilService.setCurrentUrl('users/projectExecution')
+    this.utilService.setCurrentUrl('users/projectExecution');
 
-    this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
+    this.router.navigate([`/users/projectExecution/${this.clientId}`]);
 
   }
 
-  submitPO() {
-
-    if(this.formQuantity.invalid) {
-      this.isQuantityDirty = true;
-      return;
+  onQuantityFormSubmit() {
+    if (this.formQuantity.invalid) {
+      this.quantityIsDirty = true;
+      return this.toasterService.showError('Please fill the mandatory fields', '');
     }
+    const formValue = this.formQuantity.get('items').value;
+    console.log('submitPOData', formValue);
+    const data = formValue.map((value) => {
+      return {
+        ...value,
+        quantity: Number(value.quantity || 0),
+        po_number: this.purchaseOrderId,
+        user_id: Number(this.clientId)
+      };
+    });
+    console.log('data', data);
+    this.invoiceService.updatePopupModal(data)
+        .subscribe((res: any) => {
+          this.quantityIsDirty = false;
+          const error = res.Error;
+          const errorMessage = res.ErrorMessage;
 
-   
-
-
-    this.PurchaseOrderForm.value['date']=this.DatePipe.transform(this.PurchaseOrderForm.value['date'],'dd/MM/yyyy')
-
-    this.PurchaseOrderForm.value['startDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['startDate'],'dd/MM/yyyy')
-
-    this.PurchaseOrderForm.value['endDate']=this.DatePipe.transform(this.PurchaseOrderForm.value['endDate'],'dd/MM/yyyy')
-
-    // {"poNumber":"5972112","projectNumber":"11","projectName":"TestABC","poDate":"24/12/2020","uploadDocument":"file","pi_no":"2","smsapproved":"2","validUpto":"30/12/2020","username":"TestUser01","remark":"Remark Column","withouttax":"3","userEmail":"testdemo@appiyo,com","managerEmail":"managerdemo123@gmail,com","validFrom":"24/12/2020","amtWithTax":"52","rate":"220","quantity":4,"description":"Description","selectedDepartment":"37","selectedPOStatus":"6","selectedPaymentStatus":"6"},"projectId":"2efbdc721cc311ebb6c0727d5ac274b2"}
-	
-   
-    const data = {
-      "poNumber":this.PurchaseOrderForm.value.poNumber,
-      "projectNumber":this.PurchaseOrderForm.value.projectNo,
-      "projectName": this.PurchaseOrderForm.value.projectName,
-      "poDate": this.PurchaseOrderForm.value.date,
-      "poStatus":Number(this.PurchaseOrderForm.value.poStatus),
-      "uploadDocument":"file",
-      "pi_no":this.PurchaseOrderForm.value.piNumber,
-      "smsapproved":this.PurchaseOrderForm.value.smsApproved,
-      "validUpto":this.PurchaseOrderForm.value.endDate,
-      "username":this.PurchaseOrderForm.value.userName,
-      "remark":this.PurchaseOrderForm.value.remark,
-      "withouttax":this.PurchaseOrderForm.value.withoutTax,
-      "userEmail":this.PurchaseOrderForm.value.userEmail,
-      "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
-      "validFrom":this.PurchaseOrderForm.value.startDate,
-      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax,
-      "rate":this.formQuantity.value.rate,
-      "quantity":Number(this.formQuantity.value.quantity),
-      "description":this.formQuantity.value.description,
-      "selectedDepartment":this.PurchaseOrderForm.value.departmentName,
-      "selectedPOStatus":this.PurchaseOrderForm.value.poStatus,
-      "selectedPaymentStatus":this.PurchaseOrderForm.value.paymentStatus
-    }
-
-
-
-    this.invoiceService.createPurchaseOrder(data).subscribe((response)=> {
-
-      console.log('Response',response)
-
-      if(response['ProcessVariables']['error']['code'] == '0') {
-
-        this.showPOModal= false;
-
-
-        this.PurchaseOrderForm.reset();
-        this.PurchaseOrderForm.controls['paymentStatus'].setValue("");
-        this.PurchaseOrderForm.controls['departmentName'].setValue("");
-        this.PurchaseOrderForm.controls['poStatus'].setValue("");
-        this.PurchaseOrderForm.controls['userName'].setValue(this.accountName);
-        this.isDirty = false;
-        this.formQuantity.reset();
-        this.beheSer.setPoNumber(data.poNumber);
-        this.beheSer.setSmsApproved(data.smsapproved);
-
-
-          this.toasterService.showSuccess('Data Saved Successfully','')
-
-          this.fetchPODetails(this.clientId)
-
-          // this.showDataSaveModal = true;
-          this.dataValue= {
-            title: 'Purchase Order Saved Successfully',
-            message: 'Are you sure you want to proceed tax invoice page?'
+          if (error !== '0') {
+            return this.toasterService.showError(errorMessage, '');
           }
-      }else {
-        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
+
+          const processVariables = res.ProcessVariables;
+
+          const errorObj = processVariables.error;
+
+          if (errorObj.code !== '0') {
+            return this.toasterService.showError(errorObj.message, '');
+          }
+          this.showDataSaveModal = true;
+          this.dataValue = {
+            title: 'Purchase Order Saved Successfully',
+                message: 'Are you sure you want to proceed tax invoice page?'
+          };
+
+        });
+  }
+
+  submitFormData(formData?: any) {
+
+    let formValue;
+
+    if (formData) {
+        formValue = formData;
+    } else {
+
+      if (this.PurchaseOrderForm.invalid) {
+        this.isDirty = true;
+        return;
       }
 
-    })
- 
+      formValue = this.PurchaseOrderForm.value;
 
+    }
+
+    formValue.date = this.DatePipe.transform(formValue.date, 'dd/MM/yyyy');
+
+    formValue.startDate = this.DatePipe.transform(formValue.startDate, 'dd/MM/yyyy');
+
+    formValue.endDate = this.DatePipe.transform(formValue.endDate, 'dd/MM/yyyy');
+
+    const data = {
+      poNumber: formValue.poNumber,
+      projectNumber: formValue.projectNo,
+      projectName: formValue.projectName,
+      poDate: formValue.date,
+      poStatus: Number(formValue.poStatus),
+      uploadDocument: 'file',
+      piNumber: formValue.piNumber,
+      smsApproved: formValue.smsApproved,
+      validTo: formValue.endDate,
+      userName: formValue.userName,
+      remark: formValue.remark,
+      withOutTax: formValue.withoutTax,
+      userEmail: formValue.userEmail,
+      managerEmail: formValue.poManagerEmail,
+      validFrom: formValue.startDate,
+      amountWithTax: formValue.poAmountWithTax,
+      department: formValue.departmentName,
+      paymentStatus: Number(formValue.paymentStatus),
+      userId: Number(this.clientId),
+      id: formValue.id,
+    };
+
+    console.log('data', data);
+
+    this.invoiceService.createPurchaseOrder(data).subscribe((response: any) => {
+      const error = response.Error;
+      const errorMessage = response.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMessage, '');
+      }
+      const processVariables = response.ProcessVariables;
+      const errorObj = processVariables.error;
+
+      if (errorObj.code !== '0') {
+        return this.toasterService.showError(errorObj.message, '');
+      }
+
+
+      this.showPOModal = false;
+
+      this.isDirty = false;
+
+
+      this.PurchaseOrderForm.reset();
+      this.PurchaseOrderForm.get('paymentStatus').setValue('');
+      this.PurchaseOrderForm.get('departmentName').setValue('');
+      this.PurchaseOrderForm.get('poStatus').setValue('');
+      this.PurchaseOrderForm.get('userName').setValue(this.accountName);
+      this.isDirty = false;
+      this.formQuantity.reset();
+      this.beheSer.setPoNumber(data.poNumber);
+      this.beheSer.setSmsApproved(data.smsApproved);
+      console.log('processVariables', processVariables);
+      if (formData) {
+        this.toasterService.showSuccess('Data updated Successfully', '');
+        this.overrideGridData(processVariables);
+      } else {
+        this.toasterService.showSuccess('Data Saved Successfully', '');
+        this.updateGridData(processVariables);
+      }
+      this.showPOModal = true;
+
+      //     // this.fetchPODetails(this.clientId);
+
+      //     // this.showDataSaveModal = true;
+      //     this.dataValue= {
+      //       title: 'Purchase Order Saved Successfully',
+      //       message: 'Are you sure you want to proceed tax invoice page?'
+      // };
+
+    });
+
+  }
+
+  overrideGridData(data: any) {
+    const index = this.userList.findIndex((value) => {
+          return String(value.currentPOId || value.id) === String(data.id);
+    });
+    this.userList[index] = data;
+    this.dataSource = new MatTableDataSource<any>(this.userList);
+    this.dataSource.paginator = this.paginator;
+  }
+
+  updateGridData(data) {
+    this.userList = this.userList || [];
+    console.log('processVariables', data);
+    this.purchaseOrderId = data.id;
+    this.userList.unshift(data);
+    this.dataSource = new MatTableDataSource<any>(this.userList);
+    this.dataSource.paginator = this.paginator;
   }
 
   pageEventData(event) {
@@ -612,28 +662,21 @@ smsApprovedList : any[] = [
 
     const currentPageIndex  = Number(event.pageIndex) + 1;
 
-    this.fetchPODetails(this.clientId,currentPageIndex)
+    this.fetchPODetails(this.clientId, currentPageIndex);
   }
-
-  
-
-  
-
-  
 
   cancelPO() {
-    this.showPOModal= false;
+    this.showPOModal = false;
   }
 
-  saveYes()
- {
+  saveYes() {
 
   this.showDataSaveModal = false;
-  this.showPOModal= false;
+  this.showPOModal = false;
 
-  this.utilService.setCurrentUrl('users/taxInvoice')
+  this.utilService.setCurrentUrl('users/taxInvoice');
 
-  this.router.navigate([`/users/taxInvoice/${this.storeProjectNo}`])
+  this.router.navigate([`/users/taxInvoice/${this.storeProjectNo}`]);
 
 
  }
@@ -641,6 +684,6 @@ smsApprovedList : any[] = [
  saveCancel() {
 
   this.showDataSaveModal = false;
-  this.showPOModal= false;
+  this.showPOModal = false;
  }
 }

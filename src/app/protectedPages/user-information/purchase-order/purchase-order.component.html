@@ -340,7 +340,7 @@
 
                         <div class="col-10">
 
-                            <button class="btn btn-primary" style="float:left" (click)="POForm()">Submit</button>
+                            <button class="btn btn-primary" style="float:left" (click)="submitFormData()">Submit</button>
 
                         </div>
 
@@ -539,6 +539,24 @@
         </div>
        
         <!--Materail Table End -->
+        <div class="row pt-3 pb-3 m-0">
+            <!-- <button class="btn btn-primary" (click)="POForm()">Raise E-Invoice</button>
+            <button class="btn btn-primary ml-3" (click)="next()">Next</button> -->
+
+            <div class="col-10">
+
+
+            </div>
+
+           <div class="col-1" style="float: left;">
+
+           </div>
+
+           <div class="col-1" style="float: left;">
+            <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+
+           </div>
+        </div>
         <div class="m-5"></div>
 
     </div>
@@ -564,17 +582,18 @@
             <div class="modal-body msg-data">
                
 
-                <form [formGroup]="formQuantity" (ngSubmit)="submit()">
+                <form [formGroup]="formQuantity">
 
 
-                    <div class="row"  *ngFor="let obj of dataArray;let i = index;">
+                    <div class="row" formArrayName="items"  *ngFor="let item of formQuantity.get('items')['controls'];let i = index;">
+                       <ng-container [formGroupName]="i">
                         <div class="col-3">
                             <div class="form-group">
 
                                 <app-custom-input formControlName="description" 
                                  [labelName]="labels.description"
                                  placeHolder = "Enter the Description" 
-                                 [(ngModel)]="obj.description">
+                                 >
                                 </app-custom-input>
                             </div>
                         </div>
@@ -585,7 +604,7 @@
                                 <app-custom-input formControlName="quantity" 
                                  [labelName]="labels.quantity" 
                                  placeHolder =  "Enter the Quantity"
-                                 [(ngModel)]="obj.quantity">
+                                 >
                                 </app-custom-input>
 
                             </div>
@@ -597,25 +616,25 @@
                                 <app-custom-input formControlName="rate"                     
                                   [labelName]="labels.rate" 
                                   placeHolder =  "Enter the Rate"
-                                  [(ngModel)]="obj.rate">
+                                 >
                                 </app-custom-input>
 
                             </div>
                         </div>
+                    </ng-container>
                         <div class="col-1 plus" >
-                        <span (click)="purchaseForm()" class="btn btn-success">+</span>
+                        <span (click)="addControlForQuantity()" class="btn btn-success">+</span>
                           </div>
                           <div class="col-1 plus">
-                            <span (click)="deleteRow(i)" class="btn btn-danger">-</span>
+                            <span (click)="removeControlFromQuantityForm(i)" class="btn btn-danger">-</span>
                             </div>
                     </div>
                
-                     <span class="btn btn-info" (click)="submit()">Save</span>
                   
                 </form>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="submitPO()"> Submit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onQuantityFormSubmit()"> Submit</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="cancelPO()"> Cancel</button>
             </div>
         </div>
