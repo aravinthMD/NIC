@@ -333,9 +333,13 @@ export class ApiService {
       processId : 'de5c8230645c11eb8ddf727d5ac274b2',
       projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
+    },
+
+    sendEmailRemainderAPI :  {
+      processId  : '1a102930653911eb8e37727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  '640f2fe8442a11ebb7bf727d5ac274b2'
     }
-
-
     
 
   };

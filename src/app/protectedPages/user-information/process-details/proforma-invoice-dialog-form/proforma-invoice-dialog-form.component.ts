@@ -580,7 +580,7 @@ download(){
 }
 
 showPDF() {
-  this.showUploadModal = false;
+  // this.showUploadModal = false;
   this.showPdfModal = true;
   this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`
 }

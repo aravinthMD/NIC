@@ -626,7 +626,7 @@
                                     <div class="col-4" *ngIf="existingUserFlag && docAvailFlag" style="padding-bottom:30px;">
                                         <label for="document">Document</label><br>
                                         <div class="pb-2">
-                                            <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="viewDoc()">View PDF</button>
+                                            <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF()">View PDF</button>
                                         </div>
                                     </div>
 
@@ -828,13 +828,13 @@
   
         <div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
         <div class="modal-dialog">
-            <div class="modal-content" style="width:800px;color:black">
+            <div class="modal-content" style="width:920px;color:black">
             <div class="modal-header text-center">
                 <h4 class="modal-title">View PDF</h4>
-                <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false">&times;</button>
             </div>
-            <div class="modal-body" style="height: 500px;">
-                <iframe [src]= "previewUrl | secure | async" style="height:464px;width: 763px;" type="application/pdf"></iframe>
+            <div class="modal-body" style="height: 553px;">
+                <iframe [src]= "previewUrl | secure | async" style="height:491px;width: 886px;" type="application/pdf"></iframe>
             </div>
         </div>
         </div>
