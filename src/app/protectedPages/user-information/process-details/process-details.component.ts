@@ -25,6 +25,8 @@ export class ProcessDetailsComponent implements OnInit{
   userId:string ;
   @Input('userObj') user : any;
 
+  data : string = ''
+
   file : any;
   documentUploadId : string = ''
 
@@ -333,6 +335,7 @@ export class ProcessDetailsComponent implements OnInit{
 
   sendReminder(element) {
     this.showEmailModal = true;
+    this.data = 'Send Mail'
 
     this.modalData =  {
       title: 'Send Reminder Email',
@@ -346,6 +349,7 @@ export class ProcessDetailsComponent implements OnInit{
 
   sendEscalation(element) {
     this.showEmailModal = true;
+    this.data = 'Send Escalation'
 
     this.modalData =  {
       title: 'Send Escalation Email',

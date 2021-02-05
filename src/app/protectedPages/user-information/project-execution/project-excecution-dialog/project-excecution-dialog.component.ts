@@ -353,9 +353,9 @@ this.closeDialog()
     this.dialogRef.close({ event : 'close' ,data : 'returnvalue'});
   }
 
-  viewDoc() {
-    this.showUploadModal = true;
-  }
+  // viewDoc() {
+  //   this.showUploadModal = true;
+  // }
 
   download(){
   
@@ -511,7 +511,7 @@ this.closeDialog()
   }
 
   showPDF() {
-    this.showUploadModal = false;
+    // this.showUploadModal = false;
     this.showPdfModal = true;
     this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`
 

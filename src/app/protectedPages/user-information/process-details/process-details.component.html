@@ -498,7 +498,7 @@
 
 </div>
 
-<app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="modalData" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
+<app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data] = "data" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
 
 
 <app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="showDataSaveModal = !showDataSaveModal"></app-data-saved-modal>

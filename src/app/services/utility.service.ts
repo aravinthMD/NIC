@@ -6,7 +6,7 @@ import { HttpService } from './http.service';
   providedIn: 'root'
 })
 export class UtilityService {
-
+private userData: any;
   constructor(private httpService: HttpService,
               private router: Router) { }
 
@@ -27,5 +27,13 @@ export class UtilityService {
     localStorage.clear();    
     this.router.navigateByUrl('/login');   
     
+  }
+
+  setUserDetail(data){
+  this.userData =  data;
+  console.log("set user data ",data)
+  }
+  getUserData(){
+    return this.userData;
   }
 }

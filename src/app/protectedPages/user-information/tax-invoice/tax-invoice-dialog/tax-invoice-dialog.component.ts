@@ -896,7 +896,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
   }
 
   showPDF() {
-    this.showUploadModal = false;
+    // this.showUploadModal = false;
     this.showPdfModal = true;
   }
 
