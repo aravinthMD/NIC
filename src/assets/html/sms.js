@@ -1,0 +1,212 @@
+let token = '';
+
+
+function login() {
+   const email = 'akshaya.venkataraman@appiyo.com';
+   const password = 'inswit@123';
+   const params = {
+       email,
+       password
+   };
+   const encryption = encrypt(
+        JSON.stringify(params),
+        publicKey
+      );
+   const url = `${host}account/${apiVersions.login}login`
+   fetch(url, {
+      body: encryption.rawPayload,
+      method: 'POST',
+      headers: encryption.headers
+   }).then(async (res) => {
+       const body = await res.text();
+       res  = {
+           body: body,
+           bodyUsed: false,
+           headers: res.headers,
+           ok: res.ok,
+           redirected: res.redirected,
+           status: res.status,
+           statusText: res.statusText,
+           type: res.type,
+           url: res.url
+       }
+       return res
+   })
+   .then((res) => {
+         return decryptResponse(res)
+      })
+     .then(res => {
+         const loginResponse = JSON.parse(res);
+         console.log('loginResponse', loginResponse);
+         token = loginResponse.token;
+         getData();
+     })
+}
+
+
+function showLoader() {
+    document.getElementById("overlay").style.display = "block";
+}
+
+function hideLoader() {
+    document.getElementById("overlay").style.display = "none";
+}
+function afterViewInit() {
+    login();
+}
+
+function showSnackbar(message, isError = false) {
+    var x = document.getElementById("snackbar");
+    x.value = message;
+    x.className = "show";
+    if(isError) {
+        x.classList.add('snackbar-error');
+    } else {
+        x.classList.remove('snackbar-error');
+    }
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
+
+async function getData() {
+    const requestId = document.getElementById('requestId');
+    const accountName = document.getElementById('accountName');
+    const projectNumber = document.getElementById('projectNumber');
+    const department = document.getElementById('department');
+    const city = document.getElementById('city');
+    const state = document.getElementById('state');
+    const requestedCredits = document.getElementById('requestedCredits');
+    const dateOfRequest = document.getElementById('dateOfRequest');
+    const requestRaisedBy = document.getElementById('requestRaisedBy');
+    const approverEmailId = document.getElementById('approverEmailId');
+    const approverName = document.getElementById('approverName');
+    const approvedOnBehalf = document.getElementById('approvedOnBehalf');
+    const dateOfApproval = document.getElementById('dateOfApproval');
+    const remarks = document.getElementById('remarks');
+    const comments = document.getElementById('comments');
+    const urlString = location.href;
+    const url = new URL(urlString);
+    showLoader();
+    try {
+        const response = await getSmsCreditAllocationData();
+        accountName.value = response.accountName;
+        projectNumber.value = response.projectNumber;
+        approverName.value = response.approvedBy;
+        dateOfRequest.value = response.dateOfRequest;
+        dateOfApproval.value = response.dateOfApproval;
+        approvedOnBehalf.value = response.onApprovalOf;
+        requestedCredits.value = response.requestedCredit;
+        remarks.value = response.remark;
+        hideLoader();
+    } catch(e) {
+        hideLoader();
+        showErrorMessage(response)
+    }
+}
+
+function showErrorMessage(response) {
+    const error = response.error;
+    const errorMessage = response.ErrorMessage;
+    if (error !== '0') {
+        return showSnackbar(errorMessage, true);
+    }
+    const processVariables = response.ProcessVariables;
+    const errorObj = processVariables.error;
+    if (errorObj.code !== '0') {
+        return showSnackbar(errorObj.message, true);
+    }
+    return false;
+}
+
+async function getSmsCreditAllocationData() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = Number(urlParams.get('id') || 0);
+    const token = urlParams.get('token');
+    const projectId = '2efbdc721cc311ebb6c0727d5ac274b2';
+    const processId = 'e48c17f0661511eb8e50727d5ac274b2';
+    const workflowId = 'db28bebe4b5011ebb822727d5ac274b2';
+    const data = {id};
+    return await buildApi(projectId, processId, workflowId, data);
+    
+}
+
+async function sendUserResponse(isApprove) { // '1': approved    '0': rejected
+    const projectId = '2efbdc721cc311ebb6c0727d5ac274b2';
+    const processId = 'e48c17f0661511eb8e50727d5ac274b2';
+    const workflowId = 'db28bebe4b5011ebb822727d5ac274b2';
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = Number(urlParams.get('id') || 0);
+    const data = {
+                    id,
+                    isApprove
+                 };
+    showLoader();
+    const response  = await buildApi(projectId, processId, workflowId, data);
+    hideLoader();
+    if (showErrorMessage(response)) {
+        return;
+    }
+    showSnackbar('Your request is submitted successfully');
+    console.log('response', response);
+}
+
+ function buildApi(projectId, processId, workflowId, body) {
+
+    const data = { 
+        processId,
+        workflowId,
+        projectId,
+        ProcessVariables: body,
+      };
+    const url = `${host}d/workflows/${processId}/${apiVersions.api}execute?projectId=${projectId}`;
+    const encryption = encrypt(
+        JSON.stringify(data),
+        publicKey
+      );
+    const headers = new Headers(encryption.headers);
+    headers.append('authentication-token', token);
+
+    return new Promise((resolve, reject) => {
+
+        fetch(url, {
+            method: 'POST',
+            body: encryption.rawPayload,
+            headers: headers
+        }).then(async (res) => {
+            const body = await res.text();
+            res  = {
+                body: body,
+                bodyUsed: false,
+                headers: res.headers,
+                ok: res.ok,
+                redirected: res.redirected,
+                status: res.status,
+                statusText: res.statusText,
+                type: res.type,
+                url: res.url
+            }
+            return res
+        })
+        .then((res) => {
+              return decryptResponse(res)
+           })
+          .then(res => {
+              const responseBody = JSON.parse(res);
+              console.log('responseBody', responseBody);
+              const error = responseBody.Error;
+              const errorMessage = responseBody.ErrorMessage;
+              if (error !== '0') {
+                  reject(errorMessage);
+              }
+              const processVariables = responseBody.ProcessVariables;
+              const errorObj = processVariables.error;
+              if (errorObj && errorObj.code !== '0') {
+                  reject(errorObj.message);
+              }
+              resolve(processVariables);
+          })
+
+    });
+}

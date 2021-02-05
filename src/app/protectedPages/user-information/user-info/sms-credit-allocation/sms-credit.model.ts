@@ -11,4 +11,5 @@ export interface SmsCreditAllocation {
     smsApprover?: string;
     id?: number;
     statusValue?: string;
+    smsUrl?: string;
 }
