@@ -197,6 +197,7 @@ _utf8_decode(e) {
         return plaintext;
     }
     decryptResponse(event) {
+        console.log('decryptResponse', event);
         var timestamp = event.headers.get('x-appiyo-ts')
         var randomkey = event.headers.get('x-appiyo-key')
         var responseHash = event.headers.get('x-appiyo-hash');  
