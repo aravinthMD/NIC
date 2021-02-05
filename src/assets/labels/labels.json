@@ -349,7 +349,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         
         "UserId": {
@@ -407,7 +407,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type": "number"
+            "type": "alpha-numeric"
         },
         "withoutTax": {
             "maxLength": {
@@ -491,7 +491,7 @@
             "maxLength": {
                 "rule": 15
             },
-            "type" : "number"
+            "type" : "alpha-numeric"
         },
         "nicsiManager": {
             "maxLength": {
