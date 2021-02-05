@@ -35,13 +35,16 @@
 }
 
 .sidenav a {
-    padding: 1.50rem 1.25rem;
+    padding: 13px;
     text-decoration: none;
     // font-size: 1.25rem;
     font-size: 14px;
     color: #fff;
     display: block;
+    font-weight:500;
 }
+
+
 
 // .sidenav a:hover {
 //   background-color: #e7e7e7;
@@ -55,7 +58,7 @@
     // background-color: #e7e7e7;
     background-repeat: no-repeat;
     background-position: right;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 body {
@@ -82,14 +85,20 @@ body {
     margin-bottom: 50px;
 }
 
-@media screen and (max-height: 450px) {
-    // .sidenav {
-    //   padding-top: 15px;
-    // }
-    .sidenav a {
-        font-size: 16px;
-    }
+// @media screen and (max-height: 450px) {
+//     // .sidenav {
+//     //   padding-top: 15px;
+//     // }
+//     .sidenav a {
+//         font-size: 12px;
+//         font-weight:500;
+//     }
+// }
+
+.dashBoard, .accountHeader{
+    font-size:18px!important;
 }
+
 
 .user {
     width: 40%;
@@ -192,8 +201,8 @@ button.btn.btn-primary {
 }
 
 .font-paginator {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 mat-form-field {
@@ -414,14 +423,42 @@ label {
     font-size: 14px;
 }
 
+.font-weight-500{
+    font-weight:500;
+}
+
 @media screen and (min-width: 992px) and (max-width:1163px) {
     .font-small {
         font-size: 9px!important;
+    }
+
+    .nav-link.p-1 {
+        color: #858585;
+        padding: 13px !important;
+        font-size: 12px!important;
+    
     }
 }
 
 @media screen and (min-width: 1163px) and (max-width:1433px) {
     .font-small {
         font-size: 12px;
+    }
+
+    .nav-link.p-1 {
+        color: #858585;
+        padding: 13px !important;
+        font-size: 12px!important;
+    
+    }
+}
+
+@media screen and (min-width: 1433px) {
+   
+    .nav-link.p-1 {
+        color: #858585;
+        padding: 13px !important;
+        font-size: 12px!important;
+    
     }
 }

@@ -233,7 +233,7 @@ updateAdminUser(data) {
 
 }
 
-deleteAdminUser(id) {
+deleteAdminUser(id, emailUrl) {
 
   const processId = this.apiService.api.deleteAdminUser.processId;
   const workflowId = this.apiService.api.deleteAdminUser.workflowId;
@@ -243,7 +243,8 @@ deleteAdminUser(id) {
   const requestEntity: any = {
     processId,
     ProcessVariables: {
-      "id": String(id)
+      "id": String(id),
+      emailUrl
     },
     workflowId,
     projectId,

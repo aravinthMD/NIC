@@ -88,7 +88,11 @@ async function getData() {
     const url = new URL(urlString);
     showLoader();
     try {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = Number(urlParams.get('id') || 0);
         const response = await getSmsCreditAllocationData();
+        requestId.innerHTML = id;
         accountName.value = response.accountName;
         projectNumber.value = response.projectNumber;
         approverName.value = response.approvedBy;
@@ -105,17 +109,18 @@ async function getData() {
 }
 
 function showErrorMessage(response) {
-    const error = response.error;
-    const errorMessage = response.ErrorMessage;
-    if (error !== '0') {
-        return showSnackbar(errorMessage, true);
-    }
-    const processVariables = response.ProcessVariables;
-    const errorObj = processVariables.error;
-    if (errorObj.code !== '0') {
-        return showSnackbar(errorObj.message, true);
-    }
-    return false;
+    showSnackbar(response, true);
+    // const error = response.error;
+    // const errorMessage = response.ErrorMessage;
+    // if (error !== '0') {
+    //     return showSnackbar(errorMessage, true);
+    // }
+    // const processVariables = response.ProcessVariables;
+    // const errorObj = processVariables.error;
+    // if (errorObj.code !== '0') {
+    //     return showSnackbar(errorObj.message, true);
+    // }
+    // return false;
 }
 
 async function getSmsCreditAllocationData() {
