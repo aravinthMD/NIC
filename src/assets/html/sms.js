@@ -88,7 +88,11 @@ async function getData() {
     const url = new URL(urlString);
     showLoader();
     try {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = Number(urlParams.get('id') || 0);
         const response = await getSmsCreditAllocationData();
+        requestId.innerHTML = id;
         accountName.value = response.accountName;
         projectNumber.value = response.projectNumber;
         approverName.value = response.approvedBy;
@@ -105,17 +109,18 @@ async function getData() {
 }
 
 function showErrorMessage(response) {
-    const error = response.error;
-    const errorMessage = response.ErrorMessage;
-    if (error !== '0') {
-        return showSnackbar(errorMessage, true);
-    }
-    const processVariables = response.ProcessVariables;
-    const errorObj = processVariables.error;
-    if (errorObj.code !== '0') {
-        return showSnackbar(errorObj.message, true);
-    }
-    return false;
+    showSnackbar(response, true);
+    // const error = response.error;
+    // const errorMessage = response.ErrorMessage;
+    // if (error !== '0') {
+    //     return showSnackbar(errorMessage, true);
+    // }
+    // const processVariables = response.ProcessVariables;
+    // const errorObj = processVariables.error;
+    // if (errorObj.code !== '0') {
+    //     return showSnackbar(errorObj.message, true);
+    // }
+    // return false;
 }
 
 async function getSmsCreditAllocationData() {
@@ -152,61 +157,3 @@ async function sendUserResponse(isApprove) { // '1': approved    '0': rejected
     console.log('response', response);
 }
 
- function buildApi(projectId, processId, workflowId, body) {
-
-    const data = { 
-        processId,
-        workflowId,
-        projectId,
-        ProcessVariables: body,
-      };
-    const url = `${host}d/workflows/${processId}/${apiVersions.api}execute?projectId=${projectId}`;
-    const encryption = encrypt(
-        JSON.stringify(data),
-        publicKey
-      );
-    const headers = new Headers(encryption.headers);
-    headers.append('authentication-token', token);
-
-    return new Promise((resolve, reject) => {
-
-        fetch(url, {
-            method: 'POST',
-            body: encryption.rawPayload,
-            headers: headers
-        }).then(async (res) => {
-            const body = await res.text();
-            res  = {
-                body: body,
-                bodyUsed: false,
-                headers: res.headers,
-                ok: res.ok,
-                redirected: res.redirected,
-                status: res.status,
-                statusText: res.statusText,
-                type: res.type,
-                url: res.url
-            }
-            return res
-        })
-        .then((res) => {
-              return decryptResponse(res)
-           })
-          .then(res => {
-              const responseBody = JSON.parse(res);
-              console.log('responseBody', responseBody);
-              const error = responseBody.Error;
-              const errorMessage = responseBody.ErrorMessage;
-              if (error !== '0') {
-                  reject(errorMessage);
-              }
-              const processVariables = responseBody.ProcessVariables;
-              const errorObj = processVariables.error;
-              if (errorObj && errorObj.code !== '0') {
-                  reject(errorObj.message);
-              }
-              resolve(processVariables);
-          })
-
-    });
-}

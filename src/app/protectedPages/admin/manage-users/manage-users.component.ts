@@ -23,6 +23,8 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   teleCodeValues = [];
   rolesList = []
 
+  popupContent: string;
+
 
 
 
@@ -119,6 +121,12 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   disable(element) {
 
+    if (element.active) {
+      this.popupContent = 'deactivate';
+    } else {
+      this.popupContent = 'activate';
+    }
+
     this.deleteUserId = element.userId;
     this.deleteAccount = element.name;
     this.showModal = true;
@@ -127,9 +135,10 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   delete() {
 
-    let id = this.deleteUserId
+    let id = this.deleteUserId;
+    const emailUrl = `${origin}/assets/html/account.html?id=${id}`;
 
-    this.adminService.deleteAdminUser(id).subscribe((response)=> {
+    this.adminService.deleteAdminUser(id, emailUrl).subscribe((response)=> {
 
       if(response['ProcessVariables']['response']['type'] == 'Success') {
 
