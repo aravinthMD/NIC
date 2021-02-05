@@ -34,6 +34,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     'credit',
     'status',
     'reminder',
+    'escalation',
     'remark',
     'Action',
   ];
@@ -82,6 +83,9 @@ export class SmsCreditAllocationComponent implements OnInit {
   };
   userId: any;
   smsCreditList: SmsCreditAllocation[] = [];
+
+
+  data : string = '';
 
   constructor(
     private labelsService: LabelsService,
@@ -492,14 +496,12 @@ export class SmsCreditAllocationComponent implements OnInit {
       return;
     }
     this.showEmailModal = true;
-    this.modalData = {
-      title: 'Send Reminder Email',
-      request: {
-        from: 'akshaya@appiyo.com',
-        to: 'arul.auth@nic.in',
-        subject: `Test Email: ${element.invoiceNo || 4535}`,
-      },
-    };
+    this.data = 'Send Mail';
+  }
+
+  sendEscalation(element){
+    this.showEmailModal = true;
+    this.data = 'Send Escalation'
   }
 
   onOkay() {

@@ -9,6 +9,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 import { UtilService } from '@services/util.service';
 
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { EmailService } from 'src/app/email.service';
 
 
 export interface Email {
@@ -27,6 +28,10 @@ export class EmailComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   showinput:boolean=false;
+
+  userName : string;
+
+  id : number = 0;
 
   editTempinp:boolean=false;
 
@@ -48,20 +53,69 @@ export class EmailComponent implements OnInit {
   SelectedVal;
   emailform:FormGroup;
 
-  optionsScreen: string[] = [
+  // optionsScreen  = [   //HardCoded
+  //   {
+  //     key : 'Customer Details' , 
+  //     value : '1' 
+  //   },
+  //   {
+  //     'key' : 'Technical Admin' ,
+  //      'value' :'2' 
+  //     },
+  //   {
+  //     'key' : 'Billing Admin' ,
+  //      'value'  : '3' 
+  //     },
+  //   {
+  //     'key' : 'SMS Credit Allocation',
+  //      'value' : '4'
+  //     },
+  //   {
+  //     'key' : 'Proforma Invoice',
+  //    'value'  : '5' 
+  //   },
+  //   {
+  //     'key' : 'Project Execution' ,
+  //      'value'  : '6 '
+  //     },
+  //   {
+  //     'key': 'Purchase Order',
+  //     'value'  : '7'
+  //    },
+  //   {
+  //     'key': 'Tax Invoice',
+  //      'value' :  '8' 
+  //     },
+  //   {
+  //     'key' : 'Reports' ,
+  //      'value'  : '9'
+  //     },
+  //   {
+  //     'key'  : 'Email' , 
+  //     'value'  : '10'
+  //   }
+  // ];
+
+  screenList = [
     'Customer Details',
-    'Technical Admin',
-    'Billing Admin',
-    'SMS Credit Allocation',
-    'Proforma Invoice',
-    'Project Execution',
-    'Purchase Order',
-    'Tax Invoice',
-    'Reports',
-    'Email'
+     'Technical Admin',
+     'Billing Admin',
+     'SMS Credit Allocation',
+     'Proforma Invoice',
+     'Project Execution',
+     'Purchase Order',
+     'Tax Invoice',
+     'Reports',
+     'Email'
   ];
 
-  dropdownSettings : IDropdownSettings = {};
+  dropdownSettings : IDropdownSettings = {
+    singleSelection: false,
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    allowSearchFilter: true,
+    itemsShowLimit: 2,
+  };
   
 
   options: string[] = ['00.00', '00.30', '01.00', '01.30','02.00', '02.30',
@@ -79,33 +133,16 @@ export class EmailComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredOptions1: Observable<string[]>;
 today=new Date()
-  constructor(private toasterService: ToasterService,private router: Router,private utilService: UtilService) {
+  constructor(private toasterService: ToasterService,private router: Router,private utilService: UtilService,private emailService : EmailService) {
 
-    this.dropdownSettings  = {
-      singleSelection: false,
-      selectAllText: 'Select All',
-      unSelectAllText: 'Unselect All',
-      allowSearchFilter: true,
-      enableCheckAll : true,
-      clearSearchFilter : true,
-      itemsShowLimit:1
-    };
+    this.userName = localStorage.getItem('userName') || '';
 
    }
 
   ngOnInit() {
-  this.emailform=new FormGroup({
-  selectedTemp:new FormControl(''),
-  textarea:new FormControl(''),
-  screenName: new FormControl(''),
-  screenNameEdit: new FormControl(''),
-  renameTemplate:new FormControl(''),
-  subject:new FormControl(''),
-  fromtime:new FormControl(),
-  totime:new FormControl(),
-  fromDate: new FormControl(),
-  toDate: new FormControl()
-})
+
+    this.initForm();
+  
 this.filteredOptions = this.emailform.get('fromtime').valueChanges
       .pipe(
         startWith(''),
@@ -117,6 +154,31 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
         map(val => this._filter1(val))
       );
   }
+
+
+  initForm(){
+    this.emailform=new FormGroup({
+
+      FromMailAddress : new FormControl(this.userName),
+      ToMailAddress : new FormControl(''),
+      subject:new FormControl(''),
+      mailContent:new FormControl(''),
+
+      templateName : new FormControl(''),
+
+      selectedTemp:new FormControl(''),
+      screenList: new FormControl(),
+      screenNameEdit: new FormControl(''),
+      renameTemplate:new FormControl(''),
+      fromtime:new FormControl(),
+      totime:new FormControl(),
+      fromDate: new FormControl(),
+      toDate: new FormControl()
+    })
+  }
+
+  
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
@@ -182,6 +244,7 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
   
   }
   onChange(event){
+
     this.SelectedVal=this.TemplateList.filter(obj=>obj.key==event.target.value)
     this.emailform.patchValue({textarea:this.SelectedVal[0]['content']});
     this.emailform.patchValue({subject:this.SelectedVal[0]['subject']});
@@ -203,9 +266,71 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
       this.toasterService.showError('Please click the todate icon to select date','');
     }
   }
-  save(){
-    this.toasterService.showSuccess('Templete Saved Successfully','');
+  saveOrUpdateTemplate(){
+
+    const FromMailAddress = this.emailform.controls['FromMailAddress'].value;
+    const ToMailAddress = this.emailform.controls['ToMailAddress'].value;
+    const templateName = this.emailform.controls['templateName'].value;
+    const subject = this.emailform.controls['subject'].value;
+    const mailContent = this.emailform.controls['mailContent'].value;
+    const screenNameList = this.emailform.controls['screenList'].value;
+
+    const data =  {
+      FromMailAddress,
+      ToMailAddress,
+      subject,
+      mailContent,
+      templateName,
+      screenNameList,
+      id : this.id 
+    }
+      
+    this.emailService.createandEditEmailTemplates(data).subscribe(
+      (response) =>{
+
+        const ProcessVariables = response['ProcessVariables'] || {};
+        const error = ProcessVariables.error || {};
+
+        if(error.code !== '0'){
+            this.toasterService.showSuccess('Email Template Saved Successfully','');
+            return;
+            
+        }else{
+            this.toasterService.showError(error.message,'');
+        }
+    },(error) =>{
+        this.toasterService.showError('Email Template Failed to Save',error.message);
+    })
+    
+
   }
+
+  getEmailTemplateById(){
+        this.emailService.getEmailTemplateById(this.id).subscribe(
+          (response) => {
+            const ProcessVariables = response['ProcessVariables'] || {};
+            const error = ProcessVariables.error || {};
+            if(error.code !== '0'){
+              let FromMailAddress = ProcessVariables.FromMailAddress || '';
+              this.emailform.controls['FromMailAddress'].setValue(FromMailAddress);
+              let ToMailAddress = ProcessVariables.ToMailAddress || '';
+              this.emailform.controls['ToMailAddress'].setValue(ToMailAddress);
+              
+            }
+        })
+  }
+
+  getAllEmailTemplates(){
+      this.emailService.getAllEmailTemplates().subscribe(
+        (response) =>{
+          const ProcessVariables = response['ProcessVariables'] || {};
+            const error = ProcessVariables.error || {};
+            if(error.code !== '0'){
+              
+            }
+      })
+  }
+
   update(){
     this.toasterService.showSuccess('Templete Updated','');
   }

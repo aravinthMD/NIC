@@ -398,16 +398,24 @@ label {
     font-weight: bold;
 }
 
-.full-width-dialog .mat-dialog-container {
-    max-width: 700px !important;
-}
+
 
 .modal-dialog {
-    max-width: 700px !important;
+    max-width: 734px !important;
     margin: 1.75rem auto;
 }
 
 .fa-eye {
+    font-size: 15px;
+}
+
+
+
+.custom-material-icons { 
+    font-size: 21px !important;
+}
+
+.fa-paper-plane { 
     font-size: 16px;
 }
 
