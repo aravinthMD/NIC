@@ -185,8 +185,9 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.labels = values;
     });
     this.user = '';
-    this.activatedRoute.params.subscribe((value)=> {
+    this.activatedRoute.params.subscribe((value) => {
         this.user = value.id;
+        this.clientDetailService.setClientId(value.id || '');
         console.log("user Id",this.user);
     });
    }

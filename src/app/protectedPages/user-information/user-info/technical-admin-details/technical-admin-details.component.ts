@@ -71,7 +71,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       private utilService: UtilService,
       private activatedRoute: ActivatedRoute,
       private behser: BehaviourSubjectService,
-      private client: ClientDetailsService,
+      private clientDetailService: ClientDetailsService,
       private billAdminService: BillingAdminService
       ) { }
 
@@ -84,6 +84,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
         return;
       }
       this.clientId = Number(value.id || 0);
+      this.clientDetailService.setClientId(value.id);
       this.getTechAdminsById(this.clientId);
 
       // this.getBillingAdminDetailById(this.clientId);

@@ -17,6 +17,7 @@ import { ApiService } from '../../../../services/api.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { SmsCreditService } from '@services/sms-credit.service';
 import { SmsCreditAllocation } from './sms-credit.model';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -33,6 +34,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     'credit',
     'status',
     'reminder',
+    'escalation',
     'remark',
     'Action',
   ];
@@ -81,6 +83,9 @@ export class SmsCreditAllocationComponent implements OnInit {
   };
   userId: any;
   smsCreditList: SmsCreditAllocation[] = [];
+
+
+  data : string = '';
 
   constructor(
     private labelsService: LabelsService,
@@ -353,6 +358,10 @@ export class SmsCreditAllocationComponent implements OnInit {
     }
   }
   onSubmit() {
+    const origin = location.origin;
+    console.log('origin', origin);
+    const token = localStorage.getItem('token');
+    const smsUrl = `${origin}/assets/html/sms.html?id=smsId`;
     if (this.smsCreditForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');
@@ -361,6 +370,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     const formValue  = this.smsCreditForm.value;
     console.log('formValue', formValue);
     const smsCredit: SmsCreditAllocation = {
+      smsUrl,
       clientId: this.userId,
       smsApprover: formValue.smsApprover,
       dateOfRequest: formValue.dateOfRequest,
@@ -375,6 +385,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     };
 
     console.log('smsCredit', smsCredit);
+
 
     this.smsCreditService.saveOrUpdateSmsCreditDetails(smsCredit)
          .subscribe((res: any) => {
@@ -485,14 +496,12 @@ export class SmsCreditAllocationComponent implements OnInit {
       return;
     }
     this.showEmailModal = true;
-    this.modalData = {
-      title: 'Send Reminder Email',
-      request: {
-        from: 'akshaya@appiyo.com',
-        to: 'arul.auth@nic.in',
-        subject: `Test Email: ${element.invoiceNo || 4535}`,
-      },
-    };
+    this.data = 'Send Mail';
+  }
+
+  sendEscalation(element){
+    this.showEmailModal = true;
+    this.data = 'Send Escalation'
   }
 
   onOkay() {

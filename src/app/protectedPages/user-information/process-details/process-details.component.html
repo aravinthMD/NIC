@@ -408,7 +408,7 @@
             <table mat-table [dataSource]="dataSource" class="custom-table">
 
                 <ng-container matColumnDef="InvoiceNo">
-                    <th mat-header-cell *matHeaderCellDef class="pl-0">Proforma Invoice No </th>
+                    <th mat-header-cell *matHeaderCellDef class="pl-1">Proforma Invoice No </th>
                     <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piNumber}} </td>
                 </ng-container>
 
@@ -454,7 +454,7 @@
                         <!-- <span class="material-icons">
                             report
                             </span> -->
-                            <mat-icon>
+                            <mat-icon class="custom-material-icons">
                                 report
                             </mat-icon>
                     </button> </td>

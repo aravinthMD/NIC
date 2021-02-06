@@ -3,6 +3,7 @@ import { FormGroup,FormControl } from '@angular/forms';
 import { Router,ActivatedRoute } from '@angular/router';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { BillingAdminService } from '@services/billing-admin.service';
+import { ClientDetailsService } from '@services/client-details.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
@@ -56,7 +57,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
     private userInfoService: UserInfoService,
     private activatedRoute: ActivatedRoute,
     private behser: BehaviourSubjectService,
-    private billingAdminService: BillingAdminService
+    private billingAdminService: BillingAdminService,
+    private clientDetailService: ClientDetailsService
     ) { }
 
   ngOnInit() {
@@ -69,6 +71,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
          return;
        }
        this.clientId = Number(value.id || 0);
+       this.clientDetailService.setClientId(value.id);
        this.getBillingAdminDetailById(this.clientId);
     });
 

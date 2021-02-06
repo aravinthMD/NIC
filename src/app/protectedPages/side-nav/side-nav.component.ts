@@ -1,6 +1,6 @@
 import { Component, OnInit,OnChanges, Input } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 import { UtilService } from '../../services/util.service'
@@ -25,19 +25,25 @@ export class SideNavComponent implements OnInit,OnChanges {
   version: string;
 
   isExistingUser: boolean;
+  clientId: string;
 
   constructor(
     private location: Location,
     private utilService: UtilService,
     private router: Router,
     private clientDetailService: ClientDetailsService,
-    private toasterService: ToasterService ) { 
+    private toasterService: ToasterService,
+    private activatedRoute: ActivatedRoute ) { 
 
     this.version = environment.version;
 
   }
 
   ngOnInit() {
+
+    // this.activatedRoute.params.subscribe((res: any) => {
+    //   this.clientId = res.id || '';
+    // });
 
     this.utilService.detectSidNav$.subscribe((user)=> {
       console.log('DETECT SIDE NAV ********',user)
@@ -213,22 +219,24 @@ export class SideNavComponent implements OnInit,OnChanges {
       // this.utilService.projectNumber$.subscribe((pno)=> {
       //     projectNo = pno;
       // })
-     const clientId =  this.clientDetailService.getClientId();
 
+      // this.activatedRoute.params.subscribe((value) => {
+        // const clientId =  value.id;
+      const clientId = this.clientDetailService.getClientId();
+      if (!clientId && (route.includes('billingAdmin') || route.includes('techAdmin'))) {
+          this.toasterService.showError(
+            `Can't proceed without submitting customer details`,
+            ''
+          );
+          return;
+      }
+      if (clientId) {
+          this.router.navigate([`${route}/${clientId}`]);
+      } else {
+          this.router.navigate([route]);
+      }
 
-     if (!clientId && (route.includes('billingAdmin') || route.includes('techAdmin'))) {
-       this.toasterService.showError(
-         `Can't proceed without submitting customer details`,
-         ''
-       );
-       return;
-     }
-
-     if (clientId) {
-       this.router.navigate([`${route}/${clientId}`]);
-     } else {
-       this.router.navigate([route]);
-     }
+      // });
   }
 
   navigation(route: string) {
