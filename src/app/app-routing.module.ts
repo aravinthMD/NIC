@@ -34,6 +34,7 @@ import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
 import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 import { LovResolverService } from '@services/lov-resolver.service';
+import { AuthguardService } from '@services/authguard.service';
 
 const routes: Routes = [
   {
@@ -51,100 +52,103 @@ const routes: Routes = [
   {
     path : "users",
     component : ProtectedComponent,
+    canActivate: [AuthguardService],
     resolve :  { listOfValue : LovResolverService },
-  children : [
-    { 
-      path : "Dashboard" ,
-       component : DashboardComponent
-     },
-    { 
-      path : "userInfo" , 
-      component : UserInformationComponent,
-    },
-    { 
-      path : "customerDetails/:id" , 
-      component : UserInfoComponent,
-    },
-    {
-      path: 'customerDetails',
-      component: UserInfoComponent,
-    },
-    {
-      path: 'techAdmin',
-      component: TechnicalAdminDetailsComponent,
-    },
-    {
-      path: 'techAdmin/:id',
-      component: TechnicalAdminDetailsComponent,
-    },
-    {
-      path: 'billingAdmin',
-      component: BillingOwnerDetailsComponent,
-    },
-    {
-      path: 'billingAdmin/:id',
-      component: BillingOwnerDetailsComponent,
-    },
-    {
-      path: 'smsCredit',
-      component: SmsCreditAllocationComponent,
-    },
-    {
-      path: 'smsCredit/:id',
-      component: SmsCreditAllocationComponent,
-    },
+    children : [
+      { 
+        path : "Dashboard" ,
+        component : DashboardComponent
+      },
+      { 
+        path : "userInfo" , 
+        component : UserInformationComponent,
+      },
+      { 
+        path : "customerDetails/:id" , 
+        component : UserInfoComponent,
+      },
+      {
+        path: 'customerDetails',
+        component: UserInfoComponent,
+      },
+      {
+        path: 'techAdmin',
+        component: TechnicalAdminDetailsComponent,
+      },
+      {
+        path: 'techAdmin/:id',
+        component: TechnicalAdminDetailsComponent,
+      },
+      {
+        path: 'billingAdmin',
+        component: BillingOwnerDetailsComponent,
+      },
+      {
+        path: 'billingAdmin/:id',
+        component: BillingOwnerDetailsComponent,
+      },
+      {
+        path: 'smsCredit',
+        component: SmsCreditAllocationComponent,
+      },
+      {
+        path: 'smsCredit/:id',
+        component: SmsCreditAllocationComponent,
+      },
 
-    {
-      path:'proformaInvoice', 
-      component: ProcessDetailsComponent,
-    },
-    {
-      path:'proformaInvoice/:id', 
-      component: ProcessDetailsComponent,
-    },
-    {
-      path:'projectExecution', 
-      component: ProjectExecutionComponent,
-    },
-    {
-      path:'projectExecution/:projectNo', 
-      component: ProjectExecutionComponent,
-    },
-    {
-      path:'purchaseOrder', 
-      component: PurchaseOrderComponent,
-    },
-    {
-      path:'purchaseOrder/:projectNo', 
-      component: PurchaseOrderComponent,
-    },
-    {
-      path:'taxInvoice', 
-      component: TaxInvoiceComponent,
-    },
-    {
-      path:'taxInvoice/:projectNo', 
-      component: TaxInvoiceComponent,
-    },
+      {
+        path:'proformaInvoice', 
+        component: ProcessDetailsComponent,
+      },
+      {
+        path:'proformaInvoice/:id', 
+        component: ProcessDetailsComponent,
+      },
+      {
+        path:'projectExecution', 
+        component: ProjectExecutionComponent,
+      },
+      {
+        path:'projectExecution/:projectNo', 
+        component: ProjectExecutionComponent,
+      },
+      {
+        path:'purchaseOrder', 
+        component: PurchaseOrderComponent,
+      },
+      {
+        path:'purchaseOrder/:projectNo', 
+        component: PurchaseOrderComponent,
+      },
+      {
+        path:'taxInvoice', 
+        component: TaxInvoiceComponent,
+      },
+      {
+        path:'taxInvoice/:projectNo', 
+        component: TaxInvoiceComponent,
+      },
 
 
-    { path : "reports" , 
-    component : ReportsComponent,
+      { path : "reports" , 
+      component : ReportsComponent,
+    },
+      {
+        path: "sendemail", 
+        component : EmailComponent,
+      },
+      {
+        path: "managegroup", 
+        component : ManageGroupComponent,
+      }
+    ],
   },
-    {
-      path: "sendemail", 
-      component : EmailComponent,
-    },
-    {
-      path: "managegroup", 
-      component : ManageGroupComponent,
-    }
-  ],
-},
   {
     path:"admin",
     component : AdminComponent,
+  
     resolve :  { listOfValue : LovResolverService },
+    canActivate: [AuthguardService],
     children : [
       {
         path: "manageUser", 
