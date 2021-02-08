@@ -16,6 +16,7 @@ import {ApiService } from '../../../services/api.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { POService } from '@services/po-service';
 import { ClientDetailsService } from '@services/client-details.service';
+import { CsvDataService } from '@services/csv-data.service';
 
 
 
@@ -52,7 +53,7 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
   ];
   departmentListData = [];
   dataArray = [];
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = [];
   date = new FormControl();
   PurchaseOrderForm: FormGroup;
   formQuantity: FormGroup;
@@ -119,7 +120,7 @@ smsApprovedList: any[] = [
     private beheSer: BehaviourSubjectService,
     private route: ActivatedRoute,
     private clientDetailService: ClientDetailsService,
-    private poDataService: POService
+    private poDataService: POService,
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
@@ -142,42 +143,6 @@ smsApprovedList: any[] = [
       console.log('label', this.labels);
     });
     this.initForm();
-    // this.PurchaseOrderForm = new FormGroup({
-    //   userName: new FormControl(null),
-    //   piNumber: new FormControl(null),
-    //   poNumber: new FormControl(null),
-    //   smsApproved: new FormControl(null),
-    //   projectName:new FormControl(null),
-    //   date:new FormControl(null),
-    //   withoutTax: new FormControl(null),
-    //   poStatus:new FormControl(''),
-    //   startDate: new FormControl(null),
-    //   endDate: new FormControl(null),
-    //   userEmail:new FormControl(null),
-    //   poManagerEmail: new FormControl(null),
-    //   projectNo:new FormControl(null,Validators.pattern("^[0-9]{0,15}$")),
-    //   poAmountWithTax: new FormControl(null),
-    //   departmentName: new FormControl(''),
-    //   paymentStatus:new FormControl(''),
-    //   uploadDoc:new FormControl(null),
-    //   remark:new FormControl('')
-
-    // })
-
-    // this.clientId = this.clientDetailService.getClientId();
-
-    // this.searchForm = new FormGroup({
-    //   searchData: new FormControl(null),
-    //   searchTo: new FormControl(null),
-    //   searchFrom: new FormControl(null)
-    // })
-
-    // this.formQuantity = new FormGroup({
-    //   rate: new FormControl(null),
-    //   quantity: new FormControl(null),
-    //   description: new FormControl(null)
-    // })
-
     this.utilService.userDetails$.subscribe((val: any) => {
 
       this.accountName = val.App_name || '';
@@ -253,8 +218,8 @@ smsApprovedList: any[] = [
         console.log('response', response);
         this.datePerPage = Number(processVariables.dataPerPage || 0);
         this.resultsLength = Number(processVariables.totalCount || 0);
-        this.dataSource = new MatTableDataSource<any>(this.userList);
-        this.dataSource.paginator = this.paginator;
+        this.dataSource = this.userList;
+        // this.dataSource.paginator = this.paginator;
     });
   }
 
@@ -353,7 +318,7 @@ smsApprovedList: any[] = [
     this.showPOModal = true;
   }
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+//    this.dataSource.paginator = this.paginator;
 
   }
 
@@ -379,7 +344,7 @@ smsApprovedList: any[] = [
               return this.toasterService.showError(errorObj.message, '');
             }
             const purchaseData = processVariables.purchaseData || [];
-            this.dataSource = new MatTableDataSource<any>(purchaseData);
+            this.dataSource = purchaseData;
             this.datePerPage = Number(processVariables.dataPerPage || 0);
             this.resultsLength = Number(processVariables.totalCount || 0);
 
@@ -644,8 +609,7 @@ next() {
           return String(value.currentPOId || value.id) === String(data.id);
     });
     this.userList[index] = data;
-    this.dataSource = new MatTableDataSource<any>(this.userList);
-    this.dataSource.paginator = this.paginator;
+    this.dataSource = this.userList;
   }
 
   updateGridData(data) {
@@ -653,8 +617,8 @@ next() {
     console.log('processVariables', data);
     this.purchaseOrderId = data.id;
     this.userList.unshift(data);
-    this.dataSource = new MatTableDataSource<any>(this.userList);
-    this.dataSource.paginator = this.paginator;
+    this.dataSource = this.userList;
+    this.resultsLength += 1;
   }
 
   pageEventData(event) {
@@ -685,5 +649,41 @@ next() {
 
   this.showDataSaveModal = false;
   this.showPOModal = false;
+ }
+
+ exportAsCsv() {
+  const formValue = this.searchForm.value;
+  const params = {
+    searchKeyword: formValue.searchData,
+    fromDate: formValue.searchFrom,
+    toDate: formValue.searchTo,
+    exportCsv: 'true',
+    selectedClientId: Number(this.clientId)
+  };
+  this.poDataService.getCsvData(params)
+      .subscribe((res: any) => {
+        const error = res.Error;
+        const errorMessage = res.ErrorMessage;
+        if (error !== "0") {
+          return this.toasterService.showError(errorMessage, '');
+        }
+        const processVariables = res.ProcessVariables;
+        const list = processVariables.List;
+        if (!list) {
+          return this.toasterService.showInfo('No data available', '');
+        }
+        CsvDataService.exportToCsv('PURCHASER_ORDER.csv', list);
+        //  console.log('res', res);
+        //  const link = document.createElement('a');
+        //  const csvContent = atob(res.ProcessVariables.exportCsv);
+        //  const  blob = new Blob([csvContent], {type: "data:application/octet-stream;base64"});
+        //  const url = URL.createObjectURL(blob);
+        //  link.setAttribute('href', url);
+        //  link.setAttribute('download', 'Filename.csv');
+        //  link.style.visibility = 'hidden';
+        //  document.body.appendChild(link);
+        //  link.click();
+        //  document.body.removeChild(link);
+      });
  }
 }

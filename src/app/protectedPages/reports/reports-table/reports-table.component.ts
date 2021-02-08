@@ -34,7 +34,7 @@ export class ReportsTableComponent implements OnInit, OnChanges {
   PAYMENT_SHORT_PAY_COLUMNS = ['InvoiceNo', 'InvoicePaid', 'ShortPay'];
 
   PAID_UNPAID_COLUMNS = ['UserName', 'projectNumber', 'InvoiceNo', 'InvoiceAmount', 'InvoicePaid', 'InvoiceUnpaid'];
-  SMS_CREDIT_ALLOCATION = ['smsMatrix', 'DateOfRequest', 'Credits', 'Status', 'Navigate'];
+  SMS_CREDIT_ALLOCATION = ['smsMatrix', 'DateOfRequest', 'Credits', 'Status'];
   PROFORMA_INVOICE = ['piNumber', 'piAmount', 'piDate'];
   PURCHASE_ORDER_RAISED = ['piNumber', 'poNumber', 'poDate', 'projectNumber'];
   INVOICE_RAISED = ['projectNumber', 'poNumber', 'poDate', 'InvoiceNo', 'InvoiceDate'];

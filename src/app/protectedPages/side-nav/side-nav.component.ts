@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment';
 import { ClientDetailsService } from '@services/client-details.service';
 import { ToasterService } from '@services/toaster.service';
 import { UtilityService } from '@services/utility.service';
+import { NewAccountService } from '@services/new-account.service';
 import { filter } from 'rxjs/operators';
 import { F } from '@angular/cdk/keycodes';
 @Component({
@@ -40,6 +41,8 @@ public taxInvoiceModule: boolean;
 public projectExecutionModule: boolean;
 public performaInvoiceModule: boolean;
 private mySetting: Array<any>;
+insertionFlag: number;
+// showOtherMenus: boolean;
   constructor(
     private location: Location,
     private utilService: UtilService,
@@ -47,7 +50,9 @@ private mySetting: Array<any>;
     private clientDetailService: ClientDetailsService,
     private toasterService: ToasterService,
     private activatedRoute: ActivatedRoute ,
-    private utilityService: UtilityService) { 
+    private utilityService: UtilityService,
+    private newAccountService: NewAccountService
+    ) {
 
       this.version = environment.version;
       this.loginDetail = this.utilityService.getLoginDetail();
@@ -87,6 +92,8 @@ private mySetting: Array<any>;
 
   ngOnInit() {
 
+
+    this.listenerForGetFlagValues();
     // this.activatedRoute.params.subscribe((res: any) => {
     //   this.clientId = res.id || '';
     // });
@@ -211,6 +218,18 @@ private mySetting: Array<any>;
     
   }
 
+  listenerForGetFlagValues() {
+    this.newAccountService.getFlagForShowingPages()
+        .subscribe((value) => {
+            // if (value === 3) {
+            //     this.showOtherMenus = true;
+            // } else {
+            //   this.showOtherMenus = false;
+            // }
+            this.insertionFlag = value;
+        });
+  }
+
 
   listenerForLocationChange() {
     this.location.onUrlChange((url) => {
@@ -274,6 +293,9 @@ private mySetting: Array<any>;
             ''
           );
           return;
+      }
+      if (this.insertionFlag <= 1 && route.includes('billingAdmin')) {
+         return this.toasterService.showError(`Can't proceed without submitting technical admin details`, '');
       }
       if (clientId) {
           this.router.navigate([`${route}/${clientId}`]);

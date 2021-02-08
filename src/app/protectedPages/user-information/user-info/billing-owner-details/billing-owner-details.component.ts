@@ -8,6 +8,7 @@ import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
+import { NewAccountService } from '@services/new-account.service';
 
 @Component({
   selector: 'app-billing-owner-details',
@@ -47,7 +48,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   userId: string;
   clientId: number;
   isShowViewPage = false;
- 
+  insertionFlag: number;
 
   constructor(
     private labelsService: LabelsService,
@@ -58,10 +59,16 @@ export class BillingOwnerDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private behser: BehaviourSubjectService,
     private billingAdminService: BillingAdminService,
-    private clientDetailService: ClientDetailsService
+    private clientDetailService: ClientDetailsService,
+    private newAccountService: NewAccountService
     ) { }
 
   ngOnInit() {
+
+    this.newAccountService.getFlagForShowingPages()
+        .subscribe((value) => {
+            this.insertionFlag = value;
+        });
 
     this.initForm();
     this.patchLovValues();
@@ -103,7 +110,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
         this.status = val['status'] || '';
       })
 
-      this.setBillOwnerFormValues();
+      // this.setBillOwnerFormValues();
       }else  {
        this.showView = false
       }
@@ -115,17 +122,17 @@ export class BillingOwnerDetailsComponent implements OnInit {
       departmentName : new FormControl ([null]),
       designation: new FormControl ([null]),
       employeeCode : new FormControl ([null]),
-      email : new FormControl (''),
+      email : new FormControl (null),
       mobileNumberCode: new FormControl(''),
       mobileNumber : new FormControl (''),
-      telephoneNumber : new FormControl (''),
+      telephoneNumber : new FormControl (null),
       telephoneNumberCode: new FormControl(''),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
       city : new FormControl ([null]),
       state : new FormControl ([null]),
-      pinCode : new FormControl (''),
+      pinCode : new FormControl (null),
       remark: new FormControl('')
     });
   }
@@ -141,6 +148,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   setBillOwnerFormValues(data?: any) {
+      if (!data.selectedClient) {
+        return;
+      }
       if (data) {
         this.billOwnerForm.patchValue({
           id: Number(data.id),
@@ -149,10 +159,10 @@ export class BillingOwnerDetailsComponent implements OnInit {
           designation: data.designation,
           employeeCode: data.employeeCode,
           email: data.email,
-          mobileNumberCode: data.mobileNumberCode,
+          mobileNumberCode: data.mobileNumberCode || null,
           mobileNumber: data.mobileNumber,
           telephoneNumber: data.telephoneNumber,
-          telephoneNumberCode: data.telephoneNumberCode,
+          telephoneNumberCode: data.telephoneNumberCode || null,
           offAddress1: data.oaLine1,
           offAddress2: data.oaLine1,
           offAddress3: data.oaLine1,
@@ -303,6 +313,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       }
 
       this.showDataSaveModal = true;
+      this.newAccountService.setFlagForShowingPages(3);
       this.dataValue = {
         title: 'Billing Admin Details Updated Successfully',
         message:
@@ -382,7 +393,12 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   onNext() {
-     this.utilService.setCurrentUrl('users/smsCredit')
+
+    if (this.insertionFlag < 3) {
+      return this.toasterService.showError(`Can't proceed without submitting billing admin details`, '');
+    }
+     
+     // this.utilService.setCurrentUrl('users/smsCredit')
 
     // let pno = '';
     // this.utilService.projectNumber$.subscribe((val)=> {
@@ -418,7 +434,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   // })
 
   // if(this.user){
-    this.router.navigate(['/users/techAdmin/'+this.clientId])
+    // this.router.navigate(['/users/techAdmin/'+this.clientId])
     this.showView = true;
     this.propertyFlag = true;
   // }else{

@@ -12,6 +12,7 @@ import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { AdminService } from '@services/admin.service';
 import { environment } from 'src/environments/environment.prod';
+import { NewAccountService } from '@services/new-account.service';
 
 
 
@@ -117,16 +118,18 @@ export class UserInfoComponent implements OnInit, OnChanges {
     clientId: string;
 
   constructor(
-    private formBuilder : FormBuilder,
-    private labelsService: LabelsService, 
+    private formBuilder: FormBuilder,
+    private labelsService: LabelsService,
     private location: Location,
     private utilService: UtilService,
     private userInfoService: UserInfoService,
     private toasterService: ToasterService,
     private router: Router,
-    private activatedRoute: ActivatedRoute, 
-    private beheSer : BehaviourSubjectService,
-    private clientDetailService  : ClientDetailsService) {
+    private activatedRoute: ActivatedRoute,
+    private beheSer: BehaviourSubjectService,
+    private clientDetailService: ClientDetailsService,
+    private newAccountService: NewAccountService
+    ) {
 
       // this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
       // this.mobileNumberCodeList = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'];
@@ -425,6 +428,18 @@ export class UserInfoComponent implements OnInit, OnChanges {
       {
         key  : this.labels.remark,
         value :  this.form.value.remark
+      },
+      {
+        key  : '',
+        value :  ''
+      },
+      {
+        key  : '',
+        value :  ''
+      },
+      {
+        key  : '',
+        value :  ''
       }
     ]
 
@@ -590,6 +605,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       }
       
       this.clientDetailService.setClientId(this.clientId);
+      this.newAccountService.setFlagForShowingPages(1);
       this.dataValue = {
         title: 'Customer Information Saved Sucessfully',
         message : 'Are you sure you want to proceed to Technical Admin page?'

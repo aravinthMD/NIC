@@ -18,6 +18,7 @@ import { ClientDetailsService } from '@services/client-details.service';
 import { SmsCreditService } from '@services/sms-credit.service';
 import { SmsCreditAllocation } from './sms-credit.model';
 import { environment } from 'src/environments/environment.prod';
+import { CsvDataService } from '@services/csv-data.service';
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -100,7 +101,8 @@ export class SmsCreditAllocationComponent implements OnInit {
     private searchService: SearchService,
     private apiService: ApiService,
     private clientDetailsService: ClientDetailsService,
-    private smsCreditService: SmsCreditService
+    private smsCreditService: SmsCreditService,
+  //  private csvDataService: CsvDataService
   ) {}
 
   ngOnInit() {
@@ -361,7 +363,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     const origin = location.origin;
     console.log('origin', origin);
     const token = localStorage.getItem('token');
-    const smsUrl = `${origin}/assets/html/sms.html?id=smsId`;
+    const smsUrl = `${origin}/nic/assets/html/sms.html?id=smsId`;
     if (this.smsCreditForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');
@@ -458,7 +460,23 @@ export class SmsCreditAllocationComponent implements OnInit {
   //   this.dataSource.paginator = this.paginator;
   // }
   getDownloadXls() {
-    this.utilService.getDownloadXlsFile(this.history);
+    const data = this.smsCreditList.map((value) => {
+          const statusObj = this.statusList.find((status) => {
+              return String(status.key) === String(value.status);
+          });
+          return {
+            Total_Credit: value.totalCredit,
+            Date_Of_Request: value.dateOfRequest,
+            Balance_Credit: value.balanceCredit,
+            Approved_By: value.approvedBy,
+            Used_Credit: value.usedCredit,
+            Approval_Of: value.onApprovalOf,
+            Status: statusObj.value,
+            Status_Changed_On: value.statusChangedOn
+          };
+    });
+    CsvDataService.exportToCsv('SMS_CREDIT_ALLOCATION.csv', data);
+    // this.utilService.getDownloadXlsFile(this.history);
   }
 
   detectDateKeyAction(event, type) {

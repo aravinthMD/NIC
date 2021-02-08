@@ -438,6 +438,10 @@ userStatus  = [
     // this.accordion.closeAll()
   }
 
+  clearForm() {
+    this.reportsForm.reset();
+  }
+
   setGridValues(res: any) {
     const reports = this.reportsForm.get('reports').value;
     this.reportsId = reports;
@@ -457,7 +461,7 @@ userStatus  = [
       const values = (res.smsCreditAllocationReportList || []).map((value) => {
           return {
             ...value,
-            SMSQuotaApprovalMatrix: (this.smsQuotaApprovalMatrix.find(sms => sms.key === value.SMSQuotaApprovalMatrix ) || {}).value,
+            SMSQuotaApprovalMatrix: value.onApprovalOf,
             status: (this.smsCreditStatus.find(sms => sms.key === value.status) || {}).value
           };
       });

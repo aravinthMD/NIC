@@ -10,6 +10,7 @@ import { ClientDetailsService } from '@services/client-details.service';
 import { DashboardService } from '@services/dashboard.service';
 
 import { CsvDataService } from '@services/csv-data.service';
+import { NewAccountService } from '@services/new-account.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -44,11 +45,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private apiService: ApiService,
     private toasterService: ToasterService,
     private clientDetailsService: ClientDetailsService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private newAccountService: NewAccountService
   ) {}
 
   ngOnInit() {
    // this.onSearch();
+    this.newAccountService.setFlagForShowingPages('reset');
     this.getDashboardDetails();
   }
 
@@ -73,6 +76,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 state: value.state,
                 status: value.activeStatus ? 'Active' : 'InActive',
                 clientId: value.id,
+                insertionFlag: value.insertionFlag
               };
             });
             this.dataSource = new MatTableDataSource<any>(dashboardList);
@@ -130,6 +134,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     // this.utilService.setUserDetails(element);
 
     this.clientDetailsService.setClientId(element.clientId);
+    this.newAccountService.setFlagForShowingPages(element.insertionFlag);
 
     this.utilService.setCurrentUrl('users/customerDetails');
     this.route.navigate(['/users/customerDetails/' + element.clientId]);

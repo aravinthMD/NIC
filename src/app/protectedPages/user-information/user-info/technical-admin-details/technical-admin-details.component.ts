@@ -9,6 +9,7 @@ import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
+import { NewAccountService } from '@services/new-account.service';
 
 @Component({
   selector: 'app-technical-admin-details',
@@ -60,6 +61,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     teleCodeValues = [];
 
     isShowTechViewPage  = true;
+    insertionFlag: number;
  
 
 
@@ -72,17 +74,25 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       private activatedRoute: ActivatedRoute,
       private behser: BehaviourSubjectService,
       private clientDetailService: ClientDetailsService,
-      private billAdminService: BillingAdminService
+      private billAdminService: BillingAdminService,
+      private newAccountService: NewAccountService
       ) { }
 
   ngOnInit() {
 
+    this.newAccountService.getFlagForShowingPages()
+        .subscribe((value) => {
+            this.insertionFlag = value;
+        });
+
     this.patchLovValues();
 
     this.activatedRoute.params.subscribe((value) => {
+      // this.showView = false;
       if (!value) {
         return;
       }
+      // this.showView = true;
       this.clientId = Number(value.id || 0);
       this.clientDetailService.setClientId(value.id);
       this.getTechAdminsById(this.clientId);
@@ -153,16 +163,16 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     console.log(this.activatedRoute)
       if(this.user){
-        this.getTechAdminsById(this.user);
+       // this.getTechAdminsById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
       this.propertyFlag = true;
-      this.getBillingAdminDetailById(this.user);
+      // this.getBillingAdminDetailById(this.user);
       }else {
-        this.showView = false;
+        // this.showView = false;
       }
   }
 
@@ -407,6 +417,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
         }
         this.isDirty = false;
         this.showDataSaveModal = true;
+        this.newAccountService.setFlagForShowingPages(2);
         this.dataValue = {
           title: 'Technical Admin details saved Successfully',
           message: 'Are you sure want to proceed to Billing Admin Detail?',
@@ -417,6 +428,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   }
 
   onNext() {
+    if (this.insertionFlag < 2) {
+      return this.toasterService.showError(`Can't proceed without submitting technical admin details`, '');
+    }
     this.router.navigate(['/users/billingAdmin/' + this.clientId]);
   }
 
@@ -468,6 +482,11 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       if (!processVariables.clientId) {
           this.isShowTechViewPage = false;
           this.propertyFlag = false;
+      }
+      if (!processVariables.selectedTechId) {
+        this.showView = false;
+      } else {
+        this.showView = true;
       }
       this.utilService.setTechAdminUserDetails(processVariables);
       this.setFormValues(processVariables);

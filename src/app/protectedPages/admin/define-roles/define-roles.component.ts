@@ -23,36 +23,36 @@ export class DefineRolesComponent implements OnInit {
 
     {
       role: 'Finance User',
-      screenName: 'Customer Details',
+      screenName: 'Customer Module',
       mappingStatus : 'Mapped',
       status : 'Read/Write',
       emailFlag  : 'Enabled'
     },
-    {
-      role: 'Finance User',
-      screenName: 'Technical Admin',
-      mappingStatus : "Mapped",
-      status : 'Read/Write/Delete',
-      emailFlag : 'Disabled'
-    },
-    {
-      role: 'Finance User',
-      screenName: 'Billing Admin',
-      mappingStatus  :"Not Mapped",
-      status : 'Read',
-      emailFlag  : 'Disabled'
-    },
+    // {
+    //   role: 'Finance User',
+    //   screenName: 'Technical Admin',
+    //   mappingStatus : "Mapped",
+    //   status : 'Read/Write/Delete',
+    //   emailFlag : 'Disabled'
+    // },
+    // {
+    //   role: 'Finance User',
+    //   screenName: 'Billing Admin',
+    //   mappingStatus  :"Not Mapped",
+    //   status : 'Read',
+    //   emailFlag  : 'Disabled'
+    // },
    
     {
       role  :'Finance User',
-      screenName : 'SMS Credit Allocation',
+      screenName : 'SMS Credit Allocation Module',
       mappingStatus : "Not Mapped",
       status  : 'Read/Write',
       emailFlag  : 'Enabled'
     },
     {
       role: 'Finance User',
-      screenName: 'Proforma Invoice',
+      screenName: 'Proforma Invoice Module',
       mappingStatus : "Mapped",
       status  : 'Read',
       emailFlag  : 'Enabled'
@@ -60,21 +60,21 @@ export class DefineRolesComponent implements OnInit {
     },
     {
       role  : 'Finance User',
-      screenName  : 'Project Execution',
+      screenName  : 'Project Execution Module',
       mappingStatus : "Mapped",
       status  : 'Read',
       emailFlag :  'Enabled'
     },
     {
       role  : 'Finance User',
-      screenName  :  'Purchase Order',
+      screenName  :  'Purchase Order Module',
       mappingStatus :  'Not Mapped',
       status  : 'Read/Write',
       emailFlag  : 'Enabled'
     },
     {
       role :  'Financial User',
-      screenName  : 'Tax Invoice',
+      screenName  : 'Tax Invoice Module',
       mappingStatus  : 'Mapped',
       status : 'Read/Write',
       emailFlag  :'Enabled'
@@ -82,7 +82,7 @@ export class DefineRolesComponent implements OnInit {
     
     {
       role: 'Finance User',
-      screenName: 'Reports',
+      screenName: 'Reports Module',
       mappingStatus : "Mapped",
       status  : 'Read/Write',
       emailFlag :  'Disabled'
@@ -90,10 +90,17 @@ export class DefineRolesComponent implements OnInit {
 
     {
       role  : 'Finance User',
-      screenName  : 'Email',
+      screenName  : 'Email Module',
       mappingStatus :  "Mapped",
       status  : 'Read',
       emailFlag : 'Disabled'
+    },
+    {
+      role  : 'Admin',
+      screenName  : 'Admin Module',
+      mappingStatus :  "Mapped",
+      status  : 'Read',
+      emailFlag : 'Read/Write/Disabled'
     }
   ]
   dataSource = new MatTableDataSource<any>(this.roleList);
