@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { environment } from '../../environments/environment';
+import { ApiService } from '@services/api.service';
+import { HttpService } from '@services/http.service';
 @Injectable({
     providedIn: 'root'
 })
@@ -14,7 +17,10 @@ export class POService {
     { key: 5, value: 'On Hold' }]
     private paymentList = [{ key : "3",value : 'Received' }];
     private poData;
-    constructor() {}
+    constructor(
+        private apiService: ApiService,
+        private httpService: HttpService
+    ) {}
 
     setDepartmentList(data) {
         this.departmentList = data;
@@ -47,4 +53,20 @@ export class POService {
     getPoData() {
         return this.poData;
     }
+
+    getCsvData(data) {
+        const dashboardDetails = this.apiService.api.poCsvAPI;
+        const { processId, projectId, workflowId } = dashboardDetails;
+        const requestEntity: any = {
+          processId,
+          ProcessVariables: {
+              ...data
+          },
+          workflowId,
+          projectId,
+        };
+        const url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return this.httpService.post(url, requestEntity);
+    }
 }
+
