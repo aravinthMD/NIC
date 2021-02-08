@@ -8,6 +8,8 @@ import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router'
 import { InvoiceService } from '@services/invoice.service';
+import { ClientDetailsService } from '@services/client-details.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-proforma-invoice-dialog-form',
@@ -37,6 +39,14 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   showPdfModal: boolean;
 
   showDeleteModal: boolean;
+
+  previewDocumentId : string = '';
+
+  host  = environment.host;
+  newAppiyoDrive  = environment.previewDocappiyoDrive;
+  previewUrl : string = ''
+
+  docAvailFlag : boolean
 
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On hold'}]
 
@@ -101,7 +111,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     private utilService: UtilService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private invoiceServoice : InvoiceService
+    private invoiceServoice : InvoiceService,
+    private clientDetailService : ClientDetailsService
     ) { 
 
     console.log(data)
@@ -120,7 +131,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       endDate:new Date(),
       piStatus: [''],
       paymentStatus:[''],
-      remark:['']
+      remark:['',Validators.required]
     })
     this.detectAuditTrialObj=this.form.value
   }
@@ -143,78 +154,32 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-    this.viewInfoData = [
-      {
-        key: this.labels.accountName,
-        value:this.form.value.accountName
-      },
-      {
-        key: this.labels.proformaIN,
-        value:this.form.value.invoiceNumber
-      },
-      {
-        key: this.labels.refNo,
-        value:this.form.value.refNumber
-      },
-      {
-        key: this.labels.piOwner,
-        value:this.form.value.piOwner
-      },
-      {
-        key: this.labels.piAmount,
-        value:this.form.value.piAmount
-      },
-      {
-        key: this.labels.piTraffic,
-        value:this.form.value.piTraffic
-      },
-      {
-        key: this.labels.date,
-        value:`${day}/${month}/${year}`
-      },
-      {
-        key: 'NICSI Manager',
-        value:'vinod.agrawal@nic.in'
-      },
-      {
-        key: 'Start Date',
-        value:`${day}/${month}/${year}`
-      },
-      {
-        key: 'End Date',
-        value:`${day}/${month}/${year}`
-      },
-      {
-        key: 'PI Status',
-        value:'Pending'
-      },
-      {
-        key: 'Payment Status',
-        value:'On hold'
-      },
-      {
-        key: this.labels.remark,
-        value:this.form.value.remark
-      },
-      {
-        key: 'Document',
-        value:'invoice.pdf'
-      },
-
-    ]
 
     this.getProformaInvoiceDetailById(this.data);
 
   }
 
-  getProformaInvoiceDetailById(proformaInvoiceId : string){
+  getProformaInvoiceDetailById(currentPIId : string){
     
-    this.invoiceServoice.getProformaInvoiceDetailById(proformaInvoiceId).subscribe((response) => {
-
-      console.log(response);
-      this.dataForm =  response['ProcessVariables'];
-      this.currentPIId = response['ProcessVariables']['currentPIId'];
+    this.invoiceServoice.getProformaInvoiceDetailById(Number(currentPIId)).subscribe(
+      (response: any) => {
+        const { 
+          ProcessVariables  : { error : {
+            code,
+            message
+          }}
+        } = response;
+      if(code == '0'){
+         this.dataForm =  response['ProcessVariables'];
+         this.currentPIId = response['ProcessVariables']['id'];
+         if(response.ProcessVariables.upload_document){
+            this.previewDocumentId = response.ProcessVariables.upload_document;
+            this.docAvailFlag = true;
+         }
       this.assignToForm(this.dataForm);
+      }else{
+        this.toasterService.showError("Unable to fetch the PI Detail",'')
+      }
 
     },(error) => {
         this.toasterService.showError(error,'')
@@ -230,26 +195,88 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     this.showEdit = true;
   }
 
-  assignToForm(dataForm : any){
+  assignToForm(data : any){
 
     this.form.patchValue({
 
-      accountName : this.dataForm['AccountName'] || '',
-      invoiceNumber : this.dataForm['piNumber'] || '',
-      refNumber : this.dataForm['ReferenceNumber'] || '',
-      piTraffic  : this.dataForm['Traffic'] || '',
-      piOwner : this.dataForm['Owner'] || '',
-      date  : this.dataForm['piDate'] || '',
-      nicsiManager  :this.dataForm['NICSIManager'] || '',
-      piAmount  :this.dataForm['piAmount'] || '',
-      startDate : this.dataForm['startDate'] || '',
-      endDate : this.dataForm['endDate'] || '',
-      piStatus : this.dataForm['piStatus'] || '',
-      paymentStatus : this.dataForm['paymentStatus'] || '',
-      remark : this.dataForm['remark'] || ''
-
+      accountName : data['AccountName'] || '',
+      invoiceNumber : data['piNumber'] || '',
+      refNumber : data['referenceNumber'] || '',
+      piTraffic  : data['traffic'] || '',
+      piOwner : data['owner'] || '',
+      date  : data['date'] ? new Date(`${this.changeDateFormat(data['date'])}`) : '',
+      nicsiManager  : data['nicsiManager'] || '',
+      piAmount  : data['piAmount'] || '',
+      startDate : data['startDate'] ? new Date(`${this.changeDateFormat(data['startDate'])}`) : '',
+      endDate : data['endDate'] ? new Date(`${this.changeDateFormat(data['endDate'])}`) : '',
+      piStatus : String(data['piStatus']) || '',
+      paymentStatus : String(data['paymentStatus']) || '',
+      remark : data['remark'] || ''
 
     })
+
+    const piStatusData = this.piStatusData.filter((value) => {
+      return value.key == this.form.controls['piStatus'].value
+    })
+
+    const paymentStatus = this.paymentStatusData.filter((value) =>{
+      return value.key == this.form.controls['paymentStatus'].value
+    })
+
+    this.viewInfoData = [
+      {
+        key: this.labels.accountName,
+        value: this.form.controls['accountName'].value
+      },
+      {
+        key: this.labels.proformaIN,
+        value: this.form.controls['invoiceNumber'].value
+      },
+      {
+        key: this.labels.refNo,
+        value: this.form.controls['refNumber'].value
+      },
+      {
+        key: this.labels.piOwner,
+        value: this.form.controls['piOwner'].value
+      },
+      {
+        key: this.labels.piAmount,
+        value: this.form.controls['piAmount'].value
+      },
+      {
+        key: this.labels.piTraffic,
+        value: this.form.controls['piTraffic'].value
+      },
+      {
+        key: this.labels.date,
+        value: this.form.controls['date'].value
+      },
+      {
+        key: 'NICSI Manager',
+        value: this.form.controls['nicsiManager'].value
+      },
+      {
+        key: 'Start Date',
+        value: this.form.controls['startDate'].value
+      },
+      {
+        key: 'End Date',
+        value: this.form.controls['endDate'].value
+      },
+      {
+        key: 'PI Status',
+        value: piStatusData[0].value
+      },
+      {
+        key: 'Payment Status',
+        value: paymentStatus[0].value
+      },
+      {
+        key: this.labels.remark,
+        value: this.form.controls['remark'].value
+      }
+    ]
 
   }
 
@@ -257,11 +284,11 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
 
     const feildControls = this.form.controls;
-    const accountName = feildControls.accountName.value;
-    const invoiceNumber = feildControls.invoiceNumber.value;
-    const refNumber = feildControls.refNumber.value;
-    const piTraffic = feildControls.piTraffic.value;
-    const piOwner = feildControls.piOwner.value;
+    const AccountName = feildControls.accountName.value;
+    const piNumber = feildControls.invoiceNumber.value;
+    const referenceNumber = feildControls.refNumber.value;
+    const traffic = feildControls.piTraffic.value;
+    const owner = feildControls.piOwner.value;
     const date = feildControls.date.value;
     const nicsiManager = feildControls.nicsiManager.value;
     const piAmount = feildControls.piAmount.value;
@@ -271,31 +298,53 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     const paymentStatus = feildControls.paymentStatus.value;
     const remark = feildControls.remark.value;
 
+    const formattedInvoiceDate = this.datePipe.transform(date,'dd/MM/yyyy');
+    const formattedStartDate = this.datePipe.transform(startDate,'dd/MM/yyyy');
+    const formattedEndDate = this.datePipe.transform(endDate,'dd/MM/yyyy')
+
+    const userId = this.clientDetailService.getClientId();
 
     const Data =  {
-      AccountName : accountName,
-      piNumber : invoiceNumber,
-      ReferenceNumber : refNumber,
-      Traffic : piTraffic,
-      Owner : piOwner,
-      piDate : date,
-      NICSIManager : nicsiManager,
-      piAmount : piAmount,
-      startDate : startDate,
-      endDate : endDate,
-      piStatus : +piStatus,
-      paymentStatus : +paymentStatus,
-      remark : remark,
-      currentPIId : this.currentPIId,
-      temp : 'update',
-      selectedPIId : this.currentPIId
+      AccountName,
+      piNumber,
+      referenceNumber,
+      traffic,
+      owner,
+      date : formattedInvoiceDate,
+      nicsiManager,
+      piAmount,
+      startDate : formattedStartDate ,
+      endDate : formattedEndDate ,
+      piStatus : Number(piStatus),
+      paymentStatus : Number(paymentStatus),
+      remark,
+      uploadDocument : "file",
+      id : Number(this.currentPIId),
+      userId : Number(userId)
     }
 
 
-    this.invoiceServoice.updateProformaInvoice(Data).subscribe((response) => {
-      this.toasterService.showSuccess('PI Details Updated Successfully','')
-      console.log(response)
-      
+    this.invoiceServoice.updateProformaInvoice(Data).subscribe(
+      (response: any) => {
+      const { 
+        ProcessVariables  : { error : {
+          code,
+          message
+        }}
+      } = response;
+
+      if(code == "0"){
+        this.toasterService.showSuccess('PI Details Updated Successfully','');
+        this.form.reset();
+        this.isDirty = false;
+        this.showDataSaveModal = true;
+        this.dataValue= {
+          title: 'Proforma Invoice Saved Successfully',
+          message: 'Are you sure you want to proceed project execution page?'
+        }
+      }else{
+        this.toasterService.showError(message,'');
+      }
     },(error) => {
       this.toasterService.showError(error,'');
     })
@@ -329,29 +378,19 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   saveYes()
   {
- 
    this.showDataSaveModal = false;
- 
    this.closeDialog()
    this.next()
- 
-
- 
   }
  
   saveCancel() {
- 
    this.showDataSaveModal = false;
    this.closeDialog()
-  
   }
 
   next() {
-
     this.utilService.setCurrentUrl('users/projectExecution')
-
     this.router.navigate([`/users/projectExecution/${this.storeProjectNo}`])
-
   }
 
   formDateFunc(event) {
@@ -541,8 +580,9 @@ download(){
 }
 
 showPDF() {
-  this.showUploadModal = false;
+  // this.showUploadModal = false;
   this.showPdfModal = true;
+  this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`
 }
 
 detectDateKeyAction(event,type) {
@@ -570,5 +610,14 @@ detectDateKeyAction(event,type) {
   }
   
 }
+
+
+changeDateFormat(date) {
+
+    const splitDate = date.split('/');
+
+    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+   }
 
 }

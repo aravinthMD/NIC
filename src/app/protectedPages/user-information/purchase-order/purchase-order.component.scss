@@ -44,6 +44,7 @@ th {
     font-weight: 500;
     background-color: #0e4d92;
     color: #fff;
+    padding: 16px 0;
 }
 
 tr:nth-child(even) {
@@ -239,4 +240,8 @@ label {
     margin-top:25px;
 }
 
+
+.popup-table{
+    padding: 16px 32px;
+}
 

@@ -1,11 +1,18 @@
 import { Component, OnInit,OnChanges, Input } from '@angular/core';
 import { Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 import { UtilService } from '../../services/util.service'
 
 import { environment } from '../../../environments/environment';
 
-import { Router } from '@angular/router'
+import { ClientDetailsService } from '@services/client-details.service';
+import { ToasterService } from '@services/toaster.service';
+import { UtilityService } from '@services/utility.service';
+import { NewAccountService } from '@services/new-account.service';
+import { filter } from 'rxjs/operators';
+import { F } from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
@@ -20,16 +27,78 @@ export class SideNavComponent implements OnInit,OnChanges {
   accountInfoNav: string;
 
   version: string;
+  buildDate: string;
 
   isExistingUser: boolean;
+  clientId: string;
+private loginDetail:any;
+public isCustomerModule: boolean;
+public smsCreditAllocationModule: boolean;
+public purchaseOrderModule: boolean;
+public emailModule: boolean;
+public reportModule: boolean;
+public adminModule: boolean;
+public taxInvoiceModule: boolean;
+public projectExecutionModule: boolean;
+public performaInvoiceModule: boolean;
+private mySetting: Array<any>;
+insertionFlag: number;
+// showOtherMenus: boolean;
+  constructor(
+    private location: Location,
+    private utilService: UtilService,
+    private router: Router,
+    private clientDetailService: ClientDetailsService,
+    private toasterService: ToasterService,
+    private activatedRoute: ActivatedRoute ,
+    private utilityService: UtilityService,
+    private newAccountService: NewAccountService
+    ) {
 
-  constructor(private location: Location,private utilService: UtilService,private router: Router) { 
-
-    this.version = environment.version;
-
+      this.version = environment.version;
+      this.buildDate = environment.buildDate;
+      this.loginDetail = this.utilityService.getLoginDetail();
+      console.log("loginDetail",this.loginDetail);
+      this.mySetting = this.loginDetail["settingsDataList"];
+      console.log("mySetting",this.mySetting);
+      if(this.mySetting){
+        this.isCustomerModule = this.mySetting.find(
+            val => val['ScreenName'] == 'CustomerModule')['isMapping'];
+            console.log("isCustomerModule",this.isCustomerModule);
+        this.smsCreditAllocationModule = this.mySetting.find(
+          val => val['ScreenName'] == 'SmsCreditAllocation')['isMapping'];
+          console.log("smsCreditAllocationModule",this.smsCreditAllocationModule);
+        this.purchaseOrderModule = this.mySetting.find(
+          val => val['ScreenName'] == 'PurchaseOrder')['isMapping'];
+          console.log("purchaseOrderModule",this.purchaseOrderModule);
+          this.emailModule = this.mySetting.find(
+            val => val['ScreenName'] == 'EmailOperations')['isMapping'];
+            console.log("emailModule",this.emailModule); 
+          this.reportModule = this.mySetting.find(
+            val => val['ScreenName'] == 'Reports')['isMapping'];
+            console.log("reportModule",this.reportModule);
+          this.projectExecutionModule = this.mySetting.find(
+            val => val['ScreenName'] == 'ProjectExecution')['isMapping'];
+            console.log("ProjectExecution",this.projectExecutionModule); 
+          this.adminModule = this.mySetting.find(
+            val => val['ScreenName'] == 'Admin')['isMapping'];
+            console.log("adminModule",this.adminModule); 
+          this.taxInvoiceModule = this.mySetting.find(
+            val => val['ScreenName'] == 'TaxInvoice')['isMapping'];
+            console.log("taxInvoiceModule",this.taxInvoiceModule); 
+          this.performaInvoiceModule = this.mySetting.find(
+            val => val['ScreenName'] == 'PerformaInvoice')['isMapping'];
+            console.log("performaInvoiceModule",this.performaInvoiceModule); 
+        }  
   }
 
   ngOnInit() {
+
+
+    this.listenerForGetFlagValues();
+    // this.activatedRoute.params.subscribe((res: any) => {
+    //   this.clientId = res.id || '';
+    // });
 
     this.utilService.detectSidNav$.subscribe((user)=> {
       console.log('DETECT SIDE NAV ********',user)
@@ -68,7 +137,10 @@ export class SideNavComponent implements OnInit,OnChanges {
     })
 
 
-    let path = this.location.path()
+    const path = this.location.path();
+    // this.highlightsSideMenu(path);
+
+    this.listenerForLocationChange();
 
     if(path.includes('users/Dashboard')){
       this.isLocation = '0'
@@ -135,6 +207,7 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.router.navigate(['/users/customerDetails'])
 
     }
+   
 
     this.utilService.projectNumber$.subscribe((pno)=> {
       if(pno){
@@ -147,6 +220,59 @@ export class SideNavComponent implements OnInit,OnChanges {
     
   }
 
+  listenerForGetFlagValues() {
+    this.newAccountService.getFlagForShowingPages()
+        .subscribe((value) => {
+            // if (value === 3) {
+            //     this.showOtherMenus = true;
+            // } else {
+            //   this.showOtherMenus = false;
+            // }
+            this.insertionFlag = value;
+        });
+  }
+
+
+  listenerForLocationChange() {
+    this.location.onUrlChange((url) => {
+        this.highlightsSideMenu(url);
+    });
+  }
+
+  highlightsSideMenu(user) {
+    if(user == 'newuser') {
+      this.isLocation = '1'
+    }else if(user == 'dashboard') {
+      this.parentLocation= ''
+      this.isLocation = '0'
+    }else if(user.includes('users/customerDetails')){
+      this.parentLocation= '1'
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.1'
+    }else if(user.includes('users/techAdmin')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.2'
+    }else if(user.includes('users/billingAdmin')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.3'
+    }else if(user.includes('users/smsCredit')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.1.4'
+    }else if(user.includes('users/projectExecution')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.3'
+    }else if(user.includes('users/proformaInvoice')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.2'
+    }else if(user.includes('users/purchaseOrder')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.4'
+    }else if(user.includes('users/taxInvoice')){
+      this.accountInfoNav = '1.1'
+      this.isLocation = '1.5'
+    }
+  }
+
   ngOnChanges(){
 
     
@@ -155,16 +281,31 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   navigateRoute(route: string) {
 
-    let projectNo = ''
-      this.utilService.projectNumber$.subscribe((pno)=> {
-          projectNo = pno;
-      })
-      if(projectNo) {
-        this.router.navigate([`${route}/${projectNo}`])
-      }else{
-      this.router.navigate([route])
+    // let projectNo = ''
+      // this.utilService.projectNumber$.subscribe((pno)=> {
+      //     projectNo = pno;
+      // })
+
+      // this.activatedRoute.params.subscribe((value) => {
+        // const clientId =  value.id;
+      const clientId = this.clientDetailService.getClientId();
+      if (!clientId && (route.includes('billingAdmin') || route.includes('techAdmin'))) {
+          this.toasterService.showError(
+            `Can't proceed without submitting customer details`,
+            ''
+          );
+          return;
       }
-    
+      if (this.insertionFlag <= 1 && route.includes('billingAdmin')) {
+         return this.toasterService.showError(`Can't proceed without submitting technical admin details`, '');
+      }
+      if (clientId) {
+          this.router.navigate([`${route}/${clientId}`]);
+      } else {
+          this.router.navigate([route]);
+      }
+
+      // });
   }
 
   navigation(route: string) {
@@ -174,6 +315,7 @@ export class SideNavComponent implements OnInit,OnChanges {
     this.accountInfoNav = '1.1'
   }else {
     this.utilService.setProjectNumber(null)
+    this.clientDetailService.setClientId('');
     this.accountInfoNav = ''
   }
 

@@ -57,7 +57,7 @@ export class ApiService {
     getProjectExecutionDetailById : {
 
       workflowId : 'e4537964406711ebb7bf727d5ac274b2',
-      processId : '2082717240f111ebb7bf727d5ac274b2',
+      processId : '30509328407311ebb7bf727d5ac274b2',
       projectId  : environment.projectIds.projectId
 
     },
@@ -65,7 +65,7 @@ export class ApiService {
     updateProjectExecutionDetail : {
 
       workflowId : 'e4537964406711ebb7bf727d5ac274b2',
-      processId  : '2082717240f111ebb7bf727d5ac274b2',
+      processId  : 'e487eb40406711ebb7bf727d5ac274b2',
       projectId  : environment.projectIds.projectId
 
     },
@@ -147,12 +147,12 @@ export class ApiService {
     },
     getProformaInvoiceDetailById : {
       workflowId :  '640f2fe8442a11ebb7bf727d5ac274b2',
-      processId :  '8e09c75444fc11ebb7cb727d5ac274b2',
+      processId :  '5bc34f9044f711ebb7cb727d5ac274b2',
       projectId :  environment.projectIds.projectId
     },
     updateProformaInvoice : { 
       workflowId : '640f2fe8442a11ebb7bf727d5ac274b2',
-      processId :  '8e09c75444fc11ebb7cb727d5ac274b2',
+      processId :  '6438ef36442a11ebb7bf727d5ac274b2',
       projectId  : environment.projectIds.projectId
     },
     createTaxInvoice : {
@@ -205,6 +205,26 @@ export class ApiService {
       processId: '8ef9e00648f111ebb7d2727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
+    getAllTechAdminDetails: {
+      workflowId: '8ecc2a9448f111ebb7d2727d5ac274b2',
+      processId: '2467d2d2490711ebb7dc727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getTechAdminDetailById: {
+      workflowId: '8ecc2a9448f111ebb7d2727d5ac274b2',
+      processId: 'cb9e235c49e411ebb80a727d5ac274b2',
+      projectId : environment.projectIds.projectId
+    },
+    getBillingAdminDetailById: {
+      workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
+      processId: '6ad978c04a8711ebb813727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2'
+    },
+    saveOrUpdateBillingAdminDetails: {
+      workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
+      processId: '9bf8ea3648f111ebb7d2727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2'
+    },
     createBillingDetails: {
       workflowId: '9bc98a7a48f111ebb7d2727d5ac274b2',
       processId: '9bf8ea3648f111ebb7d2727d5ac274b2',
@@ -215,8 +235,135 @@ export class ApiService {
       processId: 'dbba1e864b5011ebb822727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
+    
+    taxInvoiceSearch : {
+      processId : 'c471fe564f5b11ebb884727d5ac274b2',
+      projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'c471fe564f5b11ebb884727d5ac274b2'
+    },
+ 
+    smsCreditAllocationSearch : {
+      processId : 'acc4ed484f5d11ebb884727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'acc4ed484f5d11ebb884727d5ac274b2'
+    },
+    updateTaxnvoice: {
+      processId : '642880ce45d311ebb7cc727d5ac274b2',
+      projectId :'2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '642880ce45d311ebb7cc727d5ac274b2'
+    },
+    getSmsCreditAllocationData: {
+      processId : 'dac048f64b6f11ebb82e727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'dac048f64b6f11ebb82e727d5ac274b2'
+    },
+
+    saveOrUpdateSmsCredit: {
+      processId : 'dbba1e864b5011ebb822727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'dbba1e864b5011ebb822727d5ac274b2'
+    },
+
+    fetchDashboardDetails: {
+      processId : 'b1aaefba4aad11ebb81e727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : 'b1aaefba4aad11ebb81e727d5ac274b2'
+    },
+
+    saveOrUpdateTaxInvoice: {
+      processId : '117f0f5245c211ebb7cc727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '117f0f5245c211ebb7cc727d5ac274b2'
+    },
+
+    fetchAllTaxInvoiceDetails: {
+      processId : '842375d045d011ebb7cc727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '842375d045d011ebb7cc727d5ac274b2'
+    },
+
+    adminEmailManageAPI :  {
+      processId :  '0ec35a14609011eb8c53727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId  : '4e04d4101cd311ebb6c2727d5ac274b2'
+    },
+
+    lovListAPI :  {
+      processId   : "c1993588612511eb8c5d727d5ac274b2",
+      projectId :  "2efbdc721cc311ebb6c0727d5ac274b2",
+      workflowId : "bfb43590408411ebb7bf727d5ac274b2"
+    },
+
+    PIonLoadAPI :  {
+      processId :  "0713298261eb11eb8c9d727d5ac274b2",
+      projectId :  "2efbdc721cc311ebb6c0727d5ac274b2",
+      workflowId :  "bfb43590408411ebb7bf727d5ac274b2"
+    },
+
+    PIonChangeAPI :  {
+      processId  : "7324b1ec621b11eb8cc2727d5ac274b2",
+      projectId :  "2efbdc721cc311ebb6c0727d5ac274b2",
+      workflowId :  "bfb43590408411ebb7bf727d5ac274b2"
+    },
+
+    TIonLoadAPI  :{
+      processId  : 'ac6255fc621d11eb8cc2727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  'bfb43590408411ebb7bf727d5ac274b2'
+    },
+
+    TIonChangeAPI : {
+      processId :  '5fa59d2a622011eb8cc2727d5ac274b2',
+      projectId  : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId  : 'bfb43590408411ebb7bf727d5ac274b2'
+    },
+    getReportsLov: {
+      processId : '9341403e5d4911eb8bcf727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '9341403e5d4911eb8bcf727d5ac274b2'
+    },
+
+    getReportsGridValue: {
+      processId : '5f3336105d5511eb8bcf727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '5f3336105d5511eb8bcf727d5ac274b2'
+    },
+
+    poPopupModalDataUpdate: {
+      processId : 'de5c8230645c11eb8ddf727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
+    },
+
+    sendEmailRemainderAPI :  {
+      processId  : '1a102930653911eb8e37727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  '640f2fe8442a11ebb7bf727d5ac274b2'
+    },
+    poCsvAPI: {
+      processId  : '96bada94451711ebb7cb727d5ac274b2',
+      projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  '4667faf21f2b11ebb6c9727d5ac274b2'
+    },
+    createAndUpdateEmailTemplate :  {
+      processId  : 'd079cb464e5911ebb85b727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  'd04ac0584e5911ebb85b727d5ac274b2'
+    },
 
 
-  }
+    getEmailTemplateById :  {
+      processId :  'b6ed0d885cae11eb8baf727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  'd04ac0584e5911ebb85b727d5ac274b2'
+    },
+
+    getAllEmailTemplates :  {
+      processId  : 'f48d859a66dc11eb8e7a727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId :  'd04ac0584e5911ebb85b727d5ac274b2'
+    }
+
+  };
 
   }

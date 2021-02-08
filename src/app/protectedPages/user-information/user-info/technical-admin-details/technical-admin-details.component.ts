@@ -1,83 +1,106 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material';
 import { Router,ActivatedRoute } from '@angular/router';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
+import { BillingAdminService } from '@services/billing-admin.service';
+import { ClientDetailsService } from '@services/client-details.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
+import { NewAccountService } from '@services/new-account.service';
 
 @Component({
   selector: 'app-technical-admin-details',
   templateUrl: './technical-admin-details.component.html',
   styleUrls: ['./technical-admin-details.component.scss']
 })
+
 export class TechnicalAdminDetailsComponent implements OnInit {
-
  
-  labels:any ;
-  
-  technicaladminform:FormGroup;
+      labels:any ;
+      
+      technicaladminform:FormGroup;
 
-  billOwnerForm  :FormGroup;
+      billOwnerForm  :FormGroup;
 
-  isDirty: boolean;
-  propertyFlag : boolean;
-  showDataSaveModal  :boolean;
-  dataValue  = {};
-  showView: boolean = true;
+      isDirty: boolean;
+      propertyFlag : boolean;
+      showDataSaveModal  :boolean;
+      dataValue  = {};
+      showView: boolean = true;
+      viewInfoData  = [];
 
-  viewInfoData :  any;
+      viewBillAdminInfoData = [];
 
-  viewBillAdminInfoData = []
+    // teleCodeValues = []
 
-  departmentListData = [
-    {key:0,value:'Department of Sainik Welfare'},
-    {key:1,value:'Ministry of Minority Affairs'},
-    {key:2,value:'Visakhapatnam Port Trust'},
-    {key:3,value:'Ministry of Tribal Affairs'},
-    {key:4,value:'Bureau of Naviks Mumbai'}
-];
+    dataSource = [];
 
-countryCodeValues = [
-  {key:0,value:'+91'},
-  {key:1,value:'+60'},
-  {key:2,value:'+65'}
-]
+    user: string;
+    name: string;
 
-teleCodeValues = [
-  {key:0,value:'+044'},
-  {key:1,value:'+040'},
-  {key:2,value:'+080'}
-]
+    accountName: string;
+    status: string;
 
-user: string;
-name: string;
+    detectAuditTrialObj: any;
 
-accountName: string;
-status: string;
+    remarkModal: boolean;
 
-detectAuditTrialObj: any;
+    hideEditButton = false;
+    showViewBill = true;
+    userId;
+    adminsList: any;
+    form: any;
+    BillDetailsList: any;
+    clientId: number;
+    clientUserId: string;
+    mobileNumberCodeList = [];
+    departmentListData = [];
+    teleCodeValues = [];
 
-remarkModal: boolean;
-
-hideEditButton: boolean = false;
-showViewBill:boolean = true;
-userId;
+    isShowTechViewPage  = true;
+    insertionFlag: number;
  
 
 
-  constructor(
-    private labelsService:LabelsService,
-    private toasterService:ToasterService,
-    private router:Router,
-    private userInfoService:UserInfoService,
-    private utilService:UtilService,
-    private activatedRoute: ActivatedRoute,
-    private behser: BehaviourSubjectService
-    ) { }
+    constructor(
+      private labelsService: LabelsService,
+      private toasterService: ToasterService,
+      private router: Router,
+      private userInfoService: UserInfoService,
+      private utilService: UtilService,
+      private activatedRoute: ActivatedRoute,
+      private behser: BehaviourSubjectService,
+      private clientDetailService: ClientDetailsService,
+      private billAdminService: BillingAdminService,
+      private newAccountService: NewAccountService
+      ) { }
 
   ngOnInit() {
+
+    this.newAccountService.getFlagForShowingPages()
+        .subscribe((value) => {
+            this.insertionFlag = value;
+        });
+
+    this.patchLovValues();
+
+    this.activatedRoute.params.subscribe((value) => {
+      // this.showView = false;
+      if (!value) {
+        return;
+      }
+      // this.showView = true;
+      this.clientId = Number(value.id || 0);
+      this.clientDetailService.setClientId(value.id);
+      this.getTechAdminsById(this.clientId);
+
+      // this.getBillingAdminDetailById(this.clientId);
+    });
+
+    // this.clientId = Number(this.client.getClientId());
     this.behser.$userId.subscribe( res => {
       console.log("Cleint ID  ",res)
       this.userId = res;
@@ -85,23 +108,24 @@ userId;
 
     console.log("userId>>>>>>>>>>>>>", this.userId);
     
-
    
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     });
 
     
+    
     this.technicaladminform=new FormGroup({
+      id : new FormControl ([null]),
       name : new FormControl ([null]),
-      departmentName : new FormControl ([null]),
+      departmentName : new FormControl (''),
       designation :new FormControl ([null]),
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
-      countryCode : new FormControl(this.countryCodeValues[0].key),
-      mobileNo :new FormControl (''),
-      telPhno : new FormControl (''),
-      teleCode: new FormControl(this.teleCodeValues[0].key),
+      mobileNumberCode : new FormControl(''),
+      mobileNumber :new FormControl (''),
+      telephoneNumber : new FormControl (''),
+      telephoneNumberCode: new FormControl(''),
       offAddress1 : new FormControl ([null]),
       offAddress2 : new FormControl ([null]),
       offAddress3 : new FormControl ([null]),
@@ -119,7 +143,7 @@ userId;
       employeeCode : new FormControl ([null]),
       email : new FormControl (''),
       countryCode: new FormControl(null),
-      mobileNo :new FormControl (''),
+      mobileNumber :new FormControl (''),
       telPhno : new FormControl (''),
       teleCode: new FormControl(),
       offAddress1 : new FormControl ([null]),
@@ -135,56 +159,61 @@ userId;
     this.user = ''
     this.activatedRoute.params.subscribe((value)=> {
       this.user = value.id;
-  });
+     });
 
-  console.log(this.activatedRoute)
-    if(this.user){
-
+    console.log(this.activatedRoute)
+      if(this.user){
+       // this.getTechAdminsById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
-        this.accountName = val['userId'] || '';
+        this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
-
-
-      this.setFormValues();
-      this.setBillOwnerFormValues();
       this.propertyFlag = true;
-
+      // this.getBillingAdminDetailById(this.user);
       }else {
-        this.showView = false;
+        // this.showView = false;
       }
-
-
   }
 
+  patchLovValues() {
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    console.log('listOfValue', processVariables);
+    this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
+    this.departmentListData = processVariables.departmentList || [];
+    this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+   }
 
+  setBillOwnerFormValues(data?: any){
 
-
-
-
-  setBillOwnerFormValues(){
-    
+    if (!data) {
+      return;
+    }
+     
+    if(data){
     
     this.billOwnerForm.patchValue({
-      name : 'Sasi',
-      departmentName : '1',
-      designation : 'Chennai',
-      employeeCode : '54534',
-      email : 'test@gmail.com',
-      countryCode: '0',
-      mobileNo : '9754544445',
-      telPhno : '2273422',
-      teleCode:'0',
-      offAddress1 : '4/345,baharathi nagar',
-      offAddress2 : 'Raja Street',
-      offAddress3 : 'adayar',
-      city : 'Chennai',
-      state : 'Tamilnadu',
-      pinCode : '600025',
-      remark: 'Pincode Changed'
-
+      name : data.name,
+      departmentName : Number(data.department),
+      designation : data.designation,
+      employeeCode : data.employeeCode,
+      email : data.email,
+      mobileNumberCode: data.mobileNumberCode,
+      mobileNumber : data.mobileNumber,
+      telephoneNumber : data.telephoneNumber,
+      telephoneNumberCode: data.telephoneNumberCode,
+      offAddress1 : data.oaLine1,
+      offAddress2 : data.oaLine1,
+      offAddress3 : data.oaLine1,
+      city : data.city,
+      state : data.state,
+      pinCode : data.pincode,
+      remark: data.remarks,
+      userId: data.selectedClient
     })
+  }
 
     this.viewBillAdminInfoData = [
       {
@@ -205,52 +234,130 @@ userId;
       },
       {
         key: this.labels.mobileNo,
-        value:`91${this.billOwnerForm.value.mobileNo}`
+        value:data.mobileNumber
       },
+      // {
+      //   key: this.labels.mobileNo,
+      //   value:`91${this.billOwnerForm.value.mobileNumber}`
+      // },
       {
-        key: this.labels.teleNumber,
-        value:`044${this.billOwnerForm.value.telPhno}`
+        key  : this.labels.teleNumber,
+        value : data.telephoneNumber,
       },
+      // {
+      //   key: this.labels.teleNumber,
+      //   value:`044${this.billOwnerForm.value.telephoneNumber}`
+      // },
       {
         key: 'Official Address',
-        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3}, ${this.billOwnerForm.value.city}, ${this.billOwnerForm.value.state} - ${this.billOwnerForm.value.pinCode}`
+        value:`${this.billOwnerForm.value.offAddress1} ${this.billOwnerForm.value.offAddress2} ${this.billOwnerForm.value.offAddress3} ${this.billOwnerForm.value.city} ${this.billOwnerForm.value.state}  ${this.billOwnerForm.value.pinCode}`
       },
       {
         key: this.labels.remark,
-        value:this.billOwnerForm.value.remark
+        value: data.remark
       }]
 
   
     }
 
   editData() {
+    this.isShowTechViewPage = false;
     this.propertyFlag = false;
     this.showView = false;
     // this.hideEditButton = true;
   }
 
-  setFormValues() {
+  setViewPageDataForTechAdminDetails(data) {
+    if (!data) {
+      return;
+    }
+
+    const department = (this.departmentListData.find( value =>
+                          String(value.key) === String(data.department)) || {}).value;
+
+    this.viewInfoData = [
+      {
+        key : this.labels.name,
+        value : data.name
+      },
+      {
+        key  : this.labels.email,
+        value  : data.email
+      },
+      {
+        key  : this.labels.department,
+        value :  department
+      },
+      {
+        key  : this.labels.designation,
+        value :  data.designation
+      },
+      {
+        key  : this.labels.employeeCode,
+        value :  data.employeeCode
+      },
+      {
+        key  : this.labels.mobileNo,
+        value  :  data.mobileNumber
+      },
+      {
+        key  : this.labels.teleNumber,
+        value :  data.telephoneNumber
+      },
+      {
+        key  : 'Official Address',
+        value :  `${data.officialAddress1}
+        ${data.officialAddress2}
+        ${data.officialAddress3}
+        ${data.city} ${data.state}
+        ${data.pinCode}`
+      },
+      {
+        key  : this.labels.remark,
+        value  : data.remark
+      },
+      {
+        key : '',
+        value :  ''
+      },
+      {
+        key :  '',
+        value :  ''
+      },
+      {
+        key  : '',
+        value :  ''
+      }
+    ];
+
+  }
+
+  setFormValues(data?: any) {
+
+    if(data){
 
     this.technicaladminform.patchValue({
-      name : 'Prakash',
-      departmentName : '1',
-      designation :'Officer',
-      employeeCode : '23232',
-      email : 'technical@nic.in',
-      countryCode : '0',
-      mobileNo :'9867655433',
-      telPhno : '2276644',
-      teleCode:'0',
-      offAddress1 : '4/345,baharathi nagar',
-      offAddress2 : 'Raja Street',
-      offAddress3 : 'adayar',
-      city : 'Chennai',
-      state : 'Tamilnadu',
-      pinCode : '600028',
-      remark: 'Address Changed'
+      id  :  Number(data.currentClientId),
+      name : data.name || '',
+      departmentName : data.department || '',
+      designation : data.designation || '',
+      employeeCode : data.employeeCode || '',
+      email : data.email || '',
+      mobileNumberCode : data.mobileNumberCode || '',
+      mobileNumber : data.mobileNumber || '',
+      telephoneNumber : data.telephoneNumber || '',
+      telephoneNumberCode: data.telephoneNumberCode || '',
+      offAddress1 : data.officialAddress1 || '',
+      offAddress2 : data.officialAddress2 || '',
+      offAddress3 : data.officialAddress3 || '',
+      city : data.city || '',
+      state : data.state || '',
+      pinCode : data.pinCode || '',
+      remark: data.remark || '',
+      userId: data.clientUserId
     })
 
-
+  }
     this.detectAuditTrialObj = this.technicaladminform.value;
 
     var dateObj = new Date();
@@ -259,123 +366,139 @@ userId;
     var year = dateObj.getUTCFullYear();
 
 
-const departmentListData = this.departmentListData.filter((val)=> {
-  return val.key == this.technicaladminform.value.departmentName
-})
+// const departmentListData = this.departmentListData.filter((val)=> {
+//   return val.key == this.technicaladminform.value.departmentName
+  
+// })
 
+// console.log("departmentList",this.departmentListData,this.technicaladminform.value.departmentName)
 
-    this.viewInfoData = [
-      {
-        key : this.labels.name,
-        value : this.technicaladminform.value.name
-      },
-      {
-        key  : this.labels.email,
-        value  : this.technicaladminform.value.email
-      },
-      {
-        key  : this.labels.department,
-        value :  departmentListData[0].value
-      },
-      {
-        key  : this.labels.designation,
-        value :  this.technicaladminform.value.designation
-      },
-      {
-        key  : this.labels.employeeCode,
-        value :  this.technicaladminform.value.employeeCode
-      },
-      {
-        key  : this.labels.mobileNo,
-        value  :  `91${this.technicaladminform.value.mobileNo}`
-      },
-      {
-        key  : this.labels.teleNumber,
-        value :  `044${this.technicaladminform.value.telPhno}`
-      },
-      {
-        key  : "Official Address",
-        value :  `${this.technicaladminform.value.offAddress1} ${this.technicaladminform.value.offAddress2} ${this.technicaladminform.value.offAddress3},${this.technicaladminform.value.city},${this.technicaladminform.value.state} - ${this.technicaladminform.value.pinCode}`
-      },
-      {
-        key  : this.labels.remark,
-        value  : this.technicaladminform.value.remark
-      },
-      {
-        key : "",
-        value :  ""
-      },
-      {
-        key :  "",
-        value :  ""
-      },
-      {
-        key  : "",
-        value :  ""
-      }
-    ]
+    
 
 
   }
 
-  onSubmit(){
-    if(this.technicaladminform.invalid) {
+  onSubmit() {
+    if (this.technicaladminform.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields','')
-      return
+      return;
     }
 
     const techAdminDetails = {
-      "department":this.technicaladminform.value.departmentName,
-      "designation":this.technicaladminform.value.designation,
-      "emailAddress":this.technicaladminform.value.email,
-      "employeeCode":this.technicaladminform.value.employeeCode,
-      "mobileCode":this.technicaladminform.value.countryCode,
-      "mobileNumber":this.technicaladminform.value.mobileNo,
-      "telephoneCode":this.technicaladminform.value.teleCode,
-      "telephoneNumber":this.technicaladminform.value.telPhno,
-      "name": this.technicaladminform.value.name,
-      "officeAddressLine1":this.technicaladminform.value.offAddress1,
-      "officeAddressLine2":this.technicaladminform.value.offAddress2,
-      "officeAddressLine3":this.technicaladminform.value.offAddress3,
-      "city":this.technicaladminform.value.city,
-      "state":this.technicaladminform.value.state,
-      "pincode":this.technicaladminform.value.pinCode,
-      "remark":this.technicaladminform.value.remark, 
-      "clientUserId":this.userId,
-      
-    }
-      this.userInfoService.createTechnicalAdmin(techAdminDetails).subscribe((response)=> {
-  
-        console.log('Response',response)
-  
-         
-        if(response['Error'] == '0' && response) {
-       
-          this.isDirty=false;
+      // id: this.technicaladminform.value.id,
+      name: this.technicaladminform.value.name,
+      department: this.technicaladminform.value.departmentName,
+      designation: this.technicaladminform.value.designation,
+      employeeCode: this.technicaladminform.value.employeeCode,
+      emailAddress: this.technicaladminform.value.email,
+      mobileCode: this.technicaladminform.value.mobileNumberCode,
+      mobileNumber: this.technicaladminform.value.mobileNumber,
+      telephoneNumber: this.technicaladminform.value.telephoneNumber,
+      telephoneCode: this.technicaladminform.value.telephoneNumberCode,
+      officeAddressLine1: this.technicaladminform.value.offAddress1,
+      officeAddressLine2: this.technicaladminform.value.offAddress2,
+      officeAddressLine3: this.technicaladminform.value.offAddress3,
+      city: this.technicaladminform.value.city,
+      state: this.technicaladminform.value.state,
+      pincode: this.technicaladminform.value.pinCode,
+      remark: this.technicaladminform.value.remark,
+      clientUserId: this.clientId,
+    };
+    console.log('techAdminDetails', techAdminDetails);
+    this.userInfoService
+      .createTechnicalAdmin(techAdminDetails)
+      .subscribe((response: any) => {
+        const error = response.Error;
+        const errorMessage = response.ErrorMessage;
 
-          this.technicaladminform.reset()
-          // this.toasterService.showSuccess(response,'')
-          this.showDataSaveModal = true;   
-
-          this.dataValue = {
-            title : "Technical Admin details saved Sucessfully",
-            message : "Are you sure want to proceed to Billing Admin Detail?"
-          }
-                
-        }else {
-          this.toasterService.showError(response['ErrorMessage'],'')
+        if (error !== '0') {
+          return this.toasterService.showError(errorMessage, '');
         }
-  
-      })
+        this.isDirty = false;
+        this.showDataSaveModal = true;
+        this.newAccountService.setFlagForShowingPages(2);
+        this.dataValue = {
+          title: 'Technical Admin details saved Successfully',
+          message: 'Are you sure want to proceed to Billing Admin Detail?',
+        };
+      });
 
+    console.log('technicaladminform',this.technicaladminform.value);
+  }
+
+  onNext() {
+    if (this.insertionFlag < 2) {
+      return this.toasterService.showError(`Can't proceed without submitting technical admin details`, '');
+    }
+    this.router.navigate(['/users/billingAdmin/' + this.clientId]);
+  }
+
+  fetchAllTechAdmins() {
+
+    this.userInfoService.fetchAllTechAdmins().subscribe((response)=> {
+
+      console.log("techAdminDetails",response)
+
+      this.adminsList = response['ProcessVariables'];
+
+      this.dataSource = this.adminsList;
+    })
+  }
+
+  getBillingAdminDetailById(id) {
+
+    this.billAdminService.getBillingAdminDetailsById({ currentClientId: id})
+        .subscribe((res: any) => {
+              const processVariables = res.ProcessVariables;
+              this.utilService.setBillAdminUserDetails(processVariables);
+              this.setBillOwnerFormValues(processVariables);
+        });
+
+    // this.userInfoService.getBillingAdminDetailById(id).subscribe((response)=> {
+
+    //   console.log("billAdminDetails by id",response)
+    //   this.utilService.setBillAdminUserDetails(response["ProcessVariables"]);
+
+    //   this.setBillOwnerFormValues(response["ProcessVariables"]);
     
+    // },(error) => {
+    
+    //   console.log(error)
+    
+    // })
+  }
 
-    console.log('billOwnerForm',this.technicaladminform.value)
-
-    // this.detectFormChanges()
   
   
+
+
+  getTechAdminsById(id){    
+
+    this.userInfoService.getTechAdminDetailById(id).subscribe((response: any) => {
+
+      console.log("get TechAdmins by id",response)
+      const processVariables = response.ProcessVariables;
+      if (!processVariables.clientId) {
+          this.isShowTechViewPage = false;
+          this.propertyFlag = false;
+      }
+      if (!processVariables.selectedTechId) {
+        this.showView = false;
+      } else {
+        this.showView = true;
+      }
+      this.utilService.setTechAdminUserDetails(processVariables);
+      this.setFormValues(processVariables);
+      this.setViewPageDataForTechAdminDetails(processVariables);
+       
+
+    },(error) => {
+
+      console.log(error)
+
+    })
+
   }
 
   detectFormChanges() {
@@ -432,13 +555,13 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
     if(value  === 'view' || value == 'billAdmin'){
       if(this.user) {
-        this.router.navigate(['/users/customerDetails/'+pno])
+        this.router.navigate(['/users/customerDetails/'+this.clientId])
       }else {
         this.router.navigate(['/users/customerDetails'])
       }
     }else if(value == 'show'){
       if(this.user){
-        this.router.navigate(['/users/techAdmin/'+pno])
+        this.router.navigate(['/users/techAdmin/'+this.clientId])
         this.showView = true
         this.propertyFlag = true
       }else{
@@ -452,41 +575,40 @@ const departmentListData = this.departmentListData.filter((val)=> {
 
   next() {
 
-    if(!this.user) {
+    // if(!this.user) {
 
-      this.utilService.setCurrentUrl('users/billingAdmin')
+    //   this.utilService.setCurrentUrl('users/billingAdmin')
 
-      let pno = '';
-      this.utilService.projectNumber$.subscribe((val)=> {
-        pno = val || '1';
-      })
-  
-  
-      if(this.user) {
-        this.router.navigate(['/users/billingAdmin/'+pno])
-      }else {
-        this.router.navigate(['/users/billingAdmin'])
-      }
+    //   let pno = '';
+    //   this.utilService.projectNumber$.subscribe((val)=> {
+    //     pno = val || '1';
+    //   })
 
-    }else {
+    //   if(this.user) {
+        this.router.navigate(['/users/billingAdmin/' + this.clientId]);
+         //   }else {
+    //     this.router.navigate(['/users/billingAdmin'])
+    //   }
 
-      this.utilService.setCurrentUrl('users/smsCredit')
+    // }else {
 
-      let pno = '';
-      this.utilService.projectNumber$.subscribe((val)=> {
-        pno = val || '1';
-      })
+    //   this.utilService.setCurrentUrl('users/smsCredit')
+
+    //   let pno = '';
+    //   this.utilService.projectNumber$.subscribe((val)=> {
+    //     pno = val || '1';
+    //   })
 
 
-      if(this.user) {
-      this.router.navigate(['/users/smsCredit/'+pno])
+    //   if(this.user) {
+    //   this.router.navigate(['/users/smsCredit/'+pno])
 
-      }else {
-      this.router.navigate(['/users/smsCredit'])
+    //   }else {
+    //   this.router.navigate(['/users/smsCredit'])
 
-     }
+    //  }
 
-    }
+    // }
    
 
        
@@ -497,30 +619,29 @@ const departmentListData = this.departmentListData.filter((val)=> {
     this.remarkModal = false;
   }
 
-  saveYes(){
-    this.utilService.setCurrentUrl('users/billingAdmin');
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) =>{
-      pno = val;
-    })
-    this.router.navigate(['/users/billingAdmin/'+pno]);
+  saveYes() {
+    // this.utilService.setCurrentUrl('users/billingAdmin');
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) =>{
+    //   pno = val;
+    // })
+    this.router.navigate(['/users/billingAdmin/' + this.clientId]);
   }
 
   saveCancel() {
     this.showDataSaveModal = false;
-    
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val)=> {
-      pno = val || '1';
-    })
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val)=> {
+    //   pno = val || '1';
+    // })
 
-    if(this.user){
-      this.router.navigate(['/users/techAdmin/'+pno])
-      this.showView = true
-      this.propertyFlag = true
-    }else{
-      this.router.navigate(['/users/techAdmin'])
-    }
+   // if(this.user){
+    this.router.navigate(['/users/techAdmin/' + this.clientId]);
+    this.showView = true;
+    this.propertyFlag = true;
+    // }else{
+    //   this.router.navigate(['/users/techAdmin'])
+    // }
 
   }
 
@@ -531,13 +652,21 @@ const departmentListData = this.departmentListData.filter((val)=> {
     this.utilService.projectNumber$.subscribe((val) =>{
       pno = val;
     })
-    this.router.navigate(['/users/billingAdmin/'+pno]);
+    this.router.navigate(['/users/billingAdmin/'+this.user]);
   }
 
 
 }
+
+
+
+
  
 
 
+
+ 
+ 
+ 
 
  

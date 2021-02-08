@@ -14,7 +14,7 @@
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Project Execution
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <form (submit)="PEForm()" [formGroup]="PurchaseEntryForm">
+                <form [formGroup]="PurchaseEntryForm">
                     <!--FIRST ROW-->
                     <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                   <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
@@ -30,12 +30,13 @@
                                  [labelName]="labels.userName" 
                                  [maxLength]="labels?.validationData?.name?.maxLength" 
                                  [type]="labels?.validationData?.name?.type" 
-                                 [isDirty]="isDirty">
+                                 [isDirty]="isDirty"
+                                 isDisabledInp = 'true'>
                                 </app-custom-input>
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="piNumber" 
                                   [isRequired]="'PI Number is Mandatory'" 
@@ -45,6 +46,37 @@
                                   [type]="labels?.validationData?.proformaIN?.type" 
                                   [isDirty]="isDirty">
                                 </app-custom-input>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-4">
+                        <div class="form-group">
+                        <input type="text" placeholder="Pick one"  [formControlName]="PurchaseEntryForm.controls['piNumber']" [matAutocomplete]="auto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"class = "form-control">
+                        <mat-option *ngFor="let proformaInvoice of proformaInvoicesList" [value]="proformaInvoice.name">
+                                    {{proformaInvoice.name}}
+                        </mat-option>
+                        </mat-autocomplete>
+                        </div>
+                        </div> -->
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="department">{{labels.proformaIN}}</label>
+                                <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
+                                class="form-control mb-3"
+                                placeholder="click to select the Proforma Invoice Number"
+                                [formControl]="PurchaseEntryForm.controls['piNumber']"
+                                formControlName = "piNumber"
+                                [matAutocomplete]="auto" 
+                               >
+                               <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let proformaInvoice of proformaInvoicesList" [value]="proformaInvoice.name">
+                                  {{proformaInvoice.name}}
+                                </mat-option>
+                              </mat-autocomplete>
+                              <div class="date-picker-error" *ngIf="isDirty && PurchaseEntryForm.controls['piNumber'].errors?.required">
+                                    Please Enter the Proforma Invoice Number
+                                </div>
                             </div>
                         </div>
 
@@ -201,7 +233,7 @@
                                   [isDirty]="isDirty"></app-vf-custom-select>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" 
                                 [labelName]="labels.remark" [id]="'remark'" 
@@ -212,22 +244,33 @@
                                 [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="poBillable">Upload Document</label>
-                                <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
+                                <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="remarks">{{labels.remark}}</label>
+                                <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                                <div class="date-picker-error" *ngIf="(PurchaseEntryForm.controls['remark'].errors?.required && PurchaseEntryForm.controls['remark'].dirty) && isDirty">
+                                        Please Enter Remark
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="row pt-3 pb-3 m-0">
 
                         <div class="col-10">
 
-                            <button class="btn btn-primary" (click)="createProjectExecution()" style="float: left;" type="submit">Request PO</button>
+                            <button class="btn btn-primary" (click)="createProjectExecution()" style="float: left;">Request PE</button>
 
                         </div>
 
@@ -305,7 +348,7 @@
                         <div class="col-md-3 form-group">
 
                             <div class="row mt-4 pt-2">
-                                <button class="btn btn-primary" type="submit" (click)="onSearch()">Apply</button>
+                                <button class="btn btn-primary" type="submit" (click)="searchProjectExecution()">Apply</button>
                             </div>
 
                         </div>
@@ -381,8 +424,33 @@
             </table>
 
             <!-- <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button> -->
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+            <mat-paginator class="font-paginator" 
+                [hidePageSize]="true" 
+                [pageSize]="pageSize" 
+                [length]="length"
+                (page)="getServerData($event)"
+                 showFirstLastButtons>
+            </mat-paginator>
             <div class="m-5"></div>
+        </div>
+
+        <div class="row pt-3 pb-3 m-0">
+            <!-- <button class="btn btn-primary" (click)="POForm()">Raise E-Invoice</button>
+            <button class="btn btn-primary ml-3" (click)="next()">Next</button> -->
+
+            <div class="col-10">
+
+
+            </div>
+
+           <div class="col-1" style="float: left;">
+
+           </div>
+
+           <div class="col-1" style="float: left;">
+            <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+
+           </div>
         </div>
 
 

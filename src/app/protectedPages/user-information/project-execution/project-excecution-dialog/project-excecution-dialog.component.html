@@ -194,7 +194,7 @@
              [isRequired] = "'Please Select the PI paid'" [isDirty] = "isDirty" ></app-vf-custom-select>
           </div>
       </div>
-      <div class="col-4">
+      <!-- <div class="col-4">
         <div class="form-group">
             <app-custom-input formControlName="remark"
             [isDisabledInp]="enableflag"
@@ -205,7 +205,18 @@
             [isRequired] = "'Please enter the remark'">
             </app-custom-input>
         </div>
-    </div>
+    </div> -->
+
+    <div class="col-4">
+        <div class="form-group">
+          <label for="remarks">{{labels.remark}}</label>
+          <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+              <div class="date-picker-error" *ngIf="isDirty && ProjectExcecutionForm.controls['remark'].errors?.required">
+                  Please Enter Remark
+              </div>
+        </div>
+      </div>
+
         <!-- <div class="col-4">
           <div class="form-group">
               <label for="poBillable">Upload Document</label>
@@ -214,21 +225,9 @@
             </div>
       </div> -->
 
-      <div class="col-4">
-
-        <div class="form-group">
-          <label for="document">Document</label>
-          <div class="pd-2">
-            <span> {{'invoice.pdf'}} </span>
-
-            <button class="btn btn-primary" style="position: absolute;
-                    left: 8vw;
-                    bottom: 0.5vw;" (click)="viewDoc()">View</button>
-          </div>
-
-
-
-        </div>
+      <div *ngIf = "docAvailFlag" class="col-4">
+        <label for="document">Document</label><br>
+          <button class="btn btn-primary" style="float: left;" (click)="showPDF()">View</button>
       </div>
 
 
@@ -265,20 +264,17 @@
             </div>
           </div>
           <div class="col-12 pt-3 ">
-            <div class="form-group ml-1">
-              {{fileName}}
-            </div>
             <div class="form-group small ml-1 pt-2 pb-3">
-              {{fileSize}}
+              click the Icon to preview the document
             </div>
             <div class="form-group row" style="margin-left: 5px">
               
-              <div class="pt-2 pr-2 pb-3">
+              <!-- <div class="pt-2 pr-2 pb-3">
                 <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="download()">Download</button>
-              </div>
-              <div class="pt-2 pb-3">
+              </div> -->
+              <!-- <div class="pt-2 pb-3">
                 <button matRipple class=" btn btn-primary" style="font-size: 10px;" (click)="showDeleteModal = true">Remove</button>
-              </div>
+              </div> -->
             </div>
           </div>
           <!-- <div class="col-12 small pr-2">
@@ -343,13 +339,13 @@
 
   <div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
     <div class="modal-dialog">
-      <div class="modal-content" style="width:800px">
+      <div class="modal-content" style="width:920px">
         <div class="modal-header text-center">
           <h4 class="modal-title">View PDF</h4>
-          <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false;showUploadModal = true">&times;</button>
+          <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false">&times;</button>
         </div>
-        <div class="modal-body" style="height:500px">
-  
+        <div class="modal-body" style="height:553px">
+          <iframe [src]= "previewUrl | secure | async" style="height:491px;width: 886px;" type="application/pdf"></iframe>
         </div>
   </div>
   </div>

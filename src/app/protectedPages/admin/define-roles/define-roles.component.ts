@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import { AdminRolesMappingDialogComponent } from './admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-define-roles',
@@ -22,36 +23,36 @@ export class DefineRolesComponent implements OnInit {
 
     {
       role: 'Finance User',
-      screenName: 'Customer Details',
+      screenName: 'Customer Module',
       mappingStatus : 'Mapped',
       status : 'Read/Write',
       emailFlag  : 'Enabled'
     },
-    {
-      role: 'Finance User',
-      screenName: 'Technical Admin',
-      mappingStatus : "Mapped",
-      status : 'Read/Write/Delete',
-      emailFlag : 'Disabled'
-    },
-    {
-      role: 'Finance User',
-      screenName: 'Billing Admin',
-      mappingStatus  :"Not Mapped",
-      status : 'Read',
-      emailFlag  : 'Disabled'
-    },
+    // {
+    //   role: 'Finance User',
+    //   screenName: 'Technical Admin',
+    //   mappingStatus : "Mapped",
+    //   status : 'Read/Write/Delete',
+    //   emailFlag : 'Disabled'
+    // },
+    // {
+    //   role: 'Finance User',
+    //   screenName: 'Billing Admin',
+    //   mappingStatus  :"Not Mapped",
+    //   status : 'Read',
+    //   emailFlag  : 'Disabled'
+    // },
    
     {
       role  :'Finance User',
-      screenName : 'SMS Credit Allocation',
+      screenName : 'SMS Credit Allocation Module',
       mappingStatus : "Not Mapped",
       status  : 'Read/Write',
       emailFlag  : 'Enabled'
     },
     {
       role: 'Finance User',
-      screenName: 'Proforma Invoice',
+      screenName: 'Proforma Invoice Module',
       mappingStatus : "Mapped",
       status  : 'Read',
       emailFlag  : 'Enabled'
@@ -59,21 +60,21 @@ export class DefineRolesComponent implements OnInit {
     },
     {
       role  : 'Finance User',
-      screenName  : 'Project Execution',
+      screenName  : 'Project Execution Module',
       mappingStatus : "Mapped",
       status  : 'Read',
       emailFlag :  'Enabled'
     },
     {
       role  : 'Finance User',
-      screenName  :  'Purchase Order',
+      screenName  :  'Purchase Order Module',
       mappingStatus :  'Not Mapped',
       status  : 'Read/Write',
       emailFlag  : 'Enabled'
     },
     {
       role :  'Financial User',
-      screenName  : 'Tax Invoice',
+      screenName  : 'Tax Invoice Module',
       mappingStatus  : 'Mapped',
       status : 'Read/Write',
       emailFlag  :'Enabled'
@@ -81,7 +82,7 @@ export class DefineRolesComponent implements OnInit {
     
     {
       role: 'Finance User',
-      screenName: 'Reports',
+      screenName: 'Reports Module',
       mappingStatus : "Mapped",
       status  : 'Read/Write',
       emailFlag :  'Disabled'
@@ -89,17 +90,25 @@ export class DefineRolesComponent implements OnInit {
 
     {
       role  : 'Finance User',
-      screenName  : 'Email',
+      screenName  : 'Email Module',
       mappingStatus :  "Mapped",
       status  : 'Read',
       emailFlag : 'Disabled'
+    },
+    {
+      role  : 'Admin',
+      screenName  : 'Admin Module',
+      mappingStatus :  "Mapped",
+      status  : 'Read',
+      emailFlag : 'Read/Write/Disabled'
     }
   ]
   dataSource = new MatTableDataSource<any>(this.roleList);
 
   constructor(
     private adminService: AdminService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private activatedRoute : ActivatedRoute
     ) { }
 
   rolesList: any;
@@ -112,24 +121,35 @@ export class DefineRolesComponent implements OnInit {
   subtasks = []
 
 
-  async ngOnInit() {
+   ngOnInit() {
+     
+    this.initForm();
+    this.pathLOVvalues();
+    // let roleData = []
+    // await this.adminService.getLovSubMenuList("5").subscribe((response)=> {
 
+
+    //   const rolesList = response['ProcessVariables']['Lovitems'];
+    //   rolesList.forEach(element => {
+    //     roleData.push({key:element.key,value:element.name})
+    //   });
+    // })
+
+    // this.rolesList = roleData
+  }
+
+  initForm(){
     this.rolesControl=new FormGroup({
       rolesList:new FormControl(''),
     })
 
-    let roleData = []
+  }
 
-    await this.adminService.getLovSubMenuList("5").subscribe((response)=> {
-
-
-      const rolesList = response['ProcessVariables']['Lovitems'];
-      rolesList.forEach(element => {
-        roleData.push({key:element.key,value:element.name})
-      });
-    })
-
-    this.rolesList = roleData
+  pathLOVvalues(){
+      const data = this.activatedRoute.parent.snapshot.data || {};
+      const listOfValues = data.listOfValue || {}
+      const ProcessVariables = listOfValues.ProcessVariables || {};
+      this.rolesList = ProcessVariables.rolesList || []
   }
 
   onChangeRole(event) {

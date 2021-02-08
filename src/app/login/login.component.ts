@@ -3,6 +3,7 @@ import { Router} from '@angular/router';
 import {FormGroup,FormBuilder} from '@angular/forms';
 import { ToasterService } from '@services/toaster.service';
 import { LoginService } from '@services/login.service'
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,11 @@ export class LoginComponent implements OnInit {
   errroMsg: string;
 
 
-  constructor(private router : Router,private formBuilder: FormBuilder,private toasterService: ToasterService,private loginService: LoginService) {
+  constructor(private router : Router,
+              private formBuilder: FormBuilder,
+              private toasterService: ToasterService,
+              private loginService: LoginService,
+              private utilityService: UtilityService) {
 
     this.form = this.formBuilder.group({
       userName: [null],
@@ -38,43 +43,53 @@ export class LoginComponent implements OnInit {
     }else {
 
       const data = {
-        // email: 'akshaya.venkataraman@appiyo.com',
-        // password: 'inswit@123',
-        // longTermToken: true
+        // username: 'akshaya.venkataraman@appiyo.com',
+        // password: 'inswit@123' 
         username: this.form.value.userName,
-        password: this.form.value.password
+        password: this.form.value.password     
       }
+      this.utilityService.setUserDetail(this.form.value);
+      // localStorage.setItem('userName',data.username)
 
-      localStorage.setItem('userName',data.username)
-
-      this.loginService.getLogin(data).subscribe((response)=> {
-
-
-        console.log(response)
-        if(response['ProcessVariables']['countUser'] === ''){
-          // this.errroMsg = response['ProcessVariables']['response']
-          const errMsg  = response['ProcessVariables']['response']
-          this.toasterService.showError(errMsg,'')
-        } else if(response['ProcessVariables']['countUser'] === '0'){
-          const errMsg  = response['ProcessVariables']['response'];
-          this.toasterService.showError(errMsg,'');
-          // this.errroMsg = response['ProcessVariables']['response']
-        }
-        else if(response['ProcessVariables']['countUser'] === '1') {
-
-          this.toasterService.showSuccess(response['ProcessVariables']['response'],'')
-          this.router.navigate(["users/Dashboard/"]);
-
-
-       }
-
-          console.log(response)
-      })
-
+      this.loginService.loginApplication(data).subscribe(res => 
+          { 
+            if(res['status'] ==  true){
+            console.log("login Response",res)
+            localStorage.setItem("token",res["token"]);
+            const userData = this.utilityService.getUserData()
+            console.log("user Data",userData)
+            this.getUserDetails({username: userData.userName              
+              })
+          }else{
+            this.toasterService.showError("Invalid user",'Login')
+          }
+          }
+        )     
       
     }
     
    
+  }
+
+  getUserDetails(data){
+
+    this.loginService.getLogin(data).subscribe((response: any)=> {    
+        if(response['Error'] !== '0' && response['ProcessVariables']['error']['code'] !== '0'){
+          // this.errroMsg = response['ProcessVariables']['response']
+          const errMsg  = response['ProcessVariables']['error']['message']
+          this.toasterService.showError(errMsg,'')
+        }
+        else {
+          this.toasterService.showSuccess('Logged Successfully','')
+          const processVariables = response.ProcessVariables;
+          this.utilityService.setLoginDetail(processVariables);
+          localStorage.setItem('userName', processVariables.username);
+          localStorage.setItem('roleName',processVariables.roleName);
+          this.router.navigate(["users/Dashboard/"]);
+       }
+          
+      })
+
   }
 
   forgotPassword() {

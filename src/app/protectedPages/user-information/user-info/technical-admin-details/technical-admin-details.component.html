@@ -5,12 +5,27 @@
 
     <app-account-header [title]="'Technical Admin Details'" [accountName]="accountName" [status]="status" [user]="user"></app-account-header>
 
-    <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info>
+    <app-view-info [techAdminUserDetails] = "viewInfoData" *ngIf = "isShowTechViewPage"></app-view-info>
 
    
 
-    <form (submit)="onSubmit()" [formGroup]="technicaladminform" *ngIf="!showView">
+    <form (submit)="onSubmit()" [formGroup]="technicaladminform" *ngIf="!isShowTechViewPage">
             <div class="row formAlignment">
+
+                <div class="d-none">
+                    <!-- formControlName="id" -->
+                    <div class="form-group">
+                        <app-custom-input
+                        type="hidden" 
+                        formControlName="id"
+                        [labelName]="labels.id" 
+                        [id]="'id'"
+                        placeHolder = "Enter the Id"
+                        >
+                        </app-custom-input>
+                    </div>
+                </div>
+                
                 <div class="col-4">
                     <div class="form-group">
                         <app-custom-input formControlName="name" 
@@ -45,7 +60,6 @@
                         <label for="department">{{labels.department}}</label>
                         <app-vf-custom-select formControlName="departmentName" 
                         [values]="departmentListData"
-                        [isRequired]="'Please Select Department'" 
                         [isDirty]="isDirty"
                         [isDisabled]="propertyFlag"
                         ></app-vf-custom-select>
@@ -75,7 +89,7 @@
                         [labelName]="labels.employeeCode" 
                         placeHolder =  "Enter the Employee Code"
                         [id]="'employeeCode'" 
-                        [maxLength]="labels?.validationData.employeeCode.maxLength" 
+                        [maxLength]="labels?.validationData.employeeCode.maxLength"  
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -86,13 +100,12 @@
                 <div class="col-1 pr-2">
                     <div class="form-group">
                         <label for="">Code<span style="color: red;">*</span></label>
-                        <app-vf-custom-select formControlName = "countryCode"
-                        [values] = "countryCodeValues"
+                        <app-vf-custom-select formControlName = "mobileNumberCode"
+                        [values] = "mobileNumberCodeList"
                         [className]="'form-control Mandatory code-pad'"
                         [isRequired] = "'Select Code'"
                         [isDisabled] = "propertyFlag"
                         [isDirty] = "isDirty"
-                        [isDisabled]="propertyFlag"
                         >
                     </app-vf-custom-select>
                     </div>
@@ -101,10 +114,10 @@
 
                 <div class="col-3">
                     <div class="form-group">
-                        <app-custom-input formControlName="mobileNo" 
+                        <app-custom-input formControlName="mobileNumber" 
                         [labelName]="labels.mobileNo" 
                         placeHolder =  "Enter the Mobile Number"
-                        [id]="'mobileNo'" 
+                        [id]="'mobileNumber'" 
                         [mandatoryField]="true"
                         [type]="labels?.validationData.mobile.type" 
                         [patternCheck]="labels?.validationData.mobile.patternCheck" 
@@ -139,7 +152,8 @@
                     <div class="form-group">
                        
                         <label for="department">Code<span style="color:red">*</span></label>
-                        <app-vf-custom-select formControlName="teleCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues"
+                        <app-vf-custom-select formControlName="telephoneNumberCode" [className]="'form-control Mandatory code-pad'" 
+                        [values]="teleCodeValues"
                         [isRequired]="'Select code'" [isDisabled]="propertyFlag"
                         [isDirty]="isDirty">
                     </app-vf-custom-select>
@@ -147,8 +161,8 @@
                 </div>
                 <div class="col-3 pl-2 ml-0">
                     <div class="form-group">
-                        <app-custom-input formControlName="telPhno" 
-                        [labelName]="labels.teleNumber" [id]="'telPhno'"
+                        <app-custom-input formControlName="telephoneNumber" 
+                        [labelName]="labels.teleNumber" [id]="'telephoneNumber'"
                         placeHolder =  "Enter the Telephone Number"
                         [isRequired]="'Telephone Number is Mandatory'" 
                         [mandatoryField]="true"
@@ -184,8 +198,6 @@
                         [labelName]="labels.officialAdd2" 
                         placeHolder =  "Enter the Address2"
                         [id]="'offcAddressLine2'" 
-                        [mandatoryField]="true"
-                        [isRequired]="'Office AddressLine2 is Mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
@@ -201,8 +213,6 @@
                         [labelName]="labels.officialAdd3" 
                         placeHolder =  "Enter the Address3"
                         [id]="'offcAddressLine3'" 
-                        [mandatoryField]="true"
-                        [isRequired]="'Office AddressLine3 is Mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
@@ -260,17 +270,13 @@
                 </div>
 
                 <div class="col-4">
-                    <div class="form-group">
-                        <app-custom-input formControlName="remark" 
-                            [labelName]="labels.remark" 
-                            placeHolder =  "Enter the Remark"
-                            [id]="'remark'"
-                            [maxLength]="labels?.validationData.remark.maxLength" 
-                            [isRequired]="'Remark is Mandatory'"
-                            [isDisabledInp]="propertyFlag"
-                            [isDirty]="isDirty">
-                        </app-custom-input>
-                    </div>
+                        <div class="form-group">
+                            <label for="remarks">{{labels.remark}}</label>
+                            <textarea class="form-control" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                                <div class="date-picker-error" *ngIf="isDirty && technicaladminform.controls['remark'].errors?.required">
+                                    Please Enter Remark
+                                </div>
+                        </div>
                 </div>
 
 
@@ -295,15 +301,16 @@
 
             
             <div class="row pt-3 pb-3">
-                <div class="col-9">
-                    <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save & Next</button>
+                <div class="col-8">
+                    <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!showView" (click)="onSubmit()">Save & Next</button>
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="hideEditButton" (click)="onSubmit()">Save & Next</button> -->
-                    <button class="btn btn-primary btn-lg float-left back-btn" *ngIf= "showView" matRipple (click)="editData()"> Edit </button>
+                    <button class="btn btn-primary btn-lg float-left back-btn" *ngIf= "showView" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editData()"> Edit </button>
                 </div>
 
-               <div class="col-2" style="float: right;">
-                <button class="btn btn-primary ml-3" *ngIf = "!showView" (click)="back('show')">Back</button>
-                <button class="btn btn-primary ml-3" *ngIf = "showView" (click)="back('view')">Back</button>
+               <div class="col-4" style="float: right;">
+                <button class="btn btn-primary ml-3" style="padding-left: 36px; padding-right:36px;" (click)="onNext()">Next</button>
+                <button class="btn btn-primary ml-3" *ngIf = "!showView" style="padding-left: 36px; padding-right:36px;" (click)="back('show')">Back</button>
+                <button class="btn btn-primary ml-3" *ngIf = "showView"  style="padding-left: 36px; padding-right:36px;" (click)="back('view')">Back</button>
 
                </div>
 
@@ -319,27 +326,29 @@
 
         <!-- <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header> -->
 
-        <div *ngIf = "showView">
-        <div class="dashBoard" *ngIf = "user">
+        <div *ngIf = "false">
+        <div class="dashBoard" *ngIf = "isShowTechViewPage">
             <div>
                 Billing Admin Details
             </div>
         </div>
 
-        <app-view-info [userDetails] = "viewBillAdminInfoData" *ngIf = "showViewBill && user"></app-view-info>
+        <!-- <app-view-info [billAdminUserDetails] = "viewBillAdminInfoData" *ngIf = "isShowTechViewPage"></app-view-info> -->
 
 
 
 
 
-        <div class="row pt-3 pb-3" *ngIf="user">
-            <div class="col-9">
+        <div class="row pt-3 pb-3" *ngIf="isShowTechViewPage">
+            <div class="col-8">
                 <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
-                <button class="btn btn-primary btn-lg float-left back-btn" matRipple (click)="editDataBill()">Edit</button>
+                <button class="btn btn-primary btn-lg float-left back-btn"  style="padding-left: 36px; padding-right:36px;" matRipple (click)="editDataBill()">Edit</button>
             </div>
 
-           <div class="col-2" style="float: right;">
-            <button class="btn btn-primary ml-30" (click)="back('billAdmin')">Back</button>
+           <div class="col-4" style="float: right;">
+            <button *ngIf="isShowTechViewPage" class="btn btn-primary ml-3" style="padding-left: 36px; padding-right:36px;" (click)="onNext()">Next</button>
+
+            <button class="btn btn-primary ml-30" style="padding-left: 36px; padding-right:36px;" (click)="back('billAdmin')">Back</button>
 
            </div>
 
@@ -353,7 +362,6 @@
 
     </mat-card>
         </div>
-
 
 
 <app-remark-modal *ngIf="remarkModal" [showRemarkModal]="remarkModal" (onOkay)="remarkOkay()"></app-remark-modal>

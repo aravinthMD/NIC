@@ -1,18 +1,27 @@
 import { Component, OnInit, Input, Output,EventEmitter, OnChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { AdminService } from '@services/admin.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-email-modal',
   templateUrl: './email-modal.component.html',
   styleUrls: ['./email-modal.component.scss']
 })
-export class EmailModalComponent implements OnInit, OnChanges {
+export class EmailModalComponent implements OnInit {
 
 
-  @Input() data : {
-    title : string;
-    request: any
-  };
+  @Input('data') title : string = ''
+
+  fromMail  : string;
+  toMail : string;
+  ccMail  : string;
+
+  subject : string;
+
+  composeMsg   :string;
+
+
   @Input() showModal: boolean;
 
   @Output('okay') okay = new EventEmitter();
@@ -21,44 +30,63 @@ export class EmailModalComponent implements OnInit, OnChanges {
 
   emailForm: FormGroup
 
-  constructor() { }
+  constructor(private adminService : AdminService,private toasterService : ToasterService) { }
 
   ngOnInit() {
-
+    this.initForm();
   }
 
   initForm() {
 
-
+    const userName = localStorage.getItem('userName');
     this.emailForm = new FormGroup({
-      from: new FormControl(''),
-      to: new FormControl(''),
+      fromAddress: new FormControl(userName),
+      toAddress: new FormControl(''),
       cc: new FormControl(''),
       subject: new FormControl(''),
-      compose: new FormControl('')
+      message1: new FormControl('')
     })
 
   }
 
-  ngOnChanges() {
+  // ngOnChanges() {
 
-    this.initForm()
+  //   this.initForm()
+  // }
 
-    if(this.emailForm) {
 
-      this.emailForm.patchValue({
-        from: this.data.request.from || '',
-        to: this.data.request.to || '',
-        subject: this.data.request.subject || '',
-      })
+  sendEmail() {
 
+    const formValue = this.emailForm.value;
+
+    console.log('formValue', formValue);
+
+    return 
+
+    const Data =  {
+          ... formValue,
     }
-    
-  }
 
+    this.adminService.sendEmailRemainder(Data).subscribe(
+      (response : any) =>{
+        const { 
+          ProcessVariables  : { error : {
+            code,
+            message
+          }}
+        } = response;
 
-  send() {
-      this.okay.emit()
+        if(code === '0'){
+            this.toasterService.showSuccess('Remainder Sent Successfully','');
+            this.okay.emit()
+        }else {
+            this.toasterService.showError(message,'');
+        }
+
+    },(error) => {
+        this.toasterService.showError('Remainder Not Sent','');
+    })
+
   }
 
   close() {

@@ -3,6 +3,7 @@ import { LabelsService } from '../../../services/labels.service';
 import { FormGroup,FormBuilder} from '@angular/forms';
 import { AdminService } from '@services/admin.service';
 import { ToasterService } from '@services/toaster.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-user',
@@ -27,24 +28,24 @@ export class CreateUserComponent implements OnInit {
     msg?: string;
   }[];
 
-  countryCodeValues = [
-    {key:0,value:'+91'},
-    {key:1,value:'+60'},
-    {key:2,value:'+65'}
-  ]
+  countryCodeValues = []
 
-  teleCodeValues = [
-    {key:0,value:'+044'},
-    {key:1,value:'+040'},
-    {key:2,value:'+080'}
-  ]
+  teleCodeValues = []
   
 
   deparmentList : any[] = [];
 
   roleList: any[] = []
 
-  constructor(private labelsService: LabelsService,private formBuilder:FormBuilder,private adminService: AdminService,private toasterService: ToasterService) {
+  constructor(
+    private labelsService: LabelsService,
+    private formBuilder:FormBuilder,
+    private adminService: AdminService,
+    private toasterService: ToasterService,
+    private route : ActivatedRoute
+    ) {
+
+    
 
     this.form =this.formBuilder.group({
       userName: [null],
@@ -55,10 +56,10 @@ export class CreateUserComponent implements OnInit {
       designation : [null],
       employeeCode : [null],
       email : [null],
-      countryCode : [this.countryCodeValues[0].key],
+      countryCode : [''],
       mobileNo : [null],
       telPhno : [null],
-      teleCode: [this.teleCodeValues[0].key],
+      teleCode: [''],
       offAddress1 : [null],
       offAddress2 : [null],
       offAddress3 : [null],
@@ -70,42 +71,29 @@ export class CreateUserComponent implements OnInit {
 
    }
 
-  async ngOnInit() {
+   pathLOVvalues(){
+     const data = this.route.parent.snapshot.data || {}
+     const listOfValue = data.listOfValue || {};
+     const ProcessVariables = listOfValue.ProcessVariables || {};
+     this.deparmentList = ProcessVariables.admindepartment || [];
+     this.countryCodeValues = ProcessVariables.mobileNumberCodeList || [];
+     this.teleCodeValues = ProcessVariables.telephoneNumberCodeList || [];
+     this.roleList = ProcessVariables.rolesList || [];
 
+    //  this.deparmentList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['admindepartment'] || [];
+    // this.countryCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['mobileNumberCodeList'] || [];
+    // this.teleCodeValues = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['telephoneNumberCodeList'] || [];
+    // this.roleList = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['rolesList'] || [];
+   }
+
+  ngOnInit() {
+
+    this.pathLOVvalues();
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     })
-
-    let listData = []
-
-    await this.adminService.getLovSubMenuList("0").subscribe((response)=> {
-
-
-      const submenuList = response['ProcessVariables']['Lovitems'];
-     submenuList.forEach(element => {
-        
-        listData.push({key:element.key,value:element.name})
-      });
-    })
-
-    this.deparmentList = listData;
-
-    let roleData = []
-
-    await this.adminService.getLovSubMenuList("5").subscribe((response)=> {
-
-
-      const rolesList = response['ProcessVariables']['Lovitems'];
-      rolesList.forEach(element => {
-        roleData.push({key:element.key,value:element.name})
-      });
-    })
-
-    this.roleList = roleData
-
     this.passwordValidation = this.passwordValidationCheck()
-
   }
 
   passwordValidationCheck() {
@@ -165,6 +153,10 @@ export class CreateUserComponent implements OnInit {
 
         this.isDirty=false;
         this.form.reset()
+        this.form.controls['departmentName'].setValue("");
+        this.form.controls['roleName'].setValue("");
+        this.form.controls['countryCode'].setValue("");
+        this.form.controls['teleCode'].setValue("");
         this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
 
       }else {

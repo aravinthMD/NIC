@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {LabelsService} from '../../../../services/labels.service';
 import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router'
+import { InvoiceService } from '@services/invoice.service';
+import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -20,6 +23,15 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   buttonName : any = 'Edit';
   enableflag :boolean = true;
   showDeleteModal: boolean;
+
+  previewDocumentId : string = '';
+
+  host  = environment.host;
+  newAppiyoDrive  = environment.previewDocappiyoDrive;
+  previewUrl : string = ''
+
+  docAvailFlag : boolean
+
 
   modeOfPaymentList = [
     {key : 0 ,value : 'DD'},
@@ -58,6 +70,8 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   detectAuditTrialObj:any;
   showUpdate: boolean;
 
+  selectedPEId: string;
+
   showDataSaveModal: boolean;
 
   dataValue: {
@@ -79,44 +93,33 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     private formBuilder :  FormBuilder,
     private utilService: UtilService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private invoiceService : InvoiceService,
+    private datePipe:DatePipe,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
     ) { 
+    this.InitForm();
+    this.detectAuditTrialObj=this.ProjectExcecutionForm.value
+  }
 
-    // this.ProjectExcecutionForm = new FormGroup({
-    //   userName : new FormControl(null),
-    //   piNumber : new FormControl(null),
-    //   piDate : new FormControl(null),
-    //   piAmount : new FormControl(null),
-    //   modeOfPayment : new FormControl(''),
-    //   documentNo :  new FormControl(null),
-    //   dateOfTransaction :  new FormControl(null),
-    //   bankName : new FormControl(null),
-    //   amountReceived : new FormControl(null),
-    //   tds : new FormControl(null),
-    //   NICSIProjectNo : new FormControl(null),
-    //   invoiceDate :  new FormControl(null),
-    //   transactionDate : new FormControl(null),
-    //   piPaid: new FormControl('')
-    // });
-
+  InitForm(){
     this.ProjectExcecutionForm = this.formBuilder.group({
-      userName : ['Suchita'],
-      piNumber : ['4355'],
+      userName : [''],
+      piNumber : [''],
       piDate : new Date(),
-      piAmount : ['50000'],
-      modeOfPayment : ['2'],
-      documentNo : ['3000'],
+      piAmount : [''],
+      modeOfPayment : [''],
+      documentNo : [''],
       dateOfTransaction : new Date(),
-      bankName : ['SBI'],
-      amountReceived : ['30000'],
-      tds : ['2500'],
-      NICSIProjectNo: ['6785'],
+      bankName : [''],
+      amountReceived : [''],
+      tds : [''],
+      NICSIProjectNo: [''],
       invoiceDate : new Date(),
       transactionDate : new Date(),
-      piPaid : ['1'],
-      remark:['User Updated']
+      piPaid : [''],
+      remark:['',Validators.required]
     })
-    this.detectAuditTrialObj=this.ProjectExcecutionForm.value
   }
 
   ngOnInit() {
@@ -130,70 +133,126 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.storeProjectNo = value.projectNo || 4535;
     })
 
-    var dateObj = new Date();
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
+    this.getProjectExecutionDetailById(this.data)
 
-    this.viewInfoData = [
-      {
-        key: this.labels.userName,
-        value:this.ProjectExcecutionForm.value.userName
-      },
-      {
-        key: this.labels.proformaIN,
-        value:this.ProjectExcecutionForm.value.piNumber
-      },
-      {
-        key: 'Proforma Invoice Date',
-        value:`${day}/${month}/${year}`
-      },
-      {
-        key: this.labels.piAmount,
-        value:this.ProjectExcecutionForm.value.piAmount
-      },
-      {
-        key: this.labels.modeOfPayment,
-        value:'RTGS'
-      },
-      {
-        key: this.labels.documentNo,
-        value:this.ProjectExcecutionForm.value.documentNo
-      },
-      {
-        key: 'Date of Transaction',
-        value:`${day}/${month}/${year}`
-      },
-      {
-        key: this.labels.bankName,
-        value:this.ProjectExcecutionForm.value.bankName
-      },
-      {
-        key: this.labels.amountReceived,
-        value:this.ProjectExcecutionForm.value.amountReceived
-      },
-      {
-        key: this.labels.tds,
-        value:this.ProjectExcecutionForm.value.tds
-      },
-      {
-        key: this.labels.nicsiProjectNumber,
-        value:this.ProjectExcecutionForm.value.NICSIProjectNo
-      },
-      {
-        key: 'PI Paid',
-        value:'Partial Payment'
-      },
-      {
-        key: this.labels.remark,
-        value:this.ProjectExcecutionForm.value.remark
-      },
-      {
-        key: 'Document',
-        value:'invoice.pdf'
+  }
+
+
+  getProjectExecutionDetailById(currentPEId : string){
+
+    this.invoiceService.getProjectExecutionDetailbyId(Number(currentPEId)).subscribe(
+      (response: any) => {
+      const { 
+        ProcessVariables  : { error : {
+          code,
+          message
+        }}
+      } = response;
+      if(code == '0'){
+        const data  = response["ProcessVariables"];
+        this.selectedPEId = response["ProcessVariables"]["id"] ? response["ProcessVariables"]["id"] : ""; 
+        this.setFormValues(data);
+        if(response.ProcessVariables.upload_document){
+          this.previewDocumentId = response.ProcessVariables.upload_document;
+          this.docAvailFlag = true;
+        }
+      }else{
+        this.toasterService.showError(message,'')
       }
+    },(error) => {
+      console.log(error)
+      this.toasterService.showError(error,'')
+    })
 
-    ]
+  }
+
+
+  setFormValues(data){
+
+    if(data){
+
+      this.ProjectExcecutionForm.patchValue({
+        userName : data.userName || '',
+        piNumber : data.proformaInvoiceNumber || '',
+        piAmount : data.amount || '',
+        modeOfPayment : data.paymentMode || '',
+        documentNo : data.documentNumber || '',
+        bankName : data.branchName || '',
+        amountReceived : data.receivedAmount || '',
+        tds : data.tds || '',
+        NICSIProjectNo: data.nicsiProjectNumber || '',
+        invoiceDate : data.proformaInvoiceDate ? new Date(this.changeDateFormat(data.proformaInvoiceDate)) : '',
+        transactionDate : data.transactionDate ? new Date(this.changeDateFormat(data.transactionDate)) : '',
+        piPaid : data.paidPI || '',
+        remark :  data.remark || ''
+
+      })
+
+      const psData = this.modeOfPaymentList.filter((val) =>{
+          return val.key == this.ProjectExcecutionForm.controls['modeOfPayment'].value
+      })
+
+      const piPaid = this.piPaidValues.filter((val) =>{
+          return val.key == this.ProjectExcecutionForm.controls['piPaid'].value
+      })
+
+      
+      this.viewInfoData = [
+        {
+          key: this.labels.userName,
+          value:this.ProjectExcecutionForm.controls['userName'].value
+        },
+        {
+          key: this.labels.proformaIN,
+          value:this.ProjectExcecutionForm.controls['piNumber'].value
+        },
+        {
+          key: 'Proforma Invoice Date',
+          value: data.proformaInvoiceDate
+        },
+        {
+          key: this.labels.piAmount,
+          value:this.ProjectExcecutionForm.controls['piAmount'].value
+        },
+        {
+          key: this.labels.modeOfPayment,
+          value:  psData[0].value || ''
+        },
+        {
+          key: this.labels.documentNo,
+          value:this.ProjectExcecutionForm.controls['documentNo'].value
+        },
+        {
+          key: 'Date of Transaction',
+          value:  data.transactionDate
+        },
+        {
+          key: this.labels.bankName,
+          value:this.ProjectExcecutionForm.controls['bankName'].value
+        },
+        {
+          key: this.labels.amountReceived,
+          value:this.ProjectExcecutionForm.controls['amountReceived'].value
+        },
+        {
+          key: this.labels.tds,
+          value:this.ProjectExcecutionForm.controls['tds'].value
+        },
+        {
+          key: this.labels.nicsiProjectNumber,
+          value:this.ProjectExcecutionForm.controls['NICSIProjectNo'].value
+        },
+        {
+          key: 'PI Paid',
+          value: piPaid[0].value || ''
+        },
+        {
+          key: this.labels.remark,
+          value:this.ProjectExcecutionForm.controls['remark'].value
+        }
+  
+      ]
+    }
 
   }
 
@@ -204,40 +263,81 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
   OnUpdate(){
-   
-   
-    this.detectFormChanges();
-      
-    if(this.ProjectExcecutionForm.invalid){
-      this.isDirty = true;
-      return;
+    const feildControls = this.ProjectExcecutionForm.controls;
+    const userName  = feildControls.userName.value;
+    const proformaInvoiceNumber  = feildControls.piNumber .value;
+    const amount = feildControls.piAmount.value;
+    const paymentMode = feildControls.modeOfPayment.value;
+    const documentNumber = feildControls.documentNo.value;
+    const branchName = feildControls.bankName.value;
+    const receivedAmount = feildControls.amountReceived.value;
+    const tds = feildControls.tds.value;
+    const nicsiProjectNumber = feildControls.NICSIProjectNo.value;
+    const invoiceDate = feildControls.invoiceDate.value;
+    const transactionDate = feildControls.transactionDate.value;
+    const paidPI = feildControls.piPaid.value;
+    const remark = feildControls.remark.value;
+
+    const formattedInvoiceDate = this.datePipe.transform(invoiceDate,'dd/MM/yyyy');
+    const formattedDateOfTransaction = this.datePipe.transform(transactionDate,'dd/MM/yyyy');
+
+    const Data = {
+      id  : Number(this.selectedPEId),  //UPDATE ID
+      userName,
+      proformaInvoiceNumber,
+      proformaInvoiceDate  : formattedInvoiceDate,
+      amount,
+      paymentMode,
+      documentNumber,
+      transactionDate : formattedDateOfTransaction,
+      branchName,
+      receivedAmount,
+      tds,
+      nicsiProjectNumber,
+      paidPI,
+      remark,
+      uploadDocument : "file",
     }
 
-    this.showDataSaveModal = true;
-    this.dataValue= {
-      title: 'Project Execution Saved Successfully',
-      message: 'Are you sure you want to proceed purchase order page?'
-    }
+    this.invoiceService.updateProjectExecutionDetail(Data).subscribe(
+      (response: any) =>{
+        const { 
+          ProcessVariables  : { error : {
+            code,
+            message
+          }}
+        } = response;
+
+        if(code == "0"){
+          this.toasterService.showSuccess('Project Execution Details Updated Successfully','');
+          this.ProjectExcecutionForm.reset();
+          this.selectedPEId = "";
+          this.isDirty = false;
+          this.showDataSaveModal;
+          this.showDataSaveModal = true;
+          this.dataValue= {
+           title: 'Project Execution Saved Successfully',
+           message: 'Are you sure you want to proceed purchase order page?'
+            }
+        }else{
+          this.toasterService.showError(message,'');
+        }
+        
+    },(error) =>{
+        this.toasterService.showError(error,'');
+    })
 }
 
 saveYes()
 {
-
 this.showDataSaveModal = false;
-
 this.closeDialog()
 this.next()
-
-
-
 }
 
 next() {
-
   this.utilService.setCurrentUrl('users/purchaseOrder')
-
   this.router.navigate([`/users/purchaseOrder/${this.storeProjectNo}`])
-
 }
 
 saveCancel() {
@@ -253,10 +353,9 @@ this.closeDialog()
     this.dialogRef.close({ event : 'close' ,data : 'returnvalue'});
   }
 
-  viewDoc() {
-
-    this.showUploadModal = true;
-  }
+  // viewDoc() {
+  //   this.showUploadModal = true;
+  // }
 
   download(){
   
@@ -412,8 +511,10 @@ this.closeDialog()
   }
 
   showPDF() {
-    this.showUploadModal = false;
+    // this.showUploadModal = false;
     this.showPdfModal = true;
+    this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`
+
   }
 
   detectDateKeyAction(event,type) {
@@ -435,6 +536,14 @@ this.closeDialog()
     }
     
   }
+
+  changeDateFormat(date) {
+
+    const splitDate = date.split('/');
+
+    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+   }
 
 
 }

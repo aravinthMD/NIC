@@ -1,12 +1,14 @@
-import { Component, OnInit,Optional, Inject, } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit,Optional, Inject, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef,MAT_DIALOG_DATA } from '@angular/material';
 import {LabelsService } from '../../../../services/labels.service'
 import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router';
 import { AdminService } from '@services/admin.service';
-import { InvoiceService } from '@services/invoice.service'
+import { InvoiceService } from '@services/invoice.service';
+import {DatePipe} from '@angular/common';
+import { POService } from '@services/po-service';
 
 @Component({
   selector: 'app-purchase-order-dialog',
@@ -71,12 +73,23 @@ export class PurchaseOrderDialogComponent implements OnInit {
   ]
 
   poId: string;
+  updateEmitter = new EventEmitter();
 
-  constructor(private labelService :  LabelsService,private formBuilder : FormBuilder,
-    private dialogRef : MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,private toasterService: ToasterService,private router: Router,private activatedRoute: ActivatedRoute,private utilService: UtilService,private adminService: AdminService,private invoiceService: InvoiceService) {
+  constructor(
+    private labelService:  LabelsService,
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<PurchaseOrderDialogComponent>,@Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    private toasterService: ToasterService,
+    private router: Router, private activatedRoute: ActivatedRoute,
+    private utilService: UtilService,
+    private adminService: AdminService,
+    private invoiceService: InvoiceService,
+    private DatePipe: DatePipe,
+    private poService: POService
+    ) {
 
 
-      this.poId = this.data.currentPOId;
+      this.poId = this.data.currentPOId || this.data.id;
 
       this.PurchaseOrderForm = this.formBuilder.group({
         userName : [this.data.userName],
@@ -94,8 +107,8 @@ export class PurchaseOrderDialogComponent implements OnInit {
         projectNo : [this.data.projectNumber],
         poAmountWithTax : [this.data.amountWithTax],
         departmentName : [this.data.department],
-        paymentStatus : [''],
-        remark:[this.data.remark],
+        paymentStatus : [this.data.paymentStatus],
+        remark:[this.data.remark,Validators.required],
         uploadDoc : ['']
       })
       this.detectAuditTrialObj=this.PurchaseOrderForm.value
@@ -104,6 +117,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
    }
 
    changeDateFormat(date) {
+
+    if (!date) {
+      return;
+    }
 
     const splitDate = date.split('/');
 
@@ -142,16 +159,35 @@ export class PurchaseOrderDialogComponent implements OnInit {
       })
     })
   }
+  async getSubLovs() {
+
+    let paymentStatus = []
+
+    await this.adminService.getLovSubMenuList("3").subscribe((response)=> {
+
+
+      const paymentList = response['ProcessVariables']['Lovitems'];
+      paymentList.forEach(element => {
+        
+        paymentStatus.push({key:element.key,value:element.name})
+      });
+    })
+
+    this.paymentStatus = paymentStatus
+  }
 
  async ngOnInit() {
     this.labelService.getLabelsData().subscribe((value) =>{
     this.labels = value;
     })
 
+    // this.getSubLovs()
 
-    this.departmentListData = await this.getDepartmentLov();
+    this.departmentListData = this.poService.getDepartmentList();
+    
 
-    this.poStatus = await this.getStatusLov()
+    this.poStatus = this.poService.getStatusList();
+    this.paymentStatus = this.poService.getPaymentList();
 
 
     this.activatedRoute.params.subscribe((value)=> {
@@ -271,58 +307,16 @@ const departmentListData = this.departmentListData.filter((val)=> {
     this.showEdit = true;
   }
 
-  OnUpdate(){
-  
-      this.detectFormChanges();
+  OnUpdate() {
+     if (this.PurchaseOrderForm.invalid) {
+       this.isDirty = true;
+       return;
+     }
 
-    if(this.PurchaseOrderForm.invalid) {
-      this.isDirty = true;
-      return;
-    }
-      
-
-    const poObject = {
-
-      "uploads":"file",
-      "paymentStatus":2,
-      "selectedPOId":this.poId,
-      "temp":"update",
-      "poNumber":this.PurchaseOrderForm.value.poNumber,
-      "projectNumber":this.PurchaseOrderForm.value.projectNo,
-      "projectName": this.PurchaseOrderForm.value.projectName,
-      "poDate": this.PurchaseOrderForm.value.date,
-      "poStatus":Number(this.PurchaseOrderForm.value.poStatus),
-      "uploadDocument":"file",
-      "piNumber":this.PurchaseOrderForm.value.piNumber,
-      "smsApproved":this.PurchaseOrderForm.value.smsApproved,
-      "validUpto":this.PurchaseOrderForm.value.endDate,
-      "department":this.PurchaseOrderForm.value.departmentName,
-      "userName":this.PurchaseOrderForm.value.userName,
-      "remark":this.PurchaseOrderForm.value.remark,
-      "withoutTax":this.PurchaseOrderForm.value.withoutTax,
-      "userEmail":this.PurchaseOrderForm.value.userEmail,
-      "managerEmail":this.PurchaseOrderForm.value.poManagerEmail,
-      "validFrom":this.PurchaseOrderForm.value.startDate,
-      "amtWithTax":this.PurchaseOrderForm.value.poAmountWithTax
-    }
-
-
-    this.invoiceService.updatePurchaseOrder(poObject).subscribe((response)=> {
-
-      console.log(response)
-
-      
-      this.toasterService.showSuccess('Data Saved Successfully','')
-
-      this.showDataSaveModal = true;
-      this.dataValue= {
-        title: 'Purchase Order Saved Successfully',
-        message: 'Are you sure you want to proceed tax invoice page?'
-      }
-    })
-
-    
-
+     this.updateEmitter.emit({
+       ...this.PurchaseOrderForm.value,
+       id: Number(this.poId),
+     });
   }
 
   saveYes()
@@ -402,10 +396,6 @@ this.closeDialog()
       //     remark: this.detectAuditTrialObj.remark
       //   })
       // }
-
-    
-
-
       this.detectAuditTrialObj = this.PurchaseOrderForm.value;
      
     }

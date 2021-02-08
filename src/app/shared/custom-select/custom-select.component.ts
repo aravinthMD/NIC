@@ -69,9 +69,10 @@ export class CustomSelectComponent
   }
 
   getSelectedObject() {
+    console.log('selectedOption', this.selectedOption);
     return this.values && Array.isArray(this.values)
       ? this.values.find(
-          (value) => String(value[this.keyField]) === this.selectedOption
+          (value) => String(value[this.keyField]) === String(this.selectedOption)
         )
       : {};
   }
@@ -144,7 +145,7 @@ export class CustomSelectComponent
   onBlurMethod(event) {
     const newValue = event.target.value;
 
-    if (!newValue && this.isRequired) {
+    if ((newValue === null || newValue === undefined || newValue === '') && this.isRequired) {
       this.displayError(this.isRequired);
       return;
     }

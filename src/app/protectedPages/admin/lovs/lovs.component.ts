@@ -185,7 +185,7 @@ export class LovsComponent implements OnInit {
       const submenuList = response['ProcessVariables']['Lovitems'];
      submenuList.forEach(element => {
         
-        listData.push({key:element.key,value:element.name})
+        listData.push({key:element.key,value:element.value})
       });
     })
 
@@ -228,6 +228,49 @@ if(this.selectedLovs=='0'){
         this.lovsList1=listData
         this.filteredOptions = this.lovsList1
 
+      }else if(this.selectedLovs == '6'){
+
+        this.labelNameKey = 'Mobile Code Key';
+        this.labelNameVal = 'Mobile Code Value';
+        this.labelNameDrp = 'Mobile Code';
+        this.lovsList1 = listData;
+        this.filteredOptions = this.lovsList1
+      }else if(this.selectedLovs == '7'){
+
+        this.labelNameKey = 'Telephone Code Key';
+        this.labelNameVal = 'Telephone Code Value';
+        this.labelNameDrp = 'Telephone Code';
+        this.lovsList1 = listData;
+        this.filteredOptions = this.lovsList1
+      }else if(this.selectedLovs == '8'){
+
+        this.labelNameKey = 'SMS Approval Key';
+        this.labelNameVal = 'SMS Approval Value';
+        this.labelNameDrp = 'SMS Approval';
+        this.lovsList1 = listData;
+        this.filteredOptions = this.lovsList1
+      }else if(this.selectedLovs == '9'){
+
+        this.labelNameKey = 'Admin Department Key';
+        this.labelNameVal = 'Admin Department Value';
+        this.labelNameDrp = 'Admin Department';
+        this.lovsList1 = listData;
+        this.filteredOptions = this.lovsList1
+      }else if(this.selectedLovs == '10'){
+
+        this.labelNameKey = 'SMS Service Key';
+        this.labelNameVal = 'SMS Service Value';
+        this.labelNameDrp = 'SMS Service';
+        this.lovsList1 = listData;
+        this.filteredOptions = this.lovsList1
+      }
+      else if(this.selectedLovs == '11'){
+
+        this.labelNameKey = 'Sender Exempted Key';
+        this.labelNameVal = 'Sender Exempted Value';
+        this.labelNameDrp = 'Send Exempted';
+        this.lovsList1 = listData;
+        this.filteredOptions = this.lovsList1
       }
 }
 

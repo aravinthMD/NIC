@@ -26,7 +26,8 @@
                                  [isRequired]="'Account Name is Mandatory'" 
                                  [maxLength]="labels?.validationData.userName.maxLength" 
                                  [type]="labels?.validationData.userName.type" 
-                                 [isDirty]="isDirty">
+                                 [isDirty]="isDirty"
+                                 isDisabledInp = 'true'>
                                 </app-custom-input>
 
                                 <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is Mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDirty]="isDirty">
@@ -153,15 +154,12 @@
                     <small id="dateHelp" class="form-text text-muted"></small> -->
 
                                 <mat-form-field floatLabel  =  "never">
-                                    <input matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" >
+                                    <input #dateFeild matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')" >
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                     <mat-placeholder>Select Date</mat-placeholder>
                                 </mat-form-field>
-                                <div class="date-picker-error" *ngIf="
-            isDirty &&
-            form.get('date').errors?.required
-          ">
+                                <div class="date-picker-error" *ngIf="isDirty && form.get('date').errors?.required">
                                     Please Select Date
                                 </div>
 
@@ -254,7 +252,7 @@
                             </div>
 
                         </div>
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="remark" 
                                    [labelName]="labels.remark" [id]="'remark'" 
@@ -265,12 +263,22 @@
                                    [isDisabledInp]="propertyFlag">
                                 </app-custom-input>
                             </div>
+                        </div> -->
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label class="mb-0" for="remarks">{{labels.remark}}</label>
+                                <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                                    <div class="date-picker-error" *ngIf="isDirty && form.controls['remark'].errors?.required">
+                                        Please Enter Remark
+                                    </div>
+                            </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="poBillable" style="margin-bottom: -1em">Upload Document</label>
-                                <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp">
+                                <label for="poBillable" class="mb-0">Upload Document</label>
+                                <input type="file" class="form-control upload-choose-pad" formControlName = "importFile" id="poBillable" aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
@@ -282,17 +290,17 @@
 
                         <div class="col-10">
 
-                            <button class="btn btn-primary btn-lg" style="float: left; padding-bottom: 10px; margin-top: 10px;" (click)="createProformaInvoice()">Submit</button>
+                            <button class="btn btn-primary btn-lg pb-4" style="float: left;" (click)="createProformaInvoice()">Submit</button>
 
                         </div>
 
                        <div class="col-1" style="float: left;">
-                        <button class="btn btn-primary btn-lg ml-3" (click)="back()">Back</button>
+                        <button class="btn btn-primary btn-lg ml-3 pb-4" (click)="back()">Back</button>
 
                        </div>
 
                        <div class="col-1" style="float: left;">
-                        <button class="btn btn-primary btn-lg ml-3" (click)="next()">Next</button>
+                        <button class="btn btn-primary btn-lg ml-3 pb-4" (click)="next()">Next</button>
 
                        </div>
 
@@ -400,7 +408,7 @@
             <table mat-table [dataSource]="dataSource" class="custom-table">
 
                 <ng-container matColumnDef="InvoiceNo">
-                    <th mat-header-cell *matHeaderCellDef class="pl-0">Proforma Invoice No </th>
+                    <th mat-header-cell *matHeaderCellDef class="pl-1">Proforma Invoice No </th>
                     <td mat-cell *matCellDef="let element" class="value-bold"> {{element.piNumber}} </td>
                 </ng-container>
 
@@ -446,7 +454,7 @@
                         <!-- <span class="material-icons">
                             report
                             </span> -->
-                            <mat-icon>
+                            <mat-icon class="custom-material-icons">
                                 report
                             </mat-icon>
                     </button> </td>
@@ -457,15 +465,40 @@
             </table>
 
            
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+            <mat-paginator class="font-paginator"  
+                 [hidePageSize]= "true" 
+                 [pageSize]="pageSize"
+                 [length] = "length"
+                 (page) = getServerData($event)
+                 showFirstLastButtons>
+            </mat-paginator>
         </div>
         <!--Material Table End-->
+        <div class="row pt-3 pb-3 m-0">
+
+            <div class="col-10">
+
+                <!-- <button class="btn btn-primary btn-lg pb-4" style="float: left;" (click)="createProformaInvoice()">Raise PI</button> -->
+
+            </div>
+
+           <div class="col-1" style="float: left;">
+            <!-- <button class="btn btn-primary btn-lg ml-3 pb-4" (click)="back()">Back</button> -->
+
+           </div>
+
+           <div class="col-1" style="float: left;">
+            <button class="btn btn-primary btn-lg ml-3 pb-4" (click)="next()">Next</button>
+
+           </div>
+
+        </div>
         <div class="m-5"></div>
     </div>
 
 </div>
 
-<app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="modalData" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
+<app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data] = "data" (okay)="onOkay()" (cancel)="onCancel()"></app-email-modal>
 
 
-<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>
+<app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="showDataSaveModal = !showDataSaveModal"></app-data-saved-modal>

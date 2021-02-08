@@ -6,6 +6,7 @@ import { ManageUserDialogComponent } from '../manage-user-dialog/manage-user-dia
 import { LoginService} from "src/app/services/login.service";
 import { AdminService } from '@services/admin.service';
 import {ToasterService} from '@services/toaster.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -16,6 +17,15 @@ import {ToasterService} from '@services/toaster.service';
 export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   @Input('userObj') user : any;
+
+  mobileNumberCodeList = []; 
+  departmentListData = [];
+  teleCodeValues = [];
+  rolesList = []
+
+  popupContent: string;
+
+
 
 
   @ViewChild(MatPaginator,{static:true}) paginator: MatPaginator;
@@ -45,13 +55,28 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   deleteUserId: string;
 
-  constructor(private dialog: MatDialog,private loginService : LoginService,private adminService: AdminService,private toasterService: ToasterService) {
-
-   }
+  constructor(
+    private dialog: MatDialog,
+    private loginService : LoginService,
+    private adminService: AdminService,
+    private toasterService: ToasterService,
+    private activatedRoute : ActivatedRoute
+    ) {}
 
   async ngOnInit() {
+    this.patchLovValues();
     await this.fetchManageUsers();
   }
+
+  patchLovValues(){
+    const data  = this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    this.mobileNumberCodeList = processVariables.mobileNumberCodeList || [];
+    this.departmentListData = processVariables.admindepartment || [];
+    this.teleCodeValues = processVariables.telephoneNumberCodeList || [];
+    this.rolesList = processVariables.rolesList || [];
+   }
 
   ngAfterViewInit(){
     this.dataSource.paginator = this.paginator;
@@ -70,9 +95,14 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
     //   objData = response['ProcessVariables']['usersList'][0];
 
       const dialogRef = this.dialog.open(ManageUserDialogComponent,{
-        data: element
+        data: element,
       });
     // })
+
+    dialogRef.componentInstance.countryCodeValues = this.mobileNumberCodeList;
+    dialogRef.componentInstance.teleCodeValues = this.teleCodeValues;
+    dialogRef.componentInstance.deparmentList = this.departmentListData;
+    dialogRef.componentInstance.roleList = this.rolesList;
 
     dialogRef.afterClosed().subscribe(result => {
       this.fetchManageUsers();
@@ -91,6 +121,12 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   disable(element) {
 
+    if (element.active) {
+      this.popupContent = 'deactivate';
+    } else {
+      this.popupContent = 'activate';
+    }
+
     this.deleteUserId = element.userId;
     this.deleteAccount = element.name;
     this.showModal = true;
@@ -99,9 +135,10 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
 
   delete() {
 
-    let id = this.deleteUserId
+    let id = this.deleteUserId;
+    const emailUrl = `${origin}/nic/assets/html/account.html?id=${id}`;
 
-    this.adminService.deleteAdminUser(id).subscribe((response)=> {
+    this.adminService.deleteAdminUser(id, emailUrl).subscribe((response)=> {
 
       if(response['ProcessVariables']['response']['type'] == 'Success') {
 

@@ -43,13 +43,13 @@
 
               </section> -->
 
-              <label for="smsApproved">{{labels.smsApproved}}</label>
+              <!-- <label for="smsApproved">{{labels.smsApproved}}</label>
               <app-vf-custom-select formControlName="smsApproved" [values]="smsApprovedList" [isRequired]="'Please Select SMS Approved'" [isDirty]="isDirty" [isDisabled]="enableFlag">
-              </app-vf-custom-select>
+              </app-vf-custom-select> -->
 
-                    <!-- <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty"
+                    <app-custom-input formControlName="smsApproved" [isRequired]="'SMS Approved is Mandatory'" [labelName]="labels.smsApproved" [maxLength]="labels?.validationData?.smsApproved.maxLength" [type]="labels?.validationData?.smsApproved.type" [isDirty]="isDirty"
                         [isDisabledInp]="enableFlag">
-                    </app-custom-input> -->
+                    </app-custom-input>
 
                 </div>
             </div>
@@ -197,7 +197,7 @@
                 </div>
             </div>
 
-            <div class="col-4">
+            <!-- <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="remark" 
                     [labelName]="labels.remark" [id]="'remark'"
@@ -206,6 +206,16 @@
                      [maxLength]="labels?.validationData.userName.maxLength" 
                      [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                     </app-custom-input>
+                </div>
+            </div> -->
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label class="mb-0" for="remarks">{{labels.remark}}</label>
+                    <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+                        <div class="date-picker-error" *ngIf="isDirty && PurchaseOrderForm.controls['remark'].errors?.required">
+                            Please Enter Remark
+                        </div>
                 </div>
             </div>
             <!-- <div class="col-4">

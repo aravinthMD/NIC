@@ -39,7 +39,7 @@ import {DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import { AppDateAdapter, APP_DATE_FORMATS } from './services/format-datepicker.service';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '@services/auth.interceptor.service';
+import { AuthInterceptorService } from '@services/auth.interceptor.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { TechnicalAdminDetailsComponent } from './protectedPages/user-information/user-info/technical-admin-details/technical-admin-details.component';
@@ -71,6 +71,7 @@ import { ViewTechnicalAdminComponent } from './protectedPages/user-information/u
 import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
 import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-roles/admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
+import { AuthguardService } from '@services/authguard.service';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -190,13 +191,14 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: AuthInterceptorService,
       multi: true,
     },
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
-    NgxUiLoaderService
+    NgxUiLoaderService,
+    AuthguardService
   ],
   bootstrap: [AppComponent],
   entryComponents:[
