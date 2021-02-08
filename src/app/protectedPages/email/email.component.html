@@ -44,7 +44,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="pb-2" for="">To</label>
-                                <div class="ml-4">
+                                <div class="ml-4" style="margin-bottom: 5px;">
                                     <mat-chip-list #chipList aria-label="email selection">
                                         <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable" [removable]="removable" (removed)="remove(email)">
                                             {{email}}
@@ -202,7 +202,7 @@
 
                                     <label for="">Message</label>
                             
-                                    <button type="submit" matRipple class=" btn btn-primary">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
+                                    <button type="submit" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
                                     <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
 
                                 </div>

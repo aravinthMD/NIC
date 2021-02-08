@@ -8,6 +8,7 @@ import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
+import { NewAccountService } from '@services/new-account.service';
 
 @Component({
   selector: 'app-billing-owner-details',
@@ -47,7 +48,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   userId: string;
   clientId: number;
   isShowViewPage = false;
- 
+  insertionFlag: number;
 
   constructor(
     private labelsService: LabelsService,
@@ -58,10 +59,16 @@ export class BillingOwnerDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private behser: BehaviourSubjectService,
     private billingAdminService: BillingAdminService,
-    private clientDetailService: ClientDetailsService
+    private clientDetailService: ClientDetailsService,
+    private newAccountService: NewAccountService
     ) { }
 
   ngOnInit() {
+
+    this.newAccountService.getFlagForShowingPages()
+        .subscribe((value) => {
+            this.insertionFlag = value;
+        });
 
     this.initForm();
     this.patchLovValues();
@@ -306,6 +313,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       }
 
       this.showDataSaveModal = true;
+      this.newAccountService.setFlagForShowingPages(3);
       this.dataValue = {
         title: 'Billing Admin Details Updated Successfully',
         message:
@@ -385,7 +393,12 @@ export class BillingOwnerDetailsComponent implements OnInit {
   }
 
   onNext() {
-     this.utilService.setCurrentUrl('users/smsCredit')
+
+    if (this.insertionFlag < 3) {
+      return this.toasterService.showError(`Can't proceed without submitting billing admin details`, '');
+    }
+     
+     // this.utilService.setCurrentUrl('users/smsCredit')
 
     // let pno = '';
     // this.utilService.projectNumber$.subscribe((val)=> {
@@ -421,7 +434,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   // })
 
   // if(this.user){
-    this.router.navigate(['/users/techAdmin/'+this.clientId])
+    // this.router.navigate(['/users/techAdmin/'+this.clientId])
     this.showView = true;
     this.propertyFlag = true;
   // }else{

@@ -146,8 +146,6 @@
                                         placeHolder =  "Enter the User Id"
                                         [maxLength]="labels?.validationData.userName.maxLength" 
                                         [isDisabledInp]="propertyFlag" 
-                                        [isRequired]="'User ID is Mandatory'" 
-                                        [mandatoryField]="true" 
                                         [isDirty]="isDirty">
                                     </app-custom-input>
                                 </div>
@@ -158,13 +156,10 @@
                                     [labelName]="labels.password" 
                                     placeHolder =  "Enter the Password"
                                     [id]="'password'"
-                                    [mandatoryField]="true" 
-                                    [isRequired]="'Password is Mandatory'" 
                                     [maxLength]="labels?.validationData.userName.maxLength" 
                                     [isDisabledInp]="propertyFlag"
                                     [isDirty]="isDirty"
-                                    [type]="hide ? 'password' : 'text'"
-                                    required>
+                                    [type]="hide ? 'password' : 'text'">
                                     </app-custom-input>
                                 </div>
                             </div>

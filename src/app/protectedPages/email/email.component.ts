@@ -10,6 +10,7 @@ import { UtilService } from '@services/util.service';
 
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { EmailService } from 'src/app/email.service';
+import { AdminService } from '@services/admin.service';
 
 
 @Component({
@@ -130,7 +131,12 @@ export class EmailComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredOptions1: Observable<string[]>;
 today=new Date()
-  constructor(private toasterService: ToasterService,private router: Router,private utilService: UtilService,private emailService : EmailService) {
+  constructor(
+    private toasterService: ToasterService,
+    private router: Router,
+    private utilService: UtilService,
+    private emailService: EmailService,
+    private adminService: AdminService) {
 
     this.userName = localStorage.getItem('userName') || '';
 
@@ -222,6 +228,45 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
       fromDate: new FormControl(),
       toDate: new FormControl()
     })
+  }
+
+  sendEmail() {
+    const formValue = this.emailform.value;
+    const toAddress = formValue.ToMailAddress;
+    const subject = formValue.subject;
+    const message1 = formValue.mailContent;
+    const fromAddress = formValue.FromMailAddress;
+    if (!toAddress) {
+      return this.toasterService.showError('Please enter the to mail address', '');
+    }
+    if (!subject) {
+      return this.toasterService.showError('Please enter the subject', '');
+    }
+    if (!message1) {
+      return this.toasterService.showError('Please enter the message', '');
+    }
+    const data = {
+      fromAddress,
+      message1,
+      subject,
+      toAddress };
+    console.log('data', data);
+    this.adminService.sendEmailRemainder(data)
+          .subscribe((res: any) => {
+             const error = res.Error;
+             const errorMessage = res.ErrorMessage;
+             if (error !== '0') {
+               return this.toasterService.showError(errorMessage, '');
+             }
+             const processVariables = res.ProcessVariables;
+             const errorObj = processVariables.error;
+             if (errorObj.code !== '0') {
+               return this.toasterService.showError(errorObj.message, '');
+             }
+             this.emailform.reset();
+             this.emailIdList = [];
+             return this.toasterService.showSuccess('Mail sent successfully', '');
+          });
   }
 
   

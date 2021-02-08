@@ -9,6 +9,7 @@ import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
+import { NewAccountService } from '@services/new-account.service';
 
 @Component({
   selector: 'app-technical-admin-details',
@@ -60,6 +61,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     teleCodeValues = [];
 
     isShowTechViewPage  = true;
+    insertionFlag: number;
  
 
 
@@ -72,10 +74,16 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       private activatedRoute: ActivatedRoute,
       private behser: BehaviourSubjectService,
       private clientDetailService: ClientDetailsService,
-      private billAdminService: BillingAdminService
+      private billAdminService: BillingAdminService,
+      private newAccountService: NewAccountService
       ) { }
 
   ngOnInit() {
+
+    this.newAccountService.getFlagForShowingPages()
+        .subscribe((value) => {
+            this.insertionFlag = value;
+        });
 
     this.patchLovValues();
 
@@ -409,6 +417,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
         }
         this.isDirty = false;
         this.showDataSaveModal = true;
+        this.newAccountService.setFlagForShowingPages(2);
         this.dataValue = {
           title: 'Technical Admin details saved Successfully',
           message: 'Are you sure want to proceed to Billing Admin Detail?',
@@ -419,6 +428,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   }
 
   onNext() {
+    if (this.insertionFlag < 2) {
+      return this.toasterService.showError(`Can't proceed without submitting technical admin details`, '');
+    }
     this.router.navigate(['/users/billingAdmin/' + this.clientId]);
   }
 

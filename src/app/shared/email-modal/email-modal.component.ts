@@ -59,6 +59,10 @@ export class EmailModalComponent implements OnInit {
 
     const formValue = this.emailForm.value;
 
+    console.log('formValue', formValue);
+
+    return 
+
     const Data =  {
           ... formValue,
     }

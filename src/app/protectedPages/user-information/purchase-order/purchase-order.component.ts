@@ -16,6 +16,7 @@ import {ApiService } from '../../../services/api.service';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { POService } from '@services/po-service';
 import { ClientDetailsService } from '@services/client-details.service';
+import { CsvDataService } from '@services/csv-data.service';
 
 
 
@@ -119,7 +120,7 @@ smsApprovedList: any[] = [
     private beheSer: BehaviourSubjectService,
     private route: ActivatedRoute,
     private clientDetailService: ClientDetailsService,
-    private poDataService: POService
+    private poDataService: POService,
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
@@ -661,17 +662,28 @@ next() {
   };
   this.poDataService.getCsvData(params)
       .subscribe((res: any) => {
-         console.log('res', res);
-         const link = document.createElement('a');
-         const csvContent = atob(res.ProcessVariables.exportCsv);
-         const  blob = new Blob([csvContent], {type: "data:application/octet-stream;base64"});
-         const url = URL.createObjectURL(blob);
-         link.setAttribute('href', url);
-         link.setAttribute('download', 'Filename.csv');
-         link.style.visibility = 'hidden';
-         document.body.appendChild(link);
-         link.click();
-         document.body.removeChild(link);
+        const error = res.Error;
+        const errorMessage = res.ErrorMessage;
+        if (error !== "0") {
+          return this.toasterService.showError(errorMessage, '');
+        }
+        const processVariables = res.ProcessVariables;
+        const list = processVariables.List;
+        if (!list) {
+          return this.toasterService.showInfo('No data available', '');
+        }
+        CsvDataService.exportToCsv('PURCHASER_ORDER.csv', list);
+        //  console.log('res', res);
+        //  const link = document.createElement('a');
+        //  const csvContent = atob(res.ProcessVariables.exportCsv);
+        //  const  blob = new Blob([csvContent], {type: "data:application/octet-stream;base64"});
+        //  const url = URL.createObjectURL(blob);
+        //  link.setAttribute('href', url);
+        //  link.setAttribute('download', 'Filename.csv');
+        //  link.style.visibility = 'hidden';
+        //  document.body.appendChild(link);
+        //  link.click();
+        //  document.body.removeChild(link);
       });
  }
 }

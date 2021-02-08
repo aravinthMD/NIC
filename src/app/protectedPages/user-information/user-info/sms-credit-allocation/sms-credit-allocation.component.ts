@@ -363,7 +363,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     const origin = location.origin;
     console.log('origin', origin);
     const token = localStorage.getItem('token');
-    const smsUrl = `${origin}/assets/html/sms.html?id=smsId`;
+    const smsUrl = `${origin}/nic/assets/html/sms.html?id=smsId`;
     if (this.smsCreditForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');
