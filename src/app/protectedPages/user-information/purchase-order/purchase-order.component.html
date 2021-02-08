@@ -572,9 +572,9 @@
             <table>
                 <thead>
                  <tr>
-                    <th>{{accountName}}</th>
-                    <th>{{poNumber}}</th>
-                    <th>{{smsapproved}}</th>
+                    <th class="popup-table">{{accountName}}</th>
+                    <th class="popup-table">{{poNumber}}</th>
+                    <th class="popup-table">{{smsapproved}}</th>
                 </tr>
             </thead>
             </table>
@@ -587,7 +587,7 @@
 
                     <div class="row" formArrayName="items"  *ngFor="let item of formQuantity.get('items')['controls'];let i = index;">
                        <ng-container [formGroupName]="i">
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="form-group">
 
                                 <app-custom-input formControlName="description" 

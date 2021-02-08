@@ -80,9 +80,11 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     this.patchLovValues();
 
     this.activatedRoute.params.subscribe((value) => {
+      // this.showView = false;
       if (!value) {
         return;
       }
+      // this.showView = true;
       this.clientId = Number(value.id || 0);
       this.clientDetailService.setClientId(value.id);
       this.getTechAdminsById(this.clientId);
@@ -153,16 +155,16 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
     console.log(this.activatedRoute)
       if(this.user){
-        this.getTechAdminsById(this.user);
+       // this.getTechAdminsById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
         this.accountName = val['App_name'] || '';
         this.status = val['status'] || '';
       })
       this.propertyFlag = true;
-      this.getBillingAdminDetailById(this.user);
+      // this.getBillingAdminDetailById(this.user);
       }else {
-        this.showView = false;
+        // this.showView = false;
       }
   }
 
@@ -468,6 +470,11 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       if (!processVariables.clientId) {
           this.isShowTechViewPage = false;
           this.propertyFlag = false;
+      }
+      if (!processVariables.selectedTechId) {
+        this.showView = false;
+      } else {
+        this.showView = true;
       }
       this.utilService.setTechAdminUserDetails(processVariables);
       this.setFormValues(processVariables);

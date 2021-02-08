@@ -37,6 +37,9 @@ export class TaxInvoiceComponent implements OnInit {
   uploadedData = {};
   documentUploadId : string = '';
 
+  showEmailModal : boolean;
+  data  : string = '';
+
 
 
 //    monthList = [ "January", "February", "March", "April", "May", "June",
@@ -45,7 +48,7 @@ export class TaxInvoiceComponent implements OnInit {
 //  yearList = [ "2020", "2021", "2022", "2023", "2024", "2025",
 // "2026", "2027", "2028", "2029", "2030", "2031" ];
 
-  displayedColumns: string[] = ['InvoiceNo', 'projectNo', 'piAmt', 'remarks', 'Active'];
+  displayedColumns: string[] = ['InvoiceNo', 'projectNo', 'piAmt', 'remarks','reminder','Escalation', 'Active'];
 
   // csvSampleData:any[]=[
   //   {InvoiceNo:1111,projectNo:1111,piAmt:1000,remarks:'nill',Active:'Active'},
@@ -632,6 +635,17 @@ changeDateFormat(date) {
       }
   }
 
+}
+
+sendReminder(element){
+  this.showEmailModal = true;
+  this.data = 'Send Mail'
+}
+
+
+sendEscalation(element){
+  this.showEmailModal = true;
+  this.data = 'Send Escalation';
 }
 
 

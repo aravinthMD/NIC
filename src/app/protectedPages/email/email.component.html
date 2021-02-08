@@ -40,15 +40,14 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="">From</label>
-                                <input type="text" value="deepak.saxena@nic.in" class="form-control" readonly>
+                                <input type="text" formControlName = "FromMailAddress" class="form-control" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="pb-2" for="">To</label>
                                 <div class="ml-4">
                                     <mat-chip-list #chipList aria-label="email selection">
-                                        <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable"
-                                            [removable]="removable" (removed)="remove(email)">
-                                            {{email.name}}
+                                        <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable" [removable]="removable" (removed)="remove(email)">
+                                            {{email}}
                                             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                                         </mat-chip>
                                     </mat-chip-list>
@@ -56,9 +55,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input style="padding-left:10px;" class="form-control" placeholder="Enter Email Address"
-                                    [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                <input style="padding-left:10px;" 
+                                    class="form-control" 
+                                    formControlName = "ToMailAddress" placeholder="Enter Email Address"
+                                    [matChipInputFor]="chipList" 
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur" 
+                                    (matChipInputTokenEnd)="add($event)">
                                 <mat-error *ngIf="isInvalidEmail">
                                     Please enter valid email id
                                 </mat-error>
@@ -91,7 +94,7 @@
                                 <mat-form-field 
                                 class="col-10 form-control" style="margin-left: 26px;border:none">
                                     <mat-label>From Date</mat-label>
-                                    <input matInput [matDatepicker]="picker" formControlName="fromDate" 
+                                    <input matInput [matDatepicker]="picker" formControlName="FromMailAddress" 
                                     [min]="today" (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
@@ -140,22 +143,20 @@
                         <div *ngIf="showinput" class="row col-8 ml-1">
                             <div class="form-group">
                                 <label for="">Template Name <span style="color:red">*</span></label>
-                                <input type="text" class="form-control">
+                                <input type="text" formControlName = "templateName" class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label for="">Screen Name(Optional)</label>
                                 <ng-multiselect-dropdown
                                 [placeholder]="'Choose Screen'"
-                                formControlName ="screenName"
-                                [data]="optionsScreen"
-                                [settings]="dropdownSettings"
-                               
-                                >
+                                [data]="screenNameDropDownList"
+                                formControlName ="screenList"
+                                [settings]="dropdownSettings">
                                 </ng-multiselect-dropdown>
                             </div>
                             <div class="pl-3" style="margin-top: 40px !important;">
-                                <button type="button"  matRipple (click)="save()" class=" btn btn-primary">Save</button>
+                                <button type="button"  matRipple (click)="saveOrUpdateTemplate()" class=" btn btn-primary">Save</button>
                             </div>
                             <div class="pl-3" style="margin-top: 40px !important;">
                                 <button type="button" (click)="cancel()" matRipple
@@ -165,14 +166,14 @@
                         <div *ngIf="chooseTemp" class="col-4">
                             <div class="form-group">
                                 <label for="chooseTemplete">Choose Templete</label>
-                                <app-vf-custom-select formControlName="selectedTemp" [values]="TemplateList"
+                                <app-vf-custom-select formControlName="selectedTemp" [values]="TemplateList" valueField = "templateTitle" keyField = "id"
                                     (change)="onChange($event)">
                                 </app-vf-custom-select>
                             </div>
                         </div>
                         <div *ngIf="editTempinp" class="col-3">
                             <div class="form-group">
-                                <app-custom-input [labelName]="'Edit Template Name'" formControlName="renameTemplate">
+                                <app-custom-input [labelName]="'Edit Template Name'" formControlName="templateName">
                                 </app-custom-input>
                             </div>
                         </div>
@@ -182,8 +183,8 @@
                                 <label for="">Screen Name</label>
                                 <ng-multiselect-dropdown
                                 [placeholder]="'Choose Screen'"
-                                formControlName ="screenNameEdit"
-                                [data]="optionsScreen"
+                                [data]="screenNameDropDownList"
+                                formControlName ="screenList"
                                 [settings]="dropdownSettings">
                                 </ng-multiselect-dropdown>
                             </div>
@@ -207,7 +208,7 @@
                                 </div>
                               
                                 
-                                <textarea type="text" formControlName="textarea" class="form-control"></textarea>
+                                <textarea type="text" formControlName="mailContent" class="form-control"></textarea>
                             </div>
                         </div>
                         <!-- <div class="col-6">

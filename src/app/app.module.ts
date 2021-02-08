@@ -71,6 +71,7 @@ import { ViewTechnicalAdminComponent } from './protectedPages/user-information/u
 import { DefineRolesComponent } from './protectedPages/admin/define-roles/define-roles.component';
 import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-roles/admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
+import { AuthguardService } from '@services/authguard.service';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -196,7 +197,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
-    NgxUiLoaderService
+    NgxUiLoaderService,
+    AuthguardService
   ],
   bootstrap: [AppComponent],
   entryComponents:[

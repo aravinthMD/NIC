@@ -9,6 +9,9 @@ import { environment } from '../../../environments/environment';
 
 import { ClientDetailsService } from '@services/client-details.service';
 import { ToasterService } from '@services/toaster.service';
+import { UtilityService } from '@services/utility.service';
+import { filter } from 'rxjs/operators';
+import { F } from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
@@ -26,17 +29,60 @@ export class SideNavComponent implements OnInit,OnChanges {
 
   isExistingUser: boolean;
   clientId: string;
-
+private loginDetail:any;
+private isCustomerModule: boolean;
+private smsCreditAllocationModule: boolean;
+private purchaseOrderModule: boolean;
+private emailModule: boolean;
+private reportModule: boolean;
+private adminModule: boolean;
+private taxInvoiceModule: boolean;
+private projectExecutionModule: boolean;
+private performaInvoiceModule: boolean;
+private mySetting: Array<any>;
   constructor(
     private location: Location,
     private utilService: UtilService,
     private router: Router,
     private clientDetailService: ClientDetailsService,
     private toasterService: ToasterService,
-    private activatedRoute: ActivatedRoute ) { 
+    private activatedRoute: ActivatedRoute ,
+    private utilityService: UtilityService) { 
 
-    this.version = environment.version;
-
+      this.version = environment.version;
+      this.loginDetail = this.utilityService.getLoginDetail();
+      console.log("loginDetail",this.loginDetail);
+      this.mySetting = this.loginDetail["settingsDataList"];
+      console.log("mySetting",this.mySetting);
+      if(this.mySetting){
+        this.isCustomerModule = this.mySetting.find(
+            val => val['ScreenName'] == 'CustomerModule')['isMapping'];
+            console.log("isCustomerModule",this.isCustomerModule);
+        this.smsCreditAllocationModule = this.mySetting.find(
+          val => val['ScreenName'] == 'SmsCreditAllocation')['isMapping'];
+          console.log("smsCreditAllocationModule",this.smsCreditAllocationModule);
+        this.purchaseOrderModule = this.mySetting.find(
+          val => val['ScreenName'] == 'PurchaseOrder')['isMapping'];
+          console.log("purchaseOrderModule",this.purchaseOrderModule);
+          this.emailModule = this.mySetting.find(
+            val => val['ScreenName'] == 'EmailOperations')['isMapping'];
+            console.log("emailModule",this.emailModule); 
+          this.reportModule = this.mySetting.find(
+            val => val['ScreenName'] == 'Reports')['isMapping'];
+            console.log("reportModule",this.reportModule);
+          this.projectExecutionModule = this.mySetting.find(
+            val => val['ScreenName'] == 'ProjectExecution')['isMapping'];
+            console.log("ProjectExecution",this.projectExecutionModule); 
+          this.adminModule = this.mySetting.find(
+            val => val['ScreenName'] == 'Admin')['isMapping'];
+            console.log("adminModule",this.adminModule); 
+          this.taxInvoiceModule = this.mySetting.find(
+            val => val['ScreenName'] == 'TaxInvoice')['isMapping'];
+            console.log("taxInvoiceModule",this.taxInvoiceModule); 
+          this.performaInvoiceModule = this.mySetting.find(
+            val => val['ScreenName'] == 'PerformaInvoice')['isMapping'];
+            console.log("performaInvoiceModule",this.performaInvoiceModule); 
+        }  
   }
 
   ngOnInit() {
@@ -152,8 +198,7 @@ export class SideNavComponent implements OnInit,OnChanges {
       this.router.navigate(['/users/customerDetails'])
 
     }
-
-    
+   
 
     this.utilService.projectNumber$.subscribe((pno)=> {
       if(pno){

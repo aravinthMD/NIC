@@ -73,14 +73,14 @@ export class EmailModalComponent implements OnInit {
         } = response;
 
         if(code === '0'){
-            this.toasterService.showSuccess('Data Updated Successfully','');
+            this.toasterService.showSuccess('Remainder Sent Successfully','');
             this.okay.emit()
         }else {
             this.toasterService.showError(message,'');
         }
 
     },(error) => {
-        this.toasterService.showError('Data Update Failed','');
+        this.toasterService.showError('Remainder Not Sent','');
     })
 
   }
