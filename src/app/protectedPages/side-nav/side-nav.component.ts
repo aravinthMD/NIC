@@ -30,15 +30,15 @@ export class SideNavComponent implements OnInit,OnChanges {
   isExistingUser: boolean;
   clientId: string;
 private loginDetail:any;
-private isCustomerModule: boolean;
-private smsCreditAllocationModule: boolean;
-private purchaseOrderModule: boolean;
-private emailModule: boolean;
-private reportModule: boolean;
-private adminModule: boolean;
-private taxInvoiceModule: boolean;
-private projectExecutionModule: boolean;
-private performaInvoiceModule: boolean;
+public isCustomerModule: boolean;
+public smsCreditAllocationModule: boolean;
+public purchaseOrderModule: boolean;
+public emailModule: boolean;
+public reportModule: boolean;
+public adminModule: boolean;
+public taxInvoiceModule: boolean;
+public projectExecutionModule: boolean;
+public performaInvoiceModule: boolean;
 private mySetting: Array<any>;
   constructor(
     private location: Location,
