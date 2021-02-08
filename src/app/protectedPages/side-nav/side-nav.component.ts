@@ -27,6 +27,7 @@ export class SideNavComponent implements OnInit,OnChanges {
   accountInfoNav: string;
 
   version: string;
+  buildDate: string;
 
   isExistingUser: boolean;
   clientId: string;
@@ -55,6 +56,7 @@ insertionFlag: number;
     ) {
 
       this.version = environment.version;
+      this.buildDate = environment.buildDate;
       this.loginDetail = this.utilityService.getLoginDetail();
       console.log("loginDetail",this.loginDetail);
       this.mySetting = this.loginDetail["settingsDataList"];
