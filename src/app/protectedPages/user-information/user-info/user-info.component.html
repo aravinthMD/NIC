@@ -126,13 +126,14 @@
                                     [id]="'projectNo'" 
                                     [maxLength]="labels?.validationData.projectNo.maxLength"
                                     [isDisabledInp]="propertyFlag" 
-                                    [isDirty]="isDirty">
+                                    [isDirty]="isDirty"
+                                    [type]="labels?.validationData.projectNo.type">
                                     </app-custom-input>
-                                    <div *ngIf="form.get('projectNo').errors?.pattern" class="error-feedback">
+                                    <!-- <div *ngIf="form.get('projectNo').errors?.pattern" class="error-feedback">
                                         <div>
                                             {{'Please Enter Digits'}}
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         

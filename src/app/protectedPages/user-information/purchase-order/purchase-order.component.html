@@ -252,13 +252,14 @@
                                    [isRequired]="'Project number is Mandatory'" 
                                    [maxLength]="labels?.validationData.projectNo.maxLength" 
                                    [isDisabledInp]="propertyFlag" 
-                                   [isDirty]="isDirty">
+                                   [isDirty]="isDirty"
+                                   [type]="labels?.validationData.projectNo.type">
                                 </app-custom-input>
-                                <div *ngIf="PurchaseOrderForm.get('projectNo').errors?.pattern" class="error-feedback">
+                                <!-- <div *ngIf="PurchaseOrderForm.get('projectNo').errors?.pattern" class="error-feedback">
                                     <div>
                                         {{'Please Enter Digits'}}
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 

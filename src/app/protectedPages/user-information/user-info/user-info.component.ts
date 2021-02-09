@@ -174,7 +174,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       userId: [null],
       password: [null],
       piDuration : [null],
-      projectNo : [null, Validators.pattern('^[0-9]{0,15}$')],
+      projectNo : [null],
       // creditAdded : [null],
       // creditApprover : [null],
       // creditDate : [null],
