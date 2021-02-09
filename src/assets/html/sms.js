@@ -57,7 +57,7 @@ function afterViewInit() {
 
 function showSnackbar(message, isError = false) {
     var x = document.getElementById("snackbar");
-    x.value = message;
+    x.innerHTML = message;
     x.className = "show";
     if(isError) {
         x.classList.add('snackbar-error');
@@ -103,8 +103,9 @@ async function getData() {
         remarks.value = response.remark;
         hideLoader();
     } catch(e) {
+        console.log('response error', e)
         hideLoader();
-        showErrorMessage(response)
+        showErrorMessage(e)
     }
 }
 
@@ -148,12 +149,20 @@ async function sendUserResponse(isApprove) { // '1': approved    '0': rejected
                     isApprove
                  };
     showLoader();
-    const response  = await buildApi(projectId, processId, workflowId, data);
-    hideLoader();
-    if (showErrorMessage(response)) {
-        return;
+    try {
+        const response  = await buildApi(projectId, processId, workflowId, data);
+        showSnackbar('Your request is submitted successfully');
+        hideLoader();
+    } catch(e) {
+      console
+       hideLoader();
     }
-    showSnackbar('Your request is submitted successfully');
-    console.log('response', response);
+    
+    // console.log('response', response);
+    // if (showErrorMessage(response)) {
+    //     return;
+    // }
+   
+    // console.log('response', response);
 }
 
