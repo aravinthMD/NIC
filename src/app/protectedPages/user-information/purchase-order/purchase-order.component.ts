@@ -278,7 +278,7 @@ smsApprovedList: any[] = [
       endDate: new FormControl(null),
       userEmail: new FormControl(null),
       poManagerEmail: new FormControl(null),
-      projectNo: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
+      projectNo: new FormControl(null),
       poAmountWithTax: new FormControl(null),
       departmentName: new FormControl(''),
       paymentStatus: new FormControl(''),
