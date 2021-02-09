@@ -38,9 +38,7 @@
                   </mat-autocomplete>
                 </div>
             </div>
-             <div *ngIf="hideButton" class="col-1" style="margin-top:28px">
-             <button [disabled]="enablebtn" class="btn btn-primary" (click)="addField()">Add</button>
-            </div>
+             
             <div class="col-1" style="margin-top:28px">
                 <button class="btn btn-primary" [disabled]="isDisabled || LovsControl.get('labelNameDrp').value==''" (click)="editField()">Modify</button>
             </div>
@@ -79,10 +77,13 @@
                     </app-custom-input>
                 </div>
             </div>
-            <div *ngIf="!hideButton" class="col-1" style="margin-top:40px">
+            <div *ngIf="hideButton" class="col-1" style="margin-top:28px">
+                <button [disabled]="enablebtn" class="btn btn-primary" (click)="addField()">Add</button>
+            </div>
+            <div *ngIf="!hideButton" class="col-1" style="margin-top:28px">
                 <button class="btn btn-primary" (click)="click(btnName)">{{btnName}}</button>
                </div>
-            <div *ngIf="!hideButton" class="col-1" style="margin-top:40px">
+            <div *ngIf="!hideButton" class="col-1" style="margin-top:28px">
                 <button class="btn btn-primary" (click)="close()">Close</button>
                </div>
 
