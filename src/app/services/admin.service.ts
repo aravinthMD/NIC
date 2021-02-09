@@ -359,6 +359,34 @@ let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environm
 return  this.httpService.post(url,requestEntity);
 }
 
+getAllSecurityMatrix(roleToFind){
+  
+
+  const {
+    api : {
+      fetchAllSecurityMatrix : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+  const data = {
+    roleToFind
+  }
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+}
+
 
 transform(data: any) {
   return new HttpParams({ fromObject: data });
