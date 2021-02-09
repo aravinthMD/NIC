@@ -53,12 +53,12 @@
 
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{element.status}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{ element.isRead ? 'Read' : '' }}/{{ element.isWrite  ? 'Write' : '' }} </td>
             </ng-container>
 
             <ng-container matColumnDef="email">
               <th mat-header-cell *matHeaderCellDef> Email </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{ element.isEnableEmail ? 'Yes' :  'No'}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{ element.isEnableEmail ? 'Yes' :  'No' }} </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
