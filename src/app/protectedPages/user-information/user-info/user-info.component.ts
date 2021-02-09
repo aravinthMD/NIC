@@ -959,20 +959,32 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
  async uploadFile(files  :FileList){
       this.file = files.item(0);
-      if(this.file){
-        const userId : string = this.clientDetailService.getClientId();
+      if (this.file) {
+        const userId: string = this.clientDetailService.getClientId();
         const modifiedFile = Object.defineProperty(this.file, "name", {
           writable: true,
-          value: this.file["name"]
+          value: this.file["name"],
         });
-        modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
-       this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
-       if(this.uploadedData['uploadStatus']){
-          this.documentUploadId = this.uploadedData['documentUploadId'];
-         this.toasterService.showSuccess('File upload Success','')
-       }else{
-         this.toasterService.showError('File upload Failed','')
-       }
+        modifiedFile["name"] =
+          userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+        try {
+          this.uploadedData = await this.utilService.uploadToAppiyoDrive(
+            this.file
+          );
+
+          if (this.uploadedData["uploadStatus"]) {
+            this.documentUploadId = this.uploadedData["documentUploadId"];
+            this.toasterService.showSuccess("File upload Success", "");
+          } else {
+            this.toasterService.showError("File upload Failed", "");
+          }
+        } catch (e) {
+          console.log("file error", e);
+          const error = e.error;
+          if (error && error.ok === false) {
+            return this.toasterService.showError(error.message, "");
+          }
+        }
       }
   }
 
