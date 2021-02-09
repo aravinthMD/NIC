@@ -35,12 +35,12 @@
           
             <ng-container matColumnDef="ScreenName">
               <th mat-header-cell *matHeaderCellDef> Screen Name </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{element.screenName}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{ element.ScreenName }} </td>
             </ng-container>
           
             <ng-container matColumnDef="Mapping">
               <th mat-header-cell *matHeaderCellDef> Mapping </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{element.mappingStatus}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> <p>{{ element.isMapping ? 'Mapped' :  'Not Mapped' }}</p> </td>
             </ng-container>
           
             <ng-container matColumnDef="Modify">
@@ -58,14 +58,14 @@
 
             <ng-container matColumnDef="email">
               <th mat-header-cell *matHeaderCellDef> Email </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{element.emailFlag}} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{ element.isEnableEmail ? 'Yes' :  'No'}} </td>
             </ng-container>
           
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
 
-          <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+          <mat-paginator class="font-paginator" showFirstLastButtons></mat-paginator>
 
         </div>
         <div class="m-5"></div>

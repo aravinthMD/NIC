@@ -104,6 +104,13 @@ smsApprovedList: any[] = [
   quantityIsDirty: boolean;
 
 
+  file : any;
+
+  documentUploadId : string = '';
+  previewDocumentId : string = '';
+
+  uploadedData : any = {}
+
 
 
   constructor(
@@ -261,6 +268,7 @@ smsApprovedList: any[] = [
       userName: new FormControl(null),
       piNumber: new FormControl(null),
       poNumber: new FormControl(null),
+      uploadDocument  : new FormControl(null),
       smsApproved: new FormControl(null),
       projectName: new FormControl(null),
       date: new FormControl(null),
@@ -414,6 +422,37 @@ smsApprovedList: any[] = [
     this.utilService.getDownloadXlsFile(this.userList, 'PurchaseOrder');
   }
 
+  async uploadFile(files : FileList){
+      this.file = files.item(0);
+      if (this.file) {
+        const userId: string = this.clientDetailService.getClientId();
+        const modifiedFile = Object.defineProperty(this.file, "name", {
+          writable: true,
+          value: this.file["name"],
+        });
+        modifiedFile["name"] =
+          userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+        try {
+          this.uploadedData = await this.utilService.uploadToAppiyoDrive(
+            this.file
+          );
+
+          if (this.uploadedData["uploadStatus"]) {
+            this.documentUploadId = this.uploadedData["documentUploadId"];
+            this.toasterService.showSuccess("File upload Success", "");
+          } else {
+            this.toasterService.showError("File upload Failed", "");
+          }
+        } catch (e) {
+          console.log("file error", e);
+          const error = e.error;
+          if (error && error.ok === false) {
+            return this.toasterService.showError(error.message, "");
+          }
+        }
+      }
+  }
+
   detectDateKeyAction(event, type) {
 
     console.log(event);
@@ -535,7 +574,6 @@ next() {
       projectName: formValue.projectName,
       poDate: formValue.date,
       poStatus: Number(formValue.poStatus),
-      uploadDocument: 'file',
       piNumber: formValue.piNumber,
       smsApproved: formValue.smsApproved,
       validTo: formValue.endDate,
@@ -550,6 +588,7 @@ next() {
       paymentStatus: Number(formValue.paymentStatus),
       userId: Number(this.clientId),
       id: formValue.id,
+      upload_document : this.documentUploadId
     };
 
     console.log('data', data);
@@ -574,6 +613,7 @@ next() {
 
 
       this.PurchaseOrderForm.reset();
+      this.documentUploadId = '';
       this.PurchaseOrderForm.get('paymentStatus').setValue('');
       this.PurchaseOrderForm.get('departmentName').setValue('');
       this.PurchaseOrderForm.get('poStatus').setValue('');

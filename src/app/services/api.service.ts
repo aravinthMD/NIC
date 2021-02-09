@@ -362,6 +362,12 @@ export class ApiService {
       processId  : 'f48d859a66dc11eb8e7a727d5ac274b2',
       projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
       workflowId :  'd04ac0584e5911ebb85b727d5ac274b2'
+    },
+
+    fetchAllSecurityMatrix :  {
+      processId  : '236f435e4e9011ebb871727d5ac274b2',
+      projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+      workflowId : '23473e9a4e9011ebb871727d5ac274b2'
     }
 
   };
