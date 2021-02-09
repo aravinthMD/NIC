@@ -169,13 +169,14 @@
                                    [labelName]="labels.projectNo" 
                                    placeHolder =  "Enter the Project Number"
                                    [maxLength]="labels?.validationData?.projectNo?.maxLength" 
-                                   [isDirty]="isDirty">
+                                   [isDirty]="isDirty"
+                                   [type]="labels?.validationData?.projectNo?.type" >
                                 </app-custom-input>
-                                <div *ngIf="taxInvoiceForm.get('projectNumber').errors?.pattern" class="error-feedback">
+                                <!-- <div *ngIf="taxInvoiceForm.get('projectNumber').errors?.pattern" class="error-feedback">
                                     <div>
                                         {{'Please Enter Digits'}}
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
