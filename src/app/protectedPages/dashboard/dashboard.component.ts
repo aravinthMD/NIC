@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 projectNo: value.projectNumber,
                 department: value.departmentName,
                 state: value.state,
-                status: value.activeStatus ? 'Active' : 'InActive',
+                status: value.activeStatus ? 'Active' : 'Inactive',
                 clientId: value.id,
                 insertionFlag: value.insertionFlag
               };
