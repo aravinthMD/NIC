@@ -83,12 +83,38 @@ export class DefineRolesComponent implements OnInit {
   }
 
 
-  mappingMethod(){
+  mappingMethod(Data){
 
-    this.dialog.open(AdminRolesMappingDialogComponent,{
+   const dialogRef =  this.dialog.open(AdminRolesMappingDialogComponent,{
       width : '500px',
-      height  :'400px'
+      height  :'400px',
+      data  : Data
     });
+
+    dialogRef.componentInstance.emiiter.subscribe((resValue : any) => {
+
+      if(!resValue)
+      return
+
+      const data = {
+
+        enableMapping : resValue.isMapping,
+        enableRead : resValue.isRead,
+        enableWrite : resValue.isWrite,
+        enableEmail : resValue.isEnableEmail,
+        currentDataId : Data.id,
+        temp : 'update',
+        screenName  :resValue.screenName
+      }
+
+      this.adminService.updateSecurityMatrix(data).subscribe(
+        (response) =>{
+          console.log("")
+      })
+
+    })
+
+
 
 
   }

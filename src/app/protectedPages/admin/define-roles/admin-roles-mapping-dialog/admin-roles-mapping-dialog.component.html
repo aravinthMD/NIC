@@ -14,5 +14,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button mat-dialog-close cdkFocusInitial>Cancel</button>
-    <button mat-raised-button mat-dialog-close [disabled] = '!checked' color = "primary">Apply</button>
+    <button mat-raised-button mat-dialog-close [disabled] = '!checked' color = "primary" (click) = "update()">Apply</button>
   </div>
