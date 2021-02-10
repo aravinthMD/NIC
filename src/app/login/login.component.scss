@@ -1,11 +1,19 @@
 .login {
     font-size: 0.8rem;
-    // border-radius: 1rem;
-    padding: 1.5rem 1rem;
-    margin-top: 155px;
+    border-radius: 10px;
+    padding: 0px;
+    margin-top: 250px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.logo_header {
+    background-color: #ffffff;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .log {
@@ -21,6 +29,10 @@
     height: 100%;
 }
 
+.forgot-pwd {
+    color: #b1c8e0;
+}
+
 .container,
 .container-fluid,
 .container-sm,
@@ -32,7 +44,7 @@
 }
 
 .log {
-    background-image: url('src/img/NIC_BG_2.jpg');
+    background-image: url('../../assets/images/NIC_BG_3.png');
     min-height: 380px;
     background-position: center;
     background-repeat: no-repeat;
@@ -50,12 +62,13 @@
     font-weight: 400;
     line-height: 1.5;
     color: #6e707e;
-    background-color: #fff;
+    background: #ffffff;
+    opacity: 64%;
     background-clip: padding-box;
-    border: 1px solid #d1d3e2;
+    border: none;
     // border-radius: 0.35rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    border-radius: 25PX;
+    border-radius: 10px;
     margin: 0 auto;
 }
 
@@ -78,9 +91,10 @@
 }
 
 button.btn.btn-primary {
-    padding: .75rem 1rem;
-    width: 100%;
-    border-radius: 25px;
+    padding: 0.75rem 1rem;
+    width: 50%;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 .form-group.form-check {
@@ -89,7 +103,7 @@ button.btn.btn-primary {
 
 a {
     padding-left: 78px;
-    color:#0e4d92 !important;
+    color: #0e4d92;
     font-weight: bold;
     letter-spacing: 2px;
 }
@@ -102,6 +116,12 @@ a {
     text-align: center;
 }
 
-a:hover { 
-   color:  #ffff !important;
+a:hover {
+    color: #ffff !important;
+}
+
+@media screen and (min-width: 576px) and (max-width: 1086px) {
+    .nic_logo {
+        width: 50%!important;
+    }
 }
