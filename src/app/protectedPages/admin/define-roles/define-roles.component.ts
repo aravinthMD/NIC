@@ -2,12 +2,10 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 
 import { AdminService } from '@services/admin.service';
 import { FormControl, FormGroup } from '@angular/forms';
-
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import { AdminRolesMappingDialogComponent } from './admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-define-roles',
@@ -16,107 +14,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DefineRolesComponent implements OnInit {
 
-  @ViewChild(MatPaginator,{static : true}) paginator : MatPaginator;
-
-
-  roleList = [
-
-    {
-      role: 'Finance User',
-      screenName: 'Customer Module',
-      mappingStatus : 'Mapped',
-      status : 'Read/Write',
-      emailFlag  : 'Enabled'
-    },
-    // {
-    //   role: 'Finance User',
-    //   screenName: 'Technical Admin',
-    //   mappingStatus : "Mapped",
-    //   status : 'Read/Write/Delete',
-    //   emailFlag : 'Disabled'
-    // },
-    // {
-    //   role: 'Finance User',
-    //   screenName: 'Billing Admin',
-    //   mappingStatus  :"Not Mapped",
-    //   status : 'Read',
-    //   emailFlag  : 'Disabled'
-    // },
-   
-    {
-      role  :'Finance User',
-      screenName : 'SMS Credit Allocation Module',
-      mappingStatus : "Not Mapped",
-      status  : 'Read/Write',
-      emailFlag  : 'Enabled'
-    },
-    {
-      role: 'Finance User',
-      screenName: 'Proforma Invoice Module',
-      mappingStatus : "Mapped",
-      status  : 'Read',
-      emailFlag  : 'Enabled'
-
-    },
-    {
-      role  : 'Finance User',
-      screenName  : 'Project Execution Module',
-      mappingStatus : "Mapped",
-      status  : 'Read',
-      emailFlag :  'Enabled'
-    },
-    {
-      role  : 'Finance User',
-      screenName  :  'Purchase Order Module',
-      mappingStatus :  'Not Mapped',
-      status  : 'Read/Write',
-      emailFlag  : 'Enabled'
-    },
-    {
-      role :  'Financial User',
-      screenName  : 'Tax Invoice Module',
-      mappingStatus  : 'Mapped',
-      status : 'Read/Write',
-      emailFlag  :'Enabled'
-    },
-    
-    {
-      role: 'Finance User',
-      screenName: 'Reports Module',
-      mappingStatus : "Mapped",
-      status  : 'Read/Write',
-      emailFlag :  'Disabled'
-    },
-
-    {
-      role  : 'Finance User',
-      screenName  : 'Email Module',
-      mappingStatus :  "Mapped",
-      status  : 'Read',
-      emailFlag : 'Disabled'
-    },
-    {
-      role  : 'Admin',
-      screenName  : 'Admin Module',
-      mappingStatus :  "Mapped",
-      status  : 'Read',
-      emailFlag : 'Read/Write/Disabled'
-    }
-  ]
-  dataSource = new MatTableDataSource<any>(this.roleList);
+  dataSource = [];
 
   constructor(
     private adminService: AdminService,
     private dialog: MatDialog,
-    private activatedRoute : ActivatedRoute
+    private activatedRoute : ActivatedRoute,
+    private toasterService : ToasterService
     ) { }
 
   rolesList: any;
 
   rolesControl: FormGroup;
 
-  // displayedColumns : string[] = ['Role','ScreenName','showMode','emailMode']
-  displayedColumns  :string[] = ['ScreenName','Mapping','Modify','status','email']
+  displayedColumns = ['ScreenName','Mapping','Modify','status','email']
 
   subtasks = []
 
@@ -136,11 +47,12 @@ export class DefineRolesComponent implements OnInit {
     // })
 
     // this.rolesList = roleData
+    this.fetchAllSecurityMetrix('1');
   }
 
   initForm(){
     this.rolesControl=new FormGroup({
-      rolesList:new FormControl(''),
+      rolesList:new FormControl('1'),
     })
 
   }
@@ -153,7 +65,8 @@ export class DefineRolesComponent implements OnInit {
   }
 
   onChangeRole(event) {
-
+      let roleTOFind = event.target.value;
+      this.fetchAllSecurityMetrix(roleTOFind);
   }
 
   enableMode() {
@@ -177,6 +90,29 @@ export class DefineRolesComponent implements OnInit {
       height  :'400px'
     });
 
+
+  }
+
+
+  fetchAllSecurityMetrix(roleTOFind){
+
+    this.adminService.getAllSecurityMatrix(roleTOFind).subscribe(
+      (response : any) =>{
+          console.log(response);
+
+
+          const ProcessVariables = response.ProcessVariables || {};
+          const error = ProcessVariables.error || {}
+          if(error.code === '0'){
+            const settingsDataList = ProcessVariables.settingsDataList || [];
+            this.dataSource = settingsDataList;
+          }else{
+            this.toasterService.showError(error.message,'')
+          }
+    },(error) =>{
+        console.log(error.message);
+        this.toasterService.showError('Failed to Fetch Data','');
+    })
 
   }
 

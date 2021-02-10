@@ -9,6 +9,7 @@ import { AdminService } from '@services/admin.service';
 import { InvoiceService } from '@services/invoice.service';
 import {DatePipe} from '@angular/common';
 import { POService } from '@services/po-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-purchase-order-dialog',
@@ -41,6 +42,11 @@ export class PurchaseOrderDialogComponent implements OnInit {
   fileSize: string = 'Size - 109.4 KB';
   fileName: string = 'invoice.pdf';;
   fileType: string;
+
+  docAvailFlag : boolean;
+  host  = environment.host;
+  newAppiyoDrive  = environment.previewDocappiyoDrive;
+  previewUrl : string = ''
 
   showPdfModal: boolean;
   remarkModal:boolean;
@@ -109,11 +115,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
         departmentName : [this.data.department],
         paymentStatus : [this.data.paymentStatus],
         remark:[this.data.remark,Validators.required],
-        uploadDoc : ['']
       })
       this.detectAuditTrialObj=this.PurchaseOrderForm.value
 
-      
+      this.filePreview();
    }
 
    changeDateFormat(date) {
@@ -286,8 +291,8 @@ const departmentListData = this.departmentListData.filter((val)=> {
         value:this.PurchaseOrderForm.value.remark
       },
       {
-        key: 'Document',
-        value:'invoice.pdf'
+        key: '',
+        value:''
       },{
         key :  "",
         value :  ""
@@ -298,6 +303,14 @@ const departmentListData = this.departmentListData.filter((val)=> {
       }
     ]
   }
+
+  filePreview(){
+    if(this.data.upload_document){
+      this.docAvailFlag = true;
+      this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.data.upload_document}`
+    }
+  }
+
 
   OnEdit() {
 
@@ -509,7 +522,7 @@ this.closeDialog()
   }
 
   showPDF() {
-    this.showUploadModal = false;
+    // this.showUploadModal = false;
     this.showPdfModal = true;
   }
 
