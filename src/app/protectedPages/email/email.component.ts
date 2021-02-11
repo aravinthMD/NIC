@@ -507,7 +507,9 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       const FromMailAddress = this.fromMailAddress;
       const ToMailAddress = this.toMailAddress;
       const subject = this.Subject;
-      
+      const mailContent = this.mailContent;
+
+
   }
 
  
