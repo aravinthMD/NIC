@@ -234,7 +234,7 @@ export class SmsCreditAllocationComponent implements OnInit {
         }
         const processVariables = res.ProcessVariables;
         const dataList = processVariables.list;
-        if (!processVariables.dataList) {
+        if (!dataList) {
           return this.toasterService.showInfo('No data available for download', '');
         }
         CsvDataService.exportToCsv('SMS_Credit_Allocation.csv', dataList);
