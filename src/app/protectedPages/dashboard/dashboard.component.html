@@ -243,7 +243,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
             </table>
            
-            <div  *ngIf="csvData">
+            <!-- <div  *ngIf="csvData">
               <button
               type="button"
               class="btn btn-primary ml-3"
@@ -252,8 +252,8 @@
               (click)="exportCsvData()"
             >
               Export Csv
-            </button>
-            </div>
+            </button> 
+            </div> -->
            
             <mat-paginator class="font-paginator" [pageSizeOptions]="[5,10,15]" showFirstLastButtons></mat-paginator>
             

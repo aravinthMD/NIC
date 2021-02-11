@@ -289,7 +289,7 @@
             },
             "type": "number",
             "patternCheck": {
-                "rule": "^[0-9]{8}",
+                "rule": "^[0-9]{7}",
                 "msg": "Invalid telephone number"
             }
         },
