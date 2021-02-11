@@ -287,7 +287,7 @@ export class TaxInvoiceComponent implements OnInit {
         return this.toasterService.showError(errorMsg, '');
       }
       const processVariables = res.ProcessVariables;
-      const dataList = processVariables.list;
+      const dataList = processVariables.TiList;
       if (!dataList) {
         return this.toasterService.showInfo('No data available for download', '');
       }

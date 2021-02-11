@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>(this.userList);
   sortedData = [];
   isSearchApiCalled: boolean;
+  csvData: any;
 
   constructor(
     private route: Router,
@@ -119,13 +120,36 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             const attachment = processVariables.attachment;
 
             const fileName = attachment.name;
+            this.csvData = {
+              name: fileName,
+              data: resData
+            };
+            if (!resData) {
+              return this.toasterService.showInfo('No data available', '');
+            }
+            const dashboardList = (resData || []).map((value) => {
+              return {
+                userId: value.accountName,
+                projectNo: value.projectNumber,
+                department: value.department,
+                state: value.state,
+                status: value.activeStatus ? 'Active' : 'Inactive',
+                clientId: value.id,
+                insertionFlag: value.insertionFlag
+              };
+            });
+            this.userList = dashboardList;
+            this.dataSource = new MatTableDataSource<any>(dashboardList);
+            this.dataSource.paginator = this.paginator;
             // const header = Object.keys(resData[0]);
 
-            CsvDataService.exportToCsv(fileName, resData);
+           // // CsvDataService.exportToCsv(fileName, resData);
 
             // console.log('arrayToCsv', arrayToCsv.convertArrayToCSV(resData));
         });
   }
+
+
 
   addUser() {
     this.utilService.setCurrentUrl('newuser');
@@ -133,6 +157,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   onSearchClear() {
+    this.csvData = null;
     if (!this.isSearchApiCalled) {
       return;
     }
@@ -180,8 +205,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<any>(this.sortedData);
     this.dataSource.paginator = this.paginator;
   }
+
+  exportCsvData() {
+    console.log('csv data', this.csvData);
+    CsvDataService.exportToCsv(this.csvData.name, this.csvData.data);
+  }
   onSearch() {
-    
+    this.csvData = null;
     const keyword = this.searchKey || '';
     console.log('Search Value', keyword);
     const data = this.apiService.api.getAllCustomerDetails;
