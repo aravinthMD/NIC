@@ -23,7 +23,7 @@ export class CustomDateAdapter  {
                 return new Date(year, month, date);
 
             }
-            return '';
+            return new Date(value);
         }
 }
 

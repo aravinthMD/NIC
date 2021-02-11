@@ -209,13 +209,13 @@ insertionFlag: number;
     }
    
 
-    this.utilService.projectNumber$.subscribe((pno)=> {
-      if(pno){
-        this.isExistingUser = true
-      }else {
-        this.isExistingUser = false
-      }
-  })
+  //   this.utilService.projectNumber$.subscribe((pno)=> {
+  //     if(pno){
+  //       this.isExistingUser = true
+  //     }else {
+  //       this.isExistingUser = false
+  //     }
+  // })
    
     
   }
@@ -234,7 +234,14 @@ insertionFlag: number;
 
 
   listenerForLocationChange() {
+    // this.activatedRoute.params.subscribe((res) => {
+    //     console.log('side nav change', res);
+    // });
+    
     this.location.onUrlChange((url) => {
+        const clientId = this.clientDetailService.getClientId();
+        this.isExistingUser = !!clientId;
+        console.log('side nav change', clientId);
         this.highlightsSideMenu(url);
     });
   }
