@@ -148,10 +148,14 @@ async function sendUserResponse(status) { // '1': approved    '2': rejected
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = Number(urlParams.get('id') || 0);
+    const statusComment = document.getElementById('comments').value;
+
     const data = {
                     id,
-                    status
+                    status,
+                    statusComment,
                  };
+    console.log('data', data);
     showLoader();
     try {
         const response  = await buildApi(projectId, processId, workflowId, data);

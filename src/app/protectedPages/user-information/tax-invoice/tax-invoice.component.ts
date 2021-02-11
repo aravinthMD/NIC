@@ -18,6 +18,7 @@ import { TaxInvoiceService } from '@services/tax-invoice.service';
 import { ClientDetailsService } from '@services/client-details.service';
 
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
+import { CsvDataService } from '@services/csv-data.service';
 
 @Component({
   selector: 'app-tax-invoice',
@@ -270,6 +271,31 @@ export class TaxInvoiceComponent implements OnInit {
 
     // this.paymentStatus = listData;
 
+  }
+
+  exportCsv() {
+    this.taxInvoiceService.getTaxInvoiceList(
+      {
+        selectedClientId: this.selectedClientId,
+        exportCsv: 'true'
+      }
+    ).subscribe((res: any) => {
+      console.log('get list', res);
+      const error = res.Error;
+      const errorMsg = res.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMsg, '');
+      }
+      const processVariables = res.ProcessVariables;
+      const dataList = processVariables.list;
+      if (!dataList) {
+        return this.toasterService.showInfo('No data available for download', '');
+      }
+      CsvDataService.exportToCsv('Tax_Invoice.csv', dataList);
+      // this.taxInvoiceList = processVariables.TIList || [];
+      // this.dataSource = new MatTableDataSource<any>(this.taxInvoiceList);
+      // this.dataSource.paginator = this.paginator;
+    });
   }
 
   // getAllTaxInvoiceDetails(currentPage?: any){

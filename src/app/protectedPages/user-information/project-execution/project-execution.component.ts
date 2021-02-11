@@ -13,6 +13,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService} from '../../../services/api.service';
 import { ClientDetailsService } from '@services/client-details.service';
+import { CsvDataService } from '@services/csv-data.service';
 
 
 @Component({
@@ -258,6 +259,26 @@ dataValue: {
             console.log(error)
             this.toasterService.showError(error,'')
         })
+    }
+
+    exportCsv() {
+      const data = {
+        selectedClientId: this.clientId
+      };
+      this.invoiceService.exportCsv(data).
+      subscribe((res: any) => {
+        const error = res.Error;
+        const errorMessage = res.ErrorMessage;
+        if (error !== '0') {
+          return this.toasterService.showError(errorMessage, '');
+        }
+        const processVariables = res.ProcessVariables;
+        const list = processVariables.peList;
+        if (!list) {
+          return  this.toasterService.showInfo('No data available for download', '');
+        }
+        CsvDataService.exportToCsv('Project_Execution.csv', list);
+      });
     }
 
     getProjectExecutionDetails(currentPage:any,selectedClientId : string){ 
