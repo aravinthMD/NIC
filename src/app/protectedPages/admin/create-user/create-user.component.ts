@@ -149,9 +149,9 @@ export class CreateUserComponent implements OnInit {
 
       console.log('Response',response)
 
-      if(response['Error'] == '0' && response['ProcessVariables']['response']['type'] == 'Success') {
+      if(response['Error'] == '0' && response['ProcessVariables']['error']['code'] == '0') {
 
-        this.isDirty=false;
+        this.isDirty = false;
         this.form.reset()
         this.form.controls['departmentName'].setValue("");
         this.form.controls['roleName'].setValue("");
@@ -160,10 +160,14 @@ export class CreateUserComponent implements OnInit {
         this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
 
       }else {
-        this.toasterService.showError(response['ProcessVariables']['response']['value'],'')
+        this.toasterService.showError(response['ProcessVariables']['error']['message'],'')
       }
 
     })
+  }
+  userNameChange(event){
+    console.log("userName change",event.target.value);
+    this.form.controls['email'].setValue(event.target.value);
   }
 
 }

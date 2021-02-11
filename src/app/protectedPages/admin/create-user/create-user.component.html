@@ -18,13 +18,14 @@
                     <div class="form-group">
                         <app-custom-input formControlName="userName" 
                         [labelName]="labels.userName"
-                        placeHolder =  "Enter the User Name" 
+                        placeHolder =  "Enter Email Id" 
                         [mandatoryField]="true" 
-                        [patternCheck]="labels?.validationData.userName.patternCheck"
+                        [patternCheck]="labels?.validationData.email.patternCheck"
                         [id]="'UserName'" 
-                        [isRequired]="'User name is Mandatory'" 
-                        [maxLength]="labels?.validationData.userName.maxLength" 
+                        [isRequired]="'User name is mandatory'" 
+                        [maxLength]="labels?.validationData.email.maxLength" 
                         [isDirty]="isDirty"
+                        (change)="userNameChange($event)"
                          >
                     </app-custom-input>
                     </div>
@@ -127,7 +128,10 @@
                         placeHolder = "Enter the Email"
                         [id]="'email'" 
                         [isRequired]="'Email is Mandatory'" 
-                        [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength" [mandatoryField]="true" [isDirty]="isDirty">
+                        [patternCheck]="labels?.validationData.email.patternCheck" 
+                        [maxLength]="labels?.validationData.email.maxLength" 
+                        [mandatoryField]="true" [isDirty]="isDirty"
+                        [isDisabledInp]="true">
 
                         </app-custom-input>
                     </div>

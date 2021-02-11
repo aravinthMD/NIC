@@ -143,7 +143,8 @@ mat-form-field {
     border-color: #0e4d92;
     border-style: solid;
     vertical-align: middle !important;
-    width: 103%
+    width: 103%;
+    height: 40px;
 }
 
 #mySearch {
@@ -223,6 +224,17 @@ mat-form-field {
 
 .cursor-pointer {
     cursor: pointer;
+}
+.fa-search{
+    font-size: 14px;
+    margin-top: 2px !important;
+}
+.header-dev{
+    margin-top:-8px !important;
+}
+
+th{
+   background-color:  #697c90;
 }
 
 @media screen and (min-width: 300px) and (max-width:768px){
