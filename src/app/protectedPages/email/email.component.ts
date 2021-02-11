@@ -509,7 +509,7 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       const subject = this.Subject;
       const mailContent = this.mailContent;
 
-
+      const templateId = this.id;
   }
 
  

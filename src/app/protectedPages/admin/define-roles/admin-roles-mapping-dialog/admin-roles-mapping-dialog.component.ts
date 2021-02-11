@@ -17,6 +17,7 @@ export class AdminRolesMappingDialogComponent implements OnInit {
   emailEnable : boolean
   screenId : string;
   screenName : string;
+  roleToFind ;
 
   currentDataId : string;
 
@@ -33,10 +34,10 @@ export class AdminRolesMappingDialogComponent implements OnInit {
     // this.screenName = this.data.screenName;
       // this.getSecurityMatrixById(this.data)
       console.log(this.data);
-      let roleToFind = this.data.roleToFind;
+       this.roleToFind = this.data.roleToFind;
       this.screenId = this.data.screenId
       this.screenName = this.data.screenName
-      this.getSecurityMatrixById(roleToFind,this.screenId)
+      this.getSecurityMatrixById(this.roleToFind,this.screenId)
   } 
 
   update(){
@@ -46,7 +47,9 @@ export class AdminRolesMappingDialogComponent implements OnInit {
       enableRead : this.read,
       enableWrite : this.write,
       enableEmail :  this.emailEnable,
-      currentDataId : this.currentDataId,
+      // currentDataId : this.currentDataId,
+      roleToFind : this.roleToFind,
+      screenId : this.screenId,
       enableMapping : this.checked,
       temp  : 'update'
     }
