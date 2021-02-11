@@ -2,22 +2,114 @@
 
     <div class="col-md-12 dashboard p-0">
         <!-- <h1 class="h3 mb-2 text-gray-800">Dashboard</h1> -->
-        <div class="dashBoard row p-2 m-0">
-            <div class="col-md-6 mt-2 pt-2 dashb">
+        <div class="row mt-4">
+
+          <!-- Total PI Pending Card Example -->
+          <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('pi')" title="Click to download as CSV">
+              <div class="card border-left-primary shadow h-100">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <div class="text-xs font-weight-500 text-primary mb-1 clr-white"><span class="font-small">Total Proforma Invoice Pending</span></div>
+
+                              <!-- <span class="float-right"><i class="fa fa-area-chart fa-lg" aria-hidden="true"></i></span> -->
+                              <div class="h5 mb-0 font-weight-500 text-gray-800 clr-white font-small">{{proformaInvoicePendingCount}}</div>
+                          </div>
+                          <!-- <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+              </div> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Total PI Pending Card Example -->
+          <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('po')" title="Click to download as CSV">
+              <div class="card border-left-success shadow h-100">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <div class="text-xs font-weight-500 text-success mb-1 clr-white"><span class="font-small">Total Purchase Order Pending</span></div>
+
+                              <!-- <span class="float-right"><i class="fa fa-file-o fa-lg" aria-hidden="true"></i></span> -->
+
+                              <div class="h5 mb-0 font-weight-500 text-gray-800 clr-white font-small">{{purchaseOrderPendingCount}}</div>
+                          </div>
+                          <!-- <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Total PI Pending Card Example -->
+          <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('invoicePending')" title="Click to download as CSV">
+              <div class="card border-left-info shadow h-100">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <div class="text-xs font-weight-500 text-info mb-1 clr-white "><span class="font-small">Total Invoice Pending</span></div>
+
+                              <!--<span class="float-right"><i class="fa fa-file-text fa-lg" aria-hidden="true"></i>
+                              </span>-->
+
+                              <div class="row no-gutters align-items-center">
+                                  <div class="col-auto">
+                                      <div class="h5 mb-0 mr-3 font-weight-500 text-gray-800 clr-white font-small">{{invoicePendingCount}}</div>
+                                  </div>
+                                  <!--  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div> -->
+                              </div>
+                          </div>
+                          <!--  <div class="col-auto">
+                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+              </div> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Pending Requests Card Example -->
+          <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('partialBill')" title="Click to download as CSV">
+              <div class="card border-left-warning shadow h-100">
+                  <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                              <div class="text-xs font-weight-500 text-warning mb-1 clr-white"><span class="font-small">Total Partial Bill Paid</span></div>
+
+                              <!--<span class="float-right"><i class="fa fa-file-powerpoint-o fa-lg" aria-hidden="true"></i></span>-->
+
+                              <div class="h5 mb-0 font-weight-500 text-gray-800 clr-white font-small">{{partialBillPaidCount}}</div>
+                          </div>
+                          <!--  <div class="col-auto">
+                <i class="fas fa-comments fa-2x text-gray-300"></i>
+              </div> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <div class="dashBoard row p-2 m-0 ">
+            <div class="col-md-6 mt-2 pt-2 dashb header-dev" (click)="onSearch()" style="cursor: pointer;">
+              <i class="fa fa-home" aria-hidden="true"  style="color: #fff"></i>
                 Dashboard
             </div>
-            <div class="input-icons col-md-6 d-flex justify-content-end">
+            <div class="input-icons col-md-6 d-flex justify-content-end header-dev">
               <!-- <span class="fa-stack"> -->
                 
                   
-                <i class="fa fa-times" *ngIf="searchKey" (click)="searchKey = ''" (click)="onSearchClear()"></i>
+                <i class="fa fa-times fa-search" *ngIf="searchKey" (click)="searchKey = ''" (click)="onSearchClear()"></i>
                 
               <!-- </span> -->
               <div>
                 <i class="fa fa-search search-icon" (click)="onSearch()"></i>
               </div>
                 
-                <input type="text" id="mySearch" [(ngModel)]="searchKey" title="Search the Account"  (keyup.enter)="onSearch()">
+                <input type="text" id="mySearch" [(ngModel)]="searchKey" title="Search the Account"  (keyup.enter)="onSearch()" style="height: fit-content;">
                 
             </div>
             <!-- <mat-form-field class="example-form-field p-0 mt-3">
@@ -47,97 +139,7 @@
         </div>
 
 
-        <div class="row mt-4">
-
-            <!-- Total PI Pending Card Example -->
-            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('pi')">
-                <div class="card border-left-primary shadow h-100">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-500 text-primary mb-1 clr-white"><span class="font-small">Total Proforma Invoice Pending</span></div>
-
-                                <!-- <span class="float-right"><i class="fa fa-area-chart fa-lg" aria-hidden="true"></i></span> -->
-                                <div class="h5 mb-0 font-weight-500 text-gray-800 clr-white font-small">{{proformaInvoicePendingCount}}</div>
-                            </div>
-                            <!-- <div class="col-auto">
-                  <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Total PI Pending Card Example -->
-            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('po')">
-                <div class="card border-left-success shadow h-100">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-500 text-success mb-1 clr-white"><span class="font-small">Total Purchase Order Pending</span></div>
-
-                                <!-- <span class="float-right"><i class="fa fa-file-o fa-lg" aria-hidden="true"></i></span> -->
-
-                                <div class="h5 mb-0 font-weight-500 text-gray-800 clr-white font-small">{{purchaseOrderPendingCount}}</div>
-                            </div>
-                            <!-- <div class="col-auto">
-                  <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Total PI Pending Card Example -->
-            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('invoicePending')">
-                <div class="card border-left-info shadow h-100">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-500 text-info mb-1 clr-white "><span class="font-small">Total Invoice Pending</span></div>
-
-                                <!--<span class="float-right"><i class="fa fa-file-text fa-lg" aria-hidden="true"></i>
-                                </span>-->
-
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 mr-3 font-weight-500 text-gray-800 clr-white font-small">{{invoicePendingCount}}</div>
-                                    </div>
-                                    <!--  <div class="col">
-                      <div class="progress progress-sm mr-2">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div> -->
-                                </div>
-                            </div>
-                            <!--  <div class="col-auto">
-                  <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pending Requests Card Example -->
-            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('partialBill')">
-                <div class="card border-left-warning shadow h-100">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-500 text-warning mb-1 clr-white"><span class="font-small">Total Partial Bill Paid</span></div>
-
-                                <!--<span class="float-right"><i class="fa fa-file-powerpoint-o fa-lg" aria-hidden="true"></i></span>-->
-
-                                <div class="h5 mb-0 font-weight-500 text-gray-800 clr-white font-small">{{partialBillPaidCount}}</div>
-                            </div>
-                            <!--  <div class="col-auto">
-                  <i class="fas fa-comments fa-2x text-gray-300"></i>
-                </div> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- <div>
         <div class="input-icons">
@@ -240,8 +242,21 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
             </table>
-
-            <mat-paginator class="font-paginator"  style="margin-bottom: -18px;" [pageSizeOptions]="[5,10,15]" showFirstLastButtons></mat-paginator>
+           
+            <div  *ngIf="csvData">
+              <button
+              type="button"
+              class="btn btn-primary ml-3"
+              data-dismiss="modal"
+              style="margin-top: 10px;"
+              (click)="exportCsvData()"
+            >
+              Export Csv
+            </button>
+            </div>
+           
+            <mat-paginator class="font-paginator" [pageSizeOptions]="[5,10,15]" showFirstLastButtons></mat-paginator>
+            
         </div>
         <!--Material Table End-->
         <div class="mb-5"></div>
