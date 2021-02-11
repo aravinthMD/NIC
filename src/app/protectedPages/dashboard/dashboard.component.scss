@@ -184,7 +184,7 @@ mat-form-field {
     color: #747677 !important;
     margin-top: 5px;
     margin-right: 5px;
-    background-color: #fff !important;
+    background-color: #fff0 !important;
     padding-left: 5px;
     padding-bottom: 8px;
 } 
@@ -197,7 +197,7 @@ mat-form-field {
     color: #747677 !important;
     margin-top: 5px;
     margin-right: 5px;
-    background-color: #fff !important;
+    background-color: #fff0 !important;
     padding-left: 5px;
     padding-bottom: 8px;
 } 
@@ -224,3 +224,27 @@ mat-form-field {
 .cursor-pointer {
     cursor: pointer;
 }
+
+@media screen and (min-width: 300px) and (max-width:768px){
+
+    #mySearch {
+         width: 100%;        
+    }
+
+    .input-icons i { 
+        margin-top: 5px;
+    } 
+    .search-icon {        
+        margin-top: 5px;       
+    } 
+
+    :host ::ng-deep td.mat-cell {
+        line-height: 24px !important;
+        text-align: left;
+        flex: 0 20% !important;
+        width: 100% !important;
+        line-height: 20px !important;
+        padding: 8px;
+        // word-break: break-all;
+    }
+ }
