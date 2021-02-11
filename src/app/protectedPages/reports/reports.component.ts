@@ -676,30 +676,30 @@ onReportFilterChange(event) {
     
   }
 
-  exportCSV(datatable:any[]) {
+  exportCSV() {
 
-    const reportVal = this.form.controls['reports'].value;
+//     const reportVal = this.form.controls['reports'].value;
 
-    if(reportVal >= 1 && reportVal <= 5){
+//     if(reportVal >= 1 && reportVal <= 5){
 
-    }
+//     }
 
-    if(reportVal == 6){
-//Paymnet Tracking
-     return this.utilService.getDownloadXlsFile(this.paymnettrackkey,'Report_Payment_Track')
+//     if(reportVal == 6){
+// //Paymnet Tracking
+//      return this.utilService.getDownloadXlsFile(this.paymnettrackkey,'Report_Payment_Track')
       
-    }
-    if(reportVal == 7){
+//     }
+//     if(reportVal == 7){
 
-      //Payment Received
+//       //Payment Received
     
-    }
-    if(reportVal == 8){
+//     }
+//     if(reportVal == 8){
 
-      //Payment Shortpay
+//       //Payment Shortpay
     
-    }
-this.utilService.getDownloadXlsFile(datatable,'Report')
+//     }
+// this.utilService.getDownloadXlsFile(datatable,'Report')
   }
 
 }

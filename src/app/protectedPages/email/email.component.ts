@@ -191,6 +191,30 @@ today=new Date()
         return this.emailform.controls['screenList'].value;
    }
 
+   set fromScheduleDate(value){
+        this.emailform.controls['fromScheduleDate'].setValue(value);
+   }
+
+   get fromScheduleDate(){
+      return this.emailform.controls['fromScheduleDate'].value;
+   }
+
+   set toScheduleDate(value){
+      this.emailform.controls['toScheduleDate'].setValue(value);
+   }
+
+   get toScheduleDate(){
+      return this.emailform.controls['toScheduleDate'].value;
+   }
+
+   set scheduleTime(value){
+      this.emailform.controls['scheduleTime'].setValue(value);
+   }
+
+   get scheduleTime(){
+     return this.emailform.controls['scheduleTime'].value;
+   }
+
 
   ngOnInit() {
 
@@ -480,7 +504,10 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
   }
 
   emailScheduler(){
-    
+      const FromMailAddress = this.fromMailAddress;
+      const ToMailAddress = this.toMailAddress;
+      const subject = this.Subject;
+      
   }
 
  

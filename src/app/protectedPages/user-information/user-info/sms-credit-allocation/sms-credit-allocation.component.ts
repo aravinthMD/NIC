@@ -19,6 +19,7 @@ import { SmsCreditService } from '@services/sms-credit.service';
 import { SmsCreditAllocation } from './sms-credit.model';
 import { environment } from 'src/environments/environment.prod';
 import { CsvDataService } from '@services/csv-data.service';
+import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -102,6 +103,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     private apiService: ApiService,
     private clientDetailsService: ClientDetailsService,
     private smsCreditService: SmsCreditService,
+    private customDateAdapter: CustomDateAdapter,
   //  private csvDataService: CsvDataService
   ) {}
 
@@ -217,6 +219,9 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   getStatusDescription(key) {
+    if (!key) {
+      return;
+    }
     const status = this.statusList.find((val) => {
       return val.key === key;
     });
@@ -375,7 +380,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       smsUrl,
       clientId: this.userId,
       smsApprover: formValue.smsApprover,
-      dateOfRequest: formValue.dateOfRequest,
+      dateOfRequest: this.customDateAdapter.transform(formValue.dateOfRequest, 'dd/MM/yyyy'),
       balanceCredit: formValue.totalCredit, // initially full credit is available
       status: formValue.status,
       onApprovalOf: formValue.onApprovalOf,

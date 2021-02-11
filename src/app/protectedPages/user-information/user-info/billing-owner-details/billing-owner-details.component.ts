@@ -118,20 +118,20 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   initForm() {
     this.billOwnerForm = new FormGroup({
-      name : new FormControl ([null]),
-      departmentName : new FormControl ([null]),
-      designation: new FormControl ([null]),
-      employeeCode : new FormControl ([null]),
+      name : new FormControl (null),
+      departmentName : new FormControl (null),
+      designation: new FormControl (null),
+      employeeCode : new FormControl (null),
       email : new FormControl (null),
       mobileNumberCode: new FormControl(''),
       mobileNumber : new FormControl (''),
       telephoneNumber : new FormControl (null),
       telephoneNumberCode: new FormControl(''),
-      offAddress1 : new FormControl ([null]),
-      offAddress2 : new FormControl ([null]),
-      offAddress3 : new FormControl ([null]),
-      city : new FormControl ([null]),
-      state : new FormControl ([null]),
+      offAddress1 : new FormControl (null),
+      offAddress2 : new FormControl (null),
+      offAddress3 : new FormControl (null),
+      city : new FormControl (null),
+      state : new FormControl (null),
       pinCode : new FormControl (null),
       remark: new FormControl('')
     });
