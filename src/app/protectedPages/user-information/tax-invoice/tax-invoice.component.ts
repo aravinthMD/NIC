@@ -120,7 +120,7 @@ export class TaxInvoiceComponent implements OnInit {
     });
     this.taxInvoiceForm = new FormGroup({
       userName: new FormControl(null),
-      projectNumber: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
+      projectNumber: new FormControl(null),
       poNumber: new FormControl(null,Validators.required),
       poDate: new FormControl(null),
       fromDate: new FormControl(null),

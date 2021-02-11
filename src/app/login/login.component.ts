@@ -71,24 +71,26 @@ export class LoginComponent implements OnInit {
    
   }
 
-  getUserDetails(data){
+  getUserDetails(data) {
 
-    this.loginService.getLogin(data).subscribe((response: any)=> {    
-        if(response['Error'] !== '0' && response['ProcessVariables']['error']['code'] !== '0'){
-          // this.errroMsg = response['ProcessVariables']['response']
-          const errMsg  = response['ProcessVariables']['error']['message']
-          this.toasterService.showError(errMsg,'')
+    this.loginService.getLogin(data).subscribe((response: any) => {
+        const error =  response.Error;
+        const errorMessage = response.ErrorMessage;
+        if (error !== '0') {
+          return this.toasterService.showError(errorMessage, '');
         }
-        else {
-          this.toasterService.showSuccess('Logged Successfully','')
-          const processVariables = response.ProcessVariables;
-          this.utilityService.setLoginDetail(processVariables);
-          localStorage.setItem('userName', processVariables.username);
-          localStorage.setItem('roleName',processVariables.roleName);
-          this.router.navigate(["users/Dashboard/"]);
-       }
-          
-      })
+        const processVariables = response.ProcessVariables;
+        const errorObj = processVariables.error;
+
+        if (errorObj.code !== '0')  {
+          return this.toasterService.showError(errorObj.message, '');
+        }
+        this.toasterService.showSuccess('Logged Successfully', '');
+        this.utilityService.setLoginDetail(processVariables);
+        localStorage.setItem('userName', processVariables.username);
+        localStorage.setItem('roleName', processVariables.roleName);
+        this.router.navigate(['users/Dashboard/']);
+      });
 
   }
 

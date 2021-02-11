@@ -538,7 +538,7 @@ next() {
           }
           this.showDataSaveModal = true;
           this.dataValue = {
-            title: 'Purchase Order Saved Successfully',
+            title: 'Details submitted successfully to ERP',
                 message: 'Are you sure you want to proceed tax invoice page?'
           };
 

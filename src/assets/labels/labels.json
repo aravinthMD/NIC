@@ -285,7 +285,7 @@
         },
         "telephoneNumber": {
             "maxLength": {
-                "rule": 8
+                "rule": 7
             },
             "type": "number",
             "patternCheck": {
