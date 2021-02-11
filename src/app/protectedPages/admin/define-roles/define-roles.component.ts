@@ -31,6 +31,16 @@ export class DefineRolesComponent implements OnInit {
 
   subtasks = []
 
+  get role(){
+
+    return this.rolesControl.controls['rolesList'].value;
+
+  }
+
+  set role(value){
+      this.rolesList.controls['rolesList'].setValue(value);
+  }
+
 
    ngOnInit() {
      
@@ -83,12 +93,48 @@ export class DefineRolesComponent implements OnInit {
   }
 
 
-  mappingMethod(){
+  edit(Data){
 
-    this.dialog.open(AdminRolesMappingDialogComponent,{
+   const dialogRef =  this.dialog.open(AdminRolesMappingDialogComponent,{
       width : '500px',
-      height  :'400px'
+      height  :'400px',
+      data  : {
+                screenName : Data.ScreenName,
+                screenId  :  Data.screenId,
+                roleToFind  : this.role
+                }
     });
+
+      dialogRef.afterClosed().subscribe((result) =>{  
+        if(result == 'SUCCESS'){
+          this.fetchAllSecurityMetrix(this.role);
+        }
+      } )
+
+    // dialogRef.componentInstance.emiiter.subscribe((resValue : any) => {
+
+    //   if(!resValue)
+    //   return
+
+    //   const data = {
+
+    //     enableMapping : resValue.isMapping,
+    //     enableRead : resValue.isRead,
+    //     enableWrite : resValue.isWrite,
+    //     enableEmail : resValue.isEnableEmail,
+    //     currentDataId : Data.id,
+    //     temp : 'update',
+    //     screenName  :resValue.screenName
+    //   }
+
+    //   this.adminService.updateSecurityMatrix(data).subscribe(
+    //     (response) =>{
+    //       console.log("")
+    //   })
+
+    // })
+
+
 
 
   }

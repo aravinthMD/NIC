@@ -370,7 +370,7 @@ smsApprovedList: any[] = [
           this.proformaInvoicesList = processVariables.piList || [];
       }, (error) => {
           console.log('Error');
-          this.toasterService.showError('Failed to fetch data', '');
+          this.toasterService.showError('Failed to Fetch Data', '');
       });
   }
 
@@ -439,9 +439,9 @@ smsApprovedList: any[] = [
 
           if (this.uploadedData["uploadStatus"]) {
             this.documentUploadId = this.uploadedData["documentUploadId"];
-            this.toasterService.showSuccess("File upload Success", "");
+            this.toasterService.showSuccess("File Upload Success", "");
           } else {
-            this.toasterService.showError("File upload Failed", "");
+            this.toasterService.showError("File Upload Failed", "");
           }
         } catch (e) {
           console.log("file error", e);
@@ -624,7 +624,7 @@ next() {
       this.beheSer.setSmsApproved(data.smsApproved);
       console.log('processVariables', processVariables);
       if (formData) {
-        this.toasterService.showSuccess('Data updated Successfully', '');
+        this.toasterService.showSuccess('Data Updated Successfully', '');
         this.overrideGridData(processVariables);
       } else {
         this.toasterService.showSuccess('Data Saved Successfully', '');

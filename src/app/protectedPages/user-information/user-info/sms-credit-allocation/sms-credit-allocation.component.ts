@@ -435,7 +435,7 @@ export class SmsCreditAllocationComponent implements OnInit {
             if (error !== '0') {
               return this.toasterService.showError(errorMessage, '');
             }
-            this.toasterService.showSuccess('Data saved successfully', '');
+            this.toasterService.showSuccess('Data Saved Successfully', '');
             this.isDirty = false
             const processVariables = res.ProcessVariables;
             const status = this.getStatusDescription(processVariables.status);
@@ -533,7 +533,7 @@ export class SmsCreditAllocationComponent implements OnInit {
         searchFrom: '',
       });
       this.toasterService.showError(
-        'Please click the fromdate icon to select date',
+        'Please click the from date icon to select date',
         ''
       );
     } else if (type === 'searchTo') {
@@ -541,7 +541,7 @@ export class SmsCreditAllocationComponent implements OnInit {
         searchTo: '',
       });
       this.toasterService.showError(
-        'Please click the todate icon to select date',
+        'Please click the to date icon to select date',
         ''
       );
     }

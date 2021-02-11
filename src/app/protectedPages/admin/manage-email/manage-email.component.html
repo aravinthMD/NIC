@@ -17,7 +17,7 @@
       
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-row mat-cell *matCellDef="let element"> {{element.status}} </td>
+          <td mat-row mat-cell *matCellDef="let element"> {{ element.screenStatus === '1' ? 'Enabled' : 'Disabled'}} </td>
         </ng-container>
       
         <ng-container matColumnDef="action">
@@ -31,7 +31,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-      <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+      <mat-paginator class="font-paginator" [hidePageSize]= "true" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
       
         </div>
 
