@@ -413,7 +413,7 @@ return  this.httpService.post(url,requestEntity);
 }
 
 
-getSecurityMatrixById(roleToFind : string,screenName : string){
+getSecurityMatrixById(roleToFind : string,screenId : string){
 
   const {
     api : {
@@ -427,7 +427,7 @@ getSecurityMatrixById(roleToFind : string,screenName : string){
 
 const data = {
     roleToFind,
-    screenName,
+    screenId,
     temp :  'get'
 }
 
