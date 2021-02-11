@@ -11,9 +11,9 @@ import { SmsCreditAllocation } from '../protectedPages/user-information/user-inf
 })
 export class SmsCreditService {
   private STATUS_LIST = [
-    { key: '0', value: 'Approved' },
-    { key: '1', value: 'Rejected' },
-    { key: '2', value: 'Pending' },
+    { key: '0', value: 'Pending' },
+    { key: '1', value: 'Approved' },
+    { key: '2', value: 'Rejected' },
   ];
 
   private SMS_QUOTA_MATRIX = [

@@ -24,7 +24,7 @@
         <span *ngIf="mandatoryField" style="color:red">*</span>
         <span *ngIf="optionalField" style="color:blue">*</span>
     </label>
-    <input type="type" #customInput placeholder= {{placeHolder}}  name="input" class="form-control" [id]="id" [(ngModel)]="inputValue" appFiledFill appPreventAction (ngModelChange)="updateChanges()" [minLength]="minLength?.rule" [maxlength]="maxLength?.rule" [disabled]="isDisabledInp" autocomplete="off" aria-describedby="id">
+    <input autocomplete="false" type="type" #customInput placeholder= {{placeHolder}}  name="input" class="form-control" [id]="id" [(ngModel)]="inputValue" appFiledFill appPreventAction (ngModelChange)="updateChanges()" [minLength]="minLength?.rule" [maxlength]="maxLength?.rule" [disabled]="isDisabledInp" autocomplete="off" aria-describedby="id">
     <small id="id" class="form-text text-muted"></small>
     <div class="error-feedback" *ngIf="inputError">
         <div>

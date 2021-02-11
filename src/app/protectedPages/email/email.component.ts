@@ -191,17 +191,41 @@ today=new Date()
         return this.emailform.controls['screenList'].value;
    }
 
+   set fromScheduleDate(value){
+        this.emailform.controls['fromScheduleDate'].setValue(value);
+   }
+
+   get fromScheduleDate(){
+      return this.emailform.controls['fromScheduleDate'].value;
+   }
+
+   set toScheduleDate(value){
+      this.emailform.controls['toScheduleDate'].setValue(value);
+   }
+
+   get toScheduleDate(){
+      return this.emailform.controls['toScheduleDate'].value;
+   }
+
+   set scheduleTime(value){
+      this.emailform.controls['scheduleTime'].setValue(value);
+   }
+
+   get scheduleTime(){
+     return this.emailform.controls['scheduleTime'].value;
+   }
+
 
   ngOnInit() {
 
     this.initForm();
   
-this.filteredOptions = this.emailform.get('fromtime').valueChanges
+this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
       );
-      this.filteredOptions1 = this.emailform.get('totime').valueChanges
+      this.filteredOptions1 = this.emailform.get('toScheduleDate').valueChanges
       .pipe(
         startWith(''),
         map(val => this._filter1(val))
@@ -223,10 +247,9 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
       screenList: new FormControl(),
       screenNameEdit: new FormControl(''),
       renameTemplate:new FormControl(''),
-      fromtime:new FormControl(),
-      totime:new FormControl(),
-      fromDate: new FormControl(),
-      toDate: new FormControl()
+      scheduleTime:new FormControl(),
+      fromScheduleDate: new FormControl(),
+      toScheduleDate: new FormControl()
     })
   }
 
@@ -265,7 +288,7 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
              }
              this.emailform.reset();
              this.emailIdList = [];
-             return this.toasterService.showSuccess('Mail sent successfully', '');
+             return this.toasterService.showSuccess('Mail Sent Successfully', '');
           });
   }
 
@@ -364,12 +387,12 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
     console.log(event)
    if(type == 'fromDate') {
       this.emailform.patchValue({
-        fromDate: ''
+        fromScheduleDate: ''
       })
       this.toasterService.showError('Please click the from date icon to select date','');
     }else if(type == 'toDate') {
       this.emailform.patchValue({
-        toDate: ''
+        toScheduleDate: ''
       })
       this.toasterService.showError('Please click the to date icon to select date','');
     }
@@ -404,7 +427,7 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
         const error = ProcessVariables.error || {};
 
         if(error.code == '0'){
-            this.toasterService.showSuccess('Email Template  Successfully','');
+            this.toasterService.showSuccess('Email Template Saved Successfully','');
             this.emailFormReset();
             this.getAllEmailTemplates();
         }else{
@@ -478,6 +501,15 @@ this.filteredOptions = this.emailform.get('fromtime').valueChanges
                 return this.toasterService.showError('Failed to Fetch Data','');
             }
       })
+  }
+
+  emailScheduler(){
+      const FromMailAddress = this.fromMailAddress;
+      const ToMailAddress = this.toMailAddress;
+      const subject = this.Subject;
+      const mailContent = this.mailContent;
+
+      const templateId = this.id;
   }
 
  

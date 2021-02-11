@@ -387,6 +387,111 @@ return  this.httpService.post(url,requestEntity);
 
 }
 
+updateSecurityMatrix(data){
+    
+
+  const {
+    api : {
+      updateSecurityMatrix : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+
+}
+
+
+getSecurityMatrixById(roleToFind : string,screenId : string){
+
+  const {
+    api : {
+      fetchSecurityMatrixbyId : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const data = {
+    roleToFind,
+    screenId,
+    temp :  'get'
+}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+
+}
+
+
+getAllManageEmailList(){
+
+  const {
+    api : {
+      getManageEmailList : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const data = {}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+}
+
+emailScheduler(data : any){
+  
+  const {
+    api : {
+      emailSchedulerAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+}
+
+
 
 transform(data: any) {
   return new HttpParams({ fromObject: data });
