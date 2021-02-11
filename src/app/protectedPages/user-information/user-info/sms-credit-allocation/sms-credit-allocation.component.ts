@@ -163,7 +163,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       smsApprover: new FormControl(''),
       totalCredit: new FormControl(null),
       dateOfRequest: new FormControl(null),
-      status: new FormControl('2'),
+      status: new FormControl('0'),
       onApprovalOf: new FormControl(null),
       remark: new FormControl(''),
       usedCredit: new FormControl(null),
