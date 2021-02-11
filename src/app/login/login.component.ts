@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
             this.getUserDetails({username: userData.userName              
               })
           }else{
-            this.toasterService.showError("Invalid user",'Login')
+            this.toasterService.showError("Invalid User",'Login')
           }
           }
         )     

@@ -494,9 +494,9 @@ export class ProcessDetailsComponent implements OnInit{
         this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
         if(this.uploadedData['uploadStatus']){
           this.documentUploadId = this.uploadedData['documentUploadId'];
-          this.toasterService.showSuccess('File upload Success','')
+          this.toasterService.showSuccess('File Upload Success','')
         }else { 
-          this.toasterService.showError('File upload Failed','')
+          this.toasterService.showError('File Upload Failed','')
         }
     }
 
