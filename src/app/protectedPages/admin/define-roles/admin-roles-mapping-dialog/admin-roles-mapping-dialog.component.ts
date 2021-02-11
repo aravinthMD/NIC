@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit,EventEmitter } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AdminService } from '@services/admin.service';
+import { ToasterService } from '@services/toaster.service';
 
 @Component({
   selector: 'app-admin-roles-mapping-dialog',
@@ -13,33 +15,84 @@ export class AdminRolesMappingDialogComponent implements OnInit {
   write : boolean;
   delete : boolean;
   emailEnable : boolean
+  screenId : string;
   screenName : string;
+
+  currentDataId : string;
 
   emiiter = new EventEmitter<any>();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { 
-    this.checked = this.data.isMapping;
-    this.read = this.data.isRead;
-    this.write = this.data.isWrite;
-    this.emailEnable = this.data.isEnableEmail;
-    this.screenName = this.data.screenName;
-
-  }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+      private adminService  : AdminService,
+      private toasterService : ToasterService,
+      private dialogRef: MatDialogRef<AdminRolesMappingDialogComponent>) { 
+    // this.checked = this.data.isMapping;
+    // this.read = this.data.isRead;
+    // this.write = this.data.isWrite;
+    // this.emailEnable = this.data.isEnableEmail;
+    // this.screenName = this.data.screenName;
+      // this.getSecurityMatrixById(this.data)
+      console.log(this.data);
+      let roleToFind = this.data.roleToFind;
+      this.screenId = this.data.screenId
+      this.screenName = this.data.screenName
+      this.getSecurityMatrixById(roleToFind,this.screenId)
+  } 
 
   update(){
 
     const data = {
-        isMapping : this.checked,
-        isRead : this.read,
-        write :  this.write,
-        isEnableEmail  : this.emailEnable,
-        screenName : this.screenName
+
+      enableRead : this.read,
+      enableWrite : this.write,
+      enableEmail :  this.emailEnable,
+      currentDataId : this.currentDataId,
+      enableMapping : this.checked,
+      temp  : 'update'
     }
 
-    this.emiiter.emit(data);
+    this.adminService.updateSecurityMatrix(data).subscribe(
+      (response  :any) =>{
+        const ProcessVariables = response.ProcessVariables || {};
+        const error = ProcessVariables.error || {};
+        if(error.code === '0'){
+          this.toasterService.showSuccess('Data Updated Successfully','');
+          this.dialogRef.close('SUCCESS');
+        }else{
+          this.toasterService.showError(error.message,'');
+        }
+    },(error) =>{
+        this.toasterService.showError(error.message,'');
+    })
+
+
   }
 
   ngOnInit() {
+  }
+
+  getSecurityMatrixById(roleToFind : string,screenId : string){
+
+    this.adminService.getSecurityMatrixById(roleToFind,screenId).subscribe(
+      (response : any) =>{
+        console.log(response);
+        const ProcessVariables = response.ProcessVariables || {};
+        const error = ProcessVariables.error || {};
+        if(error.code === '0'){
+            this.emailEnable = ProcessVariables.enableEmail;
+            this.write = ProcessVariables.enableWrite;
+            this.read = ProcessVariables.enableRead;
+            this.checked  = ProcessVariables.enableMapping;
+            this.currentDataId = ProcessVariables.currentDataId;
+        }else  {
+            this.toasterService.showError('Failed to Fetch Data','');
+        }
+    },(error) => {
+          this.toasterService.showError('Failed to Fetch Data','');
+    })
+
+    
+
   }
 
 }

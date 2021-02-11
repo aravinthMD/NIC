@@ -114,12 +114,12 @@ export class AuditTrailDialogComponent implements OnInit,AfterViewInit {
       this.searchForm.patchValue({
         searchFrom: ''
       })
-      this.toasterService.showError('Please click the fromdate icon to select date','');
+      this.toasterService.showError('Please click the from date icon to select date','');
     }else if(type == 'searchTo') {
       this.searchForm.patchValue({
         searchTo: ''
       })
-      this.toasterService.showError('Please click the todate icon to select date','');
+      this.toasterService.showError('Please click the to date icon to select date','');
     }
   }
 

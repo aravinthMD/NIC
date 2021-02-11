@@ -410,7 +410,7 @@ dataValue: {
           this.PurchaseEntryForm.controls['piAmount'].setValue(amount || '')
         },(error) =>{
           console.log(`Failed to fetch data`);
-          this.toasterService.showError('Failed to fetch data','');
+          this.toasterService.showError('Failed to Fetch Data','');
         })
   }
 
@@ -427,9 +427,9 @@ dataValue: {
         this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
         if(this.uploadedData['uploadStatus']){
           this.documentUploadId = this.uploadedData['documentUploadId'];
-          this.toasterService.showSuccess('File upload Success','')
+          this.toasterService.showSuccess('File Upload Success','')
         }else { 
-          this.toasterService.showError('File upload Failed','')
+          this.toasterService.showError('File Upload Failed','')
         }
     }
 

@@ -380,6 +380,18 @@ export class ApiService {
         processId :  '8ff2ce524f2011ebb873727d5ac274b2',
         projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
         workflowId :  '23473e9a4e9011ebb871727d5ac274b2'
+    },
+
+    getManageEmailList :  {
+        processId :  '9e94d3e869dc11eb8f28727d5ac274b2',
+        projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+        workflowId :  '23473e9a4e9011ebb871727d5ac274b2'
+    },
+
+    emailSchedulerAPI :  {
+        processId :  '3a5c6c026ab711eb8f74727d5ac274b2',
+        projectId :  '2efbdc721cc311ebb6c0727d5ac274b2',
+        workflowId :  'd04ac0584e5911ebb85b727d5ac274b2'
     }
 
   };

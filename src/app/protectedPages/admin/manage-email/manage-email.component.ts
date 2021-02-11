@@ -24,12 +24,16 @@ export class ManageEmailComponent implements OnInit {
 
   showModal : boolean = false;
 
-  constructor(private clientDetailService : ClientDetailsService,private adminService : AdminService,private toasterService : ToasterService) {
-      this.dataSource = this.clientDetailService.getManageEmailList();
+  constructor(
+    private clientDetailService : ClientDetailsService,
+    private adminService : AdminService,
+    private toasterService : ToasterService
+    ) {
    }
 
   ngOnInit() {
     this.userId = this.clientDetailService.getClientId();
+    this.getAllManageEmailList();
   }
 
   OnEdit(data : any){
@@ -47,7 +51,7 @@ export class ManageEmailComponent implements OnInit {
 
   submitDialog(){
     const screenStatus = this.emailValue;
-    this.adminService.adminEmailManager(+this.selectedID,this.userId,screenStatus).
+    this.adminService.adminEmailManager(+this.selectedID,'73',screenStatus).
       subscribe((response: any) => {
       const {
         ProcessVariables  : { error : {
@@ -56,13 +60,29 @@ export class ManageEmailComponent implements OnInit {
         }}
       } = response;
       if(code == '0'){
-        this.toasterService.showSuccess('Email Sending Options updated Successfully','');
-        this.showModal = false
+        this.toasterService.showSuccess('Email Sending Options Updated Successfully','');
+        this.showModal = false;
+        this.getAllManageEmailList();
       }
     },(error) =>{
       this.toasterService.showError('Failed to Update','');
       console.log('Error ',error)
     }) 
+  }
+
+  getAllManageEmailList(){
+      this.adminService.getAllManageEmailList().subscribe(
+        (response : any) => {
+          const ProcessVariables = response.ProcessVariables || {};
+          const error = ProcessVariables.error || {};
+          if(error.code === '0'){
+            this.dataSource = ProcessVariables.manageEmailList || [];
+          }else{
+            this.toasterService.showError(error.message,'');
+          }
+      },(error) => {
+          this.toasterService.showError(error.message,'');
+      }) 
   }
 
 }

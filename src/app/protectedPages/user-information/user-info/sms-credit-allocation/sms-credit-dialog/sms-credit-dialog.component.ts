@@ -201,7 +201,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
           const processVariables = res.ProcessVariables;
           this.isDataUpdated = processVariables;
           this.edit.emit(processVariables);
-          this.toasterService.showSuccess('Data updated successfully', '');
+          this.toasterService.showSuccess('Data Updated Successfully', '');
         });
 
     // this.toasterService.showSuccess('Data Saved Successfully','')

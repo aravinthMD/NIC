@@ -666,12 +666,12 @@ onReportFilterChange(event) {
       this.form.patchValue({
         fromDate: ''
       })
-      this.toasterService.showError('Please click the fromdate icon to select date','');
+      this.toasterService.showError('Please click the from date icon to select date','');
     }else if(type == 'toDate') {
       this.form.patchValue({
         toDate: ''
       })
-      this.toasterService.showError('Please click the todate icon to select date','');
+      this.toasterService.showError('Please click the to date icon to select date','');
     }
     
   }
