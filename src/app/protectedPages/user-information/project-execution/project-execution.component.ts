@@ -13,6 +13,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { SearchService } from '../../../services/search.service';
 import {ApiService} from '../../../services/api.service';
 import { ClientDetailsService } from '@services/client-details.service';
+import { CsvDataService } from '@services/csv-data.service';
 
 
 @Component({
@@ -260,6 +261,26 @@ dataValue: {
         })
     }
 
+    exportCsv() {
+      const data = {
+        selectedClientId: this.clientId
+      };
+      this.invoiceService.exportCsv(data).
+      subscribe((res: any) => {
+        const error = res.Error;
+        const errorMessage = res.ErrorMessage;
+        if (error !== '0') {
+          return this.toasterService.showError(errorMessage, '');
+        }
+        const processVariables = res.ProcessVariables;
+        const list = processVariables.peList;
+        if (!list) {
+          return  this.toasterService.showInfo('No data available for download', '');
+        }
+        CsvDataService.exportToCsv('Project_Execution.csv', list);
+      });
+    }
+
     getProjectExecutionDetails(currentPage:any,selectedClientId : string){ 
       this.invoiceService.getProjectExecutionDetails(currentPage,selectedClientId).
       subscribe((response: any) => {
@@ -410,7 +431,7 @@ dataValue: {
           this.PurchaseEntryForm.controls['piAmount'].setValue(amount || '')
         },(error) =>{
           console.log(`Failed to fetch data`);
-          this.toasterService.showError('Failed to fetch data','');
+          this.toasterService.showError('Failed to Fetch Data','');
         })
   }
 
@@ -427,9 +448,9 @@ dataValue: {
         this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
         if(this.uploadedData['uploadStatus']){
           this.documentUploadId = this.uploadedData['documentUploadId'];
-          this.toasterService.showSuccess('File upload Success','')
+          this.toasterService.showSuccess('File Upload Success','')
         }else { 
-          this.toasterService.showError('File upload Failed','')
+          this.toasterService.showError('File Upload Failed','')
         }
     }
 

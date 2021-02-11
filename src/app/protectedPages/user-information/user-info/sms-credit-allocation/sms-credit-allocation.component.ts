@@ -19,6 +19,8 @@ import { SmsCreditService } from '@services/sms-credit.service';
 import { SmsCreditAllocation } from './sms-credit.model';
 import { environment } from 'src/environments/environment.prod';
 import { CsvDataService } from '@services/csv-data.service';
+import { CustomDateAdapter } from '@services/custom-date-adapter.service';
+// import { CsvDataService } from '@services/csv-data.service';
 
 @Component({
   selector: 'app-sms-credit-allocation',
@@ -102,6 +104,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     private apiService: ApiService,
     private clientDetailsService: ClientDetailsService,
     private smsCreditService: SmsCreditService,
+    private customDateAdapter: CustomDateAdapter,
   //  private csvDataService: CsvDataService
   ) {}
 
@@ -216,7 +219,42 @@ export class SmsCreditAllocationComponent implements OnInit {
       });
   }
 
+  exportCsv() {
+    this.smsCreditService.getCreditSmsList(
+      {
+        selectedClientId: this.userId,
+        exportCsv: 'true'
+      }
+    ).subscribe((res: any) => {
+        console.log('fetch data', res);
+        const error = res.Error;
+        const errorMessage = res.ErrorMessage;
+        if (error !== '0') {
+          return this.toasterService.showWarning(errorMessage, '');
+        }
+        const processVariables = res.ProcessVariables;
+        const dataList = processVariables.list;
+        if (!processVariables.dataList) {
+          return this.toasterService.showInfo('No data available for download', '');
+        }
+        CsvDataService.exportToCsv('SMS_Credit_Allocation.csv', dataList);
+        // this.smsCreditList = (processVariables.SmsCreditList || []).map((val) => {
+        //   const status = this.getStatusDescription(val.status);
+        //   return {
+        //       ...val,
+        //       statusValue: status
+        //   };
+        // });
+
+        // this.dataSource = new MatTableDataSource<any>(this.smsCreditList);
+        // this.dataSource.paginator = this.paginator;
+    });
+  }
+
   getStatusDescription(key) {
+    if (!key) {
+      return;
+    }
     const status = this.statusList.find((val) => {
       return val.key === key;
     });
@@ -375,7 +413,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       smsUrl,
       clientId: this.userId,
       smsApprover: formValue.smsApprover,
-      dateOfRequest: formValue.dateOfRequest,
+      dateOfRequest: this.customDateAdapter.transform(formValue.dateOfRequest, 'dd/MM/yyyy'),
       balanceCredit: formValue.totalCredit, // initially full credit is available
       status: formValue.status,
       onApprovalOf: formValue.onApprovalOf,
@@ -397,7 +435,7 @@ export class SmsCreditAllocationComponent implements OnInit {
             if (error !== '0') {
               return this.toasterService.showError(errorMessage, '');
             }
-            this.toasterService.showSuccess('Data saved successfully', '');
+            this.toasterService.showSuccess('Data Saved Successfully', '');
             this.isDirty = false
             const processVariables = res.ProcessVariables;
             const status = this.getStatusDescription(processVariables.status);
@@ -495,7 +533,7 @@ export class SmsCreditAllocationComponent implements OnInit {
         searchFrom: '',
       });
       this.toasterService.showError(
-        'Please click the fromdate icon to select date',
+        'Please click the from date icon to select date',
         ''
       );
     } else if (type === 'searchTo') {
@@ -503,7 +541,7 @@ export class SmsCreditAllocationComponent implements OnInit {
         searchTo: '',
       });
       this.toasterService.showError(
-        'Please click the todate icon to select date',
+        'Please click the to date icon to select date',
         ''
       );
     }

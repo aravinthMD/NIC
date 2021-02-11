@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
+import {Sort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UtilService } from '../../services/util.service';
 import { SearchService } from '../../services/search.service';
@@ -37,6 +38,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   userList: any[] = [];
 
   dataSource = new MatTableDataSource<any>(this.userList);
+  sortedData = [];
+  isSearchApiCalled: boolean;
 
   constructor(
     private route: Router,
@@ -79,6 +82,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 insertionFlag: value.insertionFlag
               };
             });
+            this.userList = dashboardList;
             this.dataSource = new MatTableDataSource<any>(dashboardList);
             this.dataSource.paginator = this.paginator;
         });
@@ -128,6 +132,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.route.navigate(['/users/userInfo']);
   }
 
+  onSearchClear() {
+    if (!this.isSearchApiCalled) {
+      return;
+    }
+    this.isSearchApiCalled = false;
+    this.getDashboardDetails();
+  }
+
+
+
   navigateToUser(element) {
     this.utilService.setProjectNumber(element.projectNo);
 
@@ -139,7 +153,35 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.utilService.setCurrentUrl('users/customerDetails');
     this.route.navigate(['/users/customerDetails/' + element.clientId]);
   }
+  sortData(sort: Sort) {
+    console.log('sort data', sort.direction);
+    if (!sort.direction) {
+      this.dataSource = new MatTableDataSource<any>(this.userList);
+      this.dataSource.paginator = this.paginator;
+    }
+    const data = this.userList.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'userId': return compare(String(a.userId || '').toLowerCase(), String(b.userId || '').toLowerCase(), isAsc);
+        case 'projectNo': return compare(a.projectNo , b.projectNo, isAsc);
+        case 'department': return compare(a.department, b.department, isAsc);
+        case 'state': return compare(a.state, b.state, isAsc);
+        case 'status': return compare(a.status, b.status, isAsc);
+        default: return 0;
+      }
+    });
+    // this.userList = this.sortedData;
+    this.dataSource = new MatTableDataSource<any>(this.sortedData);
+    this.dataSource.paginator = this.paginator;
+  }
   onSearch() {
+    
     const keyword = this.searchKey || '';
     console.log('Search Value', keyword);
     const data = this.apiService.api.getAllCustomerDetails;
@@ -153,11 +195,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.searchService
       .searchProjectExecution(data, params)
       .subscribe((resp) => {
+        
         console.log('Response', resp);
 
         const respError = resp['ProcessVariables']['error'];
 
         if (respError.code == "0") {
+          this.isSearchApiCalled = true;
           const result: any[] = resp["ProcessVariables"]["customerList"];
           //this.dataSource = new MatTableDataSource<any>(result);
           // console.log('result', result);
@@ -184,7 +228,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               insertionFlag: value.insertionFlag
             };
           });
-
+          this.userList = dashboardList;
           this.dataSource = new MatTableDataSource<any>(dashboardList);
           this.dataSource.paginator = this.paginator;
         } else {
@@ -195,4 +239,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }
       });
   }
+}
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

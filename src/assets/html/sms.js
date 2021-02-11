@@ -101,6 +101,10 @@ async function getData() {
         approvedOnBehalf.value = response.onApprovalOf;
         requestedCredits.value = response.requestedCredit;
         remarks.value = response.remark;
+        department.value = response.department;
+        city.value = response.city;
+        state.value = response.state;
+
         hideLoader();
     } catch(e) {
         console.log('response error', e)
@@ -137,17 +141,21 @@ async function getSmsCreditAllocationData() {
     
 }
 
-async function sendUserResponse(isApprove) { // '1': approved    '0': rejected
+async function sendUserResponse(status) { // '1': approved    '2': rejected
     const projectId = '2efbdc721cc311ebb6c0727d5ac274b2';
-    const processId = 'e48c17f0661511eb8e50727d5ac274b2';
+    const processId = '0cf105546af111eb8f7d727d5ac274b2';
     const workflowId = 'db28bebe4b5011ebb822727d5ac274b2';
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = Number(urlParams.get('id') || 0);
+    const statusComment = document.getElementById('comments').value;
+
     const data = {
                     id,
-                    isApprove
+                    status,
+                    statusComment,
                  };
+    console.log('data', data);
     showLoader();
     try {
         const response  = await buildApi(projectId, processId, workflowId, data);

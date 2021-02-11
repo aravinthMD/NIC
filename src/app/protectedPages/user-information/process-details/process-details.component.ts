@@ -14,6 +14,7 @@ import { SearchService } from '../../../services/search.service';
 import{ApiService} from '../../../services/api.service'
 import { ClientDetailsService } from '@services/client-details.service';
 import { MatInput } from '@angular/material';
+import { CsvDataService } from '@services/csv-data.service';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -123,6 +124,33 @@ export class ProcessDetailsComponent implements OnInit{
       searchTo: new FormControl(null)
     })
 
+  }
+
+  getCsvFormatForProformaInvoice() {
+    const formValue = this.searchForm.value;
+    const data = {
+      selectedClientId: this.userId,
+      fromDate: formValue.searchFrom || '',
+      toDate: formValue.searchTo || '',
+      searchKeyword: formValue.searchData || '',
+      exportCsv: 'true',
+    };
+    this.invoiceService.getCsvFormatForProformaInvoice(data)
+        .subscribe((res: any) => {
+            const error = res.Error;
+            const message = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(message, '');
+            }
+            const processVariables = res.ProcessVariables;
+            const piList = processVariables.piList;
+            if (!piList) {
+              return this.toasterService.showInfo('No data available for download', '');
+            }
+            // const errorObj = processVariables.error;
+            // if () {}
+            CsvDataService.exportToCsv('Proforma_invoice.csv', piList);
+        });
   }
 
   ngOnInit() {
@@ -302,9 +330,11 @@ export class ProcessDetailsComponent implements OnInit{
 
     const data = this.apiService.api.fetchAllProformaInvoice;
     const params = {
-        searchKeyword: this.searchForm.get('searchData').value,
-        fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
-        toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
+        id: this.userId,
+        currentPage: 1,
+        searchKeyword: this.searchForm.get('searchData').value || '',
+        fromDate: this.searchForm.get('searchFrom').value || '',//"2020-12-27T18:30:00.000Z",
+        toDate: this.searchForm.get('searchTo').value || '' //"2021-01-05T18:30:00.000Z"
     }
       this.searchService.searchProjectExecution(data,params).subscribe(
         (response) => {
@@ -328,7 +358,10 @@ export class ProcessDetailsComponent implements OnInit{
       searchData: null,
       searchFrom:null,
       searchTo:null
-    })
+    });
+
+    this.fetchAllProformaInvoice(1, this.userId);
+
   }
 
 
@@ -461,9 +494,9 @@ export class ProcessDetailsComponent implements OnInit{
         this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
         if(this.uploadedData['uploadStatus']){
           this.documentUploadId = this.uploadedData['documentUploadId'];
-          this.toasterService.showSuccess('File upload Success','')
+          this.toasterService.showSuccess('File Upload Success','')
         }else { 
-          this.toasterService.showError('File upload Failed','')
+          this.toasterService.showError('File Upload Failed','')
         }
     }
 

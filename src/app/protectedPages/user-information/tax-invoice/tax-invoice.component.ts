@@ -18,6 +18,7 @@ import { TaxInvoiceService } from '@services/tax-invoice.service';
 import { ClientDetailsService } from '@services/client-details.service';
 
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
+import { CsvDataService } from '@services/csv-data.service';
 
 @Component({
   selector: 'app-tax-invoice',
@@ -120,7 +121,7 @@ export class TaxInvoiceComponent implements OnInit {
     });
     this.taxInvoiceForm = new FormGroup({
       userName: new FormControl(null),
-      projectNumber: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
+      projectNumber: new FormControl(null),
       poNumber: new FormControl(null,Validators.required),
       poDate: new FormControl(null),
       fromDate: new FormControl(null),
@@ -270,6 +271,31 @@ export class TaxInvoiceComponent implements OnInit {
 
     // this.paymentStatus = listData;
 
+  }
+
+  exportCsv() {
+    this.taxInvoiceService.getTaxInvoiceList(
+      {
+        selectedClientId: this.selectedClientId,
+        exportCsv: 'true'
+      }
+    ).subscribe((res: any) => {
+      console.log('get list', res);
+      const error = res.Error;
+      const errorMsg = res.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMsg, '');
+      }
+      const processVariables = res.ProcessVariables;
+      const dataList = processVariables.list;
+      if (!dataList) {
+        return this.toasterService.showInfo('No data available for download', '');
+      }
+      CsvDataService.exportToCsv('Tax_Invoice.csv', dataList);
+      // this.taxInvoiceList = processVariables.TIList || [];
+      // this.dataSource = new MatTableDataSource<any>(this.taxInvoiceList);
+      // this.dataSource.paginator = this.paginator;
+    });
   }
 
   // getAllTaxInvoiceDetails(currentPage?: any){
@@ -584,7 +610,7 @@ getAutoPopulatePO(piNumber : string,clientId : number){
     (response) =>{
       this.purchaseOrderNumberList = response['ProcessVariables']['poNumberList']  ? response['ProcessVariables']['poNumberList'] :  [];
   },(error) =>{
-      this.toasterService.showError('Failed to fetch the data','');
+      this.toasterService.showError('Failed to Fetch the Data','');
   })
 }
 
@@ -604,7 +630,7 @@ getOnChangePO(poNumber : string){
       this.taxInvoiceForm.controls['projectName'].setValue(projectName);
       this.taxInvoiceForm.controls['projectNumber'].setValue(projectNumber);
   },(error) =>{
-      this.toasterService.showError('Failed to fetch data','');
+      this.toasterService.showError('Failed to Fetch Data','');
   })
 }
 
@@ -629,9 +655,9 @@ changeDateFormat(date) {
       this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
       if(this.uploadedData['uploadStatus']){
         this.documentUploadId = this.uploadedData['documentUploadId'];
-        this.toasterService.showSuccess('File upload Success','')
+        this.toasterService.showSuccess('File Upload Success','')
       }else { 
-        this.toasterService.showError('File upload Failed','')
+        this.toasterService.showError('File Upload Failed','')
       }
   }
 
