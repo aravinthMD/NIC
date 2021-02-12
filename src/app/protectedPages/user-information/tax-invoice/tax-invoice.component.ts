@@ -287,7 +287,7 @@ export class TaxInvoiceComponent implements OnInit {
         return this.toasterService.showError(errorMsg, '');
       }
       const processVariables = res.ProcessVariables;
-      const dataList = processVariables.TiList;
+      const dataList = processVariables.list;
       if (!dataList) {
         return this.toasterService.showInfo('No data available for download', '');
       }
@@ -322,9 +322,9 @@ export class TaxInvoiceComponent implements OnInit {
   // }
 
   onSubmit(value?: any) {
-    this.isDirty = true;
     let formValue;
     if (!value) {
+       this.isDirty = true;
        if (!this.taxInvoiceForm.valid) {
          return this.toasterService.showError('Please fill all the fields', '');
        }
@@ -539,6 +539,10 @@ export class TaxInvoiceComponent implements OnInit {
   onEdit(selectedTaxInvoice: TaxInvoice) {
     const dialogRef = this.dialog.open(TaxInvoiceDialogComponent, {
       data : selectedTaxInvoice
+    });
+
+    dialogRef.componentInstance.onFileUpload.subscribe((res: any) => {
+        this.uploadFile(res);
     });
 
     dialogRef.componentInstance.updateEmitter.subscribe((value) => {

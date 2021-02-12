@@ -54,6 +54,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
   showEdit: boolean;
 
   updateEmitter = new EventEmitter();
+  onFileUpload = new EventEmitter();
 
   docAvailFlag : boolean;
   host  = environment.host;
@@ -313,6 +314,10 @@ export class TaxInvoiceDialogComponent implements OnInit {
     // this.getTaxInvoiceDetailById(this.data)
   }
 
+  uploadFile(event) {
+    this.onFileUpload.emit(event);
+  }
+
   initForm() {
     this.taxInvoiceForm = new FormGroup({
       userName: new FormControl(null),
@@ -496,6 +501,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
         key :  this.labels.mrn,
         value : this.data.mrnNumber
       },
+      {
+        isButton: true,
+        key: 'View PDF',
+        value: this.data.upload_document
+      }
     ];
 
   }

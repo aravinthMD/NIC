@@ -186,6 +186,16 @@ export class ProcessDetailsComponent implements OnInit{
       data: Data.selectedPIId
     });
 
+    dialogRef.componentInstance.onFileUpload
+             .subscribe((res: any) => {
+                console.log('file upload event', res);
+                this.uploadFile(res);
+             });
+    dialogRef.componentInstance.onUpdateProformaInvoice
+             .subscribe((data) => {
+                this.createProformaInvoice(data);
+             });
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.fetchAllProformaInvoice(this.currentPage,this.userId);
@@ -216,8 +226,8 @@ export class ProcessDetailsComponent implements OnInit{
       })
   }
 
-  onSubmit() {
-
+  onSubmit(data?: any) {
+  
     if(this.form.invalid) {
       this.isDirty = true;
       return;
@@ -237,9 +247,12 @@ export class ProcessDetailsComponent implements OnInit{
       }
   }
 
-  createProformaInvoice(){
-
-      if(this.form.invalid){
+  createProformaInvoice(data?: any) {
+     let value: any = {};
+     if (data) {
+       value = data;
+     } else {
+      if (this.form.invalid) {
         this.isDirty = true;
         return;
       }
@@ -264,13 +277,13 @@ export class ProcessDetailsComponent implements OnInit{
       const formattedEndDate = this.datePipe.transform(endDate,'dd/MM/yyyy')
 
       const userId = this.userId;
-      const Data = {
+      value = {
         AccountName,
         piNumber,
         referenceNumber,
         traffic,
         owner,
-        date : formattedDate,     
+        date : formattedDate,
         nicsiManager,
         piAmount,
         startDate : formattedStartDate,
@@ -278,11 +291,16 @@ export class ProcessDetailsComponent implements OnInit{
         piStatus,
         paymentStatus,
         remark,
-        upload_document : this.documentUploadId,
         userId : Number(userId)
-      }
+      };
+     }
 
-      this.invoiceService.createProformaInvoice(Data).subscribe(
+     value.upload_document = this.documentUploadId;
+
+      
+      
+
+      this.invoiceService.createProformaInvoice(value).subscribe(
         (response: any) => {
           const { 
             ProcessVariables  : { error : {

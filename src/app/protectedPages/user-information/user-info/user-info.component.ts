@@ -210,6 +210,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
   ngOnInit() {
 
+    console.log('data', this.activatedRoute.snapshot.data);
+
     this.patchLovValues();
     this.ipValidation = this.ipAddressValiationCheck();
     this.activatedRoute.params.subscribe((value)=> {
@@ -430,8 +432,9 @@ export class UserInfoComponent implements OnInit, OnChanges {
         value :  this.form.value.remark
       },
       {
-        key  : '',
-        value :  ''
+        isButton: true,
+        key  : 'View Pdf',
+        value :  data.upload_document
       },
       {
         key  : '',
@@ -645,10 +648,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.utilService.setUserDetails(processVariables);
       this.setFormValues(processVariables);
       this.setValueForViewPage(processVariables);
-      if(response['ProcessVariables']['upload_document']){
-          this.previewDocumentId = response['ProcessVariables']['upload_document'];
-          this.docAvailFlag = true;
-      }
+      const docsId = processVariables.upload_document || '';
+      this.docAvailFlag = !!docsId;
+      this.previewDocumentId = docsId;
+      this.documentUploadId = docsId;
+      // if(response['ProcessVariables']['upload_document']){
+      //     this.previewDocumentId = response['ProcessVariables']['upload_document'];
+      //     this.docAvailFlag = true;
+      // }
 
     },(error) => {
 

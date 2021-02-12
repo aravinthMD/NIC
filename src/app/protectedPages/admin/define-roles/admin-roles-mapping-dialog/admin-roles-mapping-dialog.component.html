@@ -1,6 +1,6 @@
-<mat-card><h1 mat-dialog-title>Mapping the Roles</h1></mat-card>
+<mat-card class="p-1"><h1 mat-dialog-title>Mapping the Roles for {{ screenName }}</h1></mat-card>
 <div mat-dialog-content>
-   Are you sure you want to map the {{ screenName }} screen?<br>
+   Are you sure you want to map the screen?<br>
    <mat-checkbox class="example-margin" [disabled] = " (screenId === '1' || screenId === '5' || screenId === '6') ? false : true" [(ngModel)]="checked" color = "primary">Yes</mat-checkbox>
    <br>
    Enable?<br>

@@ -403,6 +403,11 @@ smsApprovedList: any[] = [
       panelClass: 'full-width-dialog'
     });
 
+    dialogRef.componentInstance.onFileUpload
+             .subscribe((res: any) => {
+                 this.uploadFile(res);
+             });
+
     dialogRef.componentInstance.updateEmitter
              .subscribe((res: any) => {
                   console.log('updateEmitter', res);
@@ -649,7 +654,7 @@ next() {
           return String(value.currentPOId || value.id) === String(data.id);
     });
     this.userList[index] = data;
-    this.dataSource = this.userList;
+    this.dataSource = [...this.userList];
   }
 
   updateGridData(data) {
@@ -657,7 +662,7 @@ next() {
     console.log('processVariables', data);
     this.purchaseOrderId = data.id;
     this.userList.unshift(data);
-    this.dataSource = this.userList;
+    this.dataSource = [...this.userList];
     this.resultsLength += 1;
   }
 

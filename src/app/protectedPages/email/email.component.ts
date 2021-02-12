@@ -509,6 +509,42 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       const subject = this.Subject;
       const mailContent = this.mailContent;
 
+      const templateId = this.id;
+      const ScheduledFromDate = this.fromScheduleDate;
+      const ScheduledToDate = this.toScheduleDate;
+      const ScheduledTime = this.scheduleTime
+
+
+      const Data = {
+        FromMailAddress,
+        ToMailAddress,
+        subject,
+        mailContent,
+        templateId,
+        ScheduledFromDate,
+        ScheduledToDate,
+        ScheduledTime
+      }
+
+      this.adminService.emailScheduler(Data).subscribe(
+        (response : any) => {
+
+          const ProcessVariables = response.ProcessVariables || {};
+          const error = ProcessVariables.error || {};
+
+          if(error.code === '0'){
+              this.toasterService.showSuccess("Email Scheduled Successfully",'');
+
+          }else{
+
+            this.toasterService.showError(error.message,'')
+
+          }
+      },(error) => {
+          this.toasterService.showError(error.message,'');
+      })
+
+
 
   }
 

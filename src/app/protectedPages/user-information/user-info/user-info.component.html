@@ -610,21 +610,27 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4"  *ngIf="!existingUserFlag">
+                                    
+
+                                    <div class="col-4"  *ngIf="this.clientId">
                                         <div class="form-group">
-                                            <label for="poBillable">{{labels.uploadDoc}}</label>
+                                            <label for="poBillable">{{docAvailFlag ? labels?.changeDoc :labels?.uploadDoc}}</label>
                                             <input type="file" class="form-control upload-choose-pad" id="poBillable"
                                                 aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
                                             <small id="poBillableHelp" class="form-text text-muted"></small>
                                         </div>
                                     </div>
 
-                                    <div class="col-4" *ngIf="existingUserFlag && docAvailFlag" style="padding-bottom:30px;">
-                                        <label for="document">Document</label><br>
-                                        <div class="pb-2">
-                                            <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF()">View PDF</button>
+                                    <ng-container *ngIf="this.clientId"> 
+                                        <div class="col-4" *ngIf="docAvailFlag" style="padding-bottom:30px;">
+                                            <label for="document">Document</label><br>
+                                            <div class="pb-2">
+                                                <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF()">View PDF</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </ng-container>
+
+                                   
 
                                 </div>
 

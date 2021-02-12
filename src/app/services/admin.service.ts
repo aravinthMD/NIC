@@ -292,6 +292,7 @@ const data = {
     id,
     userId,
     screenStatus,
+    temp : 'get'
 }
 
 const requestEntity  : any  = {
@@ -301,6 +302,39 @@ const requestEntity  : any  = {
 }
 
 
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+}
+
+
+updateManageEmail(id : number,userId : string,screenStatus ?: string ){
+
+  
+  const {
+    api : {
+      adminEmailManageAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+
+const data = {
+    id,
+    userId,
+    screenStatus,
+    temp : 'update'
+}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
 
 let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 return  this.httpService.post(url,requestEntity);
@@ -413,7 +447,7 @@ return  this.httpService.post(url,requestEntity);
 }
 
 
-getSecurityMatrixById(roleToFind : string,screenName : string){
+getSecurityMatrixById(roleToFind : string,screenId : string){
 
   const {
     api : {
@@ -427,7 +461,7 @@ getSecurityMatrixById(roleToFind : string,screenName : string){
 
 const data = {
     roleToFind,
-    screenName,
+    screenId,
     temp :  'get'
 }
 

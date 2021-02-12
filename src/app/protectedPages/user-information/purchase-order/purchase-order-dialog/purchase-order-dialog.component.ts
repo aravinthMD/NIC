@@ -80,6 +80,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   poId: string;
   updateEmitter = new EventEmitter();
+  onFileUpload = new EventEmitter();
 
   constructor(
     private labelService:  LabelsService,
@@ -147,6 +148,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
             })
       })
             
+  }
+
+  uploadFile(event) {
+    this.onFileUpload.emit(event);
   }
 
   async getStatusLov() {
@@ -291,8 +296,9 @@ const departmentListData = this.departmentListData.filter((val)=> {
         value:this.PurchaseOrderForm.value.remark
       },
       {
-        key: '',
-        value:''
+        isButton: true,
+        key: 'View PDF',
+        value: this.data.upload_document
       },{
         key :  "",
         value :  ""

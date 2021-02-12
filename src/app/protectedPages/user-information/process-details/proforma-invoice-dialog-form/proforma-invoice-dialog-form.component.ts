@@ -1,4 +1,4 @@
-import { Component, OnInit,Optional, Inject } from '@angular/core';
+import { Component, OnInit,Optional, Inject, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LabelsService } from '../../../../services/labels.service';
@@ -99,6 +99,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   showEdit: boolean;
 
   viewInfoData: any;
+  onFileUpload = new EventEmitter();
+  onUpdateProformaInvoice = new EventEmitter();
 
   
   constructor( 
@@ -187,6 +189,9 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   }
 
+  uploadFile(event) {
+    this.onFileUpload.emit(event);
+  }
 
   OnEdit() {
 
@@ -275,8 +280,13 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       {
         key: this.labels.remark,
         value: this.form.controls['remark'].value
+      },
+      {
+        isButton: true,
+        key: 'View PDF',
+        value: data.upload_document
       }
-    ]
+    ];
 
   }
 
@@ -304,7 +314,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
     const userId = this.clientDetailService.getClientId();
 
-    const Data =  {
+    const data =  {
       AccountName,
       piNumber,
       referenceNumber,
@@ -322,32 +332,33 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       id : Number(this.currentPIId),
       userId : Number(userId)
     }
+    this.onUpdateProformaInvoice.emit(data);
 
 
-    this.invoiceServoice.updateProformaInvoice(Data).subscribe(
-      (response: any) => {
-      const { 
-        ProcessVariables  : { error : {
-          code,
-          message
-        }}
-      } = response;
+    // this.invoiceServoice.updateProformaInvoice(Data).subscribe(
+    //   (response: any) => {
+    //   const { 
+    //     ProcessVariables  : { error : {
+    //       code,
+    //       message
+    //     }}
+    //   } = response;
 
-      if(code == "0"){
-        this.toasterService.showSuccess('PI Details Updated Successfully','');
-        this.form.reset();
-        this.isDirty = false;
-        this.showDataSaveModal = true;
-        this.dataValue= {
-          title: 'Proforma Invoice Saved Successfully',
-          message: 'Are you sure you want to proceed project execution page?'
-        }
-      }else{
-        this.toasterService.showError(message,'');
-      }
-    },(error) => {
-      this.toasterService.showError(error,'');
-    })
+    //   if(code == "0"){
+    //     this.toasterService.showSuccess('PI Details Updated Successfully','');
+    //     this.form.reset();
+    //     this.isDirty = false;
+    //     this.showDataSaveModal = true;
+    //     this.dataValue= {
+    //       title: 'Proforma Invoice Saved Successfully',
+    //       message: 'Are you sure you want to proceed project execution page?'
+    //     }
+    //   }else{
+    //     this.toasterService.showError(message,'');
+    //   }
+    // },(error) => {
+    //   this.toasterService.showError(error,'');
+    // })
 
   }
 

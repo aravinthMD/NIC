@@ -249,6 +249,11 @@ export class ProjectExcecutionDialogComponent implements OnInit {
         {
           key: this.labels.remark,
           value:this.ProjectExcecutionForm.controls['remark'].value
+        },
+        {
+          isButton: true,
+          key: 'View PDF',
+          value: data.upload_document
         }
   
       ]
