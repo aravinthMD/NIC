@@ -10,6 +10,7 @@ import { Router,ActivatedRoute } from '@angular/router'
 import { InvoiceService } from '@services/invoice.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { environment } from 'src/environments/environment';
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-proforma-invoice-dialog-form',
@@ -101,7 +102,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
   viewInfoData: any;
   onFileUpload = new EventEmitter();
   onUpdateProformaInvoice = new EventEmitter();
-
+  isWrite = true;
   
   constructor( 
     public dialogRef: MatDialogRef<ProformaInvoiceDialogFormComponent>,
@@ -114,7 +115,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private invoiceServoice : InvoiceService,
-    private clientDetailService : ClientDetailsService
+    private clientDetailService : ClientDetailsService,
+    private utilityService: UtilityService
     ) { 
 
     console.log(data)
@@ -140,6 +142,8 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
 
   ngOnInit() {
+    const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
+    this.isWrite = smsPage.isWrite;
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;

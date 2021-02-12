@@ -285,8 +285,9 @@
         <div class="row pt-3 pb-3">
 
             <div class="col-8">
-
+               <ng-container *ngIf="isWrite">
                 <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save & Submit</button>
+            </ng-container>
                 <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="hideEditButton" (click)="onSubmit()">Save & Next</button> -->
                 <!-- <button class="btn btn-primary float-left back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit {{'Submit'}}</button> -->
 
@@ -325,7 +326,9 @@
         <div class="row pt-3 pb-3" >
             <div class="col-8">
                 <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
+                <ng-container *ngIf="isWrite">
                 <button class="btn btn-primary btn-lg float-left back-btn"  style="padding-left: 36px; padding-right:36px;" matRipple (click)="editDataBill()">Edit</button>
+            </ng-container>
             </div>
 
            <div class="col-4" style="float: right;">

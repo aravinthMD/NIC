@@ -19,6 +19,7 @@ import { ClientDetailsService } from '@services/client-details.service';
 
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 import { CsvDataService } from '@services/csv-data.service';
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-tax-invoice',
@@ -97,6 +98,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   selectedClientId;
   taxInvoiceList: TaxInvoice[] = [];
+  isWrite = true;
 
   constructor(
       private labelsService: LabelsService,
@@ -111,9 +113,12 @@ export class TaxInvoiceComponent implements OnInit {
       private taxInvoiceService: TaxInvoiceService,
       private clientDetailsService: ClientDetailsService,
       private customDateAdapter: CustomDateAdapter,
+      private utilityService: UtilityService
       ) { }
 
   ngOnInit() {
+    const taxInvoice = this.utilityService.getSettingsDataList('TaxInvoice');
+    this.isWrite = taxInvoice.isWrite;
     this.selectedClientId = Number(this.clientDetailsService.getClientId());
     this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;

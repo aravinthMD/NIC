@@ -17,6 +17,9 @@ import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { POService } from '@services/po-service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { CsvDataService } from '@services/csv-data.service';
+import { UtilityService } from '@services/utility.service';
+
+
 
 
 
@@ -111,6 +114,8 @@ smsApprovedList: any[] = [
 
   uploadedData : any = {}
 
+  isWrite = true;
+
 
 
   constructor(
@@ -128,6 +133,7 @@ smsApprovedList: any[] = [
     private route: ActivatedRoute,
     private clientDetailService: ClientDetailsService,
     private poDataService: POService,
+    private utilityService: UtilityService
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
@@ -135,6 +141,9 @@ smsApprovedList: any[] = [
      }
 
   ngOnInit() {
+
+    const smsPage = this.utilityService.getSettingsDataList('PurchaseOrder');
+    this.isWrite = smsPage.isWrite;
 
     this.route.params.subscribe((param) => {
         if (!param) {

@@ -138,12 +138,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 insertionFlag: value.insertionFlag
               };
             });
-            this.userList = dashboardList;
-            this.dataSource = new MatTableDataSource<any>(dashboardList);
-            this.dataSource.paginator = this.paginator;
+            // this.userList = dashboardList;
+            // this.dataSource = new MatTableDataSource<any>(dashboardList);
+            // this.dataSource.paginator = this.paginator;
             // const header = Object.keys(resData[0]);
 
-           // // CsvDataService.exportToCsv(fileName, resData);
+            CsvDataService.exportToCsv(fileName, resData);
 
             // console.log('arrayToCsv', arrayToCsv.convertArrayToCSV(resData));
         });
@@ -168,6 +168,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   navigateToUser(element) {
+    if (this.csvData) {
+      return;
+    }
     this.utilService.setProjectNumber(element.projectNo);
 
     // this.utilService.setUserDetails(element);

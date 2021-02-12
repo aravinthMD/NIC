@@ -302,9 +302,11 @@
             
             <div class="row pt-3 pb-3">
                 <div class="col-8">
+                    <ng-container *ngIf="isWrite">
                     <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!showView" (click)="onSubmit()">Save & Next</button>
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="hideEditButton" (click)="onSubmit()">Save & Next</button> -->
                     <button class="btn btn-primary btn-lg float-left back-btn" *ngIf= "showView" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editData()"> Edit </button>
+                </ng-container>
                 </div>
 
                <div class="col-4" style="float: right;">

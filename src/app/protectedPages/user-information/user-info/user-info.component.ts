@@ -14,6 +14,8 @@ import { AdminService } from '@services/admin.service';
 import { environment } from 'src/environments/environment.prod';
 import { NewAccountService } from '@services/new-account.service';
 
+import { UtilityService } from '@services/utility.service';
+
 
 
 
@@ -116,6 +118,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
     projectNo: string;
     userId: string;
     clientId: string;
+    isWrite = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -128,7 +131,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
     private activatedRoute: ActivatedRoute,
     private beheSer: BehaviourSubjectService,
     private clientDetailService: ClientDetailsService,
-    private newAccountService: NewAccountService
+    private newAccountService: NewAccountService,
+    private utilityService: UtilityService
     ) {
 
       // this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
@@ -209,8 +213,10 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
 
   ngOnInit() {
+    const customerPage = this.utilityService.getSettingsDataList('CustomerModule');
+    this.isWrite = customerPage.isWrite;
+    // console.log('data', );
 
-    console.log('data', this.activatedRoute.snapshot.data);
 
     this.patchLovValues();
     this.ipValidation = this.ipAddressValiationCheck();

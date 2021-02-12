@@ -15,6 +15,8 @@ import{ApiService} from '../../../services/api.service'
 import { ClientDetailsService } from '@services/client-details.service';
 import { MatInput } from '@angular/material';
 import { CsvDataService } from '@services/csv-data.service';
+
+import { UtilityService } from '@services/utility.service';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -82,7 +84,9 @@ export class ProcessDetailsComponent implements OnInit{
   dataValue: {
     title: string;
     message ?: string
-  }
+  };
+
+  isWrite = false;
 
   constructor(
         private dialog: MatDialog,
@@ -96,7 +100,8 @@ export class ProcessDetailsComponent implements OnInit{
         private invoiceService : InvoiceService,
         private searchService: SearchService,
         private apiService:ApiService,
-        private clientDetailService:ClientDetailsService
+        private clientDetailService:ClientDetailsService,
+        private utilityService: UtilityService
         ) { 
 
 
@@ -154,6 +159,10 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   ngOnInit() {
+
+
+    const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
+    this.isWrite = smsPage.isWrite;
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;

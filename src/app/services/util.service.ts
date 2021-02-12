@@ -22,6 +22,8 @@ export class UtilService {
   private customerId$:BehaviorSubject<any> = new BehaviorSubject<string>('');
 
   public customerId:Observable<any> = this.customerId$.asObservable();
+  
+
 
     
     setCurrentUrl(data) {
@@ -46,8 +48,12 @@ export class UtilService {
 
     
   setUserDetails(data) {
+       
+        
         this.userDetails$.next(data)
   }
+
+  
 
 
   getUserDetails(){

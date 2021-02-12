@@ -9,6 +9,8 @@ import { InvoiceService } from '@services/invoice.service';
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environment';
 
+import { UtilityService } from '@services/utility.service';
+
 
 @Component({
   selector: 'app-project-excecution-dialog',
@@ -84,6 +86,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   viewInfoData: any;
 
   showEdit: boolean;
+  isWrite = true;
 
 
   constructor(
@@ -96,6 +99,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private invoiceService : InvoiceService,
     private datePipe:DatePipe,
+    private utilityService: UtilityService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
     ) { 
     this.InitForm();
@@ -123,6 +127,9 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const smsPage = this.utilityService.getSettingsDataList('ProjectExecution');
+    this.isWrite = smsPage.isWrite;
 
     this.labelsService.getLabelsData().subscribe((value) => {
       this.labels = value;

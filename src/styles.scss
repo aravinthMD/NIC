@@ -474,3 +474,19 @@ label {
 .mat-sort-header-arrow {
      color: #fff;
 }
+
+@media screen and (min-width: 300px) and (max-width:768px){
+   
+    
+    #menu-toggle {
+        display: none;
+      }
+   
+
+    .main {        
+        margin-left: 0px;         
+    }
+
+ }
+
+ 

@@ -19,6 +19,7 @@ export const environment = {
   previewDocappiyoDrive :  "d/drive/docs/",
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   encryptionType: true, // Ecryption
+  userNameDomain: '@appiyo.com'
 };
 
 /*
