@@ -758,7 +758,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
   onStatusYes() {
     this.showStatusModal = false;
-    this.toasterService.showSuccess('Status updated successfully', '')
+    this.toasterService.showSuccess('Status Updated successfully', '')
     if(this.modalMsg == 'Are you sure you want to activate this user ?') {
 
       this.utilService.setUserDetails({
@@ -974,9 +974,9 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
           if (this.uploadedData["uploadStatus"]) {
             this.documentUploadId = this.uploadedData["documentUploadId"];
-            this.toasterService.showSuccess("File upload Success", "");
+            this.toasterService.showSuccess("File Upload Success", "");
           } else {
-            this.toasterService.showError("File upload Failed", "");
+            this.toasterService.showError("File Upload Failed", "");
           }
         } catch (e) {
           console.log("file error", e);

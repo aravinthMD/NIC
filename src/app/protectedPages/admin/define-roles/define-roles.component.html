@@ -47,13 +47,13 @@
               <th mat-header-cell *matHeaderCellDef> Modify </th>
               <td mat-row mat-cell *matCellDef="let element"> 
                 
-                  <button (click) = "mappingMethod()"> Modify</button>
+                  <button (click) = "edit(element)"> Modify</button>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{ element.isRead ? 'Read' : '' }}/{{ element.isWrite  ? 'Write' : '' }} </td>
+              <td mat-row mat-cell *matCellDef="let element"> {{ element.isRead ? 'Read' : '' }} {{ element.isWrite  ? 'Write' : '' }} </td>
             </ng-container>
 
             <ng-container matColumnDef="email">
@@ -65,7 +65,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
 
-          <mat-paginator class="font-paginator" showFirstLastButtons></mat-paginator>
+          <mat-paginator class="font-paginator" [hidePageSize]= "true" showFirstLastButtons></mat-paginator>
 
         </div>
         <div class="m-5"></div>

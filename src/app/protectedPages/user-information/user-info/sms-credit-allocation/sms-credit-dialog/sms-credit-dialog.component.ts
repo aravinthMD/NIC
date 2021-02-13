@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SmsCreditService } from '@services/sms-credit.service';
 import { SmsCreditAllocation } from '../sms-credit.model';
 import { ClientDetailsService } from '@services/client-details.service';
+import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 
 @Component({
   selector: 'app-sms-credit-dialog',
@@ -63,6 +64,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private smsCreditService: SmsCreditService,
     private clientDetailsService: ClientDetailsService,
+    private customDateAdapter: CustomDateAdapter,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.currentDate = this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	');
@@ -178,7 +180,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     const smsCredit: SmsCreditAllocation = {
       approvedBy: formValue.approvedBy,
       balanceCredit: formValue.balanceCredit,
-      dateOfRequest: formValue.dateOfRequest,
+      dateOfRequest: this.customDateAdapter.transform(formValue.dateOfRequest, 'dd/MM/yyyy'),
       onApprovalOf: formValue.onApprovalOf,
       remark: formValue.remark,
       smsApprover: formValue.smsApprover,
@@ -201,7 +203,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
           const processVariables = res.ProcessVariables;
           this.isDataUpdated = processVariables;
           this.edit.emit(processVariables);
-          this.toasterService.showSuccess('Data updated successfully', '');
+          this.toasterService.showSuccess('Data Updated Successfully', '');
         });
 
     // this.toasterService.showSuccess('Data Saved Successfully','')
@@ -246,7 +248,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       totalCredit: this.data.totalCredit,
       usedCredit: this.data.usedCredit,
       balanceCredit: this.data.balanceCredit,
-      dateOfRequest : new Date(this.data.dateOfRequest),
+      dateOfRequest : this.customDateAdapter.parseToDateObj(this.data.dateOfRequest),
       status : this.data.status,
       onApprovalOf : this.data.onApprovalOf,
       remark : this.data.remark,

@@ -1,5 +1,5 @@
 <button class="close" mat-button mat-dialog-close>  
-<mat-icon class="">close</mat-icon>
+<mat-icon class="" style="color: white;">close</mat-icon>
 </button>
 <h2 mat-dialog-title>Audit Trail</h2>
     <!--Mat Tabel-->
@@ -117,10 +117,10 @@
                 <td mat-cell *matCellDef="let element"> {{element.dataFeild}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="oldValue">
+            <!-- <ng-container matColumnDef="oldValue">
                 <th mat-header-cell *matHeaderCellDef>Old Value</th>
                 <td mat-cell *matCellDef="let element"> {{element.oldValue}} </td>
-            </ng-container>
+            </ng-container> -->
 
             <ng-container matColumnDef="newValue">
                 <th mat-header-cell *matHeaderCellDef> New Value </th>

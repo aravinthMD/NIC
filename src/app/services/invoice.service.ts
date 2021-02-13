@@ -83,6 +83,36 @@ export class InvoiceService {
 
   }
 
+  exportCsv(data){
+
+    const {
+      api : {
+        getProjectExecutionDetailsList : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+  // const data = {
+  //   selectedClientId,
+  //   currentPage 
+  // }
+
+  const requestEntity  : any  = {
+    processId,
+    ProcessVariables : {...data},
+    projectId
+  }
+
+  
+
+  let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+  return  this.httpService.post(url,requestEntity);
+
+  }
+
 
   getProjectExecutionDetailbyId(id : number){
         const {
@@ -668,6 +698,44 @@ updatePurchaseOrder(data) {
 
   transform(data: any) {
     return new HttpParams({ fromObject: data });
+  }
+
+
+  getCsvFormatForProformaInvoice(data) {
+    // const dashboardDetails = this.apiService.api.proformaInvoiceCsvDownload;
+    // const { processId, projectId, workflowId } = dashboardDetails;
+    // const requestEntity: any = {
+    //   processId,
+    //   ProcessVariables: {...data},
+    //   workflowId,
+    //   projectId,
+    // };
+    const {
+      api : {
+        fetchAllProformaInvoice : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+  } = this.apiService;
+
+    // const data = {
+    //   currentPage,
+    //   selectedClientId
+    // }
+
+    const requestEntity: any  = {
+      processId,
+      ProcessVariables : {...data},
+      projectId
+    }
+  
+
+    
+
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    return  this.httpService.post(url,requestEntity);
   }
 
 }

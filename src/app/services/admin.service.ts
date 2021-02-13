@@ -292,6 +292,7 @@ const data = {
     id,
     userId,
     screenStatus,
+    temp : 'get'
 }
 
 const requestEntity  : any  = {
@@ -301,6 +302,39 @@ const requestEntity  : any  = {
 }
 
 
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+}
+
+
+updateManageEmail(id : number,userId : string,screenStatus ?: string ){
+
+  
+  const {
+    api : {
+      adminEmailManageAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+
+const data = {
+    id,
+    userId,
+    screenStatus,
+    temp : 'update'
+}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
 
 let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 return  this.httpService.post(url,requestEntity);
@@ -386,6 +420,111 @@ let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environm
 return  this.httpService.post(url,requestEntity);
 
 }
+
+updateSecurityMatrix(data){
+    
+
+  const {
+    api : {
+      updateSecurityMatrix : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+
+}
+
+
+getSecurityMatrixById(roleToFind : string,screenId : string){
+
+  const {
+    api : {
+      fetchSecurityMatrixbyId : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const data = {
+    roleToFind,
+    screenId,
+    temp :  'get'
+}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+
+}
+
+
+getAllManageEmailList(){
+
+  const {
+    api : {
+      getManageEmailList : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const data = {}
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+
+}
+
+emailScheduler(data : any){
+  
+  const {
+    api : {
+      emailSchedulerAPI : {
+          workflowId,
+          processId,
+          projectId
+      }
+    }
+} = this.apiService;
+
+const requestEntity  : any  = {
+  processId,
+  ProcessVariables : data,
+  projectId
+}
+
+let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+return  this.httpService.post(url,requestEntity);
+}
+
 
 
 transform(data: any) {

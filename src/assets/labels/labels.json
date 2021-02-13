@@ -285,11 +285,11 @@
         },
         "telephoneNumber": {
             "maxLength": {
-                "rule": 8
+                "rule": 7
             },
             "type": "number",
             "patternCheck": {
-                "rule": "^[0-9]{8}",
+                "rule": "^[0-9]{7}",
                 "msg": "Invalid telephone number"
             }
         },

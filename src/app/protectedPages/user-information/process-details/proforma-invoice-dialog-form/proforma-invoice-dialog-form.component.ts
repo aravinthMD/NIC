@@ -178,7 +178,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
          }
       this.assignToForm(this.dataForm);
       }else{
-        this.toasterService.showError("Unable to fetch the PI Detail",'')
+        this.toasterService.showError("Unable to Fetch the PI Detail",'')
       }
 
     },(error) => {
@@ -600,13 +600,13 @@ detectDateKeyAction(event,type) {
     this.form.patchValue({
       startDate: ''
     })
-    this.toasterService.showError('Please click the startDate icon to select date','');
+    this.toasterService.showError('Please click the start date icon to select date','');
   }else if(type == 'endDate') {
 
     this.form.patchValue({
       endDate: ''
     })
-    this.toasterService.showError('Please click the endDate icon to select date','');
+    this.toasterService.showError('Please click the end date icon to select date','');
   }
   
 }

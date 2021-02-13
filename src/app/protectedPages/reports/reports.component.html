@@ -10,8 +10,8 @@
         </div> 
 
         <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header matRipple expanded>
+            <mat-expansion-panel [expanded]="0">
+                <mat-expansion-panel-header matRipple expanded class="accordin-height">
                     <mat-panel-title>
                         <mat-icon>filter_alt</mat-icon><span class="panel-title">Filter Report</span>
                     </mat-panel-title>
@@ -203,7 +203,7 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button  class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Filter</button>
+                        <button  class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Generate</button>
                         <button class="btn btn-primary" (click)="filterTabButtonName = '';clearForm()" type="submit">Clear</button>
 
 
@@ -217,7 +217,7 @@
         </mat-accordion>
         <!--Material Table-->
         <app-reports-table [gridValues] = "gridValues" [reportsId] = "reportsId" *ngIf="gridValues.length > 0">
-            <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV(dataList)">Export as CSV</button>
+            <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV()">Export as CSV</button>
         </app-reports-table>
 
     </div>
