@@ -90,7 +90,7 @@ loginApplication(data){
   }
 
 
-  forgotPassword(username: string) {
+  forgotPassword(username: string,authKey?) {
 
     const processId = this.apiService.api.forgotPassword.processId;
     const workflowId = this.apiService.api.forgotPassword.workflowId;
@@ -107,11 +107,13 @@ loginApplication(data){
       projectId,
     };
 
-   
+   const headers = {
+    "X-AUTH-SESSIONID": authKey
+   }
 
-    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
-
-    return this.httpService.post(url,requestEntity);
+    // let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    let url = `${environment.host}session/auth_init`
+    return this.httpService.post(url,requestEntity,headers);
 
 
 
@@ -178,6 +180,12 @@ loginApplication(data){
   transform(data: any) {
     return new HttpParams({ fromObject: data });
   }
+  createSession(data){
 
+    const myData = data
+
+    let url = `${environment.host}account/create_session`;
+    return this.httpService.post(url,myData);
+  }
 
 }
