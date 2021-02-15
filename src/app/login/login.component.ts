@@ -142,6 +142,7 @@ export class LoginComponent implements OnInit {
         console.log("xAuthSessionId",xAuthSessionId);
         this.loginService.forgotPassword(username,xAuthSessionId).subscribe((response)=> {
           console.log("forgotPassword response",response);
+          this.router.navigate(['/verifyotp'])
         })
 
     }

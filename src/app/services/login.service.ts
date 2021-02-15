@@ -180,6 +180,7 @@ loginApplication(data){
   transform(data: any) {
     return new HttpParams({ fromObject: data });
   }
+  
   createSession(data){
 
     const myData = data
