@@ -27,7 +27,7 @@ export class HttpService {
     let requestData;
     let fileUploaduri = environment.host + environment.appiyoDrive;
 
-    if (url.includes('login') || url == fileUploaduri) {
+    if (url.includes('login') || url == fileUploaduri || url.includes('create_session')) {
       requestData = requestEntity;
       
     } else {
