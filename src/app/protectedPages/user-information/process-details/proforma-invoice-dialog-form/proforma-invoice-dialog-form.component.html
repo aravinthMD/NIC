@@ -270,6 +270,15 @@
       </div>
   </div>
 
+  <div class="col-4" >
+    <div class="form-group">
+        <label for="poBillable">{{docAvailFlag ? labels?.changeDoc :labels?.uploadDoc}}</label>
+        <input type="file" class="form-control upload-choose-pad" id="poBillable"
+            aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
+        <small id="poBillableHelp" class="form-text text-muted"></small>
+    </div>
+</div>
+
 
       <div *ngIf = "docAvailFlag" class="col-4">
           <label for="document">Document</label><br>
@@ -281,8 +290,10 @@
 
   </form>
     <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
+      <ng-container *ngIf="isWrite">
       <button class="btn btn-primary" type="submit"  *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
       <button class="btn btn-primary" type="submit" mat-dialog-close = 'close' *ngIf="showUpdate" (click)="updateProformaInvoice()">Update</button>
+    </ng-container>
       <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
     </div>
 

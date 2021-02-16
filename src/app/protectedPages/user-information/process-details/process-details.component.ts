@@ -15,6 +15,8 @@ import{ApiService} from '../../../services/api.service'
 import { ClientDetailsService } from '@services/client-details.service';
 import { MatInput } from '@angular/material';
 import { CsvDataService } from '@services/csv-data.service';
+
+import { UtilityService } from '@services/utility.service';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -82,7 +84,9 @@ export class ProcessDetailsComponent implements OnInit{
   dataValue: {
     title: string;
     message ?: string
-  }
+  };
+
+  isWrite = false;
 
   constructor(
         private dialog: MatDialog,
@@ -96,7 +100,8 @@ export class ProcessDetailsComponent implements OnInit{
         private invoiceService : InvoiceService,
         private searchService: SearchService,
         private apiService:ApiService,
-        private clientDetailService:ClientDetailsService
+        private clientDetailService:ClientDetailsService,
+        private utilityService: UtilityService
         ) { 
 
 
@@ -155,6 +160,10 @@ export class ProcessDetailsComponent implements OnInit{
 
   ngOnInit() {
 
+
+    const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
+    this.isWrite = smsPage.isWrite;
+
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
     })
@@ -186,6 +195,16 @@ export class ProcessDetailsComponent implements OnInit{
       data: Data.selectedPIId
     });
 
+    dialogRef.componentInstance.onFileUpload
+             .subscribe((res: any) => {
+                console.log('file upload event', res);
+                this.uploadFile(res);
+             });
+    dialogRef.componentInstance.onUpdateProformaInvoice
+             .subscribe((data) => {
+                this.createProformaInvoice(data);
+             });
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       this.fetchAllProformaInvoice(this.currentPage,this.userId);
@@ -216,8 +235,8 @@ export class ProcessDetailsComponent implements OnInit{
       })
   }
 
-  onSubmit() {
-
+  onSubmit(data?: any) {
+  
     if(this.form.invalid) {
       this.isDirty = true;
       return;
@@ -237,9 +256,12 @@ export class ProcessDetailsComponent implements OnInit{
       }
   }
 
-  createProformaInvoice(){
-
-      if(this.form.invalid){
+  createProformaInvoice(data?: any) {
+     let value: any = {};
+     if (data) {
+       value = data;
+     } else {
+      if (this.form.invalid) {
         this.isDirty = true;
         return;
       }
@@ -264,13 +286,13 @@ export class ProcessDetailsComponent implements OnInit{
       const formattedEndDate = this.datePipe.transform(endDate,'dd/MM/yyyy')
 
       const userId = this.userId;
-      const Data = {
+      value = {
         AccountName,
         piNumber,
         referenceNumber,
         traffic,
         owner,
-        date : formattedDate,     
+        date : formattedDate,
         nicsiManager,
         piAmount,
         startDate : formattedStartDate,
@@ -278,11 +300,16 @@ export class ProcessDetailsComponent implements OnInit{
         piStatus,
         paymentStatus,
         remark,
-        upload_document : this.documentUploadId,
         userId : Number(userId)
-      }
+      };
+     }
 
-      this.invoiceService.createProformaInvoice(Data).subscribe(
+     value.upload_document = this.documentUploadId;
+
+      
+      
+
+      this.invoiceService.createProformaInvoice(value).subscribe(
         (response: any) => {
           const { 
             ProcessVariables  : { error : {

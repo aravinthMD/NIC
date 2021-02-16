@@ -677,29 +677,31 @@ onReportFilterChange(event) {
   }
 
   exportCSV() {
+    const formValue = this.reportsForm.value;
+    const fromDate = this.customDateAdapter.transform(formValue.fromDate, 'dd/MM/yyyy');
+    const toDate = this.customDateAdapter.transform(formValue.toDate, 'dd/MM/yyyy');
+    const activeStatus = formValue.userStatus;
+    const data = {
+      ...formValue,
+      activeStatus,
+      fromDate,
+      toDate,
+      exportCsv: 'true'
+    };
 
-//     const reportVal = this.form.controls['reports'].value;
+    console.log('data', data);
 
-//     if(reportVal >= 1 && reportVal <= 5){
 
-//     }
-
-//     if(reportVal == 6){
-// //Paymnet Tracking
-//      return this.utilService.getDownloadXlsFile(this.paymnettrackkey,'Report_Payment_Track')
-      
-//     }
-//     if(reportVal == 7){
-
-//       //Payment Received
-    
-//     }
-//     if(reportVal == 8){
-
-//       //Payment Shortpay
-    
-//     }
-// this.utilService.getDownloadXlsFile(datatable,'Report')
+    this.reportsService.getReportsGridValue(data)
+        .subscribe((res: any) => {
+            const error = res.Error;
+            const errorMessage = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
+            }
+            const processVariables = res.ProcessVariables;
+            console.log('processVariables', processVariables);
+        });
   }
 
 }

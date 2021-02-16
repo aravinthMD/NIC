@@ -10,6 +10,7 @@ import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
 import { NewAccountService } from '@services/new-account.service';
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-technical-admin-details',
@@ -63,7 +64,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     isShowTechViewPage  = true;
     insertionFlag: number;
  
-
+    isWrite = true;
 
     constructor(
       private labelsService: LabelsService,
@@ -75,11 +76,14 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       private behser: BehaviourSubjectService,
       private clientDetailService: ClientDetailsService,
       private billAdminService: BillingAdminService,
-      private newAccountService: NewAccountService
+      private newAccountService: NewAccountService,
+      private utilityService: UtilityService
       ) { }
 
   ngOnInit() {
 
+    const customerPage = this.utilityService.getSettingsDataList('CustomerModule');
+    this.isWrite = customerPage.isWrite;
     this.newAccountService.getFlagForShowingPages()
         .subscribe((value) => {
             this.insertionFlag = value;
