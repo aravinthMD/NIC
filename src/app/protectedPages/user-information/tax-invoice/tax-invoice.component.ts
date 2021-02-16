@@ -19,6 +19,7 @@ import { ClientDetailsService } from '@services/client-details.service';
 
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 import { CsvDataService } from '@services/csv-data.service';
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-tax-invoice',
@@ -97,6 +98,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   selectedClientId;
   taxInvoiceList: TaxInvoice[] = [];
+  isWrite = true;
 
   constructor(
       private labelsService: LabelsService,
@@ -111,9 +113,12 @@ export class TaxInvoiceComponent implements OnInit {
       private taxInvoiceService: TaxInvoiceService,
       private clientDetailsService: ClientDetailsService,
       private customDateAdapter: CustomDateAdapter,
+      private utilityService: UtilityService
       ) { }
 
   ngOnInit() {
+    const taxInvoice = this.utilityService.getSettingsDataList('TaxInvoice');
+    this.isWrite = taxInvoice.isWrite;
     this.selectedClientId = Number(this.clientDetailsService.getClientId());
     this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
@@ -287,7 +292,7 @@ export class TaxInvoiceComponent implements OnInit {
         return this.toasterService.showError(errorMsg, '');
       }
       const processVariables = res.ProcessVariables;
-      const dataList = processVariables.TiList;
+      const dataList = processVariables.list;
       if (!dataList) {
         return this.toasterService.showInfo('No data available for download', '');
       }
@@ -322,9 +327,9 @@ export class TaxInvoiceComponent implements OnInit {
   // }
 
   onSubmit(value?: any) {
-    this.isDirty = true;
     let formValue;
     if (!value) {
+       this.isDirty = true;
        if (!this.taxInvoiceForm.valid) {
          return this.toasterService.showError('Please fill all the fields', '');
        }
@@ -539,6 +544,10 @@ export class TaxInvoiceComponent implements OnInit {
   onEdit(selectedTaxInvoice: TaxInvoice) {
     const dialogRef = this.dialog.open(TaxInvoiceDialogComponent, {
       data : selectedTaxInvoice
+    });
+
+    dialogRef.componentInstance.onFileUpload.subscribe((res: any) => {
+        this.uploadFile(res);
     });
 
     dialogRef.componentInstance.updateEmitter.subscribe((value) => {

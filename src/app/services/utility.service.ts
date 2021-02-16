@@ -4,56 +4,62 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpService } from './http.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class UtilityService {
-private userData: any;
-private loginData: any;
-  constructor(private httpService: HttpService,
-              private router: Router) { }
+  private userData: any;
+  private loginData: any;
+  private settingsDataList = {};
+  constructor(private httpService: HttpService, private router: Router) {}
 
-logDataStatus$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  logDataStatus$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   logOut() {
-    
     this.httpService.logOut().subscribe(
-      (res) => {       
+      (res) => {
         this.removeAllLocalStorage();
       },
-      (error) => {      
+      (error) => {
         this.removeAllLocalStorage();
       }
-    );   
-
+    );
   }
 
   removeAllLocalStorage() {
-    localStorage.clear();    
-    this.router.navigateByUrl('/login');   
-    
+    localStorage.clear();
+    this.router.navigateByUrl("/login");
   }
 
-  setUserDetail(data){
-  this.userData =  data;
-  console.log("set user data ",data)
+  setUserDetail(data) {
+    this.userData = data;
+    console.log("set user data ", data);
   }
-  getUserData(){
+  getUserData() {
     return this.userData;
   }
-  setLoginDetail(data){
-    if(data){
-    this.loginData = data;
-    this.setLogStatus(true);
-    }else{
+  setLoginDetail(data) {
+    if (data) {
+      (data.settingsDataList || []).forEach((value) => {
+        this.settingsDataList[value.ScreenName] = value;
+      });
+      this.loginData = data;
+      this.setLogStatus(true);
+    } else {
       this.setLogStatus(false);
     }
   }
 
-  getLoginDetail(){
+  getSettingsDataList(screenName: string) {
+    return this.settingsDataList[screenName] || {};
+ }
+
+  getLoginDetail() {
     return this.loginData;
   }
 
-  setLogStatus(data){
-    this.logDataStatus$.next(data)
+  setLogStatus(data) {
+    this.logDataStatus$.next(data);
   }
 }

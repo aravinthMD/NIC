@@ -14,6 +14,7 @@ import { SearchService } from '../../../services/search.service';
 import {ApiService} from '../../../services/api.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { CsvDataService } from '@services/csv-data.service';
+import { UtilityService } from '@services/utility.service';
 
 
 @Component({
@@ -80,6 +81,7 @@ dataValue: {
   title: string;
   message: string
 }
+isWrite = true;
 
   constructor(
               private labelsService : LabelsService,
@@ -92,7 +94,8 @@ dataValue: {
               private datePipe:DatePipe,
               private searchService: SearchService,
               private apiService:ApiService,
-              private clientDetailService : ClientDetailsService
+              private clientDetailService : ClientDetailsService,
+              private utilityService: UtilityService
               ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
@@ -102,6 +105,11 @@ dataValue: {
   }
 
   ngOnInit() {
+
+    // ProjectExecution
+
+    const smsPage = this.utilityService.getSettingsDataList('ProjectExecution');
+    this.isWrite = smsPage.isWrite;
 
     this.labelsService.getLabelsData().subscribe((value) => {
       this.labels = value;

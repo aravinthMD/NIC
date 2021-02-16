@@ -4,7 +4,7 @@
 
         <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
 
-        <mat-accordion>
+        <mat-accordion *ngIf="isWrite">
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px">
                     <mat-panel-title>

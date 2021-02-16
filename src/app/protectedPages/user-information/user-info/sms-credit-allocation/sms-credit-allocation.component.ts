@@ -20,6 +20,7 @@ import { SmsCreditAllocation } from './sms-credit.model';
 import { environment } from 'src/environments/environment.prod';
 import { CsvDataService } from '@services/csv-data.service';
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
+import { UtilityService } from '@services/utility.service';
 // import { CsvDataService } from '@services/csv-data.service';
 
 @Component({
@@ -89,6 +90,7 @@ export class SmsCreditAllocationComponent implements OnInit {
 
 
   data : string = '';
+  isWrite = true;
 
   constructor(
     private labelsService: LabelsService,
@@ -105,10 +107,13 @@ export class SmsCreditAllocationComponent implements OnInit {
     private clientDetailsService: ClientDetailsService,
     private smsCreditService: SmsCreditService,
     private customDateAdapter: CustomDateAdapter,
+    private utilityService: UtilityService
   //  private csvDataService: CsvDataService
   ) {}
 
   ngOnInit() {
+    const smsPage = this.utilityService.getSettingsDataList('SmsCreditAllocation');
+    this.isWrite = smsPage.isWrite;
     // this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
     this.pathLovValue();
     this.statusList = this.smsCreditService.getStatusListLov();

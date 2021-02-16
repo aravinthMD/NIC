@@ -11,6 +11,7 @@ import { TaxInvoice } from '../tax-invoice.model';
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 import { TaxInvoiceService } from '@services/tax-invoice.service';
 import { environment } from 'src/environments/environment';
+import { UtilityService } from '@services/utility.service';
 @Component({
   selector: 'app-tax-invoice-dialog',
   templateUrl: './tax-invoice-dialog.component.html',
@@ -54,11 +55,13 @@ export class TaxInvoiceDialogComponent implements OnInit {
   showEdit: boolean;
 
   updateEmitter = new EventEmitter();
+  onFileUpload = new EventEmitter();
 
   docAvailFlag : boolean;
   host  = environment.host;
   newAppiyoDrive  = environment.previewDocappiyoDrive;
-  previewUrl : string = ''
+  previewUrl : string = '';
+  isWrite = true;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -71,6 +74,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
       private invoiceService: InvoiceService,
       private customDateAdapter: CustomDateAdapter,
       private taxInvoiceService: TaxInvoiceService,
+      private utilityService: UtilityService,
       @Optional() @Inject(MAT_DIALOG_DATA) public data: TaxInvoice,
       ) {
 
@@ -130,6 +134,8 @@ export class TaxInvoiceDialogComponent implements OnInit {
   paymentStatus: any[] = [];
 
   ngOnInit() {
+    const taxInvoice = this.utilityService.getSettingsDataList('TaxInvoice');
+    this.isWrite = taxInvoice.isWrite;
     this.paymentStatus = this.taxInvoiceService.getPaymentList();
     this.labelService.getLabelsData().subscribe((value) => {
       this.labels = value;
@@ -311,6 +317,10 @@ export class TaxInvoiceDialogComponent implements OnInit {
     // ]   
 
     // this.getTaxInvoiceDetailById(this.data)
+  }
+
+  uploadFile(event) {
+    this.onFileUpload.emit(event);
   }
 
   initForm() {
@@ -496,6 +506,11 @@ export class TaxInvoiceDialogComponent implements OnInit {
         key :  this.labels.mrn,
         value : this.data.mrnNumber
       },
+      {
+        isButton: true,
+        key: 'View PDF',
+        value: this.data.upload_document
+      }
     ];
 
   }

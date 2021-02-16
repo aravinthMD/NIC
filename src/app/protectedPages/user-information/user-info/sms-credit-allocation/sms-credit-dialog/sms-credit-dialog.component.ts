@@ -12,6 +12,7 @@ import { SmsCreditService } from '@services/sms-credit.service';
 import { SmsCreditAllocation } from '../sms-credit.model';
 import { ClientDetailsService } from '@services/client-details.service';
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-sms-credit-dialog',
@@ -52,7 +53,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
 
   edit = new EventEmitter();
   isDataUpdated: SmsCreditAllocation;
-
+  isWrite = true;
 
   constructor(
     private dialogRef: MatDialogRef<SmsCreditDialogComponent>,
@@ -65,6 +66,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     private smsCreditService: SmsCreditService,
     private clientDetailsService: ClientDetailsService,
     private customDateAdapter: CustomDateAdapter,
+    private utilityService: UtilityService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.currentDate = this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	');
@@ -72,6 +74,9 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
+
+    const smsPage = this.utilityService.getSettingsDataList('SmsCreditAllocation');
+    this.isWrite = smsPage.isWrite; 
 
     this.smsQuotaMatrix = this.smsCreditService.getSmsQuotaMatrix();
     this.clientId = this.clientDetailsService.getClientId();
