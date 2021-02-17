@@ -40,6 +40,7 @@ export class ManageEmailComponent implements OnInit {
     this.showModal = true;
     this.selectedID = data.id;
     this.emailValue = data.screenStatus;
+    return;
     this.adminService.adminEmailManager(data.id,'73').subscribe((response) => {
         this.selectedID = response["ProcessVariables"]["id"];
         this.emailValue = response["ProcessVariables"]["screenStatus"];
