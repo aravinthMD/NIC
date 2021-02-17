@@ -12,6 +12,7 @@ import { ToasterService } from '@services/toaster.service';
 import { ReportsService } from '@services/reports.service';
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 import { SmsCreditService } from '@services/sms-credit.service';
+import { CsvDataService } from '@services/csv-data.service';
 
 
 @Component({
@@ -253,6 +254,7 @@ userStatus  = [
   };
   smsQuotaApprovalMatrix = [];
   smsCreditStatus = [];
+  totalRecords: number;
 
 
   constructor(
@@ -367,8 +369,13 @@ userStatus  = [
   }
 
 
+  onPageChange(value) {
+    console.log('on page', value);
+    const currentPage = value.pageIndex;
+    this.OnFilter(currentPage);
+  }
 
-  OnFilter() {
+  OnFilter(currentPage?: number) {
     const formValue = this.reportsForm.value;
     console.log('formValue', formValue);
     // const report  = formValue.reports;
@@ -382,6 +389,9 @@ userStatus  = [
       fromDate,
       toDate,
     };
+    if (currentPage) {
+      data.currentPage = currentPage;
+    }
 
     console.log('data', data);
 
@@ -395,6 +405,8 @@ userStatus  = [
             }
             const processVariables = res.ProcessVariables;
             console.log('processVariables', processVariables);
+            // this.totalRecords = processVariables.totalPages || 50 ;
+            // return;
             this.setGridValues(processVariables);
             if (this.gridValues.length === 0) {
               return this.toasterService.showInfo('No records to display', '');
@@ -446,6 +458,8 @@ userStatus  = [
     const reports = this.reportsForm.get('reports').value;
     this.reportsId = reports;
     if (reports === '0') {
+      const data = res.paymentsTrackingReportList || [];
+      this.totalRecords = data.length;
       return this.gridValues = res.paymentsTrackingReportList || [];
     }
     if (reports === '1') {
@@ -474,15 +488,34 @@ userStatus  = [
       return this.gridValues = res.poRaisedReportList || [];
     }
     if (reports === '7') {
-      return this.gridValues = res.invoiceRaisedReportList || [];
+      const data = res.invoiceRaisedReportList || [];
+      this.totalRecords = data.length;
+      return this.gridValues = data;
+    }
+    if (reports === '9') {
+      this.totalRecords = res.totalPages;
+      return this.gridValues = this.setValueForAllReports(res.allCategoryRptList) || [];
     }
 
-   
+
     // if (reports === '8') {
     //   return this.gridValues = res.paidUnpaidReportList || [];
     // }
 
 
+  }
+
+
+  setValueForAllReports(value = []) {
+    return value.map((data) => {
+      return {
+        department: data.clientDepartment,
+        projectNumber: data.clientProjNo,
+        state: data.clientState,
+        userId: data.clientUserId,
+        ...data
+      };
+    });
   }
 
   onReportChange(event) {
@@ -691,6 +724,8 @@ onReportFilterChange(event) {
 
     console.log('data', data);
 
+    const responseKey = `list_${formValue.reports}`;
+
 
     this.reportsService.getReportsGridValue(data)
         .subscribe((res: any) => {
@@ -700,7 +735,12 @@ onReportFilterChange(event) {
               return this.toasterService.showError(errorMessage, '');
             }
             const processVariables = res.ProcessVariables;
+            const csvData = processVariables[responseKey];
+            if(!csvData) {
+                return this.toasterService.showError('No records available', '');
+            }
             console.log('processVariables', processVariables);
+            CsvDataService.exportToCsv('Reports.csv', csvData);
         });
   }
 
