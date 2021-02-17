@@ -25,6 +25,7 @@
                             <div class="form-group">
                                 <!-- <label for="purchaseOrder">{{labels?.purchaseON}}</label> -->
                                 <app-custom-input formControlName="userName" 
+                                [mandatoryField]="true"
                                  [isRequired]="'User Name is Mandatory'" 
                                  placeHolder =  "Ener the User Name"
                                  [labelName]="labels.userName" 
@@ -61,7 +62,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="department">{{labels.proformaIN}}</label>
+                                <label for="department">{{labels.proformaIN}}<span style="color:red">*</span></label>
                                 <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
                                 class="form-control mb-3"
                                 placeholder="click to select the Proforma Invoice Number"
@@ -93,7 +94,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="invoiceDate">Proforma Invoice Date</label>
+                                <label for="invoiceDate">Proforma Invoice Date<span style="color:red">*</span></label>
                                 <!--  <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                       <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
@@ -119,7 +120,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="piAmount" 
+                                <app-custom-input formControlName="piAmount"
+                                [mandatoryField]="true" 
                                   [isRequired]="'Purchase Invoice Number is Mandatory'" 
                                   [labelName]="labels.piAmount" 
                                   placeHolder =  "Enter the Proforma Invoice Amount"
@@ -131,13 +133,14 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="modeOfPayment">{{labels.modeOfPayment}}</label>
+                                <label for="modeOfPayment">{{labels.modeOfPayment}}<span style="color:red">*</span></label>
                                 <app-vf-custom-select formControlName="modeOfPayment" [values]="modeOfPaymentList" [isRequired]="'Please Select the Payment'" [isDirty]="isDirty"></app-vf-custom-select>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="documentNo" 
+                                [mandatoryField]="true"
                                   [isRequired]="'Document Number is Mandatory'" 
                                   [labelName]="labels.documentNo" 
                                   placeHolder =  "Enter the Document Number"
@@ -150,7 +153,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="invoiceDate">Date of Transaction</label>
+                                <label for="invoiceDate">Date of Transaction<span style="color:red">*</span></label>
                                 <!--  <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                       <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
@@ -175,6 +178,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="bankName" 
+                                [mandatoryField]="true"
                                   [isRequired]="'Bank Name/Branch is Mandatory'" 
                                   [labelName]="labels.bankName" 
                                   placeHolder =  "Enter the Bank Name"
@@ -187,7 +191,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="amountReceived" 
+                                <app-custom-input formControlName="amountReceived"
+                                [mandatoryField]="true" 
                                   [isRequired]="'Amount Received is Required'" 
                                   [labelName]="labels.amountReceived" 
                                   placeHolder =  "Enter the Amount Received"
@@ -201,6 +206,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="tds" 
+                                [mandatoryField]="true"
                                   [isRequired]="'TDS is Required'" 
                                   [labelName]="labels?.tds" 
                                   placeHolder =  "Enter the TDS"
@@ -213,7 +219,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="NICSIProjectNo" 
+                                <app-custom-input formControlName="NICSIProjectNo"
+                                [mandatoryField]="true" 
                                     [isRequired]="'NICSI Project Number is Required'" 
                                     [labelName]="labels?.nicsiProjectNumber" 
                                     placeHolder = "Enter the NICSI Project Number"
@@ -226,7 +233,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="modeOfPayment">PI Paid</label>
+                                <label for="modeOfPayment">PI Paid<span style="color:red">*</span></label>
                                 <app-vf-custom-select formControlName="piPaid" 
                                   [values]="piPaidValues" 
                                   [isRequired]="'Please Select the PI Paid'" 

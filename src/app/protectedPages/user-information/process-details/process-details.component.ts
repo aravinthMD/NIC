@@ -321,11 +321,14 @@ export class ProcessDetailsComponent implements OnInit{
           if(code == '0'){
             this.form.reset();
             this.documentUploadId = '';
-            this.input.value = ''
+            // this.input.value = ''
             this.form.controls['piStatus'].setValue("");
             this.form.controls['paymentStatus'].setValue("");
             this.form.controls['startDate'].setValue("");
-            this.form.controls['accountName'].setValue(this.accountName);
+            setTimeout(() => {
+              // this.form.controls['accountName'].setValue(this.accountName);
+              this.form.get('accountName').setValue(this.accountName);
+            })
             this.isDirty = false;
             this.toasterService.showSuccess('Proforma Invoice Saved Sucessfully','');
             // this.showDataSaveModal = true

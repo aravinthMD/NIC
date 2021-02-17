@@ -326,7 +326,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
   initForm() {
     this.taxInvoiceForm = new FormGroup({
       userName: new FormControl(null),
-      projectNumber: new FormControl(null, Validators.pattern('^[0-9]{0,15}$')),
+      projectNumber: new FormControl(null),
       poNumber: new FormControl(null),
       poDate: new FormControl(null),
       fromDate: new FormControl(null),
