@@ -41,10 +41,8 @@
     font-size: 14px;
     color: #fff;
     display: block;
-    font-weight:500;
+    font-weight: 500;
 }
-
-
 
 // .sidenav a:hover {
 //   background-color: #e7e7e7;
@@ -94,11 +92,10 @@ body {
 //         font-weight:500;
 //     }
 // }
-
-.dashBoard, .accountHeader{
-    font-size:18px!important;
+.dashBoard,
+.accountHeader {
+    font-size: 18px!important;
 }
-
 
 .user {
     width: 40%;
@@ -284,6 +281,9 @@ label {
         margin-left: 265px;
         padding: 0;
     }
+    .topbar {
+        margin-left: 225px;
+    }
 }
 
 .logo_header {
@@ -342,6 +342,12 @@ label {
 
 // mat-table:not(.mat-calendar-table){
 // }
+.custom-table {
+    display: block;
+    max-width: 100%;
+    overflow: scroll;
+}
+
 .custom-table td {
     vertical-align: middle;
     // font-size: 16px !important;
@@ -398,8 +404,6 @@ label {
     font-weight: bold;
 }
 
-
-
 .modal-dialog {
     max-width: 85% !important;
     margin: 1.75rem auto;
@@ -409,13 +413,11 @@ label {
     font-size: 15px;
 }
 
-
-
-.custom-material-icons { 
+.custom-material-icons {
     font-size: 21px !important;
 }
 
-.fa-paper-plane { 
+.fa-paper-plane {
     font-size: 16px;
 }
 
@@ -431,20 +433,18 @@ label {
     font-size: 14px;
 }
 
-.font-weight-500{
-    font-weight:500;
+.font-weight-500 {
+    font-weight: 500;
 }
 
 @media screen and (min-width: 992px) and (max-width:1163px) {
     .font-small {
         font-size: 9px!important;
     }
-
     .nav-link.p-1 {
         color: #858585;
         padding: 13px !important;
         font-size: 12px!important;
-    
     }
 }
 
@@ -452,41 +452,30 @@ label {
     .font-small {
         font-size: 12px;
     }
-
     .nav-link.p-1 {
         color: #858585;
         padding: 13px !important;
         font-size: 12px!important;
-    
     }
 }
 
-@media screen and (min-width: 1433px) and (max-width:2000px){
-   
+@media screen and (min-width: 1433px) and (max-width:2000px) {
     .nav-link.p-1 {
         color: #858585;
         padding: 13px !important;
         font-size: 12px!important;
-    
     }
 }
 
 .mat-sort-header-arrow {
-     color: #fff;
+    color: #fff;
 }
 
-@media screen and (min-width: 300px) and (max-width:768px){
-   
-    
+@media screen and (min-width: 200px) and (max-width:768px) {
     #menu-toggle {
         display: none;
-      }
-   
-
-    .main {        
-        margin-left: 0px;         
     }
-
- }
-
- 
+    .main {
+        margin-left: 0px;
+    }
+}

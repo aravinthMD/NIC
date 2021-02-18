@@ -1,83 +1,83 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<nav class="col-md-10 col-lg-10 col-sm-12 col-xs-12 navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-  <!-- Sidebar Toggle (Topbar) -->
-  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
   <i class="fa fa-bars"></i>
 </button>
 
 
 
-  <!-- Topbar Navbar -->
-  <ul class="navbar-nav ml-auto">
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
 
-      <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-      <li class="nav-item dropdown no-arrow">
-        
-          <a style="cursor:pointer" (click)="newUserMethod()">
-              <i class="fa fa-user-plus" aria-hidden="true" title="New User" data-placement="top"></i>
-          </a>
+        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+        <li class="nav-item dropdown no-arrow">
 
-      </li>
+            <a style="cursor:pointer" (click)="newUserMethod()">
+                <i class="fa fa-user-plus" aria-hidden="true" title="New User" data-placement="top"></i>
+            </a>
 
-      <!-- Nav Item - Alerts -->
-      <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle"  id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-bell" aria-hidden="true"></i>
+        </li>
 
-              <!-- Counter - Alerts -->
-              <span class="badge badge-danger badge-counter">3+</span>
-          </a>
-          <!-- Dropdown - Alerts -->
-          <div class="col-md-3 dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-              <h6 class="dropdown-header">
-                  Alerts Center
-              </h6>
-              <a class="dropdown-item d-flex align-items-center" >
-                  <div class="mr-3">
-                      <div class="icon-circle bg-primary">
-                          <i class="fas fa-file-alt text-white"></i>
-                      </div>
-                  </div>
-                  <div>
-                      <div class="small text-gray-500">December 12, 2019</div>
-                      <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-              </a>
-              <a class="dropdown-item d-flex align-items-center">
-                  <div class="mr-3">
-                      <div class="icon-circle bg-success">
-                          <i class="fas fa-donate text-white"></i>
-                      </div>
-                  </div>
-                  <div>
-                      <div class="small text-gray-500">December 7, 2019</div>
-                      $290.29 has been deposited into your account!
-                  </div>
-              </a>
-              <a class="dropdown-item d-flex align-items-center" >
-                  <div class="mr-3">
-                      <div class="icon-circle bg-warning">
-                          <i class="fas fa-exclamation-triangle text-white"></i>
-                      </div>
-                  </div>
-                  <div>
-                      <div class="small text-gray-500">December 2, 2019</div>
-                      Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-              </a>
-              <a class="dropdown-item text-center small text-gray-500" >Show All Alerts</a>
-          </div>
-      </li>
-      <!-- Nav Item - Alerts -->
-      <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle"  id="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-envelope" (click) = "navigateToEmail()" aria-hidden="true"></i>
+        <!-- Nav Item - Alerts -->
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-bell" aria-hidden="true"></i>
 
-              <!-- Counter - Alerts -->
-              <!-- <span class="badge badge-danger badge-counter envelope">3+</span> -->
-          </a>
-          <!-- Dropdown - Alerts -->
-          <!-- <div class="col-md-3 dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter">3+</span>
+            </a>
+            <!-- Dropdown - Alerts -->
+            <div class="col-md-3 dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                    Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-primary">
+                            <i class="fas fa-file-alt text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 12, 2019</div>
+                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-success">
+                            <i class="fas fa-donate text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 7, 2019</div>
+                        $290.29 has been deposited into your account!
+                    </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center">
+                    <div class="mr-3">
+                        <div class="icon-circle bg-warning">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="small text-gray-500">December 2, 2019</div>
+                        Spending Alert: We've noticed unusually high spending for your account.
+                    </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500">Show All Alerts</a>
+            </div>
+        </li>
+        <!-- Nav Item - Alerts -->
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" id="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-envelope" (click)="navigateToEmail()" aria-hidden="true"></i>
+
+                <!-- Counter - Alerts -->
+                <!-- <span class="badge badge-danger badge-counter envelope">3+</span> -->
+            </a>
+            <!-- Dropdown - Alerts -->
+            <!-- <div class="col-md-3 dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
               <h6 class="dropdown-header">
                   Alerts Center
               </h6>
@@ -116,29 +116,29 @@
               </a>
               <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
           </div> -->
-      </li>
+        </li>
 
-      <div class="topbar-divider d-none d-sm-block"></div>
+        <div class="topbar-divider d-none d-sm-block"></div>
 
-      <!-- Nav Item - User Information -->
-      <li class="nav-item dropdown no-arrow">
-          <a class="nav-link dropdown-toggle"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ userName }}</span>
-              <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-          </a>
-          <!-- Dropdown - User Information -->
-          <div class="col-md-2 dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-             
-              <a class="dropdown-item">
-                  <i class="fa fa-user-o fa-sm fa-fw mr-2 text-gray-400"></i> {{userType}}
-              </a> 
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item"  (click)= "logOut()">
-                  <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i> Logout
-              </a>
-          </div>
-      </li>
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ userName }}</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="col-md-2 dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
 
-  </ul>
+                <a class="dropdown-item">
+                    <i class="fa fa-user-o fa-sm fa-fw mr-2 text-gray-400"></i> {{userType}}
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="logOut()">
+                    <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
 
 </nav>
