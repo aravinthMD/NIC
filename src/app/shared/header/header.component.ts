@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilService } from '@services/util.service';
 import { UtilityService } from '@services/utility.service';
+import { ToggleSideMenuService } from '@services/toggle-sidemenu.service';
 
 @Component({
   selector: 'nav-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(private utilityService: UtilityService,
               private utilService : UtilService,
-              private router : Router) {
+              private router : Router,
+              private toggleSideMenuService: ToggleSideMenuService) {
 
     this.userName = localStorage.getItem('userName') || 'Admin User'
     this.userType = localStorage.getItem('roleName') || 'Admin' ;
@@ -25,6 +27,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
   }
 
+  onToggle() {
+    this.toggleSideMenuService.toggle(true);
+  }
   newUserMethod(){
     this.utilService.setProjectNumber(null)
     this.utilService.setCurrentUrl('users/customerDetails');

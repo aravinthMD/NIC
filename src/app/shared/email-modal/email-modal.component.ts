@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output,EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AdminService } from '@services/admin.service';
 import { ToasterService } from '@services/toaster.service';
+import { FileToBase64Service } from '@services/file-to-base64.service';
 
 @Component({
   selector: 'app-email-modal',
@@ -30,7 +31,18 @@ export class EmailModalComponent implements OnInit {
 
   emailForm: FormGroup
 
-  constructor(private adminService : AdminService,private toasterService : ToasterService) { }
+  attachment: {
+    name?: string,
+    base64?: string;
+  };
+
+  isShowClose = false;
+  @ViewChild('inputEmailFile', {static: false}) inputEmailFile: ElementRef;
+
+  constructor(
+    private adminService: AdminService,
+    private toasterService: ToasterService,
+    private fileToBase64Service: FileToBase64Service) { }
 
   ngOnInit() {
     this.initForm();
@@ -45,7 +57,7 @@ export class EmailModalComponent implements OnInit {
       cc: new FormControl(''),
       subject: new FormControl(''),
       message1: new FormControl('')
-    })
+    });
 
   }
 
@@ -53,6 +65,22 @@ export class EmailModalComponent implements OnInit {
 
   //   this.initForm()
   // }
+
+  async attachFile(event) {
+    // console.log(event);
+    // const file = event.target.files[0];
+    try {
+      this.attachment = await this.fileToBase64Service.convertToBase64(event);
+      console.log('base64', this.attachment);
+      this.inputEmailFile.nativeElement.value = '';
+    } catch (e) {
+      console.log('file error', e);
+    }
+  }
+
+  removeAttachment() {
+    this.attachment = null;
+  }
 
 
   sendEmail() {

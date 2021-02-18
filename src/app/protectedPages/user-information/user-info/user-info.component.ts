@@ -258,7 +258,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
          
 
         this.form.valueChanges.subscribe(data => {
-          console.log('Form changes', data)
+          // console.log('Form changes', data)
 
          
                 // this.detectFormChanges()
