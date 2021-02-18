@@ -9,7 +9,7 @@
             <!-- <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info> -->
 
 
-            <mat-accordion>
+            <mat-accordion *ngIf="isWrite">
                 <mat-expansion-panel>
                     <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px"> 
                         <mat-panel-title>
@@ -21,7 +21,7 @@
                             <div class="col-4 pb-0">
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="smsQuotaMetrix">{{labels.smsQuotaMatrix}}</label>
+                                        <label for="smsQuotaMetrix">{{labels.smsQuotaMatrix}}<span style="color:red">*</span></label>
                                         <app-vf-custom-select formControlName="smsApprover"  [values]="smsQuotaMetrix" [isDirty]="isDirty" [isRequired]="'SMS quota matrix is mandatory'" (valueChange)="onQuotaMatrixChange($event)">
                                         </app-vf-custom-select>
                                     </div>
@@ -34,7 +34,7 @@
                              
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="creditDate">{{labels.dateOfRequest}}</label>
+                                    <label for="creditDate">{{labels.dateOfRequest}}<span style="color:red">*</span></label>
                                     <mat-form-field   floatLabel = "never">
                                         <input matInput [matDatepicker]="picker3" formControlName="dateOfRequest" (keyup)="detectDateKeyAction($event,'date')" required>
                                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
@@ -53,6 +53,7 @@
                             <div class="col-4 pb-0">
                                 <div class="form-group">
                                     <app-custom-input formControlName="totalCredit" 
+                                      [mandatoryField]="true"
                                       [labelName]="labels.credit" [id]="'credit'" 
                                       placeHolder =  "Enter the Credit"
                                       [maxLength]="labels?.validationData.userName.maxLength" 
@@ -119,7 +120,8 @@
                                      [maxLength]="labels?.validationData.userName.maxLength"  
                                      [isRequired]="'OnApproval is mandatory'" 
                                      [isDirty]="isDirty"
-                                     [isDisabledInp]="isDisabledInp">
+                                     [isDisabledInp]="isDisabledInp"
+                                     [mandatoryField]="true">
                                     </app-custom-input>
                                 </div>
                             </div>
@@ -151,7 +153,7 @@
 
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="remarks">{{labels.remark}}</label>
+                                    <label for="remarks">{{labels.remark}}<span style="color:red">*</span></label>
                                     <textarea class="form-control" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
                                         <div class="date-picker-error" *ngIf="isDirty && smsCreditForm.controls['remark'].errors?.required">
                                             Please Enter Remark

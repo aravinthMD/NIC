@@ -471,10 +471,22 @@ label {
     color: #fff;
 }
 
-@media screen and (min-width: 200px) and (max-width:768px) {
-    #menu-toggle {
+
+@media screen and (min-width: 300px) and (max-width:768px){
+   
+    
+    // #menu-toggle {
+    //     display: none;
+    //   }
+
+    .hide-side-menu {
         display: none;
     }
+
+    .show-side-menu {
+        display: block !important;
+    }
+   
     .main {
         margin-left: 0px;
     }

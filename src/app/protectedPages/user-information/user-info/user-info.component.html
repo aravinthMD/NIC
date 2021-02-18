@@ -610,21 +610,27 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4"  *ngIf="!existingUserFlag">
+                                    
+
+                                    <div class="col-4" >
                                         <div class="form-group">
-                                            <label for="poBillable">{{labels.uploadDoc}}</label>
+                                            <label for="poBillable">{{docAvailFlag ? labels?.changeDoc :labels?.uploadDoc}}</label>
                                             <input type="file" class="form-control upload-choose-pad" id="poBillable"
                                                 aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
                                             <small id="poBillableHelp" class="form-text text-muted"></small>
                                         </div>
                                     </div>
 
-                                    <div class="col-4" *ngIf="existingUserFlag && docAvailFlag" style="padding-bottom:30px;">
-                                        <label for="document">Document</label><br>
-                                        <div class="pb-2">
-                                            <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF()">View PDF</button>
+                                    <ng-container *ngIf="this.clientId"> 
+                                        <div class="col-4" *ngIf="docAvailFlag" style="padding-bottom:30px;">
+                                            <label for="document">Document</label><br>
+                                            <div class="pb-2">
+                                                <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF()">View PDF</button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </ng-container>
+
+                                   
 
                                 </div>
 
@@ -684,11 +690,13 @@
 
                 <div class="row pt-3 pb-3">
                     <div class="col-8">
+                    <ng-container *ngIf="isWrite">
                     <button class="btn btn-primary float-left" matRipple type="submit"
                     (click)="Onsubmit()"    *ngIf="!existingPreviewUserFlag">Save & Next</button>
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit"
                     (click)="Onsubmit()" *ngIf="hideEditButton">Save & Submit</button> -->
                     <button class="btn btn-primary btn-lg back-btn float-left" *ngIf = "existingPreviewUserFlag" style="padding-left: 36px; padding-right:36px;"   matRipple (click)="editData()">Edit</button>
+                </ng-container>
                     </div>
                     
 

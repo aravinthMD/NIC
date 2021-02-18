@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  version: '0.0.2',
-  buildDate: '11-02-2021',
+  version: '0.0.3',
+  buildDate: '15-02-2021',
   projectIds: {
     projectId: '2efbdc721cc311ebb6c0727d5ac274b2'
   },
@@ -9,7 +9,7 @@ export const environment = {
     login: 'v3/',
     api: 'v2/',
   },
-  host:'http://178.128.125.44/appiyo/',
+  host:'/appiyo/',
   appiyoDrive: "d/drive/upload/",
   previewDocappiyoDrive :  "d/drive/docs/",
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',

@@ -40,4 +40,14 @@ label {
         background: rgb(245, 245, 245) !important;
     }
 
- 
+    .dis-block {
+        display: block;
+    }
+    .modal {
+       left: 15%;
+       top: 10%;
+    }
+
+    .modal-dialog {
+        max-width: 50%;
+      }

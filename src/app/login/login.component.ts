@@ -94,34 +94,61 @@ export class LoginComponent implements OnInit {
 
   }
 
-  forgotPassword() {
+  // forgotPassword() {
 
 
-    if(!this.form.value.userName){
-      this.errroMsg = 'Please enter the username to reset password'
-      // this.toasterService.showError('Please enter the useranme to reset password','')
-    }else {
+  //   if(!this.form.value.userName){
+  //     this.errroMsg = 'Please enter the username to reset password'
+  //     // this.toasterService.showError('Please enter the useranme to reset password','')
+  //   }else {
 
-      const username = this.form.value.userName;
+  //     const username = this.form.value.userName;
 
-      localStorage.setItem('userName',this.form.value.userName)
+  //     localStorage.setItem('userName',this.form.value.userName)
 
-      this.loginService.forgotPassword(username).subscribe((response)=> {
+  //     this.loginService.forgotPassword(username).subscribe((response)=> {
 
-        if(response['Error'] == 0 && response['ProcessVariables']['otp']) {
-          this.toasterService.showSuccess('OTP Sent Successfully','')
-          this.router.navigate(['/verifyotp'])
-        }else {
-          // this.toasterService.showError('Invalid Username','')
-          // this.errroMsg = 'Invalid username'
-          this.toasterService.showError('Invalid User Name','')
-        }
+  //       if(response['Error'] == 0 && response['ProcessVariables']['otp']) {
+  //         this.toasterService.showSuccess('OTP Sent Successfully','')
+  //         this.router.navigate(['/verifyotp'])
+  //       }else {
+  //         // this.toasterService.showError('Invalid Username','')
+  //         // this.errroMsg = 'Invalid username'
+  //         this.toasterService.showError('Invalid User Name','')
+  //       }
              
-      })
+  //     })
 
     
 
+  //   }
+  // }
+
+  forgotPassword() {
+    
+    if(!this.form.value.userName){
+          this.errroMsg = 'Please enter the username to reset password'
+          // this.toasterService.showError('Please enter the useranme to reset password','')
+      }else {
+        const username = this.form.value.userName;
+
+        const data ={"userId" : "admin", "validity" : 900, "zoneId" : 98}
+        // X-AUTH-SESSIONID
+        this.loginService.createSession(data).subscribe((response)=> {
+        const getResponse =  response;
+        console.log("createSession response",response);
+        if (getResponse["status"] == true){     
+        const xAuthSessionId = getResponse["payload"]["auth"]["sessionId"]
+        console.log("xAuthSessionId",xAuthSessionId);
+        this.loginService.forgotPassword(username,xAuthSessionId).subscribe((response)=> {
+          console.log("forgotPassword response",response);
+          this.router.navigate(['/verifyotp'])
+        })
+
     }
+
+  })
+  }
   }
 
 }

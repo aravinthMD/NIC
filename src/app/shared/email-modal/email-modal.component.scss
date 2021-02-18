@@ -33,3 +33,25 @@
     padding: 5px;
     box-shadow: none;
   }
+
+  .attachment {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+
+  .show-close {
+    visibility: visible !important;
+  }
+
+  .close-icon {
+     visibility: hidden;
+  }
+
+  .attachment-name {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #104d92;
+    border-radius: 10px;
+    color: #555;
+  }

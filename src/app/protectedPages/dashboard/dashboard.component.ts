@@ -199,7 +199,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         case 'userId': return compare(String(a.userId || '').toLowerCase(), String(b.userId || '').toLowerCase(), isAsc);
         case 'projectNo': return compare(a.projectNo , b.projectNo, isAsc);
         case 'department': return compare(a.department, b.department, isAsc);
-        case 'state': return compare(a.state, b.state, isAsc);
+        case 'state': return compare(String(a.state || '').toLowerCase(), String(b.state || '').toLowerCase(), isAsc);
         case 'status': return compare(a.status, b.status, isAsc);
         default: return 0;
       }

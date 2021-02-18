@@ -10,7 +10,12 @@ export class CustomDateAdapter  {
         constructor(private datePipe: DatePipe) {}
 
         transform(value: string, format: string) {
-            return this.datePipe.transform(value, format);
+            try {
+                return this.datePipe.transform(value, format);
+
+            } catch (e) {
+                return value;
+            }
         }
 
         parseToDateObj(value: any): Date | Error | string {

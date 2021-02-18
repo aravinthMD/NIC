@@ -11,6 +11,8 @@ import {DatePipe} from '@angular/common';
 import { POService } from '@services/po-service';
 import { environment } from 'src/environments/environment';
 
+import { UtilityService } from '@services/utility.service';
+
 @Component({
   selector: 'app-purchase-order-dialog',
   templateUrl: './purchase-order-dialog.component.html',
@@ -80,6 +82,8 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   poId: string;
   updateEmitter = new EventEmitter();
+  onFileUpload = new EventEmitter();
+  isWrite = true;
 
   constructor(
     private labelService:  LabelsService,
@@ -91,8 +95,12 @@ export class PurchaseOrderDialogComponent implements OnInit {
     private adminService: AdminService,
     private invoiceService: InvoiceService,
     private DatePipe: DatePipe,
-    private poService: POService
+    private poService: POService,
+    private utilityService: UtilityService
     ) {
+
+      const purchaseOrder = this.utilityService.getSettingsDataList('PurchaseOrder');
+      this.isWrite = purchaseOrder.isWrite;
 
 
       this.poId = this.data.currentPOId || this.data.id;
@@ -147,6 +155,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
             })
       })
             
+  }
+
+  uploadFile(event) {
+    this.onFileUpload.emit(event);
   }
 
   async getStatusLov() {
@@ -291,8 +303,9 @@ const departmentListData = this.departmentListData.filter((val)=> {
         value:this.PurchaseOrderForm.value.remark
       },
       {
-        key: '',
-        value:''
+        isButton: true,
+        key: 'View PDF',
+        value: this.data.upload_document
       },{
         key :  "",
         value :  ""

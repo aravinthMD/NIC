@@ -216,7 +216,7 @@
             </mat-expansion-panel>
         </mat-accordion>
         <!--Material Table-->
-        <app-reports-table [gridValues] = "gridValues" [reportsId] = "reportsId" *ngIf="gridValues.length > 0">
+        <app-reports-table [gridValues] = "gridValues" [reportsId] = "reportsId" *ngIf="gridValues.length > 0" [resultsLength]="totalRecords" (pageChangeEvent)="onPageChange($event)">
             <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV()">Export as CSV</button>
         </app-reports-table>
 
