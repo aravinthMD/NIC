@@ -53,8 +53,8 @@ export class HttpService {
 
 
   logOut() {
-    let url = environment.host + '/account/logout';
-    return this.http.get(url);
+    let url = environment.host + 'account/logout';
+    return this.get(url);
   }
 
 }
