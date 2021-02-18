@@ -74,11 +74,10 @@
                         <div class="row ml-3 mt-4 pb-2">
                             <h4 class="col-12 p-0"></h4>
                             <div class="d-flex justify-content-start button mr-2">
-                                <button type="button" (click)="saveTemplete()" matRipple class=" btn btn-primary">Save
-                                    as Template</button>
+                                <button type="button" [disabled] = "!showSaveTemplateBtn" (click)="saveTemplete()" matRipple class=" btn btn-primary">Create Template</button>
                             </div>
                             <div class="  d-flex justify-content-start button mr-2">
-                                <button type="submit" (click)="chooseTemplete()" matRipple
+                                <button type="submit" [disabled] = "!showChooseTemplateBtn" (click)="chooseTemplete()" matRipple
                                     class=" btn btn-primary">Choose Template</button>
                             </div>
                             <div class="  d-flex justify-content-start button mr-2">
@@ -87,7 +86,7 @@
                                     class=" btn btn-primary">Edit Template</button>
                             </div>
                             <div class="d-flex justify-content-start button mr-2">
-                                <button  matRipple
+                                <button  [disabled] = "!showScheduleBtn" matRipple
                                     class=" btn btn-primary" (click) = "emailScheduler()">Schedule</button>
                             </div>
                             <div  class="d-flex justify-content-star mr-2" style="width: 15%;">
@@ -152,11 +151,12 @@
                                 [placeholder]="'Choose Screen'"
                                 [data]="screenNameDropDownList"
                                 formControlName ="screenList"
+                                [(ngModel)] = "selectedItems"
                                 [settings]="dropdownSettings">
                                 </ng-multiselect-dropdown>
                             </div>
                             <div class="pl-3" style="margin-top: 40px !important;">
-                                <button type="button"  matRipple (click)="saveOrUpdateTemplate()" class=" btn btn-primary">Save</button>
+                                <button type="button" [disabled] = "!templateName"  matRipple (click)="saveOrUpdateTemplate()" class=" btn btn-primary">Save</button>
                             </div>
                             <div class="pl-3" style="margin-top: 40px !important;">
                                 <button type="button" (click)="cancel()" matRipple
@@ -165,7 +165,7 @@
                         </div>
                         <div *ngIf="chooseTemp" class="col-4">
                             <div class="form-group">
-                                <label for="chooseTemplete">Choose Templete</label>
+                                <label for="chooseTemplete" class="mb-0">Choose Template</label>
                                 <app-vf-custom-select formControlName="selectedTemp" [values]="TemplateList" valueField = "templateTitle" keyField = "id"
                                     (change)="onChange($event)">
                                 </app-vf-custom-select>
@@ -180,7 +180,7 @@
 
                         <div *ngIf="editTempinp" class="col-3">
                             <div class="form-group">
-                                <label for="">Screen Name</label>
+                                <label for="" class="mb-0">Screen Name</label>
                                 <ng-multiselect-dropdown
                                 [placeholder]="'Choose Screen'"
                                 [data]="screenNameDropDownList"
@@ -189,10 +189,10 @@
                                 </ng-multiselect-dropdown>
                             </div>
                         </div>
-                        <div *ngIf="editTempinp" style="margin-top: 3.2% !important;padding-right: 10px;">
+                        <div *ngIf="editTempinp" style="margin-top: 2.5% !important;padding-right: 10px;">
                             <button type="button"  matRipple (click)="update()" class=" btn btn-primary">Update</button>
                         </div>
-                        <div *ngIf="chooseTemp" style="margin-top: 3.2% !important;margin-left: 0%">
+                        <div *ngIf="chooseTemp" style="margin-top: 2.5% !important;margin-left: 0%">
                             <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
                         </div>
 
@@ -200,17 +200,21 @@
                             <div class="form-group compose-height">
                                 <div class="col-2" style="padding:10px;padding-bottom: 0%;">
 
-                                    <label for="">Message</label>
-                            
-                                    <button type="submit" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
-                                    <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
+                                <label for="">Message</label>
+                        
+                                <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
+                                <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
 
-                                </div>
-                              
-                                
+                            </div>
                                 <textarea type="text" formControlName="mailContent" class="form-control"></textarea>
+                                
                             </div>
                         </div>
+                        <!-- <div class="col-2 pl-0">
+                                <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
+                                <button  [disabled] = "!showScheduleBtn" matRipple
+                                    class=" btn btn-primary" (click) = "openScheduleEmailDialog()">Schedule</button>
+                        </div> -->
                         <!-- <div class="col-6">
                             <div class="form-group">
                                 <label for="">Attachment</label>
