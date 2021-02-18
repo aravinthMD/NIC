@@ -14,6 +14,9 @@ export class LoginService {
   constructor(private apiService: ApiService,
     private httpService: HttpService) { }
 
+  private xAuthSessionId: string;
+  private authenticationToken: string;
+
   getLoginCredentials(data) {
     const url =
       environment.host + 'account/'+ environment.apiVersion.login +'login';
@@ -91,7 +94,10 @@ loginApplication(data){
 
 
   forgotPassword(username: string,authKey?) {
-
+    if (authKey){
+      this.xAuthSessionId = authKey
+     }
+ 
     const processId = this.apiService.api.forgotPassword.processId;
     const workflowId = this.apiService.api.forgotPassword.workflowId;
     const projectId = this.apiService.api.forgotPassword.projectId;
@@ -108,7 +114,7 @@ loginApplication(data){
     };
 
    const headers = {
-    "X-AUTH-SESSIONID": authKey
+    "X-AUTH-SESSIONID": authKey ? authKey:  this.xAuthSessionId
    }
 
     // let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
@@ -136,12 +142,15 @@ loginApplication(data){
       workflowId,
       projectId,
     };
-
+    const headers = {
+      "X-AUTH-SESSIONID":  this.xAuthSessionId
+     }
    
 
-    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    // let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    let url = `${environment.host}session/auth_validate`;
 
-    return this.httpService.post(url,requestEntity);
+    return this.httpService.post(url,requestEntity,headers);
 
 
 
@@ -166,11 +175,13 @@ loginApplication(data){
       projectId,
     };
 
+    const headers = {
+      'authentication-token': this.authenticationToken
+    }
    
-
     let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
 
-    return this.httpService.post(url,requestEntity);
+    return this.httpService.post(url,requestEntity,headers);
 
 
 
@@ -187,6 +198,42 @@ loginApplication(data){
 
     let url = `${environment.host}account/create_session`;
     return this.httpService.post(url,myData);
+  }
+
+  reSendOtp(username: string,authKey?) {
+    if (authKey){
+      this.xAuthSessionId = authKey
+     }
+ 
+    const processId = this.apiService.api.forgotPassword.processId;
+    const workflowId = this.apiService.api.forgotPassword.workflowId;
+    const projectId = this.apiService.api.forgotPassword.projectId;
+
+    const data = {
+      name : username
+  }
+
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+   const headers = {
+    "X-AUTH-SESSIONID": authKey ? authKey:  this.xAuthSessionId
+   }
+
+    // let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    let url = `${environment.host}session/auth_reinit`
+    return this.httpService.post(url,requestEntity,headers);
+
+
+
+  }
+
+  setToken(authToken){
+    this.authenticationToken =  authToken;
   }
 
 }
