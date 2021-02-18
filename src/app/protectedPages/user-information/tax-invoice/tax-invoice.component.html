@@ -5,7 +5,7 @@
 
 
         <!--Mat Expansion Panel -->
-        <mat-accordion>
+        <mat-accordion *ngIf="isWrite">
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px">
                     <mat-panel-title>
@@ -18,7 +18,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="userName" 
+                                <app-custom-input formControlName="userName"
+                                [mandatoryField]="true" 
                                   [isRequired]="'User Name is Mandatory'" 
                                   [labelName]="labels.userName" 
                                   placeHolder =  "Enter the User Name"
@@ -32,7 +33,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="department">{{labels.proformaIN}}</label>
+                                <label for="department">{{labels.proformaIN}}<span style="color:red">*</span></label>
                                 <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
                                 class="form-control mb-3"
                                 placeholder="click to select the Proforma Invoice Number"
@@ -54,7 +55,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="department">{{labels.poNumber}}</label>
+                                <label for="department">{{labels.poNumber}<span style="color:red">*</span>}</label>
                                 <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
                                 class="form-control mb-3"
                                 placeholder="click to select the Purchase Order Number"
@@ -94,7 +95,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="InvoiceDate">{{labels?.poDate}}</label>
+                                <label for="InvoiceDate">{{labels?.poDate}}<span style="color:red">*</span></label>
 
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput formControlName="poDate" required 
@@ -130,7 +131,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="fromDate">{{labels?.fromDate}}</label>
+                                <label for="fromDate">{{labels?.fromDate}}<span style="color:red">*</span></label>
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput formControlName="fromDate" required [matDatepicker]="fromDateId" (keyup)="detectDateKeyAction($event,'fromDate')">
                                     <mat-datepicker-toggle matSuffix [for]="fromDateId"></mat-datepicker-toggle>
@@ -148,7 +149,7 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="toDate">{{labels?.toDate}}</label>
+                                <label for="toDate">{{labels?.toDate}}<span style="color:red">*</span></label>
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput [min]="taxInvoiceForm.get('fromDate').value"  formControlName="toDate" required [matDatepicker]="toDateId" [min]="taxInvoiceForm.get('toDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="toDateId"></mat-datepicker-toggle>
@@ -164,6 +165,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="projectNumber" 
+                                [mandatoryField]="true"
                                    [type] = "labels?.validationData?.projectNo?.type"
                                    [isRequired]="'Project Number is Mandatory'" 
                                    [labelName]="labels.projectNo" 
@@ -183,6 +185,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="billableAmount" 
+                                [mandatoryField]="true"
                                    [isRequired]="'Billable Amount is Mandatory'" 
                                    [labelName]="labels?.poBillable" 
                                    placeHolder =  "Enter the Billable Amount"
@@ -196,6 +199,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="invoiceAmount" 
+                                [mandatoryField]="true"
                                    [isRequired]="'Invoice Amount is Mandatory'" 
                                    [labelName]="labels?.invoiceAmount" 
                                    placeHolder =  "Enter the Invoice Amount"
@@ -209,6 +213,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="taxInvoiceNumber" 
+                                [mandatoryField]="true"
                                    [isRequired]="'Tax Invoice Number is Mandatory'" 
                                    [labelName]="labels?.taxIN"
                                    placeHolder = "Enter the Tax Invoice Number" 
@@ -221,7 +226,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="dateFor">{{labels?.submittedDate}}</label>
+                                <label for="dateFor">{{labels?.submittedDate}}<span style="color:red">*</span></label>
 
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput required formControlName="submittedDate" [matDatepicker]="sumbittedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
@@ -242,7 +247,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="">{{labels?.invoiceStatus}}</label>
+                                <label for="">{{labels?.invoiceStatus}}<span style="color:red">*</span></label>
                                 <app-vf-custom-select formControlName="invoiceStatus" 
                                   [values]="invoiceStatusList"
                                   [isRequired]="'Please Select the Invoice Status'" 
@@ -252,7 +257,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="invoicePaidAmount" 
+                                <app-custom-input formControlName="invoicePaidAmount"
+                                [mandatoryField]="true" 
                                    [isRequired]="'Invoice Amount Paid is Mandatory'" 
                                    [labelName]="labels?.invoiceAmountPaid" 
                                    placeHolder =  "Enter the Invoice Amount Paid"
@@ -266,6 +272,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="tds" 
+                                [mandatoryField]="true"
                                   [isRequired]="'TDS is Required'" 
                                   [labelName]="labels?.tds" 
                                   placeHolder =  "Enter the TDS"
@@ -280,6 +287,7 @@
                             <div class="form-group">
                                 <app-custom-input formControlName="penalty" 
                                    [isRequired]="'Penalty is Mandatory'" 
+                                   [mandatoryField]="true"
                                    [labelName]="labels?.penalty"
                                    placeHolder =  "Enter the Penalty" 
                                    [maxLength]="labels?.validationData?.penalty.maxLength" 
@@ -292,6 +300,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="shortPay" 
+                                [mandatoryField]="true"
                                    [isRequired]="'Short Pay is Mandatory'" 
                                    [labelName]="labels?.shortPay" 
                                    placeHolder =  "Enter the Short Pay"
@@ -304,7 +313,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="paymentStatus">{{labels.paymentStatus}}</label>
+                                <label for="paymentStatus">{{labels.paymentStatus}}<span style="color:red">*</span></label>
                                 <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatus" [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty"></app-vf-custom-select>
 
                             </div>
@@ -313,6 +322,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="projectName" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.projectName" [id]="'projectName'" 
                                 placeHolder =  "Enter the Project Name"
                                 [isRequired]="'ProjectName is Mandatory'" 
@@ -326,6 +336,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="projectCoordinator" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.projectCordinator" [id]="'projectCordinator'" 
                                 placeHolder =  "Enter the Project Coordinator Name"
                                 [isRequired]="'Project Coordinator Name is Mandatory'" 
@@ -339,6 +350,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="amendOrderNo" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.PONoAmendOrder" [id]="'PONoAmendOrder'" 
                                 placeHolder =  "Enter the PO No Amend Order"
                                 [isRequired]="'PO No AmendOrder is Mandatory'" 
@@ -351,7 +363,8 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="userEmail" 
+                                <app-custom-input formControlName="userEmail"
+                                [mandatoryField]="true" 
                                 [labelName]="labels.mail" [id]="'mail'" 
                                 placeHolder =  "Enter the Mail"
                                 [isRequired]="'Mail is Mandatory'" 
@@ -365,6 +378,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="totalSMS" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.totalSMS" [id]="'totalSMS'" 
                                 placeHolder =  "Enter the Total SMS"
                                 [isRequired]="'Total SMS is Mandatory'"
@@ -377,7 +391,8 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="counts1" 
+                                <app-custom-input formControlName="counts1"
+                                [mandatoryField]="true" 
                                 [type]="'number'"
                                 [labelName]="labels.counts" [id]="'counts'" 
                                 placeHolder =  "Enter the Counts"
@@ -392,6 +407,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="baseAmount" 
+                                [mandatoryField]="true"
                                 [type]="labels?.validationData.baseAmount.type"
                                 [labelName]="labels.baseAmount" [id]="'baseAmount'" 
                                 placeHolder =  "Enter the Base Amount"
@@ -405,6 +421,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="tax" 
+                                [mandatoryField]="true"
                                 [type]="labels?.validationData.tax.type"
                                 [labelName]="labels.tax" [id]="'tax'" 
                                 placeHolder =  "Enter the tax"
@@ -418,7 +435,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="dateFor">{{labels?.recvDate}}</label>
+                                <label for="dateFor">{{labels?.recvDate}}<span style="color:red">*</span></label>
 
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput required formControlName="receiveDate" [matDatepicker]="recvDateDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
@@ -438,7 +455,8 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <app-custom-input formControlName="book" 
+                                <app-custom-input formControlName="book"
+                                [mandatoryField]="true" 
                                 [labelName]="labels.book" [id]="'book'" 
                                 placeHolder =  "Enter the Book"
                                 [isRequired]="'Book is Mandatory'" 
@@ -452,7 +470,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="dateFor">{{labels?.dateEstimated}}</label>
+                                <label for="dateFor">{{labels?.dateEstimated}}<span style="color:red">*</span></label>
 
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput required formControlName="dateEstimated" [matDatepicker]="dateEstimatedDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
@@ -473,7 +491,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="invoiceAmount2"
-                                
+                                [mandatoryField]="true"
                                 [labelName]="labels.invoiceAmount2" [id]="'invoiceAmount2'" 
                                 placeHolder =  "Enter the Invoice Amount 2"
                                 [isRequired]="'Invoice Amount 2 is Mandatory'" 
@@ -487,6 +505,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="bankReceived" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.bankReceived" [id]="'bankReceived'" 
                                 placeHolder =  "Enter the Bank Received"
                                 [isRequired]="'Bank Received is Mandatory'" 
@@ -500,6 +519,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="interestOnTds" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.interestOnTDSotherDeduction" [id]="'interestOnTDSotherDeduction'" 
                                 placeHolder =  "Enter the Interest On TDS Other Deduction"
                                 [isRequired]="'Interest On TDS other Deduction is Mandatory'" 
@@ -513,7 +533,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="dateFor">{{labels?.receiptDate}}</label>
+                                <label for="dateFor">{{labels?.receiptDate}}<span style="color:red">*</span></label>
 
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput required formControlName="receiptDate" [matDatepicker]="receiptDatePicker" (keyup)="detectDateKeyAction($event,'submittedOn')">
@@ -533,7 +553,7 @@
                     
                         <!-- <div class="col-4">
                             <div class="form-group">
-                                <label for="">{{labels?.month}}</label>
+                                <label for="">{{labels?.month}}<span style="color:red">*</span></label>
                                 <app-vf-custom-select formControlName="month" 
                                   [values]="monthList"
                                   [isRequired]="'Please Select the month'" 
@@ -543,7 +563,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="">{{labels?.year}}</label>
+                                <label for="">{{labels?.year}}<span style="color:red">*</span></label>
                                 <app-vf-custom-select formControlName="year" 
                                   [values]="yearList"
                                   [isRequired]="'Please Select the year'" 
@@ -553,6 +573,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <app-custom-input formControlName="mrnNumber" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.mrn" [id]="'mrn'" 
                                 placeHolder =  "Enter the MRN Number"
                                 [isRequired]="'MRN Number is Mandatory'"

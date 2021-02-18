@@ -6,7 +6,7 @@
 
 
 
-        <mat-accordion>
+        <mat-accordion *ngIf="isWrite">
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple collapsedHeight="40px" expandedHeight="43px">
                     <mat-panel-title>
@@ -21,6 +21,7 @@
                             <div class="form-group">
 
                                 <app-custom-input formControlName="accountName" 
+                                [mandatoryField]="true"
                                  [labelName]="labels.accountName" [id]="'accountName'" 
                                  placeHolder =  "Enter the Account Name"
                                  [isRequired]="'Account Name is Mandatory'" 
@@ -55,6 +56,7 @@
                   </div> -->
 
                                 <app-custom-input formControlName="invoiceNumber" 
+                                [mandatoryField]="true"
                                     [labelName]="labels.proformaIN" [id]="'invoiceNumber'" 
                                     placeHolder = "Enter the Proforma Invoice Number"
                                     [isRequired]="'Invoice Number is Mandatory'" 
@@ -69,6 +71,7 @@
 
 
                                 <app-custom-input formControlName="refNumber" 
+                                [mandatoryField]="true"
                                   [labelName]="labels.refNo" [id]="'refNo'" 
                                   placeHolder =  "Enter the Reference Number"
                                   [isRequired]="'Reference Number is Mandatory'" 
@@ -87,6 +90,7 @@
                             <div class="form-group">
 
                                 <app-custom-input formControlName="piOwner" 
+                                [mandatoryField]="true"
                                     [labelName]="labels.piOwner" [id]="'piOwner'" 
                                     placeHolder =  "Enter the Proforma Invoice Owner"
                                     [isRequired]="'Owner is Mandatory'" 
@@ -118,6 +122,7 @@
             </div> -->
 
                                 <app-custom-input formControlName="piAmount" 
+                                [mandatoryField]="true"
                                    [labelName]="labels.piAmount" [id]="'piAmount'" 
                                    placeHolder =  "Enter the Amount"
                                    [isRequired]="'Amount is Mandatory'" 
@@ -133,6 +138,7 @@
                             <div class="form-group">
 
                                 <app-custom-input formControlName="piTraffic" 
+                                [mandatoryField]="true"
                                 [labelName]="labels.piTraffic" [id]="'piTraffic'" 
                                 placeHolder =  "Enter the Traffic"
                                 [isRequired]="'Traffic is Mandatory'" 
@@ -149,7 +155,7 @@
                             <div class="form-group">
 
 
-                                <label for="dateFor">{{labels?.date}}</label>
+                                <label for="dateFor">{{labels?.date}}<span style="color:red">*</span></label>
                                 <!-- <input type="date" class="form-control" id="dateFor" aria-describedby="dateHelp">
                     <small id="dateHelp" class="form-text text-muted"></small> -->
 
@@ -177,6 +183,7 @@
             [isRequired]="'Please Select NICSI Manager'" [isDirty]="isDirty"></app-vf-custom-select> -->
 
                                 <app-custom-input formControlName="nicsiManager" 
+                                [mandatoryField]="true"
                                    [labelName]="labels.nicsiManager" [id]="'nicsiManager'" 
                                    placeHolder =  "Enter the NICSI Manager"
                                    [isRequired]="'NICSI Manager is Mandatory'" 
@@ -191,7 +198,7 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="Fromperiod">Start Date</label>
+                                <label for="Fromperiod">Start Date<span style="color:red">*</span></label>
 
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="form.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" required>
@@ -211,7 +218,7 @@
                         </div>
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="Toperiod">End Date</label>
+                                <label for="Toperiod">End Date<span style="color:red">*</span></label>
 
                                 <mat-form-field floatLabel  =  "never">
                                     <input matInput [matDatepicker]="picker4" [min]="form.get('startDate').value" formControlName="endDate" (keyup)="detectDateKeyAction($event,'endDate')" required>
@@ -234,7 +241,7 @@
                         <div class="col-4">
 
                             <div class="form-group">
-                                <label for="piStatus" style="margin-bottom: -1em">PI Status</label>
+                                <label for="piStatus" style="margin-bottom: -1em">PI Status<span style="color:red">*</span></label>
 
                                 <app-vf-custom-select formControlName="piStatus" [values]="piStatusData" [isRequired]="'Please Select PI Status'" [isDirty]="isDirty"></app-vf-custom-select>
 
@@ -244,7 +251,7 @@
                         <div class="col-4">
 
                             <div class="form-group">
-                                <label for="payMentStatus" style="margin-bottom: -1em">Payment Status</label>
+                                <label for="payMentStatus" style="margin-bottom: -1em">Payment Status<span style="color:red">*</span></label>
 
                                 <app-vf-custom-select formControlName="paymentStatus" [values]="paymentStatusData" [isRequired]="'Please Select Payment Status'" [isDirty]="isDirty">
                                 </app-vf-custom-select>
@@ -267,7 +274,7 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label class="mb-0" for="remarks">{{labels.remark}}</label>
+                                <label class="mb-0" for="remarks">{{labels.remark}}<span style="color:red">*</span></label>
                                 <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
                                     <div class="date-picker-error" *ngIf="isDirty && form.controls['remark'].errors?.required">
                                         Please Enter Remark
@@ -315,7 +322,7 @@
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
-                            <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
+                            <label for="dateFor" class="" style="visibility:hidden;">From Date<span style="color:red">*</span></label>
                             <mat-form-field>
                                 <mat-label>Search...</mat-label>
                                 <input matInput type="text" formControlName="searchData">
@@ -333,7 +340,7 @@
                         <div class="form-group">
 
 
-                            <label for="dateFor" style="visibility:hidden;">From Date</label>
+                            <label for="dateFor" style="visibility:hidden;">From Date<span style="color:red">*</span></label>
 
                             <mat-form-field>
                                 <mat-label>From Date</mat-label>
@@ -349,7 +356,7 @@
                         <div class="form-group">
 
 
-                            <label for="dateFor" style="visibility:hidden;">To Date</label>
+                            <label for="dateFor" style="visibility:hidden;">To Date<span style="color:red">*</span></label>
 
                             <mat-form-field>
                                 <mat-label>To Date</mat-label>

@@ -9,6 +9,7 @@ import { ToasterService } from '@services/toaster.service';
 import { UserInfoService } from '@services/user-info.service';
 import { UtilService } from '@services/util.service';
 import { NewAccountService } from '@services/new-account.service';
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-billing-owner-details',
@@ -49,6 +50,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
   clientId: number;
   isShowViewPage = false;
   insertionFlag: number;
+  isWrite = false;
 
   constructor(
     private labelsService: LabelsService,
@@ -60,11 +62,13 @@ export class BillingOwnerDetailsComponent implements OnInit {
     private behser: BehaviourSubjectService,
     private billingAdminService: BillingAdminService,
     private clientDetailService: ClientDetailsService,
-    private newAccountService: NewAccountService
+    private newAccountService: NewAccountService,
+    private utilityService: UtilityService
     ) { }
 
   ngOnInit() {
-
+    const customerPage = this.utilityService.getSettingsDataList('CustomerModule');
+    this.isWrite = customerPage.isWrite;
     this.newAccountService.getFlagForShowingPages()
         .subscribe((value) => {
             this.insertionFlag = value;

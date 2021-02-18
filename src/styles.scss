@@ -478,9 +478,17 @@ label {
 @media screen and (min-width: 300px) and (max-width:768px){
    
     
-    #menu-toggle {
+    // #menu-toggle {
+    //     display: none;
+    //   }
+
+    .hide-side-menu {
         display: none;
-      }
+    }
+
+    .show-side-menu {
+        display: block !important;
+    }
    
 
     .main {        

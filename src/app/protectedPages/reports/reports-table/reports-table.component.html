@@ -199,6 +199,13 @@
     </table>
     <ng-content></ng-content>
     <!-- <button class="btn btn-primary download download-pad" type="submit">Export As CSV</button> -->
-    <mat-paginator class="font-paginator" [pageSize]="[5]" showFirstLastButtons></mat-paginator>
+    <!-- <ng-container *ngIf="reportsId !== '9'">
+       <mat-paginator class="font-paginator" [pageSize]="[5]" showFirstLastButtons></mat-paginator>
+    </ng-container> -->
+    <ng-container >
+        <mat-paginator [hidden]="reportsId === '9'" class="font-paginator"  [hidePageSize]='true' [pageSize]="5" showFirstLastButtons></mat-paginator>
+        <mat-paginator [hidden]="reportsId !=='9'" class="font-paginator" [length]="resultsLength" (page)="pageEventData($event)" [hidePageSize]='true' [pageSize]="5" showFirstLastButtons></mat-paginator>
+        <!-- <mat-paginator class="font-paginator" [hidePageSize]='true'  [length]="resultsLength"[pageSize]="[5]" showFirstLastButtons  (page)="pageEventData($event)"></mat-paginator> -->
+     </ng-container>
     <div class="mb-3"></div>
 </div>
