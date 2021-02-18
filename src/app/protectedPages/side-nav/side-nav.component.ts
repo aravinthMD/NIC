@@ -11,6 +11,7 @@ import { ClientDetailsService } from '@services/client-details.service';
 import { ToasterService } from '@services/toaster.service';
 import { UtilityService } from '@services/utility.service';
 import { NewAccountService } from '@services/new-account.service';
+import { ToggleSideMenuService } from '@services/toggle-sidemenu.service';
 import { filter } from 'rxjs/operators';
 import { F } from '@angular/cdk/keycodes';
 @Component({
@@ -43,6 +44,7 @@ public projectExecutionModule: boolean;
 public performaInvoiceModule: boolean;
 private mySetting: Array<any>;
 insertionFlag: number;
+showSideMenu = false;
 // showOtherMenus: boolean;
   constructor(
     private location: Location,
@@ -52,7 +54,8 @@ insertionFlag: number;
     private toasterService: ToasterService,
     private activatedRoute: ActivatedRoute ,
     private utilityService: UtilityService,
-    private newAccountService: NewAccountService
+    private newAccountService: NewAccountService,
+    private toggleSideMenuService: ToggleSideMenuService
     ) {
 
       this.version = environment.version;
@@ -93,6 +96,11 @@ insertionFlag: number;
   }
 
   ngOnInit() {
+
+    this.toggleSideMenuService.getToggleListener()
+        .subscribe((value) => {
+            this.showSideMenu = value;
+        });
 
 
     this.listenerForGetFlagValues();

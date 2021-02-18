@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { UtilService } from '@services/util.service';
@@ -16,18 +16,22 @@ export class ReportsTableComponent implements OnInit, OnChanges {
 
   @Input() reportsId: string;
   @Input() gridValues: any[] = [];
+  @Input() resultsLength: number;
+  @Output() pageChangeEvent = new EventEmitter();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+ 
 
 
   dataSource = new MatTableDataSource<any>(this.gridValues);
   displayedColumns: string[] = ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate']; 
 
-  defaultColumns: string[] =  ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate'];
+  DEFAULT_COLUMNS =  ['UserID', 'Department', 'state','projectNumber', 'piNumber','piDate'];
 
   PAYMENT_TRACKING_COLUMNS  = ['projectNumber', 'InvoiceNo', 'InvoicePaid', 'InvoiceDate'];
 
   PAYMENT_RECEIVED_COLUMNS = ['InvoiceNo', 'InvoicePaid', 'ActualPayment', 'ShortPay'];
+
 
   // shortColumns : string[] = ['DocNo','PayBMade','Diff','DocRecDate','PaymentRecDate','WithTdS'];
 
@@ -40,6 +44,7 @@ export class ReportsTableComponent implements OnInit, OnChanges {
   INVOICE_RAISED = ['projectNumber', 'poNumber', 'poDate', 'InvoiceNo', 'InvoiceDate'];
 
   smsColumns: string[] = ['smsMatrix','Credits','Date','Status','Navigate']
+  isEnablePagination = false;
   constructor(
     private ngxUiLoaderService: NgxUiLoaderService,
     private utilService: UtilService,
@@ -70,6 +75,9 @@ export class ReportsTableComponent implements OnInit, OnChanges {
       this.displayedColumns = this.PURCHASE_ORDER_RAISED;
     } else if (this.reportsId === '7') {
       this.displayedColumns = this.INVOICE_RAISED;
+    } else if (this.reportsId === '9') {
+      this.isEnablePagination = true;
+      this.displayedColumns = this.DEFAULT_COLUMNS;
     }
 
 
@@ -116,6 +124,10 @@ export class ReportsTableComponent implements OnInit, OnChanges {
 
 //   this.ngxUiLoaderService.stop();
 
+  }
+
+  pageEventData(page) {
+    this.pageChangeEvent.emit(page);
   }
 
   navigate(obj: any) {

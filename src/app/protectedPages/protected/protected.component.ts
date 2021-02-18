@@ -3,6 +3,7 @@ import { Router} from '@angular/router';
 import {UtilService} from '@services/util.service';
 import { UtilityService } from '@services/utility.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { ToggleSideMenuService } from '@services/toggle-sidemenu.service';
 
 
 @Component({
@@ -18,13 +19,25 @@ export class ProtectedComponent implements OnInit {
   constructor(private router :Router,
               private utilService:UtilService,
               private ngxUiLoaderService: NgxUiLoaderService,
-              private utilityService: UtilityService) { 
+              private utilityService: UtilityService,
+              private toggleSideMenuService: ToggleSideMenuService) { 
 
     this.userName = localStorage.getItem('userName') || 'Admin User'
   }
 
   ngOnInit() {
     this.userType = localStorage.getItem('roleName');
+    this.bodyClickListener()
+  }
+
+  bodyClickListener() {
+       document.addEventListener('click', (event: any) => {
+            console.log('body click', event.target.id);
+            const id = event.target.id;
+            if (id !== 'menu' && id !== 'sidebarToggleTop' && id !== 'toggleSide' && id !== 'forarrow') {
+               this.toggleSideMenuService.toggle(false);
+            }
+       });
   }
 
   newUserMethod(){
@@ -44,4 +57,5 @@ export class ProtectedComponent implements OnInit {
   logOut(){
     this.utilityService.logOut()
   }
+
 }
