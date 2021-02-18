@@ -49,7 +49,7 @@ export class ApiService {
     getProjectExecutionDetailsList : {
 
       workflowId : 'e4537964406711ebb7bf727d5ac274b2',
-      processId  : '5e47716c410d11ebb7bf727d5ac274b2',
+      processId  : 'c72924446f5911eb9013727d5ac274b2',
       projectId  : environment.projectIds.projectId
 
     },
