@@ -71,12 +71,7 @@ export class TaxInvoiceComponent implements OnInit {
   // ];
   paymentStatus: any[] = [];
 
-    invoiceStatusList :  any[] = [
-      {key : 0,value : 'Pending'},
-      {key : 1,value : 'Paid'},
-      {key : 2,value : 'Partially Paid'},
-      {key : 3,value : 'Return by NICSI'}
-    ]
+    invoiceStatusList = [];
 
   dataSource = new MatTableDataSource<any>([]);
   taxInvoiceForm: FormGroup;
@@ -117,6 +112,11 @@ export class TaxInvoiceComponent implements OnInit {
       ) { }
 
   ngOnInit() {
+    const lov = this.activatedRoute.parent.snapshot.data || {};
+    const listOfValues = lov.listOfValue || {};
+    const processVariables = listOfValues.ProcessVariables || {};
+    this.invoiceStatusList = processVariables.invoiceStatusList || [];
+    this.taxInvoiceService.setInvoiceStatusList(this.invoiceStatusList);
     const taxInvoice = this.utilityService.getSettingsDataList('TaxInvoice');
     this.isWrite = taxInvoice.isWrite;
     this.selectedClientId = Number(this.clientDetailsService.getClientId());

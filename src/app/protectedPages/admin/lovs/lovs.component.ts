@@ -29,6 +29,7 @@ export class LovsComponent implements OnInit {
     tableLength: number;
     totalLovItems = [];
     searchLovItemsValue = [];
+    isAddNewKey: boolean;
   constructor(
       private labelsService: LabelsService,
       private toasterService: ToasterService,
@@ -45,13 +46,15 @@ export class LovsComponent implements OnInit {
 
   initLovForm() {
       this.lovItemsForm = new FormGroup({
-        items: new FormArray([])
+        items: new FormArray([]),
+        addNewValue: new FormControl(),
       });
   }
 
   addNewItems() {
-    const formArray = this.lovItemsForm.get('items') as FormArray;
-    formArray.push(this.addLovFormItems());
+    this.isAddNewKey = true;
+    // const formArray = this.lovItemsForm.get('items') as FormArray;
+    // formArray.push(this.addLovFormItems());
   }
 
   addLovFormItems(item?: any) {
@@ -102,6 +105,20 @@ export class LovsComponent implements OnInit {
   }
 
   onLovItemSave(index: number) {
+    const listId = this.selectedLovItem.key;
+
+    if (index === -1) {
+        const newValue = this.lovItemsForm.get('addNewValue').value;
+        if (!newValue) {
+          return this.toasterService.showError('Please enter the value', '');
+        }
+        const data = {
+            listId,
+            value: newValue
+        };
+        this.addNewItemToLov(data);
+        return;
+    }
     const formArray = this.lovItemsForm.get('items') as FormArray;
     const formGroup = formArray.at(index) as FormGroup;
     const value = formGroup.get('value').value;
@@ -110,17 +127,12 @@ export class LovsComponent implements OnInit {
     }
     const key = formGroup.get('key').value;
     formGroup.get('value').disable();
-    const listId = this.selectedLovItem.key;
     const requestData: any = {
       listId,
       key,
       value,
     };
-    if (key === 'NA') {
-       requestData.index = index;
-       this.addNewItemToLov(requestData);
-       return;
-    }
+    
     this.adminService.updateLov(requestData).subscribe((response: any) => {
       const error = response.Error;
       const errorMessage = response.ErrorMessage;
@@ -138,20 +150,23 @@ export class LovsComponent implements OnInit {
 
   addNewItemToLov(data) {
     console.log('addNewItemToLov', data);
-    const formArray = this.lovItemsForm.get('items') as FormArray;
-    const formGroup = formArray.at(data.index) as FormGroup;
-    const insertObj = {
-      listId: data.listId,
-      value: data.value,
-    };
+    // const formArray = this.lovItemsForm.get('items') as FormArray;
+    // const formGroup = formArray.at(data.index) as FormGroup;
+    // const insertObj = {
+    //   listId: data.listId,
+    //   value: data.value,
+    // };
 
-    this.adminService.insertLov(insertObj).subscribe((response: any) => {
+    this.adminService.insertLov(data).subscribe((response: any) => {
       const error = response.Error;
       const errorMessage = response.ErrorMessage;
 
       if (error !== '0') {
         return this.toasterService.showError(errorMessage, '');
       }
+
+      this.lovItemsForm.get('addNewValue').setValue('');
+      this.isAddNewKey = false;
 
       console.log('add data', response);
       this.toasterService.showSuccess('Added Successfully', '');
@@ -257,6 +272,11 @@ export class LovsComponent implements OnInit {
   }
 
 openDeleteModal(index: number) {
+  if (index === -1) {
+    this.lovItemsForm.get('addNewValue').setValue('');
+    this.isAddNewKey = false;
+    return;
+  }
   const formArray = this.lovItemsForm.get('items') as FormArray;
   const key = formArray.at(index).get('key').value;
   if (key === 'NA') {

@@ -123,18 +123,14 @@ export class TaxInvoiceDialogComponent implements OnInit {
     //this.detectAuditTrialObj=this.taxInvoiceForm.value
    }
 
-   invoiceStatusList  = [
-    {key : 0, value : 'Pending'},
-    {key : 1, value : 'Paid'},
-    {key : 2, value : 'Partially Paid'},
-    {key : 3, value : 'Return by NICSI'}
-  ];
+   invoiceStatusList  = [];
   detectAuditTrialObj: any;
   remarkModal: boolean;
   paymentStatus: any[] = [];
 
   ngOnInit() {
     const taxInvoice = this.utilityService.getSettingsDataList('TaxInvoice');
+    this.invoiceStatusList = this.taxInvoiceService.getInvoiceStatusList();
     this.isWrite = taxInvoice.isWrite;
     this.paymentStatus = this.taxInvoiceService.getPaymentList();
     this.labelService.getLabelsData().subscribe((value) => {
@@ -317,6 +313,10 @@ export class TaxInvoiceDialogComponent implements OnInit {
     // ]   
 
     // this.getTaxInvoiceDetailById(this.data)
+  }
+
+  patchLov() {
+    
   }
 
   uploadFile(event) {
