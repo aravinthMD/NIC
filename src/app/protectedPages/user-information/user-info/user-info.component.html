@@ -40,6 +40,7 @@
                                     [maxLength]="labels?.validationData.applicantName.maxLength" 
                                     [isDisabledInp]="propertyFlag"
                                     placeHolder = "Enter the Applicant Name"
+                                    [type]="labels?.validationData.applicantName.type"
                                     [isDirty]="isDirty">
                                     </app-custom-input>
                                 </div>
@@ -113,6 +114,7 @@
                                     [isRequired]="'Designation is Mandatory'" 
                                     [mandatoryField]="true"
                                     [maxLength]="labels?.validationData.designation.maxLength"
+                                    [type]="labels?.validationData.designation.type"
                                     [isDisabledInp]="propertyFlag" 
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -146,6 +148,7 @@
                                         [labelName]="labels.userId" [id]="'userId'"
                                         placeHolder =  "Enter the User Id"
                                         [maxLength]="labels?.validationData.userName.maxLength" 
+                                        [type]="labels?.validationData.userName.type" 
                                         [isDisabledInp]="propertyFlag" 
                                         [isDirty]="isDirty">
                                     </app-custom-input>
@@ -178,6 +181,7 @@
                                     [isRequired]="'Officer Name is Mandatory'"
                                     [mandatoryField]="true" 
                                     [maxLength]="labels?.validationData.officerName.maxLength"
+                                    [type]="labels?.validationData.officerName.type"
                                     [isDisabledInp]="propertyFlag" 
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -243,6 +247,7 @@
                                     [mandatoryField]="true"
                                     [isRequired]="'Office AddressLine1 is Mandatory'"
                                     [maxLength]="labels?.validationData.officeAddress.maxLength"
+                                    [type]="labels?.validationData.officeAddress.type"
                                     [isDisabledInp]="propertyFlag" 
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -258,6 +263,7 @@
                                     placeHolder = "Enter the Address2"
                                     [id]="'offcAddressLine2'" 
                                     [maxLength]="labels?.validationData.officeAddress.maxLength"
+                                    [type]="labels?.validationData.officeAddress.type"
                                     [isDisabledInp]="propertyFlag" 
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -271,6 +277,7 @@
                                     placeHolder =  "Enter the Address3"
                                     [id]="'offcAddressLine3'" 
                                     [maxLength]="labels?.validationData.officeAddress.maxLength"
+                                    [type]="labels?.validationData.officeAddress.type"
                                     [isDisabledInp]="propertyFlag" 
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -286,6 +293,7 @@
                                     [mandatoryField]="true" 
                                     [isRequired]="'City is Mandatory'"
                                     [maxLength]="labels?.validationData.city.maxLength" 
+                                    [type]="labels?.validationData.city.type" 
                                     [isDisabledInp]="propertyFlag"
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -303,6 +311,7 @@
                                         [mandatoryField]="true" 
                                         [isRequired]="'State is Mandatory'"
                                         [maxLength]="labels?.validationData.state.maxLength" 
+                                        [type]="labels?.validationData.state.type" 
                                         [isDisabledInp]="propertyFlag"
                                         [isDirty]="isDirty">
                                     </app-custom-input>
@@ -376,7 +385,8 @@
                                     [id]="'nameOfTheApplication'"
                                     [mandatoryField]="true" 
                                     [isRequired]="'Name of the Applicationis Mandatory'"
-                                    [maxLength]="labels?.validationData.applicantName.maxLength" 
+                                    [maxLength]="labels?.validationData.applicantName.maxLength"
+                                    [type]="labels?.validationData.applicantName.type" 
                                     [isDisabledInp]="propertyFlag"
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -410,6 +420,7 @@
                                     [mandatoryField]="true"
                                     [isRequired]="'Server Location Mandatory'"
                                     [maxLength]="labels?.validationData.serverLocation.maxLength" 
+                                    [type]="labels?.validationData.serverLocation.type" 
                                     [isDisabledInp]="propertyFlag"
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -422,6 +433,8 @@
                                     placeHolder = "Enter the purpose of Application"
                                     [id]="'purpOfTheApplication'"
                                     [isDisabledInp]="propertyFlag"
+                                    [maxLength]="labels?.validationData.purpOfTheApplication.maxLength"
+                                    [type]="labels?.validationData.purpOfTheApplication.type"
                                     [isDirty]="isDirty">
                                     </app-custom-input>
                                 </div>
@@ -435,6 +448,7 @@
                                     [mandatoryField]="true" 
                                     [isRequired]="'This Field is Mandatory'"
                                     [maxLength]="labels?.validationData.smsGatewayAccess.maxLength" 
+                                    [type]="labels?.validationData.smsGatewayAccess.type" 
                                     [isDisabledInp]="propertyFlag"
                                     [isDirty]="isDirty">
                                     </app-custom-input>
@@ -469,6 +483,7 @@
                                     [id]="'domMonSmsTraffic'"
                                     [mandatoryField]="true" 
                                     [maxLength]="labels?.validationData.domMonSmsTraffic.maxLength"
+                                    [type]="labels?.validationData.domMonSmsTraffic.type"
                                     [isDisabledInp]="propertyFlag" 
                                     [isRequired]="'This Field is Mandatory'"
                                     [isDirty]="isDirty">
@@ -481,7 +496,8 @@
                                     [labelName]="labels.projectedInternationalMonthlySMStraffic"
                                     placeHolder = "Enter the projected International monthly SMS Traffic" 
                                     [id]="'intMonSmsTraffic'"
-                                    [maxLength]="labels?.validationData.intMonSmsTraffic.maxLength" 
+                                    [maxLength]="labels?.validationData.intMonSmsTraffic.maxLength"
+                                    [type]="labels?.validationData.intMonSmsTraffic.type" 
                                     [isDisabledInp]="propertyFlag"
                                     [isDirty]="isDirty">
                                     </app-custom-input>

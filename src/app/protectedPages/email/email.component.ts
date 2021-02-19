@@ -44,6 +44,7 @@ export class EmailComponent implements OnInit {
   SelectedVal;
   emailform:FormGroup;
 
+
   // optionsScreen  = [   //HardCoded
   //   {
   //     key : 'Customer Details' , 

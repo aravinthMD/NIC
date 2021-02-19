@@ -108,7 +108,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
 
   getDataForDialogModal() {
     const smsApprover = this.smsQuotaMatrix.find((val) => {
-      return val.key === this.data.smsApprover;
+      return String(val.key) === String(this.data.smsApprover);
     }) || {};
     const status = this.statusList.find(val => {
       return val.key === this.data.status;

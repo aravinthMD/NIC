@@ -165,7 +165,7 @@ createAdminUser(data) {
 
 } 
 
-fetchAllAdminUser() {
+fetchAllAdminUser(currentPage = 1) {
 
   const processId = this.apiService.api.fetchAllAdminUser.processId;
   const workflowId = this.apiService.api.fetchAllAdminUser.workflowId;
@@ -174,7 +174,9 @@ fetchAllAdminUser() {
 
   const requestEntity: any = {
     processId,
-    ProcessVariables: {},
+    ProcessVariables: {
+      currentPage
+    },
     workflowId,
     projectId,
   };

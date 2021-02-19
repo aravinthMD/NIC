@@ -16,12 +16,7 @@ export class SmsCreditService {
     { key: '2', value: 'Rejected' },
   ];
 
-  private SMS_QUOTA_MATRIX = [
-    { key: '0', value: 'arpita.burman@nic.in' },
-    { key: '1', value: 'dureja.sk@nic.in' },
-    { key: '2', value: 'sshanker@nic.in' },
-    { key: '3', value: 'pradeep.garg@nic.in' },
-  ];
+  private SMS_QUOTA_MATRIX = [];
 
   constructor(
     private httpService: HttpService,
@@ -30,6 +25,10 @@ export class SmsCreditService {
 
   getStatusListLov() {
     return this.STATUS_LIST;
+  }
+
+  setSmsQuotaMatrix(value = []) {
+    this.SMS_QUOTA_MATRIX = value;
   }
 
   getSmsQuotaMatrix() {

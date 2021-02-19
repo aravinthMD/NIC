@@ -119,7 +119,7 @@
                                     <mat-label>To Date</mat-label>
                                     <input matInput formControlName="toScheduleDate"
                                     [matDatepicker]="picker1"
-                                    [min]="emailform.get('toScheduleDate').value" (keyup)="detectDateKeyAction($event,'toDate')">
+                                    [min]="emailform.get('fromScheduleDate').value || today" (keyup)="detectDateKeyAction($event,'toDate')">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>

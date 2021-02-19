@@ -33,7 +33,8 @@
                         placeHolder = "Enter the Name"
                         [isRequired]="'Name is Mandatory'" 
                         [mandatoryField]="true"
-                        [maxLength]="labels?.validationData.name.maxLength" 
+                        [maxLength]="labels?.validationData.name.maxLength"
+                        [type]="labels?.validationData.name.type" 
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -76,7 +77,8 @@
                         [id]="'designation'" 
                         [mandatoryField]="true"
                         [isRequired]="'Designation is Mandatory'" 
-                        [maxLength]="labels?.validationData.designation.maxLength" 
+                        [maxLength]="labels?.validationData.designation.maxLength"
+                        [type]="labels?.validationData.designation.type" 
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -89,7 +91,8 @@
                         [labelName]="labels.employeeCode" 
                         placeHolder =  "Enter the Employee Code"
                         [id]="'employeeCode'" 
-                        [maxLength]="labels?.validationData.employeeCode.maxLength"  
+                        [maxLength]="labels?.validationData.employeeCode.maxLength"
+                        [type]="labels?.validationData.employeeCode.type"  
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -186,6 +189,7 @@
                         [mandatoryField]="true"
                         [isRequired]="'Office AddressLine1 is Mandatory'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                        [type]="labels?.validationData.officeAddress.type" 
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -199,6 +203,7 @@
                         placeHolder =  "Enter the Address2"
                         [id]="'offcAddressLine2'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                        [type]="labels?.validationData.officeAddress.type"
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -214,6 +219,7 @@
                         placeHolder =  "Enter the Address3"
                         [id]="'offcAddressLine3'" 
                         [maxLength]="labels?.validationData.officeAddress.maxLength" 
+                        [type]="labels?.validationData.officeAddress.type"
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -228,7 +234,8 @@
                         [id]="'city'" 
                         [mandatoryField]="true"
                         [isRequired]="'City is Mandatory'" 
-                        [maxLength]="labels?.validationData.city.maxLength" 
+                        [maxLength]="labels?.validationData.city.maxLength"
+                        [type]="labels?.validationData.city.type" 
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
@@ -243,7 +250,8 @@
                         [id]="'state'" 
                         [mandatoryField]="true"
                         [isRequired]="'State is Mandatory'" 
-                        [maxLength]="labels?.validationData.state.maxLength" 
+                        [maxLength]="labels?.validationData.state.maxLength"
+                        [type]="labels?.validationData.state.type" 
                         [isDirty]="isDirty"
                         [isDisabledInp]="propertyFlag"
                         >
