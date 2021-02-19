@@ -343,8 +343,8 @@ label {
 // mat-table:not(.mat-calendar-table){
 // }
 .custom-table {
-    display: block;
-    max-width: 100%;
+    // display: block;
+    // width: 100%;
     overflow: scroll;
 }
 
@@ -471,22 +471,16 @@ label {
     color: #fff;
 }
 
-
-@media screen and (min-width: 300px) and (max-width:768px){
-   
-    
+@media screen and (min-width: 300px) and (max-width:768px) {
     // #menu-toggle {
     //     display: none;
     //   }
-
     .hide-side-menu {
         display: none;
     }
-
     .show-side-menu {
         display: block !important;
     }
-   
     .main {
         margin-left: 0px;
     }
