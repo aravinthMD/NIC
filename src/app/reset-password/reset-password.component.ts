@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { ToasterService } from '@services/toaster.service';
 import { Router } from '@angular/router';
 import { LoginService } from '@services/login.service'
+import { UtilityService } from '@services/utility.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -26,8 +27,13 @@ export class ResetPasswordComponent implements OnInit {
   confirmValidPattern: boolean;
 
   isError: boolean;
+  userData: any;
 
-  constructor(private formBuilder : FormBuilder,private toasterService: ToasterService,private router: Router,private loginService: LoginService) {
+  constructor(private formBuilder : FormBuilder,
+              private toasterService: ToasterService,
+              private router: Router,
+              private loginService: LoginService,
+              private utilityService: UtilityService) {
     this.form = this.formBuilder.group({
       newPassword : [null],
       confirmPassword: [null]
@@ -38,6 +44,10 @@ export class ResetPasswordComponent implements OnInit {
 
 
   ngOnInit() {
+    this.userData = this.utilityService.getUserData(); 
+    if (!this.userData) {
+      this.router.navigate(['']);
+    }
   }
 
   get password(){
@@ -102,7 +112,7 @@ export class ResetPasswordComponent implements OnInit {
       this.isError = false;
 
       const request = {
-        username: localStorage.getItem('userName'),
+        username: this.userData.userName,
         password: confirmPassword
       }
 
@@ -118,6 +128,13 @@ export class ResetPasswordComponent implements OnInit {
         
       })
       
+    }
+  }
+
+  setAutoFillOff(event: any) {
+    console.log("event call");
+    if (event) {
+      event.target.attributes['autocomplete'].value = 'chrome-off';
     }
   }
 

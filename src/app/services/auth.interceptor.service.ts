@@ -37,12 +37,8 @@ export class AuthInterceptorService implements HttpInterceptor {
     this.ngxUiLoaderService.start();
     this.apiCount++;
     let httpMethod = req.method;
-
-    const reqBody = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-
-    if (reqBody && reqBody.showLoader !== false) {
-      this.ngxUiLoaderService.start();
-    } 
+    const reqBody = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;   
+     
     console.log("********************************************");  
     console.log('Before Encryption', req.body);  
     console.log("********************************************");
@@ -90,6 +86,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       authReq = req.clone({
         headers: req.headers.set(
           'authentication-token',
+          req.headers.get('authentication-token') ? req.headers.get('authentication-token'):
           localStorage.getItem('token')
           ? localStorage.getItem('token') : ''
         ),
@@ -105,6 +102,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       
       catchError((err: any) => {
         if (err instanceof HttpErrorResponse) {
+          this.apiCount--;
           if (err.status != 200) {
             console.log('httpErr', err);
             this.ngxUiLoaderService.stop();
@@ -118,14 +116,16 @@ export class AuthInterceptorService implements HttpInterceptor {
               this.toasterService.showError(`${err.status}: ${err.statusText}-invalid user`, 'Technical error..');
             }
           }
+          this.checkApiCount();
         }
         return throwError(err);
       }),
       map(
         (event: HttpEvent<any>) => {         
           let res;
-          this.apiCount--;
+          
           if (event instanceof HttpResponse) {
+            this.apiCount--;
             if (event.headers.get('content-type') == 'text/plain') {
               event = event.clone({
                 body: JSON.parse(this.encrytionService.decryptResponse(event)),
@@ -152,11 +152,13 @@ export class AuthInterceptorService implements HttpInterceptor {
             if (res && res['Error'] === '1') {
               alert(res['ErrorMessage']);
             }
-            this.ngxUiLoaderService.stop();
+            // this.ngxUiLoaderService.stop();
             this.checkApiCount();
             return event;
-          } else {
-            this.ngxUiLoaderService.stop();
+          } else {          
+            //
+            // this.apiCount--;
+            this.checkApiCount();
             console.log('authenticateErrorevent', event);
           }
         },
@@ -175,6 +177,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     if (this.apiCount <= 0) {
       console.log('this.apiCount', this.apiCount)
       this.ngxUiLoaderService.stop();
+      this.apiCount = 0;
     }
   }
 }

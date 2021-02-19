@@ -72,6 +72,7 @@ import { DefineRolesComponent } from './protectedPages/admin/define-roles/define
 import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-roles/admin-roles-mapping-dialog/admin-roles-mapping-dialog.component';
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 import { AuthguardService } from '@services/authguard.service';
+import { ScheduleEmailDialogComponent } from './protectedPages/email/schedule-email-dialog/schedule-email-dialog.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -153,7 +154,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ViewTechnicalAdminComponent,
     DefineRolesComponent,
     AdminRolesMappingDialogComponent,
-    ManageEmailComponent
+    ManageEmailComponent,
+    ScheduleEmailDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -209,7 +211,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     TaxInvoiceDialogComponent,
     PurchaseOrderDialogComponent,
     SmsCreditDialogComponent,
-    AdminRolesMappingDialogComponent
+    AdminRolesMappingDialogComponent,
+    ScheduleEmailDialogComponent
   ]
 })
 export class AppModule { }
