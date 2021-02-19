@@ -11,6 +11,8 @@ import { UtilService } from '@services/util.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { EmailService } from 'src/app/email.service';
 import { AdminService } from '@services/admin.service';
+import { MatDialog } from '@angular/material';
+import { ScheduleEmailDialogComponent } from './schedule-email-dialog/schedule-email-dialog.component';
 
 
 @Component({
@@ -25,6 +27,13 @@ export class EmailComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   showinput:boolean=false;
+
+  showSaveTemplateBtn  = true;
+  showChooseTemplateBtn = true;
+  showScheduleBtn = true;
+  showSendEmailBtn = true;
+
+  selectedItems  = []
 
   userName : string;
 
@@ -102,18 +111,16 @@ export class EmailComponent implements OnInit {
   //    'Email'
   // ];
 
-  screenNameDropDownList = [
-    'Billing Admin',
-    'SMS Credit Allocation',
-    'Proforma Invoice'
-  ]
+  screenNameDropDownList = [];
 
   dropdownSettings : IDropdownSettings = {
     singleSelection: false,
     selectAllText: 'Select All',
     unSelectAllText: 'UnSelect All',
+    idField : 'key',
+    textField : 'value',
     allowSearchFilter: true,
-    itemsShowLimit: 2,
+    itemsShowLimit: 1,
   };
   
 
@@ -137,7 +144,9 @@ today=new Date()
     private router: Router,
     private utilService: UtilService,
     private emailService: EmailService,
-    private adminService: AdminService) {
+    private adminService: AdminService,
+    private route : ActivatedRoute,
+    private dialog : MatDialog) {
 
     this.userName = localStorage.getItem('userName') || '';
 
@@ -220,13 +229,14 @@ today=new Date()
   ngOnInit() {
 
     this.initForm();
+    this.patchLovValues();
   
-this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
+      this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
       );
-      this.filteredOptions1 = this.emailform.get('toScheduleDate').valueChanges
+      this.filteredOptions1 = this.emailform.get('scheduleTime').valueChanges
       .pipe(
         startWith(''),
         map(val => this._filter1(val))
@@ -252,6 +262,13 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       fromScheduleDate: new FormControl(),
       toScheduleDate: new FormControl()
     })
+  }
+
+  patchLovValues(){
+    const data = this.route.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables;
+    this.screenNameDropDownList = processVariables.screenList || [];
   }
 
   sendEmail() {
@@ -301,7 +318,7 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
-  private _filter1(val: string): string[] {
+  private _filter1(val: string): any {
       if(!val)
         return
     const filterVal = val.toLowerCase();
@@ -335,12 +352,24 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       selectedTemp: '',
       screenName:''
     })
-    this.showinput=true
-    this.chooseTemp=false
-    this.editTempinp=false
+    // this.emailFormReset();
+    this.mailContent = '';
+    this.templateName = '';
+    this.showSaveTemplateBtn = false;
+    this.showChooseTemplateBtn = false;
+    this.showScheduleBtn = false;
+    this.showSendEmailBtn = false;
+    this.showinput = true;
+    this.chooseTemp = false;
+    this.editTempinp = false;
   }
 
   cancel(){
+    this.showSaveTemplateBtn = true;
+    this.showChooseTemplateBtn = true;
+    this.showScheduleBtn = true;
+    this.showSendEmailBtn = true;
+    this.showSendEmailBtn = true;
     this.showinput = false;
     this.chooseTemp = false;
     this.editTempinp = false;
@@ -348,6 +377,11 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
     this.emailform.reset();
   }
   chooseTemplete(){
+
+    this.showSaveTemplateBtn = false;
+    this.showScheduleBtn = false;
+    this.showChooseTemplateBtn = false;
+    this.showSendEmailBtn = false;
     this.chooseTemp = true
     this.showinput = false
     this.editTempinp = false
@@ -360,7 +394,7 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
   }
 
   onChange(event){
-
+    
     let templateObj=  this.TemplateList.filter((val) => val.id === event.target.value)
     const templateObject = templateObj[0] ? templateObj[0] : {};
     this.id = templateObject.id || 0;
@@ -370,7 +404,10 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
     let mailContent  = templateObject.emailContent || '';
     let templateName = templateObject.templateTitle || '';
     let screenList = templateObject.screenName || '';
-    let screenNameListArray = screenList.split(",");
+    let screenListArray : number[] = screenList.split(',').map(value => parseInt(value) ? parseInt(value) : value);
+
+    let screenNameListArray  = this.getScreenList(this.screenNameDropDownList,screenListArray);
+
     this.setToFormMethod({toMailAddress,subject,mailContent,templateName,screenNameListArray});
   }
 
@@ -381,6 +418,11 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       this.templateName = data.templateName;
       this.screenList = data.screenNameListArray;
       this.mailContent  = data.mailContent;
+  }
+
+  getScreenList(list1 : any[],list2 : any[]){
+
+    return list1.filter(element => list2.includes(element.key));
   }
 
   detectDateKeyAction(event,type) {
@@ -408,7 +450,8 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
     const mailContent = this.emailform.controls['mailContent'].value;
     const ScreenList = this.emailform.controls['screenList'].value;
 
-    const ScreenNameList = this.ListToStringConverter(ScreenList);
+    const filteredScreenListKey = this.getkeyListfromArray(ScreenList);
+    const ScreenNameList = this.ListToStringConverter(filteredScreenListKey);
   
 
     const data =  {
@@ -430,7 +473,11 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
         if(error.code == '0'){
             this.toasterService.showSuccess('Email Template Saved Successfully','');
             this.emailFormReset();
-            this.getAllEmailTemplates();
+            this.showAllButtons();
+            this.showinput = false;
+            this.chooseTemp = false;
+            this.editTempinp = false;
+            this.schedule = false;            this.getAllEmailTemplates();
         }else{
             this.toasterService.showError(error.message,'');
         }
@@ -441,15 +488,28 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
 
   }
 
+  getkeyListfromArray(list : any[]){
+      return list.map(value => value.key);
+  }
+
   emailFormReset(){
       this.toMailAddress = '';
       this.Subject = '';
       this.templateName = '';
       this.mailContent = '';
-      this.screenList = '';
+      this.screenList = [];
+      this.selectedItems = [];
       this.emailIdList = [];
-      this.emailform.controls['selectedTemp'].setValue([]);
+      this.emailform.controls['selectedTemp'].setValue("");
       this.editTempinp = false;
+      this.fromMailAddress = this.userName;
+  }
+
+  showAllButtons(){
+    this.showSaveTemplateBtn = true;
+    this.showChooseTemplateBtn = true;
+    this.showScheduleBtn = true;
+    this.showSendEmailBtn = true;
   }
 
 
@@ -504,7 +564,26 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
       })
   }
 
+
+  openScheduleEmailDialog(){
+   const dialogRef =  this.dialog.open(ScheduleEmailDialogComponent,{
+      height : '30%',
+      width :  '50%'
+    });
+
+    dialogRef.componentInstance.emitForm.subscribe((value) =>{
+        if(!value)
+          return ;
+
+          
+    })
+  }
+
   emailScheduler(){
+
+      if(!this.fromScheduleDate || !this.toScheduleDate)
+        return this.toasterService.showError('Please Choose the Date to Schedule Email','');
+
       const FromMailAddress = this.fromMailAddress;
       const ToMailAddress = this.toMailAddress;
       const subject = this.Subject;
@@ -512,7 +591,9 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
 
       const templateId = this.id;
       const ScheduledFromDate = this.fromScheduleDate;
+      // const ScheduledFromDate = form.fromScheduleDate;
       const ScheduledToDate = this.toScheduleDate;
+      // const ScheduledToDate = form.toScheduleDate;
       const ScheduledTime = this.scheduleTime
 
 
@@ -535,7 +616,7 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
 
           if(error.code === '0'){
               this.toasterService.showSuccess("Email Scheduled Successfully",'');
-
+              this.resetTimeScheduleForm();
           }else{
 
             this.toasterService.showError(error.message,'')
@@ -547,6 +628,12 @@ this.filteredOptions = this.emailform.get('fromScheduleDate').valueChanges
 
 
 
+  }
+
+  resetTimeScheduleForm(){
+    this.fromScheduleDate = '';
+    this.toScheduleDate = '';
+    this.scheduleTime =  '';
   }
 
  
