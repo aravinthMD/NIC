@@ -1,74 +1,74 @@
 <div class="col-md-10 main">
 
-  <mat-card class="defineRoles">
-    <app-account-header [title]="'Manage Roles'"></app-account-header>
+    <mat-card class="defineRoles p-0">
+        <app-account-header [title]="'Manage Roles'"></app-account-header>
 
 
-    <form class="" [formGroup]="rolesControl">
-        <!--FIRST ROW-->
+        <form class="pr-3 pl-3" [formGroup]="rolesControl">
+            <!--FIRST ROW-->
 
-        <div class="row pad-row">
-            <div class="col-4">
-                <div class="form-group">
-                    <label for="department">Choose Roles</label>
-                    <app-vf-custom-select [values]="rolesList" 
-                    formControlName="rolesList"
-                        (change)="onChangeRole($event)">
-                    </app-vf-custom-select>
-        </div>
+            <div class="row pad-row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="department">Choose Roles</label>
+                        <app-vf-custom-select [values]="rolesList" formControlName="rolesList" (change)="onChangeRole($event)">
+                        </app-vf-custom-select>
+                    </div>
 
-    </div>
-    </div>
+                </div>
+            </div>
 
-    </form>
+        </form>
 
 
 
-    <!-- <button class="btn btn-primary download download-pad"  (click)="submitData()" type="button">Submit</button> -->
-        
+        <!-- <button class="btn btn-primary download download-pad"  (click)="submitData()" type="button">Submit</button> -->
+
         <!--Material Table-->
 
-        <div class="mat-elevation-z8">
+        <div class=" pl-3 pr-3">
 
-        <table mat-table [dataSource]="dataSource" class="custom-table">
+            <table mat-table [dataSource]="dataSource" class="custom-table">
 
-          
-            <ng-container matColumnDef="ScreenName">
-              <th mat-header-cell *matHeaderCellDef> Screen Name </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{ element.ScreenName }} </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="Mapping">
-              <th mat-header-cell *matHeaderCellDef> Mapping </th>
-              <td mat-row mat-cell *matCellDef="let element"> <p>{{ element.isMapping ? 'Mapped' :  'Not Mapped' }}</p> </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="Modify">
-              <th mat-header-cell *matHeaderCellDef> Modify </th>
-              <td mat-row mat-cell *matCellDef="let element"> 
-                
-                  <button (click) = "edit(element)"> Modify</button>
-              </td>
-            </ng-container>
 
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{ element.isRead ? 'Read' : '' }} {{ element.isWrite  ? 'Write' : '' }} </td>
-            </ng-container>
+                <ng-container matColumnDef="ScreenName">
+                    <th mat-header-cell *matHeaderCellDef> Screen Name </th>
+                    <td mat-row mat-cell *matCellDef="let element"> {{ element.ScreenName }} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef> Email </th>
-              <td mat-row mat-cell *matCellDef="let element"> {{ element.isEnableEmail ? 'Yes' :  'No' }} </td>
-            </ng-container>
-          
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
+                <ng-container matColumnDef="Mapping">
+                    <th mat-header-cell *matHeaderCellDef> Mapping </th>
+                    <td mat-row mat-cell *matCellDef="let element">
+                        <p>{{ element.isMapping ? 'Mapped' : 'Not Mapped' }}</p>
+                    </td>
+                </ng-container>
 
-          <mat-paginator class="font-paginator" [hidePageSize]= "true" showFirstLastButtons></mat-paginator>
+                <ng-container matColumnDef="Modify">
+                    <th mat-header-cell *matHeaderCellDef> Modify </th>
+                    <td mat-row mat-cell *matCellDef="let element">
+
+                        <button (click)="edit(element)"> Modify</button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-row mat-cell *matCellDef="let element"> {{ element.isRead ? 'Read' : '' }} {{ element.isWrite ? 'Write' : '' }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-row mat-cell *matCellDef="let element"> {{ element.isEnableEmail ? 'Yes' : 'No' }} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator class="font-paginator" [hidePageSize]="true" showFirstLastButtons></mat-paginator>
 
         </div>
         <div class="m-5"></div>
-   </mat-card>    
+    </mat-card>
 
 </div>
