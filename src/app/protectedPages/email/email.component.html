@@ -162,11 +162,11 @@
                             </ng-multiselect-dropdown>
                         </div>
                     </div>
-                    <div *ngIf="editTempinp" style="margin-top: 3.2% !important;padding-right: 10px;">
-                        <button type="button" matRipple (click)="update()" class=" btn btn-primary">Update</button>
+                    <div *ngIf="editTempinp">
+                        <button type="button" matRipple (click)="update()" class=" btn btn-primary pl-3" style="margin-top: 40px !important;">Update</button>
                     </div>
-                    <div *ngIf="chooseTemp" style="margin-top: 3.2% !important;margin-left: 0%">
-                        <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
+                    <div *ngIf="chooseTemp">
+                        <button type="button" (click)="cancel()" matRipple class=" btn btn-primary pl-3" style="margin-top: 40px !important;">Cancel</button>
                     </div>
 
                     <div class="col-12">

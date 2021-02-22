@@ -474,13 +474,13 @@
                     <mat-icon>arrow_forward_ios</mat-icon>
                 </button> -->
 
-        <div class="row p-3">
+        <div class="row m-3">
             <div class="col-8">
                 <ng-container *ngIf="isWrite">
                     <button class="btn btn-primary float-left" matRipple type="submit" (click)="Onsubmit()" *ngIf="!existingPreviewUserFlag">Save & Next</button>
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit"
                     (click)="Onsubmit()" *ngIf="hideEditButton">Save & Submit</button> -->
-                    <button class="btn btn-primary btn-lg back-btn float-left" *ngIf="existingPreviewUserFlag" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editData()">Edit</button>
+                    <button class="btn btn-primary btn-lg float-left" *ngIf="existingPreviewUserFlag" matRipple (click)="editData()">Edit</button>
                 </ng-container>
             </div>
 

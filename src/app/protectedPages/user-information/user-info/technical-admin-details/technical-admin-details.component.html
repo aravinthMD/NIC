@@ -169,12 +169,12 @@
             <!-- <div class="row pt-3 pb-3 m-0">
                 <button class="btn btn-primary" [disabled]="technicaladminform.invalid" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button>
 
-                <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
+                <button class="btn btn-primary " [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
 
 
                 <div class="ml-auto float-right">
-                <button class="btn btn-primary back-btn" matRipple (click)="back()">Back</button>
-                <button class="btn btn-primary back-btn" matRipple (click)="next()">Next</button>
+                <button class="btn btn-primary " matRipple (click)="back()">Back</button>
+                <button class="btn btn-primary " matRipple (click)="next()">Next</button>
             </div>
 
             </div> -->
@@ -183,19 +183,19 @@
 
 
 
-            <div class="row p-3">
+            <div class="row m-3">
                 <div class="col-8">
                     <ng-container *ngIf="isWrite">
-                        <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!showView" (click)="onSubmit()">Save & Next</button>
+                        <button class="btn btn-primary btn-lg float-left" matRipple type="submit" *ngIf="!showView" (click)="onSubmit()">Save & Next</button>
                         <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="hideEditButton" (click)="onSubmit()">Save & Next</button> -->
-                        <button class="btn btn-primary btn-lg float-left back-btn" *ngIf="showView" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editData()"> Edit </button>
+                        <button class="btn btn-primary btn-lg float-left " *ngIf="showView" matRipple (click)="editData()"> Edit </button>
                     </ng-container>
                 </div>
 
                 <div class="col-4" style="float: right;">
-                    <button class="btn btn-primary ml-3" style="padding-left: 36px; padding-right:36px;" (click)="onNext()">Next</button>
-                    <button class="btn btn-primary ml-3" *ngIf="!showView" style="padding-left: 36px; padding-right:36px;" (click)="back('show')">Back</button>
-                    <button class="btn btn-primary ml-3" *ngIf="showView" style="padding-left: 36px; padding-right:36px;" (click)="back('view')">Back</button>
+                    <button class="btn btn-lg btn-primary ml-3" (click)="onNext()">Next</button>
+                    <button class="btn btn-lg btn-primary ml-3" *ngIf="!showView" (click)="back('show')">Back</button>
+                    <button class="btn btn-lg btn-primary ml-3" *ngIf="showView" (click)="back('view')">Back</button>
 
                 </div>
 
@@ -227,13 +227,13 @@
             <div class="row pt-3 pb-3" *ngIf="isShowTechViewPage">
                 <div class="col-8">
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
-                    <button class="btn btn-primary btn-lg float-left back-btn" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editDataBill()">Edit</button>
+                    <button class="btn btn-primary btn-lg float-left " matRipple (click)="editDataBill()">Edit</button>
                 </div>
 
                 <div class="col-4" style="float: right;">
-                    <button *ngIf="isShowTechViewPage" class="btn btn-primary ml-3" style="padding-left: 36px; padding-right:36px;" (click)="onNext()">Next</button>
+                    <button *ngIf="isShowTechViewPage" class="btn btn-primary btn-lg ml-3" (click)="onNext()">Next</button>
 
-                    <button class="btn btn-primary ml-30" style="padding-left: 36px; padding-right:36px;" (click)="back('billAdmin')">Back</button>
+                    <button class="btn btn-primary btn-lg ml-30" (click)="back('billAdmin')">Back</button>
 
                 </div>
 
