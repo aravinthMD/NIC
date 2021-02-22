@@ -380,7 +380,7 @@
                        <mat-label>Search...</mat-label>
                        <input matInput type="text" formControlName="searchData">
                        <button mat-button  matSuffix mat-icon-button aria-label="Clear">
-                         <mat-icon>search</mat-icon>
+                         <mat-icon (click)="onSearch()">search</mat-icon>
                        </button>
                      </mat-form-field>
                    
