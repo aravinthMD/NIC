@@ -1,41 +1,41 @@
 <div class="col-md-10 main">
 
-    
-    <mat-card>
 
-    <app-account-header [title]="'Manage Emails'"></app-account-header>
+    <mat-card class="p-0">
 
-    <div class="mat-elevation-z8">
+        <app-account-header [title]="'Manage Emails'"></app-account-header>
 
-    <table mat-table  [dataSource]="dataSource" class="custom-table"> 
+        <div class="mat-elevation-z8 pr-3 pl-3">
 
-      
-        <ng-container matColumnDef="screen">
-          <th mat-header-cell *matHeaderCellDef>Screen</th>
-          <td mat-row mat-cell *matCellDef="let element"> {{element.screen}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-row mat-cell *matCellDef="let element"> {{ element.screenStatus === '1' ? 'Enabled' : 'Disabled'}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Action </th>   
-          <td mat-row mat-cell *matCellDef="let element"> 
-            <button (click) = "OnEdit(element)">Modify</button>      
-        </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+            <table mat-table [dataSource]="dataSource" class="custom-table">
 
-      <mat-paginator class="font-paginator" [hidePageSize]= "true" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
-      
+
+                <ng-container matColumnDef="screen">
+                    <th mat-header-cell *matHeaderCellDef>Screen</th>
+                    <td mat-row mat-cell *matCellDef="let element"> {{element.screen}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-row mat-cell *matCellDef="let element"> {{ element.screenStatus === '1' ? 'Enabled' : 'Disabled'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-row mat-cell *matCellDef="let element">
+                        <button (click)="OnEdit(element)">Modify</button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator class="font-paginator" [hidePageSize]="true" [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+
         </div>
 
-      <div class="m-5"></div>
+        <div class="m-5"></div>
 
     </mat-card>
 
@@ -43,51 +43,37 @@
 
 
 <!--Dia Log-->
-<div
-class="modal"
-id="ucicModel2"
-[ngClass]="{ 'dis-block': showModal }"
->
-<div class="modal-dialog">
-  <div class="modal-content">
-    <!-- Modal Header -->
-    <div class="modal-header text-center">
-      <h4 class="modal-title"></h4>
-    </div>
+<div class="modal" id="ucicModel2" [ngClass]="{ 'dis-block': showModal }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <h4 class="modal-title"></h4>
+            </div>
 
-    <!-- Modal body -->
-    <div class="modal-body">
-      <span *ngIf = "!emailValue">Please select the option</span>
-      <span *ngIf = "emailValue"  id="">
+            <!-- Modal body -->
+            <div class="modal-body">
+                <span *ngIf="!emailValue">Please select the option</span>
+                <span *ngIf="emailValue" id="">
      Are you sure you want to {{(emailValue === '2') ? 'disable' : 'enable' }} email sending options?
       </span>
-      <br>
-      <mat-radio-group aria-label="Select an option" color = "primary" [(ngModel)] = "emailValue">
-        <mat-radio-button class="button1" value="1">Enable</mat-radio-button>
-        <mat-radio-button value="0">Disable</mat-radio-button>
-      </mat-radio-group>
-         
-    </div>
+                <br>
+                <mat-radio-group aria-label="Select an option" color="primary" [(ngModel)]="emailValue">
+                    <mat-radio-button class="button1" value="1">Enable</mat-radio-button>
+                    <mat-radio-button value="0">Disable</mat-radio-button>
+                </mat-radio-group>
 
-    <!-- Modal footer -->
-    <div class="modal-footer text-center">
-      <button
-      class="dialog-button"
-        data-dismiss="modal"
-        id="ucic_lead"
-        [disabled] = "!emailValue"
-        (click)  = "submitDialog()"
-      >
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer text-center">
+                <button class="dialog-button" data-dismiss="modal" id="ucic_lead" [disabled]="!emailValue" (click)="submitDialog()">
         Apply
       </button>
-      <button 
-      class="dialog-button"
-        data-dismiss="modal"
-        (click) = "showModal = false"
-      >
+                <button class="dialog-button" data-dismiss="modal" (click)="showModal = false">
         Cancel
       </button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </div>

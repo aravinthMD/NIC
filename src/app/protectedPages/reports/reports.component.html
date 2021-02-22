@@ -7,7 +7,7 @@
 
         <div class="dashBoard mt-2">
             <div>Reports</div>
-        </div> 
+        </div>
 
         <mat-accordion>
             <mat-expansion-panel [expanded]="0">
@@ -53,7 +53,7 @@
                                 
                               </select> -->
 
-                                <app-vf-custom-select formControlName="status" [values]="status" ></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="status" [values]="status"></app-vf-custom-select>
 
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 <!-- <option value="1">User Id</option>
                                 <option value="2">Department</option>
                                 <option value="3">Status</option> -->
-                                </select> 
+                                </select>
                                 <!-- <app-vf-custom-select formControlName="reportFilter" (valueChange)="onReportFilterChange($event)" [values]="reportFilterLov"></app-vf-custom-select> -->
 
                             </div>
@@ -105,18 +105,12 @@
                         </div> -->
 
 
-                        <div class="col-4" *ngIf = "reportDisplayName">
+                        <div class="col-4" *ngIf="reportDisplayName">
                             <label for="mobile">{{reportDisplayName}}</label>
                             <div class="form-group">
-                            <ng-multiselect-dropdown
-                            placeholder="Choose {{reportDisplayName}}"
-                            formControlName ="reportsFilterDetails"
-                            [data]="reportsFilterDetails"
-                            [settings]="dropdownSettings"
-                            (onDeSelectAll) = "onItemDeSelect('1')"
-                            >
-                            </ng-multiselect-dropdown>
-                        </div>
+                                <ng-multiselect-dropdown placeholder="Choose {{reportDisplayName}}" formControlName="reportsFilterDetails" [data]="reportsFilterDetails" [settings]="dropdownSettings" (onDeSelectAll)="onItemDeSelect('1')">
+                                </ng-multiselect-dropdown>
+                            </div>
                         </div>
 
                         <div class="col-4">
@@ -125,7 +119,7 @@
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
 
-                                <mat-form-field floatLabel = "never">
+                                <mat-form-field floatLabel="never">
                                     <mat-placeholder>dd-mm-yyyy</mat-placeholder>
                                     <input matInput [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'fromDate')" formControlName="fromDate" [max]="reportsForm.get('toDate').value">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -139,7 +133,7 @@
                                 <label for="invoiceDate">To Date</label>
                                 <!-- <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
-                                <mat-form-field floatLabel =  "never">
+                                <mat-form-field floatLabel="never">
                                     <mat-placeholder>dd-mm-yyyy</mat-placeholder>
                                     <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="reportsForm.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -203,7 +197,7 @@
 
 
                     <div class="row pt-3 pb-3 m-0">
-                        <button  class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Generate</button>
+                        <button class="btn btn-primary mr-3" (click)="OnFilter()" type="submit">Generate</button>
                         <button class="btn btn-primary" (click)="filterTabButtonName = '';clearForm()" type="submit">Clear</button>
 
 
@@ -216,8 +210,8 @@
             </mat-expansion-panel>
         </mat-accordion>
         <!--Material Table-->
-        <app-reports-table [gridValues] = "gridValues" [reportsId] = "reportsId" *ngIf="gridValues.length > 0" [resultsLength]="totalRecords" (pageChangeEvent)="onPageChange($event)">
-            <button style="float: right;" class="btn btn-primary download download-pad" type="submit"  (click)="exportCSV()">Export as CSV</button>
+        <app-reports-table [gridValues]="gridValues" [reportsId]="reportsId" *ngIf="gridValues.length > 0" [resultsLength]="totalRecords" (pageChangeEvent)="onPageChange($event)">
+            <button style="float: right;" class="btn btn-primary download download-pad" type="submit" (click)="exportCSV()">Export as CSV</button>
         </app-reports-table>
 
     </div>

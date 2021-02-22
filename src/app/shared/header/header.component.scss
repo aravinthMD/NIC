@@ -197,6 +197,14 @@
     margin-left: 225px;
 }
 
+.col-lg-11 {
+    height: 3.5rem;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    margin-left: 140px!important;
+}
+
 .topbar #sidebarToggleTop {
     height: 2.5rem;
     width: 2.5rem
@@ -381,4 +389,12 @@ span.mr-2.d-none.d-lg-inline.text-gray-600.small {
     .topbar {
         margin-left: 0px!important;
     }
+}
+
+.col-lg-11 .topbar {
+    height: 3.5rem;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    margin-left: 80px!important;
 }
