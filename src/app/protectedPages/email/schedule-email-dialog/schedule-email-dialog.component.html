@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Schedule Email</h1>
 <form [formGroup] = "emailform">
 <div class="row">
-<div  class="d-flex justify-content-star mr-2" style="width: 15%;">
+<div  class="col-3 justify-content-star mr-2" >
     <mat-form-field 
     class="col-10 form-control" style="margin-left: 26px;border:none">
         <mat-label>From Date</mat-label>
@@ -23,8 +23,8 @@
         </mat-autocomplete>
     </mat-form-field>
 </div> -->
-<span  class="d-flex justify-content-star pl-3 mt-3">--</span>
-<div  class="d-flex justify-content-star mr-2" style="width: 15%;">
+<!-- <span  class="d-flex justify-content-star pl-3 mt-3">--</span> -->
+<div  class="col-3 justify-content-star mr-2" >
     <mat-form-field class="col-10 form-control" 
     style="margin-left: 15px;border:none">
         <mat-label>To Date</mat-label>
@@ -37,11 +37,13 @@
     </mat-form-field>
 </div>
 
-<div  class="col-1 form-control">
-    <mat-form-field appearance="none">
-        <input type="text" aria-lab el="Number" 
+<div  class="col-3">
+    <mat-form-field class="col-10 form-control" 
+    style="margin-left: 15px;border:none">
+    <mat-label>Time</mat-label>
+        <input type="text"  aria-lab el="Number" 
         matInput formControlName="scheduleTime"
-            [matAutocomplete]="auto1" placeholder="Time">
+            [matAutocomplete]="auto1" >
         <mat-autocomplete #auto1="matAutocomplete">
             <mat-option *ngFor="let opt of filteredOptions1 | async" [value]="opt">
                 {{opt}}
@@ -49,9 +51,11 @@
         </mat-autocomplete>
     </mat-form-field>
 </div>
-<div class="pl-2 pt-2" style="font-size: 14px;margin-top: 1px;"><i class="fa fa-clock-o fa-lg pr-2" aria-hidden="true"></i>(Asia/Calcutta)</div>
+<div class="pl-2 pt-2 mt-3" style="font-size: 14px;"><i class="fa fa-clock-o fa-lg pr-2" aria-hidden="true"></i>(Asia/Calcutta)</div>
 </div>
 <div mat-dialog-actions>
-<button mat-button mat-dialog-close cdkFocusInitial [disabled] = "emailform.invalid" (click) = "scheduleEmail()">Schedule</button>
+<button class="btn btn-primary mt-4 mr-4" mat-dialog-close cdkFocusInitial [disabled] = "emailform.invalid" (click) = "scheduleEmail()">Send</button>
+<button class="btn btn-primary mt-4 float-right" mat-dialog-close>close</button>
+
 </div>
 </form>
