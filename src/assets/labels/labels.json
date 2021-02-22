@@ -300,11 +300,15 @@
         },
         "telephoneNumber": {
             "maxLength": {
-                "rule": 7
+                "rule": 8
+            },
+            "minLength": {
+                "rule": 7,
+                "msg":"Min 7 digits require"
             },
             "type": "number",
             "patternCheck": {
-                "rule": "^[0-9]{7}",
+                "rule": "^[0-9]",
                 "msg": "Invalid telephone number"
             }
         },
