@@ -65,15 +65,15 @@
                             <input type="text" formControlName="subject" class="form-control">
                         </div>
                     </div>
-                    <div class="col-12 row">
+                    <div class="col-12 row mt-2">
 
-                        <div class="col-4">
+                        <div class="col-2">
                             <button type="button" [disabled]="!showSaveTemplateBtn" (click)="saveTemplete()" matRipple class=" btn btn-primary">Create Template</button>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <button type="submit" [disabled]="!showChooseTemplateBtn" (click)="chooseTemplete()" matRipple class=" btn btn-primary">Choose Template</button>
                         </div>
-                        <div class="col-4">
+                        <div class="col-2">
                             <button type="submit" (click)="editTemplete()" [disabled]="this.emailform.get('selectedTemp').value==''" matRipple class=" btn btn-primary">Edit Template</button>
                         </div>
                         <!-- <div class="d-flex justify-content-start button mr-2">
