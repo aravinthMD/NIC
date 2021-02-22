@@ -42,7 +42,7 @@ export class ProcessDetailsComponent implements OnInit{
   uploadedData : any = {}
 
   storeProjectNo: string;
-  displayedColumns : string[] = ['InvoiceNo','accountName','projectNumber','piAmt',"reminder","Escalation","Action"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','piAmt',"reminder","Escalation","Action"]
   piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
   paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
   nicsiData = [
@@ -360,7 +360,7 @@ export class ProcessDetailsComponent implements OnInit{
 
     const data = this.apiService.api.fetchAllProformaInvoice;
     const params = {
-        id: this.userId,
+        selectedClientId: this.userId,
         currentPage: 1,
         searchKeyword: this.searchForm.get('searchData').value || '',
         fromDate: this.searchForm.get('searchFrom').value || '',//"2020-12-27T18:30:00.000Z",

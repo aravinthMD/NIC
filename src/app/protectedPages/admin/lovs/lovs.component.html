@@ -45,6 +45,22 @@
                     </th>
                 </thead>
                 <tbody [formGroup]="lovItemsForm">
+                  <tr *ngIf="isAddNewKey">
+                    <td> 
+                      <span class="table-key">NA</span>
+                  </td>
+                  <td>
+                      <input  class="table-input" formControlName="addNewValue"/>
+
+                  </td>
+                  <td>
+                     <button class="btn btn-primary" (click)="onLovItemSave(-1)" > Save</button>
+                     
+                  </td>
+                  <td>
+                     <i class="fa fa-close table-fa" (click)="openDeleteModal(-1)"></i>
+                  </td>
+                  </tr>
 
                     <tr formArrayName="items" *ngFor="let item of lovItemsForm.get('items')['controls'];let i = index;">
                         <ng-container [formGroupName]="i">

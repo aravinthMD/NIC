@@ -189,6 +189,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     const listOfValue = data.listOfValue || {};
     const processVariables = listOfValue.ProcessVariables;
     this.smsQuotaMetrix = processVariables.SMSApproval || [];
+    this.smsCreditService.setSmsQuotaMatrix(this.smsQuotaMetrix);
   }
 
   onQuotaMatrixChange(event) {
@@ -389,18 +390,19 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   back() {
-    this.utilService.setCurrentUrl('users/billingAdmin');
+    this.router.navigate(['/users/billingAdmin/' + this.userId]);
+    // this.utilService.setCurrentUrl('users/billingAdmin');
 
-    let pno = '';
-    this.utilService.projectNumber$.subscribe((val) => {
-      pno = val || '1';
-    });
+    // let pno = '';
+    // this.utilService.projectNumber$.subscribe((val) => {
+    //   pno = val || '1';
+    // });
 
-    if (this.user) {
-      this.router.navigate(['/users/techAdmin/' + pno]);
-    } else {
-      this.router.navigate(['/users/techAdmin']);
-    }
+    // if (this.user) {
+    //   this.router.navigate(['/users/techAdmin/' + pno]);
+    // } else {
+    //   this.router.navigate(['/users/techAdmin']);
+    // }
   }
   onSubmit() {
     const origin = location.origin;
