@@ -5,24 +5,24 @@
         <!--Reports Tag Start-->
         <!-- <h1 class="h3  text-gray-800 mb-2">Reports</h1> -->
         <!-- <mat-accordion> -->
-            <!---<mat-expansion-panel> -->
-                <!-- <mat-expansion-panel-header matRipple>
+        <!---<mat-expansion-panel> -->
+        <!-- <mat-expansion-panel-header matRipple>
                     <mat-panel-title>
                         <mat-icon>filter_alt</mat-icon><span class="panel-title">Compose E-Mail</span>
                     </mat-panel-title>
 
                 </mat-expansion-panel-header>  -->
 
-    <mat-card>
+        <mat-card>
 
 
-        <div class="dashBoard">
-            <div>Compose<i class="fa fa-envelope pl-2" aria-hidden="true"></i></div>
-        </div> 
+            <div class="dashBoard">
+                <div>Compose<i class="fa fa-envelope pl-2" aria-hidden="true"></i></div>
+            </div>
 
 
 
-        <!-- <div class="row m-0">
+            <!-- <div class="row m-0">
             <div class="col-md-8 p-0">
                 <h1 class="h4 text-gray-100 title nic-bg" matRipple><span class="panel-title">Compose E-Mail</span></h1>
             </div>
@@ -32,64 +32,55 @@
             </div>
 
         </div> -->
-                <form [formGroup]="emailform">
-                    <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
+            <form [formGroup]="emailform">
+                <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                 <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
               </div>  -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="">From</label>
-                                <input type="text" formControlName = "FromMailAddress" class="form-control" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label class="pb-2" for="">To</label>
-                                <div class="ml-4" style="margin-bottom: 5px;">
-                                    <mat-chip-list #chipList aria-label="email selection">
-                                        <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable" [removable]="removable" (removed)="remove(email)">
-                                            {{email}}
-                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                                        </mat-chip>
-                                    </mat-chip-list>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="">From</label>
+                            <input type="text" formControlName="FromMailAddress" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="pb-2" for="">To</label>
+                            <div class="ml-4" style="margin-bottom: 5px;">
+                                <mat-chip-list #chipList aria-label="email selection">
+                                    <mat-chip *ngFor="let email of emailIdList" [selectable]="selectable" [removable]="removable" (removed)="remove(email)">
+                                        {{email}}
+                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                    </mat-chip>
+                                </mat-chip-list>
 
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input style="padding-left:10px;" 
-                                    class="form-control" 
-                                    formControlName = "ToMailAddress" placeholder="Enter Email Address"
-                                    [matChipInputFor]="chipList" 
-                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                    [matChipInputAddOnBlur]="addOnBlur" 
-                                    (matChipInputTokenEnd)="add($event)">
-                                <mat-error *ngIf="isInvalidEmail">
-                                    Please enter valid email id
-                                </mat-error>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Subject</label>
-                                <input type="text" formControlName="subject" class="form-control">
                             </div>
                         </div>
-                        <div class="row ml-3 mt-4 pb-2">
-                            <h4 class="col-12 p-0"></h4>
-                            <div class="d-flex justify-content-start button mr-2">
-                                <button type="button" [disabled] = "!showSaveTemplateBtn" (click)="saveTemplete()" matRipple class=" btn btn-primary">Create Template</button>
-                            </div>
-                            <div class="  d-flex justify-content-start button mr-2">
-                                <button type="submit" [disabled] = "!showChooseTemplateBtn" (click)="chooseTemplete()" matRipple
-                                    class=" btn btn-primary">Choose Template</button>
-                            </div>
-                            <div class="  d-flex justify-content-start button mr-2">
-                                <button type="submit" (click)="editTemplete()"
-                                    [disabled]="this.emailform.get('selectedTemp').value==''" matRipple
-                                    class=" btn btn-primary">Edit Template</button>
-                            </div>
-                            <!-- <div class="d-flex justify-content-start button mr-2">
+                        <div class="form-group">
+                            <input style="padding-left:10px;" class="form-control" formControlName="ToMailAddress" placeholder="Enter Email Address" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                            <mat-error *ngIf="isInvalidEmail">
+                                Please enter valid email id
+                            </mat-error>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Subject</label>
+                            <input type="text" formControlName="subject" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-12 row">
+
+                        <div class="col-4">
+                            <button type="button" [disabled]="!showSaveTemplateBtn" (click)="saveTemplete()" matRipple class=" btn btn-primary">Create Template</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" [disabled]="!showChooseTemplateBtn" (click)="chooseTemplete()" matRipple class=" btn btn-primary">Choose Template</button>
+                        </div>
+                        <div class="col-4">
+                            <button type="submit" (click)="editTemplete()" [disabled]="this.emailform.get('selectedTemp').value==''" matRipple class=" btn btn-primary">Edit Template</button>
+                        </div>
+                        <!-- <div class="d-flex justify-content-start button mr-2">
                                 <button  [disabled] = "!showScheduleBtn" matRipple
                                     class=" btn btn-primary" (click) = "emailScheduler()">Schedule</button>
                             </div> -->
-                            <!-- <div  class="d-flex justify-content-star mr-2" style="width: 15%;">
+                        <!-- <div  class="d-flex justify-content-star mr-2" style="width: 15%;">
                                 <mat-form-field 
                                 class="col-10 form-control" style="margin-left: 26px;border:none">
                                     <mat-label>From Date</mat-label>
@@ -99,7 +90,7 @@
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                             </div> -->
-                            <!-- <div class="col-1 form-control">
+                        <!-- <div class="col-1 form-control">
                                 <mat-form-field appearance="none">
                                     <input type="text" aria-label="Number" matInput formControlName="fromtime"
                                         [matAutocomplete]="auto" placeholder="Time"
@@ -111,8 +102,8 @@
                                     </mat-autocomplete>
                                 </mat-form-field>
                             </div> -->
-                            <!-- <span  class="d-flex justify-content-star pl-3 mt-3">--</span> -->
-                            <!-- <div  class="d-flex justify-content-star mr-2" style="width: 15%;">
+                        <!-- <span  class="d-flex justify-content-star pl-3 mt-3">--</span> -->
+                        <!-- <div  class="d-flex justify-content-star mr-2" style="width: 15%;">
                                 <mat-form-field class="col-10 form-control" 
                                 style="margin-left: 15px;border:none">
                                     <mat-label>To Date</mat-label>
@@ -124,7 +115,7 @@
                                 </mat-form-field>
                             </div> -->
 
-                            <!-- <div  class="col-1 form-control">
+                        <!-- <div  class="col-1 form-control">
                                 <mat-form-field appearance="none">
                                     <input type="text" aria-lab el="Number" 
                                     matInput formControlName="scheduleTime"
@@ -136,105 +127,93 @@
                                     </mat-autocomplete>
                                 </mat-form-field>
                             </div> -->
-                            <!-- <div class="pl-2 pt-2" style="font-size: 14px;margin-top: 1px;"><i class="fa fa-clock-o fa-lg pr-2" aria-hidden="true"></i>(Asia/Calcutta)</div> -->
-                        </div>
-                        <br>
-                        <div *ngIf="showinput" class="row col-8 ml-1">
-                            <div class="form-group">
-                                <label for="">Template Name <span style="color:red">*</span></label>
-                                <input type="text" formControlName = "templateName" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Screen Name(Optional)</label>
-                                <ng-multiselect-dropdown
-                                [placeholder]="'Choose Screen'"
-                                [data]="screenNameDropDownList"
-                                formControlName ="screenList"
-                                [(ngModel)] = "selectedItems"
-                                [settings]="dropdownSettings">
-                                </ng-multiselect-dropdown>
-                            </div>
-                            <div class="pl-3" style="margin-top: 40px !important;">
-                                <button type="button" [disabled] = "!templateName"  matRipple (click)="saveOrUpdateTemplate()" class=" btn btn-primary">Save</button>
-                            </div>
-                            <div class="pl-3" style="margin-top: 40px !important;">
-                                <button type="button" (click)="cancel()" matRipple
-                                    class=" btn btn-primary">Cancel</button>
-                            </div>
-                        </div>
-                        <div *ngIf="chooseTemp" class="col-4">
-                            <div class="form-group">
-                                <label for="chooseTemplete" class="mb-0">Choose Template</label>
-                                <app-vf-custom-select formControlName="selectedTemp" [values]="TemplateList" valueField = "templateTitle" keyField = "id"
-                                    (change)="onChange($event)">
-                                </app-vf-custom-select>
-                            </div>
-                        </div>
-                        <div *ngIf="editTempinp" class="col-3">
-                            <div class="form-group">
-                                <app-custom-input [labelName]="'Edit Template Name'" formControlName="templateName">
-                                </app-custom-input>
-                            </div>
+                        <!-- <div class="pl-2 pt-2" style="font-size: 14px;margin-top: 1px;"><i class="fa fa-clock-o fa-lg pr-2" aria-hidden="true"></i>(Asia/Calcutta)</div> -->
+                    </div>
+                    <br>
+                    <div *ngIf="showinput" class="row col-8 ml-1">
+                        <div class="form-group">
+                            <label for="">Template Name <span style="color:red">*</span></label>
+                            <input type="text" formControlName="templateName" class="form-control">
                         </div>
 
-                        <div *ngIf="editTempinp" class="col-3">
-                            <div class="form-group">
-                                <label for="" class="mb-0">Screen Name</label>
-                                <ng-multiselect-dropdown
-                                [placeholder]="'Choose Screen'"
-                                [data]="screenNameDropDownList"
-                                formControlName ="screenList"
-                                [settings]="dropdownSettings">
-                                </ng-multiselect-dropdown>
-                            </div>
+                        <div class="form-group">
+                            <label for="">Screen Name(Optional)</label>
+                            <ng-multiselect-dropdown [placeholder]="'Choose Screen'" [data]="screenNameDropDownList" formControlName="screenList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
+                            </ng-multiselect-dropdown>
                         </div>
-                        <div *ngIf="editTempinp" style="margin-top: 2.5% !important;padding-right: 10px;">
-                            <button type="button"  matRipple (click)="update()" class=" btn btn-primary">Update</button>
+                        <div class="pl-3" style="margin-top: 40px !important;">
+                            <button type="button" [disabled]="!templateName" matRipple (click)="saveOrUpdateTemplate()" class=" btn btn-primary">Save</button>
                         </div>
-                        <div *ngIf="chooseTemp" style="margin-top: 2.5% !important;margin-left: 0%">
+                        <div class="pl-3" style="margin-top: 40px !important;">
                             <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
                         </div>
+                    </div>
+                    <div *ngIf="chooseTemp" class="col-4">
+                        <div class="form-group">
+                            <label for="chooseTemplete" class="mb-0">Choose Template</label>
+                            <app-vf-custom-select formControlName="selectedTemp" [values]="TemplateList" valueField="templateTitle" keyField="id" (change)="onChange($event)">
+                            </app-vf-custom-select>
+                        </div>
+                    </div>
+                    <div *ngIf="editTempinp" class="col-3">
+                        <div class="form-group">
+                            <app-custom-input [labelName]="'Edit Template Name'" formControlName="templateName">
+                            </app-custom-input>
+                        </div>
+                    </div>
 
-                        <div class="col-12">
-                            <div class="form-group compose-height">
-                                <div class="col-2" style="padding:10px;padding-bottom: 0%;">
+                    <div *ngIf="editTempinp" class="col-3">
+                        <div class="form-group">
+                            <label for="" class="mb-0">Screen Name</label>
+                            <ng-multiselect-dropdown [placeholder]="'Choose Screen'" [data]="screenNameDropDownList" formControlName="screenList" [settings]="dropdownSettings">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </div>
+                    <div *ngIf="editTempinp" style="margin-top: 2.5% !important;padding-right: 10px;">
+                        <button type="button" matRipple (click)="update()" class=" btn btn-primary">Update</button>
+                    </div>
+                    <div *ngIf="chooseTemp" style="margin-top: 2.5% !important;margin-left: 0%">
+                        <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group compose-height">
+                            <div class="col-2" style="padding:10px;padding-bottom: 0%;">
 
                                 <label for="">Message</label>
-                        
-                               
+
+
                             </div>
-                                <textarea type="text" formControlName="mailContent" class="form-control"></textarea>
-                                
-                            </div>
+                            <textarea type="text" formControlName="mailContent" class="form-control"></textarea>
+
                         </div>
-                        <div class="col-12 pt-2">
-                                <!-- <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button> -->
-                                <button  [disabled] = "!showScheduleBtn" matRipple
-                                    class=" btn btn-primary float-left" [disabled] = "!(toMailAddress && Subject && mailContent)" (click) = "openScheduleEmailDialog()">Schedule</button>
-                                    <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
-                                    <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
-    
-                        </div>
-                        <!-- <div class="col-6">
+                    </div>
+                    <div class="col-12 pt-2">
+                        <!-- <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button> -->
+                        <button [disabled]="!showScheduleBtn" matRipple class=" btn btn-primary float-left" [disabled]="!(toMailAddress && Subject && mailContent)" (click)="openScheduleEmailDialog()">Schedule</button>
+                        <button type="submit" [disabled]="!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
+                        <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
+
+                    </div>
+                    <!-- <div class="col-6">
                             <div class="form-group">
                                 <label for="">Attachment</label>
                                 <input type="file" class="form-control">
                             </div>
                         </div> -->
-                    </div>
+                </div>
 
-                </form>
+            </form>
 
-                <!-- <div class="row m-0">
+            <!-- <div class="row m-0">
                     
                     <div class="d-flex justify-content-start button mr-2 mt-2">
                         <button type="submit" matRipple class=" btn btn-primary">Send</button>
                     </div>
                 </div> -->
 
-            </mat-card>
-            <!-- </mat-expansion-panel> -->
+        </mat-card>
+        <!-- </mat-expansion-panel> -->
         <!-- </mat-accordion> -->
 
         <div class="mt-5"></div>
