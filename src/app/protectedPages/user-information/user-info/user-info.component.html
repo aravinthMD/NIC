@@ -253,13 +253,21 @@
                             </app-custom-input>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <div class="form-group">
-                            <app-custom-input formControlName="smsGatewayAccess" [labelName]="labels.ipformwhichSmsGatewaywillbeaccess" placeHolder="Enter the IP Form" [id]="'smsGatewayAccess'" [mandatoryField]="true" [isRequired]="'This Field is Mandatory'" [maxLength]="labels?.validationData.smsGatewayAccess.maxLength"
-                                [type]="labels?.validationData.smsGatewayAccess.type" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
-                            </app-custom-input>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="smsGatewayAccess"
+                                [labelName]="labels.ipformwhichSmsGatewaywillbeaccess" 
+                                placeHolder = "Enter the IP Form"
+                                [id]="'smsGatewayAccess'"
+                                [mandatoryField]="true" 
+                                [isRequired]="'This Field is Mandatory'"
+                                [maxLength]="labels?.validationData.smsGatewayAccess.maxLength" 
+                                [custom]="ipValidation"
+                                [isDisabledInp]="propertyFlag"
+                                [isDirty]="isDirty">
+                                </app-custom-input>
+                            </div>
                         </div>
-                    </div>
                 </div>
                 <div class="row formAlignment">
 
@@ -401,12 +409,10 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-4">
                         <div class="form-group">
                             <label for="poBillable">{{docAvailFlag ? labels?.changeDoc :labels?.uploadDoc}}</label>
-                            <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp" (change)="uploadFile($event.target.files)">
+                            <input type="file" accept="application/pdf" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
                             <small id="poBillableHelp" class="form-text text-muted"></small>
                         </div>
                     </div>
