@@ -499,6 +499,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       searchFrom: null,
       searchTo: null,
     });
+    this.getSmsCreditList();
   }
 
   // ngAfterViewInit() {

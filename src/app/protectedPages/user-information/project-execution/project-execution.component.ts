@@ -169,6 +169,7 @@ isWrite = true;
 
     const data = this.apiService.api.getProjectExecutionDetailsList;
       const params = {
+        selectedClientId: this.clientId,
         searchKeyword: this.searchForm.get('searchData').value,
         fromDate: this.searchForm.get('searchFrom').value,//"2020-12-27T18:30:00.000Z",
         toDate: this.searchForm.get('searchTo').value//"2021-01-05T18:30:00.000Z"
