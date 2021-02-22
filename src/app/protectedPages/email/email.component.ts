@@ -567,22 +567,22 @@ today=new Date()
 
   openScheduleEmailDialog(){
    const dialogRef =  this.dialog.open(ScheduleEmailDialogComponent,{
-      height : '30%',
-      width :  '50%'
+      width :  '70%'
     });
 
     dialogRef.componentInstance.emitForm.subscribe((value) =>{
         if(!value)
           return ;
-
+          // this.sendEmail();
+          this.emailScheduler(value);
           
     })
   }
 
-  emailScheduler(){
+  emailScheduler(form ? : any){
 
-      if(!this.fromScheduleDate || !this.toScheduleDate)
-        return this.toasterService.showError('Please Choose the Date to Schedule Email','');
+      // if(!this.fromScheduleDate || !this.toScheduleDate)
+      //   return this.toasterService.showError('Please Choose the Date to Schedule Email','');
 
       const FromMailAddress = this.fromMailAddress;
       const ToMailAddress = this.toMailAddress;
@@ -590,10 +590,10 @@ today=new Date()
       const mailContent = this.mailContent;
 
       const templateId = this.id;
-      const ScheduledFromDate = this.fromScheduleDate;
-      // const ScheduledFromDate = form.fromScheduleDate;
-      const ScheduledToDate = this.toScheduleDate;
-      // const ScheduledToDate = form.toScheduleDate;
+      // const ScheduledFromDate = this.fromScheduleDate;
+      const ScheduledFromDate = form.fromScheduleDate;
+      // const ScheduledToDate = this.toScheduleDate;
+      const ScheduledToDate = form.toScheduleDate;
       const ScheduledTime = this.scheduleTime
 
 
@@ -616,7 +616,8 @@ today=new Date()
 
           if(error.code === '0'){
               this.toasterService.showSuccess("Email Scheduled Successfully",'');
-              this.resetTimeScheduleForm();
+              // this.sendEmail();
+              // this.resetTimeScheduleForm();
           }else{
 
             this.toasterService.showError(error.message,'')
