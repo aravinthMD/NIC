@@ -11,7 +11,7 @@
 
             <app-view-info [userDetails]="viewInfoData" *ngIf="existingPreviewUserFlag"></app-view-info>
 
-            <form [formGroup]="form" (keydown.enter)="$event.preventDefault()" *ngIf="existingUserFlag || newUserFlag">
+            <form class="ml-3 mr-3" [formGroup]="form" (keydown.enter)="$event.preventDefault()" *ngIf="existingUserFlag || newUserFlag">
                 <!--FIRST ROW-->
 
                 <div class="row formAlignment">
@@ -461,27 +461,6 @@
 
                     </div> -->
 
-                <!-- <div>
-                <button mat-raised-button matRipple style="background-color:#0e4d92;color: #fff;" (click)="back()">Back</button>
-                <button mat-raised-button matRipple style="background-color:#0e4d92;color: #fff;" (click)="next()">Next</button>
-                </div> -->
-        </div>
-        <!-- <button mat-mini-fab color="primary" class="float-left" aria-label="Example icon button with a home icon">
-                    <mat-icon>arrow_back_ios</mat-icon>
-                </button>
-                <button mat-mini-fab color="primary" class="float-right" aria-label="Example icon button with a home icon">
-                    <mat-icon>arrow_forward_ios</mat-icon>
-                </button> -->
-
-        <div class="row m-3">
-            <div class="col-8">
-                <ng-container *ngIf="isWrite">
-                    <button class="btn btn-primary float-left" matRipple type="submit" (click)="Onsubmit()" *ngIf="!existingPreviewUserFlag">Save & Next</button>
-                    <!-- <button class="btn btn-primary float-left" matRipple type="submit"
-                    (click)="Onsubmit()" *ngIf="hideEditButton">Save & Submit</button> -->
-                    <button class="btn btn-primary btn-lg float-left" *ngIf="existingPreviewUserFlag" matRipple (click)="editData()">Edit</button>
-                </ng-container>
-            </div>
 
 
             </form>
@@ -499,13 +478,13 @@
                 <mat-icon>arrow_forward_ios</mat-icon>
             </button> -->
 
-        <div class="row pt-3 pb-3">
+        <div class="row m-3">
             <div class="col-8">
                 <ng-container *ngIf="isWrite">
                     <button class="btn btn-primary float-left" matRipple type="submit" (click)="Onsubmit()" *ngIf="!existingPreviewUserFlag">Save & Next</button>
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit"
                 (click)="Onsubmit()" *ngIf="hideEditButton">Save & Submit</button> -->
-                    <button class="btn btn-primary btn-lg back-btn float-left" *ngIf="existingPreviewUserFlag" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editData()">Edit</button>
+                    <button class="btn btn-primary btn-lg float-left" *ngIf="existingPreviewUserFlag" matRipple (click)="editData()">Edit</button>
                 </ng-container>
             </div>
 

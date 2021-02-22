@@ -10,7 +10,7 @@
 
 
             <mat-accordion *ngIf="isWrite">
-                <mat-expansion-panel class="pr-3 pl-3">
+                <mat-expansion-panel class="">
                     <mat-expansion-panel-header matRipple collapsedHeight="30px" expandedHeight="35px">
                         <mat-panel-title>
                             <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New SMS Credit Allocation
@@ -193,7 +193,7 @@
 
             <mat-card class="search-card">
                 <form [formGroup]="searchForm">
-                    <div class="row">
+                    <div class="row ml-2 mr-2">
                         <div class="col-3">
                             <div class="form-group">
                                 <label for="dateFor" class="" style="visibility:hidden;">From Date</label>

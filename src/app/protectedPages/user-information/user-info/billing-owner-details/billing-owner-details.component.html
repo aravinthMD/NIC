@@ -7,76 +7,41 @@
 
             <!-- <app-view-info [userDetails]="viewInfoData" *ngIf="!showView"></app-view-info> -->
 
-    <!-- <app-view-info [userDetails]="viewInfoData" *ngIf="!showView"></app-view-info> -->
-    
-   <ng-container  *ngIf="!isShowViewPage">
-<form (submit)="onSubmit()" [formGroup]="billOwnerForm">
-        <div class="row formAlignment">
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input formControlName="name" 
-                    [labelName]="labels.name" 
-                    placeHolder =  "Enter the Name"
-                    [id]="'Name'" 
-                    [isRequired]="'Name is Mandatory'"
-                    [mandatoryField]="true" 
-                    [maxLength]="labels?.validationData.name.maxLength"
-                    [type]="labels?.validationData.name.type" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input formControlName="email" 
-                    [labelName]="labels.email" 
-                    placeHolder =  "Enter the Email"
-                    [id]="'email'" 
-                    [isRequired]="'Email is Mandatory'" 
-                    [mandatoryField]="true"
-                    [patternCheck]="labels?.validationData.email.patternCheck" 
-                    [maxLength]="labels?.validationData.email.maxLength" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input 
-                    formControlName="designation" 
-                    [labelName]="labels.designation" 
-                    placeHolder =  "Enter the Designation"
-                    [id]="'designation'" 
-                    [mandatoryField]="true"
-                    [isRequired]="'Designation is Mandatory'" 
-                    [maxLength]="labels?.validationData.designation.maxLength"
-                    [type]="labels?.validationData.designation.type" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
-        </div>
-            <div class="row formAlignment"> 
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input formControlName="employeeCode" 
-                    [labelName]="labels.employeeCode" 
-                    placeHolder =  "Enter the Employee Code"
-                    [id]="'employeeCode'" 
-                    [maxLength]="labels?.validationData.employeeCode.maxLength"
-                    [type]="labels?.validationData.employeeCode.type" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
+            <!-- <app-view-info [userDetails]="viewInfoData" *ngIf="!showView"></app-view-info> -->
+
+            <ng-container *ngIf="!isShowViewPage">
+                <form class="ml-3 mr-3" (submit)="onSubmit()" [formGroup]="billOwnerForm">
+                    <div class="row formAlignment">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="name" [labelName]="labels.name" placeHolder="Enter the Name" [id]="'Name'" [isRequired]="'Name is Mandatory'" [mandatoryField]="true" [maxLength]="labels?.validationData.name.maxLength" [type]="labels?.validationData.name.type"
+                                    [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="email" [labelName]="labels.email" placeHolder="Enter the Email" [id]="'email'" [isRequired]="'Email is Mandatory'" [mandatoryField]="true" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength"
+                                    [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="designation" [labelName]="labels.designation" placeHolder="Enter the Designation" [id]="'designation'" [mandatoryField]="true" [isRequired]="'Designation is Mandatory'" [maxLength]="labels?.validationData.designation.maxLength"
+                                    [type]="labels?.validationData.designation.type" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row formAlignment">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" placeHolder="Enter the Employee Code" [id]="'employeeCode'" [maxLength]="labels?.validationData.employeeCode.maxLength" [type]="labels?.validationData.employeeCode.type"
+                                    [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
 
                         <div class="col-1 pr-2 mr-0">
                             <div class="form-group">

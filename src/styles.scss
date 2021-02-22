@@ -238,6 +238,10 @@ mat-card.mat-card {
     margin-bottom: 100px;
 }
 
+.mat-card {
+    padding: 0px!important;
+}
+
 .example-element-row:nth-of-type(2n+1) {
     background-color: rgba(0, 0, 0, 0.04);
 }
@@ -514,4 +518,12 @@ th.mat-header-cell:first-of-type {
 
 td.mat-cell {
     padding: 8px 14px!important;
+}
+
+label {
+    margin-bottom: 0px;
+}
+
+.mar-30 {
+    margin: 34px 5px;
 }
