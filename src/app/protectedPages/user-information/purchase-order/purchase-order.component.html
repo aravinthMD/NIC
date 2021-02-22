@@ -307,16 +307,16 @@
 
 
         <mat-card>
-            <form class="mr-3 ml-3" [formGroup]="searchForm">
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label for="dateFor" class="" style="visibility:hidden;">From Date</label> <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
-                            <mat-form-field>
-                                <mat-label>Search...</mat-label>
-                                <input matInput type="text" formControlName="searchData">
-                                <button mat-button matSuffix mat-icon-button aria-label="Clear">
-                         <mat-icon>search</mat-icon>
+            <form [formGroup]="searchForm">
+             <div class="row">
+               <div class="col-3">
+                   <div class="form-group">
+                    <label for="dateFor" class="" style="visibility:hidden;">From Date</label> <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
+                     <mat-form-field >
+                       <mat-label>Search...</mat-label>
+                       <input matInput type="text" formControlName="searchData">
+                       <button mat-button  matSuffix mat-icon-button aria-label="Clear">
+                         <mat-icon (click)="onSearch()">search</mat-icon>
                        </button>
                             </mat-form-field>
 

@@ -483,9 +483,9 @@
                             <mat-form-field>
                                 <mat-label>Search...</mat-label>
                                 <input matInput type="text" formControlName="searchData">
-                                <!-- <button mat-button  matSuffix mat-icon-button aria-label="Clear">
-                         <mat-icon>search</mat-icon>
-                       </button> -->
+                                <button mat-button  matSuffix mat-icon-button aria-label="Clear">
+                         <mat-icon (click)="onSearch()">search</mat-icon>
+                       </button>
                             </mat-form-field>
 
 
