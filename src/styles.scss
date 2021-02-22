@@ -65,6 +65,7 @@ body {
     overflow-x: hidden;
     color: #4e73df;
     background-color: #eff6fd !important;
+    overflow-y: scroll;
 }
 
 .main {
@@ -185,6 +186,10 @@ label {
     font-size: 14px !important;
 }
 
+.btn {
+    line-height: initial!important;
+}
+
 button.btn.btn-primary {
     float: right;
     background-color: #0e4d92 !important;
@@ -222,7 +227,7 @@ mat-form-field {
 /****changes done by rajapriya***/
 
 tr.mat-header-row {
-    height: 40px !important;
+    height: 35px !important;
 }
 
 tr.mat-row {
@@ -231,6 +236,10 @@ tr.mat-row {
 
 mat-card.mat-card {
     margin-bottom: 100px;
+}
+
+.mat-card {
+    padding: 0px!important;
 }
 
 .example-element-row:nth-of-type(2n+1) {
@@ -484,4 +493,37 @@ label {
     .main {
         margin-left: 0px;
     }
+}
+
+
+/* updated code */
+
+.btn-lg {
+    padding-left: 36px;
+    padding-right: 36px;
+}
+
+mat-header-row td,
+th {
+    border-right: 2px solid #d4d4d4;
+    text-align: left;
+    padding: 8px 14px!important;
+}
+
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type,
+th.mat-header-cell:first-of-type {
+    padding-left: 14px!important;
+}
+
+td.mat-cell {
+    padding: 8px 14px!important;
+}
+
+label {
+    margin-bottom: 0px;
+}
+
+.mar-30 {
+    margin: 34px 5px;
 }

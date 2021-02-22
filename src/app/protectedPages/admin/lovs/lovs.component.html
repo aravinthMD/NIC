@@ -4,14 +4,14 @@
         <app-account-header [title]="'LOVs'"></app-account-header>
 
         <ng-container *ngIf="!isLovItemClicked">
-            <div class="search">
-                <input type="text" placeholder="Search LOVs" (input)="onLovSearch($event)" [(ngModel)]="searchValue"/>
+            <div class="search ml-3 mr-3">
+                <input type="text" placeholder="Search LOVs" (input)="onLovSearch($event)" [(ngModel)]="searchValue" />
                 <i class="fa fa-close" *ngIf="searchValue" (click)="clearSearch()"></i>
             </div>
-    
+
             <div class="lov-list">
                 <div class="lov-item" *ngFor="let item of lovsList" (click)="onLovItemClick(item)">
-                      {{item.value}}
+                    {{item.value}}
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
                 <button (click)="onLovBack()" class="btn btn-primary go-back">Go Back</button>
                 <h5 class="item-name">{{selectedLovItem?.value}}</h5>
                 <div class="lov-value-search">
-                    <input type="text" (input)="onLovValueSearch($event)" placeholder="Search" [(ngModel)]="lovValueSearch"/>
+                    <input type="text" (input)="onLovValueSearch($event)" placeholder="Search" [(ngModel)]="lovValueSearch" />
                     <i class="fa fa-close" *ngIf="lovValueSearch" (click)="onLovValueClear()"></i>
                 </div>
                 <button class="btn btn-primary add-new" (click)="addNewItems()">Add New</button>
@@ -45,38 +45,38 @@
                     </th>
                 </thead>
                 <tbody [formGroup]="lovItemsForm">
-                  <tr *ngIf="isAddNewKey">
-                    <td> 
-                      <span class="table-key">NA</span>
-                  </td>
-                  <td>
-                      <input  class="table-input" formControlName="addNewValue"/>
+                    <tr *ngIf="isAddNewKey">
+                        <td>
+                            <span class="table-key">NA</span>
+                        </td>
+                        <td>
+                            <input class="table-input" formControlName="addNewValue" />
 
-                  </td>
-                  <td>
-                     <button class="btn btn-primary" (click)="onLovItemSave(-1)" > Save</button>
-                     
-                  </td>
-                  <td>
-                     <i class="fa fa-close table-fa" (click)="openDeleteModal(-1)"></i>
-                  </td>
-                  </tr>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary" (click)="onLovItemSave(-1)"> Save</button>
+
+                        </td>
+                        <td>
+                            <i class="fa fa-close table-fa" (click)="openDeleteModal(-1)"></i>
+                        </td>
+                    </tr>
 
                     <tr formArrayName="items" *ngFor="let item of lovItemsForm.get('items')['controls'];let i = index;">
                         <ng-container [formGroupName]="i">
-                            <td> 
+                            <td>
                                 <span class="table-key">{{item?.get('key')?.value}}</span>
                             </td>
                             <td>
-                                <input formControlName="value" class="table-input"/>
-   
+                                <input formControlName="value" class="table-input" />
+
                             </td>
                             <td>
-                               <button class="btn btn-primary" (click)="onLovItemSave(i)" *ngIf="checkIsIdAdded(i)"> Save</button>
-                               <button class="btn btn-primary" (click)="onLovItemEdit(i)" *ngIf="!checkIsIdAdded(i)">Edit</button>
+                                <button class="btn btn-primary" (click)="onLovItemSave(i)" *ngIf="checkIsIdAdded(i)"> Save</button>
+                                <button class="btn btn-primary" (click)="onLovItemEdit(i)" *ngIf="!checkIsIdAdded(i)">Edit</button>
                             </td>
                             <td>
-                               <i class="fa fa-close table-fa" (click)="openDeleteModal(i)"></i>
+                                <i class="fa fa-close table-fa" (click)="openDeleteModal(i)"></i>
                             </td>
                         </ng-container>
                     </tr>
@@ -84,42 +84,28 @@
                 </tbody>
             </table>
 
-            <mat-paginator #paginator
-                 (page)="onPageChange($event)"
-                 [length]="tableLength"
-                 [pageSizeOptions]="[10]"
-                 showFirstLastButtons>
+            <mat-paginator #paginator (page)="onPageChange($event)" [length]="tableLength" [pageSizeOptions]="[10]" showFirstLastButtons>
             </mat-paginator>
 
-            
+
 
 
         </ng-container>
-    <div
-    class="modal"
-    id="ucicModel2"
-    [ngClass]="{ 'dis-block': showModal }"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header text-center">
-          <h4 class="modal-title"></h4>
-        </div>
-  
-        <div class="modal-body">
-          <p id="">
-              Are you sure you want to delete  ?
-          </p>
-        </div>
-  
-        <div class="modal-footer text-center">
-          <button
-            type="button"
-            class="btn btn-success"
-            data-dismiss="modal"
-            id="ucic_lead"
-            (click)="delete()"
-          >
+        <div class="modal" id="ucicModel2" [ngClass]="{ 'dis-block': showModal }">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title"></h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p id="">
+                            Are you sure you want to delete ?
+                        </p>
+                    </div>
+
+                    <div class="modal-footer text-center">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" id="ucic_lead" (click)="delete()">
   
             Yes
           </button>

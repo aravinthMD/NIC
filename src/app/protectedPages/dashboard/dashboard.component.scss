@@ -39,7 +39,7 @@ h3 {
 }
 
 table {
-    width: 103%;
+    width: 100%;
 }
 
 .font-paginator {
@@ -115,7 +115,7 @@ mat-form-field {
     width: 20% !important;
     line-height: 20px !important;
     text-align: left;
-    padding: 5px;
+    padding: 8px 14px!important;
     margin: auto;
 }
 
@@ -229,10 +229,9 @@ i {
     padding-bottom: 15px;
 }
 
-::ng-deep.cdk-column-Department {
-    padding-left: 0px !important;
-}
-
+// ::ng-deep.cdk-column-Department {
+//     padding-left: 0px !important;
+// }
 .cursor-pointer {
     cursor: pointer;
 }

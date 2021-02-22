@@ -7,76 +7,41 @@
 
             <!-- <app-view-info [userDetails]="viewInfoData" *ngIf="!showView"></app-view-info> -->
 
-    <!-- <app-view-info [userDetails]="viewInfoData" *ngIf="!showView"></app-view-info> -->
-    
-   <ng-container  *ngIf="!isShowViewPage">
-<form (submit)="onSubmit()" [formGroup]="billOwnerForm">
-        <div class="row formAlignment">
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input formControlName="name" 
-                    [labelName]="labels.name" 
-                    placeHolder =  "Enter the Name"
-                    [id]="'Name'" 
-                    [isRequired]="'Name is Mandatory'"
-                    [mandatoryField]="true" 
-                    [maxLength]="labels?.validationData.name.maxLength"
-                    [type]="labels?.validationData.name.type" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input formControlName="email" 
-                    [labelName]="labels.email" 
-                    placeHolder =  "Enter the Email"
-                    [id]="'email'" 
-                    [isRequired]="'Email is Mandatory'" 
-                    [mandatoryField]="true"
-                    [patternCheck]="labels?.validationData.email.patternCheck" 
-                    [maxLength]="labels?.validationData.email.maxLength" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input 
-                    formControlName="designation" 
-                    [labelName]="labels.designation" 
-                    placeHolder =  "Enter the Designation"
-                    [id]="'designation'" 
-                    [mandatoryField]="true"
-                    [isRequired]="'Designation is Mandatory'" 
-                    [maxLength]="labels?.validationData.designation.maxLength"
-                    [type]="labels?.validationData.designation.type" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
-        </div>
-            <div class="row formAlignment"> 
-            <div class="col-4">
-                <div class="form-group">
-                    <app-custom-input formControlName="employeeCode" 
-                    [labelName]="labels.employeeCode" 
-                    placeHolder =  "Enter the Employee Code"
-                    [id]="'employeeCode'" 
-                    [maxLength]="labels?.validationData.employeeCode.maxLength"
-                    [type]="labels?.validationData.employeeCode.type" 
-                    [isDirty]="isDirty"
-                    [isDisabledInp]="propertyFlag"
-                    >
-                    </app-custom-input>
-                </div>
-            </div>
+            <!-- <app-view-info [userDetails]="viewInfoData" *ngIf="!showView"></app-view-info> -->
+
+            <ng-container *ngIf="!isShowViewPage">
+                <form class="ml-3 mr-3" (submit)="onSubmit()" [formGroup]="billOwnerForm">
+                    <div class="row formAlignment">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="name" [labelName]="labels.name" placeHolder="Enter the Name" [id]="'Name'" [isRequired]="'Name is Mandatory'" [mandatoryField]="true" [maxLength]="labels?.validationData.name.maxLength" [type]="labels?.validationData.name.type"
+                                    [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="email" [labelName]="labels.email" placeHolder="Enter the Email" [id]="'email'" [isRequired]="'Email is Mandatory'" [mandatoryField]="true" [patternCheck]="labels?.validationData.email.patternCheck" [maxLength]="labels?.validationData.email.maxLength"
+                                    [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="designation" [labelName]="labels.designation" placeHolder="Enter the Designation" [id]="'designation'" [mandatoryField]="true" [isRequired]="'Designation is Mandatory'" [maxLength]="labels?.validationData.designation.maxLength"
+                                    [type]="labels?.validationData.designation.type" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row formAlignment">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" placeHolder="Enter the Employee Code" [id]="'employeeCode'" [maxLength]="labels?.validationData.employeeCode.maxLength" [type]="labels?.validationData.employeeCode.type"
+                                    [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                </app-custom-input>
+                            </div>
+                        </div>
 
                         <div class="col-1 pr-2 mr-0">
                             <div class="form-group">
@@ -297,7 +262,7 @@
 
                     </div>
                 </form>
-                <!-- <div class="row pt-3 pb-3 m-0">
+                <!-- <div class="row  m-0">
             <button class="btn btn-primary" matRipple type="submit" [disabled]="billOwnerForm.invalid" *ngIf="!propertyFlag" (click)="onSubmit()">{{'Submit'}}</button>
 
             <button class="btn btn-primary back-btn" [disabled]="!propertyFlag" matRipple (click)="editData()">Edit</button>
@@ -322,8 +287,8 @@
                     </div>
 
                     <div class="col-4" style="float: left;">
-                        <button class="btn btn-primary ml-3" style="padding-left: 36px; padding-right:36px;" (click)="onNext()">Next</button>
-                        <button class="btn btn-primary ml-3" style="padding-left: 36px; padding-right:36px;" (click)="back()">Back</button>
+                        <button class="btn btn-primary btn-lg ml-3" (click)="onNext()">Next</button>
+                        <button class="btn btn-primary btn-lg ml-3" (click)="back()">Back</button>
 
                     </div>
 
@@ -351,25 +316,22 @@
 
 
 
-            <div class="row pt-3 pb-3">
-                <div class="col-8">
+            <div class="row m-3">
+                <div class="col-6">
                     <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
                     <ng-container *ngIf="isWrite">
-                        <button class="btn btn-primary btn-lg float-left back-btn" style="padding-left: 36px; padding-right:36px;" matRipple (click)="editDataBill()">Edit</button>
+                        <button class="btn btn-primary btn-lg float-left " matRipple (click)="editDataBill()">Edit</button>
                     </ng-container>
                 </div>
 
-                <div class="col-4" style="float: right;">
-                    <button *ngIf="this.isShowViewPage" class="btn btn-primary ml-3" style="padding-left: 36px; padding-right:36px;" (click)="onNext()">Next</button>
+                <div class="col-6" style="float: right;">
+                    <button *ngIf="this.isShowViewPage" class="btn btn-primary btn-lg ml-3" (click)="onNext()">Next</button>
 
-                    <button class="btn btn-primary ml-30" style="padding-left: 36px; padding-right:36px;" (click)="back()">Back</button>
-
-                </div>
-
-                <div class="col-2" style="float: left;">
-                    <!-- <button class="btn btn-primary ml-3" (click)="next()">Save & Next</button> -->
+                    <button class="btn btn-primary btn-lg ml-30" (click)="back()">Back</button>
 
                 </div>
+
+
             </div>
         </ng-container>
 

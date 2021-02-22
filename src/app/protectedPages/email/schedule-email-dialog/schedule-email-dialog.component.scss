@@ -1,0 +1,16 @@
+::ng-deep .time_date > .mat-form-field-label.mat-empty.mat-form-field-empty {
+    margin-top:-10px !important;
+}
+
+.float-right{
+    float: right;
+}
+
+::ng-deep div.cdk-overlay-pane {
+    max-width: 80vw !important;
+    position: absolute !important;
+    width: 70% !important;
+    left: 22vw !important;
+    display: flex;
+}
+
