@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminDetailServiceService } from '@services/admin-detail-service.service';
 import { AdminService } from '@services/admin.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { ToasterService } from '@services/toaster.service';
@@ -17,6 +18,7 @@ export class ManageEmailComponent implements OnInit {
   selectedID : number;
 
   userId : string;
+  adminUserId : string;
 
   dataList =  []
 
@@ -27,12 +29,14 @@ export class ManageEmailComponent implements OnInit {
   constructor(
     private clientDetailService : ClientDetailsService,
     private adminService : AdminService,
-    private toasterService : ToasterService
+    private toasterService : ToasterService,
+    private adminDetailService : AdminDetailServiceService
     ) {
    }
 
   ngOnInit() {
     this.userId = this.clientDetailService.getClientId();
+    this.adminUserId = this.adminDetailService.getAdminUserId();
     this.getAllManageEmailList();
   }
 
@@ -40,7 +44,7 @@ export class ManageEmailComponent implements OnInit {
     this.showModal = true;
     this.selectedID = data.id;
     this.emailValue = data.screenStatus;
-    this.adminService.adminEmailManager(data.id,'73').subscribe((response) => {
+    this.adminService.adminEmailManager(data.id,this.adminUserId).subscribe((response) => {
         this.selectedID = response["ProcessVariables"]["id"];
         this.emailValue = response["ProcessVariables"]["screenStatus"];
     },(error) =>{
@@ -51,7 +55,7 @@ export class ManageEmailComponent implements OnInit {
 
   submitDialog(){
     const screenStatus = this.emailValue;
-    this.adminService.updateManageEmail(+this.selectedID,'73',screenStatus).
+    this.adminService.updateManageEmail(+this.selectedID,this.adminUserId,screenStatus).
       subscribe((response: any) => {
       const {
         ProcessVariables  : { error : {

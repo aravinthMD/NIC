@@ -362,6 +362,10 @@ export class UserInfoComponent implements OnInit, OnChanges {
         value : data.proj_number
       },
       {
+        key : this.labels.userId,
+        value  : data.userId
+      },
+      {
         key : this.labels.password,
         value : this.replaceStrar(data.password)
       },

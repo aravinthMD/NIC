@@ -4,6 +4,7 @@ import {FormGroup,FormBuilder} from '@angular/forms';
 import { ToasterService } from '@services/toaster.service';
 import { LoginService } from '@services/login.service'
 import { UtilityService } from '@services/utility.service';
+import { AdminDetailServiceService } from '@services/admin-detail-service.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
               private formBuilder: FormBuilder,
               private toasterService: ToasterService,
               private loginService: LoginService,
-              private utilityService: UtilityService) {
+              private utilityService: UtilityService,
+              private adminDetailService : AdminDetailServiceService) {
 
     this.form = this.formBuilder.group({
       userName: [null],
@@ -87,6 +89,7 @@ export class LoginComponent implements OnInit {
         }
         this.toasterService.showSuccess('Logged Successfully', '');
         this.utilityService.setLoginDetail(processVariables);
+        this.adminDetailService.setAdminUserId(processVariables.userId ? processVariables.userId : '');
         localStorage.setItem('userName', processVariables.username);
         localStorage.setItem('roleName', processVariables.roleName);
         this.router.navigate(['users/Dashboard/']);
