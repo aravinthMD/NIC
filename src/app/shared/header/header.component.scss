@@ -391,6 +391,16 @@ span.mr-2.d-none.d-lg-inline.text-gray-600.small {
     }
 }
 
+@media screen and (min-width: 768px) and (max-width:992px) {
+    .col-lg-11 {
+        height: 3.5rem;
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        margin-left: 207px !important;
+    }
+}
+
 .col-lg-11 .topbar {
     height: 3.5rem;
     width: 100%;
