@@ -24,6 +24,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   rolesList = []
 
   popupContent: string;
+  totalLength: number;
 
 
 
@@ -112,11 +113,21 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
    
   }
 
-  fetchManageUsers(){
-    this.adminService.fetchAllAdminUser().subscribe((response) => {
-        this.dataSource = new MatTableDataSource<any>(response['ProcessVariables']['usersList']);
-        this.dataSource.paginator = this.paginator;
-    })
+  fetchManageUsers(currentPage?: number) {
+    this.adminService.fetchAllAdminUser(currentPage).subscribe((response: any) => {
+        const processVariables = response.ProcessVariables;
+        this.dataSource = new MatTableDataSource<any>(processVariables.usersList);
+        if (!currentPage) {
+          this.dataSource.paginator = this.paginator;
+          this.totalLength = processVariables.totalData;
+        }
+    });
+  }
+
+  onPageChange(event) {
+    console.log('event', event);
+    const currentPage = event.pageIndex + 1;
+    this.fetchManageUsers(currentPage);
   }
 
   disable(element) {

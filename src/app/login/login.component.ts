@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("token",res["token"]);
             const userData = this.utilityService.getUserData()
             console.log("user Data",userData)
-            this.getUserDetails({username: userData.userName              
+            this.getUserDetails({username: userData.userName ?  userData.userName: null           
               })
           }else{
             this.toasterService.showError("Invalid User",'Login')
@@ -130,25 +130,36 @@ export class LoginComponent implements OnInit {
           this.errroMsg = 'Please enter the username to reset password'
           // this.toasterService.showError('Please enter the useranme to reset password','')
       }else {
+        this.utilityService.setUserDetail(this.form.value);
         const username = this.form.value.userName;
 
-        const data ={"userId" : "admin", "validity" : 900, "zoneId" : 98}
+        const data ={"userId" : username, "validity" : 900, "zoneId" : 98}
         // X-AUTH-SESSIONID
         this.loginService.createSession(data).subscribe((response)=> {
         const getResponse =  response;
         console.log("createSession response",response);
         if (getResponse["status"] == true){     
-        const xAuthSessionId = getResponse["payload"]["auth"]["sessionId"]
-        console.log("xAuthSessionId",xAuthSessionId);
-        this.loginService.forgotPassword(username,xAuthSessionId).subscribe((response)=> {
-          console.log("forgotPassword response",response);
-          this.router.navigate(['/verifyotp'])
-        })
+          const xAuthSessionId = getResponse["payload"]["auth"]["sessionId"]
+          console.log("xAuthSessionId",xAuthSessionId);
+          this.loginService.forgotPassword(username,xAuthSessionId).subscribe((res)=> {
+            const response =  res['payload'];
+            if(res['status'] && response["processResponse"]['Error'] == 0 && 
+                response["processResponse"]['ProcessVariables']['error']['code'] == 0){
+            console.log("forgotPassword response",response);
+            this.router.navigate(['/verifyotp'])
+          }else {
+            this.toasterService.showError(response["processResponse"]['ProcessVariables']['error'] ?
+              response["processResponse"]['ProcessVariables']['error']['message']: response["processResponse"]['ProcessVariables']?
+              response["processResponse"]['ProcessVariables']['ErrorMessage']: '','');
+          }
+          })
 
-    }
+        }else {
+          this.toasterService.showError("Invalid User",'Login');
+        }
 
-  })
-  }
+       })
+      }
   }
 
 }

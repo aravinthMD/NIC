@@ -1,5 +1,5 @@
 <div class="col-md-10 main">
-    <mat-card class="p-0">
+    <mat-card class="pt-2">
         <div class="technical_admin">
             <!-- <h1 class="h4 mb-1 mt-1 text-gray-100 mb-3" matRipple style="font-family: arial;">Technical Admin Details</h1> -->
 
@@ -9,7 +9,7 @@
 
 
 
-            <form class="pr-3 pl-3" (submit)="onSubmit()" [formGroup]="technicaladminform" *ngIf="!isShowTechViewPage">
+            <form (submit)="onSubmit()" [formGroup]="technicaladminform" *ngIf="!isShowTechViewPage">
                 <div class="row formAlignment">
 
                     <div class="d-none">
@@ -22,7 +22,8 @@
 
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="name" [labelName]="labels.name" [id]="'Name'" placeHolder="Enter the Name" [isRequired]="'Name is Mandatory'" [mandatoryField]="true" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="name" [labelName]="labels.name" [id]="'Name'" placeHolder="Enter the Name" [isRequired]="'Name is Mandatory'" [mandatoryField]="true" [maxLength]="labels?.validationData.name.maxLength" [type]="labels?.validationData.name.type"
+                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -44,13 +45,14 @@
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="designation" [labelName]="labels.designation" placeHolder="Enter the Designation" [id]="'designation'" [mandatoryField]="true" [isRequired]="'Designation is Mandatory'" [maxLength]="labels?.validationData.designation.maxLength"
-                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                [type]="labels?.validationData.designation.type" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" placeHolder="Enter the Employee Code" [id]="'employeeCode'" [maxLength]="labels?.validationData.employeeCode.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="employeeCode" [labelName]="labels.employeeCode" placeHolder="Enter the Employee Code" [id]="'employeeCode'" [maxLength]="labels?.validationData.employeeCode.maxLength" [type]="labels?.validationData.employeeCode.type"
+                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -112,13 +114,14 @@
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="offAddress1" [labelName]="labels.officialAdd1" placeHolder="Enter the Address1" [id]="'offcAddressLine1'" [mandatoryField]="true" [isRequired]="'Office AddressLine1 is Mandatory'" [maxLength]="labels?.validationData.officeAddress.maxLength"
-                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                                [type]="labels?.validationData.officeAddress.type" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="offAddress2" [labelName]="labels.officialAdd2" placeHolder="Enter the Address2" [id]="'offcAddressLine2'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="offAddress2" [labelName]="labels.officialAdd2" placeHolder="Enter the Address2" [id]="'offcAddressLine2'" [maxLength]="labels?.validationData.officeAddress.maxLength" [type]="labels?.validationData.officeAddress.type"
+                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -126,19 +129,22 @@
                 <div class="row formAlignment">
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3" placeHolder="Enter the Address3" [id]="'offcAddressLine3'" [maxLength]="labels?.validationData.officeAddress.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="offAddress3" [labelName]="labels.officialAdd3" placeHolder="Enter the Address3" [id]="'offcAddressLine3'" [maxLength]="labels?.validationData.officeAddress.maxLength" [type]="labels?.validationData.officeAddress.type"
+                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="city" [labelName]="labels.city" placeHolder="Enter the City Name" [id]="'city'" [mandatoryField]="true" [isRequired]="'City is Mandatory'" [maxLength]="labels?.validationData.city.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="city" [labelName]="labels.city" placeHolder="Enter the City Name" [id]="'city'" [mandatoryField]="true" [isRequired]="'City is Mandatory'" [maxLength]="labels?.validationData.city.maxLength" [type]="labels?.validationData.city.type"
+                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="state" [labelName]="labels.state" placeHolder="Enter the State" [id]="'state'" [mandatoryField]="true" [isRequired]="'State is Mandatory'" [maxLength]="labels?.validationData.state.maxLength" [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
+                            <app-custom-input formControlName="state" [labelName]="labels.state" placeHolder="Enter the State" [id]="'state'" [mandatoryField]="true" [isRequired]="'State is Mandatory'" [maxLength]="labels?.validationData.state.maxLength" [type]="labels?.validationData.state.type"
+                                [isDirty]="isDirty" [isDisabledInp]="propertyFlag">
                             </app-custom-input>
                         </div>
                     </div>
@@ -183,6 +189,7 @@
 
 
 
+
             <div class="row m-3">
                 <div class="col-8">
                     <ng-container *ngIf="isWrite">
@@ -199,53 +206,55 @@
 
                 </div>
 
-
             </div>
+
 
         </div>
 
-        <!-- <div class="bottom-button">
+</div>
+
+<!-- <div class="bottom-button">
            <button mat-raised-button (click)="next()" class="float-left" matRipple style="background-color:#0e4d92;color: #fff;" (click)="back()">Back</button>
            <button mat-raised-button (click)="back()" class="float-right" matRipple style="background-color:#0e4d92;color: #fff;" (click)="next()">Next</button>
         </div> -->
 
-        <!-- <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header> -->
+<!-- <app-account-header [title]="'Billing Admin Details'" *ngIf="user"></app-account-header> -->
 
-        <div *ngIf="false">
-            <div class="dashBoard" *ngIf="isShowTechViewPage">
-                <div>
-                    Billing Admin Details
-                </div>
-            </div>
+<div *ngIf="false">
+    <div class="dashBoard" *ngIf="isShowTechViewPage">
+        <div>
+            Billing Admin Details
+        </div>
+    </div>
 
-            <!-- <app-view-info [billAdminUserDetails] = "viewBillAdminInfoData" *ngIf = "isShowTechViewPage"></app-view-info> -->
-
-
+    <!-- <app-view-info [billAdminUserDetails] = "viewBillAdminInfoData" *ngIf = "isShowTechViewPage"></app-view-info> -->
 
 
 
-            <div class="row pt-3 pb-3" *ngIf="isShowTechViewPage">
-                <div class="col-8">
-                    <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
-                    <button class="btn btn-primary btn-lg float-left " matRipple (click)="editDataBill()">Edit</button>
-                </div>
 
-                <div class="col-4" style="float: right;">
-                    <button *ngIf="isShowTechViewPage" class="btn btn-primary btn-lg ml-3" (click)="onNext()">Next</button>
 
-                    <button class="btn btn-primary btn-lg ml-30" (click)="back('billAdmin')">Back</button>
-
-                </div>
-
-                <div class="col-2" style="float: left;">
-                    <!-- <button class="btn btn-primary ml-3" (click)="next()">Save & Next</button> -->
-
-                </div>
-            </div>
+    <div class="row pt-3 pb-3" *ngIf="isShowTechViewPage">
+        <div class="col-8">
+            <!-- <button class="btn btn-primary float-left" matRipple type="submit" *ngIf="!propertyFlag" (click)="onSubmit()">Save</button> -->
+            <button class="btn btn-primary btn-lg float-left " matRipple (click)="editDataBill()">Edit</button>
         </div>
 
+        <div class="col-4" style="float: right;">
+            <button *ngIf="isShowTechViewPage" class="btn btn-primary btn-lg ml-3" (click)="onNext()">Next</button>
 
-    </mat-card>
+            <button class="btn btn-primary btn-lg ml-30" (click)="back('billAdmin')">Back</button>
+
+        </div>
+
+        <div class="col-2" style="float: left;">
+            <!-- <button class="btn btn-primary ml-3" (click)="next()">Save & Next</button> -->
+
+        </div>
+    </div>
+</div>
+
+
+</mat-card>
 </div>
 
 

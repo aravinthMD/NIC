@@ -118,4 +118,120 @@ label {
     margin-top: 1px;
 }
 
+.search {
+    display: flex;
+}
+
+.search input {
+    border: none;
+    color: #555;
+    border-bottom: 1px solid #555;
+}
+
+.search input:focus {
+    outline: none;
+}
+
+.lov-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.lov-item {
+    font-size: 15px;
+    box-sizing: border-box;
+    padding: 20px 10px;
+    color: #555;
+    // border: 1px solid #777;
+    flex-basis: 45%;
+    min-width: 500px;
+    cursor: pointer;
+    margin: 5px;
+    box-shadow: 0 0 10px 0px rgba(0,0,0, 0.1);
+}
+
+.lov-details {
+    display: flex;
+    align-items: center;
+}
+
+.add-new {
+    margin-left: 50px;
+}
+
+.go-back {
+    margin-right: 50px;
+}
+
+.item-name {
+    color: #555;
+}
+
+.lov-details input {
+    border: none;
+    color: #555;
+    border-bottom: 1px solid #555;
+    margin-left: 20px;
+}
+
+.lov-details input:hover {
+    outline: none;
+}
+
+table, th, td {
+    border-collapse: collapse;
+}
+
+th {
+    font-size: 16px;
+    color: #555;
+}
+
+th, td {
+    padding: 15px;
+    width: 50px;
+}
+
+td {
+    text-align: center; 
+    vertical-align: middle;
+}
+
+thead {
+   border-bottom:  2px solid #104d92;
+}
+
+.lov-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    float: left !important;
+}
+
+.table-input, .table-fa {
+    float: left;
+}
+
+.table-input {
+    font-size: 16px;
+    padding: 10px 5px;
+    width: 350px;
+}
+
+.table-fa {
+    color: #0e4d92;
+    cursor: pointer;
+}
+
+.table-key {
+    float: left;
+    font-size: 16px;
+}
+
+.modal-dialog {
+    max-width: 60% !important;
+}
  

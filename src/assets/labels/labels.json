@@ -139,7 +139,7 @@
             "maxLength": {
                 "rule": 50
             },
-            "type": "alpha",
+            "type": "alpha-numeric",
             "patternCheck":{
                 "rule":"^[a-zA-Z][a-zA-Z\\s]+$",
                 "msg": "Invalid UserName"
@@ -148,17 +148,20 @@
         "applicantName": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha"
         },
         "serverLocation": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type":"alpha-numeric"
         },
         "smsGatewayAccess": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha-numeric"
         },
         "ipServReqd": {
             "maxLength": {
@@ -168,17 +171,20 @@
         "domMonSmsTraffic": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type":"alpha-numeric"
         },
         "intMonSmsTraffic": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type":"alpha-numeric"
         },
         "officerName": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha"
         },
         "appSecurAudClear": {
             "maxLength": {
@@ -189,6 +195,12 @@
             "maxLength": {
                 "rule": 50
             }
+        },
+        "purpOfTheApplication": {
+            "maxLength": {
+                "rule": 50
+            },
+            "type":"alpha-numeric"
         },
         "purchaseON": {
             "maxLength": {
@@ -268,12 +280,14 @@
         "designation": {
             "maxLength": {
                 "rule": 50
-            }
+            },
+            "type": "alpha"
         },
         "employeeCode": {
             "maxLength": {
                 "rule": 20
-            }
+            },
+            "type":"alpha-numeric"
         },
         "email": {
             "maxLength": {
@@ -312,17 +326,20 @@
         "officeAddress": {
             "maxLength": {
                 "rule": 50
-         }
+         },
+         "type": "alpha-numeric"
         },
         "city": {
             "maxLength": {
                 "rule": 25
-            }
+            },
+            "type": "alpha"
         },
         "state": {
             "maxLength": {
                 "rule": 25
-            }
+            },
+            "type": "alpha"
         },
         "pincode": {
             "maxLength": {
