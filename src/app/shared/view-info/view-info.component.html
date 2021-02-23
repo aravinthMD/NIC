@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row ml-4 mr-4">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of userDetails;let i = index">
         <ng-container *ngIf="!data.isButton">
-        <div style="word-break: break-all;">
-            <label style="font-weight: bold;">{{data?.key}}</label><br>
-            <label >{{data?.value}}</label>
-        </div>
-       </ng-container>
+            <div style="word-break: break-all;">
+                <label style="font-weight: bold;">{{data?.key}}</label><br>
+                <label>{{data?.value}}</label>
+            </div>
+        </ng-container>
         <ng-container *ngIf="data.isButton && data?.value">
             <div style="word-break: break-all; margin-top: 10px;">
                 <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF(data?.value)">View PDF</button>
@@ -15,49 +15,49 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row ml-4 mr-4">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of techAdminUserDetails;let i = index">
         <ng-container *ngIf="!data?.isButton">
             <div style="word-break: break-all;">
                 <label style="font-weight: bold;">{{data?.key}}</label><br>
-                <label >{{data?.value}}</label>
-        </div>
+                <label>{{data?.value}}</label>
+            </div>
         </ng-container>
-    <ng-container *ngIf="data?.isButton && data?.value">
-        <div style="word-break: break-all; margin-top: 10px;">
-            <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF(data?.value)">View PDF</button>
+        <ng-container *ngIf="data?.isButton && data?.value">
+            <div style="word-break: break-all; margin-top: 10px;">
+                <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF(data?.value)">View PDF</button>
 
-        </div>
-    </ng-container>
+            </div>
+        </ng-container>
     </div>
 </div>
 
-<div class="row">
+<div class="row ml-4 mr-4">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of billAdminUserDetails;let i = index">
         <ng-container *ngIf="!data?.isButton && data?.value">
             <div style="word-break: break-all;">
                 <label style="font-weight: bold;">{{data?.key}}</label><br>
-                <label >{{data?.value}}</label>
-        </div>
+                <label>{{data?.value}}</label>
+            </div>
         </ng-container>
-    <ng-container *ngIf="data?.isButton">
-        <div style="word-break: break-all; margin-top: 10px;">
-            <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF(data?.value)">View PDF</button>
+        <ng-container *ngIf="data?.isButton">
+            <div style="word-break: break-all; margin-top: 10px;">
+                <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF(data?.value)">View PDF</button>
 
-        </div>
-    </ng-container>
+            </div>
+        </ng-container>
     </div>
 </div>
 <div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
     <div class="modal-dialog">
         <div class="modal-content" style="width:920px;color:black">
-        <div class="modal-header text-center">
-            <h4 class="modal-title">View PDF</h4>
-            <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false">&times;</button>
+            <div class="modal-header text-center">
+                <h4 class="modal-title">View PDF</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false">&times;</button>
+            </div>
+            <div class="modal-body" style="height: 553px;">
+                <iframe [src]="previewUrl | secure | async" style="height:491px;width: 886px;" type="application/pdf"></iframe>
+            </div>
         </div>
-        <div class="modal-body" style="height: 553px;">
-            <iframe [src]= "previewUrl | secure | async" style="height:491px;width: 886px;" type="application/pdf"></iframe>
-        </div>
     </div>
-    </div>
-    </div>
+</div>

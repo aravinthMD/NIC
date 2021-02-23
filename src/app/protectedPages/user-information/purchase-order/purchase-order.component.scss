@@ -4,7 +4,7 @@
 }
 
 .purchase-order {
-    margin-top: 10px;
+    // margin-top: 10px;
     overflow-x: hidden;
 }
 
@@ -112,7 +112,6 @@ button {
 // .example-form-field.p-0.search-label {
 //     margin-top: -22px !important;
 // }
-
 mat-card.mat-card {
     margin-top: 20px !important;
     margin-bottom: 0px !important;
@@ -126,7 +125,6 @@ mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
     background-color: initial !important;
     color: #0e4d92 !important;
 }
-
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
     padding: .4375em 0 13px 0px !important;
@@ -147,6 +145,7 @@ td.mat-cell {
     line-height: 20px !important;
     word-break: break-all;
 }
+
 .mat-form-field-label-wrapper {
     top: -1.5em !important;
 }
@@ -175,15 +174,15 @@ td.mat-cell {
 
 .dis-block {
     display: block;
-  }
+}
 
-  .save-popup{
+.save-popup {
     max-width: 700px !important;
     top: 20% !important;
     color: #0d4d92;
 }
 
-.dirty-error{
+.dirty-error {
     font-size: 0.9vw;
     font-family: zurich-bold;
     letter-spacing: .5px;
@@ -197,51 +196,31 @@ label {
     font-size: 16px;
 }
 
-
 .btn-success {
- 
     color: #fff;
-   
     background-color: #28a745;
-   
     border-radius: 35px;
-   
     border: 1px solid rgba(21, 87, 36, 0.75);
-   
 }
 
 .btn-warning {
- 
     color: #212529;
-   
     background-color: #ffc107;
-   
     border-radius: 90%;
-   
-    border: 1px solid rgba(255, 193, 7, 0.75);   
-   
+    border: 1px solid rgba(255, 193, 7, 0.75);
 }
-
 
 .btn-info {
- 
     color: #ffffff;
-   
     background-color: #007bff;
-   
     border-radius: 25%;
-   
-    border: 1px solid rgba(82, 138, 223, 0.75);   
-   
+    border: 1px solid rgba(82, 138, 223, 0.75);
 }
 
-.plus
-{
-    margin-top:25px;
+.plus {
+    margin-top: 25px;
 }
 
-
-.popup-table{
+.popup-table {
     padding: 16px 32px;
 }
-

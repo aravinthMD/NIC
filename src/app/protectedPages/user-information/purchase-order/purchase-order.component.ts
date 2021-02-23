@@ -343,6 +343,7 @@ smsApprovedList: any[] = [
     const data = this.apiService.api.fetchPurchaseOrder;
 
     const params = {
+      selectedClientId: this.clientId,
         searchKeyword: this.searchForm.get('searchData').value,
         fromDate: this.searchForm.get('searchFrom').value,
         toDate: this.searchForm.get('searchTo').value

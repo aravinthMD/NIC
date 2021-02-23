@@ -1,7 +1,7 @@
 <div class="col-md-10 main">
     <!--Main class Start-->
 
-    <div class="col-md-12  p-0">
+    <div class="col-md-12">
         <!--Reports Tag Start-->
         <!-- <h1 class="h3  text-gray-800 mb-2">Reports</h1> -->
         <!-- <mat-accordion> -->
@@ -36,7 +36,7 @@
                 <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
                 <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
               </div>  -->
-                <div class="row">
+                <div class=" row ml-3 mr-3">
                     <div class="col-12">
                         <div class="form-group">
                             <label for="">From</label>
@@ -141,10 +141,10 @@
                             <ng-multiselect-dropdown [placeholder]="'Choose Screen'" [data]="screenNameDropDownList" formControlName="screenList" [(ngModel)]="selectedItems" [settings]="dropdownSettings">
                             </ng-multiselect-dropdown>
                         </div>
-                        <div class="pl-3" style="margin-top: 40px !important;">
+                        <div class="from-group mar-30">
                             <button type="button" [disabled]="!templateName" matRipple (click)="saveOrUpdateTemplate()" class=" btn btn-primary">Save</button>
                         </div>
-                        <div class="pl-3" style="margin-top: 40px !important;">
+                        <div class="from-group mar-30">
                             <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
                         </div>
                     </div>
@@ -169,10 +169,10 @@
                             </ng-multiselect-dropdown>
                         </div>
                     </div>
-                    <div *ngIf="editTempinp" style="margin-top: 2.5% !important;padding-right: 10px;">
+                    <div *ngIf="editTempinp" class="mar-30">
                         <button type="button" matRipple (click)="update()" class=" btn btn-primary">Update</button>
                     </div>
-                    <div *ngIf="chooseTemp" style="margin-top: 2.5% !important;margin-left: 0%">
+                    <div *ngIf="chooseTemp" class="mar-30">
                         <button type="button" (click)="cancel()" matRipple class=" btn btn-primary">Cancel</button>
                     </div>
 
@@ -188,7 +188,7 @@
 
                         </div>
                     </div>
-                    <div class="col-12 pt-2">
+                    <div class="col-12 m-2">
                         <!-- <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button> -->
                         <button [disabled]="!showScheduleBtn" matRipple class=" btn btn-primary float-left" [disabled]="!(toMailAddress && Subject && mailContent)" (click)="openScheduleEmailDialog()">Schedule</button>
                         <button type="submit" [disabled]="!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>

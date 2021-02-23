@@ -160,8 +160,7 @@
         "smsGatewayAccess": {
             "maxLength": {
                 "rule": 50
-            },
-            "type": "alpha-numeric"
+            }
         },
         "ipServReqd": {
             "maxLength": {
@@ -172,13 +171,13 @@
             "maxLength": {
                 "rule": 50
             },
-            "type":"alpha-numeric"
+            "type":"number"
         },
         "intMonSmsTraffic": {
             "maxLength": {
                 "rule": 50
             },
-            "type":"alpha-numeric"
+            "type":"number"
         },
         "officerName": {
             "maxLength": {

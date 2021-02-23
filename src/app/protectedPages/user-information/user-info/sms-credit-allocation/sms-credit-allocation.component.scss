@@ -1,5 +1,5 @@
 .sms_credit_allocation {
-    margin-top: 15px;
+    // margin-top: 15px;
     overflow-x: hidden;
 }
 
@@ -121,45 +121,41 @@ tr.example-element-row:hover {
 //     background-color: #dfdfdf !important;
 //     font-weight: 500 !important;
 // }
-
 // .mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
 //     background-color: #dfdfdf !important;
 // }
-
 .mat-expansion-panel-body {
     padding: 0px !important;
 }
 
-mat-expansion-panel-header#mat-expansion-panel-header-0 {
-    height: 48px !important;
-}
-
-
+// mat-expansion-panel-header#mat-expansion-panel-header-0 {
+//     height: 48px !important;
+// }
 :ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
     padding: .4375em 0 13px 0px !important;
-  }
-  
-  th.mat-header-cell {
+}
+
+th.mat-header-cell {
     flex: 0 16% !important;
     width: 16% !important;
     line-height: 20px !important;
     text-align: left;
-  }
-  
-  td.mat-cell {
+}
+
+td.mat-cell {
     line-height: 24px !important;
     text-align: left;
     flex: 0 16% !important;
     width: 16% !important;
     line-height: 20px !important;
     word-break: break-all;
-  }
+}
 
-  mat-card .search-card {
+mat-card .search-card {
     margin-bottom: -5px !important;
-  }
+}
 
-  button {
+button {
     height: 30px;
     border-radius: 5px;
     color: #ffffff !important;
@@ -178,7 +174,6 @@ mat-expansion-panel-header#mat-expansion-panel-header-0 {
 }
 
 mat-card .history-card {
-
     background: #0d4d92 !important;
     margin-bottom: 20px !important;
 }
@@ -218,8 +213,7 @@ mat-card {
     color: #f8f9fa;
 }
 
-mat-card{
-
+mat-card {
     box-shadow: none !important;
 }
 
