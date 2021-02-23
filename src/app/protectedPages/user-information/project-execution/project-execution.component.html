@@ -210,9 +210,9 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="remarks">{{labels.remark}}</label>
+                                <label for="remarks">{{labels.remark}}</label><span style="color:red">*</span>
                                 <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName='remark' id="remarks" rows="3"></textarea>
-                                <div class="date-picker-error" *ngIf="(PurchaseEntryForm.controls['remark'].errors?.required && PurchaseEntryForm.controls['remark'].dirty) && isDirty">
+                                <div class="date-picker-error" *ngIf="PurchaseEntryForm.controls['remark'].errors?.required && isDirty">
                                     Please Enter Remark
                                 </div>
                             </div>

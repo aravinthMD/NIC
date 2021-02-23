@@ -556,9 +556,6 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendReminder(element) {
-    if (element.status === '0') {
-      return;
-    }
     this.showEmailModal = true;
     this.data = 'Send Mail';
   }

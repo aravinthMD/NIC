@@ -232,12 +232,12 @@
 
                             <label for="dateFor" style="visibility:hidden;">To Date</label>
 
-                            <mat-form-field>
-                                <mat-label>To Date</mat-label>
-                                <input matInput [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
-                                <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
-                                <mat-datepicker #picker7></mat-datepicker>
-                            </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>To Date</mat-label>
+                                    <input matInput [min] = "searchForm.controls['searchFrom'].value" [matDatepicker]="picker7" formControlName="searchTo" (keyup)="detectDateKeyAction($event,'searchTo')">
+                                    <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker7></mat-datepicker>
+                                </mat-form-field>
 
                         </div>
                     </div>

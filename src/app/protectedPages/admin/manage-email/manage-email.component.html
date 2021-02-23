@@ -55,7 +55,7 @@
             <div class="modal-body">
                 <span *ngIf="!emailValue">Please select the option</span>
                 <span *ngIf="emailValue" id="">
-     Are you sure you want to {{(emailValue === '2') ? 'disable' : 'enable' }} email sending options?
+     Are you sure you want to {{(emailValue === '2') ? 'disable' : 'enable' }} email sending options for {{screenName}} screen?
       </span>
                 <br>
                 <mat-radio-group aria-label="Select an option" color="primary" [(ngModel)]="emailValue">

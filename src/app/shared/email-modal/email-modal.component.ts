@@ -87,10 +87,16 @@ export class EmailModalComponent implements OnInit {
 
     const formValue = this.emailForm.value;
 
+    const attachment = this.attachment ?  this.attachment.base64 :  '';
+    const attachmentName  = this.attachment ? this.attachment.name :  '';
+
     console.log('formValue', formValue);
+
 
     const Data =  {
           ... formValue,
+          attachment,
+          attachmentName
     }
 
     this.adminService.sendEmailRemainder(Data).subscribe(
