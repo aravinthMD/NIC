@@ -1,0 +1,149 @@
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <!-- <span class="close">&times;</span> -->
+        <h2>{{messageText}}</h2>
+        <div class="modal-footer">
+            <button (click)="onModalOkay()">Okay</button>
+        </div>
+    </div>
+</div>
+<div class="">
+    <div class="grid-container-img">
+        <div class="grid-img">
+            <img src="assets/images/dashboard_nic_logo_1-1.png">
+        </div>
+    </div>
+    <div class="grid-container-2 common">
+
+        <div class="grid-name">
+            <div class="left-details ">
+                <span class="caption">Account Activation Request</span>
+                <span class="caption" style="display: none;">Account Deactivation Request</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+
+
+
+    <p class="row common-normal pad-20">Request ID:<span id="requestId"> {{requestId}}</span></p>
+    <div class="zbank-body grid-container">
+
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Account Name</label>
+                <input id="accountName" class="input-color" [value]="accountName" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Project No.</label>
+                <input id="projectNumber" class="input-color" [value]="projectNumber" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Department</label>
+                <!--  <select class="input-color-select" readonly>
+                        <option>Dep 1</option>
+                        <option>Dep 2</option>
+                    </select> -->
+                <input id="department" class="input-color" [value]="department" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">City</label>
+                <!--  <select class="input-color-select" readonly>
+                        <option>City 1</option>
+                        <option>City 2</option>
+                    </select> -->
+                <input id="city" class="input-color" [value]="city" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">State</label>
+                <!-- <select class="input-color-select" readonly>
+                        <option>State 1</option>
+                        <option>State 2</option>
+                    </select> -->
+                <input id="state" class="input-color" [value]="state" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Requested Credits</label>
+                <input id="requestedCredits" class="input-color" [value]="requestedCredits" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Date of Request</label>
+                <input id="dateOfRequest" class="input-color" [value]="dateOfRequest" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Request Raised by</label>
+                <input id="requestRaisedBy" class="input-color" readonly="">
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Approver Email ID</label>
+                <input id="approverEmailId" class="input-color" [value]="smsApprover" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Approver Name</label>
+                <input id="approverName" class="input-color" [value]="approverName" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Approved On Behalf</label>
+                <input id="approvedOnBehalf" class="input-color" [value]="approvedOnBehalf" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Date Of Approval</label>
+                <input id="dateOfApproval" class="input-color" [value]="dateOfApproval" readonly="">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Remarks</label>
+                <textarea id="remarks" class="input-color" rows="5" [value]="remarks" readonly></textarea>
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 "> Comments</label>
+                <textarea id="comments" class="input-color" [(ngModel)]='myComments' rows="5"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row txt-center">
+        <div class="left-details ">
+            <button class="" (click)="sendUserResponse('1')">Approve</button>
+            <button class="" (click)="sendUserResponse('2')">Reject</button>
+        </div>
+    </div>
+
+
+
+    <div>
+        <div id="snackbar"></div>
+    </div>
+</div>
