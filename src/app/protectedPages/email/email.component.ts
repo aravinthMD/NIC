@@ -59,7 +59,7 @@ export class EmailComponent implements OnInit {
   SelectedVal;
   emailform:FormGroup;
 
-
+  isShowClose = false;
   @ViewChild('inputEmailFile', {static: false}) inputEmailFile: ElementRef;
 
 

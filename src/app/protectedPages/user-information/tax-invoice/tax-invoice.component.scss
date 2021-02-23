@@ -11,7 +11,7 @@
 th {
     font-size: 16px;
     font-weight: 500;
-    background-color: #0e4d92;
+    background-color: #276678;
     color: #fff;
 }
 
@@ -58,13 +58,13 @@ tr:nth-child(even) {
     line-height: 24px;
     margin-bottom: 10px;
     // background-color: #dfdfdf !important;
-    background-color: #0d4d92 !important;
+    background-color: #2ca2b9 !important;
     font-weight: 500 !important;
 }
 
 .mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
     // background-color: #dfdfdf !important;
-    background-color: #0d4d92 !important;
+    background-color: #2ca2b9 !important;
 }
 
 .upload-choose-pad {
@@ -87,9 +87,10 @@ button {
     height: 33px;
     border-radius: 5px;
     color: #ffffff !important;
-    background-color: #0e4d92 !important;
+    background-color: #276678 !important;
     border-style: none;
     font-weight: 400;
+    // box-shadow: 0px 0px 0px 0px #c9e1e6 inset, 0px 0px 8px 0px #9ea3a8
 }
 
 .searching {
@@ -110,7 +111,7 @@ button {
     height: 33px;
     border-radius: 5px;
     color: #ffffff !important;
-    background-color: #0e4d92 !important;
+    background-color: #276678 !important;
     border-style: none;
     font-weight: 400;
 }
@@ -134,7 +135,7 @@ mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
 
 .background-none {
     background-color: initial !important;
-    color: #0e4d92 !important;
+    color: #276678 !important;
 }
 
 th.mat-header-cell {

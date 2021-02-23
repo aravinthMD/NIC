@@ -1,56 +1,52 @@
-tr{
-    td{
-
+tr {
+    td {
         vertical-align: middle;
         font-size: 14px;
-
-        a{
+        a {
             cursor: pointer;
             font-size: 14px;
         }
-
-        a:hover{
+        a:hover {
             text-decoration: underline;
         }
     }
-
-    th{
-        vertical-align: middle;        
+    th {
+        vertical-align: middle;
         font-weight: 500;
     }
     height: 65px;
 }
 
-
 table {
     width: 100%;
     margin-bottom: 0rem !important;
+}
 
-  }
-
-  th{
+th {
     font-size: 14px;
     font-weight: 500;
-    background-color: #0e4d92;
+    background-color: #276678;
     color: #fff;
-  }
+}
 
-  button.btn.btn-primary {
-    background-color: #0e4d92 !important;
-    border: 1px solid #0e4d92 !important;
+button.btn.btn-primary {
+    background-color: #276678 !important;
+    border: 1px solid #276678 !important;
     font-size: 13px;
     float: none !important;
+    box-shadow: 0px 0px 0px 0px #c9e1e6 inset, 0px 0px 8px 0px #9ea3a8;
 }
 
 tr.example-element-row:hover {
     background: whitesmoke;
-  }
+}
 
-  .text-gray-800 {
+.text-gray-800 {
     color: #5a5c69 !important;
 }
 
-.h3, h3 {
+.h3,
+h3 {
     font-size: 1.75rem;
     margin-bottom: .5rem;
     font-weight: 400;
@@ -62,35 +58,34 @@ tr.example-element-row:hover {
     padding-left: 1.5vw;
 }
 
-
 //For Table Stripes
-tr:nth-child(even) {background-color:#f5f4f4;}
+tr:nth-child(even) {
+    background-color: #f5f4f4;
+}
 
 ::ng-deep .mat-select-value {
     font-size: 15px !important;
-  }
+}
 
-  ::ng-deep .mat-option-text {
+ ::ng-deep .mat-option-text {
     font-size: 15px !important;
-  }
+}
 
-  .dis-block {
+.dis-block {
     display: block;
     top: 20% !important;
-  }
+}
 
-
-  mat-card {
+mat-card {
     width: 100% !important;
 }
 
-.mat-row:hover > .mat-cell {
-  background-color:#d8d0d0 ;
-
+.mat-row:hover>.mat-cell {
+    background-color: #d8d0d0;
 }
 
 label {
-  display: inline-block;
-  margin-bottom: -0.1rem;
-  font-size: 16px;
+    display: inline-block;
+    margin-bottom: -0.1rem;
+    font-size: 16px;
 }

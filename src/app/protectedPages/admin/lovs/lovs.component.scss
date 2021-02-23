@@ -8,7 +8,7 @@
 }
 
 h1.h3.text-gray-800.mb-2 {
-    color: #0e4d92;
+    color: #276678;
     font-size: 20px;
 }
 
@@ -43,13 +43,14 @@ h2 {
 
 button.btn.btn-primary {
     float: right;
-    background-color: #0e4d92 !important;
-    border: 1px solid #0e4d92 !important;
+    background-color: #276678 !important;
+    border: 1px solid #276678 !important;
     font-size: 13px;
+    box-shadow: 0px 0px 0px 0px #c9e1e6 inset, 0px 0px 8px 0px #9ea3a8;
 }
 
 label {
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .mat-tab-group {
@@ -125,7 +126,7 @@ label {
     color: #555;
     border: 1px solid #cacaca;
     border-radius: 5px;
-    font-size: 15px;
+    font-size: 13px;
     padding: 5px;
 }
 
@@ -136,20 +137,21 @@ label {
 .lov-list {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .lov-item {
-    font-size: 15px;
+    font-size: 13px;
     box-sizing: border-box;
-    padding: 20px 10px;
-    color: #555;
+    padding: 10px;
     // border: 1px solid #777;
-    flex-basis: 45%;
-    min-width: 500px;
+    flex-basis: 48%;
+    // min-width: 500px;
     cursor: pointer;
     margin: 5px;
     box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.1);
+    background-color: #2ca2b9;
+    color: #fff;
 }
 
 .lov-details {
@@ -187,7 +189,7 @@ td {
 }
 
 th {
-    font-size: 16px;
+    font-size: 13px;
     color: #555;
 }
 
@@ -202,15 +204,9 @@ td {
     vertical-align: middle;
 }
 
-thead {
-    border-bottom: 2px solid #104d92;
-}
-
-.lov-table {
-    width: 100%;
-    margin-top: 20px;
-}
-
+// thead {
+//     border-bottom: 2px solid #104d92;
+// }
 .btn-primary {
     float: left !important;
 }
@@ -220,20 +216,24 @@ thead {
     float: left;
 }
 
+table {
+    width: -webkit-fill-available!important;
+}
+
 .table-input {
-    font-size: 16px;
+    font-size: 13px;
     padding: 10px 5px;
-    width: 350px;
+    width: -webkit-fill-available;
 }
 
 .table-fa {
-    color: #0e4d92;
+    color: #276678;
     cursor: pointer;
 }
 
 .table-key {
     float: left;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .modal-dialog {

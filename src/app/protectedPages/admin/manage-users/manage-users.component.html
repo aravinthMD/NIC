@@ -8,7 +8,7 @@
     <!--Material Table -->
     <mat-card class="p-0">
         <app-account-header [title]="'Manage Users'"></app-account-header>
-        <div class="mat-elevation-z8 pr-3 pl-3">
+        <div class="mat-elevation-z8 pt-3 pr-3 pl-3">
             <table mat-table [dataSource]="dataSource" class="custom-table">
 
                 <!-- <ng-container matColumnDef="S.NO">
@@ -63,10 +63,10 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
             </table>
 
-        <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons [length]="totalLength" (page)="onPageChange($event)"></mat-paginator>
-    </div>
-    <!--Material Table End-->
-</mat-card>
+            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons [length]="totalLength" (page)="onPageChange($event)"></mat-paginator>
+        </div>
+        <!--Material Table End-->
+    </mat-card>
 
 </div>
 
@@ -92,12 +92,12 @@
 
             <!-- Modal footer -->
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-success" data-dismiss="modal" id="ucic_lead" (click)="delete()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="ucic_lead" (click)="delete()">
         <!-- (click)="checkNegativeList()" -->
 
         Yes
       </button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onCancel()">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="onCancel()">
         Cancel
       </button>
             </div>
