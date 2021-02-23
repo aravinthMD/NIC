@@ -167,7 +167,7 @@ body {
 }
 
 label {
-    font-size: 14px !important;
+    font-size: 13px !important;
     color: #414141 !important;
     font-weight: 400px !important;
 }
@@ -249,7 +249,7 @@ mat-card.mat-card {
 
 label {
     line-height: 30px !important;
-    font-size: 15px !important;
+    font-size: 13px !important;
     font-weight: 450;
 }
 
@@ -414,7 +414,7 @@ label {
 .custom-label {
     display: inline-block;
     margin-bottom: -0.1rem;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .bold-lable {
@@ -593,6 +593,7 @@ th {
     position: relative;
     flex: 1 1 auto;
     padding: 0 1rem;
+    font-size: 13px;
 }
 
 .modal-title {
@@ -618,4 +619,42 @@ button {
 
 .account-info {
     font-size: 13px!important;
+}
+
+.mat-radio-label-content {
+    font-size: 13px!important;
+}
+
+.mat-fab.mat-primary,
+.mat-flat-button.mat-primary,
+.mat-mini-fab.mat-primary,
+.mat-raised-button.mat-primary {
+    background-color: #276678!important;
+}
+
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-primary .mat-ripple-element,
+.mat-checkbox:active:not(.mat-checkbox-disabled).mat-primary .mat-ripple-element {
+    background: #276678!important;
+}
+
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-primary .mat-ripple-element,
+.mat-checkbox:active:not(.mat-checkbox-disabled).mat-primary .mat-ripple-element {
+    background: #276678!important;
+}
+
+.btn-secondary {
+    color: #6c757d;
+    background-color: #ebebeb;
+    border-color: #ebebeb;
+    font-size: 13px;
+}
+
+.btn-primary:hover {
+    background-color: #367a8d;
+}
+
+.btn-secondary:hover {
+    background-color: #d4d4d4;
+    border-color: #ebebeb;
+    color: #367a8d;
 }
