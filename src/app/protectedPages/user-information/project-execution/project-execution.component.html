@@ -203,7 +203,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="poBillable">Upload Document</label>
-                                <input type="file" accept="application/pdf" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp" (change) = "uploadFile($event.target.files)">
+                                <input type="file" accept="application/pdf" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp" (change)="uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
@@ -380,7 +380,7 @@
             <!-- <button class="btn btn-primary download download-pad" type="submit">Export as CSV</button> -->
             <mat-paginator class="font-paginator" [hidePageSize]="true" [pageSize]="pageSize" [length]="length" (page)="getServerData($event)" showFirstLastButtons>
             </mat-paginator>
-            <div class="m-5"></div>
+            <div class=""></div>
         </div>
 
         <div class="row pt-3 pb-3 m-0">

@@ -1,4 +1,4 @@
-<div class="row ml-4 mr-4">
+<div class="row ml-3 mr-3 pt-3">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of userDetails;let i = index">
         <ng-container *ngIf="!data.isButton">
             <div style="word-break: break-all;">
@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="row ml-4 mr-4">
+<div class="row ml-3 mr-3 ">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of techAdminUserDetails;let i = index">
         <ng-container *ngIf="!data?.isButton">
             <div style="word-break: break-all;">
@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<div class="row ml-4 mr-4">
+<div class="row ml-3 mr-3 ">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of billAdminUserDetails;let i = index">
         <ng-container *ngIf="!data?.isButton && data?.value">
             <div style="word-break: break-all;">

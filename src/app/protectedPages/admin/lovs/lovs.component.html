@@ -4,13 +4,13 @@
         <app-account-header [title]="'LOVs'"></app-account-header>
 
         <ng-container *ngIf="!isLovItemClicked">
-            <div class="search ml-3 mr-3">
+            <div class="search mt-2 ml-3 mr-3">
                 <input type="text" placeholder="Search LOVs" (input)="onLovSearch($event)" [(ngModel)]="searchValue" />
                 <i class="fa fa-close" *ngIf="searchValue" (click)="clearSearch()"></i>
             </div>
 
-            <div class="lov-list">
-                <div class="lov-item" *ngFor="let item of lovsList" (click)="onLovItemClick(item)">
+            <div class="lov-list m-0 row">
+                <div class="lov-item col-6" *ngFor="let item of lovsList" (click)="onLovItemClick(item)">
                     {{item.value}}
                 </div>
             </div>
@@ -21,7 +21,7 @@
 
             <div class="lov-details">
                 <button (click)="onLovBack()" class="btn btn-primary go-back">Go Back</button>
-                <h5 class="item-name">{{selectedLovItem?.value}}</h5>
+                <p class="item-name mt-3">{{selectedLovItem?.value}}</p>
                 <div class="lov-value-search">
                     <input type="text" (input)="onLovValueSearch($event)" placeholder="Search" [(ngModel)]="lovValueSearch" />
                     <i class="fa fa-close" *ngIf="lovValueSearch" (click)="onLovValueClear()"></i>
