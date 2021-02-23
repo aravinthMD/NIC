@@ -428,12 +428,9 @@
 
                         <div class="col-4">
                             <div class="form-group">
-                                <label for="remark">{{labels.remark}}</label>
+                                <label for="remark">{{labels.remark}}</label><span style="color:red">*</span>
                                 <textarea class="remark" maxlength="3000" formControlName='remark' id="remark" placeHolder="Enter the Remark" required></textarea>
-                                <div class="date-picker-error" *ngIf="
-                              isDirty &&
-                              taxInvoiceForm.get('remark').errors?.required
-                            ">
+                                <div class="date-picker-error" *ngIf="isDirty && taxInvoiceForm.get('remark').errors?.required">
                                     Please Enter Remark
                                 </div>
                             </div>

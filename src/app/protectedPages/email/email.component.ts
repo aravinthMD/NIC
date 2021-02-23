@@ -13,6 +13,7 @@ import { EmailService } from 'src/app/email.service';
 import { AdminService } from '@services/admin.service';
 import { MatDialog } from '@angular/material';
 import { ScheduleEmailDialogComponent } from './schedule-email-dialog/schedule-email-dialog.component';
+import { FileToBase64Service } from '@services/file-to-base64.service';
 
 
 @Component({
@@ -33,6 +34,11 @@ export class EmailComponent implements OnInit {
   showScheduleBtn = true;
   showSendEmailBtn = true;
 
+  attachment : {
+    name?: string,
+    base64?: string
+  }
+
   selectedItems  = []
 
   userName : string;
@@ -52,6 +58,9 @@ export class EmailComponent implements OnInit {
   isInvalidEmail: boolean;
   SelectedVal;
   emailform:FormGroup;
+
+
+  @ViewChild('inputEmailFile', {static: false}) inputEmailFile: ElementRef;
 
 
   // optionsScreen  = [   //HardCoded
@@ -146,7 +155,8 @@ today=new Date()
     private emailService: EmailService,
     private adminService: AdminService,
     private route : ActivatedRoute,
-    private dialog : MatDialog) {
+    private dialog : MatDialog,
+    private fileToBase64Service : FileToBase64Service) {
 
     this.userName = localStorage.getItem('userName') || '';
 
@@ -277,6 +287,12 @@ today=new Date()
     const subject = formValue.subject;
     const message1 = formValue.mailContent;
     const fromAddress = formValue.FromMailAddress;
+    
+
+    //Attachment Upload
+    const attachment = this.attachment ? this.attachment.base64 :  '';
+    const attachmentName = this.attachment ? this.attachment.name :  '';
+
     if (!toAddress) {
       return this.toasterService.showError('Please enter the to mail address', '');
     }
@@ -290,7 +306,10 @@ today=new Date()
       fromAddress,
       message1,
       subject,
-      toAddress };
+      toAddress,
+      attachment,
+      attachmentName
+     };
     console.log('data', data);
     this.adminService.sendEmailRemainder(data)
           .subscribe((res: any) => {
@@ -306,6 +325,7 @@ today=new Date()
              }
              this.emailform.reset();
              this.emailIdList = [];
+             this.attachment = null;
              return this.toasterService.showSuccess('Mail Sent Successfully', '');
           });
   }
@@ -629,6 +649,22 @@ today=new Date()
 
 
 
+  }
+
+  async attachFile(event) {
+    // console.log(event);
+    // const file = event.target.files[0];
+    try {
+      this.attachment = await this.fileToBase64Service.convertToBase64(event);
+      console.log('base64', this.attachment);
+      this.inputEmailFile.nativeElement.value = '';
+    } catch (e) {
+      console.log('file error', e);
+    }
+  }
+
+  removeAttachment() {
+    this.attachment = null;
   }
 
   resetTimeScheduleForm(){
