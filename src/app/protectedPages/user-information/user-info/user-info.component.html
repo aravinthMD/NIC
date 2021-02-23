@@ -345,6 +345,7 @@
                 </div>
 
                 <div class="row formAlignment1">
+                    
                     <!-- <div class="col-4" *ngIf="existingUserFlag">
                                 <div class="form-group">
                                     <label for="creditAddedAgainstPi">{{labels.creditPI}}</label>
@@ -364,18 +365,17 @@
 
                                 </div>
                             </div> -->
-                    <!-- <div class="col-4" *ngIf="existingUserFlag">
+                    <div class="col-4" *ngIf="existingUserFlag">
                                 <div class="form-group">
                                     <label for="department">{{labels.status}}</label>
                                     <app-vf-custom-select formControlName="status" 
                                     [values]="statusList"
                                     [isRequired]="'Please Select Status'" 
                                     (valueChange)="statusChange($event)"
-                                    [isDisabled]="propertyFlag"
                                     [isDirty]="isDirty">
                                     </app-vf-custom-select>
                                 </div>
-                                </div> -->
+                                </div>
 
                     <!-- <div class="col-4">
                                     <div class="form-group">
