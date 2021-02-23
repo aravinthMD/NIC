@@ -658,3 +658,34 @@ button {
     border-color: #ebebeb;
     color: #367a8d;
 }
+
+table {
+    width: -webkit-fill-available!important;
+}
+
+p,
+input {
+    font-size: 13px!important;
+}
+
+th {
+    font-size: 13px!important;
+    color: #fff!important;
+    font-weight: 500;
+}
+
+.btn-danger,
+.btn-danger:hover {
+    color: #276678;
+    background-color: #ddd;
+    border-color: #ddd;
+    font-size: 13px;
+}
+
+.btn-success,
+.btn-success:hover {
+    background-color: #276678;
+    color: #fff;
+    border-color: #276678;
+    font-size: 13px;
+}
