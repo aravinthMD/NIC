@@ -17,7 +17,7 @@ import { ApiService } from '../../../../services/api.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { SmsCreditService } from '@services/sms-credit.service';
 import { SmsCreditAllocation } from './sms-credit.model';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { CsvDataService } from '@services/csv-data.service';
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 import { UtilityService } from '@services/utility.service';
@@ -408,7 +408,13 @@ export class SmsCreditAllocationComponent implements OnInit {
     const origin = location.origin;
     console.log('origin', origin);
     const token = localStorage.getItem('token');
-    const smsUrl = `${origin}/nic/assets/html/sms.html?id=smsId`;
+    // const smsUrl = `${origin}/nic/assets/html/sms.html?id=smsId`;
+    let  smsUrl 
+    if(environment.production){
+      smsUrl = `${origin}/nic/#/external/smsappove/smsId`
+    }else{
+      smsUrl = `${origin}/#/external/smsappove/smsId`
+    }    
     if (this.smsCreditForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');
