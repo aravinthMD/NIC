@@ -1,64 +1,66 @@
 .example-action-buttons {
     padding-bottom: 20px;
-  }
-  
-  .example-headers-align .mat-expansion-panel-header-title,
-  .example-headers-align .mat-expansion-panel-header-description {
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
     flex-basis: 0;
-  }
-  
-  .example-headers-align .mat-expansion-panel-header-description {
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .example-headers-align .mat-form-field + .mat-form-field {
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
     margin-left: 8px;
-  }
-  .mat-tab-label-content {
+}
+
+.mat-tab-label-content {
     font-size: 20px !important;
 }
 
-.mat-tab-label mat-ripple ng-star-inserted{
+.mat-tab-label mat-ripple ng-star-inserted {
     margin-left: 202px;
-
 }
 
-
 .mat-tab-label.mat-tab-label-active {
-  background-color: #e3e7e8 !important;
+    background-color: #e3e7e8 !important;
 }
 
 ::ng-deep .mat-tab-label {
-  border-style: ridge;
-  border-color: #c0cad4 !important;
-  border-radius: 8px;
+    border-style: ridge;
+    border-color: #c0cad4 !important;
+    border-radius: 8px;
 }
 
 
 /***header top tab css**/
 
 
-  /* Styles for the active tab label */
-  ::ng-deep .mat-tab-label-active {
+/* Styles for the active tab label */
+
+ ::ng-deep .mat-tab-label-active {
     background-color: #2ca2b9 !important;
     color: #fff;
     opacity: 1 !important;
-    border-color: #fff !important ;
-  }
-  
-  /* Styles for the ink bar */
-  ::ng-deep .mat-ink-bar {
-    background-color:  #2ca2b9 !important;
-  }
+    border-color: #fff !important;
+}
 
-:host ::ng-deep .mat-tab-label{
-  border-radius: 2px;
- border-style: ridge;
- background-color: #0e4d92;
+
+/* Styles for the ink bar */
+
+ ::ng-deep .mat-ink-bar {
+    background-color: #2ca2b9 !important;
+}
+
+:host ::ng-deep .mat-tab-label {
+    border-radius: 2px;
+    border-style: ridge;
+    background-color: #276678;
     opacity: 1 !important;
     color: white;
-
 }
+
 
 /***header top tab css**/

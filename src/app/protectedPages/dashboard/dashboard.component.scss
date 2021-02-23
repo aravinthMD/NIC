@@ -49,7 +49,7 @@ table {
 th {
     font-size: 14px;
     font-weight: 500;
-    background-color: #0e4d92;
+    background-color: #1687a7;
     color: #fff;
 }
 
@@ -137,7 +137,7 @@ mat-form-field {
 }
 
 .dashBoard {
-    background: #0e4d92 !important;
+    background: #276678 !important;
     color: #fff!important;
     // margin-bottom: 17px;
     // height: 44px;
@@ -145,7 +145,7 @@ mat-form-field {
     // padding-left: 10px;
     font-size: 21px;
     font-weight: 500;
-    border-color: #0e4d92;
+    border: 1px solid #ddd;
     border-style: solid;
     vertical-align: middle !important;
     width: 100%;
@@ -166,7 +166,7 @@ mat-form-field {
 }
 
 #mySearch.active {
-    border-color: #0e4d92 !important;
+    border-color: #1687a7 !important;
 }
 
 // #mySearch { 
@@ -183,10 +183,9 @@ mat-form-field {
     font-size: 0.5em;
 }
 
-i {
-    vertical-align: middle;
-}
-
+// i {
+//     vertical-align: middle;
+// }
 .input-icons i {
     position: absolute;
     padding-top: 8px;
@@ -224,7 +223,7 @@ i {
 }
 
 .dashb {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 450;
     padding-bottom: 15px;
 }

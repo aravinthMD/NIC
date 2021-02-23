@@ -273,7 +273,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="documentUpload">{{labels?.uploadDoc}}</label>
-                                <input type="file" accept="application/pdf" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload" (change) = "uploadFile($event.target.files)">
+                                <input type="file" accept="application/pdf" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload" (change)="uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
@@ -307,15 +307,15 @@
 
 
         <mat-card>
-            <form [formGroup]="searchForm">
-             <div class="row">
-               <div class="col-3">
-                   <div class="form-group">
-                    <label for="dateFor" class="" style="visibility:hidden;">From Date</label> <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
-                     <mat-form-field >
-                       <mat-label>Search...</mat-label>
-                       <input matInput type="text" formControlName="searchData">
-                       <button mat-button  matSuffix mat-icon-button aria-label="Clear">
+            <form [formGroup]="searchForm" class="ml-3 mr-3">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="dateFor" class="" style="visibility:hidden;">From Date</label> <label for="dateFor" class="" style="visibility:hidden;">From Date</label>
+                            <mat-form-field>
+                                <mat-label>Search...</mat-label>
+                                <input matInput type="text" formControlName="searchData">
+                                <button mat-button matSuffix mat-icon-button aria-label="Clear">
                          <mat-icon (click)="onSearch()">search</mat-icon>
                        </button>
                             </mat-form-field>
