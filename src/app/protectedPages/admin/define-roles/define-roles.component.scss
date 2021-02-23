@@ -71,7 +71,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 .form-group {
-    font-size: 15px;
+    font-size: 13px;
     color: black;
 }
 
@@ -108,7 +108,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 //   border: 1px solid #4268d6!important;
 // }
 th {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 500;
     background-color: #276678;
     color: #fff;
@@ -131,13 +131,13 @@ tr:nth-child(even) {
     line-height: 24px;
     margin-bottom: 10px;
     // background-color: #dfdfdf !important;
-    background-color: #0d4d92 !important;
+    background-color: #276678 !important;
     font-weight: 500 !important;
 }
 
 .mat-expansion-panel-header:hover #mat-expansion-panel-header-0 {
     // background-color: #dfdfdf !important;
-    background-color: #0d4d92 !important;
+    background-color: #276678 !important;
 }
 
 // .mat-expansion-panel-header:active #mat-expansion-panel-header-0{
@@ -149,11 +149,11 @@ tr:nth-child(even) {
 }
 
  ::ng-deep .mat-select-value {
-    font-size: 15px !important;
+    font-size: 13px !important;
 }
 
  ::ng-deep .mat-option-text {
-    font-size: 15px !important;
+    font-size: 13px !important;
 }
 
 mat-form-field {
@@ -174,7 +174,7 @@ button {
     background-color: #276678 !important;
     border-style: none;
     font-weight: 400;
-    font-size: 14px !important;
+    font-size: 13px !important;
     padding: 6px !important;
     box-shadow: 0px 0px 0px 0px #c9e1e6 inset, 0px 0px 8px 0px #9ea3a8
 }

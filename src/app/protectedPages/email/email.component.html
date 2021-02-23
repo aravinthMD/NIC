@@ -181,16 +181,25 @@
                             <div class="col-2" style="padding:10px;padding-bottom: 0%;">
 
                                 <label for="">Message</label>
-
+                                <div class="attachment">
+                                    <div (click)="inputEmailFile.click()">
+                                        <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                         Attachment
+                                    </div>
+                                </div>
 
                             </div>
                             <textarea type="text" formControlName="mailContent" class="form-control"></textarea>
 
                         </div>
+                        <div *ngIf="attachment">
+                            <div class="attachment-name" (mouseenter)="isShowClose=true" (mouseleave)="isShowClose=false">{{attachment?.name}} <span><i class="fa fa-times close-icon" aria-hidden="true" [ngClass]="{'show-close': isShowClose}" (click)="removeAttachment()"></i></span></div>
+                        </div>
                     </div>
                     <div class="col-12 m-2">
                         <!-- <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button> -->
                         <button [disabled]="!showScheduleBtn" matRipple class=" btn btn-primary float-left" [disabled]="!(toMailAddress && Subject && mailContent)" (click)="openScheduleEmailDialog()">Schedule</button>
+                        <input hidden type="file" #inputEmailFile (change)="attachFile($event)">
                         <button type="submit" [disabled]="!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
                         <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
 

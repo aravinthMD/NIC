@@ -55,6 +55,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   deleteAccount: string;
 
   deleteUserId: string;
+  currentPage: number;
 
   constructor(
     private dialog: MatDialog,
@@ -127,6 +128,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   onPageChange(event) {
     console.log('event', event);
     const currentPage = event.pageIndex + 1;
+    this.currentPage = currentPage;
     this.fetchManageUsers(currentPage);
   }
 
@@ -154,7 +156,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
       if(response['ProcessVariables']['response']['type'] == 'Success') {
 
         this.showModal = false;
-        this.fetchManageUsers()
+        this.fetchManageUsers(this.currentPage);
 
         this.toasterService.showSuccess(response['ProcessVariables']['response']['value'],'')
       }else {

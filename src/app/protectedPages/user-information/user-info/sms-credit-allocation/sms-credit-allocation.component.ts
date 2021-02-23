@@ -409,7 +409,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     console.log('origin', origin);
     const token = localStorage.getItem('token');
     // const smsUrl = `${origin}/nic/assets/html/sms.html?id=smsId`;
-    const smsUrl = `${origin}#/external/smsappove/smsId`
+    const smsUrl = `${origin}/#/external/smsappove/smsId`
     if (this.smsCreditForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');
@@ -557,9 +557,6 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendReminder(element) {
-    if (element.status === '0') {
-      return;
-    }
     this.showEmailModal = true;
     this.data = 'Send Mail';
   }
