@@ -1,11 +1,11 @@
 table {
     width: 100%;
-  }
+}
 
-  th {
+th {
     font-size: 16px;
     font-weight: 500;
-    background-color: #0e4d92;
+    background-color: #276678;
     color: #fff;
 }
 
@@ -13,7 +13,7 @@ button {
     height: 30px;
     border-radius: 5px;
     color: #ffffff !important;
-    background-color: #0e4d92 !important;
+    background-color: #276678 !important;
     border-style: none;
     font-weight: 400;
     font-size: 14px;
@@ -25,7 +25,6 @@ button {
 //     border-color: #fff !important;
 //     padding: 7px !important;
 // }
-
 th.mat-header-cell {
     flex: 0 14% !important;
     width: 14% !important;
@@ -48,40 +47,33 @@ td.mat-cell {
     word-break: break-all;
 }
 
-
 .dis-block {
-        top: 20%;
-        display: block;
-        
-  }
+    top: 20%;
+    display: block;
+}
 
-  ::ng-deep.mat-radio-button {
+ ::ng-deep.mat-radio-button {
     padding: 13px 24px 7px 13px;
-  }
+}
 
-
-  span {
-    color: #0e4d92;
+span {
+    color: #276678;
     font-weight: 450;
     line-height: 26px;
 }
 
-.button1 { 
+.button1 {
     padding-left: 122px;
 }
 
-.dialog-button{
-
+.dialog-button {
     font-size: 17px;
 }
-
 
 mat-card {
     width: 100% !important;
 }
 
-
-.modal-dialog  {
+.modal-dialog {
     width: 36% !important;
 }
- 

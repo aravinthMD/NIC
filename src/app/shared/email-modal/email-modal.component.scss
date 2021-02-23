@@ -1,57 +1,55 @@
 .dis-block {
     display: block;
-  }
-  
+}
 
-  textarea.form-control {
-      height: 10vw;
-  }
+textarea.form-control {
+    height: 10vw;
+}
 
-  // .modal-dialog {
-  //   box-shadow: 0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%);
-  //   background: #fff;
-  //   color: rgba(0,0,0,.87);
-  //   border-radius: 4px;
-  //   width: 100%;
-  //   height: 100%;
-  //   box-sizing: border-box;
-  //   padding: 24px;
-  // }
-
-
-  .modal-dialog  {
+// .modal-dialog {
+//   box-shadow: 0 11px 15px -7px rgb(0 0 0 / 20%), 0 24px 38px 3px rgb(0 0 0 / 14%), 0 9px 46px 8px rgb(0 0 0 / 12%);
+//   background: #fff;
+//   color: rgba(0,0,0,.87);
+//   border-radius: 4px;
+//   width: 100%;
+//   height: 100%;
+//   box-sizing: border-box;
+//   padding: 24px;
+// }
+.modal-dialog {
     box-shadow: 0 0 15px rgb(0 0 0 / 50%);
     border-radius: 0.3rem;
-  }
+}
 
-  .modal-title { 
-    color: #0e4d92;
-    font-size: 22px !important;  }
+.modal-title {
+    color: #276678;
+    font-size: 22px !important;
+}
 
-  .modal-content  {
-    border : none;
+.modal-content {
+    border: none;
     padding: 5px;
     box-shadow: none;
-  }
+}
 
-  .attachment {
+.attachment {
     margin: 10px 0;
     cursor: pointer;
-  }
+}
 
-  .show-close {
+.show-close {
     visibility: visible !important;
-  }
+}
 
-  .close-icon {
-     visibility: hidden;
-  }
+.close-icon {
+    visibility: hidden;
+}
 
-  .attachment-name {
+.attachment-name {
     display: inline-block;
     margin: 10px 0;
     padding: 10px;
     border: 1px solid #104d92;
     border-radius: 10px;
     color: #555;
-  }
+}

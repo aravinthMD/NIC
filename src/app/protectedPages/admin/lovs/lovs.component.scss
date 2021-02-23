@@ -8,7 +8,7 @@
 }
 
 h1.h3.text-gray-800.mb-2 {
-    color: #0e4d92;
+    color: #276678;
     font-size: 20px;
 }
 
@@ -43,9 +43,10 @@ h2 {
 
 button.btn.btn-primary {
     float: right;
-    background-color: #0e4d92 !important;
-    border: 1px solid #0e4d92 !important;
+    background-color: #276678 !important;
+    border: 1px solid #276678 !important;
     font-size: 13px;
+    box-shadow: 0px 0px 0px 0px #c9e1e6 inset, 0px 0px 8px 0px #9ea3a8;
 }
 
 label {
@@ -227,7 +228,7 @@ thead {
 }
 
 .table-fa {
-    color: #0e4d92;
+    color: #276678;
     cursor: pointer;
 }
 
