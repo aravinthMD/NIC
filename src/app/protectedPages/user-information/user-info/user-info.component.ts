@@ -71,14 +71,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
   teleCodeValues = []
 
-  statusList= [
+  statusList = [
     {
-      key:0,value: 'Active',
+      key:'0',value: 'Active',
     },
     {
-      key:1,value:'Inactive'
+      key:'1',value:'Inactive'
     }
-  ]
+  ];
 
   traiSenderId = [];
 
@@ -113,6 +113,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
     rule?: any;
     msg?: string;
   }[];
+
+  initialStatus = '0';
 
     private userPassWord: string;
     projectNo: string;
@@ -185,8 +187,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
       // creditAddedAgainstPi : [null],
       fromDate: [null],
       toDate: [null],
-      status: [null],
-      remark: [null]
+      status: new FormControl(),
+      remark: [null],
     });
     this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
@@ -507,8 +509,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
       traiSenderId: data.trai_extempted,
       userId: data.userId,
       password: data.password,
-      // status: data.status,
-      remark:data.remark
+      status: String(data.status || 0),
+      remark:data.remark,
     })
 
     
@@ -549,7 +551,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       return;
     }
 
-    const userInfo = {
+    const userInfo: any = {
       currentCustomerId: this.form.value.id,
       App_name: this.form.value.applicantName,
       department: this.form.value.departmentName,
@@ -594,8 +596,16 @@ export class UserInfoComponent implements OnInit, OnChanges {
        upload_document: this.documentUploadId
     };
 
+    const status = String(this.form.value.status);
+    const customerId = this.form.value.id;
+    if (status !== this.initialStatus && customerId) {
+        userInfo.status = Number(status);
+        userInfo.clientActivation = `${origin}/nic/assets/html/account.html?id=${customerId}`;
+    }
+
 
     console.log('User Creation Form:', userInfo);
+
 
     this.userInfoService.createCustomerDetails(userInfo).subscribe((response: any) => {
 
@@ -616,7 +626,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       } else if (processVariables.currentCustomerId) {
         this.clientId = processVariables.currentCustomerId;
       }
-      
+      this.form.get('status').setValue(this.initialStatus);
       this.clientDetailService.setClientId(this.clientId);
       this.newAccountService.setFlagForShowingPages(1);
       this.dataValue = {
@@ -662,6 +672,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.docAvailFlag = !!docsId;
       this.previewDocumentId = docsId;
       this.documentUploadId = docsId;
+      this.initialStatus = String(processVariables.status || 0);
       // if(response['ProcessVariables']['upload_document']){
       //     this.previewDocumentId = response['ProcessVariables']['upload_document'];
       //     this.docAvailFlag = true;
@@ -750,14 +761,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
     
   }
 
-  statusChange(event){
+  statusChange(event) {
 
-    this.showStatusModal = true;
-    if(event.value == 'Active') {
-      this.modalMsg = 'Are you sure you want to activate this user ?'
-    }else {
-      this.modalMsg = 'Are you sure you want to inactivate this user ?'
-    }
+    // this.showStatusModal = true;
+    // if(event.value == 'Active') {
+    //   this.modalMsg = 'Are you sure you want to activate this user ?'
+    // }else {
+    //   this.modalMsg = 'Are you sure you want to inactivate this user ?'
+    // }
   }
 
   onStatusCancel() {
@@ -950,7 +961,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
   }
 
   saveCancel() {
-    this.form.disable();
+    // this.form.disable();
     this.showDataSaveModal = false;
     // this.propertyFlag = true;
     this.existingPreviewUserFlag  = true;
