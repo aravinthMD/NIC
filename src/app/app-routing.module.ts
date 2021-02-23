@@ -178,7 +178,10 @@ const routes: Routes = [
         path :  "manageEmail",
         component : ManageEmailComponent
       }
-    ]},
+    ]},{
+      path: 'external',
+      loadChildren: ()=> import('./external/external.module').then(m => m.ExternalModule)
+    },
     {
       path : "**",redirectTo : "/",
     }
