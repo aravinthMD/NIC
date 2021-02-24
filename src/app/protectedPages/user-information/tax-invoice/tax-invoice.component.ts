@@ -382,6 +382,7 @@ export class TaxInvoiceComponent implements OnInit {
             this.documentUploadId = ''
             this.taxInvoiceForm.controls['userName'].setValue(this.accountName);
             this.taxInvoiceForm.controls['invoiceStatus'].setValue('');
+            this.taxInvoiceForm.controls['paymentStatus'].setValue('');
             this.updateGrid(taxInvoiceData);
         });
   }

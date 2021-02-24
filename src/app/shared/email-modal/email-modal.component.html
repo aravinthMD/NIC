@@ -1,5 +1,5 @@
 <div style="width:80%">
-<div class="modal" id="emailModal" [ngClass]="{ 'dis-block': showModal }">
+<div class="modal" id="emailModal" [ngClass]="{ 'dis-block': showModal }"  style="overflow: auto;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -7,67 +7,66 @@
             </div>
             <div class="modal-body">
 
-            <form [formGroup]="emailForm">
+                    <form [formGroup]="emailForm">
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="">From</label>
-                            <input type="text" class="form-control" formControlName="fromAddress" readonly>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="">To</label>
-                            <input type="text" class="form-control" formControlName="toAddress">
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="">Cc</label>
-                            <input type="text" class="form-control" formControlName="cc">
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-12">
-                    <div class="form-group">
-                        <label for="">Subject</label>
-                        <input type="text" class="form-control" formControlName="subject">
-                    </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-group compose-height">
-                            <label for="">Compose</label>
-                            <div class="attachment">
-                                <div (click)="inputEmailFile.click()">
-                                    <i class="fa fa-paperclip" aria-hidden="true"></i>
-                                     Attachment
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">From</label>
+                                    <input type="text" class="form-control" formControlName="fromAddress" readonly>
                                 </div>
                             </div>
-                            <textarea type="text" class="form-control" formControlName="message1"></textarea>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">To</label>
+                                    <input type="text" class="form-control" formControlName="toAddress">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">Cc</label>
+                                    <input type="text" class="form-control" formControlName="cc">
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">Subject</label>
+                                    <input type="text" class="form-control" formControlName="subject">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group compose-height">
+                                    <label for="">Compose</label>
+                                    <div class="font-14 attachment">
+                                        <div (click)="inputEmailFile.click()">
+                                            <i class="fa fa-paperclip" aria-hidden="true"></i> Attachment
+                                        </div>
+                                    </div>
+                                    <textarea type="text" class="form-control" formControlName="message1"></textarea>
+                                </div>
+                                <div *ngIf="attachment">
+                                    <div class="attachment-name" (mouseenter)="isShowClose=true" (mouseleave)="isShowClose=false">{{attachment?.name}} <span><i class="fa fa-times close-icon" aria-hidden="true" [ngClass]="{'show-close': isShowClose}" (click)="removeAttachment()"></i></span></div>
+                                </div>
+                            </div>
+
+
                         </div>
-                        <div *ngIf="attachment">
-                            <div class="attachment-name" (mouseenter)="isShowClose=true" (mouseleave)="isShowClose=false">{{attachment?.name}} <span><i class="fa fa-times close-icon" aria-hidden="true" [ngClass]="{'show-close': isShowClose}" (click)="removeAttachment()"></i></span></div>
+                        <div class="modal-footer text-center">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="sendEmail()"> Send</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="close()"> Close</button>
                         </div>
-                    </div>
 
+                        <input hidden type="file" #inputEmailFile (change)="attachFile($event)">
 
+                    </form>
                 </div>
-                <div class="modal-footer text-center">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "sendEmail()"> Send</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click) = "close()"> Close</button>
-                </div>
-
-                <input hidden type="file" #inputEmailFile (change)="attachFile($event)">
-
-            </form>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>

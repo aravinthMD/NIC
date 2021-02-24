@@ -236,4 +236,61 @@ loginApplication(data){
     this.authenticationToken =  authToken;
   }
 
+
+  getSmsAllcationData(requestId,authKey?) {
+    if (authKey){
+      this.xAuthSessionId = authKey
+     }
+ 
+    const processId = this.apiService.api.getSmsApprove.processId;
+    const workflowId = this.apiService.api.getSmsApprove.workflowId;
+    const projectId = this.apiService.api.getSmsApprove.projectId;
+
+    const data = {
+      id : requestId
+  }
+
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+   const headers = {
+    "X-AUTH-SESSIONID": authKey ? authKey:  this.xAuthSessionId
+   }
+
+    let url = `${environment.host}session/auth_init`
+    return this.httpService.post(url,requestEntity,headers);
+  }
+
+
+  submitSmsApproveStatus(data,authKey?){
+    if (authKey){
+      this.xAuthSessionId = authKey
+     }
+ 
+    const processId = this.apiService.api.submitSmsApproveStatus.processId;
+    const workflowId = this.apiService.api.submitSmsApproveStatus.workflowId;
+    const projectId = this.apiService.api.submitSmsApproveStatus.projectId;
+   
+
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+   const headers = {
+    "X-AUTH-SESSIONID": authKey ? authKey:  this.xAuthSessionId
+   }
+
+    // let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    let url = `${environment.host}session/auth_reinit`
+    return this.httpService.post(url,requestEntity,headers);
+
+  }
+ 
 }

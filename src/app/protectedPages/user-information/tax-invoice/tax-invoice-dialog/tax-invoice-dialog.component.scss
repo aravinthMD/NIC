@@ -1,23 +1,19 @@
 button.mat-button.mat-button-base {
-    background-color: #0e4d92 !important;
+    background-color: #276678 !important;
     margin-left: 10px;
     color: white;
-    border: 1px solid #0e4d92 !important;
+    border: 1px solid #276678 !important;
     font-size: 13px;
-    
 }
 
-
-
-::ng-deep .inp-date,.mat-form-field-flex{
-
-     pointer-events: none;
-
+::ng-deep .inp-date,
+.mat-form-field-flex {
+    pointer-events: none;
 }
 
 .dis-block {
     display: block;
-  }
+}
 
 label {
     display: inline-block;
@@ -28,7 +24,6 @@ label {
 mat-form-field {
     margin-top: -0.4vw;
 }
-
 
 .mat-form-field-label-wrapper {
     top: -1.5em !important;
@@ -57,8 +52,6 @@ mat-form-field {
     padding: 5px;
     margin-bottom: 8px;
 }
-  
-
 
   .modal-dialog {
       max-width: 50%;

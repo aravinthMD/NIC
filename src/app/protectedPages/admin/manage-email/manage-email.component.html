@@ -5,7 +5,7 @@
 
         <app-account-header [title]="'Manage Emails'"></app-account-header>
 
-        <div class="mat-elevation-z8 pr-3 pl-3">
+        <div class="mat-elevation-z8 pt-3 pr-3 pl-3">
 
             <table mat-table [dataSource]="dataSource" class="custom-table">
 
@@ -55,7 +55,7 @@
             <div class="modal-body">
                 <span *ngIf="!emailValue">Please select the option</span>
                 <span *ngIf="emailValue" id="">
-     Are you sure you want to {{(emailValue === '2') ? 'disable' : 'enable' }} email sending options?
+     Are you sure you want to {{(emailValue === '2') ? 'disable' : 'enable' }} email sending options for {{screenName}} screen?
       </span>
                 <br>
                 <mat-radio-group aria-label="Select an option" color="primary" [(ngModel)]="emailValue">

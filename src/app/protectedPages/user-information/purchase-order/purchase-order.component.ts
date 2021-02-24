@@ -293,7 +293,7 @@ smsApprovedList: any[] = [
       departmentName: new FormControl(''),
       paymentStatus: new FormControl(''),
       uploadDoc: new FormControl(null),
-      remark: new FormControl('')
+      remark: new FormControl('',Validators.required)
     });
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),

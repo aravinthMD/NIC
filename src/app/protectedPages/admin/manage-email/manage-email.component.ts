@@ -26,6 +26,8 @@ export class ManageEmailComponent implements OnInit {
 
   showModal : boolean = false;
 
+  screenName : string;
+
   constructor(
     private clientDetailService : ClientDetailsService,
     private adminService : AdminService,
@@ -44,6 +46,7 @@ export class ManageEmailComponent implements OnInit {
     this.showModal = true;
     this.selectedID = data.id;
     this.emailValue = data.screenStatus;
+    this.screenName = data.screen || '';
     this.adminService.adminEmailManager(data.id,this.adminUserId).subscribe((response) => {
         this.selectedID = response["ProcessVariables"]["id"];
         this.emailValue = response["ProcessVariables"]["screenStatus"];
