@@ -107,7 +107,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
     dialogRef.componentInstance.roleList = this.rolesList;
 
     dialogRef.afterClosed().subscribe(result => {
-      this.fetchManageUsers();
+      this.fetchManageUsers(this.currentPage);
     });
 
 
