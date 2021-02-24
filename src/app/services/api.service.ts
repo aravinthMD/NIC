@@ -408,6 +408,11 @@ export class ApiService {
       projectId : environment.projectIds.projectId,
       processId : '0cf105546af111eb8f7d727d5ac274b2',
       workflowId : 'db28bebe4b5011ebb822727d5ac274b2',
+    },
+    getAuditTrails:{
+      projectId : environment.projectIds.projectId,
+      processId : 'ac3338766add11eb8f7d727d5ac274b2',
+      workflowId : '25382108501911ebb88f727d5ac274b2'
     }
 
   };
