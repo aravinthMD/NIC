@@ -118,6 +118,7 @@ smsApprovedList: any[] = [
 
 
 
+
   constructor(
     private labelsService: LabelsService,
     private DatePipe: DatePipe,
@@ -321,9 +322,9 @@ smsApprovedList: any[] = [
 
   addFormQuantityFormControl(): FormGroup {
     return new FormGroup({
-      rate: new FormControl(null),
-      quantity: new FormControl(null),
-      description: new FormControl(null)
+      rate: new FormControl(''),
+      quantity: new FormControl(''),
+      description: new FormControl('')
     });
   }
 
@@ -519,6 +520,7 @@ next() {
   }
 
   onQuantityFormSubmit() {
+    this.isQuantityDirty = true;
     if (this.formQuantity.invalid) {
       this.quantityIsDirty = true;
       return this.toasterService.showError('Please fill the mandatory fields', '');
@@ -539,6 +541,7 @@ next() {
           this.quantityIsDirty = false;
           const error = res.Error;
           const errorMessage = res.ErrorMessage;
+          this.isQuantityDirty = false;
 
           if (error !== '0') {
             return this.toasterService.showError(errorMessage, '');
