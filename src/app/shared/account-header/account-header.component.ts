@@ -32,7 +32,7 @@ export class AccountHeaderComponent implements OnInit {
       //   left : '1',
       // }
       dialogConfig.width = '2000px';
-      dialogConfig.height = '680px';
+      dialogConfig.height = 'auto';
       dialogConfig.maxWidth = '95vw';
       const MatDialogRef =  this.dialog.open(AuditTrailDialogComponent ,dialogConfig
        );
