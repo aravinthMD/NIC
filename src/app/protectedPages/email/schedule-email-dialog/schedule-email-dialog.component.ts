@@ -58,7 +58,13 @@ export class ScheduleEmailDialogComponent implements OnInit {
 }
 
 
-scheduleEmail(){
+onTimeInput(event) {
+  console.log('event', event.target.value);
+  const value = event.target.value;
+  this.emailform.get('scheduleTime').setValue(value.replace(/[^0-9.]*/g, ''));
+}
+
+scheduleEmail() {
 
   const form = this.emailform.value;
   this.emitForm.emit(form);

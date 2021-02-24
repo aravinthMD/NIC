@@ -531,7 +531,7 @@
                             <div class="col-4">
                                 <div class="form-group">
 
-                                    <app-custom-input formControlName="description" [labelName]="labels.description" placeHolder="Enter the Description">
+                                    <app-custom-input formControlName="description" [labelName]="labels.description" placeHolder="Enter the Description" [isRequired]="'Description is mandatory'" [isDirty]="isQuantityDirty">
                                     </app-custom-input>
                                 </div>
                             </div>
@@ -539,7 +539,7 @@
                             <div class="col-3">
                                 <div class="form-group">
 
-                                    <app-custom-input formControlName="quantity" [labelName]="labels.quantity" placeHolder="Enter the Quantity">
+                                    <app-custom-input formControlName="quantity" [labelName]="labels.quantity" placeHolder="Enter the Quantity" [type]="'number'" [isRequired]="'Quantity is mandatory'" [isDirty]="isQuantityDirty">
                                     </app-custom-input>
 
                                 </div>
@@ -548,7 +548,7 @@
                             <div class="col-3">
                                 <div class="form-group">
 
-                                    <app-custom-input formControlName="rate" [labelName]="labels.rate" placeHolder="Enter the Rate">
+                                    <app-custom-input formControlName="rate" [labelName]="labels.rate" placeHolder="Enter the Rate" [type]="'number'" [isRequired]="'Rate is mandatory'" [isDirty]="isQuantityDirty">
                                     </app-custom-input>
 
                                 </div>
@@ -557,7 +557,7 @@
                         <div class="col-1 plus">
                             <span (click)="addControlForQuantity()" class="btn btn-success">+</span>
                         </div>
-                        <div class="col-1 plus">
+                        <div class="col-1 plus" *ngIf="formQuantity.get('items')['controls'].length !== 1">
                             <span (click)="removeControlFromQuantityForm(i)" class="btn btn-danger">-</span>
                         </div>
                     </div>

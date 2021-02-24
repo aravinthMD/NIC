@@ -43,7 +43,7 @@
     <mat-label>Time</mat-label>
         <input type="text"  aria-lab el="Number" 
         matInput formControlName="scheduleTime"
-            [matAutocomplete]="auto1" >
+            [matAutocomplete]="auto1" (input)="onTimeInput($event)">
         <mat-autocomplete #auto1="matAutocomplete">
             <mat-option *ngFor="let opt of filteredOptions1 | async" [value]="opt">
                 {{opt}}
