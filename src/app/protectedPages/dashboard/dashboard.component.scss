@@ -83,6 +83,16 @@ th {
     border-left: .25rem solid #f6c23e !important;
 }
 
+.border-left-gold {
+    background: linear-gradient(to right, #BF953F, #b7af5e, #B38728, #d2cb84, #AA771C);
+    border-left: .25rem solid #f6c23e !important;
+}
+
+.border-left-greenish {
+    background: linear-gradient(to right, #2ca2b9, #276576, #2ca2b9, #276677, #2ca2b9);
+    border-left: 0.25rem solid #276677 !important;
+}
+
 // tr.example-element-row:hover {    <!--- Commented For Later Use ----->
 //     background: whitesmoke;
 // }

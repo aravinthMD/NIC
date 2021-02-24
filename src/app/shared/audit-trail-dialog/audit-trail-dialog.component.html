@@ -2,8 +2,8 @@
 <mat-icon class="" style="color: white;">close</mat-icon>
 </button>
 <h2 mat-dialog-title>Audit Trail</h2>
-    <!--Mat Tabel-->
-    <mat-dialog-content class="mat-typography"> 
+<!--Mat Tabel-->
+<mat-dialog-content class="mat-typography">
 
     <!--Form FIlter-->
 
@@ -79,7 +79,7 @@
 
                         <div class="row mt-4 pt-2">
 
-                            <button (click) = "getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
+                            <button (click)="getDownloadXls()" class="btn btn-primary download" type="button">Export as CSV</button>
 
 
                         </div>
@@ -94,7 +94,8 @@
 
             </div>
         </form>
-    </mat-card> <!--Form Filter End-->
+    </mat-card>
+    <!--Form Filter End-->
 
 
 
@@ -150,13 +151,18 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
         </table>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 col-12">
+                <mat-dialog-actions>
+                    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+                </mat-dialog-actions>
+            </div>
+            <div class="col-md-6 col-lg-6 col-12">
+                <mat-paginator class="font-paginator" [pageSize]="8" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
 
-        <mat-paginator class="font-paginator" [pageSize]="8" showFirstLastButtons></mat-paginator>
+
     </div>
 
-    </mat-dialog-content>
-
-<mat-dialog-actions style="float:right;margin-top: 15px;">
-    <button mat-button [mat-dialog-close]="true"  cdkFocusInitial>Close</button>
-</mat-dialog-actions>
-
+</mat-dialog-content>
