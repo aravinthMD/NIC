@@ -18,27 +18,48 @@
                             </div>
 
                             <div class="col-12">
-                                <div class="form-group">
-                                    <label for="">To</label>
-                                    <input type="text" class="form-control" formControlName="toAddress">
-                                </div>
+                                    <!-- <label for="">To</label> -->
+                                    <!-- <input type="email" class="form-control" formControlName="toAddress"> -->
+                                    <div class="form-group">
+                                        <app-custom-input formControlName="toAddress" [labelName]="'To'" placeHolder="Mail" [id]="'email'" [patternCheck]="patternCheck">
+                                        </app-custom-input>
+                                    </div>
                             </div>
 
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <div class="form-group">
                                     <label for="">Cc</label>
                                     <input type="text" class="form-control" formControlName="cc">
                                 </div>
-                            </div>
+                            </div> -->
 
 
 
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="">Subject</label>
-                                    <input type="text" class="form-control" formControlName="subject">
+                                    <input type="text" class="form-control" placeholder="Subject" formControlName="subject">
                                 </div>
                             </div>
+
+                            <div class="col-12 mt-2 btn-left">
+                                <div class="col-4 pl-0">
+                                    <button type="submit" class="btn btn-primary btn-left" [disabled] = "!showChooseTemplateBtn" (click) = "chooseTemplate()">Choose Template</button>
+                                </div>
+                            </div>
+                            <ng-container *ngIf = "showChooseTemplate">
+                            <div class="col-12 row btn-left">
+                                <div class="col-4">
+                                    <label for="chooseTemplete" class="mb-0">Choose Template</label>
+                                    <app-vf-custom-select formControlName = "templateId" [values]="TemplateList" valueField="templateTitle" keyField="id" (change)="onChange($event)">
+                                    </app-vf-custom-select>
+                                </div>
+                                <div class="col-4 mar-30">
+                                    <button type="button" (click)="Cancel()" matRipple class=" btn btn-primary btn-left">Cancel</button>
+                                </div>
+
+                            </div>
+                            </ng-container>
 
                             <div class="col-12">
                                 <div class="form-group compose-height">
@@ -58,12 +79,11 @@
 
                         </div>
                         <div class="modal-footer text-center">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="sendEmail()"> Send</button>
+                            <button type="button" class="btn btn-primary" [disabled] = "emailForm.invalid" data-dismiss="modal" (click)="sendEmail()"> Send</button>
                             <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="close()"> Close</button>
                         </div>
 
                         <input hidden type="file" #inputEmailFile (change)="attachFile($event)">
-
                     </form>
                 </div>
             </div>
