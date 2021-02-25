@@ -32,7 +32,6 @@ export class EmailComponent implements OnInit {
   showSaveTemplateBtn  = true;
   showChooseTemplateBtn = true;
   showScheduleBtn = true;
-  showSendEmailBtn = true;
 
   attachment : {
     name?: string,
@@ -235,6 +234,14 @@ today=new Date()
      return this.emailform.controls['scheduleTime'].value;
    }
 
+   set selectedTemplate(value){
+    this.emailform.controls['selectedTemp'].setValue(value);
+ }
+
+ get selectedTemplate(){
+   return this.emailform.controls['selectedTemp'].value;
+ }
+
 
   ngOnInit() {
 
@@ -287,6 +294,7 @@ today=new Date()
     const subject = formValue.subject;
     const message1 = formValue.mailContent;
     const fromAddress = formValue.FromMailAddress;
+    const templateId = formValue.selectedTemp;
     
 
     //Attachment Upload
@@ -308,7 +316,8 @@ today=new Date()
       subject,
       toAddress,
       attachment,
-      attachmentName
+      attachmentName,
+      templateId
      };
     console.log('data', data);
     this.adminService.sendEmailRemainder(data)
@@ -323,11 +332,23 @@ today=new Date()
              if (errorObj.code !== '0') {
                return this.toasterService.showError(errorObj.message, '');
              }
-             this.emailform.reset();
-             this.emailIdList = [];
-             this.attachment = null;
+             this.reset();
              return this.toasterService.showSuccess('Mail Sent Successfully', '');
           });
+  }
+
+  reset(){
+    this.emailform.reset();
+    this.emailIdList = [];
+    this.fromMailAddress = this.userName;
+    this.attachment = null;
+    this.selectedTemplate  = '';
+    this.showSaveTemplateBtn = true;
+    this.showChooseTemplateBtn = true;
+    this.showScheduleBtn = true;
+    this.showinput = false;
+    this.chooseTemp = false;
+    this.editTempinp = false;             
   }
 
   
@@ -378,7 +399,6 @@ today=new Date()
     this.showSaveTemplateBtn = false;
     this.showChooseTemplateBtn = false;
     this.showScheduleBtn = false;
-    this.showSendEmailBtn = false;
     this.showinput = true;
     this.chooseTemp = false;
     this.editTempinp = false;
@@ -388,20 +408,23 @@ today=new Date()
     this.showSaveTemplateBtn = true;
     this.showChooseTemplateBtn = true;
     this.showScheduleBtn = true;
-    this.showSendEmailBtn = true;
-    this.showSendEmailBtn = true;
     this.showinput = false;
     this.chooseTemp = false;
     this.editTempinp = false;
     this.schedule = false;
-    this.emailform.reset();
+
+    if(this.selectedTemplate){
+      this.Subject = '';
+      this.mailContent = '';
+      this.selectedTemplate = '';
+    }
+    // this.emailform.reset();
   }
   chooseTemplete(){
 
     this.showSaveTemplateBtn = false;
     this.showScheduleBtn = false;
     this.showChooseTemplateBtn = false;
-    this.showSendEmailBtn = false;
     this.chooseTemp = true
     this.showinput = false
     this.editTempinp = false
@@ -419,7 +442,7 @@ today=new Date()
     const templateObject = templateObj[0] ? templateObj[0] : {};
     this.id = templateObject.id || 0;
     // let fromMailAddress = templateObject.fromMailAddress || '';
-    let toMailAddress = templateObject.toMailAddress || '';
+    // let toMailAddress = templateObject.toMailAddress || '';
     let subject = templateObject.subject || '';
     let mailContent  = templateObject.emailContent || '';
     let templateName = templateObject.templateTitle || '';
@@ -428,12 +451,11 @@ today=new Date()
 
     let screenNameListArray  = this.getScreenList(this.screenNameDropDownList,screenListArray);
 
-    this.setToFormMethod({toMailAddress,subject,mailContent,templateName,screenNameListArray});
+    this.setToFormMethod({subject,mailContent,templateName,screenNameListArray});
   }
 
   setToFormMethod(data  : any){
       // this.fromMailAddress = data.fromMailAddress,
-      this.toMailAddress = data.toMailAddress;
       this.Subject = data.subject;
       this.templateName = data.templateName;
       this.screenList = data.screenNameListArray;
@@ -462,9 +484,9 @@ today=new Date()
   }
   saveOrUpdateTemplate(){
 
-    const FromMailAddress = this.emailform.controls['FromMailAddress'].value;
+    // const FromMailAddress = this.emailform.controls['FromMailAddress'].value;
     // const ToMailAddress = this.emailform.controls['ToMailAddress'].value;
-    const ToMailAddress = this.ListToStringConverter(this.emailIdList);
+    // const ToMailAddress = this.ListToStringConverter(this.emailIdList);
     const templateName = this.emailform.controls['templateName'].value;
     const subject = this.emailform.controls['subject'].value;
     const mailContent = this.emailform.controls['mailContent'].value;
@@ -475,8 +497,8 @@ today=new Date()
   
 
     const data =  {
-      FromMailAddress,
-      ToMailAddress,
+      // FromMailAddress,
+      // ToMailAddress,
       subject,
       mailContent,
       templateName,
@@ -497,7 +519,8 @@ today=new Date()
             this.showinput = false;
             this.chooseTemp = false;
             this.editTempinp = false;
-            this.schedule = false;            this.getAllEmailTemplates();
+            this.schedule = false;            
+            this.getAllEmailTemplates();
         }else{
             this.toasterService.showError(error.message,'');
         }
@@ -513,7 +536,6 @@ today=new Date()
   }
 
   emailFormReset(){
-      this.toMailAddress = '';
       this.Subject = '';
       this.templateName = '';
       this.mailContent = '';
@@ -522,14 +544,12 @@ today=new Date()
       this.emailIdList = [];
       this.emailform.controls['selectedTemp'].setValue("");
       this.editTempinp = false;
-      this.fromMailAddress = this.userName;
   }
 
   showAllButtons(){
     this.showSaveTemplateBtn = true;
     this.showChooseTemplateBtn = true;
     this.showScheduleBtn = true;
-    this.showSendEmailBtn = true;
   }
 
 
