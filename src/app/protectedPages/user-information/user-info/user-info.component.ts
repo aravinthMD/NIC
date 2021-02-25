@@ -993,6 +993,10 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
  async uploadFile(files  :FileList){
       this.file = files.item(0);
+      let ext =  this.file.name.split('.').pop();
+      if(ext !== 'pdf')
+      return this.toasterService.showError('Only Pdf is Allowed','');
+
       if (this.file) {
         const userId: string = this.clientDetailService.getClientId();
         const modifiedFile = Object.defineProperty(this.file, "name", {
