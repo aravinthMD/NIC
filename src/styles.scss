@@ -665,7 +665,7 @@ table {
 
 p,
 input {
-    font-size: 13px!important;
+    font-size: 14px!important;
 }
 
 th {
@@ -688,4 +688,8 @@ th {
     color: #fff;
     border-color: #276678;
     font-size: 13px;
+}
+
+#pdfModal{
+    margin-left: -19vw;
 }
