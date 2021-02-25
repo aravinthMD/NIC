@@ -113,7 +113,7 @@ export class AuthInterceptorService implements HttpInterceptor {
                 this.toasterService.showError(`${err.statusText}`, 'Technical error..');
               }
             }else if(err.status == 401){
-              this.toasterService.showError(`${err.statusText}-invalid user`, 'Technical error..');
+              this.toasterService.showError(`invalid user`,'');
             }
           }
           this.checkApiCount();
