@@ -413,6 +413,15 @@ export class ApiService {
       projectId : environment.projectIds.projectId,
       processId : 'ac3338766add11eb8f7d727d5ac274b2',
       workflowId : '25382108501911ebb88f727d5ac274b2'
+    },
+    getAccountActivationData:{
+      projectId : environment.projectIds.projectId,
+      processId : '1a3a029a662011eb8e53727d5ac274b2',     
+      workflowId : 'efe2a4902d5b11ebb771727d5ac274b2'
+    },sendUserResponse: {
+       processId : '1a3a029a662011eb8e53727d5ac274b2',
+       projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+       workflowId : 'efe2a4902d5b11ebb771727d5ac274b2'
     }
 
   };
