@@ -1,47 +1,38 @@
 table {
     width: 100%;
     margin-bottom: 0rem !important;
+}
 
-  }
-
-
-  tr{
-    td{
-
+tr {
+    td {
         vertical-align: middle;
         font-size: 14px;
-       
     }
-
-   
     height: 65px;
 }
 
 tr.example-element-row:hover {
     background: whitesmoke;
-  }
+}
 
-  th{
+th {
     font-size: 16px;
     font-weight: 500;
     background-color: #0e4d92;
     color: #fff;
-  }
- 
+}
 
-  mat-card.mat-card {
+mat-card.mat-card {
     margin-top: 0px !important;
     margin-bottom: 8px !important;
     // border-style: groove;
     height: 106px;
     border-top-style: groove;
-
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-  padding: .4375em 0 13px 0px !important;
+    padding: .4375em 0 13px 0px !important;
 }
-
 
 // button {
 //   height: 33px;
@@ -51,3 +42,6 @@ tr.example-element-row:hover {
 //   border-style: none;
 //   font-weight: 400;
 // }
+.bg-white {
+    background-color: #fff;
+}

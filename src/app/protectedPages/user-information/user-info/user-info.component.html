@@ -28,7 +28,7 @@
                     <div class="col-4">
                         <div class="form-group">
                             <app-custom-input formControlName="applicantName" [labelName]="labels.applicantName" [id]="'applicantName'" [isRequired]="'Applicant Name is Mandatory'" [mandatoryField]="true" [maxLength]="labels?.validationData.applicantName.maxLength" [isDisabledInp]="propertyFlag"
-                                placeHolder="Enter the Applicant Name" [type]="labels?.validationData.applicantName.type" [isDirty]="isDirty">
+                                placeHolder="Enter the Applicant Name"  [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
@@ -312,7 +312,7 @@
                         <div class="form-group">
                             <label for="auditDate">{{labels.auditDatebyWhenItWillBeCleared}}</label>
                             <mat-form-field [ngClass]="{'inp-date':propertyFlag}" floatLabel="never">
-                                <input matInput [matDatepicker]="picker1" formControlName="auditDate" (keyup)="detectDateKeyAction($event,'auditDate')">
+                                <input style="margin-top: 10px;" matInput [matDatepicker]="picker1" formControlName="auditDate" (keyup)="detectDateKeyAction($event,'auditDate')">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
                                 <mat-placeholder>Choose The Date</mat-placeholder>

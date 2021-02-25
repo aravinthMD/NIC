@@ -125,6 +125,7 @@ mat-icon.mat-icon.notranslate.material-icons.mat-icon-no-color {
 .background-none {
     background-color: initial !important;
     color: #276678 !important;
+    box-shadow: none!important;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {

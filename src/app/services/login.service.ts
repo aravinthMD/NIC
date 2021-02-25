@@ -292,5 +292,7 @@ loginApplication(data){
     return this.httpService.post(url,requestEntity,headers);
 
   }
+
+ 
  
 }
