@@ -83,14 +83,24 @@ th {
     border-left: .25rem solid #f6c23e !important;
 }
 
+.border-left-purple {
+    background: linear-gradient(to right, #b5628c, #b35083, #ab4478, #a23b70, #671f43);
+    border-left: 0.25rem solid #6a2146 !important;
+}
+
+.border-left-blue {
+    background: linear-gradient(to right, #6a94bb, #457aad, #3d78b1, #306598, #28527a);
+    border-left: 0.25rem solid #28527a !important;
+}
+
 .border-left-gold {
-    background: linear-gradient(to right, #BF953F, #b7af5e, #B38728, #d2cb84, #AA771C);
-    border-left: .25rem solid #f6c23e !important;
+    background: linear-gradient(to right, #e6b255, #d6992c, #ca912b, #c18a27, #aa771c);
+    border-left: 0.25rem solid #ab781d !important;
 }
 
 .border-left-greenish {
-    background: linear-gradient(to right, #38bcd6, #59c0dc, #43c0d8, #47a7bf, #2398af);
-    border-left: 0.25rem solid #439db5 !important;
+    background: linear-gradient(to right, #38bcd6, #59c0dc, #43c0d8, #3996ad, #137f94);
+    border-left: 0.25rem solid #137f94!important;
 }
 
 // tr.example-element-row:hover {    <!--- Commented For Later Use ----->
