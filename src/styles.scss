@@ -690,9 +690,14 @@ th {
     font-size: 13px;
 }
 
-.btn-left{
+.btn-left {
     float: left!important
 }
-#pdfModal{
+
+#pdfModal {
     margin-left: -19vw;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 1.43em!important;
 }
