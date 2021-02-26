@@ -10,6 +10,7 @@ export class UtilityService {
   private userData: any;
   private loginData: any;
   private settingsDataList = {};
+  private notificationList = [];
   constructor(private httpService: HttpService, private router: Router) {}
 
   logDataStatus$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -61,5 +62,13 @@ export class UtilityService {
 
   setLogStatus(data) {
     this.logDataStatus$.next(data);
+  }
+
+  setNotifications(Value){
+      this.notificationList = Value;
+  }
+
+  getNotifications(){
+      return this.notificationList;
   }
 }

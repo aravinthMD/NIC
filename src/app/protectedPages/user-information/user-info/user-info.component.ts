@@ -336,6 +336,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
     const trai = (this.traiSenderId.find(value => String(value.key) 
                       === String(data.trai_extempted)) || {value: ''}).value;
 
+    const status = (this.statusList.find(value => String(value.key)
+                      === String(data.status || 0)) || {value : ''}).value;
 
 
     this.viewInfoData = [
@@ -438,6 +440,9 @@ export class UserInfoComponent implements OnInit, OnChanges {
       {
         key : 'TRAI Exempted Sender ID',
         value : trai
+      },{
+        key : this.labels.status,
+        value : status
       },
       {
         key  : this.labels.remark,
@@ -626,6 +631,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
         return this.toasterService.showError(errorDes.message, '');
       }
       this.showDataSaveModal = true;
+      this.utilService.setUserDetails(processVariables);
       this.beheSer.setUserId(processVariables.generatedCustomerId);
       if (processVariables.generatedCustomerId) {
         this.clientId = processVariables.generatedCustomerId;
