@@ -386,6 +386,7 @@ today=new Date()
     const index = this.emailIdList.indexOf(Email);
     if (index >= 0) {
       this.emailIdList.splice(index, 1);
+      this.toMailAddress = '';
     }
   }
   saveTemplete(){

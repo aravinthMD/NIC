@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
 
   userName : string;
   userType : string;
+  notificationList = [];
+  notificationCount ;
 
   constructor(private utilityService: UtilityService,
               private utilService : UtilService,
@@ -25,6 +27,8 @@ export class HeaderComponent implements OnInit {
                }
 
   ngOnInit() {
+    this.notificationList = this.utilityService.getNotifications();
+    this.notificationCount  = this.notificationList.length;
   }
 
   onToggle() {
