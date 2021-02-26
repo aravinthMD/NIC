@@ -1,0 +1,117 @@
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <!-- <span class="close">&times;</span> -->
+        <h2>{{messageText}}</h2>
+        <div class="modal-footer">
+            <button (click)="onModalOkay()">Okay</button>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="grid-container-img">
+        <div class="grid-img">
+            <img src="assets/images/dashboard_nic_logo_1-1.png">
+        </div>
+    </div>
+    <div class="grid-container-2 common">
+        <div class="grid-name">
+            <div class="left-details ">
+                <span class="caption">Account Activation Request</span>
+                <!-- <label class="caption" style="display: none;">Account Deactivation Request</label> -->
+            </div>
+        </div>
+
+    </div>
+
+    <p class="row common-normal pad-20">Request ID:<span id="requestId">{{customerId}}</span></p>
+    <div class="zbank-body grid-container">
+
+
+        <div class="grid-item ">
+            <div class="left-details ">
+                <label class="secondary-color font-20 "> Applicant Name</label>
+                <input class="input-color" readonly="" id="applicantName" [value]="applicantName">
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Department</label>
+                <input class="input-color" readonly="" id="department" [value]="department">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">City</label>
+                <input class="input-color" readonly="" id="city" [value]="city">
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">State</label>
+                <input class="input-color" readonly="" id="state" [value]="state">
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">User Id</label>
+                <input class="input-color" readonly="" id="userId" [value]="userId">
+            </div>
+        </div>
+        <div class="grid-item non-div">
+            <div class="left-details ">
+                &nbsp;
+            </div>
+        </div>
+
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 ">Remarks</label>
+                <textarea class="input-color" rows="5" readonly id="remarks" [value]="remarks"></textarea>
+            </div>
+        </div>
+        <div class="grid-item">
+            <div class="left-details ">
+                <label class="secondary-color font-20 "> Comments</label>
+                <textarea class="input-color" rows="5" id="comments"></textarea>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row txt-center">
+    <div class="left-details ">
+        <button class="" (click)="sendUserResponse('1')">Approve</button>
+        <button class="" (click)="sendUserResponse('0')">Reject</button>
+    </div>
+</div>
+<div id="snackbar"></div>
+
+<div class="modal" id="conformation" [ngClass]="{ 'dis-block': showModal }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">Action</h4>
+            </div>
+
+            <div class="modal-body">
+                <p id="" style="margin-top: 10px;">
+                    Are you sure you want to {{actionText}} ?
+                </p>
+            </div>
+
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="ucic_lead" (click)="userApproveResponse()">
+
+    Yes
+  </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onCancel()">
+    Cancel
+  </button>
+            </div>
+        </div>
+    </div>
+</div>

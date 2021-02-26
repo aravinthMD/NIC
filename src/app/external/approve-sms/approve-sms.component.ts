@@ -27,6 +27,11 @@ public status : string = null;
 public smsApprover: string = null;
 public myComments: string = null;
 public messageText: string = null;
+public actionText: string = null;
+public actionValue: string = null;
+public showModal:boolean
+public requestRaisedBy:  string = null;
+
   constructor(private loginService: LoginService,
               private activatedRoute: ActivatedRoute,
              
@@ -75,7 +80,8 @@ public messageText: string = null;
                 this.city = myData.city;
                 this.state = myData.state;
                 this.status = myData.status;
-                this.smsApprover = myData.smsApprover
+                this.smsApprover = myData.smsApprover;
+                this.requestRaisedBy = myData.requestRaisedBy;
 
 
               }
@@ -115,14 +121,26 @@ public messageText: string = null;
     modal.style.display = 'none';
 }
 
-sendUserResponse(status){
-  
+sendUserResponse(value){
+  if (value == 1){
+    this.actionText = 'Approve'
+    this.actionValue = value;
+    this.showModal = true;
+  }else{
+    this.actionText = 'Reject';
+    this.actionValue = value;
+    this.showModal = true;
+  }
+}
+
+submitAction(){
+  this.showModal = false;
     const id = Number(this.requestId || 0);
     const statusComment = this.myComments;
 
     const data = {
-                    id,
-                    status,
+                    id:  this.actionValue,
+                    status: this.actionValue,
                     statusComment,
                  }
   this.loginService.submitSmsApproveStatus(data).subscribe(res =>
@@ -135,10 +153,10 @@ sendUserResponse(status){
           // 
       console.log("getSmsAllcationData response",response);        
           if (myData['status'] !== '0') {
-            this.messageText = 'Your request is submitted successfully';
+            this.messageText = 'Updated successfully';
             const modal = document.getElementById("myModal");
             modal.style.display = 'block';
-            this.showSnackbar('Your request is submitted successfully')
+            this.showSnackbar('Updated successfully')
            
             return;
         
@@ -164,6 +182,9 @@ sendUserResponse(status){
         x.classList.remove('snackbar-error');
     }
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+onCancel() {
+  this.showModal = false;
 }
 
 }

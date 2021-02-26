@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { AdminService } from '@services/admin.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { NewAccountService } from '@services/new-account.service';
 
 import { UtilityService } from '@services/utility.service';
@@ -599,8 +599,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
     const status = String(this.form.value.status);
     const customerId = this.form.value.id;
     if (status !== this.initialStatus && customerId) {
-        userInfo.status = Number(status);
-        userInfo.clientActivation = `${origin}/nic/assets/html/account.html?id=${customerId}`;
+        userInfo.status = Number(status);         
+        if(environment.production){
+          userInfo.clientActivation = `${origin}/nic/#/external/active-user/${customerId}`
+        }else{
+          userInfo.clientActivation = `${origin}/#/external/active-user/${customerId}`
+          
+        } 
+        // userInfo.clientActivation = `${origin}/nic/assets/html/account.html?id=${customerId}`;
     }
 
 
