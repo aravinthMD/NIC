@@ -2,15 +2,16 @@
     <div class="proforma-invoice">
 
 
-        <app-account-header [title]="'Proforma Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Proforma Invoice'" [showUpload]="true" [accountName]="accountName" [status]="status" [user]="'invoice'" (uploadCsv)="inputCsvFile.click()"></app-account-header>
 
 
-
+        <input hidden type="file" #inputCsvFile (change)="onUploadCsv($event)" accept=".csv">
         <mat-accordion *ngIf="isWrite">
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple collapsedHeight="30px" expandedHeight="35px">
                     <mat-panel-title>
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Proforma Invoice
+                        <!-- <span (click)="inputCsvFile.click()">Upload</span> -->
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <form [formGroup]="form">
@@ -459,3 +460,5 @@
 
 
 <app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="showDataSaveModal = !showDataSaveModal"></app-data-saved-modal>
+
+<app-csv-upload-modal [data]="csvResponse" *ngIf="csvResponse" (closeModal)="onModalClose($event)"></app-csv-upload-modal>

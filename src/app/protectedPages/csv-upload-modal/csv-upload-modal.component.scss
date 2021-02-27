@@ -1,0 +1,89 @@
+.cdk-overlay-pane {
+    height: 600px !important;
+}
+
+.custom-table td {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding-left: 10px;
+}
+
+.modal {
+    display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 99; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+/* Modal Content */
+.modal-content {
+    height: 80%;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+  }
+
+  .header {
+      display: flex;
+      background: #276678;
+      justify-content: space-between;
+      padding: 10px;
+      align-items: center;
+      color: #fff;
+  }
+
+  
+  
+  /* The Close Button */
+  .close-icon {
+    color: #fff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .table-container {
+    overflow: scroll;
+    margin-bottom: 10px;
+    height: 80%;
+  }
+
+  .footer-modal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    flex-direction: column;    
+  }
+
+  .btn-save {
+    margin-left: 10px;
+  }
+  
+//   .close:hover,
+//   .close:focus {
+//     color: #000;
+//     text-decoration: none;
+//     cursor: pointer;
+//   }
+
+//   .table-container {
+//       overflow: scroll;
+//   }
+
+
+.color-green {
+  color: green !important;
+}
+
+.color-red {
+  color: red !important;
+}

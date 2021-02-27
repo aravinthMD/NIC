@@ -11,17 +11,23 @@ export class AccountHeaderComponent implements OnInit {
 
 
 
-
+ @Input() showUpload: boolean;
  @Input() title: string;
  @Input() accountName: string;
  @Input() status: string;
  @Input() user: any;
+
+ @Output() uploadCsv = new EventEmitter();
 
  @Output('addCredit') addCredit = new EventEmitter();
 
   constructor(private dialog :  MatDialog) { }
 
   ngOnInit() {
+  }
+
+  onUpload() {
+    this.uploadCsv.emit();
   }
 
   openAuditTrailDialog(){

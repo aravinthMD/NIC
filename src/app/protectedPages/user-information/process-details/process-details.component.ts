@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild ,Input,AfterViewInit} from '@angular/core';
+import { Component, OnInit,ViewChild ,Input,AfterViewInit, ElementRef} from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
@@ -16,7 +16,11 @@ import { ClientDetailsService } from '@services/client-details.service';
 import { MatInput } from '@angular/material';
 import { CsvDataService } from '@services/csv-data.service';
 
+import { CsvUploadModalComponent } from '../../../protectedPages/csv-upload-modal/csv-upload-modal.component';
+
 import { UtilityService } from '@services/utility.service';
+import { CsvUploadService } from '@services/csv-upload.service';
+import { FileToBase64Service } from '@services/file-to-base64.service';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -87,7 +91,8 @@ export class ProcessDetailsComponent implements OnInit{
   };
 
   isWrite = false;
-
+  csvResponse: any;
+  @ViewChild('inputCsvFile', {static: false}) inputCsvFile: ElementRef;
   constructor(
         private dialog: MatDialog,
         private labelsService: LabelsService,
@@ -101,7 +106,9 @@ export class ProcessDetailsComponent implements OnInit{
         private searchService: SearchService,
         private apiService:ApiService,
         private clientDetailService:ClientDetailsService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private csvUploadService: CsvUploadService,
+        private fileToBase64Service: FileToBase64Service
         ) { 
 
 
@@ -129,6 +136,84 @@ export class ProcessDetailsComponent implements OnInit{
       searchTo: new FormControl(null)
     })
 
+  }
+
+  async onUploadCsv(event) {
+    // const dialogRef =  this.dialog.open(CsvUploadModalComponent,{
+    //   width :  '70%'
+    // });
+
+    // dialogRef.componentInstance.emitForm.subscribe((value) =>{
+    //     if(!value)
+    //       return ;
+    //       // this.sendEmail();
+    //       this.emailScheduler(value);
+    // })
+    const files = event.target.files[0];
+    const fileToRead = files;
+    const fileReader = new FileReader();
+    // if (fileType.includes('xls')) {
+    //   this.getDataFromXlsFile(target);
+    //   //   fileReader.onload =  (e: any) => {
+    //   //     console.log('xls', e.target.result);
+    //   // };
+    //   // fileReader.readAsBinaryString(files);
+    // } else {
+    // fileReader.onload = (fileLoadedEvent: any) => {
+    //     const textFromFileLoaded = fileLoadedEvent.target.result;
+    //     // this.csvData = textFromFileLoaded;
+    //     const data = {
+    //       name: 'Pi.csv',
+    //       content: textFromFileLoaded,
+    //       mime: 'application/vnd.ms-excel'
+    //     };
+    //     this.csvUploadService.uploadCsv(data)
+    //       .subscribe((value) => {
+    //           console.log('value', value);
+    //       });
+    //   };
+    // fileReader.readAsText(fileToRead);
+    // }
+    try {
+      const file: any = await this.fileToBase64Service.convertToBase64(event);
+      const data = {
+        currentClientId: this.userId,
+        attachment: {
+          name: file.name,
+          content: file.base64,
+          mime: 'application/vnd.ms-excel'
+        }
+      };
+      this.csvUploadService.uploadCsv(data)
+          .subscribe((response: any) => {
+              console.log('response', response);
+              const error = response.Error;
+              const errorMessage = response.ErrorMessage;
+              this.inputCsvFile.nativeElement.value = '';
+              if (error !== '0') {
+                return this.toasterService.showError(errorMessage, '');
+              }
+
+              const processVariables = response.ProcessVariables;
+              this.csvResponse = {
+                screenName: 'PI',
+                data: processVariables.PILIst
+              };
+
+              // const dialogRef =  this.dialog.open(CsvUploadModalComponent, {
+              //                         width :  '70%',
+              //                         height: '600px',
+              //                         data: {
+              //                           screenName: 'PI',
+              //                           data: processVariables.PILIst
+              //                         }
+              //                   });
+
+          });
+    } catch (e) {
+      this.inputCsvFile.nativeElement.value = '';
+      // this.toasterService.showError(e, 'File Convert Error');
+    }
   }
 
   getCsvFormatForProformaInvoice() {
@@ -529,6 +614,34 @@ export class ProcessDetailsComponent implements OnInit{
           this.toasterService.showError('File Upload Failed','')
         }
     }
+
+  }
+
+  onModalClose(event) {
+    this.csvResponse = null;
+    if (!event) {
+       return;
+    }
+
+    if (event.length === 0) {
+      this.toasterService.showWarning('No valid records available to insert', '');
+    }
+
+    this.csvUploadService.uploadValidData({currentClientId: this.userId,})
+        .subscribe((response: any) => {
+          const error = response.Error;
+          const errorMessage = response.ErrorMessage;
+          if (error !== '0') {
+            return this.toasterService.showError(errorMessage, '');
+          }
+          const processVariables = response.ProcessVariables;
+          const errorObj = processVariables.error;
+          if (errorObj.code === '0') {
+             return this.toasterService.showSuccess(errorObj.message, '');
+          }
+          return this.toasterService.showError(errorObj.message, '');
+        });
+    console.log('event', event);
 
   }
 }

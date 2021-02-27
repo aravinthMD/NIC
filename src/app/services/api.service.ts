@@ -413,6 +413,16 @@ export class ApiService {
       projectId : environment.projectIds.projectId,
       processId : 'ac3338766add11eb8f7d727d5ac274b2',
       workflowId : '25382108501911ebb88f727d5ac274b2'
+    },
+    piCsvUpload: {
+      projectId : environment.projectIds.projectId,
+      processId : 'da209252784711eb8f35f2fa9bec3d63',
+      workflowId : 'da01f45a784711eb8f35f2fa9bec3d63'
+    },
+    piUploadValidData: {
+      projectId : environment.projectIds.projectId,
+      processId : '508b02e2784811eb8f35f2fa9bec3d63',
+      workflowId : 'da01f45a784711eb8f35f2fa9bec3d63'
     }
 
   };

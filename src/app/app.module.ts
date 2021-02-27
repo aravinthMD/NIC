@@ -50,6 +50,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {TaxInvoiceDialogComponent} from './protectedPages/user-information/tax-invoice/tax-invoice-dialog/tax-invoice-dialog.component'
 import {MatIconModule} from '@angular/material/icon';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CsvUploadModalComponent } from './protectedPages/csv-upload-modal/csv-upload-modal.component';
 
 
 
@@ -155,7 +156,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DefineRolesComponent,
     AdminRolesMappingDialogComponent,
     ManageEmailComponent,
-    ScheduleEmailDialogComponent
+    ScheduleEmailDialogComponent,
+    CsvUploadModalComponent
   ],
   imports: [
     BrowserModule,
@@ -212,7 +214,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     PurchaseOrderDialogComponent,
     SmsCreditDialogComponent,
     AdminRolesMappingDialogComponent,
-    ScheduleEmailDialogComponent
+    ScheduleEmailDialogComponent,
+    CsvUploadModalComponent
   ]
 })
 export class AppModule { }
