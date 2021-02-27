@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material';
 import { BehaviourSubjectService } from '@services/behaviour-subject.service';
 import { ClientDetailsService } from '@services/client-details.service';
 import { AdminService } from '@services/admin.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { NewAccountService } from '@services/new-account.service';
 
 import { UtilityService } from '@services/utility.service';
@@ -336,6 +336,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
     const trai = (this.traiSenderId.find(value => String(value.key) 
                       === String(data.trai_extempted)) || {value: ''}).value;
 
+    const status = (this.statusList.find(value => String(value.key)
+                      === String(data.status || 0)) || {value : ''}).value;
 
 
     this.viewInfoData = [
@@ -438,6 +440,9 @@ export class UserInfoComponent implements OnInit, OnChanges {
       {
         key : 'TRAI Exempted Sender ID',
         value : trai
+      },{
+        key : this.labels.status,
+        value : status
       },
       {
         key  : this.labels.remark,
@@ -599,8 +604,14 @@ export class UserInfoComponent implements OnInit, OnChanges {
     const status = String(this.form.value.status);
     const customerId = this.form.value.id;
     if (status !== this.initialStatus && customerId) {
-        userInfo.status = Number(status);
-        userInfo.clientActivation = `${origin}/nic/assets/html/account.html?id=${customerId}`;
+        userInfo.status = Number(status);         
+        if(environment.production){
+          userInfo.clientActivation = `${origin}/nic/#/external/active-user/${customerId}`
+        }else{
+          userInfo.clientActivation = `${origin}/#/external/active-user/${customerId}`
+          
+        } 
+        // userInfo.clientActivation = `${origin}/nic/assets/html/account.html?id=${customerId}`;
     }
 
 
@@ -620,6 +631,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
         return this.toasterService.showError(errorDes.message, '');
       }
       this.showDataSaveModal = true;
+      this.utilService.setUserDetails(processVariables);
       this.beheSer.setUserId(processVariables.generatedCustomerId);
       if (processVariables.generatedCustomerId) {
         this.clientId = processVariables.generatedCustomerId;
@@ -987,6 +999,10 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
  async uploadFile(files  :FileList){
       this.file = files.item(0);
+      let ext =  this.file.name.split('.').pop();
+      if(ext !== 'pdf')
+      return this.toasterService.showError('Only Pdf is Allowed','');
+
       if (this.file) {
         const userId: string = this.clientDetailService.getClientId();
         const modifiedFile = Object.defineProperty(this.file, "name", {

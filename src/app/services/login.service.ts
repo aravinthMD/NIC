@@ -292,7 +292,61 @@ loginApplication(data){
     return this.httpService.post(url,requestEntity,headers);
 
   }
+  getAccountActivationData(customerId,authKey?){
+    if (authKey){
+      this.xAuthSessionId = authKey
+     }
+ 
+    const processId = this.apiService.api.getAccountActivationData.processId;
+    const workflowId = this.apiService.api.getAccountActivationData.workflowId;
+    const projectId = this.apiService.api.getAccountActivationData.projectId;
+    const data = {
+      id : customerId
+  }
 
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+   const headers = {
+    "X-AUTH-SESSIONID": authKey ? authKey:  this.xAuthSessionId
+   }
+
+    // let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    let url = `${environment.host}session/auth_reinit`
+    return this.httpService.post(url,requestEntity,headers);
+  }
+ 
+  sendUserResponse(data,authKey?){
+    if (authKey){
+      this.xAuthSessionId = authKey
+     }
+ 
+    const processId = this.apiService.api.sendUserResponse.processId;
+    const workflowId = this.apiService.api.sendUserResponse.workflowId;
+    const projectId = this.apiService.api.sendUserResponse.projectId;
+  //   const data = {
+  //     id : customerId
+  // }
+
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+   const headers = {
+    "X-AUTH-SESSIONID": authKey ? authKey:  this.xAuthSessionId
+   }
+
+    // let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    let url = `${environment.host}session/auth_reinit`
+    return this.httpService.post(url,requestEntity,headers);
+  }
  
  
 }

@@ -106,14 +106,14 @@ export class AuthInterceptorService implements HttpInterceptor {
           if (err.status != 200) {
             console.log('httpErr', err);
             this.ngxUiLoaderService.stop();
-            if (err.status != 401 && err.status != 500) {
+            if (err.status != 401 && err.status != 500 && err.status != 415) {
               if (err.status === 0) {
                 this.toasterService.showError(`Connection not available! Please try again later.`, 'Technical error..');
               } else {
                 this.toasterService.showError(`${err.statusText}`, 'Technical error..');
               }
             }else if(err.status == 401){
-              this.toasterService.showError(`${err.statusText}-invalid user`, 'Technical error..');
+              this.toasterService.showError(`invalid user`,'');
             }
           }
           this.checkApiCount();

@@ -423,8 +423,17 @@ export class ApiService {
       projectId : environment.projectIds.projectId,
       processId : '508b02e2784811eb8f35f2fa9bec3d63',
       workflowId : 'da01f45a784711eb8f35f2fa9bec3d63'
+    },
+    getAccountActivationData:{
+      projectId : environment.projectIds.projectId,
+      processId : '1a3a029a662011eb8e53727d5ac274b2',     
+      workflowId : 'efe2a4902d5b11ebb771727d5ac274b2'
+    },sendUserResponse: {
+       processId : '1a3a029a662011eb8e53727d5ac274b2',
+       projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
+       workflowId : 'efe2a4902d5b11ebb771727d5ac274b2'
     }
 
-  };
 
-  }
+  };
+}

@@ -20,8 +20,8 @@
 
         <div class="grid-name">
             <div class="left-details ">
-                <span class="caption">Account Activation Request</span>
-                <span class="caption" style="display: none;">Account Deactivation Request</span>
+                <span class="caption">SMS Credit Allocation</span>
+                <!-- <span class="caption" style="display: none;">Account Deactivation Request</span> -->
             </div>
         </div>
     </div>
@@ -90,7 +90,7 @@
         <div class="grid-item">
             <div class="left-details ">
                 <label class="secondary-color font-20 ">Request Raised by</label>
-                <input id="requestRaisedBy" class="input-color" readonly="">
+                <input id="requestRaisedBy" class="input-color" readonly="" [value]="requestRaisedBy">
             </div>
         </div>
 
@@ -106,18 +106,22 @@
                 <input id="approverName" class="input-color" [value]="approverName" readonly="">
             </div>
         </div>
-        <div class="grid-item">
+        <!-- <div class="grid-item">
             <div class="left-details ">
                 <label class="secondary-color font-20 ">Approved On Behalf</label>
                 <input id="approvedOnBehalf" class="input-color" [value]="approvedOnBehalf" readonly="">
             </div>
-        </div>
+        </div> -->
         <div class="grid-item">
             <div class="left-details ">
                 <label class="secondary-color font-20 ">Date Of Approval</label>
                 <input id="dateOfApproval" class="input-color" [value]="dateOfApproval" readonly="">
             </div>
         </div>
+       
+
+    </div>
+    <div class="zbank-body grid-container">
         <div class="grid-item">
             <div class="left-details ">
                 <label class="secondary-color font-20 ">Remarks</label>
@@ -130,9 +134,7 @@
                 <textarea id="comments" class="input-color" [(ngModel)]='myComments' rows="5"></textarea>
             </div>
         </div>
-
     </div>
-
 
     <div class="row txt-center">
         <div class="left-details ">
@@ -145,5 +147,31 @@
 
     <div>
         <div id="snackbar"></div>
+    </div>
+</div>
+
+<div class="modal" id="conformation" [ngClass]="{ 'dis-block': showModal }">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">Action</h4>
+            </div>
+
+            <div class="modal-body">
+                <p id="" style="margin-top: 10px;">
+                    Are you sure you want to {{actionText}} ?
+                </p>
+            </div>
+
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="ucic_lead" (click)="submitAction()">
+
+    Yes
+  </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onCancel()">
+    Cancel
+  </button>
+            </div>
+        </div>
     </div>
 </div>
