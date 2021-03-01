@@ -168,9 +168,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   navigateToUser(element) {
-    if (this.csvData) {
-      return;
-    }
+   
     this.utilService.setProjectNumber(element.projectNo);
 
     // this.utilService.setUserDetails(element);
