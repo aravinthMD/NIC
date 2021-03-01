@@ -73,10 +73,10 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
   statusList = [
     {
-      key:'0',value: 'Active',
+      key:'1',value: 'Active',
     },
     {
-      key:'1',value:'Inactive'
+      key:'0',value:'Inactive'
     }
   ];
 

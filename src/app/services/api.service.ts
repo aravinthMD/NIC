@@ -131,8 +131,8 @@ export class ApiService {
       projectId : environment.projectIds.projectId
     },
     deleteAdminUser:{
-      workflowId: 'e54b6d842d9511ebb77e727d5ac274b2',
-      processId: 'e54b6d842d9511ebb77e727d5ac274b2',
+      workflowId: 'efe2a4902d5b11ebb771727d5ac274b2',
+      processId: '3c0a56807a8511eb8f6bf2fa9bec3d63',
       projectId : environment.projectIds.projectId
     },
     fetchAllProformaInvoice : {
