@@ -5,7 +5,7 @@
             
         -->
 
-            <div>{{title || ''}}<i class="fa fa-upload" aria-hidden="true" style="margin-left: 5px; cursor: pointer" *ngIf="showUpload" (click)="onUpload()"></i></div>
+            <div>{{title || ''}}<i class="fa fa-upload btn-upload" aria-hidden="true" *ngIf="showUpload" (click)="onUpload()"></i></div>
             <button *ngIf="user == 'smsCredit'" mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addSMSCredit()">
                 <mat-icon>add</mat-icon>
             </button>
