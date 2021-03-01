@@ -3,7 +3,7 @@
 </mat-card>
 <div mat-dialog-content>
     Are you sure you want to map the screen?<br>
-    <mat-checkbox class="example-margin" [disabled]=" (screenId === '1' || screenId === '5' || screenId === '6') ? false : true" [(ngModel)]="checked" color="primary">Yes</mat-checkbox>
+    <mat-checkbox class="example-margin" [disabled]=" (screenName === 'Reports' || screenName === 'Admin' || screenName === 'CustomerModule') ? false : true" [(ngModel)]="checked" color="primary">Yes</mat-checkbox>
     <br> Enable?
     <br>
     <mat-checkbox class="example-margin" [(ngModel)]="read" color="primary">Read</mat-checkbox>

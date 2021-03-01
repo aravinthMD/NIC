@@ -151,7 +151,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
     let id = this.deleteUserId;
     const emailUrl = `${origin}/nic/assets/html/account.html?id=${id}`;
 
-    this.adminService.deleteAdminUser(id, emailUrl).subscribe((response)=> {
+    this.adminService.deleteAdminUser(id).subscribe((response)=> {
 
       if(response['ProcessVariables']['response']['type'] == 'Success') {
 
