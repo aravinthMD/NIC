@@ -52,7 +52,9 @@
 
                         <div class="col-4 pb-0">
                             <div class="form-group">
-                                <app-custom-input formControlName="totalCredit" [mandatoryField]="true" [labelName]="labels.credit" [id]="'credit'" placeHolder="Enter the Credit" [maxLength]="labels?.validationData.userName.maxLength" [type]="'number'" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'">
+                                <app-custom-input formControlName="totalCredit" [mandatoryField]="true" [labelName]="labels.credit" [id]="'credit'" 
+                                    placeHolder="Enter the Credit" [maxLength]="labels?.validationData.creditsSMSQuota.maxLength" 
+                                    [type]="'number'" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'">
                                 </app-custom-input>
                                 <div *ngIf="smsCreditForm.get('totalCredit').errors?.pattern" class="error-feedback">
                                     <div>

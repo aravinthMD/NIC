@@ -138,6 +138,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       remark:['',Validators.required]
     })
     this.detectAuditTrialObj=this.form.value
+    this.getProformaInvoiceDetailById(this.data);
   }
 
 
@@ -161,7 +162,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     var year = dateObj.getUTCFullYear();
 
 
-    this.getProformaInvoiceDetailById(this.data);
+   
 
   }
 

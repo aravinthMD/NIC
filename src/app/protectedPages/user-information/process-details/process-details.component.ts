@@ -110,8 +110,8 @@ export class ProcessDetailsComponent implements OnInit{
         private csvUploadService: CsvUploadService,
         private fileToBase64Service: FileToBase64Service
         ) { 
-
-
+          const data = this.activatedRoute.parent.snapshot.data || {}
+          this.piStatusData = data.piStatus;
     this.form =this.formBuilder.group({
       accountName: [null],
       invoiceNumber : [null],
