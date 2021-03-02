@@ -118,7 +118,9 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     private clientDetailService : ClientDetailsService,
     private utilityService: UtilityService
     ) { 
-
+      const resolveData = this.utilService.getLovData();
+      this.piStatusData = resolveData['piStatus'];
+      this.paymentStatusData = resolveData['paymentStatusList']
     console.log(data)
 
     this.form =this.formBuilder.group({
