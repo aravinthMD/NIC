@@ -29,10 +29,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   departmentListData: any;
 
-  paymentStatus: any[] = [
-    { key: 0, value: 'Pending' },
-    { key: 1, value: 'Received' },
-    { key: 2, value: 'On Hold' }]
+  paymentStatus: any[] = []
 
 
   showUploadModal: boolean;

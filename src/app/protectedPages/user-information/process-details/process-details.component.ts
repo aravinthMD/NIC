@@ -47,8 +47,9 @@ export class ProcessDetailsComponent implements OnInit{
 
   storeProjectNo: string;
   displayedColumns : string[] = ['InvoiceNo','accountName','piAmt',"reminder","Escalation","Action"]
-  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
-  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
+  piStatusData = [];
+  // paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
+  paymentStatusData = [];
   nicsiData = [
     {
       key: '1',
@@ -110,8 +111,6 @@ export class ProcessDetailsComponent implements OnInit{
         private csvUploadService: CsvUploadService,
         private fileToBase64Service: FileToBase64Service
         ) { 
-          const data = this.activatedRoute.parent.snapshot.data || {}
-          this.piStatusData = data.piStatus;
     this.form =this.formBuilder.group({
       accountName: [null],
       invoiceNumber : [null],
@@ -136,6 +135,14 @@ export class ProcessDetailsComponent implements OnInit{
       searchTo: new FormControl(null)
     })
 
+  }
+
+  patchLovValues(){
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables || {};
+    this.piStatusData = processVariables.piStatusList || [];
+    this.paymentStatusData = processVariables.paymentStatusList || [];
   }
 
   async onUploadCsv(event) {
@@ -245,7 +252,7 @@ export class ProcessDetailsComponent implements OnInit{
 
   ngOnInit() {
 
-
+    this.patchLovValues();     //LOV's
     const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
     this.isWrite = smsPage.isWrite;
 
