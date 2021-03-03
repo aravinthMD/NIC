@@ -3,7 +3,7 @@
     <div class="purchase-entry">
 
 
-        <app-account-header [title]="'Project Execution'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Project Execution'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="'Upload Project Execution'" (uploadCsv)="onUploadCsv($event)"></app-account-header>
 
 
 
@@ -408,4 +408,5 @@
     </div>
 </div>
 
+<app-csv-upload-modal [data]="csvResponse" *ngIf="csvResponse" (closeModal)="onModalClose($event)"></app-csv-upload-modal>
 <app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>

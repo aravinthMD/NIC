@@ -1,18 +1,11 @@
 <div class="modal">
     <div class="modal-content">
         <div class="header">
-            <span class="header-title">PI Records</span>
+            <span class="header-title">{{screenName}} Records</span>
             <span class="close-icon" (click)="onCancel()">&times;</span>
-        </div>
-        <!-- <div class="dashBoard row p-2 m-0 ">
-            <div class="col-md-6 mt-2 pt-2 dashb header-dev" style="cursor: pointer;">
-                <i class="fa fa-home" aria-hidden="true" style="color: #fff"></i> Dashboard
-            </div>
-            
-        </div> -->
+        </div>        
         
-        
-        
+    
         
         
         
@@ -21,55 +14,20 @@
             <table class="custom-table">
                 <thead>
                     <th>No</th>
-                    <th> Amount </th>
-                    <th> Project No </th>
-                    <th>Date </th>
-                    <th> EndDate </th>
-                    <th> NICSIManager </th>
-                    <th>Owner</th>
-                    <th> PIStatus </th>
-                    <th> PaymentStatus </th>
-                    <th> ProformaInvoiceNumber </th>
-                    <th> ReferenceNumber </th>
-                    <th> Remark </th>
-                    <th> StartDate </th>
-                    <th> StatusMessage </th>
-                    <th> Traffic </th>
+                    <ng-container *ngFor="let head of tableHeader">
+                    <th *ngIf="head !== 'StatusCode' && head !== 'StatusMessage'">{{head}}</th>
+                       
+                    </ng-container>
+                    <th>StatusMessage</th>
+
                 </thead>
                  
                 <tr *ngFor="let element of tableData; let i =index">
-
-                    
                     <td>{{i+1}}</td>
-        
-                    <td >{{element.Amount}} </td>
-        
-                    <td > {{element.ClientId}} </td>
-        
-                    <td class="Date" > {{element.Date}} </td>
-        
-                    <td > {{element.EndDate}} </td>
-        
-                    <td > {{element.NICSIManager}} </td>
-                    <td >{{element.Owner}} </td>
-                    <td >{{element.PIStatus}} </td>
-                    <td >{{element.PaymentStatus}} </td>
-        
-                    <td >{{element.ProformaInvoiceNumber}} </td>
-        
-                    <td class="ReferenceNumber" > {{element.ReferenceNumber}} </td>
-        
-                    <td > {{element.Remark}} </td>
-        
-                    <td > {{element.StartDate}} </td>
-                
-                <!-- <ng-container matColumnDef="StatusCode">
-                    <th mat-sort-header="StatusCode" mat-header-cell *matHeaderCellDef> StatusCode </th>
-                    <td mat-cell *matCellDef="let element">{{element.StatusCode}} </td>
-                </ng-container> -->
+                    <ng-container *ngFor="let key of tableHeader">
+                        <td *ngIf="key !== 'StatusMessage' &&   key !== 'StatusCode'">{{element[key]}}</td>
+                    </ng-container>
                     <td [ngClass]="{'color-green': element.StatusCode === '0', 'color-red': element.StatusCode !== '0'}">{{element.StatusMessage}} </td>
-        
-                    <td class="Traffic"> {{element.Traffic}} </td>
                 </tr>
         
         
@@ -81,7 +39,7 @@
         
         </div>
         <div class="footer-modal">
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[10]" showFirstLastButtons [length]="dataSource?.length" (page)="onPageChange($event)"></mat-paginator>
+            <mat-paginator class="font-paginator" [pageSizeOptions]="[25]" showFirstLastButtons [length]="dataSource?.length" (page)="onPageChange($event)"></mat-paginator>
         
         <div class="footer-btn">
             <button class="btn btn-primary btn-save" (click)="onSave()">Save valid records</button>

@@ -68,5 +68,50 @@ export class POService {
         const url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
         return this.httpService.post(url, requestEntity);
     }
+
+    uploadCsv(data) {
+        const dashboardDetails = this.apiService.api.poCsvUpload;
+        const { processId, projectId, workflowId } = dashboardDetails;
+        const requestEntity: any = {
+          processId,
+          ProcessVariables: {...data},
+          workflowId,
+          projectId,
+        };
+        const url =
+        `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return this.httpService.post(url, requestEntity);
+      }
+
+      uploadValidData(data) {
+        const dashboardDetails = this.apiService.api.poUploadValidData;
+        const { processId, projectId, workflowId } = dashboardDetails;
+        const requestEntity: any = {
+          processId,
+          ProcessVariables: {...data},
+          workflowId,
+          projectId,
+        };
+        const url =
+        `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return this.httpService.post(url, requestEntity);
+      }
+      getCsvDataWithMessage(data) {
+        const piCsvDataWithMessage = this.apiService.api.poCsvDataWithMessage;
+        const { processId, projectId, workflowId } = piCsvDataWithMessage;
+        const requestEntity: any = {
+          processId,
+          ProcessVariables: {...data},
+          workflowId,
+          projectId,
+        };
+
+        const url =
+        `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+
+        return this.httpService.post(url, requestEntity);
+      }
+
+
 }
 

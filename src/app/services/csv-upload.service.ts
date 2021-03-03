@@ -42,4 +42,20 @@ export class CsvUploadService {
 
     return this.httpService.post(url, requestEntity);
   }
+
+  getCsvDataWithMessage(data) {
+    const piCsvDataWithMessage = this.apiService.api.piCsvDataWithMessage;
+    const { processId, projectId, workflowId } = piCsvDataWithMessage;
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: {...data},
+      workflowId,
+      projectId,
+    };
+
+    const url =
+    `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+
+    return this.httpService.post(url, requestEntity);
+  }
 }
