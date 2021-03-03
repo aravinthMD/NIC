@@ -22,7 +22,7 @@ export class UtilService {
   private customerId$:BehaviorSubject<any> = new BehaviorSubject<string>('');
 
   public customerId:Observable<any> = this.customerId$.asObservable();
-  
+  public lovData;
 
 
     
@@ -228,4 +228,12 @@ getCustomerId(){
 
 
   constructor(private adminService : AdminService) { }
+
+  setLovData(data){
+    this.lovData = data;    
+  }
+
+  getLovData(){
+    return this.lovData;
+  }
 }
