@@ -8,7 +8,6 @@ export class PiService {
   constructor() { }
 
   private statusList = [];
-
-  set
+  
 
 }
