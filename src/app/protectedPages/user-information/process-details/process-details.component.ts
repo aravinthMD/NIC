@@ -47,8 +47,9 @@ export class ProcessDetailsComponent implements OnInit{
 
   storeProjectNo: string;
   displayedColumns : string[] = ['InvoiceNo','accountName','piAmt',"reminder","Escalation","Action"]
-  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
-  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
+  piStatusData = [];
+  // paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
+  paymentStatusData = [];
   nicsiData = [
     {
       key: '1',
@@ -138,82 +139,44 @@ export class ProcessDetailsComponent implements OnInit{
 
   }
 
-  async onUploadCsv(event) {
-    // const dialogRef =  this.dialog.open(CsvUploadModalComponent,{
-    //   width :  '70%'
-    // });
+  patchLovValues(){
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables || {};
+    this.piStatusData = processVariables.piStatusList || [];
+    this.paymentStatusData = processVariables.paymentStatusList || [];
+  }
 
-    // dialogRef.componentInstance.emitForm.subscribe((value) =>{
-    //     if(!value)
-    //       return ;
-    //       // this.sendEmail();
-    //       this.emailScheduler(value);
-    // })
-    const files = event.target.files[0];
-    const fileToRead = files;
-    const fileReader = new FileReader();
-    // if (fileType.includes('xls')) {
-    //   this.getDataFromXlsFile(target);
-    //   //   fileReader.onload =  (e: any) => {
-    //   //     console.log('xls', e.target.result);
-    //   // };
-    //   // fileReader.readAsBinaryString(files);
-    // } else {
-    // fileReader.onload = (fileLoadedEvent: any) => {
-    //     const textFromFileLoaded = fileLoadedEvent.target.result;
-    //     // this.csvData = textFromFileLoaded;
-    //     const data = {
-    //       name: 'Pi.csv',
-    //       content: textFromFileLoaded,
-    //       mime: 'application/vnd.ms-excel'
-    //     };
-    //     this.csvUploadService.uploadCsv(data)
-    //       .subscribe((value) => {
-    //           console.log('value', value);
-    //       });
-    //   };
-    // fileReader.readAsText(fileToRead);
-    // }
-    try {
-      const file: any = await this.fileToBase64Service.convertToBase64(event);
+  async onUploadCsv(event) {
+    // const files = event.target.files[0];
+    // const fileToRead = files;
+    // const fileReader = new FileReader();
+    // try {
+      // const file: any = await this.fileToBase64Service.convertToBase64(event);
       const data = {
+        ...event,
         currentClientId: this.userId,
-        attachment: {
-          name: file.name,
-          content: file.base64,
-          mime: 'application/vnd.ms-excel'
-        }
+        // attachment: {
+        //   name: file.name,
+        //   content: file.base64,
+        //   mime: 'application/vnd.ms-excel'
+        // }
       };
       this.csvUploadService.uploadCsv(data)
           .subscribe((response: any) => {
               console.log('response', response);
               const error = response.Error;
               const errorMessage = response.ErrorMessage;
-              this.inputCsvFile.nativeElement.value = '';
+              // this.inputCsvFile.nativeElement.value = '';
               if (error !== '0') {
                 return this.toasterService.showError(errorMessage, '');
               }
 
-              const processVariables = response.ProcessVariables;
-              this.csvResponse = {
-                screenName: 'PI',
-                data: processVariables.PILIst
-              };
-
-              // const dialogRef =  this.dialog.open(CsvUploadModalComponent, {
-              //                         width :  '70%',
-              //                         height: '600px',
-              //                         data: {
-              //                           screenName: 'PI',
-              //                           data: processVariables.PILIst
-              //                         }
-              //                   });
-
+              this.getCsvDataWithValidationMessage();
           });
-    } catch (e) {
-      this.inputCsvFile.nativeElement.value = '';
-      // this.toasterService.showError(e, 'File Convert Error');
-    }
+    // } catch (e) {
+    //   this.inputCsvFile.nativeElement.value = '';
+    // }
   }
 
   getCsvFormatForProformaInvoice() {
@@ -245,7 +208,7 @@ export class ProcessDetailsComponent implements OnInit{
 
   ngOnInit() {
 
-
+    this.patchLovValues();     //LOV's
     const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
     this.isWrite = smsPage.isWrite;
 
@@ -624,7 +587,7 @@ export class ProcessDetailsComponent implements OnInit{
     }
 
     if (event.length === 0) {
-      this.toasterService.showWarning('No valid records available to insert', '');
+      return this.toasterService.showWarning('No valid records are available to upload', '');
     }
 
     this.csvUploadService.uploadValidData({currentClientId: this.userId,})
@@ -636,12 +599,38 @@ export class ProcessDetailsComponent implements OnInit{
           }
           const processVariables = response.ProcessVariables;
           const errorObj = processVariables.error;
-          if (errorObj.code === '0') {
+          if (errorObj.code !== '0') {
              return this.toasterService.showSuccess(errorObj.message, '');
           }
-          return this.toasterService.showError(errorObj.message, '');
+          this.toasterService.showSuccess(errorObj.message, '');
+          this.fetchAllProformaInvoice(1, this.userId);
         });
     console.log('event', event);
 
+  }
+
+getCsvDataWithValidationMessage() {
+   this.csvUploadService.getCsvDataWithMessage({currentClientId: this.userId,})
+    .subscribe((response: any) => {
+      const error = response.Error;
+      const errorMessage = response.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMessage, '');
+      }
+      const processVariables = response.ProcessVariables;
+      const errorObj = processVariables.error;
+      // if (errorObj.code !== '0') {
+      //    return this.toasterService.showSuccess(errorObj.message, '');
+      // }
+
+      console.log('processVariables', processVariables);
+
+      this.csvResponse = {
+        screenName: 'PI',
+        data: processVariables.PIDataLIst
+      };
+
+      // this.toasterService.showError(errorObj.message, '');
+    });
   }
 }

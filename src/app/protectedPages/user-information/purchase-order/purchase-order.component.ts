@@ -42,18 +42,17 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['purchaseNo', 'projectNo', 'piAmt', 'remarks', 'Action'];
 
   userList: any[] =   [];
-  poStatus: any[] = [
-    { key : 0, value: 'Received' },
-    { key : 1, value : 'Not Received'},
-    { key : 2, value : 'Raised'},
-    { key: 3, value: 'Pending' },
-    { key: 4, value: 'Rejected' },
-    { key: 5, value: 'On Hold' }];
+  // poStatus: any[] = [
+  //   { key : 0, value: 'Received' },
+  //   { key : 1, value : 'Not Received'},
+  //   { key : 2, value : 'Raised'},
+  //   { key: 3, value: 'Pending' },
+  //   { key: 4, value: 'Rejected' },
+  //   { key: 5, value: 'On Hold' }];
+  poStatus = [];
   piStatus: any[] = [];
   piReceivedIn: any[] = [];
-  paymentStatus: any[] = [
-      { key : '3', value : 'Received' }
-  ];
+  paymentStatus: any[] = [];
   departmentListData = [];
   dataArray = [];
   dataSource = [];
@@ -116,6 +115,8 @@ smsApprovedList: any[] = [
 
   isWrite = true;
 
+  csvResponse: any;
+
 
 
 
@@ -134,7 +135,8 @@ smsApprovedList: any[] = [
     private route: ActivatedRoute,
     private clientDetailService: ClientDetailsService,
     private poDataService: POService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private activatedRoute : ActivatedRoute
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
@@ -143,6 +145,7 @@ smsApprovedList: any[] = [
 
   ngOnInit() {
 
+    this.patchLovValues();
     const smsPage = this.utilityService.getSettingsDataList('PurchaseOrder');
     this.isWrite = smsPage.isWrite;
 
@@ -196,6 +199,17 @@ smsApprovedList: any[] = [
      this.getPIAutoPopulateonChange(value);
     });
 
+  }
+
+
+  patchLovValues(){
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables || {};
+    this.poStatus = processVariables.poStatusList || [];
+    this.paymentStatus = processVariables.paymentStatusList || [];
+    this.poDataService.setStatusList(this.paymentStatus);
+    this.poDataService.setPaymentList(this.paymentStatus);
   }
 
 
@@ -743,5 +757,78 @@ next() {
         //  link.click();
         //  document.body.removeChild(link);
       });
+ }
+
+ onUploadCsv(event) {
+   console.log('event', event);
+   const data = {
+     ...event,
+     currentClientId: this.clientId,
+   };
+
+   this.poDataService.uploadCsv(data)
+        .subscribe((res: any) => {
+            console.log('res', res);
+            const error = res.Error;
+            const errorMessage = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
+            }
+            const processVariables = res.ProcessVariables;
+            const errorObj = processVariables.error;
+            if (errorObj.code !== '0') {
+              return this.toasterService.showError(errorObj.message, '');
+            }
+            this.getCsvDataWithValidationMessage();
+        });
+ }
+
+ getCsvDataWithValidationMessage() {
+
+    this.poDataService.getCsvDataWithMessage({currentClientId: this.clientId})
+        .subscribe((res: any) => {
+             const error = res.Error;
+             const errorMessage = res.ErrorMessage;
+             if (error !== '0') {
+               return this.toasterService.showError(errorMessage, '');
+             }
+
+             const processVariables = res.ProcessVariables;
+
+             this.csvResponse = {
+              screenName: 'PO',
+              data: processVariables.PODataLIst
+            };
+
+        });
+
+ }
+
+ onModalClose(event) {
+  this.csvResponse = null;
+  if (!event) {
+     return;
+  }
+
+  if (event.length === 0) {
+    return this.toasterService.showWarning('No valid records are available to upload', '');
+  }
+
+  this.poDataService.uploadValidData({currentClientId: this.clientId,})
+      .subscribe((response: any) => {
+        const error = response.Error;
+        const errorMessage = response.ErrorMessage;
+        if (error !== '0') {
+          return this.toasterService.showError(errorMessage, '');
+        }
+        const processVariables = response.ProcessVariables;
+        const errorObj = processVariables.error;
+        if (errorObj.code !== '0') {
+           return this.toasterService.showSuccess(errorObj.message, '');
+        }
+        this.toasterService.showSuccess(errorObj.message, '');
+        this.fetchPODetails(this.clientId, 1);
+      });
+  console.log('event', event);
  }
 }

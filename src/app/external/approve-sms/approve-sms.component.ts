@@ -139,7 +139,7 @@ submitAction(){
     const statusComment = this.myComments;
 
     const data = {
-                    id:  this.actionValue,
+                    id:  id,
                     status: this.actionValue,
                     statusComment,
                  }
