@@ -116,6 +116,8 @@ smsApprovedList: any[] = [
 
   isWrite = true;
 
+  csvResponse: any;
+
 
 
 
@@ -743,5 +745,78 @@ next() {
         //  link.click();
         //  document.body.removeChild(link);
       });
+ }
+
+ onUploadCsv(event) {
+   console.log('event', event);
+   const data = {
+     ...event,
+     currentClientId: this.clientId,
+   };
+
+   this.poDataService.uploadCsv(data)
+        .subscribe((res: any) => {
+            console.log('res', res);
+            const error = res.Error;
+            const errorMessage = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
+            }
+            const processVariables = res.ProcessVariables;
+            const errorObj = processVariables.error;
+            if (errorObj.code !== '0') {
+              return this.toasterService.showError(errorObj.message, '');
+            }
+            this.getCsvDataWithValidationMessage();
+        });
+ }
+
+ getCsvDataWithValidationMessage() {
+
+    this.poDataService.getCsvDataWithMessage({currentClientId: this.clientId})
+        .subscribe((res: any) => {
+             const error = res.Error;
+             const errorMessage = res.ErrorMessage;
+             if (error !== '0') {
+               return this.toasterService.showError(errorMessage, '');
+             }
+
+             const processVariables = res.ProcessVariables;
+
+             this.csvResponse = {
+              screenName: 'PO',
+              data: processVariables.PODataLIst
+            };
+
+        });
+
+ }
+
+ onModalClose(event) {
+  this.csvResponse = null;
+  if (!event) {
+     return;
+  }
+
+  if (event.length === 0) {
+    return this.toasterService.showWarning('No valid records are available to upload', '');
+  }
+
+  this.poDataService.uploadValidData({currentClientId: this.clientId,})
+      .subscribe((response: any) => {
+        const error = response.Error;
+        const errorMessage = response.ErrorMessage;
+        if (error !== '0') {
+          return this.toasterService.showError(errorMessage, '');
+        }
+        const processVariables = response.ProcessVariables;
+        const errorObj = processVariables.error;
+        if (errorObj.code !== '0') {
+           return this.toasterService.showSuccess(errorObj.message, '');
+        }
+        this.toasterService.showSuccess(errorObj.message, '');
+        this.fetchPODetails(this.clientId, 1);
+      });
+  console.log('event', event);
  }
 }

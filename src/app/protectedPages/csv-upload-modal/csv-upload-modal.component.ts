@@ -17,6 +17,10 @@ dataPerPage = 25;
 
 tableData = [];
 
+tableHeader = [];
+
+screenName: string;
+
 
 constructor(
 ) {
@@ -53,11 +57,20 @@ ngOnInit() {
 
 ngOnChanges() {
     if (this.data) {
-        const screenName = this.data.screenName;
-        if (screenName === 'PI') {
-            this.displayedColumns = this.PI_DISPLAY_COLUMNS;
-        }
+        this.screenName = this.data.screenName;
+        // if (screenName === 'PI') {
+        //     this.displayedColumns = this.PI_DISPLAY_COLUMNS;
+        // }
         this.dataSource = this.data.data || [];
+        const firstObject = this.dataSource[0] || {};
+        this.tableHeader = Object.keys(firstObject || {});
+
+        // for (const key in firstObject) {
+        //    if (firstObject.hasOwnProperty(key)) {
+        //       this.tableHeader.push(key);
+        //    }
+        // }
+        console.log(this.tableHeader);
         this.tableData = [...this.dataSource].splice(0, this.dataPerPage);
      }
 }

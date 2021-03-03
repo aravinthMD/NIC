@@ -111,7 +111,7 @@ export class ProcessDetailsComponent implements OnInit{
         private fileToBase64Service: FileToBase64Service
         ) { 
           const data = this.activatedRoute.parent.snapshot.data || {}
-          this.piStatusData = data.piStatus;
+          this.piStatusData = data['listOfValue']['ProcessVariables']['piStatus'];
     this.form =this.formBuilder.group({
       accountName: [null],
       invoiceNumber : [null],
@@ -139,34 +139,35 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   async onUploadCsv(event) {
-    const files = event.target.files[0];
-    const fileToRead = files;
-    const fileReader = new FileReader();
-    try {
-      const file: any = await this.fileToBase64Service.convertToBase64(event);
+    // const files = event.target.files[0];
+    // const fileToRead = files;
+    // const fileReader = new FileReader();
+    // try {
+      // const file: any = await this.fileToBase64Service.convertToBase64(event);
       const data = {
+        ...event,
         currentClientId: this.userId,
-        attachment: {
-          name: file.name,
-          content: file.base64,
-          mime: 'application/vnd.ms-excel'
-        }
+        // attachment: {
+        //   name: file.name,
+        //   content: file.base64,
+        //   mime: 'application/vnd.ms-excel'
+        // }
       };
       this.csvUploadService.uploadCsv(data)
           .subscribe((response: any) => {
               console.log('response', response);
               const error = response.Error;
               const errorMessage = response.ErrorMessage;
-              this.inputCsvFile.nativeElement.value = '';
+              // this.inputCsvFile.nativeElement.value = '';
               if (error !== '0') {
                 return this.toasterService.showError(errorMessage, '');
               }
 
               this.getCsvDataWithValidationMessage();
           });
-    } catch (e) {
-      this.inputCsvFile.nativeElement.value = '';
-    }
+    // } catch (e) {
+    //   this.inputCsvFile.nativeElement.value = '';
+    // }
   }
 
   getCsvFormatForProformaInvoice() {

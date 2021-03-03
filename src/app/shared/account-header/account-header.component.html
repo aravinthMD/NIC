@@ -5,10 +5,12 @@
             
         -->
 
-            <div>{{title || ''}} <span class="upload-title" *ngIf="showUpload">{{showUpload}} <i class="fa fa-upload btn-upload" aria-hidden="true" (click)="onUpload()"></i> </span></div>
+            <div>{{title || ''}} <span class="upload-title" *ngIf="showUpload">{{showUpload}} <i class="fa fa-upload btn-upload" aria-hidden="true" (click)="inputCsvFile.click()"></i> </span></div>
             <button *ngIf="user == 'smsCredit'" mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon" (click)="addSMSCredit()">
                 <mat-icon>add</mat-icon>
             </button>
+
+            <input hidden type="file" #inputCsvFile (change)="onUpload($event)" accept=".csv">
 
             <!-- </h1> -->
 

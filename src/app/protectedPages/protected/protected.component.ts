@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import {UtilService} from '@services/util.service';
 import { UtilityService } from '@services/utility.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -20,9 +20,14 @@ export class ProtectedComponent implements OnInit {
               private utilService:UtilService,
               private ngxUiLoaderService: NgxUiLoaderService,
               private utilityService: UtilityService,
-              private toggleSideMenuService: ToggleSideMenuService) { 
+              private toggleSideMenuService: ToggleSideMenuService,
+              private activatedRoute: ActivatedRoute) { 
 
     this.userName = localStorage.getItem('userName') || 'Admin User'
+    const lovData =   this.activatedRoute.snapshot.data;
+    this.utilService.setLovData( lovData['listOfValue']['ProcessVariables'])
+   
+
   }
 
   ngOnInit() {
