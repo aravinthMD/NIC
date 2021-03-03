@@ -2,7 +2,7 @@
     <div class="purchase-order">
 
 
-        <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="'Upload Purchase Order'" (uploadCsv)="onUploadCsv($event)"></app-account-header>
 
         <mat-accordion *ngIf="isWrite">
             <mat-expansion-panel>
@@ -575,3 +575,4 @@
 
 
 <app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>
+<app-csv-upload-modal [data]="csvResponse" *ngIf="csvResponse" (closeModal)="onModalClose($event)"></app-csv-upload-modal>

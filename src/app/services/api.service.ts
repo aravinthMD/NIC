@@ -424,6 +424,11 @@ export class ApiService {
       processId : '508b02e2784811eb8f35f2fa9bec3d63',
       workflowId : 'da01f45a784711eb8f35f2fa9bec3d63'
     },
+    piCsvDataWithMessage: {
+      projectId : environment.projectIds.projectId,
+      processId : '9b2159be784811eb8f35f2fa9bec3d63',
+      workflowId : 'da01f45a784711eb8f35f2fa9bec3d63'
+    },
     getAccountActivationData:{
       projectId : environment.projectIds.projectId,
       processId : '1a3a029a662011eb8e53727d5ac274b2',     
@@ -432,7 +437,37 @@ export class ApiService {
        processId : '1a3a029a662011eb8e53727d5ac274b2',
        projectId : '2efbdc721cc311ebb6c0727d5ac274b2',
        workflowId : 'efe2a4902d5b11ebb771727d5ac274b2'
-    }
+    },
+    poCsvUpload: {
+      projectId : environment.projectIds.projectId,
+      processId : 'f4373cfa7a4e11eb8f4cf2fa9bec3d63',
+      workflowId : 'f418ec0a7a4e11eb8f4cf2fa9bec3d63'
+    },
+    poUploadValidData: {
+      projectId : environment.projectIds.projectId,
+      processId : 'dd3ad5e27b3011eb8f91f2fa9bec3d63',
+      workflowId : 'f418ec0a7a4e11eb8f4cf2fa9bec3d63'
+    },
+    poCsvDataWithMessage: {
+      projectId : environment.projectIds.projectId,
+      processId : 'ea9c496e7b3011eb8f91f2fa9bec3d63',
+      workflowId : 'f418ec0a7a4e11eb8f4cf2fa9bec3d63'
+    },
+    peCsvUpload: {
+      projectId : environment.projectIds.projectId,
+      processId : '42c8c3167a4f11eb8f4cf2fa9bec3d63',
+      workflowId : '42aa3d387a4f11eb8f4cf2fa9bec3d63'
+    },
+    peUploadValidData: {
+      projectId : environment.projectIds.projectId,
+      processId : '773d1cb87a7311eb8f67f2fa9bec3d63',
+      workflowId : '42aa3d387a4f11eb8f4cf2fa9bec3d63'
+    },
+    peCsvDataWithMessage: {
+      projectId : environment.projectIds.projectId,
+      processId : '61c4057e7a7b11eb8f69f2fa9bec3d63',
+      workflowId : '42aa3d387a4f11eb8f4cf2fa9bec3d63'
+    },
 
 
   };
