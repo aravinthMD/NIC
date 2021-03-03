@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  version: '0.0.12',
-  buildDate: '01-03-2021',
+  version: '0.0.13',
+  buildDate: '03-03-2021',
   projectIds: {
     projectId: '2efbdc721cc311ebb6c0727d5ac274b2'
   },
