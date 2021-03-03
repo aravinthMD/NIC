@@ -11,7 +11,7 @@ export class AccountHeaderComponent implements OnInit {
 
 
 
- @Input() showUpload: boolean;
+ @Input() showUpload: string;
  @Input() title: string;
  @Input() accountName: string;
  @Input() status: string;

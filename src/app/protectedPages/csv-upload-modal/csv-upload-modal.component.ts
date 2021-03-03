@@ -13,7 +13,7 @@ export class CsvUploadModalComponent implements OnInit, OnChanges {
 
 dataSource: any;
 
-dataPerPage = 10;
+dataPerPage = 25;
 
 tableData = [];
 

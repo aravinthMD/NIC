@@ -2,7 +2,7 @@
     <div class="proforma-invoice">
 
 
-        <app-account-header [title]="'Proforma Invoice'" [showUpload]="true" [accountName]="accountName" [status]="status" [user]="'invoice'" (uploadCsv)="inputCsvFile.click()"></app-account-header>
+        <app-account-header [title]="'Proforma Invoice'" [showUpload]="'Upload Proforma Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'" (uploadCsv)="inputCsvFile.click()"></app-account-header>
 
 
         <input hidden type="file" #inputCsvFile (change)="onUploadCsv($event)" accept=".csv">
