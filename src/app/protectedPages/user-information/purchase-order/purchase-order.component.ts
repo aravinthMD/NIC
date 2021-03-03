@@ -42,18 +42,17 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['purchaseNo', 'projectNo', 'piAmt', 'remarks', 'Action'];
 
   userList: any[] =   [];
-  poStatus: any[] = [
-    { key : 0, value: 'Received' },
-    { key : 1, value : 'Not Received'},
-    { key : 2, value : 'Raised'},
-    { key: 3, value: 'Pending' },
-    { key: 4, value: 'Rejected' },
-    { key: 5, value: 'On Hold' }];
+  // poStatus: any[] = [
+  //   { key : 0, value: 'Received' },
+  //   { key : 1, value : 'Not Received'},
+  //   { key : 2, value : 'Raised'},
+  //   { key: 3, value: 'Pending' },
+  //   { key: 4, value: 'Rejected' },
+  //   { key: 5, value: 'On Hold' }];
+  poStatus = [];
   piStatus: any[] = [];
   piReceivedIn: any[] = [];
-  paymentStatus: any[] = [
-      { key : '3', value : 'Received' }
-  ];
+  paymentStatus: any[] = [];
   departmentListData = [];
   dataArray = [];
   dataSource = [];
@@ -136,7 +135,8 @@ smsApprovedList: any[] = [
     private route: ActivatedRoute,
     private clientDetailService: ClientDetailsService,
     private poDataService: POService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private activatedRoute : ActivatedRoute
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
@@ -145,6 +145,7 @@ smsApprovedList: any[] = [
 
   ngOnInit() {
 
+    this.patchLovValues();
     const smsPage = this.utilityService.getSettingsDataList('PurchaseOrder');
     this.isWrite = smsPage.isWrite;
 
@@ -198,6 +199,17 @@ smsApprovedList: any[] = [
      this.getPIAutoPopulateonChange(value);
     });
 
+  }
+
+
+  patchLovValues(){
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables || {};
+    this.poStatus = processVariables.poStatusList || [];
+    this.paymentStatus = processVariables.paymentStatusList || [];
+    this.poDataService.setStatusList(this.paymentStatus);
+    this.poDataService.setPaymentList(this.paymentStatus);
   }
 
 
