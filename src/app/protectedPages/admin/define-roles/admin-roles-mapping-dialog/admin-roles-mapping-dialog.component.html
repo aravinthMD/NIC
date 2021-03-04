@@ -4,6 +4,7 @@
 <div mat-dialog-content>
     Are you sure you want to map the screen?<br>
     <mat-checkbox class="example-margin" [disabled]=" (screenName === 'Reports' || screenName === 'Admin' || screenName === 'CustomerModule' || screenName === 'EmailOperations') ? false : true" [(ngModel)]="checked" color="primary">Yes</mat-checkbox>
+    <ng-container *ngIf = "!(screenName === 'Reports' || screenName === 'Admin' || screenName === 'EmailOperations') ? true : false">
     <br> Enable?
     <br>
     <mat-checkbox class="example-margin" [(ngModel)]="read" color="primary">Read</mat-checkbox>
@@ -11,7 +12,7 @@
     <!-- <mat-checkbox class="example-margin" [disabled] = '!checked' [(ngModel)]="delete" color = "primary">Delete</mat-checkbox> -->
     <br> Enable the Email?<br>
     <mat-checkbox class="example-margin" [(ngModel)]="emailEnable" color="primary">Yes</mat-checkbox>
-
+    </ng-container>         
 </div>
 <div mat-dialog-actions>
     <button mat-raised-button mat-dialog-close cdkFocusInitial>Cancel</button>

@@ -1,6 +1,9 @@
-.mat-dialog-content {
+::ng-deep .mat-dialog-content {
     line-height: 40px !important;
     font-size: 13px !important;
+    height: auto !important;
+    min-height: 80px !important;
+    overflow-y: hidden !important;
 }
 
 ::ng-deep.mat-checkbox-layout {
@@ -13,7 +16,13 @@ mat-card.mat-card {
     color: #ffff;
 }
 
-.mat-dialog-container {
-    max-height: 300% !important;
-    height: 115% !important;
+// ::ng-deep.mat-dialog-container {
+//     max-height: 200% !important;
+//     height: auto !important;
+// }
+
+
+::ng-deep .cdk-overlay-pane {
+    height: auto !important;
+    min-height: 200px !important;
 }

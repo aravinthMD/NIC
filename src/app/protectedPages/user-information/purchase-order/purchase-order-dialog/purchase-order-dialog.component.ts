@@ -199,10 +199,10 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
     this.departmentListData = this.poService.getDepartmentList();
     
+    const data = this.utilService.getLovData();
 
-    this.poStatus = this.poService.getStatusList();
-    this.paymentStatus = this.poService.getPaymentList();
-
+    this.poStatus = data.poStatusList || [];
+    this.paymentStatus = data.paymentStatusList || [];
 
     this.activatedRoute.params.subscribe((value)=> {
 
