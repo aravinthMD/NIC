@@ -114,7 +114,7 @@ smsApprovedList: any[] = [
   uploadedData : any = {}
 
   isWrite = true;
-
+  isClientActive = true;
   csvResponse: any;
 
 
@@ -144,7 +144,7 @@ smsApprovedList: any[] = [
      }
 
   ngOnInit() {
-
+    this.isClientActive = this.clientDetailService.getClientStatus();
     this.patchLovValues();
     const smsPage = this.utilityService.getSettingsDataList('PurchaseOrder');
     this.isWrite = smsPage.isWrite;

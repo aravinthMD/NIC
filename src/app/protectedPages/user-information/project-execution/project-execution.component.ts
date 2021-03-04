@@ -84,6 +84,7 @@ dataValue: {
   message: string
 }
 isWrite = true;
+isClientActive = true;
 csvResponse: any;
 
   constructor(
@@ -111,7 +112,7 @@ csvResponse: any;
   ngOnInit() {
 
     // ProjectExecution
-
+    this.isClientActive = this.clientDetailService.getClientStatus();
     const smsPage = this.utilityService.getSettingsDataList('ProjectExecution');
     this.isWrite = smsPage.isWrite;
 

@@ -30,7 +30,7 @@ import { EmailComponent } from './protectedPages/email/email.component'
 import { ManageUserDialogComponent } from './protectedPages/admin/manage-user-dialog/manage-user-dialog.component';
 import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatDatepickerModule,MatCardModule, MatSortModule} from '@angular/material';
+import {MatDatepickerModule,MatCardModule, MatSortModule, MatToolbarModule} from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import { DatePipe } from '@angular/common';
@@ -179,6 +179,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatChipsModule,
     MatIconModule,
     MatSortModule,
+    MatToolbarModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
       positionClass:'toast-top-center'

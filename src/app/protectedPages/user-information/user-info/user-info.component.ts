@@ -685,6 +685,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.previewDocumentId = docsId;
       this.documentUploadId = docsId;
       this.initialStatus = String(processVariables.status || 0);
+      this.clientDetailService.setClientStatus(this.initialStatus === '1');
       // if(response['ProcessVariables']['upload_document']){
       //     this.previewDocumentId = response['ProcessVariables']['upload_document'];
       //     this.docAvailFlag = true;

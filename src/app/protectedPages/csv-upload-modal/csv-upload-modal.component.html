@@ -39,12 +39,28 @@
         
         </div>
         <div class="footer-modal">
-            <mat-paginator class="font-paginator" [pageSizeOptions]="[25]" showFirstLastButtons [length]="dataSource?.length" (page)="onPageChange($event)"></mat-paginator>
-        
-        <div class="footer-btn">
+            <!-- <div class="footer-btn">
+            
             <button class="btn btn-primary btn-save" (click)="onSave()">Save valid records</button>
             <button class="btn btn-primary" (click)="onCancel()">Cancel</button>
         </div>
+
+            <span class="example-spacer"></span> -->
+            
+        
+            <mat-toolbar>
+                <mat-toolbar-row>
+                    <div>
+                        <button class="btn btn-primary btn-save" (click)="onSave()">Save valid records</button>
+            <button class="btn btn-primary" (click)="onCancel()">Cancel</button>
+                    </div>
+                  <!-- <mat-icon (click)="exportCsv(dataSource)" title="Export as CSV">save_alt</mat-icon> -->
+                  <!-- <span class="example-spacer"></span> -->
+                  <!-- <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]"></mat-paginator> -->
+                  <mat-paginator class="font-paginator" [pageSizeOptions]="[25]" showFirstLastButtons [length]="dataSource?.length" (page)="onPageChange($event)"></mat-paginator>
+                </mat-toolbar-row>
+              </mat-toolbar>
+        
         </div>
     </div>
 </div>

@@ -92,6 +92,7 @@ export class ProcessDetailsComponent implements OnInit{
   };
 
   isWrite = false;
+  isClientActive = true;
   csvResponse: any;
   @ViewChild('inputCsvFile', {static: false}) inputCsvFile: ElementRef;
   constructor(
@@ -209,6 +210,7 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.isClientActive = this.clientDetailService.getClientStatus();
 
     // this.patchLovValues();     //LOV's
     const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');

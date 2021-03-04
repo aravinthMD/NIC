@@ -94,6 +94,7 @@ export class TaxInvoiceComponent implements OnInit {
   selectedClientId;
   taxInvoiceList: TaxInvoice[] = [];
   isWrite = true;
+  isClientActive = true;
 
   constructor(
       private labelsService: LabelsService,
@@ -112,6 +113,7 @@ export class TaxInvoiceComponent implements OnInit {
       ) { }
 
   ngOnInit() {
+    this.isClientActive = this.clientDetailsService.getClientStatus();
     const lov = this.activatedRoute.parent.snapshot.data || {};
     const listOfValues = lov.listOfValue || {};
     const processVariables = listOfValues.ProcessVariables || {};

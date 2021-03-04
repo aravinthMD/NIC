@@ -9,7 +9,7 @@
         <!-- <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info> -->
 
 
-        <mat-accordion *ngIf="isWrite">
+        <mat-accordion *ngIf="isWrite && isClientActive">
             <mat-expansion-panel class="">
                 <mat-expansion-panel-header matRipple collapsedHeight="30px" expandedHeight="35px">
                     <mat-panel-title>
