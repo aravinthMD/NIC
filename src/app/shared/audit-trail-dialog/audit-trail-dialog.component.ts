@@ -81,7 +81,7 @@ customerId: any;
               ) {
                this.customerId =  this.clientDetailService.getClientId()
     this.searchForm = new FormGroup( {
-      searchData :  new FormControl(null),
+      searchData :  new FormControl(''),
       searchFrom :  new FormControl(null),
       searchTo :  new FormControl(null)
     })
@@ -148,7 +148,10 @@ ngOnInit() {
   getAuditTrails(pageNo){
    const data = {
     "currentClientId":this.customerId,
-    searchData: this.searchForm.getRawValue(),
+    searchData : this.searchForm.controls['searchData'].value,
+    searchFrom : this.searchForm.controls['searchFrom'].value,
+    searchTo : this.searchForm.controls['searchTo'].value
+    ,
     currentPage: pageNo? pageNo: 1
    }
 
