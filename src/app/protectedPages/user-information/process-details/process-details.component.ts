@@ -112,8 +112,10 @@ export class ProcessDetailsComponent implements OnInit{
         private csvUploadService: CsvUploadService,
         private fileToBase64Service: FileToBase64Service
         ) { 
-          const data = this.activatedRoute.parent.snapshot.data || {}
-          this.piStatusData = data['listOfValue']['ProcessVariables']['piStatus'];
+          // const data = this.activatedRoute.parent.snapshot.data || {}
+          const data = this.utilService.getLovData();
+          this.piStatusData = data['piStatus'];
+          this.paymentStatusData = data['paymentStatusList'];
     this.form =this.formBuilder.group({
       accountName: [null],
       invoiceNumber : [null],
@@ -209,7 +211,8 @@ export class ProcessDetailsComponent implements OnInit{
 
   ngOnInit() {
     this.isClientActive = this.clientDetailService.getClientStatus();
-    this.patchLovValues();     //LOV's
+
+    // this.patchLovValues();     //LOV's
     const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
     this.isWrite = smsPage.isWrite;
 

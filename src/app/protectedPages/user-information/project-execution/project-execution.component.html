@@ -3,7 +3,7 @@
     <div class="purchase-entry">
 
 
-        <app-account-header [title]="'Project Execution'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="'Upload Project Execution'" (uploadCsv)="onUploadCsv($event)"></app-account-header>
+        <app-account-header [title]="'Project Execution'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="isClientActive ? 'Upload Project Execution': ''" (uploadCsv)="onUploadCsv($event)"></app-account-header>
 
 
 

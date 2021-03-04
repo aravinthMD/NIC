@@ -2,7 +2,7 @@
     <div class="purchase-order">
 
 
-        <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="'Upload Purchase Order'" (uploadCsv)="onUploadCsv($event)"></app-account-header>
+        <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="isClientActive ? 'Upload Purchase Order': ''" (uploadCsv)="onUploadCsv($event)"></app-account-header>
 
         <mat-accordion *ngIf="isWrite && isClientActive">
             <mat-expansion-panel>
