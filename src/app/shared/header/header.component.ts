@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.notificationList = this.utilityService.getNotifications();
-    this.notificationCount  = this.notificationList.length;
+    this.notificationCount  = this.notificationList ? this.notificationList.length : 0;
   }
 
   onToggle() {
