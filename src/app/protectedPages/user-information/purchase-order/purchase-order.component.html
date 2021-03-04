@@ -4,7 +4,7 @@
 
         <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="'Upload Purchase Order'" (uploadCsv)="onUploadCsv($event)"></app-account-header>
 
-        <mat-accordion *ngIf="isWrite">
+        <mat-accordion *ngIf="isWrite && isClientActive">
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple collapsedHeight="30px" expandedHeight="35px">
                     <mat-panel-title>

@@ -6,7 +6,7 @@
 
 
         <!-- <input hidden type="file" #inputCsvFile (change)="onUploadCsv($event)" accept=".csv"> -->
-        <mat-accordion *ngIf="isWrite">
+        <mat-accordion *ngIf="isWrite && isClientActive">
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple collapsedHeight="30px" expandedHeight="35px">
                     <mat-panel-title>
