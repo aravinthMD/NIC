@@ -5,7 +5,7 @@ import { environment as environmentProd } from './environment.prod';
 export const environment = {
   production: false,
   projectIds: {
-    projectId: '2efbdc721cc311ebb6c0727d5ac274b2'
+    projectId: '67edcea67cd511eb903ef2fa9bec3d63'
   },
   version:environmentProd.version,
   buildDate:  environmentProd.buildDate,

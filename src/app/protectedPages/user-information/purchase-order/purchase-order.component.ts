@@ -203,13 +203,9 @@ smsApprovedList: any[] = [
 
 
   patchLovValues(){
-    const data =  this.activatedRoute.parent.snapshot.data || {};
-    const listOfValue = data.listOfValue || {};
-    const processVariables = listOfValue.ProcessVariables || {};
-    this.poStatus = processVariables.poStatusList || [];
-    this.paymentStatus = processVariables.paymentStatusList || [];
-    this.poDataService.setStatusList(this.paymentStatus);
-    this.poDataService.setPaymentList(this.paymentStatus);
+    const data =  this.utilService.getLovData();
+    this.poStatus = data.poStatusList || [];
+    this.paymentStatus = data.paymentStatusList || [];
   }
 
 

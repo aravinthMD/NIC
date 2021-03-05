@@ -28,6 +28,7 @@ export class ResetPasswordComponent implements OnInit {
 
   isError: boolean;
   userData: any;
+  disableSubmitBtn : boolean;
 
   constructor(private formBuilder : FormBuilder,
               private toasterService: ToasterService,
@@ -35,8 +36,8 @@ export class ResetPasswordComponent implements OnInit {
               private loginService: LoginService,
               private utilityService: UtilityService) {
     this.form = this.formBuilder.group({
-      newPassword : [null],
-      confirmPassword: [null]
+      newPassword : [null,Validators.required],
+      confirmPassword: [null,Validators.required]
       
     })
    }
@@ -86,7 +87,11 @@ export class ResetPasswordComponent implements OnInit {
 
       this.isError = false;
     }
-    
+
+    if(this.newValidPattern || this.confirmValidPattern)
+      this.disableSubmitBtn = true;
+    else
+      this.disableSubmitBtn = false;
 
 
   }
