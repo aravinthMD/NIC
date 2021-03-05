@@ -30,6 +30,8 @@ export class LovsComponent implements OnInit {
     totalLovItems = [];
     searchLovItemsValue = [];
     isAddNewKey: boolean;
+    patternError: string;
+
   constructor(
       private labelsService: LabelsService,
       private toasterService: ToasterService,
@@ -112,6 +114,9 @@ export class LovsComponent implements OnInit {
         if (!newValue) {
           return this.toasterService.showError('Please enter the value', '');
         }
+        if (this.patternError) {
+          return this.toasterService.showError(this.patternError, '');
+        }
         const data = {
             listId,
             value: newValue
@@ -178,10 +183,38 @@ export class LovsComponent implements OnInit {
 
 
   onLovItemClick(item) {
-    this.selectedLovItem = item;
+    const key = item.key;
+    this.selectedLovItem  = item;
     this.isLovItemClicked = true;
     this.getSubMenuList(item.key);
   }
+
+  onValueChange(event) {
+    const value = event.target.value;
+    console.log('value', value);
+    const key = this.selectedLovItem.key;
+    let regex: RegExp;
+    let msg: string;
+    if (key === '8') {
+       regex =  /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+       msg = 'Please enter valid mail id';
+    } else if (key  === '6') {
+      regex = /[+]{0,1}[0-9]{1,10}$/;
+      msg = 'Please enter valid code';
+    }
+
+    if (!regex) {
+       return;
+    }
+
+    if (!regex.test(value)) {
+      this.patternError = msg;
+    } else {
+      this.patternError = null;
+    }
+  }
+
+ 
 
   getSubMenuList(key) {
     (this.lovItemsForm.get('items') as FormArray).clear();
@@ -221,6 +254,7 @@ export class LovsComponent implements OnInit {
   }
 
   onLovBack() {
+    this.isAddNewKey = false;
     this.isLovItemClicked = false;
     this.selectedLovItemIndex = ['NA'];
     (this.lovItemsForm.get('items') as FormArray).clear();
@@ -275,6 +309,7 @@ openDeleteModal(index: number) {
   if (index === -1) {
     this.lovItemsForm.get('addNewValue').setValue('');
     this.isAddNewKey = false;
+    this.patternError = null;
     return;
   }
   const formArray = this.lovItemsForm.get('items') as FormArray;

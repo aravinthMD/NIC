@@ -1,7 +1,7 @@
 <div class="col-md-10 main">
     <div class="tax-invoice">
 
-        <app-account-header [title]="'Tax Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Tax Invoice'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="isClientActive ? 'Upload Tax Invoice': ''" (uploadCsv)="onUploadCsv($event)"></app-account-header>
 
 
         <!--Mat Expansion Panel -->
@@ -628,7 +628,7 @@
         </div>
 
 
-        <app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="data" (okay)="showEmailModal = !showEmailModal" (cancel)="showEmailModal = !showEmailModal"></app-email-modal>
+<app-email-modal [showModal]="showEmailModal" *ngIf="showEmailModal" [data]="data" (okay)="showEmailModal = !showEmailModal" (cancel)="showEmailModal = !showEmailModal"></app-email-modal>
 
         <!-- <div class="mat-elevation-z8">
             <table mat-table [dataSource]="dataSource" class="custom-table">
@@ -674,3 +674,4 @@
     </div>
 
 </div>
+<app-csv-upload-modal [data]="csvResponse" *ngIf="csvResponse" (closeModal)="onModalClose($event)"></app-csv-upload-modal>

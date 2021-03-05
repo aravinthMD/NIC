@@ -74,8 +74,47 @@ export class TaxInvoiceService {
 
       }
 
-      private transform(data: any) {
-        return new HttpParams({ fromObject: data });
+      uploadCsv(data) {
+        const tiCsvUpload = this.apiService.api.tiCsvUpload;
+        const { processId, projectId, workflowId } = tiCsvUpload;
+        const requestEntity: any = {
+          processId,
+          ProcessVariables: {...data},
+          workflowId,
+          projectId,
+        };
+        const url =
+        `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return this.httpService.post(url, requestEntity);
+      }
+
+      uploadValidData(data) {
+        const tiUploadValidData = this.apiService.api.tiUploadValidData;
+        const { processId, projectId, workflowId } = tiUploadValidData;
+        const requestEntity: any = {
+          processId,
+          ProcessVariables: {...data},
+          workflowId,
+          projectId,
+        };
+        const url =
+        `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+        return this.httpService.post(url, requestEntity);
+      }
+      getCsvDataWithMessage(data) {
+        const tiCsvDataWithMessage = this.apiService.api.tiCsvDataWithMessage;
+        const { processId, projectId, workflowId } = tiCsvDataWithMessage;
+        const requestEntity: any = {
+          processId,
+          ProcessVariables: {...data},
+          workflowId,
+          projectId,
+        };
+
+        const url =
+        `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+
+        return this.httpService.post(url, requestEntity);
       }
 }
 

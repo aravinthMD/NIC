@@ -95,6 +95,7 @@ export class TaxInvoiceComponent implements OnInit {
   taxInvoiceList: TaxInvoice[] = [];
   isWrite = true;
   isClientActive = true;
+  csvResponse: any;
 
   constructor(
       private labelsService: LabelsService,
@@ -701,6 +702,79 @@ pageEventData(event) {
   const currentPageIndex  = Number(event.pageIndex) + 1;
 
   // this.getAllTaxInvoiceDetails(currentPageIndex)
+}
+
+onUploadCsv(event) {
+  console.log('event', event);
+  const data = {
+    ...event,
+    currentClientId: this.selectedClientId,
+  };
+
+  this.taxInvoiceService.uploadCsv(data)
+       .subscribe((res: any) => {
+           console.log('res', res);
+           const error = res.Error;
+           const errorMessage = res.ErrorMessage;
+           if (error !== '0') {
+             return this.toasterService.showError(errorMessage, '');
+           }
+           const processVariables = res.ProcessVariables;
+           const errorObj = processVariables.error;
+           if (errorObj.code !== '0') {
+             return this.toasterService.showError(errorObj.message, '');
+           }
+           this.getCsvDataWithValidationMessage();
+       });
+}
+
+getCsvDataWithValidationMessage() {
+
+   this.taxInvoiceService.getCsvDataWithMessage({currentClientId: this.selectedClientId})
+       .subscribe((res: any) => {
+            const error = res.Error;
+            const errorMessage = res.ErrorMessage;
+            if (error !== '0') {
+              return this.toasterService.showError(errorMessage, '');
+            }
+
+            const processVariables = res.ProcessVariables;
+
+            this.csvResponse = {
+             screenName: 'PO',
+             data: processVariables.TIDataLIst
+           };
+
+       });
+
+}
+
+onModalClose(event) {
+ this.csvResponse = null;
+ if (!event) {
+    return;
+ }
+
+ if (event.length === 0) {
+   return this.toasterService.showWarning('No valid records are available to upload', '');
+ }
+
+ this.taxInvoiceService.uploadValidData({currentClientId: this.selectedClientId})
+     .subscribe((response: any) => {
+       const error = response.Error;
+       const errorMessage = response.ErrorMessage;
+       if (error !== '0') {
+         return this.toasterService.showError(errorMessage, '');
+       }
+       const processVariables = response.ProcessVariables;
+       const errorObj = processVariables.error;
+       if (errorObj.code !== '0') {
+          return this.toasterService.showSuccess(errorObj.message, '');
+       }
+       this.toasterService.showSuccess(errorObj.message, '');
+       this.getAllTaxInvoiceList();
+     });
+ console.log('event', event);
 }
 
 

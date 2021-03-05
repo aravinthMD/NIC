@@ -4,7 +4,7 @@
             <!-- <h1 class="h4 text-gray-100 title" matRipple>{{title || ''}}
             
         -->
-        <div>{{title || ''}}<span class="btn-upload" *ngIf="showUpload"><i class="fa fa-upload " aria-hidden="true" (click)="inputCsvFile.click()"> <span class="font-fam"> Upload Invoice</span></i>
+        <div>{{title || ''}}<span (click)="inputCsvFile.click()" class="btn-upload" *ngIf="showUpload"><i class="fa fa-upload " aria-hidden="true" > <span class="font-fam"> {{showUpload}}</span></i>
         </span>
     </div>
             <!-- <div>{{title || ''}} <span class="upload-title" *ngIf="showUpload">{{showUpload}} <i class="fa fa-upload btn-upload" aria-hidden="true" (click)="inputCsvFile.click()"></i> </span></div> -->
