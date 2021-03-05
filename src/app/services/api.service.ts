@@ -468,6 +468,21 @@ export class ApiService {
       processId : '61c4057e7a7b11eb8f69f2fa9bec3d63',
       workflowId : '42aa3d387a4f11eb8f4cf2fa9bec3d63'
     },
+    tiCsvUpload: {
+      projectId : environment.projectIds.projectId,
+      processId : '1e6a82dc7b1411eb8f75f2fa9bec3d63',
+      workflowId : '1e4bfff67b1411eb8f75f2fa9bec3d63'
+    },
+    tiUploadValidData: {
+      projectId : environment.projectIds.projectId,
+      processId : 'fab917f27c1e11eb8ffbf2fa9bec3d63',
+      workflowId : '1e4bfff67b1411eb8f75f2fa9bec3d63'
+    },
+    tiCsvDataWithMessage: {
+      projectId : environment.projectIds.projectId,
+      processId : 'f9e7157e7cad11eb8ffff2fa9bec3d63',
+      workflowId : '1e4bfff67b1411eb8f75f2fa9bec3d63'
+    },
 
 
   };
