@@ -12,7 +12,7 @@
     <ul class="navbar-nav ml-auto">
 
         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow">
+        <li *ngIf = "isCustomerModuleMapped" class="nav-item dropdown no-arrow">
 
             <a style="cursor:pointer" (click)="newUserMethod()">
                 <i class="fa fa-user-plus pr-2" aria-hidden="true" title="New User" data-placement="top"></i>

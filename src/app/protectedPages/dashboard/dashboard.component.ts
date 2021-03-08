@@ -35,6 +35,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     'Status',
   ];
 
+  isCustomerModuleEnabled = true;
+
   userList: any[] = [];
 
   dataSource = new MatTableDataSource<any>(this.userList);
@@ -168,6 +170,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   navigateToUser(element) {
+
+    this.isCustomerModuleEnabled = this.utilService.getCustomerModuleFlag();
+
+    if(!this.isCustomerModuleEnabled)
+      return this.toasterService.showError('Access Denied','');
    
     this.utilService.setProjectNumber(element.projectNo);
 

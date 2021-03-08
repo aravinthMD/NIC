@@ -27,6 +27,9 @@ export class PurchaseOrderDialogComponent implements OnInit {
   isDirty : boolean;
   poStatus: any;
 
+  erpData = [];
+
+
   departmentListData: any;
 
   paymentStatus: any[] = []
@@ -82,6 +85,8 @@ export class PurchaseOrderDialogComponent implements OnInit {
   onFileUpload = new EventEmitter();
   isWrite = true;
 
+  previewDocumentId = '';
+
   constructor(
     private labelService:  LabelsService,
     private formBuilder: FormBuilder,
@@ -100,30 +105,51 @@ export class PurchaseOrderDialogComponent implements OnInit {
       this.isWrite = purchaseOrder.isWrite;
 
 
-      this.poId = this.data.currentPOId || this.data.id;
+      // this.poId = this.data.currentPOId || this.data.id;
 
+      // this.PurchaseOrderForm = this.formBuilder.group({
+      //   userName : [this.data.userName],
+      //   piNumber : [this.data.piNumber],
+      //   poNumber : [this.data.poNumber],
+      //   smsApproved : [this.data.smsApproved],
+      //   projectName : [this.data.projectName],
+      //   date : new Date(`${this.changeDateFormat(this.data.poDate)}`),
+      //   withoutTax : [this.data.withOutTax],
+      //   poStatus : [this.data.poStatus],
+      //   startDate :  new Date(`${this.changeDateFormat(this.data.validFrom)}`),
+      //   endDate :  new Date(`${this.changeDateFormat(this.data.validTo)}`),
+      //   userEmail : [this.data.userEmail],
+      //   poManagerEmail : [this.data.managerEmail],
+      //   projectNo : [this.data.projectNumber],
+      //   poAmountWithTax : [this.data.amountWithTax],
+      //   departmentName : [this.data.department],
+      //   paymentStatus : [this.data.paymentStatus],
+      //   remark:[this.data.remark,Validators.required],
+      // })
+      
       this.PurchaseOrderForm = this.formBuilder.group({
-        userName : [this.data.userName],
-        piNumber : [this.data.piNumber],
-        poNumber : [this.data.poNumber],
-        smsApproved : [this.data.smsApproved],
-        projectName : [this.data.projectName],
-        date : new Date(`${this.changeDateFormat(this.data.poDate)}`),
-        withoutTax : [this.data.withOutTax],
-        poStatus : [this.data.poStatus],
-        startDate :  new Date(`${this.changeDateFormat(this.data.validFrom)}`),
-        endDate :  new Date(`${this.changeDateFormat(this.data.validTo)}`),
-        userEmail : [this.data.userEmail],
-        poManagerEmail : [this.data.managerEmail],
-        projectNo : [this.data.projectNumber],
-        poAmountWithTax : [this.data.amountWithTax],
-        departmentName : [this.data.department],
-        paymentStatus : [this.data.paymentStatus],
-        remark:[this.data.remark,Validators.required],
+        userName : [''],
+        piNumber : [''],
+        poNumber : [''],
+        smsApproved : [''],
+        projectName : [''],
+        date : new Date(),
+        withoutTax : [''],
+        poStatus : [''],
+        startDate :  new Date(),
+        endDate :  new Date(),
+        userEmail : [''],
+        poManagerEmail : [''],
+        projectNo : [''],
+        poAmountWithTax : [''],
+        departmentName : [''],
+        paymentStatus : [''],
+        remark:[''],
       })
+
       this.detectAuditTrialObj=this.PurchaseOrderForm.value
 
-      this.filePreview();
+      // this.filePreview();
    }
 
    changeDateFormat(date) {
@@ -216,102 +242,246 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
     console.log(this.data)
   
+    this.getPurchaseOrderById(this.data);
 
+// const psData = this.paymentStatus.filter((val)=> {
 
-const psData = this.paymentStatus.filter((val)=> {
+//   return val.key == this.PurchaseOrderForm.value.paymentStatus
+// })
 
-  return val.key == this.PurchaseOrderForm.value.paymentStatus
-})
+// const poStatus = this.poStatus.filter((val)=> {
+//   return val.key == this.PurchaseOrderForm.value.poStatus
+// })
 
-const poStatus = this.poStatus.filter((val)=> {
-  return val.key == this.PurchaseOrderForm.value.poStatus
-})
+// const departmentListData = this.departmentListData.filter((val)=> {
+//   return val.key == this.PurchaseOrderForm.value.departmentName
+// })
+//     this.viewInfoData = [
+//       {
+//         key: this.labels.userName,
+//         value:this.PurchaseOrderForm.value.userName
+//       },
+//       {
+//         key: this.labels.piNumber,
+//         value:this.PurchaseOrderForm.value.piNumber
+//       },
+//       {
+//         key: this.labels.poNumber,
+//         value:this.PurchaseOrderForm.value.poNumber
+//       },
+//       {
+//         key: this.labels.smsApproved,
+//         value:this.PurchaseOrderForm.value.smsApproved
+//       },
+//       {
+//         key: this.labels.projectName,
+//         value:this.PurchaseOrderForm.value.projectName
+//       },
+//       {
+//         key: this.labels.date,
+//         value:this.data.poDate
+//       },
+//       {
+//         key: this.labels.withoutTax,
+//         value:this.PurchaseOrderForm.value.withoutTax
+//       },
+//       {
+//         key: this.labels.poStatus,
+//         value: (poStatus.length > 0) ? poStatus[0].value : ''
+//       },
+//       {
+//         key: 'Valid From',
+//         value:this.data.validFrom
+//       },
+//       {
+//         key: 'Valid Upto',
+//         value:this.data.validTo
+//       },
+//       {
+//         key: this.labels.userEmail,
+//         value:this.PurchaseOrderForm.value.userEmail
+//       },
+//       {
+//         key: this.labels.poManagerEmail,
+//         value:this.PurchaseOrderForm.value.poManagerEmail
+//       },
+//       {
+//         key: this.labels.projectNo,
+//         value:this.PurchaseOrderForm.value.projectNo
+//       },
+//       {
+//         key: this.labels.poAmountWithTax,
+//         value:this.PurchaseOrderForm.value.poAmountWithTax
+//       },
+//       {
+//         key: this.labels.department,
+//         value:(departmentListData.length > 0)?departmentListData[0].value:''
+//       },
+//       {
+//         key: this.labels.paymentStatus,
+//         value: (psData.length > 0)?psData[0].value:''
+//       },
+//       {
+//         key: this.labels.remark,
+//         value:this.PurchaseOrderForm.value.remark
+//       },
+//       {
+//         isButton: true,
+//         key: 'View PDF',
+//         value: this.data.upload_document
+//       },{
+//         key :  "",
+//         value :  ""
+//       },
+//       {
+//         key :  "",
+//         value :  ""
+//       }
+//     ]
 
-const departmentListData = this.departmentListData.filter((val)=> {
-  return val.key == this.PurchaseOrderForm.value.departmentName
-})
-    this.viewInfoData = [
-      {
-        key: this.labels.userName,
-        value:this.PurchaseOrderForm.value.userName
-      },
-      {
-        key: this.labels.piNumber,
-        value:this.PurchaseOrderForm.value.piNumber
-      },
-      {
-        key: this.labels.poNumber,
-        value:this.PurchaseOrderForm.value.poNumber
-      },
-      {
-        key: this.labels.smsApproved,
-        value:this.PurchaseOrderForm.value.smsApproved
-      },
-      {
-        key: this.labels.projectName,
-        value:this.PurchaseOrderForm.value.projectName
-      },
-      {
-        key: this.labels.date,
-        value:this.data.poDate
-      },
-      {
-        key: this.labels.withoutTax,
-        value:this.PurchaseOrderForm.value.withoutTax
-      },
-      {
-        key: this.labels.poStatus,
-        value: (poStatus.length > 0) ? poStatus[0].value : ''
-      },
-      {
-        key: 'Valid From',
-        value:this.data.validFrom
-      },
-      {
-        key: 'Valid Upto',
-        value:this.data.validTo
-      },
-      {
-        key: this.labels.userEmail,
-        value:this.PurchaseOrderForm.value.userEmail
-      },
-      {
-        key: this.labels.poManagerEmail,
-        value:this.PurchaseOrderForm.value.poManagerEmail
-      },
-      {
-        key: this.labels.projectNo,
-        value:this.PurchaseOrderForm.value.projectNo
-      },
-      {
-        key: this.labels.poAmountWithTax,
-        value:this.PurchaseOrderForm.value.poAmountWithTax
-      },
-      {
-        key: this.labels.department,
-        value:(departmentListData.length > 0)?departmentListData[0].value:''
-      },
-      {
-        key: this.labels.paymentStatus,
-        value: (psData.length > 0)?psData[0].value:''
-      },
-      {
-        key: this.labels.remark,
-        value:this.PurchaseOrderForm.value.remark
-      },
-      {
-        isButton: true,
-        key: 'View PDF',
-        value: this.data.upload_document
-      },{
-        key :  "",
-        value :  ""
-      },
-      {
-        key :  "",
-        value :  ""
-      }
-    ]
+    // console.log('View Info Data',this.viewInfoData)
+
+  }
+
+  getPurchaseOrderById(id : number){
+      this.invoiceService.getPurchaseOrderById(id).subscribe((res : any) => {
+          const processVariables = res.ProcessVariables || {};
+          const error = processVariables.error || {};
+          if(error.code == '0'){
+            const poData = processVariables;
+            this.poId = processVariables.id;
+            if(processVariables.upload_document){
+              this.previewDocumentId = processVariables.upload_document;
+              this.docAvailFlag = true;
+           }
+            this.assignToForm(poData);
+          }else{
+            this.toasterService.showError('Unable to Fetch the PO Detail','');
+          }
+      })
+  }
+
+  assignToForm(data : any){
+
+      this.PurchaseOrderForm.patchValue({
+        userName : [data.userName],
+        piNumber : [data.piNumber],
+        poNumber : [data.poNumber],
+        smsApproved : [data.smsApproved],
+        projectName : [data.projectName],
+        date : new Date(`${this.changeDateFormat(data.poDate)}`),
+        withoutTax : [data.withOutTax],
+        poStatus : [data.poStatus],
+        startDate :  new Date(`${this.changeDateFormat(data.validFrom)}`),
+        endDate :  new Date(`${this.changeDateFormat(data.validTo)}`),
+        userEmail : [data.userEmail],
+        poManagerEmail : [data.managerEmail],
+        projectNo : [data.projectNumber || ''],
+        poAmountWithTax : [data.amountWithTax || ''],
+        departmentName : [data.department || ''],
+      })
+
+      const erpData = data.erpData;
+
+      if(erpData)
+      this.setErpData(erpData);
+
+      const psData = this.paymentStatus.filter((val)=> {
+
+        return val.key == this.PurchaseOrderForm.value.paymentStatus
+      })
+      
+      const poStatus = this.poStatus.filter((val)=> {
+        return val.key == this.PurchaseOrderForm.value.poStatus
+      })
+      
+      const departmentListData = this.departmentListData.filter((val)=> {
+        return val.key == this.PurchaseOrderForm.value.departmentName
+      })
+          this.viewInfoData = [
+            {
+              key: this.labels.userName,
+              value:this.PurchaseOrderForm.value.userName
+            },
+            {
+              key: this.labels.piNumber,
+              value:this.PurchaseOrderForm.value.piNumber
+            },
+            {
+              key: this.labels.poNumber,
+              value:this.PurchaseOrderForm.value.poNumber
+            },
+            {
+              key: this.labels.smsApproved,
+              value:this.PurchaseOrderForm.value.smsApproved
+            },
+            {
+              key: this.labels.projectName,
+              value:this.PurchaseOrderForm.value.projectName
+            },
+            {
+              key: this.labels.date,
+              value: data.poDate
+            },
+            {
+              key: this.labels.withoutTax,
+              value:this.PurchaseOrderForm.value.withoutTax
+            },
+            {
+              key: this.labels.poStatus,
+              value: (poStatus.length > 0) ? poStatus[0].value : ''
+            },
+            {
+              key: 'Valid From',
+              value: data.validFrom
+            },
+            {
+              key: 'Valid Upto',
+              value: data.validTo
+            },
+            {
+              key: this.labels.userEmail,
+              value:this.PurchaseOrderForm.value.userEmail
+            },
+            {
+              key: this.labels.poManagerEmail,
+              value:this.PurchaseOrderForm.value.poManagerEmail
+            },
+            {
+              key: this.labels.projectNo,
+              value:this.PurchaseOrderForm.value.projectNo
+            },
+            {
+              key: this.labels.poAmountWithTax,
+              value:this.PurchaseOrderForm.value.poAmountWithTax
+            },
+            {
+              key: this.labels.department,
+              value:(departmentListData.length > 0)?departmentListData[0].value:''
+            },
+            {
+              key: this.labels.paymentStatus,
+              value: (psData.length > 0)?psData[0].value:''
+            },
+            {
+              key: this.labels.remark,
+              value:this.PurchaseOrderForm.value.remark
+            },
+            {
+              isButton: true,
+              key: 'View PDF',
+              value: this.data.upload_document
+            },
+            {
+              key :  "",
+              value :  ""
+            }
+          ]
+      console.log('View Data',this.viewInfoData)
+  }
+
+  setErpData(value){
+    this.erpData = value;
   }
 
   filePreview(){

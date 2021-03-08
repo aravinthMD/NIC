@@ -295,6 +295,25 @@ fetchAllPO(selectedClientId : string,currentPage?:any) {
 }
 
 
+getPurchaseOrderById(id : number){
+    const getPo = this.apiService.api.getPurchaseOrderById;
+    const { processId, projectId, workflowId } = getPo;
+
+    const data = {
+        id : Number(id)
+    }
+    const requestEntity: any = {
+      processId,
+      ProcessVariables: data,
+      workflowId,
+      projectId,
+    };
+
+    const url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    return this.httpService.post(url, requestEntity);
+}
+
+
 updatePurchaseOrder(data) {
 
         const {

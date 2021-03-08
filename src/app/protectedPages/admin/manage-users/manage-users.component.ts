@@ -117,9 +117,9 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   fetchManageUsers(currentPage?: number) {
     this.adminService.fetchAllAdminUser(currentPage).subscribe((response: any) => {
         const processVariables = response.ProcessVariables;
-        this.dataSource = new MatTableDataSource<any>(processVariables.usersList);
+        this.dataSource  = processVariables.usersList;
         if (!currentPage) {
-          this.dataSource.paginator = this.paginator;
+          // this.dataSource.paginator = this.paginator;
           this.totalLength = processVariables.totalData;
         }
     });

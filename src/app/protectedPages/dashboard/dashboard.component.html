@@ -212,7 +212,7 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="UserID">
                     <th mat-sort-header="userId" mat-header-cell *matHeaderCellDef> Account Name </th>
-                    <td mat-cell *matCellDef="let element"> <a (click)="navigateToUser(element)">{{element.userId}}</a> </td>
+                    <td mat-cell *matCellDef="let element"> <a (click)="navigateToUser(element)"><u>{{element.userId}}</u></a> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="projectNo">
