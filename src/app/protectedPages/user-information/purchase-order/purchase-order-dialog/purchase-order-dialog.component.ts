@@ -343,7 +343,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   }
 
-  getPurchaseOrderById(id : number){
+  getPurchaseOrderById(id : string){
       this.invoiceService.getPurchaseOrderById(id).subscribe((res : any) => {
           const processVariables = res.ProcessVariables || {};
           const error = processVariables.error || {};
@@ -470,7 +470,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
             {
               isButton: true,
               key: 'View PDF',
-              value: this.data.upload_document
+              value: data.upload_document
             },
             {
               key :  "",
