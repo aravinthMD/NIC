@@ -180,6 +180,12 @@ export class ApiService {
       processId: '96bada94451711ebb7cb727d5ac274b2',
       projectId : environment.projectIds.projectId
     },
+    getPurchaseOrderById :  {
+      workflowId : '4667faf21f2b11ebb6c9727d5ac274b2',
+      processId : '5ca5c9287c1b11eb8ffbf2fa9bec3d63',
+      projectId : environment.projectIds.projectId
+
+    },
     updatePurchaseOrder: {
       workflowId: '06fd5a02437e11ebb7bf727d5ac274b2',
       processId: '06fd5a02437e11ebb7bf727d5ac274b2',
@@ -337,7 +343,6 @@ export class ApiService {
       projectId : environment.projectIds.projectId,
       workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
     },
-
     sendEmailRemainderAPI :  {
       processId  : '1a102930653911eb8e37727d5ac274b2',
       projectId : environment.projectIds.projectId,

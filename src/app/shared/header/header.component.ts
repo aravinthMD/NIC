@@ -16,6 +16,8 @@ export class HeaderComponent implements OnInit {
   notificationList = [];
   notificationCount ;
 
+  isCustomerModuleMapped  = true;
+
   constructor(private utilityService: UtilityService,
               private utilService : UtilService,
               private router : Router,
@@ -29,6 +31,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.notificationList = this.utilityService.getNotifications();
     this.notificationCount  = this.notificationList ? this.notificationList.length : 0;
+    this.isCustomerModuleMapped = this.utilService.getCustomerModuleFlag();
   }
 
   onToggle() {

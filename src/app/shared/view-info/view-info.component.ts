@@ -19,6 +19,8 @@ export class ViewInfoComponent implements OnInit, OnChanges {
   Math: any;
   showPdfModal: boolean;
   previewUrl: string;
+
+  @Input() erpData;
  
   constructor() { }
 

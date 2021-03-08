@@ -284,7 +284,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
     const formValue = this.billOwnerForm.value;
 
     const billingDetails = {
-      // clientId: this.clientId,
+      clientId: this.clientId,
      // id: this.billOwnerForm.value.id,
       currentClientId: this.clientId,
       selectedClient: this.selectedClient,

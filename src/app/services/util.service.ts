@@ -24,6 +24,7 @@ export class UtilService {
   public customerId:Observable<any> = this.customerId$.asObservable();
   public lovData;
 
+  private isCustomerModule = true;
 
     
     setCurrentUrl(data) {
@@ -236,4 +237,14 @@ getCustomerId(){
   getLovData(){
     return this.lovData;
   }
+
+  setCustomerModuleFlag(flag : boolean){
+    this.isCustomerModule = flag
+  }
+
+  getCustomerModuleFlag(){
+    return this.isCustomerModule;
+  }
+
+
 }

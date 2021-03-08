@@ -417,10 +417,10 @@ smsApprovedList: any[] = [
     this.fetchPODetails(this.clientId);
   }
 
-  OnEdit(element: any) {
+  OnEdit(Data: any) {
 
     const dialogRef = this.dialog.open(PurchaseOrderDialogComponent, {
-      data : element,
+      data : Data.currentPOId,
       panelClass: 'full-width-dialog'
     });
 

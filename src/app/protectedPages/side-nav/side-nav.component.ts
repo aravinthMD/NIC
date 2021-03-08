@@ -68,6 +68,7 @@ showSideMenu = false;
         this.isCustomerModule = this.mySetting.find(
             val => val['ScreenName'] == 'CustomerModule')['isMapping'];
             console.log("isCustomerModule",this.isCustomerModule);
+            this.utilService.setCustomerModuleFlag(this.isCustomerModule);
         this.smsCreditAllocationModule = this.mySetting.find(
           val => val['ScreenName'] == 'SmsCreditAllocation')['isMapping'];
           console.log("smsCreditAllocationModule",this.smsCreditAllocationModule);
