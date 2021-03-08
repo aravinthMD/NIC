@@ -40,6 +40,7 @@ export class ViewInfoComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     console.log('Changes', this.userDetails);
+    console.log('erp ',this.erpData);
   }
 
 }

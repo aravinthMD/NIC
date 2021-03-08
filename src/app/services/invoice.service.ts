@@ -295,12 +295,12 @@ fetchAllPO(selectedClientId : string,currentPage?:any) {
 }
 
 
-getPurchaseOrderById(id : number){
+getPurchaseOrderById(id : string){
     const getPo = this.apiService.api.getPurchaseOrderById;
     const { processId, projectId, workflowId } = getPo;
 
     const data = {
-        id : Number(id)
+       id
     }
     const requestEntity: any = {
       processId,
@@ -674,7 +674,7 @@ updatePurchaseOrder(data) {
     const requestEntity: any = {
       processId,
       ProcessVariables: {
-        ...data
+        payloadListData : data
       },
       workflowId,
       projectId,
