@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   notificationCount ;
 
   isCustomerModuleMapped  = true;
+  isMailMapped  = true
 
   constructor(private utilityService: UtilityService,
               private utilService : UtilService,
@@ -32,6 +33,8 @@ export class HeaderComponent implements OnInit {
     this.notificationList = this.utilityService.getNotifications();
     this.notificationCount  = this.notificationList ? this.notificationList.length : 0;
     this.isCustomerModuleMapped = this.utilService.getCustomerModuleFlag();
+    const isMailMapped = this.utilityService.getSettingsDataList("EmailOperations");
+    this.isMailMapped = isMailMapped.isMapping;
   }
 
   onToggle() {

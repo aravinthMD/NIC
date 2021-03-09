@@ -312,7 +312,7 @@
                         <div class="form-group">
                             <label for="auditDate">{{labels.auditDatebyWhenItWillBeCleared}}</label>
                             <mat-form-field [ngClass]="{'inp-date':propertyFlag}" floatLabel="never">
-                                <input style="margin-top: 10px;" matInput [matDatepicker]="picker1" formControlName="auditDate" (keyup)="detectDateKeyAction($event,'auditDate')">
+                                <input matInput [matDatepicker]="picker1" formControlName="auditDate" (keyup)="detectDateKeyAction($event,'auditDate')">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
                                 <!-- <mat-placeholder>Choose The Date</mat-placeholder> -->
