@@ -677,12 +677,18 @@ changeDateFormat(date) {
 }
 
 sendReminder(element){
+  if (element.paymentStatus === 6) {
+    return;
+  }
   this.showEmailModal = true;
   this.data = 'Send Mail'
 }
 
 
 sendEscalation(element){
+  if (element.paymentStatus === 6) {
+    return;
+  }
   this.showEmailModal = true;
   this.data = 'Send Escalation';
 }
