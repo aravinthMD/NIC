@@ -420,7 +420,7 @@ smsApprovedList: any[] = [
   OnEdit(Data: any) {
 
     const dialogRef = this.dialog.open(PurchaseOrderDialogComponent, {
-      data : Data.currentPOId,
+      data : Data.currentPOId || Data.id,
       panelClass: 'full-width-dialog'
     });
 
@@ -634,20 +634,17 @@ next() {
         return this.toasterService.showError(errorObj.message, '');
       }
 
-
       this.showPOModal = false;
-
-      this.isDirty = false;
-
-
       this.PurchaseOrderForm.reset();
       this.documentUploadId = '';
       this.PurchaseOrderForm.get('paymentStatus').setValue('');
       this.PurchaseOrderForm.get('departmentName').setValue('');
       this.PurchaseOrderForm.get('poStatus').setValue('');
       this.PurchaseOrderForm.get('userName').setValue(this.accountName);
-      this.isDirty = false;
       this.formQuantity.reset();
+      setTimeout(() =>{
+      this.isDirty = false;
+      }, 100)
       this.beheSer.setPoNumber(data.poNumber);
       this.beheSer.setSmsApproved(data.smsApproved);
       console.log('processVariables', processVariables);
