@@ -118,7 +118,9 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     private clientDetailService : ClientDetailsService,
     private utilityService: UtilityService
     ) { 
-
+      const resolveData = this.utilService.getLovData();
+      this.piStatusData = resolveData['piStatus'];
+      this.paymentStatusData = resolveData['paymentStatusList']
     console.log(data)
 
     this.form =this.formBuilder.group({
@@ -138,6 +140,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       remark:['',Validators.required]
     })
     this.detectAuditTrialObj=this.form.value
+    this.getProformaInvoiceDetailById(this.data);
   }
 
 
@@ -161,7 +164,7 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
     var year = dateObj.getUTCFullYear();
 
 
-    this.getProformaInvoiceDetailById(this.data);
+   
 
   }
 

@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ClientDetailsService {
     private clientId: string;
+    private clientStatus: boolean;
     private manageEmailList : any[] = [
         {
            "id" : 1,
@@ -73,5 +74,13 @@ export class ClientDetailsService {
 
     getManageEmailList(){
         return this.manageEmailList;
+    }
+
+    setClientStatus(status: boolean) {
+       this.clientStatus = status;
+    }
+
+    getClientStatus() {
+       return this.clientStatus;
     }
 }

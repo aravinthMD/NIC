@@ -91,6 +91,7 @@ export class SmsCreditAllocationComponent implements OnInit {
 
   data : string = '';
   isWrite = true;
+  isClientActive = true;
 
   constructor(
     private labelsService: LabelsService,
@@ -112,6 +113,7 @@ export class SmsCreditAllocationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.isClientActive = this.clientDetailsService.getClientStatus();
     const smsPage = this.utilityService.getSettingsDataList('SmsCreditAllocation');
     this.isWrite = smsPage.isWrite;
     // this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
@@ -562,11 +564,17 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendReminder(element) {
+    if (element.status === '1') {
+      return;
+    }
     this.showEmailModal = true;
     this.data = 'Send Mail';
   }
 
   sendEscalation(element){
+    if (element.status) {
+      return;
+    }
     this.showEmailModal = true;
     this.data = 'Send Escalation'
   }

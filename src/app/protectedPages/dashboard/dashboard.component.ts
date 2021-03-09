@@ -35,6 +35,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     'Status',
   ];
 
+  isCustomerModuleEnabled = true;
+
   userList: any[] = [];
 
   dataSource = new MatTableDataSource<any>(this.userList);
@@ -168,9 +170,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   navigateToUser(element) {
-    if (this.csvData) {
-      return;
-    }
+
+    this.isCustomerModuleEnabled = this.utilService.getCustomerModuleFlag();
+
+    if(!this.isCustomerModuleEnabled)
+      return this.toasterService.showError('Access Denied','');
+   
     this.utilService.setProjectNumber(element.projectNo);
 
     // this.utilService.setUserDetails(element);
@@ -266,8 +271,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.dataSource.paginator = this.paginator;
         } else {
           this.toasterService.showError(
-            `${respError.code}: ${respError.message}`,
-            'Technical error..'
+            `${respError.message}`,
+            ''
           );
         }
       });

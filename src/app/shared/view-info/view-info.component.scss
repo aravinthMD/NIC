@@ -51,3 +51,25 @@ label {
     .modal-dialog {
         max-width: 50%;
       }
+
+      .erpDataTable{
+          width: 57% !important;
+          margin-left: 265px;
+          border: 3px solid #2ca2b9 !important;
+          border-collapse: collapse !important;
+            td {
+                padding: 11px;
+                border: inherit;
+            }
+
+            tr{
+                border: inherit !important;
+            }
+      }
+
+      .erpHeader{
+          margin-left: 264px !important;
+          color: #827979;
+          margin-bottom: 0px !important;
+      }
+

@@ -9,11 +9,16 @@
         <ng-container *ngIf="data.isButton && data?.value">
             <div style="word-break: break-all; margin-top: 10px;">
                 <button class="btn btn-primary" style="position: absolute;" id="Document" (click)="showPDF(data?.value)">View PDF</button>
-
             </div>
         </ng-container>
+
+        
     </div>
 </div>
+
+
+
+
 
 <div class="row ml-3 mr-3 ">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of techAdminUserDetails;let i = index">
@@ -34,7 +39,7 @@
 
 <div class="row ml-3 mr-3 ">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of billAdminUserDetails;let i = index">
-        <ng-container *ngIf="!data?.isButton && data?.value">
+        <ng-container *ngIf="!data?.isButton">
             <div style="word-break: break-all;">
                 <label style="font-weight: bold;">{{data?.key}}</label><br>
                 <label>{{data?.value}}</label>
@@ -48,6 +53,23 @@
         </ng-container>
     </div>
 </div>
+
+<ng-container *ngIf = "erpData && erpData.length != 0">
+    <h3 class="erpHeader">{{'ERP DATA'}}</h3>
+    <table class="erpDataTable">
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Rate</th>
+        </tr>
+        <tr *ngFor = "let element of erpData">
+          <td>{{element.description}}</td>
+          <td>{{element.quantity}}</td>
+          <td>{{element.rate}}</td>
+        </tr>
+      </table>
+    </ng-container>
+
 <div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
     <div class="modal-dialog">
         <div class="modal-content" style="width:920px;color:black">

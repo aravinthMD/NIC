@@ -22,8 +22,9 @@ export class UtilService {
   private customerId$:BehaviorSubject<any> = new BehaviorSubject<string>('');
 
   public customerId:Observable<any> = this.customerId$.asObservable();
-  
+  public lovData;
 
+  private isCustomerModule = true;
 
     
     setCurrentUrl(data) {
@@ -228,4 +229,22 @@ getCustomerId(){
 
 
   constructor(private adminService : AdminService) { }
+
+  setLovData(data){
+    this.lovData = data;    
+  }
+
+  getLovData(){
+    return this.lovData;
+  }
+
+  setCustomerModuleFlag(flag : boolean){
+    this.isCustomerModule = flag
+  }
+
+  getCustomerModuleFlag(){
+    return this.isCustomerModule;
+  }
+
+
 }

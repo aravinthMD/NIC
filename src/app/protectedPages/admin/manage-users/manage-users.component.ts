@@ -117,9 +117,9 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
   fetchManageUsers(currentPage?: number) {
     this.adminService.fetchAllAdminUser(currentPage).subscribe((response: any) => {
         const processVariables = response.ProcessVariables;
-        this.dataSource = new MatTableDataSource<any>(processVariables.usersList);
+        this.dataSource  = processVariables.usersList;
         if (!currentPage) {
-          this.dataSource.paginator = this.paginator;
+          // this.dataSource.paginator = this.paginator;
           this.totalLength = processVariables.totalData;
         }
     });
@@ -151,7 +151,7 @@ export class ManageUsersComponent implements OnInit ,AfterViewInit {
     let id = this.deleteUserId;
     const emailUrl = `${origin}/nic/assets/html/account.html?id=${id}`;
 
-    this.adminService.deleteAdminUser(id, emailUrl).subscribe((response)=> {
+    this.adminService.deleteAdminUser(id).subscribe((response)=> {
 
       if(response['ProcessVariables']['response']['type'] == 'Success') {
 

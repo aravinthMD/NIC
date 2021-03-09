@@ -91,6 +91,7 @@ export class LoginComponent implements OnInit {
         this.utilityService.setLoginDetail(processVariables);
         this.adminDetailService.setAdminUserId(processVariables.userId ? processVariables.userId : '');
         localStorage.setItem('sessionId', processVariables.username);
+        this.utilityService.setNotifications(processVariables.notificationList);        
         localStorage.setItem('roleName', processVariables.roleName);
         localStorage.setItem('userName', processVariables.userId)
         this.router.navigate(['users/Dashboard/']);

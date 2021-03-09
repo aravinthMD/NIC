@@ -30,7 +30,7 @@ import { EmailComponent } from './protectedPages/email/email.component'
 import { ManageUserDialogComponent } from './protectedPages/admin/manage-user-dialog/manage-user-dialog.component';
 import { LovsComponent } from './protectedPages/admin/lovs/lovs.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatDatepickerModule,MatCardModule, MatSortModule} from '@angular/material';
+import {MatDatepickerModule,MatCardModule, MatSortModule, MatToolbarModule} from '@angular/material';
 import {MatNativeDateModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import { DatePipe } from '@angular/common';
@@ -50,6 +50,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {TaxInvoiceDialogComponent} from './protectedPages/user-information/tax-invoice/tax-invoice-dialog/tax-invoice-dialog.component'
 import {MatIconModule} from '@angular/material/icon';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { CsvUploadModalComponent } from './protectedPages/csv-upload-modal/csv-upload-modal.component';
 
 
 
@@ -155,7 +156,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DefineRolesComponent,
     AdminRolesMappingDialogComponent,
     ManageEmailComponent,
-    ScheduleEmailDialogComponent
+    ScheduleEmailDialogComponent,
+    CsvUploadModalComponent
   ],
   imports: [
     BrowserModule,
@@ -177,6 +179,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatChipsModule,
     MatIconModule,
     MatSortModule,
+    MatToolbarModule,
     ToastrModule.forRoot({
       preventDuplicates: true,
       positionClass:'toast-top-center'
@@ -212,7 +215,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     PurchaseOrderDialogComponent,
     SmsCreditDialogComponent,
     AdminRolesMappingDialogComponent,
-    ScheduleEmailDialogComponent
+    ScheduleEmailDialogComponent,
+    CsvUploadModalComponent
   ]
 })
 export class AppModule { }

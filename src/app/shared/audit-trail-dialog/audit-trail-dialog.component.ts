@@ -27,6 +27,9 @@ customerId: any;
   displayedColumns: string[] = ['screen','changedBy','timestamp','status'];
 
   userList : any[] 
+
+  length : number;
+  pageSize : number;
   // [
   //   {screen : "Customer Details",dataFeild : "Project Number",oldValue : "8776",newValue : "9569",changedBy : "Selvakumar",timestamp : "13/10/2020 17:08:21",remarks : "Customer Details Project Number Update"},
 
@@ -78,7 +81,7 @@ customerId: any;
               ) {
                this.customerId =  this.clientDetailService.getClientId()
     this.searchForm = new FormGroup( {
-      searchData :  new FormControl(null),
+      searchData :  new FormControl(''),
       searchFrom :  new FormControl(null),
       searchTo :  new FormControl(null)
     })
@@ -120,6 +123,7 @@ ngOnInit() {
 
   clear(){
     this.searchForm.reset();
+    this.getAuditTrails(1);
   }
 
   getDownloadXls(){
@@ -145,7 +149,10 @@ ngOnInit() {
   getAuditTrails(pageNo){
    const data = {
     "currentClientId":this.customerId,
-    searchData: this.searchForm.getRawValue(),
+    searchData : this.searchForm.controls['searchData'].value,
+    searchFrom : this.searchForm.controls['searchFrom'].value,
+    searchTo : this.searchForm.controls['searchTo'].value
+    ,
     currentPage: pageNo? pageNo: 1
    }
 
@@ -155,11 +162,13 @@ ngOnInit() {
         this.userList = auditResponse['auditTrail'];
         console.log("get autdit trail",res);
 
-        this.dataSource = new MatTableDataSource<any>(this.userList);
+        this.dataSource = this.userList;
         
         if (pageNo ==1){
-          this.dataSource.paginator = this.paginator
-        this.totalLength = Number(res["ProcessVariables"]['totalPages'])*Number(res["ProcessVariables"]['perPage'])
+          // this.dataSource.paginator = this.paginator
+        // this.totalLength = Number(res["ProcessVariables"]['totalPages'])*Number(res["ProcessVariables"]['perPage'])
+        this.length = res['ProcessVariables']['totalCount'];
+        this.pageSize = res["ProcessVariables"]["dataPerPage"];
         }
       }else{
         this.toasterService.showError(res["ProcessVariables"]['error']['message'],'')

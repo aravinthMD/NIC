@@ -5,7 +5,7 @@
         <div class="row mt-4">
 
             <!-- Total PI Pending Card Example -->
-            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('pi')" title="Click to download as CSV">
+            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple " (click)="onCsvDownload('pi')" title="Click to download as CSV">
                 <div class="card border-left-greenish shadow h-100">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -24,8 +24,8 @@
             </div>
 
             <!-- Total PI Pending Card Example -->
-            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('po')" title="Click to download as CSV">
-                <div class="card border-left-greenish shadow h-100">
+            <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple " (click)="onCsvDownload('po')" title="Click to download as CSV">
+                <div class="card border-left-blue shadow h-100">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -45,7 +45,7 @@
 
             <!-- Total PI Pending Card Example -->
             <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('invoicePending')" title="Click to download as CSV">
-                <div class="card border-left-greenish shadow h-100">
+                <div class="card border-left-gold shadow h-100">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -75,7 +75,7 @@
 
             <!-- Pending Requests Card Example -->
             <div matRipple class="col-xl-3 col-lg-3 col-md-6 mb-4 cursor-pointer mat-ripple" (click)="onCsvDownload('partialBill')" title="Click to download as CSV">
-                <div class="card border-left-greenish shadow h-100">
+                <div class="card border-left-purple shadow h-100">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
@@ -212,7 +212,7 @@
                 <!-- Position Column -->
                 <ng-container matColumnDef="UserID">
                     <th mat-sort-header="userId" mat-header-cell *matHeaderCellDef> Account Name </th>
-                    <td mat-cell *matCellDef="let element"> <a (click)="navigateToUser(element)">{{element.userId}}</a> </td>
+                    <td mat-cell *matCellDef="let element"> <a (click)="navigateToUser(element)"><u>{{element.userId}}</u></a> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="projectNo">

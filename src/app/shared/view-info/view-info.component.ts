@@ -19,6 +19,8 @@ export class ViewInfoComponent implements OnInit, OnChanges {
   Math: any;
   showPdfModal: boolean;
   previewUrl: string;
+
+  @Input() erpData;
  
   constructor() { }
 
@@ -38,6 +40,7 @@ export class ViewInfoComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     console.log('Changes', this.userDetails);
+    console.log('erp ',this.erpData);
   }
 
 }

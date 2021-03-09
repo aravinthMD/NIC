@@ -16,6 +16,8 @@ import { ClientDetailsService } from '@services/client-details.service';
 import { CsvDataService } from '@services/csv-data.service';
 import { UtilityService } from '@services/utility.service';
 
+import { ProjectExecutionService } from '@services/project-execution.service';
+
 
 @Component({
   selector: 'app-project-execution',
@@ -82,6 +84,8 @@ dataValue: {
   message: string
 }
 isWrite = true;
+isClientActive = true;
+csvResponse: any;
 
   constructor(
               private labelsService : LabelsService,
@@ -95,7 +99,8 @@ isWrite = true;
               private searchService: SearchService,
               private apiService:ApiService,
               private clientDetailService : ClientDetailsService,
-              private utilityService: UtilityService
+              private utilityService: UtilityService,
+              private projectExecutionService: ProjectExecutionService
               ) { 
     this.searchForm = new FormGroup({
       searchData: new FormControl(null),
@@ -107,7 +112,7 @@ isWrite = true;
   ngOnInit() {
 
     // ProjectExecution
-
+    this.isClientActive = this.clientDetailService.getClientStatus();
     const smsPage = this.utilityService.getSettingsDataList('ProjectExecution');
     this.isWrite = smsPage.isWrite;
 
@@ -471,6 +476,79 @@ isWrite = true;
   getServerData(event?:PageEvent){
      let currentPageIndex  = Number(event.pageIndex) + 1;
       this.getProjectExecutionDetails(currentPageIndex,this.clientId);
+  }
+
+  onUploadCsv(event) {
+    console.log('event', event);
+    const data = {
+      ...event,
+      currentClientId: this.clientId,
+    };
+ 
+    this.projectExecutionService.uploadCsv(data)
+         .subscribe((res: any) => {
+             console.log('res', res);
+             const error = res.Error;
+             const errorMessage = res.ErrorMessage;
+             if (error !== '0') {
+               return this.toasterService.showError(errorMessage, '');
+             }
+             const processVariables = res.ProcessVariables;
+             const errorObj = processVariables.error;
+             if (errorObj.code !== '0') {
+               return this.toasterService.showError(errorObj.message, '');
+             }
+             this.getCsvDataWithValidationMessage();
+         });
+  }
+ 
+  getCsvDataWithValidationMessage() {
+ 
+     this.projectExecutionService.getCsvDataWithMessage({currentClientId: this.clientId})
+         .subscribe((res: any) => {
+              const error = res.Error;
+              const errorMessage = res.ErrorMessage;
+              if (error !== '0') {
+                return this.toasterService.showError(errorMessage, '');
+              }
+ 
+              const processVariables = res.ProcessVariables;
+ 
+              this.csvResponse = {
+               screenName: 'PE',
+               data: processVariables.PEDataLIst
+             };
+ 
+         });
+ 
+  }
+ 
+  onModalClose(event) {
+   this.csvResponse = null;
+   if (!event) {
+      return;
+   }
+ 
+   if (event.length === 0) {
+     return this.toasterService.showWarning('No valid records are available to upload', '');
+   }
+ 
+   this.projectExecutionService.uploadValidData({currentClientId: this.clientId})
+       .subscribe((response: any) => {
+         const error = response.Error;
+         const errorMessage = response.ErrorMessage;
+         if (error !== '0') {
+           return this.toasterService.showError(errorMessage, '');
+         }
+         const processVariables = response.ProcessVariables;
+         const errorObj = processVariables.error;
+         if (errorObj.code !== '0') {
+            return this.toasterService.showSuccess(errorObj.message, '');
+         }
+         this.toasterService.showSuccess(errorObj.message, '');
+         this.getProjectExecutionDetails(1, this.clientId);
+       });
+   console.log('event', event);
   }
 
   }

@@ -2,9 +2,9 @@
     <div class="purchase-order">
 
 
-        <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'"></app-account-header>
+        <app-account-header [title]="'Purchase Order'" [accountName]="accountName" [status]="status" [user]="'invoice'" [showUpload]="isClientActive ? 'Upload Purchase Order': ''" (uploadCsv)="onUploadCsv($event)"></app-account-header>
 
-        <mat-accordion *ngIf="isWrite">
+        <mat-accordion *ngIf="isWrite && isClientActive">
             <mat-expansion-panel>
                 <mat-expansion-panel-header matRipple collapsedHeight="30px" expandedHeight="35px">
                     <mat-panel-title>
@@ -62,7 +62,7 @@
                             <div class="form-group">
 
 
-                                <app-custom-input formControlName="poNumber" [mandatoryField]="true" [isRequired]="'Purchase Order Number is Mandatory'" [labelName]="labels.poNumber" placeHolder="Enter the Proforma Invoice Number" [maxLength]="labels?.validationData?.poNumber?.maxLength"
+                                <app-custom-input formControlName="poNumber" [mandatoryField]="true" [isRequired]="'Purchase Order Number is Mandatory'" [labelName]="labels.poNumber" placeHolder="Enter the Purchase Order Number" [maxLength]="labels?.validationData?.poNumber?.maxLength"
                                     [type]="labels?.validationData?.poNumber?.type" [isDirty]="isDirty">
                                 </app-custom-input>
                             </div>
@@ -575,3 +575,4 @@
 
 
 <app-data-saved-modal *ngIf="showDataSaveModal" [showSavedModal]="showDataSaveModal" [data]="dataValue" (yes)="saveYes()" (cancel)="saveCancel()"></app-data-saved-modal>
+<app-csv-upload-modal [data]="csvResponse" *ngIf="csvResponse" (closeModal)="onModalClose($event)"></app-csv-upload-modal>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UtilService } from '@services/util.service';
 
 @Component({
   selector: 'app-admin',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute,
+              private utilService: UtilService) { 
+    const lovData =   this.activatedRoute.snapshot.data;
+    this.utilService.setLovData( lovData['listOfValue']['ProcessVariables'])
+  }
 
   ngOnInit() {
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild ,Input,AfterViewInit} from '@angular/core';
+import { Component, OnInit,ViewChild ,Input,AfterViewInit, ElementRef} from '@angular/core';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
@@ -16,7 +16,11 @@ import { ClientDetailsService } from '@services/client-details.service';
 import { MatInput } from '@angular/material';
 import { CsvDataService } from '@services/csv-data.service';
 
+import { CsvUploadModalComponent } from '../../../protectedPages/csv-upload-modal/csv-upload-modal.component';
+
 import { UtilityService } from '@services/utility.service';
+import { CsvUploadService } from '@services/csv-upload.service';
+import { FileToBase64Service } from '@services/file-to-base64.service';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -43,8 +47,9 @@ export class ProcessDetailsComponent implements OnInit{
 
   storeProjectNo: string;
   displayedColumns : string[] = ['InvoiceNo','accountName','piAmt',"reminder","Escalation","Action"]
-  piStatusData = [{key:0,value:'Received'},{key:1,value:'Approved'},{key:2,value:'Pending'},{key:3,value:'Rejected'},{key:4,value:'On Hold'}]
-  paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
+  piStatusData = [];
+  // paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
+  paymentStatusData = [];
   nicsiData = [
     {
       key: '1',
@@ -87,7 +92,9 @@ export class ProcessDetailsComponent implements OnInit{
   };
 
   isWrite = false;
-
+  isClientActive = true;
+  csvResponse: any;
+  @ViewChild('inputCsvFile', {static: false}) inputCsvFile: ElementRef;
   constructor(
         private dialog: MatDialog,
         private labelsService: LabelsService,
@@ -101,10 +108,14 @@ export class ProcessDetailsComponent implements OnInit{
         private searchService: SearchService,
         private apiService:ApiService,
         private clientDetailService:ClientDetailsService,
-        private utilityService: UtilityService
+        private utilityService: UtilityService,
+        private csvUploadService: CsvUploadService,
+        private fileToBase64Service: FileToBase64Service
         ) { 
-
-
+          // const data = this.activatedRoute.parent.snapshot.data || {}
+          const data = this.utilService.getLovData();
+          this.piStatusData = data['piStatus'];
+          this.paymentStatusData = data['paymentStatusList'];
     this.form =this.formBuilder.group({
       accountName: [null],
       invoiceNumber : [null],
@@ -129,6 +140,46 @@ export class ProcessDetailsComponent implements OnInit{
       searchTo: new FormControl(null)
     })
 
+  }
+
+  patchLovValues(){
+    const data =  this.activatedRoute.parent.snapshot.data || {};
+    const listOfValue = data.listOfValue || {};
+    const processVariables = listOfValue.ProcessVariables || {};
+    this.piStatusData = processVariables.piStatusList || [];
+    this.paymentStatusData = processVariables.paymentStatusList || [];
+  }
+
+  async onUploadCsv(event) {
+    // const files = event.target.files[0];
+    // const fileToRead = files;
+    // const fileReader = new FileReader();
+    // try {
+      // const file: any = await this.fileToBase64Service.convertToBase64(event);
+      const data = {
+        ...event,
+        currentClientId: this.userId,
+        // attachment: {
+        //   name: file.name,
+        //   content: file.base64,
+        //   mime: 'application/vnd.ms-excel'
+        // }
+      };
+      this.csvUploadService.uploadCsv(data)
+          .subscribe((response: any) => {
+              console.log('response', response);
+              const error = response.Error;
+              const errorMessage = response.ErrorMessage;
+              // this.inputCsvFile.nativeElement.value = '';
+              if (error !== '0') {
+                return this.toasterService.showError(errorMessage, '');
+              }
+
+              this.getCsvDataWithValidationMessage();
+          });
+    // } catch (e) {
+    //   this.inputCsvFile.nativeElement.value = '';
+    // }
   }
 
   getCsvFormatForProformaInvoice() {
@@ -159,8 +210,9 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.isClientActive = this.clientDetailService.getClientStatus();
 
-
+    // this.patchLovValues();     //LOV's
     const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
     this.isWrite = smsPage.isWrite;
 
@@ -397,6 +449,9 @@ export class ProcessDetailsComponent implements OnInit{
 
 
   sendReminder(element) {
+    if (element.piStatus === 6) {
+      return;
+    }
     this.showEmailModal = true;
     this.data = 'Send Mail'
 
@@ -411,6 +466,9 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   sendEscalation(element) {
+    if (element.piStatus === 6) {
+      return;
+    }
     this.showEmailModal = true;
     this.data = 'Send Escalation'
 
@@ -530,5 +588,59 @@ export class ProcessDetailsComponent implements OnInit{
         }
     }
 
+  }
+
+  onModalClose(event) {
+    this.csvResponse = null;
+    if (!event) {
+       return;
+    }
+
+    if (event.length === 0) {
+      return this.toasterService.showWarning('No valid records are available to upload', '');
+    }
+
+    this.csvUploadService.uploadValidData({currentClientId: this.userId,})
+        .subscribe((response: any) => {
+          const error = response.Error;
+          const errorMessage = response.ErrorMessage;
+          if (error !== '0') {
+            return this.toasterService.showError(errorMessage, '');
+          }
+          const processVariables = response.ProcessVariables;
+          const errorObj = processVariables.error;
+          if (errorObj.code !== '0') {
+             return this.toasterService.showSuccess(errorObj.message, '');
+          }
+          this.toasterService.showSuccess(errorObj.message, '');
+          this.fetchAllProformaInvoice(1, this.userId);
+        });
+    console.log('event', event);
+
+  }
+
+getCsvDataWithValidationMessage() {
+   this.csvUploadService.getCsvDataWithMessage({currentClientId: this.userId,})
+    .subscribe((response: any) => {
+      const error = response.Error;
+      const errorMessage = response.ErrorMessage;
+      if (error !== '0') {
+        return this.toasterService.showError(errorMessage, '');
+      }
+      const processVariables = response.ProcessVariables;
+      const errorObj = processVariables.error;
+      // if (errorObj.code !== '0') {
+      //    return this.toasterService.showSuccess(errorObj.message, '');
+      // }
+
+      console.log('processVariables', processVariables);
+
+      this.csvResponse = {
+        screenName: 'PI',
+        data: processVariables.PIDataLIst
+      };
+
+      // this.toasterService.showError(errorObj.message, '');
+    });
   }
 }

@@ -83,14 +83,24 @@ th {
     border-left: .25rem solid #f6c23e !important;
 }
 
+.border-left-purple {
+    background: linear-gradient(to right, #28527a, #306598, #3d78b1, #457aad, #6a94bb);
+    border-left: 0.25rem solid #6a94bb !important;
+}
+
+.border-left-blue {
+    background: linear-gradient(to right, #6a94bb, #457aad, #3d78b1, #306598, #28527a);
+    border-left: 0.25rem solid #28527a !important;
+}
+
 .border-left-gold {
-    background: linear-gradient(to right, #BF953F, #b7af5e, #B38728, #d2cb84, #AA771C);
-    border-left: .25rem solid #f6c23e !important;
+    background: linear-gradient(to right, #137f94, #29a3bb, #2ca2b9, #2daec7, #2eb4ce);
+    border-left: 0.25rem solid #2eb4ce !important;
 }
 
 .border-left-greenish {
-    background: linear-gradient(to right, #38bcd6, #59c0dc, #43c0d8, #47a7bf, #2398af);
-    border-left: 0.25rem solid #439db5 !important;
+    background: linear-gradient(to right, #38bcd6, #59c0dc, #43c0d8, #3996ad, #137f94);
+    border-left: 0.25rem solid #137f94!important;
 }
 
 // tr.example-element-row:hover {    <!--- Commented For Later Use ----->
@@ -165,13 +175,12 @@ mat-form-field {
 #mySearch {
     width: 34%;
     font-size: 13px;
-    padding: 4px;
+    padding: 4px 30px;
     border: 1px solid #ddd;
     margin-bottom: 0px;
     border-radius: 3px 3px 3px 3px;
     color: #212121;
     text-align: left;
-    padding-left: 36px;
     margin-top: 6px;
 }
 
