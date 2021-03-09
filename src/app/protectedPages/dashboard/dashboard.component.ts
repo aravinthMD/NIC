@@ -271,8 +271,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           this.dataSource.paginator = this.paginator;
         } else {
           this.toasterService.showError(
-            `${respError.code}: ${respError.message}`,
-            'Technical error..'
+            `${respError.message}`,
+            ''
           );
         }
       });
