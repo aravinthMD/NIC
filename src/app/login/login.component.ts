@@ -90,8 +90,9 @@ export class LoginComponent implements OnInit {
         this.toasterService.showSuccess('Logged Successfully', '');
         this.utilityService.setLoginDetail(processVariables);
         this.adminDetailService.setAdminUserId(processVariables.userId ? processVariables.userId : '');
-        localStorage.setItem('userName', processVariables.username);
+        localStorage.setItem('sessionId', processVariables.username);
         localStorage.setItem('roleName', processVariables.roleName);
+        localStorage.setItem('userName', processVariables.userId)
         this.router.navigate(['users/Dashboard/']);
       });
 

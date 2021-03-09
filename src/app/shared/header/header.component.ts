@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
               private router : Router,
               private toggleSideMenuService: ToggleSideMenuService) {
 
-    this.userName = localStorage.getItem('userName') || 'Admin User'
+    this.userName = localStorage.getItem('sessionId') || 'Admin User'
     this.userType = localStorage.getItem('roleName') || 'Admin' ;
 
                }
