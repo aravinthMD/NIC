@@ -123,6 +123,7 @@ ngOnInit() {
 
   clear(){
     this.searchForm.reset();
+    this.getAuditTrails(1);
   }
 
   getDownloadXls(){

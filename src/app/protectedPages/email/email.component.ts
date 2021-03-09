@@ -183,7 +183,7 @@ today=new Date()
    }
 
    get Subject(){
-     return this.emailform.controls['subject'].value;
+     return this.emailform.controls['subject'].value.trim();
    }
 
    set mailContent(value){
@@ -191,7 +191,7 @@ today=new Date()
    }
 
    get mailContent(){
-      return this.emailform.controls['mailContent'].value;
+      return this.emailform.controls['mailContent'].value.trim();
    }
 
    set templateName(value){
@@ -199,7 +199,7 @@ today=new Date()
    }
 
    get templateName(){
-     return this.emailform.controls['templateName'].value;
+     return this.emailform.controls['templateName'].value.trim();
    }
 
    set screenList(value){
@@ -239,7 +239,7 @@ today=new Date()
  }
 
  get selectedTemplate(){
-   return this.emailform.controls['selectedTemp'].value;
+   return this.emailform.controls['selectedTemp'].value.trim();
  }
 
 
@@ -290,7 +290,8 @@ today=new Date()
 
   sendEmail() {
     const formValue = this.emailform.value;
-    const toAddress = formValue.ToMailAddress;
+    // const toAddress = formValue.ToMailAddress;
+    const toAddress =  this.ListToStringConverter(this.emailIdList);  
     const subject = formValue.subject;
     const message1 = formValue.mailContent;
     const fromAddress = formValue.FromMailAddress;

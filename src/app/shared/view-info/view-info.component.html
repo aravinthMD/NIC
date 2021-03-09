@@ -39,7 +39,7 @@
 
 <div class="row ml-3 mr-3 ">
     <div class="col-3" [ngClass]="{'row-color': (Math.floor(i/4) % 2 == 0) }" *ngFor="let data of billAdminUserDetails;let i = index">
-        <ng-container *ngIf="!data?.isButton && data?.value">
+        <ng-container *ngIf="!data?.isButton">
             <div style="word-break: break-all;">
                 <label style="font-weight: bold;">{{data?.key}}</label><br>
                 <label>{{data?.value}}</label>
