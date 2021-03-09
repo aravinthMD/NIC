@@ -31,6 +31,7 @@ export class LovsComponent implements OnInit {
     searchLovItemsValue = [];
     isAddNewKey: boolean;
     patternError: string;
+    selectedIndex: number;
 
   constructor(
       private labelsService: LabelsService,
@@ -100,6 +101,7 @@ export class LovsComponent implements OnInit {
   }
 
   onLovItemEdit(index: number) {
+    this.isAddNewKey = false;
     const formArray = this.lovItemsForm.get('items') as FormArray;
     const formGroup = formArray.at(index) as FormGroup;
     formGroup.get('value').enable();
@@ -123,6 +125,9 @@ export class LovsComponent implements OnInit {
         };
         this.addNewItemToLov(data);
         return;
+    }
+    if (this.selectedIndex === index && this.patternError) {
+      return this.toasterService.showError(this.patternError, '');
     }
     const formArray = this.lovItemsForm.get('items') as FormArray;
     const formGroup = formArray.at(index) as FormGroup;
@@ -189,7 +194,10 @@ export class LovsComponent implements OnInit {
     this.getSubMenuList(item.key);
   }
 
-  onValueChange(event) {
+  onValueChange(event, index?: number) {
+    if (index !== undefined ) {
+      this.selectedIndex = index;
+    }
     const value = event.target.value;
     console.log('value', value);
     const key = this.selectedLovItem.key;
@@ -198,7 +206,7 @@ export class LovsComponent implements OnInit {
     if (key === '8') {
        regex =  /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
        msg = 'Please enter valid mail id';
-    } else if (key  === '6') {
+    } else if (key  === '6' || key === '7') {
       regex = /[+]{0,1}[0-9]{1,10}$/;
       msg = 'Please enter valid code';
     }
