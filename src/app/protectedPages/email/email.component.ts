@@ -444,7 +444,8 @@ today=new Date()
     const templateObject = templateObj[0] ? templateObj[0] : {};
     this.id = templateObject.id || 0;
     // let fromMailAddress = templateObject.fromMailAddress || '';
-    // let toMailAddress = templateObject.toMailAddress || '';
+    let toMailAddress = templateObject.toMailAddress;
+    let toMailAddressArray = toMailAddress ?  toMailAddress.split(",") : [];
     let subject = templateObject.subject || '';
     let mailContent  = templateObject.emailContent || '';
     let templateName = templateObject.templateTitle || '';
@@ -453,11 +454,19 @@ today=new Date()
 
     let screenNameListArray  = this.getScreenList(this.screenNameDropDownList,screenListArray);
 
-    this.setToFormMethod({subject,mailContent,templateName,screenNameListArray});
+    this.setToFormMethod({subject,mailContent,templateName,screenNameListArray,toMailAddressArray});
   }
 
   setToFormMethod(data  : any){
       // this.fromMailAddress = data.fromMailAddress,
+      if(data.toMailAddressArray.length != 0){
+        for(let element of data.toMailAddressArray){
+
+          if(!this.emailIdList.includes(element))
+          this.emailIdList.push(element);
+          
+          }
+      }
       this.Subject = data.subject;
       this.templateName = data.templateName;
       this.screenList = data.screenNameListArray;
@@ -486,9 +495,9 @@ today=new Date()
   }
   saveOrUpdateTemplate(){
 
-    // const FromMailAddress = this.emailform.controls['FromMailAddress'].value;
+    const FromMailAddress = this.emailform.controls['FromMailAddress'].value;
     // const ToMailAddress = this.emailform.controls['ToMailAddress'].value;
-    // const ToMailAddress = this.ListToStringConverter(this.emailIdList);
+    const ToMailAddress = this.ListToStringConverter(this.emailIdList);
     const templateName = this.emailform.controls['templateName'].value;
     const subject = this.emailform.controls['subject'].value;
     const mailContent = this.emailform.controls['mailContent'].value;
@@ -499,8 +508,8 @@ today=new Date()
   
 
     const data =  {
-      // FromMailAddress,
-      // ToMailAddress,
+      FromMailAddress,
+      ToMailAddress,
       subject,
       mailContent,
       templateName,
