@@ -85,19 +85,18 @@ mat-card.mat-card {
     font-weight: 400 !important;
 }
 
-.float-left{
-    float:left;
+.float-left {
+    float: left;
 }
 
 .attachment {
     margin: 9px 0;
     cursor: pointer;
     font-size: 15px;
-    color: #4e73df;
-  }
+    color: #276677;
+}
 
-
-  .attachment-name {
+.attachment-name {
     display: inline-block;
     margin: 10px 0;
     padding: 6px;
@@ -105,4 +104,4 @@ mat-card.mat-card {
     border-radius: 10px;
     color: #555;
     font-size: 16px;
-  }
+}
