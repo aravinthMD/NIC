@@ -23,7 +23,7 @@ private loginStatus: boolean = false
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (localStorage.getItem('token')) {
       return new Observable<boolean>((observer) => {       
-          const data = { username:localStorage.getItem('userName') };          
+          const data = { username:localStorage.getItem('sessionId') };          
           if (!this.loginStatus){
           this.loginService.getLogin(data).subscribe((res: any) => {
             const response = res;
