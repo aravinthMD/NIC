@@ -451,7 +451,10 @@ export class SmsCreditAllocationComponent implements OnInit {
               return this.toasterService.showError(errorMessage, '');
             }
             this.toasterService.showSuccess('Data Saved Successfully', '');
-            this.isDirty = false
+            this.formReset();
+            setTimeout(() =>{
+            this.isDirty = false;
+            },200)  
             const processVariables = res.ProcessVariables;
             const status = this.getStatusDescription(processVariables.status);
             const data: SmsCreditAllocation = {
@@ -471,6 +474,15 @@ export class SmsCreditAllocationComponent implements OnInit {
             this.dataSource = new MatTableDataSource<any>(this.smsCreditList);
             this.dataSource.paginator = this.paginator;
          });
+  }
+
+  formReset(){
+    this.smsCreditForm.reset();
+    const userName = localStorage.getItem('userName') || '';
+    this.smsCreditForm.controls['approvedBy'].setValue(userName);
+    this.smsCreditForm.controls['status'].setValue("0");
+    this.smsCreditForm.controls['timeStamp'].setValue(this.currentDate);
+    this.smsCreditForm.controls['smsApprover'].setValue("");
   }
 
 

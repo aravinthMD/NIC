@@ -44,7 +44,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
   remarkModal: boolean;
 
-  selectedClient = 0;
+  selectedClient = "";
 
   showView = true;
   userId: string;
@@ -179,7 +179,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
         });
       }
 
-      this.selectedClient = data ? (data.selectedClient ? data.selectedClient : 0) : 0;
+      this.selectedClient = data ? (data.selectedClient ? data.selectedClient : "") : "";
 
       this.detectAuditTrialObj = this.billOwnerForm.value;
 
@@ -287,7 +287,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
       clientId: this.clientId,
      // id: this.billOwnerForm.value.id,
       currentClientId: this.clientId,
-      selectedClient: this.selectedClient,
+      selectedClient: String(this.selectedClient),
       name: formValue.name,
       city: formValue.city,
       designation: formValue.designation,
