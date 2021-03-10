@@ -12,7 +12,7 @@ export class InvoiceService {
   constructor(private apiService  : ApiService,
           private httpService : HttpService) { }
 
-  createProjectExecution(form : any){
+  createProjectExecution(form : any, isUpdate?: boolean){
       const {
           api : {
             createProjectExecution : {
@@ -23,7 +23,7 @@ export class InvoiceService {
           }
       } = this.apiService;
 
-      const data = {
+      const data: any = {
         userName : form.userName,
         proformaInvoiceNumber : form.piNumber,
         proformaInvoiceDate : form.piDate,
@@ -39,6 +39,10 @@ export class InvoiceService {
         remark  :form.remark,
         upload_document : form.upload_document,
         userId  :form.userId
+      }
+
+      if (isUpdate) {
+        data.id = form.id;
       }
 
       const requestEntity  : any  = {

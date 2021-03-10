@@ -196,83 +196,102 @@ csvResponse: any;
   }
     //Create PE
 
-    createProjectExecution(){
-
-        if(this.PurchaseEntryForm.invalid){
+    createProjectExecution(data?: any) {
+      let feildControls: any = {};
+      if (data) {
+        feildControls = data;
+      } else {
+        feildControls = this.PurchaseEntryForm.value;
+        if (this.PurchaseEntryForm.invalid) {
           this.isDirty = true;
-          return
+          return;
         }
+      }
 
-        const feildControls =   this.PurchaseEntryForm.controls;
-        const userName  = feildControls.userName.value;
-        const piNumber =  feildControls.piNumber.value;
-        const piAmount = feildControls.piAmount.value;
-        const modeOfPayment = feildControls.modeOfPayment.value;
-        const documentNo = feildControls.documentNo.value;
-        const bankName = feildControls.bankName.value;
-        const amountReceived = feildControls.amountReceived.value;
-        const tds = feildControls.tds.value;
-        const NICSIProjectNo = feildControls.NICSIProjectNo.value;
-        const invoiceDate = feildControls.invoiceDate.value;
-        const transactionDate =  feildControls.transactionDate.value;
-        const piPaid = feildControls.piPaid.value;
-        const remark = feildControls.remark.value;
-  
-        const formattedProformaInvoiceDate = this.datePipe.transform(invoiceDate,'dd/MM/yyyy')
-        const formattedDateOfTransaction = this.datePipe.transform(transactionDate,'dd/MM/yyyy')
- 
-        const Data = {
-          userName,
-          piNumber,
-          piDate : formattedProformaInvoiceDate,
-          piAmount,
-          modeOfPayment,
-          documentNo,
-          dateOfTransaction : formattedDateOfTransaction,
-          bankName,
-          amountReceived,
-          tds,
-          NICSIProjectNo,
-          piPaid,
-          remark,
-          upload_document : this.documentUploadId,
-          userId : this.clientId ?  Number(this.clientId) : 0
-                }
-  
-        this.invoiceService.createProjectExecution(Data).subscribe(
+      const userName = feildControls.userName;
+      const piNumber = feildControls.piNumber;
+      const piAmount = feildControls.piAmount;
+      const modeOfPayment = feildControls.modeOfPayment;
+      const documentNo = feildControls.documentNo;
+      const bankName = feildControls.bankName;
+      const amountReceived = feildControls.amountReceived;
+      const tds = feildControls.tds;
+      const NICSIProjectNo = feildControls.NICSIProjectNo;
+      const invoiceDate = feildControls.invoiceDate;
+      const transactionDate = feildControls.transactionDate;
+      const piPaid = feildControls.piPaid;
+      const remark = feildControls.remark;
+
+      const formattedProformaInvoiceDate = this.datePipe.transform(
+        invoiceDate,
+        "dd/MM/yyyy"
+      );
+      const formattedDateOfTransaction = this.datePipe.transform(
+        transactionDate,
+        "dd/MM/yyyy"
+      );
+
+      const Data: any = {
+        userName,
+        piNumber,
+        piDate: formattedProformaInvoiceDate,
+        piAmount,
+        modeOfPayment,
+        documentNo,
+        dateOfTransaction: formattedDateOfTransaction,
+        bankName,
+        amountReceived,
+        tds,
+        NICSIProjectNo,
+        piPaid,
+        remark,
+        upload_document: this.documentUploadId,
+        userId: this.clientId ? Number(this.clientId) : 0,
+      };
+
+      if (data) {
+        Data.id = data.id;
+      }
+
+      this.invoiceService
+        .createProjectExecution(Data, data ? true : false)
+        .subscribe(
           (response: any) => {
-                console.log(response['ProcessVariables']); 
-                const { 
-                  ProcessVariables  : { error : {
-                    code,
-                    message
-                  }}
-                } = response;
-                
-              if(code == '0'){
-                this.PurchaseEntryForm.reset();
-                this.PurchaseEntryForm.controls['modeOfPayment'].setValue("");
-                this.PurchaseEntryForm.controls['piPaid'].setValue("");
-                this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
-                this.PurchaseEntryForm.controls['piAmount'].setValue('');
-                this.PurchaseEntryForm.controls['piDate'].setValue('');
-                this.documentUploadId = '';
-                this.isDirty = false;
-                this.getProjectExecutionDetails(this.currentPage,this.clientId);
-                this.toasterService.showSuccess('Data Saved Successfully','')
-                // this.showDataSaveModal = true;
-                this.dataValue= {
-                title: 'Project Execution Saved Successfully',
-                message: 'Are you sure you want to proceed purchase order invoice page?'         
-                   } 
-                  }else{
-                this.toasterService.showError(message,'')
-                  }
+            console.log(response["ProcessVariables"]);
+            const {
+              ProcessVariables: {
+                error: { code, message },
+              },
+            } = response;
+
+            if (code == "0") {
+              this.PurchaseEntryForm.reset();
+              this.PurchaseEntryForm.controls["modeOfPayment"].setValue("");
+              this.PurchaseEntryForm.controls["piPaid"].setValue("");
+              this.PurchaseEntryForm.controls["userName"].setValue(
+                this.accountName
+              );
+              this.PurchaseEntryForm.controls["piAmount"].setValue("");
+              this.PurchaseEntryForm.controls["piDate"].setValue("");
+              this.documentUploadId = "";
+              this.isDirty = false;
+              this.getProjectExecutionDetails(this.currentPage, this.clientId);
+              this.toasterService.showSuccess("Data Saved Successfully", "");
+              // this.showDataSaveModal = true;
+              this.dataValue = {
+                title: "Project Execution Saved Successfully",
+                message:
+                  "Are you sure you want to proceed purchase order invoice page?",
+              };
+            } else {
+              this.toasterService.showError(message, "");
+            }
           },
-         (error) => {
-            console.log(error)
-            this.toasterService.showError(error,'')
-        })
+          (error) => {
+            console.log(error);
+            this.toasterService.showError(error, "");
+          }
+        );
     }
 
     exportCsv() {
@@ -343,7 +362,18 @@ csvResponse: any;
   OnEdit(Data : any){
     const dialogRef = this.dialog.open(ProjectExcecutionDialogComponent,{
       data : Data.id
-    })
+    });
+
+    dialogRef.componentInstance.onProjectExecutionUpdate
+            .subscribe((res: any) => {
+               this.createProjectExecution(res);
+            });
+
+    dialogRef.componentInstance.onFileUpload
+             .subscribe((res: any) => {
+                console.log('file upload event', res);
+                this.uploadFile(res);
+    });
 
     dialogRef.afterClosed().subscribe(result =>{
       console.log('The dialog was Closed',result);

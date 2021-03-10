@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, Inject, OnInit, Optional, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {LabelsService} from '../../../../services/labels.service';
 import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -87,6 +87,8 @@ export class ProjectExcecutionDialogComponent implements OnInit {
 
   showEdit: boolean;
   isWrite = true;
+  onFileUpload = new EventEmitter();
+  onProjectExecutionUpdate = new EventEmitter();
 
 
   constructor(
@@ -171,6 +173,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.toasterService.showError(error,'')
     })
 
+  }
+
+  uploadFile(event) {
+    this.onFileUpload.emit(event);
   }
 
 
@@ -275,69 +281,79 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
   OnUpdate(){
-    const feildControls = this.ProjectExcecutionForm.controls;
-    const userName  = feildControls.userName.value;
-    const proformaInvoiceNumber  = feildControls.piNumber .value;
-    const amount = feildControls.piAmount.value;
-    const paymentMode = feildControls.modeOfPayment.value;
-    const documentNumber = feildControls.documentNo.value;
-    const branchName = feildControls.bankName.value;
-    const receivedAmount = feildControls.amountReceived.value;
-    const tds = feildControls.tds.value;
-    const nicsiProjectNumber = feildControls.NICSIProjectNo.value;
-    const invoiceDate = feildControls.invoiceDate.value;
-    const transactionDate = feildControls.transactionDate.value;
-    const paidPI = feildControls.piPaid.value;
-    const remark = feildControls.remark.value;
+    // const feildControls = this.ProjectExcecutionForm.controls;
+    // const userName  = feildControls.userName.value;
+    // const proformaInvoiceNumber  = feildControls.piNumber .value;
+    // const amount = feildControls.piAmount.value;
+    // const paymentMode = feildControls.modeOfPayment.value;
+    // const documentNumber = feildControls.documentNo.value;
+    // const branchName = feildControls.bankName.value;
+    // const receivedAmount = feildControls.amountReceived.value;
+    // const tds = feildControls.tds.value;
+    // const nicsiProjectNumber = feildControls.NICSIProjectNo.value;
+    // const invoiceDate = feildControls.invoiceDate.value;
+    // const transactionDate = feildControls.transactionDate.value;
+    // const paidPI = feildControls.piPaid.value;
+    // const remark = feildControls.remark.value;
 
-    const formattedInvoiceDate = this.datePipe.transform(invoiceDate,'dd/MM/yyyy');
-    const formattedDateOfTransaction = this.datePipe.transform(transactionDate,'dd/MM/yyyy');
+    // const formattedInvoiceDate = this.datePipe.transform(invoiceDate,'dd/MM/yyyy');
+    // const formattedDateOfTransaction = this.datePipe.transform(transactionDate,'dd/MM/yyyy');
 
-    const Data = {
-      id  : Number(this.selectedPEId),  //UPDATE ID
-      userName,
-      proformaInvoiceNumber,
-      proformaInvoiceDate  : formattedInvoiceDate,
-      amount,
-      paymentMode,
-      documentNumber,
-      transactionDate : formattedDateOfTransaction,
-      branchName,
-      receivedAmount,
-      tds,
-      nicsiProjectNumber,
-      paidPI,
-      remark,
-      uploadDocument : "file",
-    }
+    // const Data = {
+    //   id  : Number(this.selectedPEId),  //UPDATE ID
+    //   userName,
+    //   proformaInvoiceNumber,
+    //   proformaInvoiceDate  : formattedInvoiceDate,
+    //   amount,
+    //   paymentMode,
+    //   documentNumber,
+    //   transactionDate : formattedDateOfTransaction,
+    //   branchName,
+    //   receivedAmount,
+    //   tds,
+    //   nicsiProjectNumber,
+    //   paidPI,
+    //   remark,
+    //   uploadDocument : "file",
+    // };
 
-    this.invoiceService.updateProjectExecutionDetail(Data).subscribe(
-      (response: any) =>{
-        const { 
-          ProcessVariables  : { error : {
-            code,
-            message
-          }}
-        } = response;
+    const formValue =  this.ProjectExcecutionForm.value;
 
-        if(code == "0"){
-          this.toasterService.showSuccess('Project Execution Details Updated Successfully','');
-          this.ProjectExcecutionForm.reset();
-          this.selectedPEId = "";
-          this.isDirty = false;
-          this.showDataSaveModal;
-          this.showDataSaveModal = true;
-          this.dataValue= {
-           title: 'Project Execution Saved Successfully',
-           message: 'Are you sure you want to proceed purchase order page?'
-            }
-        }else{
-          this.toasterService.showError(message,'');
-        }
+    const data = {
+        ...formValue,
+        id  : Number(this.selectedPEId)
+    };
+
+
+    this.onProjectExecutionUpdate.emit(data);
+
+    // this.invoiceService.updateProjectExecutionDetail(Data).subscribe(
+    //   (response: any) =>{
+    //     const { 
+    //       ProcessVariables  : { error : {
+    //         code,
+    //         message
+    //       }}
+    //     } = response;
+
+    //     if(code == "0"){
+    //       this.toasterService.showSuccess('Project Execution Details Updated Successfully','');
+    //       this.ProjectExcecutionForm.reset();
+    //       this.selectedPEId = "";
+    //       this.isDirty = false;
+    //       this.showDataSaveModal;
+    //       this.showDataSaveModal = true;
+    //       this.dataValue= {
+    //        title: 'Project Execution Saved Successfully',
+    //        message: 'Are you sure you want to proceed purchase order page?'
+    //         }
+    //     }else{
+    //       this.toasterService.showError(message,'');
+    //     }
         
-    },(error) =>{
-        this.toasterService.showError(error,'');
-    })
+    // },(error) =>{
+    //     this.toasterService.showError(error,'');
+    // })
 }
 
 saveYes()
