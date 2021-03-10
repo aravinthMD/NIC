@@ -40,6 +40,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     message: string
   };
 
+  showCredit : boolean;
 
   statusList = [];
 
@@ -113,6 +114,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     const status = this.statusList.find(val => {
       return val.key === this.data.status;
     });
+    this.setCreditShowFlag(status)
     return [
       {
         key: this.labels.smsQuotaMatrix,
@@ -151,6 +153,11 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
         value: localStorage.getItem('userName')
       },
     ];
+  }
+
+  setCreditShowFlag(status : any){
+    if(status.key == '1')
+    this.showCredit = true
   }
 
   initForm() {

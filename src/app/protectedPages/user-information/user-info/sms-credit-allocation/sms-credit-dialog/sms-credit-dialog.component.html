@@ -49,7 +49,8 @@
                       [maxLength]="labels?.validationData.userName.maxLength" 
                       [isDirty]="isDirty" 
                       [isRequired]="'Credit is mandatory'" 
-                      [mandatoryField]="true">
+                      [mandatoryField]="true"
+                      [isDisabledInp] = "showCredit">
                     </app-custom-input>
                     <div *ngIf="smsCreditAllocation.get('totalCredit').errors?.pattern" class="error-feedback">
                         <div>
