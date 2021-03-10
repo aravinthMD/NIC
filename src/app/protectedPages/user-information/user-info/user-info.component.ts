@@ -114,7 +114,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
     msg?: string;
   }[];
 
-  initialStatus = '0';
+   initialStatus = '1';
 
     private userPassWord: string;
     projectNo: string;
@@ -639,6 +639,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
         this.clientId = processVariables.currentCustomerId;
       }
       this.form.get('status').setValue(this.initialStatus);
+      this.form.get('id').setValue(this.clientId);
       this.clientDetailService.setClientId(this.clientId);
       this.newAccountService.setFlagForShowingPages(1);
       this.dataValue = {
@@ -684,7 +685,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.docAvailFlag = !!docsId;
       this.previewDocumentId = docsId;
       this.documentUploadId = docsId;
-      this.initialStatus = String(processVariables.status || 0);
+      this.initialStatus = String(processVariables.status || 1);
       this.clientDetailService.setClientStatus(this.initialStatus === '1');
       // if(response['ProcessVariables']['upload_document']){
       //     this.previewDocumentId = response['ProcessVariables']['upload_document'];

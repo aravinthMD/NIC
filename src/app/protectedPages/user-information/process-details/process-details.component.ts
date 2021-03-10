@@ -449,7 +449,7 @@ export class ProcessDetailsComponent implements OnInit{
 
 
   sendReminder(element) {
-    if (element.piStatus === 6) {
+    if (element.paymentStatus === 6) {
       return;
     }
     this.showEmailModal = true;
@@ -466,7 +466,7 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   sendEscalation(element) {
-    if (element.piStatus === 6) {
+    if (element.paymentStatus === 6) {
       return;
     }
     this.showEmailModal = true;
