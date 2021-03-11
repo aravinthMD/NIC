@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
           { 
             if(res['status'] ==  true){
             console.log("login Response",res)
+            sessionStorage.setItem('token', res['token'] || '');
             localStorage.setItem("token",res["token"]);
             const userData = this.utilityService.getUserData()
             console.log("user Data",userData)
