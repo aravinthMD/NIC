@@ -375,6 +375,13 @@ csvResponse: any;
                 this.uploadFile(res);
     });
 
+    dialogRef.componentInstance.updateFileID
+              .subscribe((res : any) => {
+                if(res){
+                  this.documentUploadId = res;
+                }
+    })
+
     dialogRef.afterClosed().subscribe(result =>{
       console.log('The dialog was Closed',result);
       this.getProjectExecutionDetails(this.currentPage,this.clientId);
