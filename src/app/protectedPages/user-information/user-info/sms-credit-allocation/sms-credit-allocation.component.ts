@@ -409,7 +409,6 @@ export class SmsCreditAllocationComponent implements OnInit {
   onSubmit() {
     const origin = location.origin;
     console.log('origin', origin);
-    const token = localStorage.getItem('token');
     // const smsUrl = `${origin}/nic/assets/html/sms.html?id=smsId`;
     let  smsUrl 
     if(environment.production){

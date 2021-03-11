@@ -47,9 +47,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     if (reqBody && reqBody.headers !== undefined) {
       token = reqBody.headers;
     } else if (reqBody) {
-      token = localStorage.getItem('token')
-        ? localStorage.getItem('token')
-        : ''
+      token = sessionStorage.getItem('token') || '';
     }
 
 
@@ -73,9 +71,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       req = req.clone({
         setHeaders: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'authentication-token': localStorage.getItem('token')
-          ? localStorage.getItem('token')
-            : '',
+          'authentication-token': sessionStorage.getItem('token') || ''
         },
       });
     }
@@ -87,8 +83,7 @@ export class AuthInterceptorService implements HttpInterceptor {
         headers: req.headers.set(
           'authentication-token',
           req.headers.get('authentication-token') ? req.headers.get('authentication-token'):
-          localStorage.getItem('token')
-          ? localStorage.getItem('token') : ''
+          sessionStorage.getItem('token') || ''
         ),
         //     .set('X-AUTH-SESSIONID',
         //      localStorage.getItem('X-AUTH-SESSIONID') ?
@@ -142,6 +137,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               if (res && res['login_required']) {
                 this.toasterService.showError('Session Expired.Please Login Again','');
                 this.utilityService.logOut();
+                return;
                 // this.utilityService.removeAllLocalStorage();
               }
             }
