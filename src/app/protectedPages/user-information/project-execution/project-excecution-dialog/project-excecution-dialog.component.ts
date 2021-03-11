@@ -88,6 +88,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   showEdit: boolean;
   isWrite = true;
   onFileUpload = new EventEmitter();
+  updateFileID = new EventEmitter();
   onProjectExecutionUpdate = new EventEmitter();
 
 
@@ -163,6 +164,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
         this.setFormValues(data);
         if(response.ProcessVariables.upload_document){
           this.previewDocumentId = response.ProcessVariables.upload_document;
+          this.updatePreviewId(this.previewDocumentId);
           this.docAvailFlag = true;
         }
       }else{
@@ -173,6 +175,12 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.toasterService.showError(error,'')
     })
 
+  }
+
+  updatePreviewId(docId : string){
+    if(docId){
+    this.updateFileID.emit(docId)
+    }
   }
 
   uploadFile(event) {
