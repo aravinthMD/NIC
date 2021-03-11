@@ -5,7 +5,7 @@ import { environment as environmentProd } from './environment.prod';
 export const environment = {
   production: false,
   projectIds: {
-    projectId: '67edcea67cd511eb903ef2fa9bec3d63'
+    projectId: 'da42c768822f11eb9221f2fa9bec3d63'
   },
   version:environmentProd.version,
   buildDate:  environmentProd.buildDate,
@@ -14,7 +14,6 @@ export const environment = {
     api: 'v2/'
   },
   // host:'http://178.128.125.44/appiyo/',
-  // host: 'https://hetrauat.equitasbank.com/appiyodev/',
   host:  'http://128.199.164.250/appiyo/',
   appiyoDrive: "d/drive/upload/",
   previewDocappiyoDrive :  "d/drive/docs/",

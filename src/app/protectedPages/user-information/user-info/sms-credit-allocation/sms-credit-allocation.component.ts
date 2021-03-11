@@ -91,6 +91,7 @@ export class SmsCreditAllocationComponent implements OnInit {
 
   data : string = '';
   isWrite = true;
+  isEnableEmail = true;
   isClientActive = true;
 
   constructor(
@@ -116,6 +117,8 @@ export class SmsCreditAllocationComponent implements OnInit {
     this.isClientActive = this.clientDetailsService.getClientStatus();
     const smsPage = this.utilityService.getSettingsDataList('SmsCreditAllocation');
     this.isWrite = smsPage.isWrite;
+    this.isEnableEmail = smsPage.isEnableEmail;
+
     // this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
     this.pathLovValue();
     this.statusList = this.smsCreditService.getStatusListLov();
@@ -450,7 +453,10 @@ export class SmsCreditAllocationComponent implements OnInit {
               return this.toasterService.showError(errorMessage, '');
             }
             this.toasterService.showSuccess('Data Saved Successfully', '');
-            this.isDirty = false
+            this.formReset();
+            setTimeout(() =>{
+            this.isDirty = false;
+            },200)  
             const processVariables = res.ProcessVariables;
             const status = this.getStatusDescription(processVariables.status);
             const data: SmsCreditAllocation = {
@@ -470,6 +476,15 @@ export class SmsCreditAllocationComponent implements OnInit {
             this.dataSource = new MatTableDataSource<any>(this.smsCreditList);
             this.dataSource.paginator = this.paginator;
          });
+  }
+
+  formReset(){
+    this.smsCreditForm.reset();
+    const userName = localStorage.getItem('userName') || '';
+    this.smsCreditForm.controls['approvedBy'].setValue(userName);
+    this.smsCreditForm.controls['status'].setValue("0");
+    this.smsCreditForm.controls['timeStamp'].setValue(this.currentDate);
+    this.smsCreditForm.controls['smsApprover'].setValue("");
   }
 
 
@@ -563,7 +578,7 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendReminder(element) {
-    if (element.status === '1') {
+    if (element.status === '1' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
@@ -571,7 +586,7 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendEscalation(element){
-    if (element.status) {
+    if (element.status === '1' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
