@@ -60,7 +60,7 @@
   .footer-modal {
     display: flex;
     flex-wrap: wrap;
-    justify-content: end;
+    justify-content: flex-end;
     flex-direction: column;    
   }
 
@@ -94,3 +94,7 @@
 }
 
 .mat-toolbar-row{ justify-content: space-between !important;  }
+
+mat-toolbar{
+  background-color: white;
+}
