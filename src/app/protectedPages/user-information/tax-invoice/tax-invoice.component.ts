@@ -94,6 +94,7 @@ export class TaxInvoiceComponent implements OnInit {
   selectedClientId;
   taxInvoiceList: TaxInvoice[] = [];
   isWrite = true;
+  isEnableEmail = true;
   isClientActive = true;
   csvResponse: any;
 
@@ -120,8 +121,9 @@ export class TaxInvoiceComponent implements OnInit {
     const processVariables = listOfValues.ProcessVariables || {};
     this.invoiceStatusList = processVariables.invoiceStatusList || [];
     this.taxInvoiceService.setInvoiceStatusList(this.invoiceStatusList);
-    const taxInvoice = this.utilityService.getSettingsDataList('TaxInvoice');
-    this.isWrite = taxInvoice.isWrite;
+    const taxInvoiceScrnData = this.utilityService.getSettingsDataList('TaxInvoice');
+    this.isWrite = taxInvoiceScrnData.isWrite;
+    this.isEnableEmail = taxInvoiceScrnData.isEnableEmail;
     this.selectedClientId = Number(this.clientDetailsService.getClientId());
     this.labelsService.getLabelsData().subscribe((values) => {
       this.labels = values;
@@ -677,7 +679,7 @@ changeDateFormat(date) {
 }
 
 sendReminder(element){
-  if (element.paymentStatus === 6) {
+  if (element.paymentStatus === 6 || !this.isEnableEmail) {
     return;
   }
   this.showEmailModal = true;
@@ -686,7 +688,7 @@ sendReminder(element){
 
 
 sendEscalation(element){
-  if (element.paymentStatus === 6) {
+  if (element.paymentStatus === 6 || !this.isEnableEmail) {
     return;
   }
   this.showEmailModal = true;

@@ -91,6 +91,7 @@ export class SmsCreditAllocationComponent implements OnInit {
 
   data : string = '';
   isWrite = true;
+  isEnableEmail = true;
   isClientActive = true;
 
   constructor(
@@ -116,6 +117,8 @@ export class SmsCreditAllocationComponent implements OnInit {
     this.isClientActive = this.clientDetailsService.getClientStatus();
     const smsPage = this.utilityService.getSettingsDataList('SmsCreditAllocation');
     this.isWrite = smsPage.isWrite;
+    this.isEnableEmail = smsPage.isEnableEmail;
+
     // this.smsQuotaMetrix = this.smsCreditService.getSmsQuotaMatrix();
     this.pathLovValue();
     this.statusList = this.smsCreditService.getStatusListLov();
@@ -576,7 +579,7 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendReminder(element) {
-    if (element.status === '1') {
+    if (element.status === '1' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
@@ -584,7 +587,7 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendEscalation(element){
-    if (element.status) {
+    if (element.status === '1' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;

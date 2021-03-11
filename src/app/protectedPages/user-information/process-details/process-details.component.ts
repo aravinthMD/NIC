@@ -91,6 +91,7 @@ export class ProcessDetailsComponent implements OnInit{
     message ?: string
   };
 
+  isEnableEmail = true;
   isWrite = false;
   isClientActive = true;
   csvResponse: any;
@@ -213,8 +214,9 @@ export class ProcessDetailsComponent implements OnInit{
     this.isClientActive = this.clientDetailService.getClientStatus();
 
     // this.patchLovValues();     //LOV's
-    const smsPage = this.utilityService.getSettingsDataList('PerformaInvoice');
-    this.isWrite = smsPage.isWrite;
+    const piSecreenSettingData = this.utilityService.getSettingsDataList('PerformaInvoice');
+    this.isWrite = piSecreenSettingData.isWrite;
+    this.isEnableEmail = piSecreenSettingData.isEnableEmail;
 
     this.labelsService.getLabelsData().subscribe((values)=> {
       this.labels = values;
@@ -449,7 +451,7 @@ export class ProcessDetailsComponent implements OnInit{
 
 
   sendReminder(element) {
-    if (element.paymentStatus === 6) {
+    if (element.paymentStatus === 6 || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
@@ -466,7 +468,7 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   sendEscalation(element) {
-    if (element.paymentStatus === 6) {
+    if (element.paymentStatus === 6 || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
