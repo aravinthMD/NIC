@@ -1,0 +1,208 @@
+.text-gray-800 {
+    color: #5a5c69!important;
+}
+
+.mb-0,
+.my-0 {
+    margin-bottom: 0!important;
+}
+
+// .h3 {
+//     font-size: 1.75rem;
+//     margin-bottom: .5rem;
+//     font-weight: 400;
+//     line-height: 1.2;
+//     font-family: 'FontAwesome';
+// }
+
+// table {
+//     width: 100%;
+// }
+
+// th {
+//     font-size: 16px;
+//     font-weight: 500;
+//     background-color: #276678;
+//     color: #fff;
+// }
+
+// tr:nth-child(even) {
+//     background-color: #f5f4f4;
+// }
+// .form-control {
+//     display: block;
+//     width: 100%;
+//     height: calc(1.5em + .75rem + 2px);
+//     padding: .375rem .75rem;
+//     font-size: 1rem;
+//     font-weight: 400;
+//     line-height: 1.5;
+//     color: #6e707e;
+//     background-color: #fff;
+//     background-clip: padding-box;
+//     border: 1px solid #d1d3e2;
+//     border-radius: .35rem;
+//     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+// }
+
+// .form-group {
+//     font-size: 15px;
+//     color: black;
+// }
+
+// .panel-title {
+//     padding-top: 7px;
+//     padding-left: 10px;
+// }
+
+// .example-form {
+//     min-width: 150px;
+//     max-width: 500px;
+//     width: 100%;
+// }
+
+// .example-full-width {
+//     width: 100%;
+// }
+
+// .auto-mrg-top {
+//     margin-top: 1vw;
+// }
+
+// .download-pad {
+//     margin: 0.5vw 2vw;
+//     position: absolute;
+//     margin-top: 11px;
+// }
+
+// .mrg-lft {
+//     margin: 2vw;
+// }
+
+//  ::ng-deep .mat-select-value {
+//     font-size: 15px !important;
+// }
+
+//  ::ng-deep .mat-option-text {
+//     font-size: 15px !important;
+// }
+
+//  ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+//     padding: 10px !important;
+// }
+
+// mat-form-field {
+//     margin-top: -0.4vw;
+// }
+
+// .mat-paginator {
+//     display: block;
+//     margin-bottom: 50px !important;
+// }
+
+// ::ng-deep .mat-form-field-flex {
+//     margin-top: -24px !important;
+// }
+
+// ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+//     padding: .4375em 0 13px 0px !important;
+// }
+
+// th.mat-header-cell {
+//     flex: 0 16% !important;
+//     width: 16% !important;
+//     line-height: 20px !important;
+//     text-align: center;
+// }
+
+// td.mat-cell {
+//     line-height: 24px !important;
+//     text-align: center;
+//     flex: 0 16% !important;
+//     width: 16% !important;
+//     line-height: 20px !important;
+// }
+
+// .mat-expansion-panel {
+//     overflow: visible;
+// }
+
+// .mat-expansion-panel-header-title {
+//     display: flex;
+//     flex-grow: 1;
+//     margin-right: 16px;
+//     color: #f8f9fa;
+// }
+
+// :host ::ng-deep .mat-expansion-indicator::after {
+//     border-style: solid;
+//     border-width: 0 2px 2px 0;
+//     content: '';
+//     display: inline-block;
+//     padding: 3px;
+//     transform: rotate(45deg);
+//     vertical-align: middle;
+//     color: #f8f9fa;
+// }
+
+// .mat-expansion-panel-header {
+//     background-color: #276678 !important;
+// }
+
+// // :host ::ng-deep .mat-panel-description {
+// //     color:white;
+// //     margin-top:8px;
+// //     margin-left:50px
+// // }
+// .mat-expansion-panel-header-description {
+//     flex-grow: 2;
+//     color: white;
+//     margin-top: 8px;
+//     margin-left: 50px
+// }
+
+.dashBoard {
+    background: #276678 !important;
+    color: #fff!important;
+    margin-bottom: 17px;
+    // height: 44px;
+    // padding-top: 10px;
+    // padding-left: 10px;
+    font-size: 21px;
+    font-weight: 500;
+    border-color: #276678;
+    border-style: solid;
+    vertical-align: middle !important;
+    padding: 15px;
+}
+
+.upload {
+    height: 80vh;
+}
+
+.upload-container {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.upload-container .select {
+    padding: 10px;
+    flex-basis: 30% !important;
+}
+
+.upload-container .browse-btn {
+    border: none;
+    background: #42a3ba;
+    padding: 12px 15px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 24px;
+}
+
+
+
+

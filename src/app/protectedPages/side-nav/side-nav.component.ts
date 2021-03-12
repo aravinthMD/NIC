@@ -151,7 +151,7 @@ showSideMenu = false;
 
     this.listenerForLocationChange();
 
-    if(path.includes('users/Dashboard')){
+    if(path.includes('dashboard')){
       this.isLocation = '0'
     }else if(path.includes('users/proformaInvoice')){
       this.accountInfoNav = '1.1'
@@ -199,7 +199,7 @@ showSideMenu = false;
       this.isLocation = '2.6'
     }
 
-    if(path.includes('users/') && !path.includes('users/Dashboard') && !path.includes('users/reports') &&!path.includes('users/sendemail') &&!path.includes('users/managegroup')) {
+    if(path.includes('users/') && !path.includes('dashboard') && !path.includes('users/reports') &&!path.includes('users/sendemail') &&!path.includes('users/managegroup')) {
       this.parentLocation = '1'
     }else if(path.includes('admin/')) {
       this.parentLocation = '2' 
@@ -209,13 +209,13 @@ showSideMenu = false;
       this.parentLocation = ''
     }
 
-    if(path.includes('users/proformaInvoice') || path.includes('users/projectExecution') || path.includes('users/purchaseOrder') || path.includes('users/taxInvoice') || path.includes('users/smsCredit')) {
+    // if(path.includes('users/proformaInvoice') || path.includes('users/projectExecution') || path.includes('users/purchaseOrder') || path.includes('users/taxInvoice') || path.includes('users/smsCredit')) {
 
-      this.accountInfoNav = '1.1'
-      this.isLocation = '1.1.1'
-      this.router.navigate(['/users/customerDetails'])
+    //   this.accountInfoNav = '1.1'
+    //   this.isLocation = '1.1.1'
+    //   this.router.navigate(['/users/customerDetails'])
 
-    }
+    // }
    
 
   //   this.utilService.projectNumber$.subscribe((pno)=> {
@@ -246,11 +246,17 @@ showSideMenu = false;
     // this.activatedRoute.params.subscribe((res) => {
     //     console.log('side nav change', res);
     // });
+
+    this.clientDetailService.getClientIdObs()
+        .subscribe((val) => {
+           this.isExistingUser = !!val;
+        });
     
     this.location.onUrlChange((url) => {
-        const clientId = this.clientDetailService.getClientId();
-        this.isExistingUser = !!clientId;
-        console.log('side nav change', clientId);
+        // // // const clientId = this.clientDetailService.getClientId();
+        // // // this.isExistingUser = !!clientId;
+        // // console.log('side nav change', clientId);
+        // console.log('this.isExistingUser', this.isExistingUser)
         this.highlightsSideMenu(url);
     });
   }

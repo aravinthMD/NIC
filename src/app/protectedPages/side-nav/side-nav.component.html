@@ -4,7 +4,7 @@
             <a class="logo_nic p-0"><img src="assets/images/dashboard_nic_logo_1-1.png" class="nic_logo"></a>
         </li>
         <li class="list-group-item">
-            <a routerLink="/users/Dashboard" (click)="navigation('0')" [ngClass]="{'side-menu': (isLocation == '0')}" routerLinkActive="active-link" class=""><i class="fa fa-tachometer pr-2" aria-hidden="true"></i>Dashboard</a>
+            <a routerLink="/dashboard" (click)="navigation('0')" [ngClass]="{'side-menu': (isLocation == '0')}" routerLinkActive="active-link" class=""><i class="fa fa-tachometer pr-2" aria-hidden="true"></i>Dashboard</a>
         </li>
 
         <!-- <li class="list-group-item">
@@ -183,6 +183,10 @@
         <li class="list-group-item" *ngIf="reportModule">
             <a routerLink="/users/reports" (click)="navigation('3')" [ngClass]="{'side-menu': (isLocation == '3')}" routerLinkActive="active-link" class="">
                 <i class="fa fa-area-chart pr-2" aria-hidden="true"></i>Reports</a>
+        </li>
+        <li class="list-group-item">
+            <a routerLink="/users/bulk-upload" (click)="navigation('5')" [ngClass]="{'side-menu': (isLocation == '5')}" routerLinkActive="active-link" class="">
+                <i class="fa fa-upload pr-2" aria-hidden="true"></i>Bulk Upload</a>
         </li>
         <!-- <li class="list-group-item">
             <a routerLink = "/admin/manage/users" routerLinkActive="active-link"  class=""><i class="fa fa-users pr-2" aria-hidden="true"></i>Manage Users</a>
