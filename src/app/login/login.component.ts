@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
         this.utilityService.setNotifications(processVariables.notificationList);        
         localStorage.setItem('roleName', processVariables.roleName);
         localStorage.setItem('userName', processVariables.username)
-        this.router.navigate(['users/Dashboard/']);
+        this.router.navigate(['dashboard']);
       });
 
   }

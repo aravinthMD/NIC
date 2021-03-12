@@ -35,6 +35,8 @@ import { DefineRolesComponent } from './protectedPages/admin/define-roles/define
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 import { LovResolverService } from '@services/lov-resolver.service';
 import { AuthguardService } from '@services/authguard.service';
+import { BulkUploadComponent } from './protectedPages/bulk-upload/bulk-upload.component';
+import { CustomerDetailsResolver } from '@services/customer-details.resolver.service';
 
 const routes: Routes = [
   {
@@ -49,11 +51,25 @@ const routes: Routes = [
     path:"verifyotp",
     component:GenerateOtpComponent
   },
+   {
+     path: 'dashboard',
+     component : ProtectedComponent,
+     canActivate: [AuthguardService],
+     resolve :  { listOfValue : LovResolverService },
+     children: [
+       {
+         path: '',
+         component: DashboardComponent
+       }
+     ]
+   },
   {
     path : "users",
     component : ProtectedComponent,
     canActivate: [AuthguardService],
-    resolve :  { listOfValue : LovResolverService },
+    resolve :  { 
+      listOfValue : LovResolverService,
+      customerResolver: CustomerDetailsResolver },
     children : [
       { 
         path : "Dashboard" ,
@@ -140,6 +156,10 @@ const routes: Routes = [
       {
         path: "managegroup", 
         component : ManageGroupComponent,
+      },
+      {
+        path: 'bulk-upload',
+        component: BulkUploadComponent
       }
     ],
   },

@@ -26,6 +26,8 @@ export class UtilService {
 
   private isCustomerModule = true;
 
+  customerDetails: any;
+
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
@@ -58,7 +60,7 @@ export class UtilService {
 
 
   getUserDetails(){
-    this.userDetails$.value;
+    return this.userDetails$.value;
   }
 
 
@@ -80,12 +82,14 @@ getBillAdminUserDetails(){
 }
 
 setCustomerDetails(data : any){
+  this.customerDetails = data;
   localStorage.setItem("currentCustomerDetailObject",JSON.stringify(data))
   this.customerDetail$.next(data);
 }
 
 getCustomerDetails(){
-  this.customerDetail$.value;
+  return this.customerDetails;
+  // return this.customerDetail$.value;
 }
 
 setCustomerId(id : string){

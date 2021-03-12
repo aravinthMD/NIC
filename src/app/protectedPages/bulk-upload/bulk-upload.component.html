@@ -1,0 +1,23 @@
+<div class="col-md-10 main">
+    <div class="col-md-12 reports p-0">
+      <mat-card>
+        <div class="dashBoard">
+            <div>Bulk Upload</div>
+        </div>
+
+
+        <input hidden type="file" #inputCsvFile (change)="onUpload($event)" accept=".csv">
+
+        <div class="upload">
+            <div class="upload-container">
+                <div class="select">
+                    <label>Select Page</label>
+                    <app-vf-custom-select [(ngModel)]="pageName" [values]="pageValues"></app-vf-custom-select>
+                </div>
+                <button class="browse-btn" (click)="pageName ? inputCsvFile.click() : showError()">Browse File</button>
+            </div>
+        </div>
+    </mat-card>
+    </div>
+</div>
+<app-csv-upload-modal [data]="csvResponse" *ngIf="csvResponse" (closeModal)="onModalClose($event)"></app-csv-upload-modal>

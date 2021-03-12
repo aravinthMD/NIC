@@ -712,7 +712,7 @@ today=new Date()
   home() {
 
     this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['/users/Dashboard'])
+    this.router.navigate(['dashboard'])
   }
 
 }
