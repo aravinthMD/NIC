@@ -35,6 +35,7 @@ import { DefineRolesComponent } from './protectedPages/admin/define-roles/define
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 import { LovResolverService } from '@services/lov-resolver.service';
 import { AuthguardService } from '@services/authguard.service';
+import { BulkUploadComponent } from './protectedPages/bulk-upload/bulk-upload.component';
 
 const routes: Routes = [
   {
@@ -140,6 +141,10 @@ const routes: Routes = [
       {
         path: "managegroup", 
         component : ManageGroupComponent,
+      },
+      {
+        path: 'bulk-upload',
+        component: BulkUploadComponent
       }
     ],
   },

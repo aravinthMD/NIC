@@ -493,6 +493,22 @@ export class ApiService {
       workflowId : '1e4bfff67b1411eb8f75f2fa9bec3d63'
     },
 
+    poCsvForBulkUpload: {
+      projectId : environment.projectIds.projectId,
+      processId : 'a711299874f611eb8cecf2fa9bec3d63',
+      workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
+    },
+    poValidationMsgForBulkUpload: {
+      projectId : environment.projectIds.projectId,
+      processId : '5266372e809211eb9148f2fa9bec3d63',
+      workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
+    },
+    poSaveValidDataForBulkUpload: {
+      projectId : environment.projectIds.projectId,
+      processId : '306438c4769211eb8e73f2fa9bec3d63',
+      workflowId : '4667faf21f2b11ebb6c9727d5ac274b2'
+    }
+
 
   };
 }

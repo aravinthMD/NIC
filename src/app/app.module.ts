@@ -74,6 +74,7 @@ import { AdminRolesMappingDialogComponent } from './protectedPages/admin/define-
 import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage-email.component';
 import { AuthguardService } from '@services/authguard.service';
 import { ScheduleEmailDialogComponent } from './protectedPages/email/schedule-email-dialog/schedule-email-dialog.component';
+import { BulkUploadComponent } from './protectedPages/bulk-upload/bulk-upload.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -157,7 +158,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AdminRolesMappingDialogComponent,
     ManageEmailComponent,
     ScheduleEmailDialogComponent,
-    CsvUploadModalComponent
+    CsvUploadModalComponent,
+    BulkUploadComponent
   ],
   imports: [
     BrowserModule,
