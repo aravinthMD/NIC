@@ -130,6 +130,10 @@ ngOnInit() {
     this.utilService.getDownloadXlsFile(this.userList)
   }
 
+  // getDownloadXls(downLoadList){
+  //   this.utilService.getDownloadXlsFile(downLoadList);
+  // }
+
   detectDateKeyAction(event,type) {
 
     console.log(event)
@@ -178,6 +182,33 @@ ngOnInit() {
     })
 
   }
+
+  // exportCsv(){
+
+  //   const formValue = this.searchForm.value;
+  //    const data = {
+  //       ...formValue,
+  //       "currentClientId":this.customerId,
+  //       exportCsv : true
+  //    }
+
+  //    this.auditService.getAuditTrails(data).subscribe((res :  any) => {
+       
+  //      const processVariables = res.ProcessVariables || {};
+  //      const error = processVariables.error;
+
+  //      if(error.code == '0'){
+  //        const auditResponse = processVariables.auditTrail;
+  //        this.getDownloadXls(auditResponse);
+  //      }else{
+  //        return this.toasterService.showError(error.message,'');
+  //      }
+
+  //    },(error) => {
+  //       return this.toasterService.showError(error.message,'');
+  //    })
+
+  // }
   onPageChange(event){
     const pageCollection = event
     this.getAuditTrails(pageCollection.pageIndex +1);
