@@ -88,6 +88,11 @@ export class BulkUploadComponent {
                             screenName: 'Purchase Order',
                             data: processVariables.PODataLIst
                         };
+                    } else if (this.pageName === '3') {
+                        this.csvResponse = {
+                            screenName: 'Tax Invoice',
+                            data: processVariables.TIDataLIst
+                        };
                     }
 
                     console.log('res', res);
