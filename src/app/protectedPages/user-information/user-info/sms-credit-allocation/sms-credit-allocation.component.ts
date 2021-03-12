@@ -175,7 +175,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       dateOfRequest: new FormControl(null),
       status: new FormControl('0'),
       onApprovalOf: new FormControl(null),
-      remark: new FormControl(''),
+      remark: new FormControl('',[Validators.required]),
       usedCredit: new FormControl(null),
       balanceCredit: new FormControl(null),
       approvedBy: new FormControl(userName),
@@ -272,11 +272,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     return status.value;
   }
 
-  // editData() {
-  //   this.propertyFlag = false;
-  //   this.showView = false;
-  // }
-
+ 
   // setFormValues() {
     // // this.smsCreditAllocation.patchValue({
     // //   smsQuotaMetrix: '1',
@@ -411,14 +407,17 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
   onSubmit() {
     const origin = location.origin;
+    const baseOrigin = window.location.pathname.split('/')[1];
+
     console.log('origin', origin);
     // const smsUrl = `${origin}/nic/assets/html/sms.html?id=smsId`;
     let  smsUrl 
     if(environment.production){
-      smsUrl = `${origin}/nic/#/external/smsappove/smsId`
+      smsUrl = `${origin}/${baseOrigin}/#/external/smsappove/smsId`
     }else{
       smsUrl = `${origin}/#/external/smsappove/smsId`
     }    
+
     if (this.smsCreditForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');

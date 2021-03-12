@@ -207,7 +207,7 @@ export class LovsComponent implements OnInit {
        regex =  /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
        msg = 'Please enter valid mail id';
     } else if (key  === '6' || key === '7') {
-      regex = /[+]{0,1}[0-9]{1,10}$/;
+      regex = /^([+]\d{1,2})?\d{1,10}$/;
       msg = 'Please enter valid code';
     }
 

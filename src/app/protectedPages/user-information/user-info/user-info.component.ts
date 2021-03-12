@@ -672,31 +672,38 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
   getCustomerDetailByCustomerId(id:string){    
 
-    this.userInfoService.getCustomerDetailByCustomerId(id).subscribe((response: any) => {
+    const processVariables = this.utilService.getCustomerDetails();
 
-      console.log("get customer by id",response)
-      const res = response["ProcessVariables"] || '';
-      this.userId = res.userId || '';
-      const processVariables = response.ProcessVariables;
-      this.utilService.setUserDetails(processVariables);
-      this.setFormValues(processVariables);
-      this.setValueForViewPage(processVariables);
-      const docsId = processVariables.upload_document || '';
-      this.docAvailFlag = !!docsId;
-      this.previewDocumentId = docsId;
-      this.documentUploadId = docsId;
-      this.initialStatus = String(processVariables.status || 1);
-      this.clientDetailService.setClientStatus(this.initialStatus === '1');
+    if (!processVariables) {
+      return;
+    }
+
+    // this.userInfoService.getCustomerDetailByCustomerId(id).subscribe((response: any) => {
+
+    //   console.log("get customer by id",response)
+    //   const res = response["ProcessVariables"] || '';
+    //   this.userId = res.userId || '';
+    //   const processVariables = response.ProcessVariables;
+    this.userId = processVariables.userId;
+    this.utilService.setUserDetails(processVariables);
+    this.setFormValues(processVariables);
+    this.setValueForViewPage(processVariables);
+    const docsId = processVariables.upload_document || '';
+    this.docAvailFlag = !!docsId;
+    this.previewDocumentId = docsId;
+    this.documentUploadId = docsId;
+    this.initialStatus = String(processVariables.status || 1);
+    this.clientDetailService.setClientStatus(this.initialStatus === '1');
       // if(response['ProcessVariables']['upload_document']){
       //     this.previewDocumentId = response['ProcessVariables']['upload_document'];
       //     this.docAvailFlag = true;
       // }
 
-    },(error) => {
+    // }, (error) => {
 
-      console.log(error)
+    //   console.log(error)
 
-    })
+    // })
 
   }
 
@@ -751,7 +758,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
   back() {
 
     this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['/users/Dashboard'])
+    this.router.navigate(['dashboard'])
   }
 
   next(){

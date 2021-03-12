@@ -73,12 +73,23 @@ export class BulkUploadComponent {
                         return this.toasterService.showError(errorMessage, '');
                     }
                     const processVariables = res.ProcessVariables;
-                    if (this.pageName === '2') {
+                    if (this.pageName === '0') {
+                        this.csvResponse = {
+                            screenName: 'Proforma Invoice',
+                            data: processVariables.PIDataLIst
+                        };
+                    } else if (this.pageName === '1') {
+                        this.csvResponse = {
+                            screenName: 'Project Execution',
+                            data: processVariables.PEDataLIst
+                        };
+                    } else if (this.pageName === '2') {
                         this.csvResponse = {
                             screenName: 'Purchase Order',
                             data: processVariables.PODataLIst
                         };
                     }
+
                     console.log('res', res);
                 });
       }

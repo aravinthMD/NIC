@@ -21,7 +21,7 @@ private loginStatus: boolean = false
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       return new Observable<boolean>((observer) => {       
           const data = { username:localStorage.getItem('sessionId') };          
           if (!this.loginStatus){

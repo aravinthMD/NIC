@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -59,8 +60,16 @@ export class ClientDetailsService {
         }
      ];
 
+     clientId$ = new BehaviorSubject<string>('');
+   
+
     setClientId(id: string) {
         this.clientId = id;
+        this.clientId$.next(id);
+    }
+
+    getClientIdObs() {
+       return this.clientId$;
     }
 
     getClientId() {

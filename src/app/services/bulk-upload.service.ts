@@ -15,6 +15,16 @@ export class CsvBulkUploadService {
 
   getApiDetailsForCsvUpload(pageKey: string) {
 
+    if (pageKey === '0') {
+        return this.apiService.api.piCsvForBulkUpload;
+    }
+
+    if (pageKey === '1') {
+      return this.apiService.api.peCsvForBulkUpload;
+    }
+
+
+
     if (pageKey === '2') {
         return this.apiService.api.poCsvForBulkUpload;
     }
@@ -22,15 +32,27 @@ export class CsvBulkUploadService {
   }
 
   getApiDetailsForValidationMessage(pageKey: string) {
-      if (pageKey === '2') {
+    if (pageKey === '0') {
+        return this.apiService.api.piValidationMsgForBulkUpload;
+    }
+    if (pageKey === '1') {
+      return this.apiService.api.peValidationMsgForBulkUpload;
+  }
+    if (pageKey === '2') {
           return this.apiService.api.poValidationMsgForBulkUpload;
-      }
+    }
   }
 
   getApiDetailsForSaveCsvData(pageKey: string) {
-      if (pageKey === '2') {
+    if (pageKey === '0') {
+        return this.apiService.api.piSaveValidDataForBulkUpload;
+    }
+    if (pageKey === '1') {
+      return this.apiService.api.peSaveValidDataForBulkUpload;
+  }
+    if (pageKey === '2') {
           return this.apiService.api.poSaveValidDataForBulkUpload;
-      }
+    }
   }
 
   uploadCsv(pageKey: string, data: any) {
