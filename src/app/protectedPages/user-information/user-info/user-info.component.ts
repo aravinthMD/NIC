@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 import { NewAccountService } from '@services/new-account.service';
 
 import { UtilityService } from '@services/utility.service';
+import { CustomDateAdapter } from '@services/custom-date-adapter.service';
 
 
 
@@ -134,7 +135,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
     private beheSer: BehaviourSubjectService,
     private clientDetailService: ClientDetailsService,
     private newAccountService: NewAccountService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private customDateAdapter: CustomDateAdapter
     ) {
 
       // this.departmentListData = this.activatedRoute.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'];
@@ -414,7 +416,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
         value : data.purpose_applicant
       },
       {
-        key  : 'SMS GateWay IP',
+        key  : 'SMS Gateway IP',
         value : data.Ip_form
       },
       {
@@ -476,7 +478,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       applicantName : data.App_name,
       departmentName : data.department,
       designation :  data.FO_designation,
-      mobileNumberCode : data.mobileNumberCode,
+      mobileNumberCode : Number(data.mobileNumberCode),
       // mobileNumberCode : 0,
       email : data.App_email,
       mobileNo : data.App_mobile,
@@ -508,7 +510,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       domMonSmsTraffic: data.sms_traffic,
       intMonSmsTraffic: data.proj_international,
       appSecurAudClear: data.app_security,
-      auditDate : data.audit_date,
+      auditDate : this.customDateAdapter.parseToDateObj(data.audit_date),
       // creditDate : data.creditDate,
       // creditAddedAgainstPi : data.creditAddedAgainstPI,
       traiSenderId: data.trai_extempted,
@@ -556,8 +558,10 @@ export class UserInfoComponent implements OnInit, OnChanges {
       return;
     }
 
+    const auditDate = this.customDateAdapter.transform(this.form.value.auditDate, 'dd/MM/yyyy');
+
     const userInfo: any = {
-      currentCustomerId: this.form.value.id,
+      currentCustomerId: (this.form.value.id),
       App_name: this.form.value.applicantName,
       department: this.form.value.departmentName,
       FO_designation: this.form.value.designation,
@@ -588,7 +592,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       sms_traffic: this.form.value.domMonSmsTraffic,
       proj_domestic: this.form.value.domMonSmsTraffic,
       app_security: this.form.value.appSecurAudClear,
-      audit_date: this.form.value.auditDate,
+      audit_date: auditDate,
       // creditDate: this.form.value.creditDate,
       // creditAddedAgainstPI: this.form.value.creditAddedAgainstPi,
       trai_extempted: this.form.value.traiSenderId,
@@ -642,6 +646,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.form.get('id').setValue(this.clientId);
       this.clientDetailService.setClientId(this.clientId);
       this.newAccountService.setFlagForShowingPages(1);
+      this.utilService.setCustomerDetails(processVariables);
       this.dataValue = {
         title: 'Customer Information Saved Sucessfully',
         message : 'Are you sure you want to proceed to Technical Admin page?'
@@ -836,7 +841,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
     // alert('Success')
     const files: File = event.target.files[0];
-
+    const size = files.size / 1024;
+    console.log('size', size);
 
     if(files.type == 'application/pdf') {
 
@@ -849,6 +855,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
         // target.files[0]
 
        // this.selectedPdf = ''
+        
         this.fileSize = `Size - ${this.bytesToSize(files.size)}`
         this.fileName = files.name;  
         console.log('fileSize',this.fileSize)
@@ -1009,6 +1016,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
  async uploadFile(files  :FileList){
       this.file = files.item(0);
       let ext =  this.file.name.split('.').pop();
+      const size = files.item(0).size / 1024;
+      console.log('size', size);
       if(ext !== 'pdf')
       return this.toasterService.showError('Only Pdf is Allowed','');
 
