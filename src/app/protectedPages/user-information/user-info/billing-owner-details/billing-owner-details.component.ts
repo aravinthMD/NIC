@@ -183,6 +183,9 @@ export class BillingOwnerDetailsComponent implements OnInit {
 
       this.detectAuditTrialObj = this.billOwnerForm.value;
 
+      const mobileCode = this.mobileNumberCodeList.find(val => String(val.key) === String(data.mobileNumberCode));
+      const telephoneCode = this.teleCodeValues.find(val => String(val.key) === String(data.telephoneNumberCode));
+
       this.viewInfoData = [
         {
           key: this.labels.name,
@@ -202,7 +205,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
         },
         {
           key: this.labels.mobileNo,
-          value: `${this.billOwnerForm.value.mobileNumberCode}${this.billOwnerForm.value.mobileNumber}`,
+          value: `${mobileCode.value  || ''} ${this.billOwnerForm.value.mobileNumber}`,
         },
         // {
         //   key: this.labels.mobileNo,
@@ -210,7 +213,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
         // },
         {
           key: this.labels.teleNumber,
-          value: `${this.billOwnerForm.value.telephoneNumberCode}${this.billOwnerForm.value.telephoneNumber}`,
+          value: `${telephoneCode.value || ''} ${this.billOwnerForm.value.telephoneNumber}`,
         },
         // {
         //   key: this.labels.teleNumber,

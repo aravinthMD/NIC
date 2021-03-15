@@ -194,6 +194,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     const listOfValue = data.listOfValue || {};
     const processVariables = listOfValue.ProcessVariables;
     this.smsQuotaMetrix = processVariables.SMSApproval || [];
+    this.smsCreditService.setStatusListLov(processVariables.smsCreditStatusList);
     this.smsCreditService.setSmsQuotaMatrix(this.smsQuotaMetrix);
   }
 

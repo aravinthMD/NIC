@@ -27,8 +27,10 @@ export class CustomDateAdapter  {
                 const date = Number(str[0]);
                 return new Date(year, month, date);
 
+            } else {
+                return '';
             }
-            return new Date(value);
+            // return new Date(value);
         }
 }
 
