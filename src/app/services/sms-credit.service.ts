@@ -11,9 +11,9 @@ import { SmsCreditAllocation } from '../protectedPages/user-information/user-inf
 })
 export class SmsCreditService {
   private STATUS_LIST = [
-    { key: '0', value: 'Pending' },
-    { key: '1', value: 'Approved' },
-    { key: '2', value: 'Rejected' },
+    // { key: '0', value: 'Pending' },
+    // { key: '1', value: 'Approved' },
+    // { key: '2', value: 'Rejected' },
   ];
 
   private SMS_QUOTA_MATRIX = [];
@@ -22,6 +22,10 @@ export class SmsCreditService {
     private httpService: HttpService,
     private apiService: ApiService
   ) {}
+
+  setStatusListLov(list) {
+    this.STATUS_LIST = list;
+  }
 
   getStatusListLov() {
     return this.STATUS_LIST;
