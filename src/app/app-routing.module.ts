@@ -125,7 +125,7 @@ const routes: Routes = [
         component: ProjectExecutionComponent,
       },
       {
-        path:'projectExecution/:projectNo', 
+        path:'projectExecution/:id', 
         component: ProjectExecutionComponent,
       },
       {
@@ -133,7 +133,7 @@ const routes: Routes = [
         component: PurchaseOrderComponent,
       },
       {
-        path:'purchaseOrder/:projectNo', 
+        path:'purchaseOrder/:id', 
         component: PurchaseOrderComponent,
       },
       {
@@ -141,7 +141,7 @@ const routes: Routes = [
         component: TaxInvoiceComponent,
       },
       {
-        path:'taxInvoice/:projectNo', 
+        path:'taxInvoice/:id', 
         component: TaxInvoiceComponent,
       },
 

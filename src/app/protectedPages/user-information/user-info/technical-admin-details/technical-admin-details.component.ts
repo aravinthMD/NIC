@@ -98,7 +98,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       }
       // this.showView = true;
       this.clientId = Number(value.id || 0);
-      this.clientDetailService.setClientId(value.id);
+      // this.clientDetailService.setClientId(value.id);
       this.getTechAdminsById(this.clientId);
 
       // this.getBillingAdminDetailById(this.clientId);

@@ -163,7 +163,7 @@ ngOnInit() {
     this.auditService.getAuditTrails(data).subscribe(res => {
       if (res["Error"] == 0 && res["ProcessVariables"]['error']['code']== 0) {
         const auditResponse = res["ProcessVariables"];
-        this.userList = auditResponse['auditTrail'];
+        this.userList = auditResponse['AudittrailExportList'];
         console.log("get autdit trail",res);
 
         this.dataSource = this.userList;

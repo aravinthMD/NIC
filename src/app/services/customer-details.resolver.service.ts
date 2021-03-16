@@ -29,8 +29,10 @@ export class CustomerDetailsResolver implements Resolve<any> {
         this.userInfoService.getCustomerDetailByCustomerId(customerId)
             .subscribe((response: any) => {
                 const processVariables = response.ProcessVariables;
+                this.utilService.setUserDetails(processVariables);
                 this.utilService.setCustomerDetails(processVariables);
-                // this.newAccountService.setFlagForShowingPages(processVariables.insertionFlag);
+                this.clientDetailService.setClientStatus(processVariables.status == '1');
+                this.newAccountService.setFlagForShowingPages(processVariables.insertionFlag);
             });
         // console.log('id', route.firstChild.params);
     }

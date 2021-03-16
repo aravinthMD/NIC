@@ -57,6 +57,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
    // this.onSearch();
+    this.utilService.setUserDetails(null);
+    this.utilService.setCustomerDetails(null);
+    this.clientDetailsService.setClientId(null);
     this.newAccountService.setFlagForShowingPages('reset');
     this.getDashboardDetails();
   }
