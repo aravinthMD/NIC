@@ -247,10 +247,11 @@ export class UserInfoComponent implements OnInit, OnChanges {
 
         this.utilService.userDetails$.subscribe((val: any)=> {
           console.log('val', val);
-
-          this.accountName = val['App_name'] || '';
-          this.status = val['status'] || '';
-          this.projectNo = val.projectNo || '';
+          if(val){
+            this.accountName = val['App_name'] || '';
+            this.status = val['status'] || '';
+            this.projectNo = val.projectNo || '';
+          }
         })
 
         this.existingPreviewUserFlag = true
@@ -609,13 +610,21 @@ export class UserInfoComponent implements OnInit, OnChanges {
     const customerId = this.form.value.id;
     if (status !== this.initialStatus && customerId) {
         userInfo.status = Number(status);         
+        // if(environment.production){
+        //   userInfo.clientActivation = `${origin}/nic/#/external/active-user/${customerId}`
+        // }else{
+        //   userInfo.clientActivation = `${origin}/#/external/active-user/${customerId}`
+          
+        // } 
+        // userInfo.clientActivation = `${origin}/nic/assets/html/account.html?id=${customerId}`;
+        const origin = location.origin;
+        const baseOrigin = window.location.pathname.split('/')[1];
+        console.log('origin', origin);      
         if(environment.production){
-          userInfo.clientActivation = `${origin}/nic/#/external/active-user/${customerId}`
+          userInfo.clientActivation = `${origin}/${baseOrigin}/#/external/active-user/${customerId}`
         }else{
           userInfo.clientActivation = `${origin}/#/external/active-user/${customerId}`
-          
         } 
-        // userInfo.clientActivation = `${origin}/nic/assets/html/account.html?id=${customerId}`;
     }
 
 
@@ -678,6 +687,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
   getCustomerDetailByCustomerId(id:string){    
 
     const processVariables = this.utilService.getCustomerDetails();
+
+    console.log('processVariables', processVariables)
 
     if (!processVariables) {
       return;

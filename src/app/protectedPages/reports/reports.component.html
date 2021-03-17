@@ -108,7 +108,8 @@
                         <div class="col-4" *ngIf="reportDisplayName">
                             <label for="mobile">{{reportDisplayName}}</label>
                             <div class="form-group">
-                                <ng-multiselect-dropdown placeholder="Choose {{reportDisplayName}}" formControlName="reportsFilterDetails" [data]="reportsFilterDetails" [settings]="dropdownSettings" (onDeSelectAll)="onItemDeSelect('1')">
+                                <ng-multiselect-dropdown placeholder="Choose {{reportDisplayName}}" formControlName="reportsFilterDetails" 
+                                    [data]="reportsFilterDetails" [settings]="dropdownSettings" (onDeSelectAll)="onItemDeSelect('1')">
                                 </ng-multiselect-dropdown>
                             </div>
                         </div>
@@ -135,7 +136,8 @@
                                 <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
                                 <mat-form-field floatLabel="never">
                                     <mat-placeholder>dd-mm-yyyy</mat-placeholder>
-                                    <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" [min]="reportsForm.get('fromDate').value" formControlName="toDate">
+                                    <input matInput [matDatepicker]="picker2" (keyup)="detectDateKeyAction($event,'toDate')" 
+                                        [min]="reportsForm.get('fromDate').value" formControlName="toDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
