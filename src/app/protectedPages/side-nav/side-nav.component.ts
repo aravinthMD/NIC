@@ -337,7 +337,7 @@ showSideMenu = false;
     this.accountInfoNav = '1.1'
   }else {
     this.utilService.setProjectNumber(null)
-    this.clientDetailService.setClientId('');
+    // this.clientDetailService.setClientId('');
     this.accountInfoNav = ''
   }
 

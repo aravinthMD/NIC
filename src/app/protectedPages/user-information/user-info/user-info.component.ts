@@ -198,7 +198,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
     this.user = '';
     this.activatedRoute.params.subscribe((value) => {
         this.user = value.id;
-        this.clientDetailService.setClientId(value.id || '');
+        // this.clientDetailService.setClientId(value.id || '');
         console.log("user Id",this.user);
     });
    }
@@ -229,7 +229,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       this.clientId = value.id;
       console.log("user Id",this.user);
       if (this.clientId) {
-        this.clientDetailService.setClientId(this.clientId);
+        // this.clientDetailService.setClientId(this.clientId);
         this.getCustomerDetailByCustomerId(this.clientId);
       } else {
         this.newUserFlag = true;
@@ -644,7 +644,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       }
       this.form.get('status').setValue(this.initialStatus);
       this.form.get('id').setValue(this.clientId);
-      this.clientDetailService.setClientId(this.clientId);
+     //  this.clientDetailService.setClientId(this.clientId);
       this.newAccountService.setFlagForShowingPages(1);
       this.utilService.setCustomerDetails(processVariables);
       this.dataValue = {
