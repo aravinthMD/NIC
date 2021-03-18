@@ -113,7 +113,7 @@ export class ActiveUserComponent implements OnInit {
       const data = {
           id: this.customerId,
           isApprove: this.actionValue,
-          sstatus: this.status
+          status: this.status
       }
       this.loginService.sendUserResponse(data).subscribe(res =>
         {          

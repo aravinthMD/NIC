@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
             if(res['status'] ==  true){
             console.log("login Response",res)
             sessionStorage.setItem('token', res['token'] || '');
-            localStorage.setItem("token",res["token"]);
+            // localStorage.setItem("token",res["token"]);
             const userData = this.utilityService.getUserData()
             console.log("user Data",userData)
             this.getUserDetails({username: userData.userName ?  userData.userName: null           
@@ -93,8 +93,8 @@ export class LoginComponent implements OnInit {
         this.adminDetailService.setAdminUserId(processVariables.userId ? processVariables.userId : '');
         localStorage.setItem('sessionId', processVariables.userId);
         this.utilityService.setNotifications(processVariables.notificationList);        
-        localStorage.setItem('roleName', processVariables.roleName);
-        localStorage.setItem('userName', processVariables.username)
+        // localStorage.setItem('roleName', processVariables.roleName);
+        // localStorage.setItem('userName', processVariables.username)
         this.router.navigate(['dashboard']);
       });
 

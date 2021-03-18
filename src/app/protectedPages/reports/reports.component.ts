@@ -353,19 +353,19 @@ userStatus  = [
   onReportChange(event) {
     const key = event.key;
     this.reportKey = Number(key);
-    if ( key === '4') {
+    if ( key == '4') {
         return this.status = this.allStatus.smsCreditStatusLov;
     }
-    if (key === '5') {
+    if (key == '5') {
       return this.status = this.allStatus.piRaisedStatusLov;
     }
-    if (key === '6') {
+    if (key == '6') {
       return this.status = this.allStatus.poRaisedStatusLov;
     }
-    if (key === '7') {
+    if (key == '7') {
       return this.status = this.allStatus.invoiceRaisedStatusLov;
     }
-    if (key === '8') {
+    if (key == '8') {
       return this.status = this.allStatus.paymentStatusLov;
     }
 
@@ -459,7 +459,8 @@ onReportFilterChange(event) {
             return this.toasterService.showError(errorMessage, '');
           }
           const processVariables = res.ProcessVariables;
-          if (selectedReportValue === '4') {
+          // 
+          // if (selectedReportValue == '4' || selectedReportValue == '2') {
             this.dropdownSettings = {
               singleSelection: true,
               allowSearchFilter: true,
@@ -469,18 +470,19 @@ onReportFilterChange(event) {
               idField: 'key',
               textField: 'value'
             }
-            return this.reportsFilterDetails = processVariables.statusLov;
-          }
-          this.dropdownSettings = {
-            singleSelection: false,
-            selectAllText: 'Select All',
-            unSelectAllText: 'Unselect All',
-            allowSearchFilter: true,
-            enableCheckAll : true,
-            clearSearchFilter : true,
-            itemsShowLimit:2
-          }
-          this.reportsFilterDetails = processVariables.reportFilterDetails || [];
+            return this.reportsFilterDetails = processVariables.reportFilterDetails 
+            //  processVariables.statusLov;
+          // }
+          // this.dropdownSettings = {
+          //   singleSelection: false,
+          //   selectAllText: 'Select All',
+          //   unSelectAllText: 'Unselect All',
+          //   allowSearchFilter: true,
+          //   enableCheckAll : true,
+          //   clearSearchFilter : true,
+          //   itemsShowLimit:2
+          // }
+          // this.reportsFilterDetails = processVariables.reportFilterDetails || [];
       });
 }
 

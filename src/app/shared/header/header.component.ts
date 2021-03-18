@@ -23,9 +23,12 @@ export class HeaderComponent implements OnInit {
               private utilService : UtilService,
               private router : Router,
               private toggleSideMenuService: ToggleSideMenuService) {
+    const userData = this.utilityService.getLoginDetail();            
 
-    this.userName = localStorage.getItem('userName') || 'Admin User'
-    this.userType = localStorage.getItem('roleName') || 'Admin' ;
+    this.userName = userData.username;
+    //  localStorage.getItem('userName') || 'Admin User'
+    this.userType = userData.roleName;
+    // localStorage.getItem('roleName') || 'Admin' ;
 
                }
 
