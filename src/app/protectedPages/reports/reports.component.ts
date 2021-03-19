@@ -220,7 +220,15 @@ userStatus  = [
       const status = formValue.reportsFilterDetails;
       data.activeStatus = (status[0] || {}).key || '';
       data.reportsFilterDetails = null;
+    } else {
+      const status = formValue.reportsFilterDetails || [];
+      data.reportsFilterDetails = status.map(val => val.key)
     }
+
+    // if (this.selectedReport === '4') {
+      
+      
+   // }
     if (currentPage) {
       data.currentPage = currentPage;
     }
@@ -460,17 +468,23 @@ onReportFilterChange(event) {
           }
           const processVariables = res.ProcessVariables;
           // 
-          // if (selectedReportValue == '4' || selectedReportValue == '2') {
-            this.dropdownSettings = {
-              singleSelection: true,
-              allowSearchFilter: true,
-              enableCheckAll : true,
-              clearSearchFilter : true,
-              itemsShowLimit:2,
-              idField: 'key',
-              textField: 'value'
-            }
-            return this.reportsFilterDetails = processVariables.reportFilterDetails 
+          this.dropdownSettings = {
+            allowSearchFilter: true,
+            enableCheckAll : true,
+            clearSearchFilter : true,
+            itemsShowLimit:2,
+            idField: 'key',
+            textField: 'value'
+          }
+          if (selectedReportValue == '4') { 
+              this.dropdownSettings.singleSelection = true;
+              return this.reportsFilterDetails = processVariables.statusLov;
+          } else {
+            this.dropdownSettings.singleSelection = false;
+            return this.reportsFilterDetails = processVariables.reportFilterDetails; 
+          }
+            
+           
             //  processVariables.statusLov;
           // }
           // this.dropdownSettings = {

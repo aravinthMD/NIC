@@ -47,7 +47,7 @@ export class ActiveUserComponent implements OnInit {
                 
               console.log("getSmsAllcationData response",response);
                 
-                  if (myData['status'] != '0') {
+                  if (myData['smsFlag'] != '0') {
                     const modal = document.getElementById("myModal");
                     modal.style.display = 'block';
                     this.messageText = 'This request is already processed'
@@ -124,7 +124,7 @@ export class ActiveUserComponent implements OnInit {
           //  
          const myData = response["processResponse"]['ProcessVariables'] 
              
-          if (myData['status'] !== '0') {
+          if (myData['smsFlag'] != '0') {
             this.messageText = 'Updated successfully';
             const modal = document.getElementById("myModal");
             modal.style.display = 'block';

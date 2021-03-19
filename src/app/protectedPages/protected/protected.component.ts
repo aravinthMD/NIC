@@ -25,7 +25,8 @@ export class ProtectedComponent implements OnInit {
 
     this.userName = localStorage.getItem('userName') || 'Admin User'
     const lovData =   this.activatedRoute.snapshot.data;
-    this.utilService.setLovData( lovData['listOfValue']['ProcessVariables'])
+    this.utilService.setLovData( lovData['listOfValue']['ProcessVariables']);
+    this.utilService.setUserDetails(lovData['customerResolver']?lovData['customerResolver']['ProcessVariables']:null);
    
 
   }

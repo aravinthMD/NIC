@@ -390,7 +390,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     }
 
     const techAdminDetails = {
-      // id: this.technicaladminform.value.id,
+      id: this.technicaladminform.value.id,
       name: this.technicaladminform.value.name,
       department: this.technicaladminform.value.departmentName,
       designation: this.technicaladminform.value.designation,

@@ -153,7 +153,7 @@ smsApprovedList: any[] = [
         if (!param) {
           return;
         }
-        this.clientId = param.projectNo;
+        this.clientId = param.id;
 //        this.fetchPODetails();
 
     });

@@ -112,7 +112,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       return String(val.key) === String(this.data.smsApprover);
     }) || {};
     const status = this.statusList.find(val => {
-      return val.key === this.data.status;
+      return val.key == this.data.status;
     });
     this.setCreditShowFlag(status)
     return [
