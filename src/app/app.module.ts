@@ -75,6 +75,7 @@ import { ManageEmailComponent } from './protectedPages/admin/manage-email/manage
 import { AuthguardService } from '@services/authguard.service';
 import { ScheduleEmailDialogComponent } from './protectedPages/email/schedule-email-dialog/schedule-email-dialog.component';
 import { BulkUploadComponent } from './protectedPages/bulk-upload/bulk-upload.component';
+import { MainpageComponent } from './protectedPages/mainpage/mainpage.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // bgsColor: 'red',
@@ -122,19 +123,18 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   declarations: [
     AppComponent,
     LoginComponent,
-    ProtectedComponent,
+    // ProtectedComponent,
     DashboardComponent,
-    SideNavComponent,
-    UserInformationComponent,
-    UserInfoComponent,
-    ProcessDetailsComponent,
-    PurchaseOrderComponent,
-    TaxInvoiceComponent,
+    // UserInformationComponent,
+    // UserInfoComponent,
+   // ProcessDetailsComponent,
+    // PurchaseOrderComponent,
+    // TaxInvoiceComponent,
     ProformaInvoiceDialogFormComponent,
     ResetPasswordComponent,
     ReportsComponent,
     AdminComponent,
-    HeaderComponent,
+    // HeaderComponent,
     CreateUserComponent,
     ManageUsersComponent,
     GenerateOtpComponent,
@@ -142,10 +142,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EmailComponent,
     ManageUserDialogComponent,
     LovsComponent,
-    ProjectExecutionComponent,
-    TechnicalAdminDetailsComponent,
-    BillingOwnerDetailsComponent,
-    SmsCreditAllocationComponent,
+    // ProjectExecutionComponent,
+    // TechnicalAdminDetailsComponent,
+    // BillingOwnerDetailsComponent,
+    // SmsCreditAllocationComponent,
     AccountManageComponent,
     ManageGroupComponent,
     ProjectExcecutionDialogComponent,
@@ -158,8 +158,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AdminRolesMappingDialogComponent,
     ManageEmailComponent,
     ScheduleEmailDialogComponent,
-    CsvUploadModalComponent,
-    BulkUploadComponent
+    // CsvUploadModalComponent,
+    BulkUploadComponent,
+    MainpageComponent
   ],
   imports: [
     BrowserModule,
@@ -218,7 +219,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     SmsCreditDialogComponent,
     AdminRolesMappingDialogComponent,
     ScheduleEmailDialogComponent,
-    CsvUploadModalComponent
+    // CsvUploadModalComponent
   ]
 })
 export class AppModule { }

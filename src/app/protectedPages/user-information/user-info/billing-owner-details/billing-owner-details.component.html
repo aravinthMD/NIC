@@ -234,7 +234,7 @@
             </div>
             </div>
             <div class="row formAlignment"> 
-            <!-- <div class="col-4">
+             <div class="col-4">
                 <div class="form-group">
                     <app-custom-input formControlName="remark" 
                         [labelName]="labels.remark" 
@@ -251,7 +251,8 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="remarks">{{labels.remark}}</label>
-                                <textarea class="form-control" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName='remark' id="remarks" rows="3"></textarea>
+                                <textarea class="form-control" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" 
+                                formControlName='remark' id="remarks" rows="3" [readonly]="propertyFlag"></textarea>
                                 <div class="date-picker-error" *ngIf="isDirty && billOwnerForm.controls['remark'].errors?.required">
                                     Please Enter Remark
                                 </div>

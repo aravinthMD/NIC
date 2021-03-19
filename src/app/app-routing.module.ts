@@ -37,6 +37,7 @@ import { LovResolverService } from '@services/lov-resolver.service';
 import { AuthguardService } from '@services/authguard.service';
 import { BulkUploadComponent } from './protectedPages/bulk-upload/bulk-upload.component';
 import { CustomerDetailsResolver } from '@services/customer-details.resolver.service';
+import { MainpageComponent } from './protectedPages/mainpage/mainpage.component';
 
 const routes: Routes = [
   {
@@ -51,104 +52,21 @@ const routes: Routes = [
     path:"verifyotp",
     component:GenerateOtpComponent
   },
+  
    {
-     path: 'dashboard',
-     component : ProtectedComponent,
+     path: 'home',
+     component : MainpageComponent,
      canActivate: [AuthguardService],
      resolve :  { listOfValue : LovResolverService },
      children: [
        {
          path: '',
          component: DashboardComponent
-       }
-     ]
-   },
-  {
-    path : "users",
-    component : ProtectedComponent,
-    canActivate: [AuthguardService],
-    resolve :  { 
-      listOfValue : LovResolverService,
-      customerResolver: CustomerDetailsResolver },
-    children : [
+       },       
       { 
-        path : "Dashboard" ,
-        component : DashboardComponent
+        path : "reports" , 
+        component : ReportsComponent    
       },
-      { 
-        path : "userInfo" , 
-        component : UserInformationComponent,
-      },
-      { 
-        path : "customerDetails/:id" , 
-        component : UserInfoComponent,
-      },
-      {
-        path: 'customerDetails',
-        component: UserInfoComponent,
-      },
-      {
-        path: 'techAdmin',
-        component: TechnicalAdminDetailsComponent,
-      },
-      {
-        path: 'techAdmin/:id',
-        component: TechnicalAdminDetailsComponent,
-      },
-      {
-        path: 'billingAdmin',
-        component: BillingOwnerDetailsComponent,
-      },
-      {
-        path: 'billingAdmin/:id',
-        component: BillingOwnerDetailsComponent,
-      },
-      {
-        path: 'smsCredit',
-        component: SmsCreditAllocationComponent,
-      },
-      {
-        path: 'smsCredit/:id',
-        component: SmsCreditAllocationComponent,
-      },
-
-      {
-        path:'proformaInvoice', 
-        component: ProcessDetailsComponent,
-      },
-      {
-        path:'proformaInvoice/:id', 
-        component: ProcessDetailsComponent,
-      },
-      {
-        path:'projectExecution', 
-        component: ProjectExecutionComponent,
-      },
-      {
-        path:'projectExecution/:id', 
-        component: ProjectExecutionComponent,
-      },
-      {
-        path:'purchaseOrder', 
-        component: PurchaseOrderComponent,
-      },
-      {
-        path:'purchaseOrder/:id', 
-        component: PurchaseOrderComponent,
-      },
-      {
-        path:'taxInvoice', 
-        component: TaxInvoiceComponent,
-      },
-      {
-        path:'taxInvoice/:id', 
-        component: TaxInvoiceComponent,
-      },
-
-
-      { path : "reports" , 
-      component : ReportsComponent,
-    },
       {
         path: "sendemail", 
         component : EmailComponent,
@@ -161,12 +79,101 @@ const routes: Routes = [
         path: 'bulk-upload',
         component: BulkUploadComponent
       }
-    ],
+     ]
+   },
+  {
+    path : "users",
+    // component : ProtectedComponent,
+    // canActivate: [AuthguardService],
+    // resolve :  { 
+    //   listOfValue : LovResolverService,
+    //   },
+      loadChildren: () =>
+        import( './protectedPages/protected/protected.module').then(
+          (m) => m.ProtectedModule
+        )
+    // children : [
+    //   // { 
+    //   //   path : "Dashboard" ,
+    //   //   component : DashboardComponent
+    //   // },
+    //   { 
+    //     path : "userInfo" , 
+    //     component : UserInformationComponent,
+    //   },
+    //   { 
+    //     path : "customerDetails/:id" , 
+    //     component : UserInfoComponent,
+    //   },
+    //   {
+    //     path: 'customerDetails',
+    //     component: UserInfoComponent,
+    //   },
+    //   {
+    //     path: 'techAdmin',
+    //     component: TechnicalAdminDetailsComponent,
+    //   },
+    //   {
+    //     path: 'techAdmin/:id',
+    //     component: TechnicalAdminDetailsComponent,
+    //   },
+    //   {
+    //     path: 'billingAdmin',
+    //     component: BillingOwnerDetailsComponent,
+    //   },
+    //   {
+    //     path: 'billingAdmin/:id',
+    //     component: BillingOwnerDetailsComponent,
+    //   },
+    //   {
+    //     path: 'smsCredit',
+    //     component: SmsCreditAllocationComponent,
+    //   },
+    //   {
+    //     path: 'smsCredit/:id',
+    //     component: SmsCreditAllocationComponent,
+    //   },
+
+    //   {
+    //     path:'proformaInvoice', 
+    //     component: ProcessDetailsComponent,
+    //   },
+    //   {
+    //     path:'proformaInvoice/:id', 
+    //     component: ProcessDetailsComponent,
+    //   },
+    //   {
+    //     path:'projectExecution', 
+    //     component: ProjectExecutionComponent,
+    //   },
+    //   {
+    //     path:'projectExecution/:id', 
+    //     component: ProjectExecutionComponent,
+    //   },
+    //   {
+    //     path:'purchaseOrder', 
+    //     component: PurchaseOrderComponent,
+    //   },
+    //   {
+    //     path:'purchaseOrder/:id', 
+    //     component: PurchaseOrderComponent,
+    //   },
+    //   {
+    //     path:'taxInvoice', 
+    //     component: TaxInvoiceComponent,
+    //   },
+    //   {
+    //     path:'taxInvoice/:id', 
+    //     component: TaxInvoiceComponent,
+    //   },
+
+
+  
+    // ],
   },
   {
     path:"admin",
-    component : AdminComponent,
-  
+    component : AdminComponent,  
     resolve :  { listOfValue : LovResolverService },
     canActivate: [AuthguardService],
     children : [
@@ -202,6 +209,7 @@ const routes: Routes = [
       path: 'external',
       loadChildren: ()=> import('./external/external.module').then(m => m.ExternalModule)
     },
+
     {
       path : "**",redirectTo : "/",
     }

@@ -187,7 +187,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.newAccountService.setFlagForShowingPages(element.insertionFlag);
 
     this.utilService.setCurrentUrl('users/customerDetails');
-    this.route.navigate(['/users/customerDetails/' + element.clientId]);
+    this.route.navigate(['users/customerDetails/' + element.clientId]);
   }
   sortData(sort: Sort) {
     console.log('sort data', sort.direction);

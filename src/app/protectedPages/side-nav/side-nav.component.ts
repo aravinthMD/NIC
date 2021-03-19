@@ -301,6 +301,7 @@ showSideMenu = false;
 
   }
 
+
   navigateRoute(route: string) {
 
     // let projectNo = ''
@@ -330,28 +331,34 @@ showSideMenu = false;
       // });
   }
 
-  navigation(route: string) {
-  this.isLocation = route;
+  navigation(route: string,routUrl?: any) {
+      this.isLocation = route;
 
-  if(route.includes('1.')){
-    this.accountInfoNav = '1.1'
-  }else {
-    this.utilService.setProjectNumber(null)
-    // this.clientDetailService.setClientId('');
-    this.accountInfoNav = ''
-  }
+      if(route.includes('1.')){
+        this.accountInfoNav = '1.1'
+      }else {
+        this.utilService.setProjectNumber(null)
+        // this.clientDetailService.setClientId('');
+        this.accountInfoNav = ''
+      }
 
-  if(route.includes('2.')) {
-      this.parentLocation = '2'
-  }else if(route.includes('1.')){
-    this.parentLocation = '1'
-  }else if(route.includes('4.')){
-    this.parentLocation='4'
-  }else {
-    this.parentLocation = ''
-  }
+      if(route.includes('2.')) {
+          this.parentLocation = '2'
+      }else if(route.includes('1.')){
+        this.parentLocation = '1'
+      }else if(route.includes('4.')){
+        this.parentLocation='4'
+      }else {
+        this.parentLocation = ''
+      }
+      
+    if(routUrl){
+      this.router.navigate([routUrl]);
+    }
+      
   
-
   }
+
+ 
 
 }

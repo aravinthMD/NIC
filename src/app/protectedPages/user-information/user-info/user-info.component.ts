@@ -774,7 +774,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
   back() {
 
     this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['dashboard'])
+    this.router.navigate(['home'])
   }
 
   next(){

@@ -163,11 +163,12 @@ export class UserInfoService {
       } = this.apiService;
 
       const data = {
-        currentClientId : Number(clientId),
-        temp:'get'
+       id : String(clientId)
+       
       }
 
       const requestEntity  : any  = {
+        workflowId,
         processId,
         ProcessVariables : data,
         projectId

@@ -14,6 +14,7 @@ import { AdminService } from '@services/admin.service';
 import { MatDialog } from '@angular/material';
 import { ScheduleEmailDialogComponent } from './schedule-email-dialog/schedule-email-dialog.component';
 import { FileToBase64Service } from '@services/file-to-base64.service';
+import { UtilityService } from '@services/utility.service';
 
 
 @Component({
@@ -155,9 +156,12 @@ today=new Date()
     private adminService: AdminService,
     private route : ActivatedRoute,
     private dialog : MatDialog,
-    private fileToBase64Service : FileToBase64Service) {
+    private fileToBase64Service : FileToBase64Service,
+    private utilityService: UtilityService) {
 
-    this.userName = localStorage.getItem('userName') || '';
+    // this.userName = localStorage.getItem('userName') || '';
+    const userData =  this.utilityService.getLoginDetail();
+    this.userName = userData['username'];
 
    }
 
@@ -712,7 +716,7 @@ today=new Date()
   home() {
 
     this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['dashboard'])
+    this.router.navigate(['home'])
   }
 
 }

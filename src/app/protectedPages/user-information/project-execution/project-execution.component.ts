@@ -153,7 +153,7 @@ csvResponse: any;
 
     this.activatedRoute.params.subscribe((value)=> {  
 
-      this.storeProjectNo = value.projectNo || 4535
+      this.storeProjectNo = value.id 
     })
 
     this.getProjectExecutionDetails(this.currentPage,this.clientId);    
