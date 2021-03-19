@@ -165,8 +165,8 @@ smsApprovedList: any[] = [
     this.initForm();
     this.utilService.userDetails$.subscribe((val: any) => {
 
-      this.accountName = val.App_name || '';
-      this.status = val.status || '';
+      this.accountName = val ? val.App_name : '';
+      this.status = val ? val.status : '';
 
       this.PurchaseOrderForm.get('userName').setValue(this.accountName);
     });
