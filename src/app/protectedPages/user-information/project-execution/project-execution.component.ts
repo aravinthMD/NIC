@@ -145,8 +145,8 @@ csvResponse: any;
 
     this.utilService.userDetails$.subscribe((val)=> {
 
-      this.accountName = val['App_name'] || '';
-      this.status = val['status'] || '';
+      this.accountName = val ? val['App_name'] :'';
+      this.status = val ? val['status'] :'';
 
       this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
     })

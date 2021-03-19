@@ -248,8 +248,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
         this.utilService.userDetails$.subscribe((val: any)=> {
           console.log('val', val);
           if(val){
-            this.accountName = val['App_name'] || '';
-            this.status = val['status'] || '';
+            this.accountName = val ? val['App_name'] : '';
+            this.status = val ? val['status'] : '';
             this.projectNo = val.projectNo || '';
           }
         })

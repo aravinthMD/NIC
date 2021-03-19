@@ -278,11 +278,11 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
       },
       {
         key: 'PI Status',
-        value: piStatusData[0].value
+        value: piStatusData.length > 0 ? piStatusData[0].value: null
       },
       {
         key: 'Payment Status',
-        value: paymentStatus[0].value
+        value: paymentStatus.length > 0? paymentStatus[0].value: null
       },
       {
         key: this.labels.remark,
