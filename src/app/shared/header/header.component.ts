@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
 
   navigateToEmail(){
     this.utilService.setCurrentUrl('users/sendemail');
-    this.router.navigate(['/users/sendemail']);
+    this.router.navigate(['/home/sendemail']);
   }
 
   logOut(){

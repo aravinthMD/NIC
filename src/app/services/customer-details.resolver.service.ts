@@ -27,18 +27,18 @@ export class CustomerDetailsResolver implements Resolve<any> {
             return;
         }
         this.clientDetailService.setClientId(customerId);
-        // return this.userInfoService.getCustomerDetailByCustomerId(customerId)
-        //     .pipe(
-        //         map((response: any) => {
-        //             const processVariables = response.ProcessVariables;
-        //             this.utilService.setUserDetails(processVariables);
-        //             this.utilService.setCustomerDetails(processVariables);
-        //             this.clientDetailService.setClientStatus(processVariables.status == '1');
-        //             this.newAccountService.setFlagForShowingPages(processVariables.insertionFlag);
-        //         })
-        //        );
-        // console.log('id', route.firstChild.params);
-        return this.userInfoService.getCustomerDetailByCustomerId(customerId);
+        return this.userInfoService.getCustomerDetailByCustomerId(customerId)
+            .pipe(
+                map((response: any) => {
+                    const processVariables = response.ProcessVariables;
+                    this.utilService.setUserDetails(processVariables);
+                    this.utilService.setCustomerDetails(processVariables);
+                    this.clientDetailService.setClientStatus(processVariables.status == '1');
+                    this.newAccountService.setFlagForShowingPages(processVariables.insertionFlag);
+                })
+               );
+        console.log('id', route.firstChild.params);
+        // return this.userInfoService.getCustomerDetailByCustomerId(customerId);
     }
 
 }

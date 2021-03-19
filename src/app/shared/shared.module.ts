@@ -9,23 +9,29 @@ import { AccountHeaderComponent } from './account-header/account-header.componen
 import { AuditTrailDialogComponent } from './audit-trail-dialog/audit-trail-dialog.component';
 import {MaterialModule} from './material/material.module'
 import { RemarkModalComponent } from './remark-modal/remark-modal.component';
-import { MatDatepickerModule } from '@angular/material';
+import { MatDatepickerModule, MatToolbarModule } from '@angular/material';
 import { UserInfoFormComponent } from './preview/user-info-form/user-info-form.component';
 import { DataSavedModalComponent } from './data-saved-modal/data-saved-modal.component';
 import { ViewInfoComponent } from './view-info/view-info.component';
 import { BorderDirective } from './border.directive';
 import { SecurePipe } from './secure.pipe';
+import { CsvUploadModalComponent } from '../protectedPages/csv-upload-modal/csv-upload-modal.component';
+import { SideNavComponent } from '../protectedPages/side-nav/side-nav.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
-  declarations: [CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent, ViewInfoComponent, BorderDirective, SecurePipe],
+  declarations: [
+    CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent,
+     ViewInfoComponent, BorderDirective, SecurePipe,
+    CsvUploadModalComponent, SideNavComponent, HeaderComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     MatDatepickerModule,
-
+    MatToolbarModule
   ],
   exports: [
     CustomInputComponent,
@@ -36,7 +42,10 @@ import { SecurePipe } from './secure.pipe';
     UserInfoFormComponent,
     DataSavedModalComponent,
     ViewInfoComponent,
-    SecurePipe
+    SecurePipe,
+    CsvUploadModalComponent,
+    SideNavComponent,
+    HeaderComponent
   ],
   providers : [],
   entryComponents : [AuditTrailDialogComponent]
