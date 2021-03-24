@@ -157,8 +157,10 @@
 
                     </li>
                     <li class="nav-item pl-4 border-card" [ngClass]="{'side-menu': (isLocation == '2.6')}">
-                        <a class="nav-link p1  collapsed " routerLink="/admin/manageEmail" (click)="navigation('2.6','/admin/manageEmail')" 
-                        routerLinkActive="active-link" data-toggle="collapse"><span><i class="fa fa-envelope pr-2" 
+                        <a class="nav-link p1  collapsed " routerLink="/admin/manageEmail" 
+                        (click)="navigation('2.6','/admin/manageEmail')" 
+                        routerLinkActive="active-link" data-toggle="collapse"><span>
+                            <i class="fa fa-envelope pr-2" 
                             aria-hidden="true"></i>Manage Email</span></a>
 
                     </li>
@@ -168,6 +170,13 @@
                             Account</span></a>
 
                     </li> -->
+                    <li class="nav-item pl-4 border-card" [ngClass]="{'side-menu': (isLocation == '2.7')}">
+                        <a routerLink="/admin/bulk-upload" 
+                            (click)="navigation('2.7','/admin/bulk-upload')" 
+                            [ngClass]="{'side-menu': (isLocation == '2.7')}" 
+                            routerLinkActive="active-link" class="nav-link p1  collapsed">
+                            <i class="fa fa-upload pr-2" aria-hidden="true"></i>Bulk Upload</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -188,10 +197,10 @@
             <a routerLink="/home/reports" (click)="navigation('3','/home/reports')" [ngClass]="{'side-menu': (isLocation == '3')}" routerLinkActive="active-link" class="">
                 <i class="fa fa-area-chart pr-2" aria-hidden="true"></i>Reports</a>
         </li>
-        <li class="list-group-item border-card">
+        <!-- <li class="list-group-item border-card">
             <a routerLink="/home/bulk-upload" (click)="navigation('5','/home/bulk-upload')" [ngClass]="{'side-menu': (isLocation == '5')}" routerLinkActive="active-link" class="">
                 <i class="fa fa-upload pr-2" aria-hidden="true"></i>Bulk Upload</a>
-        </li>
+        </li> -->
         <!-- <li class="list-group-item">
             <a routerLink = "/admin/manage/users" routerLinkActive="active-link"  class=""><i class="fa fa-users pr-2" aria-hidden="true"></i>Manage Users</a>
         </li> -->

@@ -640,7 +640,7 @@ today=new Date()
       //   return this.toasterService.showError('Please Choose the Date to Schedule Email','');
 
       const FromMailAddress = this.fromMailAddress;
-      const ToMailAddress = this.toMailAddress;
+      const ToMailAddress = this.emailIdList;
       const subject = this.Subject;
       const mailContent = this.mailContent;
 
@@ -649,7 +649,7 @@ today=new Date()
       const ScheduledFromDate = form.fromScheduleDate;
       // const ScheduledToDate = this.toScheduleDate;
       const ScheduledToDate = form.toScheduleDate;
-      const ScheduledTime = this.scheduleTime
+      const ScheduledTime = form.scheduleTime
 
 
       const Data = {
@@ -673,6 +673,8 @@ today=new Date()
               this.toasterService.showSuccess("Email Scheduled Successfully",'');
               // this.sendEmail();
               // this.resetTimeScheduleForm();
+              this.dialog.closeAll();
+              this.reset();
           }else{
 
             this.toasterService.showError(error.message,'')

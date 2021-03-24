@@ -67,6 +67,8 @@ onTimeInput(event) {
 scheduleEmail() {
 
   const form = this.emailform.value;
+  console.log('form vlaue',form);
+  
   this.emitForm.emit(form);
 
 }

@@ -653,7 +653,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       }
       this.form.get('status').setValue(this.initialStatus);
       this.form.get('id').setValue(this.clientId);
-     //  this.clientDetailService.setClientId(this.clientId);
+      this.clientDetailService.setClientId(this.clientId);
       this.newAccountService.setFlagForShowingPages(1);
       this.utilService.setCustomerDetails(processVariables);
       this.dataValue = {

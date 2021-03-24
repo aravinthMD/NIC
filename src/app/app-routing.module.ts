@@ -75,10 +75,10 @@ const routes: Routes = [
         path: "managegroup", 
         component : ManageGroupComponent,
       },
-      {
-        path: 'bulk-upload',
-        component: BulkUploadComponent
-      }
+      // {
+      //   path: 'bulk-upload',
+      //   component: BulkUploadComponent
+      // }
      ]
    },
   {
@@ -204,6 +204,10 @@ const routes: Routes = [
       {
         path :  "manageEmail",
         component : ManageEmailComponent
+      },
+      {
+        path: 'bulk-upload',
+        component: BulkUploadComponent
       }
     ]},{
       path: 'external',

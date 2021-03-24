@@ -238,7 +238,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:data.mobileNumber
+        value:`${this.mobileNumberCodeList.find(value => 
+            value.key == data.mobileNumberCode).value
+            + data.mobileNumber }`,
+        // data.mobileNumber
       },
       // {
       //   key: this.labels.mobileNo,
@@ -246,7 +249,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       // },
       {
         key  : this.labels.teleNumber,
-        value : data.telephoneNumber,
+        value : `${this.teleCodeValues.find(value => 
+              value.key == data.telephoneNumberCode).value + data.telephoneNumber}`,
+        // data.telephoneNumber,
       },
       // {
       //   key: this.labels.teleNumber,
@@ -304,11 +309,17 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key  : this.labels.mobileNo,
-        value  :  data.mobileNumber
+        value  : `${this.mobileNumberCodeList.find(value => 
+            value.key == data.mobileCode).value + ' ' + 
+           data.mobileNumber }`,
+        //  data.mobileNumber
       },
       {
         key  : this.labels.teleNumber,
-        value :  data.telephoneNumber
+        value :  `${this.teleCodeValues.find(value => 
+          value.key == data.telephoneCode).value + ' ' +data.telephoneNumber}`
+        
+        // data.telephoneNumber
       },
       {
         key  : 'Official Address',

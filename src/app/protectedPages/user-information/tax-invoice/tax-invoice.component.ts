@@ -544,7 +544,13 @@ export class TaxInvoiceComponent implements OnInit {
       searchTo: null
     });
 
-    // this.getAllTaxInvoiceDetails();
+    const params = {
+      searchKeyword: this.searchForm.get('searchData').value,
+      fromDate: this.searchForm.get('searchFrom').value,
+      toDate: this.searchForm.get('searchTo').value
+  };
+
+    this.getAllTaxInvoiceList(params);
   }
 
   onEdit(selectedTaxInvoice: TaxInvoice) {

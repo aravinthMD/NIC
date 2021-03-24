@@ -674,6 +674,7 @@ next() {
           return String(value.currentPOId || value.id) === String(data.id);
     });
     this.userList[index] = data;
+    this.purchaseOrderId = data.id;
     this.dataSource = [...this.userList];
   }
 

@@ -204,7 +204,8 @@ export class LovsComponent implements OnInit {
     let regex: RegExp;
     let msg: string;
     if (key === '8') {
-       regex =  /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+      //  regex =  /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+       regex =  /^[a-zA-Z0-9._`]+@[a-zA-Z._]+?\.[a-zA-Z]{2,4}$/;    
        msg = 'Please enter valid mail id';
     } else if (key  === '6' || key === '7') {
       regex = /^([+]\d{1,2})?\d{1,10}$/;
@@ -243,7 +244,7 @@ export class LovsComponent implements OnInit {
 
   setValueForGrid(totalItems) {
     if (totalItems.length > 10) {
-      this.addLovItems(totalItems.slice(0, 11));
+      this.addLovItems(totalItems.slice(0, 10));
     } else {
      this.addLovItems(totalItems);
     }
@@ -271,8 +272,8 @@ export class LovsComponent implements OnInit {
   onPageChange(event) {
     console.log('on page change', event);
     const pageIndex = event.pageIndex;
-    const start = pageIndex === 0 ? 0 : (pageIndex * 10) + 1;
-    const end = (start + 10) + 1;
+    const start = pageIndex == 0 ? 0 : (pageIndex * 9) + 1;
+    const end = (start + 10);
     let items  = [];
     if (this.lovValueSearch) {
        items = this.searchLovItemsValue.slice(start, end);

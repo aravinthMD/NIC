@@ -196,7 +196,9 @@ showSideMenu = false;
     }else if(path.includes('admin/manageRoles')){
       this.isLocation = '2.5'
     }else if(path.includes('/admin/manageEmail')){
-      this.isLocation = '2.6'
+      this.isLocation = '2.7'
+    }else if(path.includes('/admin/bulk-upload')){
+      this.isLocation = '2.7'
     }
 
     if(path.includes('users/') && !path.includes('dashboard') && !path.includes('users/reports') &&!path.includes('users/sendemail') &&!path.includes('users/managegroup')) {
