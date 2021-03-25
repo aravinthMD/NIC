@@ -180,8 +180,8 @@ export class TaxInvoiceComponent implements OnInit {
       if (!val) {
         return;
       }
-      this.accountName = val.App_name || '';
-      this.status = val.status || '';
+      this.accountName = val? val.App_name : '';
+      this.status = val ? val.status : '';
       this.taxInvoiceForm.controls['userName'].setValue(this.accountName);
     });
 
@@ -544,7 +544,13 @@ export class TaxInvoiceComponent implements OnInit {
       searchTo: null
     });
 
-    // this.getAllTaxInvoiceDetails();
+    const params = {
+      searchKeyword: this.searchForm.get('searchData').value,
+      fromDate: this.searchForm.get('searchFrom').value,
+      toDate: this.searchForm.get('searchTo').value
+  };
+
+    this.getAllTaxInvoiceList(params);
   }
 
   onEdit(selectedTaxInvoice: TaxInvoice) {

@@ -55,7 +55,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input style="padding-left:10px;" class="form-control" formControlName="ToMailAddress" placeholder="Email" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                            <input style="padding-left:10px;" class="form-control" 
+                                formControlName="ToMailAddress" placeholder="Email" 
+                                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
                             <mat-error *ngIf="isInvalidEmail">
                                 Please enter valid email id
                             </mat-error>
@@ -198,7 +201,8 @@
                     </div>
                     <div class="col-12 m-2">
                         <!-- <button type="submit" [disabled] = "!showSendEmailBtn" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button> -->
-                        <button [disabled]="!showScheduleBtn" matRipple class=" btn btn-primary float-left" [disabled]="!(toMailAddress && Subject && mailContent)" (click)="openScheduleEmailDialog()">Schedule</button>
+                        <button [disabled]="!showScheduleBtn" matRipple class=" btn btn-primary float-left" [disabled]="!(toMailAddress && Subject && mailContent)" 
+                            (click)="openScheduleEmailDialog()">Schedule</button>
                         <input hidden type="file" #inputEmailFile (change)="attachFile($event)">
                         <button type="submit" matRipple class=" btn btn-primary" (click)="sendEmail()">Send <i class="fa fa-paper-plane pl-1" aria-hidden="true"></i></button>
                         <!-- <a class="ml-3"> <i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->

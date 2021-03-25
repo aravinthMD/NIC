@@ -97,7 +97,10 @@
                         <div class="form-group">
 
                             <label for="department">Code<span style="color:red">*</span></label>
-                            <app-vf-custom-select formControlName="telephoneNumberCode" [className]="'form-control Mandatory code-pad'" [values]="teleCodeValues" [isRequired]="'Select code'" [isDisabled]="propertyFlag" [isDirty]="isDirty">
+                            <app-vf-custom-select formControlName="telephoneNumberCode" 
+                                [className]="'form-control Mandatory code-pad'" 
+                                [values]="teleCodeValues" [isRequired]="'Select code'" 
+                                [isDisabled]="propertyFlag" [isDirty]="isDirty">
                             </app-vf-custom-select>
                         </div>
                     </div>

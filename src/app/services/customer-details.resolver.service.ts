@@ -37,7 +37,8 @@ export class CustomerDetailsResolver implements Resolve<any> {
                     this.newAccountService.setFlagForShowingPages(processVariables.insertionFlag);
                 })
                );
-        // console.log('id', route.firstChild.params);
+        console.log('id', route.firstChild.params);
+        // return this.userInfoService.getCustomerDetailByCustomerId(customerId);
     }
 
 }

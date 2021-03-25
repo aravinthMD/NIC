@@ -86,7 +86,7 @@ dataValue: {
 isWrite = true;
 isClientActive = true;
 csvResponse: any;
-
+lovData: any;
   constructor(
               private labelsService : LabelsService,
               private dialog : MatDialog,
@@ -107,10 +107,14 @@ csvResponse: any;
       searchFrom: new FormControl(null),
       searchTo: new FormControl(null)
     })
+this.lovData = this.utilService.getLovData();
+
+
   }
 
   ngOnInit() {
-
+    this.modeOfPaymentList = this.lovData? this.lovData.paymentModeStatusList: null;
+    this.piPaidValues = this.lovData? this.lovData.piPaidStatusList: null;
     // ProjectExecution
     this.isClientActive = this.clientDetailService.getClientStatus();
     const smsPage = this.utilityService.getSettingsDataList('ProjectExecution');
@@ -145,15 +149,15 @@ csvResponse: any;
 
     this.utilService.userDetails$.subscribe((val)=> {
 
-      this.accountName = val['App_name'] || '';
-      this.status = val['status'] || '';
+      this.accountName = val ? val['App_name'] :'';
+      this.status = val ? val['status'] :'';
 
       this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
     })
 
     this.activatedRoute.params.subscribe((value)=> {  
 
-      this.storeProjectNo = value.projectNo || 4535
+      this.storeProjectNo = value.id 
     })
 
     this.getProjectExecutionDetails(this.currentPage,this.clientId);    
