@@ -170,8 +170,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
        // this.getTechAdminsById(this.user);
       this.utilService.userDetails$.subscribe((val)=> {
 
-        this.accountName = val['App_name'] || '';
-        this.status = val['status'] || '';
+        this.accountName = val? val['App_name'] : '';
+        this.status = val ? val['status'] : '';
       })
       this.propertyFlag = true;
       // this.getBillingAdminDetailById(this.user);
@@ -238,7 +238,10 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key: this.labels.mobileNo,
-        value:data.mobileNumber
+        value:`${this.mobileNumberCodeList.find(value => 
+            value.key == data.mobileNumberCode).value
+            + data.mobileNumber }`,
+        // data.mobileNumber
       },
       // {
       //   key: this.labels.mobileNo,
@@ -246,7 +249,9 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       // },
       {
         key  : this.labels.teleNumber,
-        value : data.telephoneNumber,
+        value : `${this.teleCodeValues.find(value => 
+              value.key == data.telephoneNumberCode).value + data.telephoneNumber}`,
+        // data.telephoneNumber,
       },
       // {
       //   key: this.labels.teleNumber,
@@ -279,6 +284,8 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     const department = (this.departmentListData.find( value =>
                           String(value.key) === String(data.department)) || {}).value;
 
+
+
     this.viewInfoData = [
       {
         key : this.labels.name,
@@ -286,7 +293,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key  : this.labels.email,
-        value  : data.email
+        value  : data.emailAddress
       },
       {
         key  : this.labels.department,
@@ -302,19 +309,25 @@ export class TechnicalAdminDetailsComponent implements OnInit {
       },
       {
         key  : this.labels.mobileNo,
-        value  :  data.mobileNumber
+        value  : `${this.mobileNumberCodeList.find(value => 
+            value.key == data.mobileCode).value + ' ' + 
+           data.mobileNumber }`,
+        //  data.mobileNumber
       },
       {
         key  : this.labels.teleNumber,
-        value :  data.telephoneNumber
+        value :  `${this.teleCodeValues.find(value => 
+          value.key == data.telephoneCode).value + ' ' +data.telephoneNumber}`
+        
+        // data.telephoneNumber
       },
       {
         key  : 'Official Address',
-        value :  `${data.officialAddress1}
-        ${data.officialAddress2}
-        ${data.officialAddress3}
+        value :  `${data.officeAddressLine1}
+        ${data.officeAddressLine2}
+        ${data.officeAddressLine3}
         ${data.city} ${data.state}
-        ${data.pinCode}`
+        ${data.pincode}`
       },
       {
         key  : this.labels.remark,
@@ -341,22 +354,22 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     if(data){
 
     this.technicaladminform.patchValue({
-      id  :  Number(data.currentClientId),
+      id  :  Number(this.insertionFlag<2 ? 0 : data.id),
       name : data.name || '',
       departmentName : data.department || '',
       designation : data.designation || '',
       employeeCode : data.employeeCode || '',
-      email : data.email || '',
-      mobileNumberCode : data.mobileNumberCode || '',
+      email : data.emailAddress || '',
+      mobileNumberCode : data.mobileCode || '',
       mobileNumber : data.mobileNumber || '',
       telephoneNumber : data.telephoneNumber || '',
-      telephoneNumberCode: data.telephoneNumberCode || '',
-      offAddress1 : data.officialAddress1 || '',
-      offAddress2 : data.officialAddress2 || '',
-      offAddress3 : data.officialAddress3 || '',
+      telephoneNumberCode: data.telephoneCode || '',
+      offAddress1 : data.officeAddressLine1 || '',
+      offAddress2 : data.officeAddressLine2 || '',
+      offAddress3 : data.officeAddressLine3 || '',
       city : data.city || '',
       state : data.state || '',
-      pinCode : data.pinCode || '',
+      pinCode : data.pincode || '',
       remark: data.remark || '',
       userId: data.clientUserId
     })
@@ -390,7 +403,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
     }
 
     const techAdminDetails = {
-      // id: this.technicaladminform.value.id,
+      id: this.technicaladminform.value.id,
       name: this.technicaladminform.value.name,
       department: this.technicaladminform.value.departmentName,
       designation: this.technicaladminform.value.designation,
@@ -451,7 +464,7 @@ export class TechnicalAdminDetailsComponent implements OnInit {
   }
 
   getBillingAdminDetailById(id) {
-
+  
     this.billAdminService.getBillingAdminDetailsById({ currentClientId: id})
         .subscribe((res: any) => {
               const processVariables = res.ProcessVariables;
@@ -483,15 +496,13 @@ export class TechnicalAdminDetailsComponent implements OnInit {
 
       console.log("get TechAdmins by id",response)
       const processVariables = response.ProcessVariables;
-      if (!processVariables.clientId) {
+      if (this.insertionFlag<2) {
           this.isShowTechViewPage = false;
           this.propertyFlag = false;
-      }
-      if (!processVariables.selectedTechId) {
-        this.showView = false;
-      } else {
+          this.showView = false;
+      }else{
         this.showView = true;
-      }
+      }   
       this.utilService.setTechAdminUserDetails(processVariables);
       this.setFormValues(processVariables);
       this.setViewPageDataForTechAdminDetails(processVariables);

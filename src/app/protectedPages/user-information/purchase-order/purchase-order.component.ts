@@ -153,7 +153,7 @@ smsApprovedList: any[] = [
         if (!param) {
           return;
         }
-        this.clientId = param.projectNo;
+        this.clientId = param.id;
 //        this.fetchPODetails();
 
     });
@@ -165,8 +165,8 @@ smsApprovedList: any[] = [
     this.initForm();
     this.utilService.userDetails$.subscribe((val: any) => {
 
-      this.accountName = val.App_name || '';
-      this.status = val.status || '';
+      this.accountName = val ? val.App_name : '';
+      this.status = val ? val.status : '';
 
       this.PurchaseOrderForm.get('userName').setValue(this.accountName);
     });
@@ -674,6 +674,7 @@ next() {
           return String(value.currentPOId || value.id) === String(data.id);
     });
     this.userList[index] = data;
+    this.purchaseOrderId = data.id;
     this.dataSource = [...this.userList];
   }
 

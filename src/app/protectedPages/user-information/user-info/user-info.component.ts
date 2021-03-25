@@ -248,8 +248,8 @@ export class UserInfoComponent implements OnInit, OnChanges {
         this.utilService.userDetails$.subscribe((val: any)=> {
           console.log('val', val);
           if(val){
-            this.accountName = val['App_name'] || '';
-            this.status = val['status'] || '';
+            this.accountName = val ? val['App_name'] : '';
+            this.status = val ? val['status'] : '';
             this.projectNo = val.projectNo || '';
           }
         })
@@ -653,7 +653,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
       }
       this.form.get('status').setValue(this.initialStatus);
       this.form.get('id').setValue(this.clientId);
-     //  this.clientDetailService.setClientId(this.clientId);
+      this.clientDetailService.setClientId(this.clientId);
       this.newAccountService.setFlagForShowingPages(1);
       this.utilService.setCustomerDetails(processVariables);
       this.dataValue = {
@@ -774,7 +774,7 @@ export class UserInfoComponent implements OnInit, OnChanges {
   back() {
 
     this.utilService.setCurrentUrl('dashboard')
-    this.router.navigate(['dashboard'])
+    this.router.navigate(['home'])
   }
 
   next(){

@@ -142,7 +142,7 @@ export class SmsCreditAllocationComponent implements OnInit {
     this.initForm();
 
     this.utilService.userDetails$.subscribe((val  :any) => {
-        this.accountName = val.App_name || '';
+        this.accountName = val ? val.App_name : '';
     })
 
     if (this.userId) {

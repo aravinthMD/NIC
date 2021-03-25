@@ -196,7 +196,9 @@ showSideMenu = false;
     }else if(path.includes('admin/manageRoles')){
       this.isLocation = '2.5'
     }else if(path.includes('/admin/manageEmail')){
-      this.isLocation = '2.6'
+      this.isLocation = '2.7'
+    }else if(path.includes('/admin/bulk-upload')){
+      this.isLocation = '2.7'
     }
 
     if(path.includes('users/') && !path.includes('dashboard') && !path.includes('users/reports') &&!path.includes('users/sendemail') &&!path.includes('users/managegroup')) {
@@ -301,6 +303,7 @@ showSideMenu = false;
 
   }
 
+
   navigateRoute(route: string) {
 
     // let projectNo = ''
@@ -330,28 +333,34 @@ showSideMenu = false;
       // });
   }
 
-  navigation(route: string) {
-  this.isLocation = route;
+  navigation(route: string,routUrl?: any) {
+      this.isLocation = route;
 
-  if(route.includes('1.')){
-    this.accountInfoNav = '1.1'
-  }else {
-    this.utilService.setProjectNumber(null)
-    // this.clientDetailService.setClientId('');
-    this.accountInfoNav = ''
-  }
+      if(route.includes('1.')){
+        this.accountInfoNav = '1.1'
+      }else {
+        this.utilService.setProjectNumber(null)
+        // this.clientDetailService.setClientId('');
+        this.accountInfoNav = ''
+      }
 
-  if(route.includes('2.')) {
-      this.parentLocation = '2'
-  }else if(route.includes('1.')){
-    this.parentLocation = '1'
-  }else if(route.includes('4.')){
-    this.parentLocation='4'
-  }else {
-    this.parentLocation = ''
-  }
+      if(route.includes('2.')) {
+          this.parentLocation = '2'
+      }else if(route.includes('1.')){
+        this.parentLocation = '1'
+      }else if(route.includes('4.')){
+        this.parentLocation='4'
+      }else {
+        this.parentLocation = ''
+      }
+      
+    if(routUrl){
+      this.router.navigate([routUrl]);
+    }
+      
   
-
   }
+
+ 
 
 }

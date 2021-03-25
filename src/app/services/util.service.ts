@@ -52,8 +52,9 @@ export class UtilService {
     
   setUserDetails(data) {
        
-        
-        this.userDetails$.next(data)
+    this.customerDetails = data;
+        this.userDetails$.next(data);
+        this.customerDetail$.next(data);
   }
 
   
