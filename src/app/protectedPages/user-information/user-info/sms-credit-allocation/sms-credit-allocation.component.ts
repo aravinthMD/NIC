@@ -268,7 +268,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       return;
     }
     const status = this.statusList.find((val) => {
-      return val.key === key;
+      return val.key == key;
     });
     return status.value;
   }

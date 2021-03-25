@@ -83,7 +83,7 @@ export class BillingOwnerDetailsComponent implements OnInit {
          return;
        }
        this.clientId = Number(value.id || 0);
-       this.clientDetailService.setClientId(value.id);
+      // this.clientDetailService.setClientId(value.id);
        this.getBillingAdminDetailById(this.clientId);
     });
 
@@ -169,8 +169,8 @@ export class BillingOwnerDetailsComponent implements OnInit {
           telephoneNumber: data.telephoneNumber,
           telephoneNumberCode: data.telephoneNumberCode || null,
           offAddress1: data.oaLine1,
-          offAddress2: data.oaLine1,
-          offAddress3: data.oaLine1,
+          offAddress2: data.oaLine2,
+          offAddress3: data.oaLine3,
           city: data.city,
           state: data.state,
           pinCode: data.pincode,

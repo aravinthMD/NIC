@@ -83,7 +83,7 @@ getBillAdminUserDetails(){
 
 setCustomerDetails(data : any){
   this.customerDetails = data;
-  localStorage.setItem("currentCustomerDetailObject",JSON.stringify(data))
+  // localStorage.setItem("currentCustomerDetailObject",JSON.stringify(data))
   this.customerDetail$.next(data);
 }
 
