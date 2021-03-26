@@ -50,7 +50,7 @@ export class TaxInvoiceComponent implements OnInit {
 //  yearList = [ "2020", "2021", "2022", "2023", "2024", "2025",
 // "2026", "2027", "2028", "2029", "2030", "2031" ];
 
-  displayedColumns: string[] = ['InvoiceNo', 'projectNo', 'piAmt', 'remarks','reminder','Escalation', 'Active'];
+  displayedColumns: string[] = ['InvoiceNo', 'projectNo', 'piAmt', 'remarks','status','reminder','Escalation', 'Active'];
 
   // csvSampleData:any[]=[
   //   {InvoiceNo:1111,projectNo:1111,piAmt:1000,remarks:'nill',Active:'Active'},

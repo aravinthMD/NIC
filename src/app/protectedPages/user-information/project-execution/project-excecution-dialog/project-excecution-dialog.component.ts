@@ -90,7 +90,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   onFileUpload = new EventEmitter();
   updateFileID = new EventEmitter();
   onProjectExecutionUpdate = new EventEmitter();
-
+  lovData: any;
 
   constructor(
     private labelsService : LabelsService,
@@ -105,8 +105,11 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     private utilityService: UtilityService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
     ) { 
+  this.lovData = this.utilService.getLovData();
+
     this.InitForm();
     this.detectAuditTrialObj=this.ProjectExcecutionForm.value
+
   }
 
   InitForm(){
@@ -130,7 +133,8 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.modeOfPaymentList = this.lovData? this.lovData.paymentModeStatusList: null;
+    this.piPaidValues = this.lovData? this.lovData.piPaidStatusList: null;
     const smsPage = this.utilityService.getSettingsDataList('ProjectExecution');
     this.isWrite = smsPage.isWrite;
 
@@ -237,7 +241,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
         },
         {
           key: this.labels.modeOfPayment,
-          value:  psData[0].value || ''
+          value:  psData.length >0 ?psData[0].value :''
         },
         {
           key: this.labels.documentNo,
@@ -265,7 +269,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
         },
         {
           key: 'PI Paid',
-          value: piPaid[0].value || ''
+          value: piPaid.length >0? piPaid[0].value : ''
         },
         {
           key: this.labels.remark,

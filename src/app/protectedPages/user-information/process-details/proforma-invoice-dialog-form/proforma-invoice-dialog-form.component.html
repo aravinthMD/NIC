@@ -1,21 +1,17 @@
-<h2 mat-dialog-title>Proforma Invoice</h2>
+<button class="close" mat-button mat-dialog-close>  
+    <mat-icon class="" style="color: white;">close</mat-icon>
+    </button>
+<h2 mat-dialog-title>Proforma Invoice </h2>
 <mat-dialog-content class="mat-typography">
 
     <app-view-info [userDetails]="viewInfoData" *ngIf="!showEdit"></app-view-info>
-    <form class="ml-3 mr-3 " [formGroup]="form" (keydown.enter)="$event.preventDefault()" *ngIf="showEdit">
-        <!-- <div class="row pt-3 pb-3 m-0 d-flex justify-content-end">
-      <button  class="btn btn-primary" type="submit"><i class="fa fa-upload pr-2"></i>Bulk Upload</button>
-    </div>  -->
+    <form class="ml-3 mr-3 " [formGroup]="form" (keydown.enter)="$event.preventDefault()" 
+    *ngIf="false" 
+        style="display: none;">
+        
         <div class="row">
             <div class="col-4">
-                <div class="form-group">
-                    <!-- <label for="invoiceNumber">Invoice Number</label>
-                    <input type="email" [disabled]="enableflag" value="3434" class="form-control" id="invoiceNumber" aria-describedby="invoiceNumberHelp">
-                    <small id="invoiceNumberHelp" class="form-text text-muted"></small> -->
-
-                    <!-- <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
-
-                    </app-custom-input> -->
+                <div class="form-group">                
 
                     <app-custom-input formControlName="accountName" [labelName]="labels.accountName" [id]="'accountName'" placeHolder="Enter the Account Name" [isRequired]="'Account name is mandatory'" [maxLength]="labels?.validationData.name.maxLength" [isDisabledInp]="enableflag"
                         [isDirty]="isDirty">
@@ -27,15 +23,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="invoiceDate">Invoice Date</label>
                   
-
-                    <mat-form-field [ngClass]="{'inp-date':enableflag}">
-                        <input matInput [matDatepicker]="picker1" formControlName="invoiceDate">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
-                      </mat-form-field> -->
-
                     <app-custom-input formControlName="invoiceNumber" [labelName]="labels.proformaIN" [id]="'invoiceNumber'" placeHolder="Enter the Invoice Number" [isRequired]="'Invoice number is mandatory'" [maxLength]="labels?.validationData.proformaIN.maxLength" [isDisabledInp]="enableflag"
                         [isDirty]="isDirty">
 
@@ -46,13 +34,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="exampleInputEmail1">Project Number</label>
-                    <input type="projectNumber" value="4355" [disabled]="enableflag" class="form-control" id="projectNumber" aria-describedby="projectNumberHelp">
-                    <small id="projectNumberHelp" class="form-text text-muted"></small> -->
-
-                    <!-- <app-custom-input formControlName="projectNumber" [labelName]="labels.projectNo" [id]="'projectNumber'" [isRequired]="'Project number is mandatory'" [maxLength]="labels?.validationData.proformaPN.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
-
-                    </app-custom-input> -->
+                   
 
                     <app-custom-input formControlName="refNumber" [labelName]="labels.refNo" [id]="'refNo'" placeHolder="Enter the Reference Number" [isRequired]="'Reference number is mandatory'" [maxLength]="labels?.validationData.refNo.maxLength" [isDisabledInp]="enableflag"
                         [isDirty]="isDirty">
@@ -63,18 +45,9 @@
             </div>
 
             <div class="col-4">
-                <!-- <div class="form-group">
-              <label for="poNumber">PO Number</label>
-              <input type="email" class="form-control" id="poNumber" aria-describedby="poNumberHelp">
-              <small id="poNumberHelp" class="form-text text-muted"></small>
-            </div>-->
+              
                 <div class="form-group">
-                    <!-- <label for="poNumber">PO Number</label>
-                  <input type="poNumber" value="5678" [disabled]="enableflag" class="form-control" id="poNumber" aria-describedby="poNumberHelp"> -->
-
-                    <!-- <app-custom-input formControlName="poNumber" [labelName]="labels.poNumber" [id]="'poNumber'" [isRequired]="'PO number is mandatory'" [maxLength]="labels?.validationData.poNumber.maxLength" [isDisabledInp]="enableflag" [isDirty]="isDirty">
-
-                </app-custom-input> -->
+                    
 
                     <app-custom-input formControlName="piOwner" [labelName]="labels.piOwner" [id]="'piOwner'" placeHolder="Enter the Proforma Invoice Owner" [isRequired]="'Owner is mandatory'" [maxLength]="labels?.validationData.piOwner.maxLength" [isDisabledInp]="enableflag"
                         [isDirty]="isDirty">
@@ -88,14 +61,7 @@
             </div>
             <div class="col-4">
                 <div class="form-group">
-                    <!-- <label for="poDate">PO Date</label>
                    
-                    <mat-form-field [ngClass]="{'inp-date':enableflag}">
-                        <input matInput [matDatepicker]="picker2" formControlName="poDate">
-                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                        <mat-datepicker #picker2></mat-datepicker>
-                      </mat-form-field> -->
-
                     <app-custom-input formControlName="piAmount" [labelName]="labels.piAmount" [id]="'piAmount'" placeHolder="Enter the Amount" [isRequired]="'Amount is mandatory'" [maxLength]="labels?.validationData.piAmount.maxLength" [isDisabledInp]="enableflag" [type]="labels?.validationData.piAmount.type"
                         [isDirty]="isDirty">
 
@@ -251,13 +217,18 @@
 
 
     </form>
+
+    <app-shared-profoma-invoice [proformaInvoiceId]="data" *ngIf="showUpdate" >
+    
+    </app-shared-profoma-invoice>
     <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
         <ng-container *ngIf="isWrite">
             <button class="btn btn-primary" type="submit" *ngIf="!showUpdate" (click)="OnEdit()">Edit</button>
-            <button class="btn btn-primary" type="submit" mat-dialog-close='close' *ngIf="showUpdate" (click)="updateProformaInvoice()">Update</button>
+            <button class="btn btn-primary" type="submit" mat-dialog-close='close' *ngIf="false" (click)="updateProformaInvoice()">Update</button>
         </ng-container>
-        <button mat-button (click)="closeDialog()" cdkFocusInitial>Close</button>
+        <button mat-button (click)="closeDialog() " *ngIf="!showUpdate" cdkFocusInitial>Close</button>
     </div>
+
 
 
 </mat-dialog-content>
@@ -361,7 +332,8 @@
         <div class="modal-content" style="width:920px">
             <div class="modal-header text-center">
                 <h4 class="modal-title">View PDF</h4>
-                <button type="button" class="close" data-dismiss="modal" (click)="showPdfModal = false">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" 
+                    (click)="showPdfModal = false">&times;</button>
             </div>
             <div class="modal-body" style="height:553px">
                 <iframe [src]="previewUrl | secure | async" style="height:491px;width: 886px;" type="application/pdf"></iframe>

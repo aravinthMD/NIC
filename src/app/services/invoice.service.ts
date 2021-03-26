@@ -386,7 +386,8 @@ updatePurchaseOrder(data) {
   const requestEntity  : any  = {
     processId,
     ProcessVariables : data,
-    projectId
+    projectId,
+    workflowId
   }
 
   
@@ -757,6 +758,32 @@ updatePurchaseOrder(data) {
 
     
 
+    let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
+    return  this.httpService.post(url,requestEntity);
+  }
+
+  getReferenceNumber(clientId : number){   
+      
+    const {
+      api : {
+        getReferenceNumbers : {
+            workflowId,
+            processId,
+            projectId
+        }
+      }
+    } = this.apiService;
+
+    const data = {
+      clientId
+    }
+
+    const requestEntity  : any  = {
+      processId,
+      ProcessVariables : data,
+      projectId,
+      workflowId
+    }
     let url = `${environment.host}d/workflows/${requestEntity.workflowId}/${environment.apiVersion.api}execute?projectId=${requestEntity.projectId}`;
     return  this.httpService.post(url,requestEntity);
   }

@@ -7,15 +7,15 @@
 
         <!-- <input hidden type="file" #inputCsvFile (change)="onUploadCsv($event)" accept=".csv"> -->
         <mat-accordion *ngIf="isWrite && isClientActive">
-            <mat-expansion-panel>
+            
+            <mat-expansion-panel  [expanded]="isExpand">
                 <mat-expansion-panel-header matRipple collapsedHeight="30px" expandedHeight="35px">
                     <mat-panel-title>
                         <mat-icon style="padding-right: 30px !important;">add_circle</mat-icon> Add New Proforma Invoice
                         <!-- <span (click)="inputCsvFile.click()">Upload</span> -->
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <form [formGroup]="form">
-
+                <form [formGroup]="form" *ngIf="false" >
 
                     <div class="row">
                         <div class="col-4">
@@ -55,15 +55,17 @@
                             </div>
                         </div>
                         <div class="col-4">
-                            <div class="form-group">
-
-
+                            <!-- <div class="form-group">
                                 <app-custom-input formControlName="refNumber" [mandatoryField]="true" [labelName]="labels.refNo" [id]="'refNo'" placeHolder="Enter the Reference Number" [isRequired]="'Reference Number is Mandatory'" [maxLength]="labels?.validationData.refNo.maxLength"
                                     [type]="labels?.validationData.refNo.type" [isDirty]="isDirty">
 
                                 </app-custom-input>
-
-
+                            </div> -->
+                            <div class="form-group">
+                                <label style="margin-bottom: -0.2em">{{labels?.refNo}}<span style="color:red">*</span></label>
+                                <ng-multiselect-dropdown placeholder="Choose Reference Number" formControlName="refNumber" 
+                                    [data]="refernceFilterDetails" [settings]="dropdownSettings" >
+                                </ng-multiselect-dropdown>
                             </div>
                         </div>
 
@@ -124,7 +126,8 @@
                     <small id="dateHelp" class="form-text text-muted"></small> -->
 
                                 <mat-form-field floatLabel="never">
-                                    <input #dateFeild matInput required formControlName="date" [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')">
+                                    <input #dateFeild matInput required formControlName="date" 
+                                    [matDatepicker]="picker1" (keyup)="detectDateKeyAction($event,'date')">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                     <mat-placeholder>Select Date</mat-placeholder>
@@ -241,7 +244,10 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label for="poBillable" class="mb-0">Upload Document</label>
-                                <input type="file" accept="application/pdf" class="form-control upload-choose-pad" formControlName="importFile" id="poBillable" aria-describedby="poBillableHelp" (change)="uploadFile($event.target.files)">
+                                <input type="file" accept="application/pdf" 
+                                    class="form-control upload-choose-pad" 
+                                    formControlName="importFile" id="poBillable" 
+                                    aria-describedby="poBillableHelp" (change)="uploadFile($event.target.files)">
                                 <small id="poBillableHelp" class="form-text text-muted"></small>
                             </div>
                         </div>
@@ -269,6 +275,8 @@
 
                     </div>
                 </form>
+                
+               <app-shared-profoma-invoice [isNextRequire]="true" [isBackRequire]="true" (externEmit)="extentHandle($event)" (callGetAll)="fetchAllProformaInvoice(currentPage,userId)" [accountName] ="accountName"></app-shared-profoma-invoice>
 
             </mat-expansion-panel>
         </mat-accordion>
@@ -389,6 +397,10 @@
                 <ng-container matColumnDef="piAmt">
                     <th mat-header-cell *matHeaderCellDef> PI Amount </th>
                     <td mat-cell *matCellDef="let element" class=""> {{element.piAmount}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element" class=""> {{element.piStatus}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Action">
