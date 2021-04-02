@@ -13,4 +13,5 @@ export interface SmsCreditAllocation {
     statusValue?: string;
     smsUrl?: string;
     statusChangedOn?: string;
+    requestRaisedBy?: string
 }

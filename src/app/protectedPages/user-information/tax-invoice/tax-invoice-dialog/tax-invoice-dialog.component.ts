@@ -141,6 +141,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
       this.filePreview();
     });
 
+console.log('invoiceStatusList',this.invoiceStatusList);
 
 
 

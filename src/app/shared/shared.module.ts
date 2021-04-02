@@ -21,13 +21,14 @@ import { HeaderComponent } from './header/header.component';
 import { SharedProfomaInvoiceComponent } from './shared-profoma-invoice/shared-profoma-invoice.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SharedViewPdfComponent } from './shared-view-pdf/shared-view-pdf.component';
+import { SharedSmsCreditAllocationComponent } from './shared-sms-credit-allocation/shared-sms-credit-allocation.component';
 
 
 @NgModule({
   declarations: [
     CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent,
      ViewInfoComponent, BorderDirective, SecurePipe,
-    CsvUploadModalComponent, SideNavComponent, HeaderComponent, SharedProfomaInvoiceComponent, SharedViewPdfComponent],
+    CsvUploadModalComponent, SideNavComponent, HeaderComponent, SharedProfomaInvoiceComponent, SharedViewPdfComponent, SharedSmsCreditAllocationComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -51,7 +52,8 @@ import { SharedViewPdfComponent } from './shared-view-pdf/shared-view-pdf.compon
     CsvUploadModalComponent,
     SideNavComponent,
     HeaderComponent,
-    SharedProfomaInvoiceComponent
+    SharedProfomaInvoiceComponent,
+    SharedSmsCreditAllocationComponent
   ],
   providers : [],
   entryComponents : [AuditTrailDialogComponent]
