@@ -4,9 +4,11 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatAutocompleteModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDatepickerModule, MatIconModule, MatInputModule, MatNativeDateModule, MatSlideToggleModule, MatSortModule, MatToolbarModule } from "@angular/material";
 import { BrowserModule } from "@angular/platform-browser";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { MaterialModule } from "src/app/shared/material/material.module";
 import { SharedModule } from "src/app/shared/shared.module";
 import { ProcessDetailsComponent } from "../user-information/process-details/process-details.component";
+import { ProformaInvoiceDialogFormComponent } from "../user-information/process-details/proforma-invoice-dialog-form/proforma-invoice-dialog-form.component";
 import { ProjectExecutionComponent } from "../user-information/project-execution/project-execution.component";
 import { PurchaseOrderComponent } from "../user-information/purchase-order/purchase-order.component";
 import { TaxInvoiceComponent } from "../user-information/tax-invoice/tax-invoice.component";
@@ -29,7 +31,8 @@ import { ProtectedComponent } from "./protected.component";
         ProcessDetailsComponent,
         ProjectExecutionComponent,
         PurchaseOrderComponent,
-        TaxInvoiceComponent
+        TaxInvoiceComponent,
+        
     ],
     imports:[
         CommonModule,
@@ -49,7 +52,8 @@ import { ProtectedComponent } from "./protected.component";
         MatChipsModule,
         MatIconModule,
         MatSortModule,
-        MatToolbarModule
+        MatToolbarModule, 
+        NgMultiSelectDropDownModule       
     ],
     exports:[]
 })

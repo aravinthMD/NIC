@@ -93,7 +93,10 @@ export class SmsCreditAllocationComponent implements OnInit {
   isWrite = true;
   isEnableEmail = true;
   isClientActive = true;
-
+  userName: string;
+  saveForm: any;
+  setFormData : SmsCreditAllocation = null;
+  resetFormFlag: boolean;
   constructor(
     private labelsService: LabelsService,
     private utilService: UtilService,
@@ -111,7 +114,11 @@ export class SmsCreditAllocationComponent implements OnInit {
     private customDateAdapter: CustomDateAdapter,
     private utilityService: UtilityService
   //  private csvDataService: CsvDataService
-  ) {}
+  ) {
+    const userData = this.utilityService.getLoginDetail();            
+
+    this.userName = userData.username;
+  }
 
   ngOnInit() {
     this.isClientActive = this.clientDetailsService.getClientStatus();
@@ -165,10 +172,11 @@ export class SmsCreditAllocationComponent implements OnInit {
     // } else {
     //   this.showView = false;
     // }
+    
   }
 
   initForm() {
-    const userName = localStorage.getItem('userName') || '';
+    // const userName = localStorage.getItem('userName') || '';
     this.smsCreditForm = new FormGroup({
       smsApprover: new FormControl(''),
       totalCredit: new FormControl(null),
@@ -178,7 +186,7 @@ export class SmsCreditAllocationComponent implements OnInit {
       remark: new FormControl('',[Validators.required]),
       usedCredit: new FormControl(null),
       balanceCredit: new FormControl(null),
-      approvedBy: new FormControl(userName),
+      approvedBy: new FormControl(this.userName),
       timeStamp: new FormControl(this.currentDate),
     });
 
@@ -419,12 +427,20 @@ export class SmsCreditAllocationComponent implements OnInit {
       smsUrl = `${origin}/#/external/smsappove/smsId`
     }    
 
-    if (this.smsCreditForm.invalid) {
+    // if (this.smsCreditForm.invalid) {
+    //   this.isDirty = true;
+    //   this.toasterService.showError('Please fill all the mandatory fields', '');
+    //   return;
+    // }
+    if (this.saveForm.invalid){
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');
       return;
     }
-    const formValue  = this.smsCreditForm.value;
+
+    
+    // const formValue  = this.smsCreditForm.value;
+    const formValue = this.saveForm.value;
     console.log('formValue', formValue);
     const smsCredit: SmsCreditAllocation = {
       smsUrl,
@@ -436,9 +452,10 @@ export class SmsCreditAllocationComponent implements OnInit {
       onApprovalOf: formValue.onApprovalOf,
       remark: formValue.remark,
       approvedBy: formValue.approvedBy,
-      id: 0, // for new creation
+      id:  0, // 0 for new creation
       totalCredit: formValue.totalCredit,
       usedCredit: '0', // initially used credit is zero
+      requestRaisedBy: this.userName
     };
 
     console.log('smsCredit', smsCredit);
@@ -479,6 +496,8 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   formReset(){
+    this.setFormData = null;
+    this.resetFormFlag = true;
     this.smsCreditForm.reset();
     const userName = localStorage.getItem('userName') || '';
     this.smsCreditForm.controls['approvedBy'].setValue(userName);
@@ -578,7 +597,7 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendReminder(element) {
-    if (element.status === '1' || !this.isEnableEmail) {
+    if (element.status !== '0' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
@@ -586,7 +605,7 @@ export class SmsCreditAllocationComponent implements OnInit {
   }
 
   sendEscalation(element){
-    if (element.status === '1' || !this.isEnableEmail) {
+    if (element.status !== '0' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
@@ -642,5 +661,10 @@ export class SmsCreditAllocationComponent implements OnInit {
 
   OnEdit(element) {
     this.newCredit(element);
+  }
+
+  saveUpdateForm(event){
+    this.saveForm = event
+    console.log('saveForm', event)
   }
 }

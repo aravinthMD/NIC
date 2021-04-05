@@ -18,20 +18,26 @@ import { SecurePipe } from './secure.pipe';
 import { CsvUploadModalComponent } from '../protectedPages/csv-upload-modal/csv-upload-modal.component';
 import { SideNavComponent } from '../protectedPages/side-nav/side-nav.component';
 import { HeaderComponent } from './header/header.component';
+import { SharedProfomaInvoiceComponent } from './shared-profoma-invoice/shared-profoma-invoice.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { SharedViewPdfComponent } from './shared-view-pdf/shared-view-pdf.component';
+import { SharedSmsCreditAllocationComponent } from './shared-sms-credit-allocation/shared-sms-credit-allocation.component';
 
 
 @NgModule({
   declarations: [
     CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent,
      ViewInfoComponent, BorderDirective, SecurePipe,
-    CsvUploadModalComponent, SideNavComponent, HeaderComponent],
+    CsvUploadModalComponent, SideNavComponent, HeaderComponent, SharedProfomaInvoiceComponent, SharedViewPdfComponent, SharedSmsCreditAllocationComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     MatDatepickerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NgMultiSelectDropDownModule
+    
   ],
   exports: [
     CustomInputComponent,
@@ -45,7 +51,9 @@ import { HeaderComponent } from './header/header.component';
     SecurePipe,
     CsvUploadModalComponent,
     SideNavComponent,
-    HeaderComponent
+    HeaderComponent,
+    SharedProfomaInvoiceComponent,
+    SharedSmsCreditAllocationComponent
   ],
   providers : [],
   entryComponents : [AuditTrailDialogComponent]

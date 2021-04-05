@@ -85,7 +85,9 @@
                                 
                               </select> -->
 
-                                <app-vf-custom-select formControlName="state" [values]="states" [isRequired]="'Please Select State'"></app-vf-custom-select>
+                                <app-vf-custom-select formControlName="state" 
+                                    [values]="states" [isRequired]="'Please Select State'">
+                                </app-vf-custom-select>
 
 
                             </div>
@@ -108,8 +110,10 @@
                         <div class="col-4" *ngIf="reportDisplayName">
                             <label for="mobile">{{reportDisplayName}}</label>
                             <div class="form-group">
-                                <ng-multiselect-dropdown placeholder="Choose {{reportDisplayName}}" formControlName="reportsFilterDetails" 
-                                    [data]="reportsFilterDetails" [settings]="dropdownSettings" (onDeSelectAll)="onItemDeSelect('1')">
+                                <ng-multiselect-dropdown placeholder="Choose {{reportDisplayName}}" 
+                                    formControlName="reportsFilterDetails" 
+                                    [data]="reportsFilterDetails" 
+                                    [settings]="dropdownSettings" (onDeSelectAll)="onItemDeSelect('1')">
                                 </ng-multiselect-dropdown>
                             </div>
                         </div>

@@ -55,7 +55,9 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
   edit = new EventEmitter();
   isDataUpdated: SmsCreditAllocation;
   isWrite = true;
-
+  setFormData: any;
+  saveForm: any;
+  resetFormFlag: boolean;
   constructor(
     private dialogRef: MatDialogRef<SmsCreditDialogComponent>,
     private datePipe: DatePipe,
@@ -181,13 +183,13 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.smsCreditAllocation.invalid) {
+    if (this.saveForm.invalid) {
       this.isDirty = true;
       this.toasterService.showError('Please fill all the mandatory fields', '');
       return;
     }
 
-    const formValue = this.smsCreditAllocation.getRawValue();
+    const formValue = this.saveForm.getRawValue();
 
     const smsCredit: SmsCreditAllocation = {
       approvedBy: formValue.approvedBy,
@@ -216,6 +218,9 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
           this.isDataUpdated = processVariables;
           this.edit.emit(processVariables);
           this.toasterService.showSuccess('Data Updated Successfully', '');
+          this.resetFormFlag = true;
+          this.closeDialog();
+
         });
 
     // this.toasterService.showSuccess('Data Saved Successfully','')
@@ -267,9 +272,14 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       statusChangedBy : localStorage.getItem('userName'),
       timeStamp: this.currentDate
     });
+    this.setFormData = this.data;
   }
 
   ngOnDestroy() {
     this.closeDialog();
+  }
+  saveUpdateForm(event){
+    this.saveForm = event
+    console.log('saveForm', event)
   }
 }

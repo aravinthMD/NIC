@@ -209,23 +209,23 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   assignToForm(data : any){
 
-    this.form.patchValue({
+    // this.form.patchValue({
 
-      accountName : data['AccountName'] || '',
-      invoiceNumber : data['piNumber'] || '',
-      refNumber : data['referenceNumber'] || '',
-      piTraffic  : data['traffic'] || '',
-      piOwner : data['owner'] || '',
-      date  : data['date'] ? new Date(`${this.changeDateFormat(data['date'])}`) : '',
-      nicsiManager  : data['nicsiManager'] || '',
-      piAmount  : data['piAmount'] || '',
-      startDate : data['startDate'] ? new Date(`${this.changeDateFormat(data['startDate'])}`) : '',
-      endDate : data['endDate'] ? new Date(`${this.changeDateFormat(data['endDate'])}`) : '',
-      piStatus : String(data['piStatus']) || '',
-      paymentStatus : String(data['paymentStatus']) || '',
-      remark : data['remark'] || ''
+    //   accountName : data['AccountName'] || '',
+    //   invoiceNumber : data['piNumber'] || '',
+    //   refNumber : data['referenceNumber'] || '',
+    //   piTraffic  : data['traffic'] || '',
+    //   piOwner : data['owner'] || '',
+    //   date  : data['date'] ? new Date(`${this.changeDateFormat(data['date'])}`) : '',
+    //   nicsiManager  : data['nicsiManager'] || '',
+    //   piAmount  : data['piAmount'] || '',
+    //   startDate : data['startDate'] ? new Date(`${this.changeDateFormat(data['startDate'])}`) : '',
+    //   endDate : data['endDate'] ? new Date(`${this.changeDateFormat(data['endDate'])}`) : '',
+    //   piStatus : String(data['piStatus']) || '',
+    //   paymentStatus : String(data['paymentStatus']) || '',
+    //   remark : data['remark'] || ''
 
-    })
+    // })
 
     const piStatusData = this.piStatusData.filter((value) => {
       return value.key == this.form.controls['piStatus'].value
