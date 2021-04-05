@@ -1,0 +1,238 @@
+<form [formGroup]="PEForm" (keydown.enter)="$event.preventDefault()">
+   
+<div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <app-custom-input formControlName="userName" 
+        [isRequired]="'UserName is Mandatory'" 
+        [mandatoryField]="true"
+        [labelName]="labels.userName" 
+        placeHolder =  "Enter the User Name"
+        [maxLength]="labels?.validationData?.name?.maxLength"
+        [type]="labels?.validationData?.name?.type"
+        [isDirty]="isDirty"
+        [isDisabledInp]= "true">
+        </app-custom-input>
+        </div>
+    </div>
+
+    <div class="col-4">
+      <div class="form-group">
+          <label for="invoiceNumber">{{labels.proformaIN}}<span style="color:red">*</span></label>
+          <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;" class="form-control mb-3" placeholder="Choose the Proforma Invoice Number" [formControl]="PEForm.controls['piNumber']" formControlName="piNumber" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith] = "displayFn.bind(this)">
+              <mat-option *ngFor="let proformaInvoice of proformaInvoicesList" [value]="proformaInvoice.name">
+                  {{proformaInvoice.name}}
+              </mat-option>
+          </mat-autocomplete>
+          <div class="date-picker-error" *ngIf="isDirty && PEForm.controls['piNumber'].errors?.required">
+              Please Enter the Proforma Invoice Number
+          </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-4">
+      <div class="form-group">
+       <app-custom-input formControlName = "piNumber" 
+       [isRequired] = "'PI Number is Mandatory'"
+       [labelName] ="labels.proformaIN"
+       placeHolder =  "Enter the Proforma Invoice Number"
+       [maxLength] ="labels?.validationData?.proformaIN?.maxLength"
+       [type] ="labels?.validationData?.proformaIN?.type"
+       [isDirty] ="isDirty">
+       </app-custom-input>
+      </div>
+    </div> -->
+
+    <!-- <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName = "piDate"
+            [isRequired] = "'Purchase Invoice Date is Mandatory'"
+            [labelName] = "labels.invoiceDate"
+            [maxLength] = "labels?.validationData?.invoiceDate.maxLength"
+            [isDirty] = "isDirty">
+            </app-custom-input>
+        </div>
+    </div> -->
+
+    <div class="col-4">
+      <div class="form-group">
+           <label for="invoiceDate">Proforma Invoice Date<span style="color : red">*</span></label>
+        <!--  <input type="date" class="form-control" id="invoiceDate" aria-describedby="invoiceDateHelp">
+          <small id="invoiceDateHelp" class="form-text text-muted"></small> -->
+
+          <mat-form-field floatLabel = "never">
+            <input matInput [matDatepicker]="picker1" formControlName="invoiceDate" (keyup)="detectDateKeyAction($event,'invoiceDate')" required>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-placeholder>Choose The Date</mat-placeholder>
+          </mat-form-field>
+
+          <div class="date-picker-error"  *ngIf="
+            isDirty &&
+            PEForm.get('invoiceDate').errors?.required
+          ">
+              Please select date
+        </div>
+
+        </div>
+  </div>
+
+
+
+
+    <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName = "piAmount"
+            [isRequired] = "'Amount is Mandatory'"
+            [mandatoryField]="true"
+            [labelName] = "labels.piAmount"
+            placeHolder =  "Enter the Amount"
+            [maxLength] = "labels?.validationData?.piAmount.maxLength"
+            [type] = "labels?.validationData?.piAmount.type"
+            [isDirty] = "isDirty">
+          </app-custom-input>
+        </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="modeOfPayment">{{labels.modeOfPayment}}<span style="color: red;">*</span></label>
+         <app-vf-custom-select formControlName ="modeOfPayment" 
+         [values] = "modeOfPaymentList"
+         [isRequired] = "'Please Select the Payment'" [isDirty] = "isDirty">
+        </app-vf-custom-select>
+      </div>
+  </div>
+    <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName = "documentNo"
+            [isRequired] = "'Document Number is Mandatory'"
+            [mandatoryField]="true"
+            [labelName] = "labels.documentNo"
+            placeHolder = "Enter the Document Number"
+            [maxLength] = "labels?.validationData?.documentNo.maxLength"
+            [isDirty] = "isDirty">
+          </app-custom-input>
+        </div>
+    </div>
+
+    <div class="col-4">
+      <div class="form-group">
+        <label for="invoiceDate">Date of Transaction<span style="color:red">*</span></label>
+          <mat-form-field floatLabel = "never">
+            <input matInput [matDatepicker]="picker2" formControlName="transactionDate" (keyup)="detectDateKeyAction($event,'transactionDate')" required>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-placeholder>Choose The Date</mat-placeholder>
+          </mat-form-field>
+
+          <div class="date-picker-error"  *ngIf="
+            isDirty &&
+            PEForm.get('transactionDate').errors?.required
+          ">
+              Please select date
+        </div>
+
+        </div>
+  </div>
+    
+
+    <div class="col-4">
+        <div class="form-group">
+          <app-custom-input formControlName = "bankName"
+          [isRequired] = "'Bank Name/Branch is Mandatory'"
+          [mandatoryField]="true"
+          [labelName] = "labels.bankName"
+          placeHolder =  "Enter the Bank Name"
+          [maxLength] = "labels?.validationData?.bankName.maxLength"
+          [type] = "labels?.validationData?.bankName.type"
+          [isDirty] = "isDirty">
+       </app-custom-input>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="form-group">
+            <app-custom-input 
+            formControlName = "amountReceived"
+            [isRequired] = "'Amount Received is Required'"
+            [mandatoryField]="true"
+            [labelName] = "labels.amountReceived"
+            placeHolder =  "Enter the Amount Received"
+            [maxLength] = "labels?.validationData?.amountReceived.maxLength"
+            [type] = "labels?.validationData?.amountReceived.type"
+            [isDirty] = "isDirty">
+            </app-custom-input>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName = "tds"
+            [isRequired] = "'TDS is Required'"
+            [mandatoryField]="true"
+            [labelName] = "labels?.tds"
+            placeHolder = "Enter the TDS"
+            [maxLength] = "labels?.validationData?.tds.maxLength"
+            [type] = "labels?.validationData?.tds.type"
+            [isDirty] = "isDirty">
+            </app-custom-input>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="form-group">
+            <app-custom-input formControlName = "NICSIProjectNo"
+            [isRequired] = "'NICSI Project Number is Required'"
+            [mandatoryField]="true"
+            [labelName] = "labels?.nicsiProjectNumber"
+            placeHolder =  "Enter the NICSI Project Number"
+            [maxLength] = "labels?.validationData?.nicsiProjectNumber.maxLength"
+            [type] = "labels?.validationData?.nicsiProjectNumber.type"
+            [isDirty] = "isDirty"
+            >
+            </app-custom-input>
+        </div>
+    </div>
+
+    <div class="col-4">
+      <div class="form-group">
+        <label for="modeOfPayment">PI Paid<span style="color:red">*</span></label>
+        <app-vf-custom-select  
+          formControlName ="piPaid" 
+         [values] = "piPaidValues"
+         [isRequired] = "'Please Select the PI paid'" 
+         [isDirty] = "isDirty" >
+        </app-vf-custom-select>
+      </div>
+  </div>
+
+<div class="col-4">
+    <div class="form-group">
+      <label for="remarks">{{labels.remark}}</label><span style="color:red">*</span>
+      <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName = 'remark' id="remarks" rows="3"></textarea>
+          <div class="date-picker-error" *ngIf="isDirty && PEForm.controls['remark'].errors?.required">
+              Please Enter Remark
+          </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="form-group">
+        <label for="poBillable">{{docAvailFlag ? labels?.changeDoc :labels?.uploadDoc}}</label>
+        <input type="file" class="form-control upload-choose-pad" id="poBillable" aria-describedby="poBillableHelp" formControlName = "importFile" (change)="uploadFile($event.target.files)">
+        <small id="poBillableHelp" class="form-text text-muted"></small>
+    </div>
+</div>
+
+  <div *ngIf = "docAvailFlag" class="col-4">
+    <label for="document">Document</label><br>
+      <button class="btn btn-primary" style="float: left;" (click)="preview()">View</button>
+  </div>
+
+</div>
+  <div class="mt-4">
+  <button class="btn btn-primary float-left" (click)="saveForm()">{{btnText}}</button>
+  <ng-content></ng-content>
+  </div>
+</form>

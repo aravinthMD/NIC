@@ -125,24 +125,24 @@ this.lovData = this.utilService.getLovData();
 
     });
 
-    this.PurchaseEntryForm = new FormGroup({
-      userName : new FormControl(null),
-      piNumber : new FormControl('',Validators.required),
-      piDate : new FormControl(null),
-      piAmount : new FormControl(null),
-      modeOfPayment : new FormControl(''),
-      documentNo :  new FormControl(null),
-      dateOfTransaction :  new FormControl(null),
-      bankName : new FormControl(null),
-      amountReceived : new FormControl(null),
-      tds : new FormControl(null),
-      NICSIProjectNo : new FormControl(null),
-      invoiceDate :  new FormControl(null),
-      transactionDate : new FormControl(null),
-      piPaid: new FormControl(''),
-      remark:new FormControl('',Validators.required),
-      importFile : new FormControl(null)
-    });
+    // this.PurchaseEntryForm = new FormGroup({
+    //   userName : new FormControl(null),
+    //   piNumber : new FormControl('',Validators.required),
+    //   piDate : new FormControl(null),
+    //   piAmount : new FormControl(null),
+    //   modeOfPayment : new FormControl(''),
+    //   documentNo :  new FormControl(null),
+    //   dateOfTransaction :  new FormControl(null),
+    //   bankName : new FormControl(null),
+    //   amountReceived : new FormControl(null),
+    //   tds : new FormControl(null),
+    //   NICSIProjectNo : new FormControl(null),
+    //   invoiceDate :  new FormControl(null),
+    //   transactionDate : new FormControl(null),
+    //   piPaid: new FormControl(''),
+    //   remark:new FormControl('',Validators.required),
+    //   importFile : new FormControl(null)
+    // });
 
 
     this.clientId = this.clientDetailService.getClientId();
@@ -152,7 +152,7 @@ this.lovData = this.utilService.getLovData();
       this.accountName = val ? val['App_name'] :'';
       this.status = val ? val['status'] :'';
 
-      this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
+      // this.PurchaseEntryForm.controls['userName'].setValue(this.accountName);
     })
 
     this.activatedRoute.params.subscribe((value)=> {  
@@ -161,16 +161,21 @@ this.lovData = this.utilService.getLovData();
     })
 
     this.getProjectExecutionDetails(this.currentPage,this.clientId);    
-    this.getPIAutoPopulate(this.clientId);
+    // this.getPIAutoPopulate(this.clientId);
 
 
-    this.PurchaseEntryForm.controls['piNumber'].valueChanges.subscribe((value) => {
-        if(!value)
-          return
-        this.getPIAutoPopulateonChange(value);
-    })
+    // this.PurchaseEntryForm.controls['piNumber'].valueChanges.subscribe((value) => {
+    //     if(!value)
+    //       return
+    //     this.getPIAutoPopulateonChange(value);
+    // })
 
   }
+
+  // displayFn(value)
+  // {
+  //   this.getPIAutoPopulateonChange(value);
+  // }
 
 
 
@@ -200,16 +205,10 @@ this.lovData = this.utilService.getLovData();
   }
     //Create PE
 
-    createProjectExecution(data?: any) {
+    saveForm(type : string,data : any) {
       let feildControls: any = {};
       if (data) {
         feildControls = data;
-      } else {
-        feildControls = this.PurchaseEntryForm.value;
-        if (this.PurchaseEntryForm.invalid) {
-          this.isDirty = true;
-          return;
-        }
       }
 
       const userName = feildControls.userName;
@@ -251,14 +250,15 @@ this.lovData = this.utilService.getLovData();
         remark,
         upload_document: this.documentUploadId,
         userId: this.clientId ? Number(this.clientId) : 0,
+
       };
 
-      if (data) {
+      if(type === 'update'){
         Data.id = data.id;
       }
 
       this.invoiceService
-        .createProjectExecution(Data, data ? true : false)
+        .createProjectExecution(Data)
         .subscribe(
           (response: any) => {
             console.log(response["ProcessVariables"]);
@@ -368,47 +368,18 @@ this.lovData = this.utilService.getLovData();
       data : Data.id
     });
 
-    dialogRef.componentInstance.onProjectExecutionUpdate
-            .subscribe((res: any) => {
-               this.createProjectExecution(res);
-            });
-
-    dialogRef.componentInstance.onFileUpload
-             .subscribe((res: any) => {
-                console.log('file upload event', res);
-                this.uploadFile(res);
-    });
-
-    dialogRef.componentInstance.updateFileID
-              .subscribe((res : any) => {
-                if(res){
-                  this.documentUploadId = res;
-                }
-    })
-
     dialogRef.afterClosed().subscribe(result =>{
       console.log('The dialog was Closed',result);
+
+      if(result === 'success')
       this.getProjectExecutionDetails(this.currentPage,this.clientId);
+
     })
   }
-
-  getDownloadXls(){
-  }
-
 
   detectDateKeyAction(event,type) {
     console.log(event)
-    if(type == 'invoiceDate') {
-      this.PurchaseEntryForm.patchValue({
-        invoiceDate: ''
-      })
-      this.toasterService.showError('Please click the PI date icon to select date','');
-    }else if(type == 'transactionDate') {
-      this.PurchaseEntryForm.patchValue({
-        transactionDate: ''
-      })
-      this.toasterService.showError('Please click the date of transaction icon to select date','');
-    }else if(type == 'searchFrom') {
+     if(type == 'searchFrom') {
       this.searchForm.patchValue({
         searchFrom: ''
       })
@@ -450,68 +421,6 @@ this.lovData = this.utilService.getLovData();
    this.showDataSaveModal = false;
 
   }
-
-
-  getPIAutoPopulate(clientId : string){
-        this.invoiceService.getPIAutoPopulationAPI(clientId).subscribe(
-          (response) => {
-            // const { 
-            //   ProcessVariables  : { error : {
-            //     code,
-            //     message
-            //   }}
-            // } = response;
-
-            console.log(`API Response for the Get PI Auto Populate ${response}`);
-            if(true){
-                this.proformaInvoicesList = response['ProcessVariables']['piList'] || [];
-            }
-        })
-  }
-
-  changeDateFormat(date) {
-
-    const splitDate = date.split('/');
-
-    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
-
-   }
-
-  getPIAutoPopulateonChange(piNumber : any){
-      this.invoiceService.getProformaInvoiceOnChangeData(Number(piNumber)).subscribe(
-        (response) =>{
-          const date = response['ProcessVariables']['date'];
-          const amount = response['ProcessVariables']['piAmount'];
-          this.PurchaseEntryForm.controls['invoiceDate'].setValue(new Date(this.changeDateFormat(date)));
-          this.PurchaseEntryForm.controls['piAmount'].setValue(amount || '')
-        },(error) =>{
-          console.log(`Failed to fetch data`);
-          this.toasterService.showError('Failed to Fetch Data','');
-        })
-  }
-
-
-  async uploadFile(files : FileList){
-    this.file = files.item(0);
-    if(this.file){
-        const userId : string = this.clientDetailService.getClientId();
-        const modifiedFile = Object.defineProperty(this.file, "name", {
-          writable: true,
-          value: this.file["name"]
-        });
-        modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
-        this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
-        if(this.uploadedData['uploadStatus']){
-          this.documentUploadId = this.uploadedData['documentUploadId'];
-          this.toasterService.showSuccess('File Upload Success','')
-        }else { 
-          this.toasterService.showError('File Upload Failed','')
-        }
-    }
-
-  }
-
-
 
 
   getServerData(event?:PageEvent){

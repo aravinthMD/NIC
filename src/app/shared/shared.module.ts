@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { CustomInputComponent } from './custom-input/custom-input.component';
@@ -18,13 +18,16 @@ import { SecurePipe } from './secure.pipe';
 import { CsvUploadModalComponent } from '../protectedPages/csv-upload-modal/csv-upload-modal.component';
 import { SideNavComponent } from '../protectedPages/side-nav/side-nav.component';
 import { HeaderComponent } from './header/header.component';
+import { ProjectExecutionFormModalComponent } from './project-execution-form-modal/project-execution-form-modal.component';
+import { PreviewPopupComponent } from './preview-popup/preview-popup.component';
+import { TaxInvoiceFormComponent } from './tax-invoice-form/tax-invoice-form.component';
 
 
 @NgModule({
   declarations: [
     CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent,
      ViewInfoComponent, BorderDirective, SecurePipe,
-    CsvUploadModalComponent, SideNavComponent, HeaderComponent],
+    CsvUploadModalComponent, SideNavComponent, HeaderComponent, ProjectExecutionFormModalComponent, PreviewPopupComponent, TaxInvoiceFormComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -45,9 +48,11 @@ import { HeaderComponent } from './header/header.component';
     SecurePipe,
     CsvUploadModalComponent,
     SideNavComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProjectExecutionFormModalComponent,
+    TaxInvoiceFormComponent
   ],
-  providers : [],
-  entryComponents : [AuditTrailDialogComponent]
+  providers : [DatePipe],
+  entryComponents : [AuditTrailDialogComponent,PreviewPopupComponent]
 })
 export class SharedModule { }

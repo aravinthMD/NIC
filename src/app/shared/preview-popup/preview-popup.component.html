@@ -1,0 +1,22 @@
+<div class="row dialog-header">
+    <div class="col-6 float-left">
+        <h2 mat-dialog-title class="mb-0" >Preview</h2>
+    </div>
+    <div class="col-6">
+        <ng-container *ngIf = "minimize">
+            <button class="float-right mt-2" matTooltipPosition = "above" matTooltip = "Maximize" (click) = "resize('3500px','750px','maximize')"><i class="fa fa-window-maximize" aria-hidden="true"></i></button>
+        </ng-container>
+        <ng-container *ngIf = "!minimize">
+            <button class="float-right mt-2" matTooltipPosition = "above" matTooltip = "Minimize" (click) = "resize('800px','560px','minimize')"><i class="fa fa-window-restore" aria-hidden="true"></i></button>
+        </ng-container>
+    </div>
+</div>
+<!-- <mat-dialog-content> -->
+
+<iframe [src]= "previewDoc | secure | async" [ngClass] = "{ 'minimize' : minimize , 'maximize' : !minimize }" type="application/pdf"></iframe>
+<!-- <embed [src]= "previewDoc | secure | async"  type="application/pdf"   height="900px" width="1000px"> -->
+
+<!-- </mat-dialog-content> -->
+<mat-dialog-actions align = "end">
+    <button mat-button mat-dialog-close class="btn btn-primary p-2">Close</button>
+</mat-dialog-actions>

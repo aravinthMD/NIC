@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { HttpService } from './http.service';
@@ -11,8 +11,12 @@ import { TaxInvoice } from '../protectedPages/user-information/tax-invoice/tax-i
     providedIn: 'root'
 })
 export class TaxInvoiceService {
+
     private paymentList: any[];
     private invoiceStatusList = [];
+    private selectedInvoiceStatus : any;
+    private selectedPaymentStatus : any;
+    
     constructor(
         private httpService: HttpService,
         private apiService: ApiService
@@ -34,6 +38,22 @@ export class TaxInvoiceService {
 
     getPaymentList() {
       return this.paymentList;
+    }
+
+    setSelectedInvoiceStatus(value){
+      this.selectedInvoiceStatus = value;
+    }
+
+    getSelectedInvoiceStatus(){
+      return this.selectedInvoiceStatus;
+    }
+
+    setSelectedPaymentStatus(value = {}){
+      this.selectedPaymentStatus = value;
+    }
+
+    getSelectedPaymentStatus(){
+      return this.selectedPaymentStatus;
     }
 
 

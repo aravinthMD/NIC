@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Optional, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder, FormGroup,FormControl } from "@angular/forms";
 import {LabelsService} from '../../../../services/labels.service';
-import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
 import { Router,ActivatedRoute } from '@angular/router'
@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environment';
 
 import { UtilityService } from '@services/utility.service';
+import { PreviewPopupComponent } from 'src/app/shared/preview-popup/preview-popup.component';
 
 
 @Component({
@@ -32,15 +33,13 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   newAppiyoDrive  = environment.previewDocappiyoDrive;
   previewUrl : string = ''
 
-  docAvailFlag : boolean
+  docAvailFlag : boolean;
+
+  PEFormData : any;
 
 
-  modeOfPaymentList = [
-    {key : 0 ,value : 'DD'},
-    {key : 1 ,value : "Cheque"},
-    {key : 2 , value : "RTGS"},
-    {key : 3 ,value : "IMPS"}
-  ]
+  modeOfPaymentList = [];
+  lovData : any;
 
   departmentListData = [
     {key:0,value:'Department of Sainik Welfare'},
@@ -50,15 +49,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     {key:4,value:'Bureau of Naviks.Mumbai'}
 ];
 
-  piPaidValues = [
-    {
-    key: 0, 
-    value: 'Full Payment'
-  },
-  {
-    key: 1, 
-    value: 'Partial Payment'
-  }];
+  piPaidValues = [];
 
   showUploadModal: boolean;
 
@@ -69,7 +60,6 @@ export class ProjectExcecutionDialogComponent implements OnInit {
 
   showPdfModal:boolean;
   remarkModal:boolean;
-  detectAuditTrialObj:any;
   showUpdate: boolean;
 
   selectedPEId: string;
@@ -90,6 +80,8 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   onFileUpload = new EventEmitter();
   updateFileID = new EventEmitter();
   onProjectExecutionUpdate = new EventEmitter();
+  
+  accountName : string;
 
 
   constructor(
@@ -101,32 +93,10 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private invoiceService : InvoiceService,
-    private datePipe:DatePipe,
     private utilityService: UtilityService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: string,
+    private dialog : MatDialog
     ) { 
-    this.InitForm();
-    this.detectAuditTrialObj=this.ProjectExcecutionForm.value
-  }
-
-  InitForm(){
-    this.ProjectExcecutionForm = this.formBuilder.group({
-      userName : [''],
-      piNumber : [''],
-      piDate : new Date(),
-      piAmount : [''],
-      modeOfPayment : [''],
-      documentNo : [''],
-      dateOfTransaction : new Date(),
-      bankName : [''],
-      amountReceived : [''],
-      tds : [''],
-      NICSIProjectNo: [''],
-      invoiceDate : new Date(),
-      transactionDate : new Date(),
-      piPaid : [''],
-      remark:['',Validators.required]
-    })
   }
 
   ngOnInit() {
@@ -143,9 +113,22 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       this.storeProjectNo = value.projectNo || 4535;
     })
 
+    this.utilService.userDetails$.subscribe((val)=> {
+
+      this.accountName = val ? val['App_name'] :'';
+    })
+
+    this.patchLov();
+
     this.getProjectExecutionDetailById(this.data)
 
   }
+
+  patchLov(){
+    this.lovData = this.utilService.getLovData();
+    this.modeOfPaymentList = this.lovData? this.lovData.paymentModeStatusList : null;
+    this.piPaidValues = this.lovData? this.lovData.piPaidStatusList : null;
+}
 
 
   getProjectExecutionDetailById(currentPEId : string){
@@ -161,7 +144,8 @@ export class ProjectExcecutionDialogComponent implements OnInit {
       if(code == '0'){
         const data  = response["ProcessVariables"];
         this.selectedPEId = response["ProcessVariables"]["id"] ? response["ProcessVariables"]["id"] : ""; 
-        this.setFormValues(data);
+        this.setPreviewData(data);
+        this.PEFormData = data;
         if(response.ProcessVariables.upload_document){
           this.previewDocumentId = response.ProcessVariables.upload_document;
           this.updatePreviewId(this.previewDocumentId);
@@ -188,88 +172,70 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
 
-  setFormValues(data){
+  setPreviewData(data){
 
     if(data){
 
-      this.ProjectExcecutionForm.patchValue({
-        userName : data.userName || '',
-        piNumber : data.proformaInvoiceNumber || '',
-        piAmount : data.amount || '',
-        modeOfPayment : data.paymentMode || '',
-        documentNo : data.documentNumber || '',
-        bankName : data.branchName || '',
-        amountReceived : data.receivedAmount || '',
-        tds : data.tds || '',
-        NICSIProjectNo: data.nicsiProjectNumber || '',
-        invoiceDate : data.proformaInvoiceDate ? new Date(this.changeDateFormat(data.proformaInvoiceDate)) : '',
-        transactionDate : data.transactionDate ? new Date(this.changeDateFormat(data.transactionDate)) : '',
-        piPaid : data.paidPI || '',
-        remark :  data.remark || ''
-
-      })
-
       const psData = this.modeOfPaymentList.filter((val) =>{
-          return val.key == this.ProjectExcecutionForm.controls['modeOfPayment'].value
+          return val.key == data.paymentMode
       })
 
       const piPaid = this.piPaidValues.filter((val) =>{
-          return val.key == this.ProjectExcecutionForm.controls['piPaid'].value
+          return val.key == data.paidPI
       })
 
-      
       this.viewInfoData = [
         {
           key: this.labels.userName,
-          value:this.ProjectExcecutionForm.controls['userName'].value
+          value: (data ?  data.userName : '')
         },
         {
           key: this.labels.proformaIN,
-          value:this.ProjectExcecutionForm.controls['piNumber'].value
+          value: (data ? data.proformaInvoiceNumber : '')
         },
         {
           key: 'Proforma Invoice Date',
-          value: data.proformaInvoiceDate
+          value: (data ? data.proformaInvoiceDate : '')
         },
         {
           key: this.labels.piAmount,
-          value:this.ProjectExcecutionForm.controls['piAmount'].value
+          value: (data ? data.amount : '')
         },
         {
           key: this.labels.modeOfPayment,
-          value:  psData[0].value || ''
+          value:  ((psData && psData.length != 0) ?   psData[0].value :  '')
         },
         {
           key: this.labels.documentNo,
-          value:this.ProjectExcecutionForm.controls['documentNo'].value
+          value: (data ? data.documentNumber : '')
         },
         {
           key: 'Date of Transaction',
-          value:  data.transactionDate
+          value:  (data ? data.transactionDate : '')
         },
         {
           key: this.labels.bankName,
-          value:this.ProjectExcecutionForm.controls['bankName'].value
+          value: (data ? data.branchName : '')
         },
         {
           key: this.labels.amountReceived,
-          value:this.ProjectExcecutionForm.controls['amountReceived'].value
+          value: (data ? data.receivedAmount : '')
         },
         {
           key: this.labels.tds,
-          value:this.ProjectExcecutionForm.controls['tds'].value
+          value: (data ? data.tds : '')
         },
         {
           key: this.labels.nicsiProjectNumber,
-          value:this.ProjectExcecutionForm.controls['NICSIProjectNo'].value
+          value: (data ? data.nicsiProjectNumber : '')
         },
         {
           key: 'PI Paid',
-          value: piPaid[0].value || ''
+          value: ((piPaid && piPaid.length != 0) ? piPaid[0].value : '')
         },
         {
           key: this.labels.remark,
-          value:this.ProjectExcecutionForm.controls['remark'].value
+          value: (data ? data.remark : '')
         },
         {
           isButton: true,
@@ -288,7 +254,7 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     this.showEdit = true;
   }
 
-  OnUpdate(){
+  // OnUpdate(form ?: any){
     // const feildControls = this.ProjectExcecutionForm.controls;
     // const userName  = feildControls.userName.value;
     // const proformaInvoiceNumber  = feildControls.piNumber .value;
@@ -325,15 +291,6 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     //   uploadDocument : "file",
     // };
 
-    const formValue =  this.ProjectExcecutionForm.value;
-
-    const data = {
-        ...formValue,
-        id  : Number(this.selectedPEId)
-    };
-
-
-    this.onProjectExecutionUpdate.emit(data);
 
     // this.invoiceService.updateProjectExecutionDetail(Data).subscribe(
     //   (response: any) =>{
@@ -362,7 +319,8 @@ export class ProjectExcecutionDialogComponent implements OnInit {
     // },(error) =>{
     //     this.toasterService.showError(error,'');
     // })
-}
+// }
+
 
 saveYes()
 {
@@ -385,8 +343,8 @@ this.closeDialog()
 
 
 
-  closeDialog(){
-    this.dialogRef.close({ event : 'close' ,data : 'returnvalue'});
+  closeDialog(value ? : string){
+    this.dialogRef.close(value);
   }
 
   // viewDoc() {
@@ -397,48 +355,6 @@ this.closeDialog()
   
   }
   
-  detectFormChanges() {
-
-    let iRemark = false;
-
-    const formObject = this.ProjectExcecutionForm.value;
-
-    const keyArr = Object.keys(formObject);
-
-    const index = keyArr.findIndex((val)=> {
-      return val == 'remark'
-    })
-    
-    keyArr.splice(index,1)
-
-    const found = keyArr.find((element) => {
-              return formObject[element] != this.ProjectExcecutionForm[element]
-        
-    });
-
-
-    if(found && formObject['remark'] == this.detectAuditTrialObj['remark']){
-      iRemark = true;
-    // this.toasterService.showError('Please enter the remark','')
-    this.remarkModal = true;
-    this.ProjectExcecutionForm.patchValue({
-      remark: ''
-    })
-    
-    }else {
-
-      // if(!found && !iRemark) {
-
-      //   this.form.patchValue({
-      //     remark: this.detectAuditTrialObj.remark
-      //   })
-      // }
-
-      this.detectAuditTrialObj = this.ProjectExcecutionForm.value;
-      this.toasterService.showSuccess('Data Saved Successfully','')
-    }
-  }
-
   remarkOkay() {
     this.remarkModal = false;
   }
@@ -547,9 +463,10 @@ this.closeDialog()
   }
 
   showPDF() {
-    // this.showUploadModal = false;
-    this.showPdfModal = true;
-    this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`
+    this.previewUrl = `${this.host}${this.newAppiyoDrive}${this.previewDocumentId}`;
+    const dialogRef  = this.dialog.open(PreviewPopupComponent,{
+      data : this.previewUrl
+    })
 
   }
 
@@ -572,14 +489,5 @@ this.closeDialog()
     }
     
   }
-
-  changeDateFormat(date) {
-
-    const splitDate = date.split('/');
-
-    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
-
-   }
-
 
 }
