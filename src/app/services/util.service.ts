@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { AdminService } from './admin.service';
+import { ClientDetailsService } from './client-details.service';
+import { ToasterService } from './toaster.service';
 
 @Injectable({
   providedIn: 'root'
@@ -195,10 +197,23 @@ getCustomerId(){
     //   })
     // }
 
-    uploadToAppiyoDrive(file : Blob) {
+    uploadToAppiyoDrive(files : FileList) {
 
       return new Promise((resolve,reject)=> {
-  
+          let file = files ?  files.item(0) : null;
+          if(!file)
+          return this.toasterService.showError("No File to Upload",'');
+
+          const userId : string = this.clientDetailService.getClientId();
+          
+          const modifiedFile = Object.defineProperty(file, "name", {
+            writable: true,
+            value: file["name"]
+          });
+          modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+
+        
+
           let uploadStatus :boolean = false;
           let documentUploadId  = null;
          this.adminService.uploadToAppiyoDrive(file).subscribe((response) =>{
@@ -209,7 +224,7 @@ getCustomerId(){
                       uploadStatus,
                       documentUploadId
                     }
-  
+                    this.toasterService.showSuccess('File Upload Success','');
                     resolve(output)
                 }else{
                   uploadStatus = false;
@@ -218,7 +233,8 @@ getCustomerId(){
                       uploadStatus,
                       documentUploadId
                     }
-  
+                    this.toasterService.showError('File Upload Failed','');
+                    
                     resolve(output)
                 }
         },
@@ -233,7 +249,9 @@ getCustomerId(){
       }
 
 
-  constructor(private adminService : AdminService) { }
+  constructor(private adminService : AdminService,
+              private toasterService : ToasterService,
+              private clientDetailService : ClientDetailsService) { }
 
   setLovData(data){
     this.lovData = data;    
@@ -250,6 +268,14 @@ getCustomerId(){
   getCustomerModuleFlag(){
     return this.isCustomerModule;
   }
+
+  changeDateFormat(date) {
+
+    const splitDate = date.split('/');
+  
+    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+  
+   }
 
 
 }

@@ -1,11 +1,8 @@
 import { Component, Inject, OnInit, Optional, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import {LabelsService} from '../../../../services/labels.service';
 import {ToasterService} from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { InvoiceService } from '@services/invoice.service';
 import { TaxInvoice } from '../tax-invoice.model';
 
 import { CustomDateAdapter } from '@services/custom-date-adapter.service';
@@ -21,7 +18,6 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   labels: any;
   buttonName = 'Edit';
-  taxInvoiceForm: FormGroup;
   enableFlag = true;
   isDirty: boolean;
 
@@ -54,76 +50,31 @@ export class TaxInvoiceDialogComponent implements OnInit {
 
   showEdit: boolean;
 
-  updateEmitter = new EventEmitter();
-  onFileUpload = new EventEmitter();
-
   docAvailFlag : boolean;
   host  = environment.host;
   newAppiyoDrive  = environment.previewDocappiyoDrive;
   previewUrl : string = '';
   isWrite = true;
 
+  accountName : string;
+
+  updateGrid = new EventEmitter<any>();
+
   constructor(
-      private formBuilder: FormBuilder,
       private dialogRef: MatDialogRef<TaxInvoiceDialogComponent>,
       private labelService: LabelsService,
       private toasterService: ToasterService,
-      private router: Router,
-      private activatedRoute: ActivatedRoute,
-      private utilService: UtilService,
-      private invoiceService: InvoiceService,
       private customDateAdapter: CustomDateAdapter,
       private taxInvoiceService: TaxInvoiceService,
       private utilityService: UtilityService,
-      @Optional() @Inject(MAT_DIALOG_DATA) public data: TaxInvoice,
-      ) {
-
+      private utilService : UtilService,
+      @Optional() 
+        @Inject(MAT_DIALOG_DATA) 
+          public data: TaxInvoice ) {
         console.log('data', data);
+        }
 
-    // this.taxInvoiceForm = this.formBuilder.group({
-    //   userName : [''],
-    //   taxIN : [''],
-    //   invoiceDate : new Date(),
-    //   projectNo : [''],
-    //   poNumber : [''],
-    //   poDate : new Date(),
-    //   fromDate : new Date(),
-    //   toDate : new Date(),
-    //   invoiceAmount : [''],
-    //   remark : [''],
-    //   uploadDoc : [''],
-    //   paymentStatus : [''],
-    //   invoiceStatus : [''],
-    //   invoiceAmountPaid : [''],
-    //   tds : [''],
-    //   penalty : [''],
-    //   shortPay : [''],
-    //   submittedOn : new Date(),
-    //   poBillable : [''],
-    //   projectName:[''],
-    //   projectCordinator:[''],
-    //   PONoAmendOrder:[''],
-    //   mail:[''],
-    //   totalSMS:[''],
-    //   counts:[''],
-    //   baseAmount : [''],
-    //   tax:[''],
-    //   recvDate : [''],
-    //   book :  [''],
-    //   dateEstimated :  [''],
-    //   invoiceAmount2 : [''],
-    //   bankReceived : [''],
-    //   interestOnTDSotherDeduction : [''],
-    //   receiptDate :  [''],
-    //   month : [''],
-    //   year : [''],
-    //   mrn : ['']
-    // })
-
-    //this.detectAuditTrialObj=this.taxInvoiceForm.value
-   }
-
-   invoiceStatusList  = [];
+  invoiceStatusList  = [];
   detectAuditTrialObj: any;
   remarkModal: boolean;
   paymentStatus: any[] = [];
@@ -133,384 +84,208 @@ export class TaxInvoiceDialogComponent implements OnInit {
     this.invoiceStatusList = this.taxInvoiceService.getInvoiceStatusList();
     this.isWrite = taxInvoice.isWrite;
     this.paymentStatus = this.taxInvoiceService.getPaymentList();
+    // this.initForm();
     this.labelService.getLabelsData().subscribe((value) => {
       this.labels = value;
-      this.initForm();
       this.setValueForView();
-      this.setFormValue();
-      this.filePreview();
+      // this.setFormValue();
+      // this.filePreview();
     });
 
-console.log('invoiceStatusList',this.invoiceStatusList);
+    this.accountName = this.utilService.getCustomerDetails().App_name || '';
+    console.log('invoiceStatusList',this.invoiceStatusList);
 
-
-
-    // this.activatedRoute.params.subscribe((value)=> {
-
-    //   this.storeProjectNo = value.projectNo || 4535;
-    // });
-
-    // var dateObj = new Date();
-    // var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    // var day = dateObj.getUTCDate();
-    // var year = dateObj.getUTCFullYear();
-
-
-    // const psData = this.paymentStatus.filter((val)=> {
-
-    //   return val.key == this.taxInvoiceForm.value.paymentStatus
-    // })
-
-    // const invoiceStatusList = this.invoiceStatusList.filter((val)=> {
-    //   return val.key == this.taxInvoiceForm.value.invoiceStatus
-    // })
-
-    // this.viewInfoData = [
-    //   {
-    //     key: this.labels.userName,
-    //     value:this.taxInvoiceForm.value.userName
-    //   },
-    //   {
-    //     key: this.labels.projectNo,
-    //     value:this.taxInvoiceForm.value.projectNo
-    //   },
-    //   {
-    //     key: this.labels.poNumber,
-    //     value:this.taxInvoiceForm.value.poNumber
-    //   },
-    //   {
-    //     key: this.labels.poDate,
-    //     value:`${day}/${month}/${year}`
-    //   },
-    //   {
-    //     key: this.labels.fromDate,
-    //     value:`${day}/${month}/${year}`
-    //   },
-    //   {
-    //     key: this.labels.toDate,
-    //     value:`${day}/${month}/${year}`
-    //   },
-    //   {
-    //     key: this.labels.poBillable,
-    //     value:this.taxInvoiceForm.value.poBillable
-    //   },
-    //   {
-    //     key: this.labels.invoiceAmount,
-    //     value:this.taxInvoiceForm.value.invoiceAmount
-    //   },
-
-    //   {
-    //     key: this.labels.taxIN,
-    //     value:this.taxInvoiceForm.value.taxIN
-    //   },
-    //   {
-    //     key: this.labels.submittedDate,
-    //     value:`${day}/${month}/${year}`
-    //   },
-    //   {
-    //     key: this.labels.invoiceStatus,
-    //     value:invoiceStatusList[0].value
-    //   },
-    //   {
-    //     key: this.labels.invoiceAmountPaid,
-    //     value:this.taxInvoiceForm.value.invoiceAmountPaid
-    //   },
-    //   {
-    //     key: this.labels.tds,
-    //     value:this.taxInvoiceForm.value.tds
-    //   },
-    //   {
-    //     key: this.labels.penalty,
-    //     value:this.taxInvoiceForm.value.penalty
-    //   },
-    //   {
-    //     key: this.labels.shortPay,
-    //     value:this.taxInvoiceForm.value.shortPay
-    //   },
-    //   {
-    //     key: this.labels.paymentStatus,
-    //     value:psData[0].value
-    //   },
-    //   {
-    //     key: this.labels.remark,
-    //     value:this.taxInvoiceForm.value.remark
-    //   },
-    //   {
-    //     key: this.labels.projectName,
-    //     value: ''
-    //   },
-    //   {
-    //     key :  this.labels.projectCordinator,
-    //     value  : ""
-    //   },{
-    //     key :  this.labels.PONoAmendOrder,
-    //     value :  ""
-    //   },
-    //   {
-    //     key :  this.labels.mail,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.totalSMS,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.projectCordinator,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.baseAmount,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.tax,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.recvDate,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.book,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.dateEstimated,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.invoiceAmount2,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.bankReceived,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.interestOnTDSotherDeduction,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.receiptDate,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  this.labels.mrn,
-    //     value : ""
-    //   },
-    //   {
-    //     key :  "",
-    //     value : ""
-    //   },
-    //   {
-    //     key :  "",
-    //     value : ""
-    //   },
-    //   {
-    //     key :  "",
-    //     value : ""
-    //   }
-
-    // ]   
-
-    // this.getTaxInvoiceDetailById(this.data)
   }
 
-  patchLov() {
-    
-  }
-
-  uploadFile(event) {
-    this.onFileUpload.emit(event);
-  }
-
-  initForm() {
-    this.taxInvoiceForm = new FormGroup({
-      userName: new FormControl(null),
-      projectNumber: new FormControl(null),
-      poNumber: new FormControl(null),
-      poDate: new FormControl(null),
-      fromDate: new FormControl(null),
-      toDate: new FormControl(null),
-      billableAmount: new FormControl(null),
-      invoiceAmount: new FormControl(null),
-      taxInvoiceNumber: new FormControl(null),
-      invoiceDate: new FormControl(null),
-      submittedDate: new FormControl(null),
-      invoiceStatus: new FormControl(''),
-      invoicePaidAmount: new FormControl(null),
-      tds:  new FormControl(null),
-      penalty:  new FormControl(null),
-      shortPay: new FormControl(null),
-      paymentStatus: new FormControl(''),
-      remark: new FormControl(null),
-      uploadDocument: new FormControl(null),
-      userEmail: new FormControl(null),
-      totalSMS: new FormControl(null),
-      counts1: new FormControl(null),
-      baseAmount: new FormControl(null),
-      tax: new FormControl(null),
-      receiveDate: new FormControl(null),
-      book:  new FormControl(null),
-      dateEstimated:  new FormControl(null),
-      invoiceAmount2: new FormControl(null),
-      bankReceived: new FormControl(null),
-      receiptDate:  new FormControl(null),
-      month: new FormControl(null),
-      year: new FormControl(null),
-      mrnNumber: new FormControl(null),
-      projectName: new FormControl(null),
-      projectCoordinator: new FormControl(null), // not available in api
-      amendOrderNo: new FormControl(null), // not available in api
-      interestOnTds : new FormControl(null), // not available in api
-    });
-  }
+  // initForm() {
+  //   this.taxInvoiceForm = new FormGroup({
+  //     userName: new FormControl(null),
+  //     projectNumber: new FormControl(null),
+  //     poNumber: new FormControl(null),
+  //     poDate: new FormControl(null),
+  //     fromDate: new FormControl(null),
+  //     toDate: new FormControl(null),
+  //     billableAmount: new FormControl(null),
+  //     invoiceAmount: new FormControl(null),
+  //     taxInvoiceNumber: new FormControl(null),
+  //     invoiceDate: new FormControl(null),
+  //     submittedDate: new FormControl(null),
+  //     invoiceStatus: new FormControl(''),
+  //     invoicePaidAmount: new FormControl(null),
+  //     tds:  new FormControl(null),
+  //     penalty:  new FormControl(null),
+  //     shortPay: new FormControl(null),
+  //     paymentStatus: new FormControl(''),
+  //     remark: new FormControl(null),
+  //     uploadDocument: new FormControl(null),
+  //     userEmail: new FormControl(null),
+  //     totalSMS: new FormControl(null),
+  //     counts1: new FormControl(null),
+  //     baseAmount: new FormControl(null),
+  //     tax: new FormControl(null),
+  //     receiveDate: new FormControl(null),
+  //     book:  new FormControl(null),
+  //     dateEstimated:  new FormControl(null),
+  //     invoiceAmount2: new FormControl(null),
+  //     bankReceived: new FormControl(null),
+  //     receiptDate:  new FormControl(null),
+  //     month: new FormControl(null),
+  //     year: new FormControl(null),
+  //     mrnNumber: new FormControl(null),
+  //     projectName: new FormControl(null),
+  //     projectCoordinator: new FormControl(null), // not available in api
+  //     amendOrderNo: new FormControl(null), // not available in api
+  //     interestOnTds : new FormControl(null), // not available in api
+  //   });
+  // }
 
   setValueForView() {
     const invoiceStatusDesc = this.invoiceStatusList.find((val) => {
         return val.key === this.data.invoiceStatus;
     });
+
     const paymentStatusDesc = this.paymentStatus.find((val) => {
       return Number(val.key) === Number(this.data.paymentStatus);
     });
+
     this.viewInfoData = [
       {
         key: this.labels.userName,
-        value: this.data.userName
+        value: this.data ? this.data.userName : ""
       },
       {
         key: this.labels.projectNo,
-        value: this.data.projectNumber
+        value: this.data ? this.data.projectNumber : ""
       },
       {
         key: this.labels.poNumber,
-        value: this.data.poNumber
+        value: this.data ? this.data.poNumber : ""
       },
       {
         key: this.labels.poDate,
-        value: this.data.poDate
+        value: this.data ? this.data.poDate : ""
       },
       {
         key: this.labels.fromDate,
-        value: this.data.fromDate
+        value: this.data ? this.data.fromDate : ""
       },
       {
         key: this.labels.toDate,
-        value: this.data.toDate
+        value: this.data ? this.data.toDate : ""
       },
       {
         key: this.labels.poBillable,
-        value: this.data.billableAmount
+        value: this.data ? this.data.billableAmount :  ""
       },
       {
         key: this.labels.invoiceAmount,
-        value: this.data.invoiceAmount
+        value: this.data ? this.data.invoiceAmount : ""
       },
 
       {
         key: this.labels.taxIN,
-        value: this.data.taxInvoiceNumber
+        value: this.data ? this.data.taxInvoiceNumber :  ""
       },
       {
         key: this.labels.submittedDate,
-        value: this.data.submittedDate
+        value: this.data ? this.data.submittedDate : ""
       },
       {
         key: this.labels.invoiceStatus,
-        value: invoiceStatusDesc.value
+        value: this.data ? invoiceStatusDesc.value : ""
       },
       {
         key: this.labels.invoiceAmountPaid,
-        value: this.data.invoicePaidAmount
+        value: this.data ? this.data.invoicePaidAmount : ""
       },
       {
         key: this.labels.tds,
-        value: this.data.tds
+        value: this.data ? this.data.tds : ""
       },
       {
         key: this.labels.penalty,
-        value: this.data.penalty
+        value: this.data ? this.data.penalty :  ""
       },
       {
         key: this.labels.shortPay,
-        value: this.data.shortPay
+        value: this.data ? this.data.shortPay : ""
       },
       {
         key: this.labels.paymentStatus,
-        value: paymentStatusDesc.value
+        value: this.data ?  paymentStatusDesc.value : ""
       },
       {
         key: this.labels.remark,
-        value: this.data.remark
+        value: this.data ? this.data.remark : ""
       },
       {
         key: this.labels.projectName,
-        value: this.data.projectName
+        value: this.data ? this.data.projectName : ""
       },
       {
         key :  this.labels.projectCordinator,
-        value  : this.data.projectCoordinator
+        value  : this.data ? this.data.projectCoordinator : ""
       },
       {
         key :  this.labels.PONoAmendOrder,
-        value :  this.data.amendOrderNo
+        value :  this.data ? this.data.amendOrderNo : ""
       },
       {
         key :  this.labels.mail,
-        value : this.data.userEmail
+        value : this.data ? this.data.userEmail : ""
       },
       {
         key :  this.labels.totalSMS,
-        value : this.data.totalSMS
+        value : this.data ? this.data.totalSMS : ""
       },
       {
         key :  this.labels.counts,
-        value : this.data.counts1
+        value : this.data ? this.data.counts1 : ""
       },
       {
         key :  this.labels.baseAmount,
-        value : this.data.baseAmount
+        value : this.data ? this.data.baseAmount : ""
       },
       {
         key :  this.labels.tax,
-        value : this.data.tax
+        value : this.data ? this.data.tax : ""
       },
       {
         key :  this.labels.recvDate,
-        value : this.data.receiveDate
+        value : this.data ? this.data.receiveDate : ""
       },
       {
         key :  this.labels.book,
-        value : this.data.book
+        value : this.data ? this.data.book : ""
       },
       {
         key :  this.labels.dateEstimated,
-        value : this.data.dateEstimated
+        value : this.data ? this.data.dateEstimated : ""
       },
       {
         key :  this.labels.invoiceAmount2,
-        value : this.data.invoiceAmount2
+        value : this.data ? this.data.invoiceAmount2 : ""
       },
       {
         key :  this.labels.bankReceived,
-        value : this.data.bankReceived
+        value : this.data ? this.data.bankReceived : ""
       },
       {
         key :  this.labels.interestOnTDSotherDeduction,
-        value : this.data.interestOnTds
+        value : this.data ? this.data.interestOnTds : ""
       },
       {
         key :  this.labels.receiptDate,
-        value : this.data.receiptDate
+        value : this.data ? this.data.receiptDate : ""
       },
       {
         key :  this.labels.mrn,
-        value : this.data.mrnNumber
+        value : this.data ? this.data.mrnNumber : ""
       },
       {
         isButton: true,
         key: 'View PDF',
-        value: this.data.upload_document
+        value: this.data ? this.data.upload_document : ""
       }
     ];
 
@@ -524,53 +299,53 @@ console.log('invoiceStatusList',this.invoiceStatusList);
   }
 
 
-  setFormValue() {
-       const purchaseOrder = this.customDateAdapter.parseToDateObj(this.data.poDate);
-       const fromDate = this.customDateAdapter.parseToDateObj(this.data.fromDate);
-       const toDate = this.customDateAdapter.parseToDateObj(this.data.toDate);
-       const invoiceDate = this.customDateAdapter.parseToDateObj(this.data.invoiceDate);
-       const submittedDate = this.customDateAdapter.parseToDateObj(this.data.submittedDate);
-       const receiveDate = this.customDateAdapter.parseToDateObj(this.data.receiveDate);
-       const dateEstimated = this.customDateAdapter.parseToDateObj(this.data.dateEstimated);
-       const receiptDate = this.customDateAdapter.parseToDateObj(this.data.receiptDate);
+  // setFormValue() {
+  //      const purchaseOrder = this.customDateAdapter.parseToDateObj(this.data.poDate);
+  //      const fromDate = this.customDateAdapter.parseToDateObj(this.data.fromDate);
+  //      const toDate = this.customDateAdapter.parseToDateObj(this.data.toDate);
+  //      const invoiceDate = this.customDateAdapter.parseToDateObj(this.data.invoiceDate);
+  //      const submittedDate = this.customDateAdapter.parseToDateObj(this.data.submittedDate);
+  //      const receiveDate = this.customDateAdapter.parseToDateObj(this.data.receiveDate);
+  //      const dateEstimated = this.customDateAdapter.parseToDateObj(this.data.dateEstimated);
+  //      const receiptDate = this.customDateAdapter.parseToDateObj(this.data.receiptDate);
 
-       this.taxInvoiceForm.patchValue({
-        userName: this.data.userName,
-        projectNumber: this.data.projectNumber,
-        poNumber: this.data.poNumber,
-        poDate: purchaseOrder,
-        billableAmount: this.data.billableAmount,
-        invoiceAmount: this.data.invoiceAmount,
-        taxInvoiceNumber: this.data.taxInvoiceNumber,
-        invoiceStatus: this.data.invoiceStatus,
-        invoicePaidAmount: this.data.invoicePaidAmount,
-        tds: this.data.tds,
-        penalty: this.data.penalty,
-        shortPay: this.data.shortPay,
-        paymentStatus: this.data.paymentStatus,
-        remark: this.data.remark,
-        userEmail: this.data.userEmail,
-        totalSMS: this.data.totalSMS,
-        counts1: this.data.counts1,
-        baseAmount: this.data.baseAmount,
-        tax: this.data.tax,
-        book: this.data.book,
-        invoiceAmount2: this.data.invoiceAmount2,
-        bankReceived: this.data.bankReceived,
-        mrnNumber: this.data.mrnNumber,
-        projectName: this.data.projectName,
-        amendOrderNo: this.data.amendOrderNo,
-        interestOnTds: this.data.interestOnTds,
-        projectCoordinator: this.data.projectCoordinator,
-        fromDate,
-        toDate,
-        invoiceDate,
-        submittedDate,
-        receiveDate,
-        receiptDate,
-        dateEstimated,
-       });
-  }
+  //      this.taxInvoiceForm.patchValue({
+  //       userName: this.data.userName,
+  //       projectNumber: this.data.projectNumber,
+  //       poNumber: this.data.poNumber,
+  //       poDate: purchaseOrder,
+  //       billableAmount: this.data.billableAmount,
+  //       invoiceAmount: this.data.invoiceAmount,
+  //       taxInvoiceNumber: this.data.taxInvoiceNumber,
+  //       invoiceStatus: this.data.invoiceStatus,
+  //       invoicePaidAmount: this.data.invoicePaidAmount,
+  //       tds: this.data.tds,
+  //       penalty: this.data.penalty,
+  //       shortPay: this.data.shortPay,
+  //       paymentStatus: this.data.paymentStatus,
+  //       remark: this.data.remark,
+  //       userEmail: this.data.userEmail,
+  //       totalSMS: this.data.totalSMS,
+  //       counts1: this.data.counts1,
+  //       baseAmount: this.data.baseAmount,
+  //       tax: this.data.tax,
+  //       book: this.data.book,
+  //       invoiceAmount2: this.data.invoiceAmount2,
+  //       bankReceived: this.data.bankReceived,
+  //       mrnNumber: this.data.mrnNumber,
+  //       projectName: this.data.projectName,
+  //       amendOrderNo: this.data.amendOrderNo,
+  //       interestOnTds: this.data.interestOnTds,
+  //       projectCoordinator: this.data.projectCoordinator,
+  //       fromDate,
+  //       toDate,
+  //       invoiceDate,
+  //       submittedDate,
+  //       receiveDate,
+  //       receiptDate,
+  //       dateEstimated,
+  //      });
+  // }
 
   // getTaxInvoiceDetailById(currentTiId :  string){
 
@@ -643,113 +418,113 @@ console.log('invoiceStatusList',this.invoiceStatusList);
     this.showEdit = true;
   }
 
-  OnUpdate() {
+  // OnUpdate() {
 
-    if (!this.taxInvoiceForm.valid) {
-      this.isDirty = true;
-      return this.toasterService.showError('Please fill all the fields', '');
-    }
-    this.updateEmitter.emit({
-      id: Number(this.data.id),
-      ...this.taxInvoiceForm.value
-    });
+  //   if (!this.taxInvoiceForm.valid) {
+  //     this.isDirty = true;
+  //     return this.toasterService.showError('Please fill all the fields', '');
+  //   }
+  //   this.updateEmitter.emit({
+  //     id: Number(this.data.id),
+  //     ...this.taxInvoiceForm.value
+  //   });
     
-    // this.detectFormChanges();
+  //   // this.detectFormChanges();
     
 
-    // if(this.taxInvoiceForm.invalid){
-    //   this.isDirty = true;
-    //   return;
-    // }
+  //   // if(this.taxInvoiceForm.invalid){
+  //   //   this.isDirty = true;
+  //   //   return;
+  //   // }
 
-    // // {"userName":"TestUser01","projectNumber":"P1234","poDate":"24/12/2020","fromDate":"23/12/2020","toDate":"24/12/2020","billableAmount":"5000","InvoiceAmount":"3000","TaxInvoiceNumber":"INV3343","submittedDate":"24/12/2020","InvoiceStatus":2,"InvoicePaidAmount":"2000","tds":"100","penalty":"0","shortPay":"2500","paymentStatus":1,"remark":"Remark Column","uploadDocument":"files","temp":"update","selectedPIId":"16","poNumber":"5"}
+  //   // // {"userName":"TestUser01","projectNumber":"P1234","poDate":"24/12/2020","fromDate":"23/12/2020","toDate":"24/12/2020","billableAmount":"5000","InvoiceAmount":"3000","TaxInvoiceNumber":"INV3343","submittedDate":"24/12/2020","InvoiceStatus":2,"InvoicePaidAmount":"2000","tds":"100","penalty":"0","shortPay":"2500","paymentStatus":1,"remark":"Remark Column","uploadDocument":"files","temp":"update","selectedPIId":"16","poNumber":"5"}
 
 
-    // // userName : [''],
-    // // taxIN : [''],
-    // // invoiceDate : new Date(),
-    // // projectNo : [''],
-    // // poNumber : [''],
-    // // poDate : new Date(),
-    // // fromDate : new Date(),
-    // // toDate : new Date(),
-    // // invoiceAmount : [''],
-    // // remark : [''],
-    // // uploadDoc : [''],
-    // // paymentStatus : [''],
-    // // invoiceStatus : [''],
-    // // invoiceAmountPaid : [''],
-    // // tds : [''],
-    // // penalty : [''],
-    // // shortPay : [''],
-    // // submittedOn : new Date(),
-    // // poBillable : [''],
-    // // projectName:[''],
-    // // projectCordinator:[''],
-    // // PONoAmendOrder:[''],
-    // // mail:[''],
-    // // totalSMS:[''],
-    // // counts:[''],
-    // // baseAmount : [''],
-    // // tax:[''],
-    // // recvDate : [''],
-    // // book :  [''],
-    // // dateEstimated :  [''],
-    // // invoiceAmount2 : [''],
-    // // bankReceived : [''],
-    // // interestOnTDSotherDeduction : [''],
-    // // receiptDate :  [''],
-    // // month : [''],
-    // // year : [''],
-    // // mrn : ['']
-    // const taxData = {
-    //   userName:this.taxInvoiceForm.value.userName,
-    //   projectNumber:this.taxInvoiceForm.value.projectNo,
-    //   poDate:this.taxInvoiceForm.value.poDate,
-    //   fromDate:this.taxInvoiceForm.value,
-    //   toDate:this.taxInvoiceForm.value,
-    //   billableAmount:this.taxInvoiceForm.value,
-    //   InvoiceAmount:this.taxInvoiceForm.value,
-    //   TaxInvoiceNumber:this.taxInvoiceForm.value,
-    //   submittedDate:this.taxInvoiceForm.value,
-    //   InvoiceStatus:this.taxInvoiceForm.value,
-    //   InvoicePaidAmount:this.taxInvoiceForm.value,
-    //   tds:this.taxInvoiceForm.value,
-    //   penalty:this.taxInvoiceForm.value,
-    //   shortPay:this.taxInvoiceForm.value,
-    //   paymentStatus:this.taxInvoiceForm.value,
-    //   remark:this.taxInvoiceForm.value,
-    //   uploadDocument:'files',
-    //   temp:'update',
-    //   selectedPIId:this.taxInvoiceForm.value,
-    //   poNumber:this.taxInvoiceForm.value,
-    //   projectName:this.taxInvoiceForm.value,
-    //   projectCordinator:this.taxInvoiceForm.value,
-    //   PONoAmendOrder:this.taxInvoiceForm.value,
-    //   mail:this.taxInvoiceForm.value,
-    //   totalSMS:this.taxInvoiceForm.value,
-    //   counts:this.taxInvoiceForm.value,
-    //   baseAmount : this.taxInvoiceForm.value,
-    //   tax:this.taxInvoiceForm.value,
-    //   recvDate : this.taxInvoiceForm.value,
-    //   book :  this.taxInvoiceForm.value,
-    //   dateEstimated :  this.taxInvoiceForm.value,
-    //   invoiceAmount2 : this.taxInvoiceForm.value,
-    //   bankReceived : this.taxInvoiceForm.value,
-    //   interestOnTDSotherDeduction : this.taxInvoiceForm.value,
-    //   receiptDate :  this.taxInvoiceForm.value,
-    //   month : this.taxInvoiceForm.value,
-    //   year : this.taxInvoiceForm.value,
-    //   mrn : this.taxInvoiceForm.value
-    // }
+  //   // // userName : [''],
+  //   // // taxIN : [''],
+  //   // // invoiceDate : new Date(),
+  //   // // projectNo : [''],
+  //   // // poNumber : [''],
+  //   // // poDate : new Date(),
+  //   // // fromDate : new Date(),
+  //   // // toDate : new Date(),
+  //   // // invoiceAmount : [''],
+  //   // // remark : [''],
+  //   // // uploadDoc : [''],
+  //   // // paymentStatus : [''],
+  //   // // invoiceStatus : [''],
+  //   // // invoiceAmountPaid : [''],
+  //   // // tds : [''],
+  //   // // penalty : [''],
+  //   // // shortPay : [''],
+  //   // // submittedOn : new Date(),
+  //   // // poBillable : [''],
+  //   // // projectName:[''],
+  //   // // projectCordinator:[''],
+  //   // // PONoAmendOrder:[''],
+  //   // // mail:[''],
+  //   // // totalSMS:[''],
+  //   // // counts:[''],
+  //   // // baseAmount : [''],
+  //   // // tax:[''],
+  //   // // recvDate : [''],
+  //   // // book :  [''],
+  //   // // dateEstimated :  [''],
+  //   // // invoiceAmount2 : [''],
+  //   // // bankReceived : [''],
+  //   // // interestOnTDSotherDeduction : [''],
+  //   // // receiptDate :  [''],
+  //   // // month : [''],
+  //   // // year : [''],
+  //   // // mrn : ['']
+  //   // const taxData = {
+  //   //   userName:this.taxInvoiceForm.value.userName,
+  //   //   projectNumber:this.taxInvoiceForm.value.projectNo,
+  //   //   poDate:this.taxInvoiceForm.value.poDate,
+  //   //   fromDate:this.taxInvoiceForm.value,
+  //   //   toDate:this.taxInvoiceForm.value,
+  //   //   billableAmount:this.taxInvoiceForm.value,
+  //   //   InvoiceAmount:this.taxInvoiceForm.value,
+  //   //   TaxInvoiceNumber:this.taxInvoiceForm.value,
+  //   //   submittedDate:this.taxInvoiceForm.value,
+  //   //   InvoiceStatus:this.taxInvoiceForm.value,
+  //   //   InvoicePaidAmount:this.taxInvoiceForm.value,
+  //   //   tds:this.taxInvoiceForm.value,
+  //   //   penalty:this.taxInvoiceForm.value,
+  //   //   shortPay:this.taxInvoiceForm.value,
+  //   //   paymentStatus:this.taxInvoiceForm.value,
+  //   //   remark:this.taxInvoiceForm.value,
+  //   //   uploadDocument:'files',
+  //   //   temp:'update',
+  //   //   selectedPIId:this.taxInvoiceForm.value,
+  //   //   poNumber:this.taxInvoiceForm.value,
+  //   //   projectName:this.taxInvoiceForm.value,
+  //   //   projectCordinator:this.taxInvoiceForm.value,
+  //   //   PONoAmendOrder:this.taxInvoiceForm.value,
+  //   //   mail:this.taxInvoiceForm.value,
+  //   //   totalSMS:this.taxInvoiceForm.value,
+  //   //   counts:this.taxInvoiceForm.value,
+  //   //   baseAmount : this.taxInvoiceForm.value,
+  //   //   tax:this.taxInvoiceForm.value,
+  //   //   recvDate : this.taxInvoiceForm.value,
+  //   //   book :  this.taxInvoiceForm.value,
+  //   //   dateEstimated :  this.taxInvoiceForm.value,
+  //   //   invoiceAmount2 : this.taxInvoiceForm.value,
+  //   //   bankReceived : this.taxInvoiceForm.value,
+  //   //   interestOnTDSotherDeduction : this.taxInvoiceForm.value,
+  //   //   receiptDate :  this.taxInvoiceForm.value,
+  //   //   month : this.taxInvoiceForm.value,
+  //   //   year : this.taxInvoiceForm.value,
+  //   //   mrn : this.taxInvoiceForm.value
+  //   // }
 
-    // this.invoiceService.updateTaxInvoice(taxData).subscribe((response)=> {
+  //   // this.invoiceService.updateTaxInvoice(taxData).subscribe((response)=> {
 
-    // })
+  //   // })
 
-  }
+  // }
 
-  closeDialog() {
+  closeDialog(value?:any) {
     this.dialogRef.close({event : 'close',data : 'returnvalue'});
   }
 
@@ -759,9 +534,6 @@ console.log('invoiceStatusList',this.invoiceStatusList);
     this.showUploadModal = true;
   }
 
-  download() {
-  
-  }
   // detectFormChanges() {
 
   //   let iRemark = false;
@@ -803,6 +575,11 @@ console.log('invoiceStatusList',this.invoiceStatusList);
   //     this.toasterService.showSuccess('Data Saved Successfully','')
   //   }
   // }
+
+  updateData(data : TaxInvoice){
+
+    this.updateGrid.emit(data);
+  }
 
   remarkOkay() {
     this.remarkModal = false;
@@ -914,39 +691,6 @@ console.log('invoiceStatusList',this.invoiceStatusList);
   showPDF() {
     // this.showUploadModal = false;
     this.showPdfModal = true;
-  }
-
-
-  detectDateKeyAction(event,type) {
-
-    console.log(event)
-    
-    if(type == 'poDate') {
-  
-      this.taxInvoiceForm.patchValue({
-        poDate: ''
-      })
-      this.toasterService.showError('Please click the PO date icon to select date','');
-    }else if(type == 'fromDate') {
-  
-      this.taxInvoiceForm.patchValue({
-        fromDate: ''
-      })
-      this.toasterService.showError('Please click the from date icon to select date','');
-    }else if(type == 'toDate') {
-  
-      this.taxInvoiceForm.patchValue({
-        toDate: ''
-      })
-      this.toasterService.showError('Please click the to date icon to select date','');
-    }else if(type == 'submittedOn') {
-  
-      this.taxInvoiceForm.patchValue({
-        submittedOn: ''
-      })
-      this.toasterService.showError('Please click the submitted on icon to select date','');
-    }
-    
   }
 
 }

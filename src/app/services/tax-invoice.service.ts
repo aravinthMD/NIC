@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { HttpService } from './http.service';
@@ -11,8 +11,10 @@ import { TaxInvoice } from '../protectedPages/user-information/tax-invoice/tax-i
     providedIn: 'root'
 })
 export class TaxInvoiceService {
+
     private paymentList: any[];
     private invoiceStatusList = [];
+    
     constructor(
         private httpService: HttpService,
         private apiService: ApiService
