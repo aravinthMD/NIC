@@ -93,6 +93,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
     });
 
     this.accountName = this.utilService.getCustomerDetails().App_name || '';
+    console.log('invoiceStatusList',this.invoiceStatusList);
 
   }
 

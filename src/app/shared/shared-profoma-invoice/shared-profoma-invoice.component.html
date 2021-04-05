@@ -1,0 +1,241 @@
+<form class="ml-3 mr-3 " [formGroup]="profomaInvoiceForm" (keydown.enter)="$event.preventDefault()">
+    
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group"> 
+                <app-custom-input formControlName="accountName" 
+                    [labelName]="labels.accountName" [id]="'accountName'" 
+                    placeHolder="Enter the Account Name" 
+                    [isRequired]="'Account name is mandatory'" 
+                    [maxLength]="labels?.validationData.name.maxLength" 
+                    [isDisabledInp]="true"
+                    [isDirty]="isDirty"
+                    [mandatoryField]="'true'">
+                </app-custom-input>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <app-custom-input formControlName="invoiceNumber" 
+                    [labelName]="labels.proformaIN" [id]="'invoiceNumber'" 
+                    placeHolder="Enter the Invoice Number" 
+                    [isRequired]="'Invoice number is mandatory'" 
+                    [maxLength]="labels?.validationData.proformaIN.maxLength" 
+                    [isDisabledInp]="enableflag"
+                    [isDirty]="isDirty"
+                    [mandatoryField]="'true'">
+                </app-custom-input>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label style="margin-bottom: -0.2em">{{labels?.refNo}}
+                    <span style="color:red">*</span>
+                </label>
+                <ng-multiselect-dropdown placeholder="Choose Reference Number" 
+                    formControlName="refNumber" 
+                    [data]="refernceNumberList" 
+                    [settings]="referencedropdownSettings" 
+                    required>
+                </ng-multiselect-dropdown>
+                <div class="error-feedback" 
+                *ngIf="isDirty && profomaInvoiceForm.get('refNumber').errors?.required">
+                Please select any refernce number
+            </div>
+            </div>  
+        </div>
+
+        <div class="col-4">            
+            <div class="form-group">
+                <app-custom-input formControlName="piOwner"
+                    [labelName]="labels.piOwner" [id]="'piOwner'" 
+                    placeHolder="Enter the Proforma Invoice Owner" 
+                    [isRequired]="'Owner is mandatory'" 
+                    [maxLength]="labels?.validationData.piOwner.maxLength" 
+                    [isDisabledInp]="enableflag"
+                    [isDirty]="isDirty"
+                    [mandatoryField]="'true'">
+                </app-custom-input>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">                
+                <app-custom-input formControlName="piAmount" 
+                    [labelName]="labels.piAmount" [id]="'piAmount'" 
+                    placeHolder="Enter the Amount" [isRequired]="'Amount is mandatory'" 
+                    [maxLength]="labels?.validationData.piAmount.maxLength" 
+                    [isDisabledInp]="enableflag" 
+                    [type]="labels?.validationData.piAmount.type"
+                    [isDirty]="isDirty"
+                    [mandatoryField]="'true'">
+                </app-custom-input>
+
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <app-custom-input formControlName="piTraffic" 
+                    [labelName]="labels.piTraffic" [id]="'piTraffic'" 
+                    placeHolder="Enter the Traffic" [isRequired]="'Traffic is mandatory'" 
+                    [maxLength]="labels?.validationData.piTraffic.maxLength" 
+                    [isDisabledInp]="enableflag"
+                    [type]="labels?.validationData.piTraffic.type" [isDirty]="isDirty"
+                    [mandatoryField]="'true'">
+                </app-custom-input>
+
+
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="dateFor">{{labels?.date}}</label>
+                <mat-form-field floatLabel="never">
+                    <input matInput required formControlName="date" 
+                        [matDatepicker]="picker1" 
+                        (keyup)="detectDateKeyAction($event,'date')">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-placeholder>Choose The Date</mat-placeholder>
+                </mat-form-field>
+                <div class="date-picker-error" 
+                    *ngIf="isDirty && profomaInvoiceForm.get('date').errors?.required">
+                    Please select date
+                </div>
+            </div>
+        </div>      
+
+        <div class="col-4">
+            <div class="form-group">
+                <app-custom-input formControlName="nicsiManager" 
+                    [labelName]="labels.nicsiManager" [id]="'nicsiManager'" 
+                    placeHolder="Enter the NICSI Manager" 
+                    [isRequired]="'NICSI Manager is Mandatory'" 
+                    [maxLength]="labels?.validationData.nicsiManager.maxLength" 
+                    [type]="labels?.validationData.nicsiManager.type"
+                    [isDirty]="isDirty"
+                    [mandatoryField]="'true'">
+                </app-custom-input>
+            </div>
+        </div>
+
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="Fromperiod">Start Date
+                    <span style="color:red">*</span>
+                </label>
+
+                <mat-form-field [ngClass]="{'inp-date':enableflag}" floatLabel="never">
+                    <input matInput [matDatepicker]="picker3" formControlName="startDate" [max]="profomaInvoiceForm.get('endDate').value" (keyup)="detectDateKeyAction($event,'startDate')" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-placeholder>Start Date</mat-placeholder>
+                </mat-form-field>
+                <div class="date-picker-error" 
+                *ngIf="isDirty && profomaInvoiceForm.get('startDate').errors?.required">
+                Please select date
+            </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <label for="Toperiod">End Date
+                    <span style="color:red">*</span>
+                </label>
+
+                <mat-form-field [ngClass]="{'inp-date':enableflag}" floatLabel="never">
+                    <input matInput [matDatepicker]="picker4" formControlName="endDate" 
+                        [min]="profomaInvoiceForm.get('startDate').value" 
+                        (keyup)="detectDateKeyAction($event,'endDate')" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                    <mat-placeholder>End Date</mat-placeholder>
+                </mat-form-field>
+                <div class="date-picker-error" 
+                *ngIf="isDirty && profomaInvoiceForm.get('endDate').errors?.required">
+                Please select date
+            </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+
+            <div class="form-group">
+                <label for="piStatus" style="padding-top:0px;">PI Status
+                    <span style="color:red">*</span></label>
+                <app-vf-custom-select formControlName="piStatus" [values]="piStatusData" [isRequired]="'Please Select PI Status'" [isDisabled]="enableflag" [isDirty]="isDirty">
+                </app-vf-custom-select>
+
+
+            </div>
+        </div>
+
+        <div class="col-4">
+
+            <div class="form-group">
+                <label for="payMentStatus">Payment Status
+                    <span style="color:red">*</span>
+                </label>
+                <app-vf-custom-select formControlName="paymentStatus" 
+                    [values]="paymentStatusData" [isRequired]="'Please Select Payment Status'" 
+                    [isDisabled]="enableflag" [isDirty]="isDirty">
+                </app-vf-custom-select>
+
+            </div>
+
+        </div>
+     
+
+        <div class="col-4">
+            <div class="form-group">
+                <label class="mb-0" for="remarks">{{labels.remark}}</label>
+                <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName='remark' id="remarks" rows="3"></textarea>
+                <div class="date-picker-error" *ngIf="isDirty && profomaInvoiceForm.controls['remark'].errors?.required">
+                    Please Enter Remark
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="poBillable">{{docAvailFlag ? labels?.changeDoc :labels?.uploadDoc}}</label>
+                <input type="file" class="form-control upload-choose-pad" id="poBillable" 
+                    aria-describedby="poBillableHelp" (change)="uploadFile($event.target.files)">
+                <small id="poBillableHelp" class="form-text text-muted"></small>
+            </div>
+        </div>
+
+
+        <div *ngIf="docAvailFlag" class="col-4">
+            <label for="document">Document</label><br>
+            <button class="btn btn-primary" style="float: left;" (click)="showPDF()">View</button>
+        </div>
+
+    </div> 
+    <button class="btn btn-primary" style="float: left;" (click)="saveUpdate()">Submit</button>
+    <div class="col-1" style="float: right ;" *ngIf="isNextRequire">
+        <button class="btn btn-primary ml-3" (click)="next()">Next</button>
+
+    </div>
+    <div class="col-1" style="float: right;" *ngIf="isBackRequire">
+        <button class="btn btn-primary" (click)="back()">Back</button>
+
+    </div>
+
+    <div class="modal" id="pdfModal" [ngClass]="{ 'dis-block': showPdfModal }" *ngIf="showPdfModal">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:920px">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title">View PDF</h4>
+                    <button type="button" class="close" data-dismiss="modal" 
+                        (click)="showPdfModal = false">&times;</button>
+                </div>
+                <div class="modal-body" style="height:553px">
+                    <iframe [src]="previewUrl | secure | async" style="height:491px;width: 886px;" type="application/pdf"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- <p>my shared model</p>  -->

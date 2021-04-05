@@ -39,7 +39,7 @@ export class PurchaseOrderComponent implements OnInit, AfterViewInit {
 
   storeProjectNo: string;
 
-  displayedColumns: string[] = ['purchaseNo', 'projectNo', 'piAmt', 'remarks', 'Action'];
+  displayedColumns: string[] = ['purchaseNo', 'projectNo', 'piAmt', 'remarks','status', 'Action'];
 
   userList: any[] =   [];
   // poStatus: any[] = [

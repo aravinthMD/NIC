@@ -40,7 +40,15 @@ export class TaxInvoiceComponent implements OnInit {
   showEmailModal : boolean;
   data  : string = '';
 
-  displayedColumns: string[] = ['InvoiceNo', 'projectNo', 'piAmt', 'remarks','reminder','Escalation', 'Active'];
+
+
+//    monthList = [ "January", "February", "March", "April", "May", "June",
+// "July", "August", "September", "October", "November", "December" ];
+
+//  yearList = [ "2020", "2021", "2022", "2023", "2024", "2025",
+// "2026", "2027", "2028", "2029", "2030", "2031" ];
+
+  displayedColumns: string[] = ['InvoiceNo', 'projectNo', 'piAmt', 'remarks','status','reminder','Escalation', 'Active'];
 
   paymentStatus: any[] = [];
 

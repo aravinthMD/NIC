@@ -4,7 +4,7 @@
 <mat-dialog-content class="mat-typography">
 
     <app-view-info [userDetails] = "viewInfoData" *ngIf = "showView"></app-view-info> 
-    <form [formGroup]="smsCreditAllocation" *ngIf = "!showView">
+    <form [formGroup]="smsCreditAllocation" *ngIf = "false">
         <div class="row">
             <div class="col-4 pb-0">
                 <div class="form-group">
@@ -161,6 +161,13 @@
         </div>
 
     </form>
+    <div *ngIf="!showView">
+        <app-shared-sms-credit-allocation [isDirty]="isDirty" 
+        (saveUpdateData)="saveUpdateForm($event)" 
+        [formData]="setFormData"
+        [resetForm]="resetFormFlag"
+        [requireField]="true"></app-shared-sms-credit-allocation>
+    </div>
 
     <div class="row pt-3 pb-3 m-0" style="padding-top: 2rem !important;">
         <ng-container *ngIf="isWrite">

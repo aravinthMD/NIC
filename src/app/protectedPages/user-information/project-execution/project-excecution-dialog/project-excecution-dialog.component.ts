@@ -83,7 +83,6 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   
   accountName : string;
 
-
   constructor(
     private labelsService : LabelsService,
     private toasterService: ToasterService,
@@ -100,7 +99,8 @@ export class ProjectExcecutionDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.modeOfPaymentList = this.lovData? this.lovData.paymentModeStatusList: null;
+    this.piPaidValues = this.lovData? this.lovData.piPaidStatusList: null;
     const smsPage = this.utilityService.getSettingsDataList('ProjectExecution');
     this.isWrite = smsPage.isWrite;
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NativeDateModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { HttpService } from './http.service';
@@ -30,6 +31,7 @@ export class UtilityService {
 
   removeAllLocalStorage() {
     localStorage.clear();
+    sessionStorage.clear();
     this.router.navigateByUrl("/login");
   }
 
@@ -71,4 +73,23 @@ export class UtilityService {
   getNotifications(){
       return this.notificationList;
   }
+
+  changeDateFormat(date) {
+
+    const splitDate = date.split('/');
+
+    return `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+   }
+   checkFileName(name:string){
+     let inputNameString: string = name;
+     if (inputNameString.includes('(')){
+      inputNameString = inputNameString.replace('(',' ');
+       }
+       if(inputNameString.includes(')')){
+        inputNameString = inputNameString.replace(')',' ');
+       }
+       inputNameString = inputNameString.replace(/(\r\n\s|\n|\r|\s)/gm, '');
+       return inputNameString.trim()
+   }
 }

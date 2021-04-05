@@ -21,20 +21,28 @@ import { HeaderComponent } from './header/header.component';
 import { ProjectExecutionFormModalComponent } from './project-execution-form-modal/project-execution-form-modal.component';
 import { PreviewPopupComponent } from './preview-popup/preview-popup.component';
 import { TaxInvoiceFormComponent } from './tax-invoice-form/tax-invoice-form.component';
+import { SharedProfomaInvoiceComponent } from './shared-profoma-invoice/shared-profoma-invoice.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { SharedViewPdfComponent } from './shared-view-pdf/shared-view-pdf.component';
+import { SharedSmsCreditAllocationComponent } from './shared-sms-credit-allocation/shared-sms-credit-allocation.component';
 
 
 @NgModule({
   declarations: [
     CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent,
      ViewInfoComponent, BorderDirective, SecurePipe,
-    CsvUploadModalComponent, SideNavComponent, HeaderComponent, ProjectExecutionFormModalComponent, PreviewPopupComponent, TaxInvoiceFormComponent],
+    CsvUploadModalComponent, SideNavComponent, HeaderComponent, ProjectExecutionFormModalComponent, PreviewPopupComponent, TaxInvoiceFormComponent,
+    CsvUploadModalComponent, SideNavComponent, HeaderComponent, SharedProfomaInvoiceComponent, SharedViewPdfComponent, SharedSmsCreditAllocationComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     MatDatepickerModule,
-    MatToolbarModule
+    MatToolbarModule,
+    NgMultiSelectDropDownModule
+    
   ],
   exports: [
     CustomInputComponent,
@@ -50,7 +58,9 @@ import { TaxInvoiceFormComponent } from './tax-invoice-form/tax-invoice-form.com
     SideNavComponent,
     HeaderComponent,
     ProjectExecutionFormModalComponent,
-    TaxInvoiceFormComponent
+    TaxInvoiceFormComponent,
+    SharedProfomaInvoiceComponent,
+    SharedSmsCreditAllocationComponent
   ],
   providers : [DatePipe],
   entryComponents : [AuditTrailDialogComponent,PreviewPopupComponent]

@@ -316,7 +316,7 @@ userStatus  = [
           return {
             ...value,
             SMSQuotaApprovalMatrix: value.onApprovalOf,
-            status: (this.smsCreditStatus.find(sms => sms.key === value.status) || {}).value
+            // status: (this.smsCreditStatus.find(sms => sms.key === value.status) || {}).value
           };
       });
       return this.gridValues = values || [];

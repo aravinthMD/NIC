@@ -1,0 +1,113 @@
+<form [formGroup]="smsCreditForm" (change)="changeForm()">
+
+    <div class="row">
+        <div class="col-4 pb-0">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="smsQuotaMetrix">{{labels.smsQuotaMatrix}}<span style="color:red">*</span></label>
+                    <app-vf-custom-select formControlName="smsApprover" [values]="smsQuotaMetrix" [isDirty]="isDirty" [isRequired]="'SMS quota matrix is mandatory'" (valueChange)="onQuotaMatrixChange($event)">
+                    </app-vf-custom-select>
+                </div>             
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="creditDate">{{labels.dateOfRequest}}<span style="color:red">*</span></label>
+                <mat-form-field floatLabel="never">
+                    <input matInput [matDatepicker]="picker3" formControlName="dateOfRequest" (keyup)="detectDateKeyAction($event,'date')" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-placeholder>Choose The Date</mat-placeholder>
+                </mat-form-field>
+                <div class="date-picker-error" *ngIf="
+              isDirty &&
+              smsCreditForm.get('dateOfRequest').errors?.required
+            ">
+                    Please Select Date
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4 pb-0">
+            <div class="form-group">
+                <app-custom-input formControlName="totalCredit" [mandatoryField]="true" [labelName]="labels.credit" [id]="'credit'" 
+                    placeHolder="Enter the Credit" [maxLength]="labels?.validationData.creditsSMSQuota.maxLength" 
+                    [type]="'number'" [isDirty]="isDirty" [isRequired]="'Credit is mandatory'">
+                </app-custom-input>
+                <div *ngIf="smsCreditForm.get('totalCredit').errors?.pattern" class="error-feedback">
+                    <div>
+                        {{'Please Enter Digits'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4" *ngIf="requireField">
+            <div class="form-group">
+                <app-custom-input formControlName="usedCredit" 
+                 [labelName]="labels.smsTraffic" [id]="'smstraffic'" 
+                 placeHolder =  "Enter the SMS Traffic"
+                 [type]="'number'" 
+                 [maxLength]="labels?.validationData.smsTraffic.maxLength" 
+                 [isDirty]="isDirty" 
+                 [isRequired]="'SMS traffic is mandatory'" 
+                 [mandatoryField]="true">
+                </app-custom-input>
+            </div>
+        </div>
+
+        <div class="col-4" *ngIf="requireField">
+            <div class="form-group">
+                <app-custom-input formControlName="balanceCredit" 
+                 [labelName]="labels.availableCredit" [id]="'availableCredit'" 
+                 placeHolder =  "Enter the Available Credit"
+                 [type]="'number'" 
+                 [maxLength]="labels?.validationData.availableCredit.maxLength" 
+                 [isDirty]="isDirty" 
+                 [isRequired]="'Available credit is mandatory'" 
+                 [mandatoryField]="true"
+                 [isDisabledInp]="true">
+                </app-custom-input>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="status">{{labels.status}}</label>
+                <app-vf-custom-select formControlName="status" [values]="statusList" [isDirty]="isDirty" [isRequired]="'Status is mandatory'" [isDisabled]="true">
+                </app-vf-custom-select>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <app-custom-input formControlName="onApprovalOf" [labelName]="labels.onApprovalOf" [id]="'onApprovalOf'" placeHolder="Enter the Approval" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty"
+                    [isDisabledInp]="isDisabledInp">
+                </app-custom-input>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <app-custom-input formControlName="approvedBy" [labelName]="labels.statusChangedBy" placeHolder="Enter the Name" [id]="'statusChangedBy'" [maxLength]="labels?.validationData.userName.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp">
+                </app-custom-input>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+                <app-custom-input formControlName="timeStamp" [labelName]="labels.timeStamp" placeHolder="Enter the Time" [id]="'timeStamp'" [maxLength]="labels?.validationData.name.maxLength" [isDirty]="isDirty" [isDisabledInp]="isDisabledInp">
+                </app-custom-input>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="remarks">{{labels.remark}}<span style="color:red">*</span></label>
+                <textarea class="form-control" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName='remark' id="remarks" rows="3"></textarea>
+                <div class="date-picker-error" style="margin-top:  0px !important" *ngIf="isDirty && smsCreditForm.controls['remark'].errors?.required">
+                    Please Enter Remark
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

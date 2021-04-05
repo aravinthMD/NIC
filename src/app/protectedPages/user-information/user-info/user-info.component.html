@@ -67,14 +67,21 @@
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="designation" [labelName]="labels.designation" placeHolder="Enter the Designation" [id]="'designation'" [isRequired]="'Designation is Mandatory'" [mandatoryField]="true" [maxLength]="labels?.validationData.designation.maxLength"
+                            <app-custom-input formControlName="designation" 
+                                [labelName]="labels.designation" placeHolder="Enter the Designation" 
+                                [id]="'designation'" [isRequired]="'Designation is Mandatory'" 
+                                [mandatoryField]="true" [maxLength]="labels?.validationData.designation.maxLength"
                                 [type]="labels?.validationData.designation.type" [isDisabledInp]="propertyFlag" [isDirty]="isDirty">
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" placeHolder="Enter the Project Number" [id]="'projectNo'" [maxLength]="labels?.validationData.projectNo.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty" [type]="labels?.validationData.projectNo.type">
+                            <app-custom-input formControlName="projectNo" [labelName]="labels.projectNo" 
+                                placeHolder="Enter the Project Number" [id]="'projectNo'" 
+                                [maxLength]="labels?.validationData.projectNo.maxLength" 
+                                [isDisabledInp]="propertyFlag" [isDirty]="isDirty" 
+                                [type]="labels?.validationData.projectNo.type">
                             </app-custom-input>
                             <!-- <div *ngIf="form.get('projectNo').errors?.pattern" class="error-feedback">
                                     <div>
@@ -89,14 +96,25 @@
                 <div class="row formAlignment">
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="userId" [labelName]="labels.userId" [id]="'userId'" placeHolder="Enter the User Id" [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag"
-                                [isDirty]="isDirty">
+                            <app-custom-input formControlName="userId" [labelName]="labels.userId" 
+                                [id]="'userId'" placeHolder="Enter the User Id" 
+                                [maxLength]="labels?.validationData.userName.maxLength" 
+                                [isDisabledInp]="propertyFlag"
+                                [isDirty]="isDirty"
+                                [isRequired]="'User Id is Mandatory'"
+                                [mandatoryField]="true"  >
                             </app-custom-input>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-group">
-                            <app-custom-input formControlName="password" [labelName]="labels.password" placeHolder="Enter the Password" [id]="'password'" [maxLength]="labels?.validationData.userName.maxLength" [isDisabledInp]="propertyFlag" [isDirty]="isDirty" [type]="hide ? 'password' : 'text'">
+                            <app-custom-input formControlName="password" [labelName]="labels.password"
+                             placeHolder="Enter the Password" [id]="'password'" 
+                             [maxLength]="labels?.validationData.userName.maxLength" 
+                             [isDisabledInp]="propertyFlag" [isDirty]="isDirty" 
+                             [type]="hide ? 'password' : 'text'"
+                             [isRequired]="'Password is Mandatory'" 
+                             [mandatoryField]="true"  >
                             </app-custom-input>
                         </div>
                     </div>

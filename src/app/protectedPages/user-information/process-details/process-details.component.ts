@@ -21,6 +21,7 @@ import { CsvUploadModalComponent } from '../../../protectedPages/csv-upload-moda
 import { UtilityService } from '@services/utility.service';
 import { CsvUploadService } from '@services/csv-upload.service';
 import { FileToBase64Service } from '@services/file-to-base64.service';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-process-details',
   templateUrl: './process-details.component.html',
@@ -46,7 +47,7 @@ export class ProcessDetailsComponent implements OnInit{
   uploadedData : any = {}
 
   storeProjectNo: string;
-  displayedColumns : string[] = ['InvoiceNo','accountName','piAmt',"reminder","Escalation","Action"]
+  displayedColumns : string[] = ['InvoiceNo','accountName','piAmt',"Status","reminder","Escalation","Action"]
   piStatusData = [];
   // paymentStatusData = [{key:0,value:'Received'},{key:1,value:'Pending'},{key:2,value:'On Hold'}]
   paymentStatusData = [];
@@ -95,7 +96,17 @@ export class ProcessDetailsComponent implements OnInit{
   isWrite = false;
   isClientActive = true;
   csvResponse: any;
+  dropdownSettings : IDropdownSettings = {
+                      allowSearchFilter: true,
+                      enableCheckAll : true,
+                      clearSearchFilter : true,
+                      itemsShowLimit:2,
+                      idField: 'key',
+                      textField: 'value'
+                    };  
+  refernceFilterDetails = [];
   @ViewChild('inputCsvFile', {static: false}) inputCsvFile: ElementRef;
+  isExpand: boolean =  false;
   constructor(
         private dialog: MatDialog,
         private labelsService: LabelsService,
@@ -143,12 +154,16 @@ export class ProcessDetailsComponent implements OnInit{
 
   }
 
-  patchLovValues(){
-    const data =  this.activatedRoute.parent.snapshot.data || {};
-    const listOfValue = data.listOfValue || {};
-    const processVariables = listOfValue.ProcessVariables || {};
-    this.piStatusData = processVariables.piStatusList || [];
-    this.paymentStatusData = processVariables.paymentStatusList || [];
+  async patchLovValues(clientId){
+    // const data =  this.activatedRoute.parent.snapshot.data || {};
+    // const listOfValue = data.listOfValue || {};
+    // const processVariables = listOfValue.ProcessVariables || {};
+    // this.piStatusData = processVariables.piStatusList || [];
+    // this.paymentStatusData = processVariables.paymentStatusList || [];
+    this.invoiceService.getReferenceNumber(clientId).subscribe(
+      resp => 
+      console.log('get Referece Number',resp)
+    )
   }
 
   async onUploadCsv(event) {
@@ -212,8 +227,14 @@ export class ProcessDetailsComponent implements OnInit{
 
   ngOnInit() {
     this.isClientActive = this.clientDetailService.getClientStatus();
-
-    // this.patchLovValues();     //LOV's
+    this.activatedRoute.params.subscribe((value) => {
+      if (!value) {
+        return;
+      }
+      this.userId = value.id;
+      this.fetchAllProformaInvoice(this.currentPage,this.userId);
+    });
+    this.patchLovValues(Number(this.userId));     //Refernece number LOV's
     const piSecreenSettingData = this.utilityService.getSettingsDataList('PerformaInvoice');
     this.isWrite = piSecreenSettingData.isWrite;
     this.isEnableEmail = piSecreenSettingData.isEnableEmail;
@@ -230,17 +251,11 @@ export class ProcessDetailsComponent implements OnInit{
     })
 
     this.activatedRoute.params.subscribe((value)=> {
-      this.storeProjectNo = value.projectNo || 4535;
+      this.storeProjectNo = value.id || 4535;
   });
    // this.userId = this.clientDetailService.getClientId();
 
-    this.activatedRoute.params.subscribe((value) => {
-      if (!value) {
-        return;
-      }
-      this.userId = value.id;
-      this.fetchAllProformaInvoice(this.currentPage,this.userId);
-    });
+   
 
   }
 
@@ -644,5 +659,10 @@ getCsvDataWithValidationMessage() {
 
       // this.toasterService.showError(errorObj.message, '');
     });
+  }
+
+  extentHandle(event: boolean){
+    console.log('extent called',event);
+    this.isExpand = event
   }
 }
