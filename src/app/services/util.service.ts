@@ -30,6 +30,21 @@ export class UtilService {
 
   customerDetails: any;
 
+  private dropDownSettings = {};
+
+    getDropDownSetting(){
+
+        this.dropDownSettings = {
+          singleSelection: true,
+          allowSearchFilter: true,
+          clearSearchFilter : true,
+          itemsShowLimit:5,
+          enableCheckAll : true,
+          idField : "id",
+          textField : "name",
+        }
+        return this.dropDownSettings;
+    }
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)

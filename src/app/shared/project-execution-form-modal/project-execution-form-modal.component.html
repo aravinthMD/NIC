@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="col-4">
+    <!-- <div class="col-4">
       <div class="form-group">
           <label for="invoiceNumber">{{labels.proformaIN}}<span style="color:red">*</span></label>
           <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;" class="form-control mb-3" placeholder="Choose the Proforma Invoice Number" [formControl]="PEForm.controls['piNumber']" formControlName="piNumber" [matAutocomplete]="auto">
@@ -28,6 +28,22 @@
           <div class="date-picker-error" *ngIf="isDirty && PEForm.controls['piNumber'].errors?.required">
               Please Enter the Proforma Invoice Number
           </div>
+      </div>
+    </div> -->
+
+    <div class="col-4">
+      <div class="form-group">
+          <label for="">{{labels.proformaIN}}<span style="color: red;">*</span></label>
+          <ng-multiselect-dropdown placeholder = "Choose the Proforma Invoice Number"
+            formControlName = "piNumber"
+            [data] = "proformaInvoicesList"
+            [settings] = "dropDownSettings"
+            (onSelect) = "onItemSelect($event)"
+            required>
+          </ng-multiselect-dropdown>
+          <div class="error-feedback" *ngIf="isDirty && PEForm.controls['piNumber'].errors?.required">
+            Please Choose the Proforma Invoice Number
+        </div>
       </div>
     </div>
 

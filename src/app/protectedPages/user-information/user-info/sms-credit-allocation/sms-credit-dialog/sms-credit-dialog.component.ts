@@ -110,6 +110,9 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
   }
 
   getDataForDialogModal() {
+
+    const timeStamp = this.datePipe.transform(new Date(),'dd/mm/yyyy hh:mm:ss')
+
     const smsApprover = this.smsQuotaMatrix.find((val) => {
       return String(val.key) === String(this.data.smsApprover);
     }) || {};
@@ -154,6 +157,10 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
         key: this.labels.statusChangedBy,
         value: localStorage.getItem('userName')
       },
+      {
+        key : this.labels.timeStamp,
+        value : timeStamp
+      }
     ];
   }
 

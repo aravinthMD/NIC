@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <ng-container *ngIf = "piShowFlag">
+        <!-- <ng-container *ngIf = "piShowFlag">
         <div class="col-4">
             <div class="form-group">
                 <label for="department">{{labels.proformaIN}}<span style="color:red">*</span></label>
@@ -32,10 +32,26 @@
                 </div>
             </div>
         </div>
+        </ng-container> -->
+
+        <ng-container *ngIf = "piShowFlag">
+            <div class="col-4">
+                <label for="">{{labels.proformaIN}}<span style="color: red;">*</span></label>
+                <ng-multiselect-dropdown placeholder = "Choose the Proforma Invoice Number"
+                 formControlName = "piNumber"
+                 [data] = "proformaInvoicesList"
+                 [settings] = "dropDownSettings"
+                 (onSelect) = "onItemSelect($event)"
+                 (onDeSelect)="onPiDeSelect($event)"
+                 required>
+                </ng-multiselect-dropdown>
+                <div class="error-feedback" *ngIf="isDirty && TIForm.controls['piNumber'].errors?.required">
+                    Please Enter the Proforma Invoice Number
+                </div>
+            </div>
         </ng-container>
 
-
-        <div class="col-4">
+        <!-- <div class="col-4">
             <div class="form-group">
                 <label for="department">{{labels.poNumber}}<span style="color:red">*</span></label>
                 <input type="text" style="border: 1px solid #ced4da;border-radius: 0.25rem;"
@@ -54,7 +70,25 @@
                     Please Enter the Proforma Invoice Number
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        <div class="col-4">
+            <div class="form-group">
+                <label for="">{{labels.poNumber}}<span style="color: red;">*</span></label>
+                <ng-multiselect-dropdown 
+                  placeholder = "Choose the Purchase Order Number"
+                  formControlName = "poNumber"
+                  [data] = "purchaseOrderNumberList"
+                  [settings] = "dropDownSettings"
+                  (onSelect) = "onPoSelect($event)"
+                  (OnDeselect) = "onPoDeSelect($event)"
+                  required>
+                </ng-multiselect-dropdown>
+                <div class="error-feedback" *ngIf="isDirty && TIForm.controls['poNumber'].errors?.required">
+                    Please Enter the Proforma Invoice Number
+                </div>
+            </div>
+          </div>
 
         <div class="col-4">
             <div class="form-group">

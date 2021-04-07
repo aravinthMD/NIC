@@ -178,6 +178,9 @@ this.lovData = this.utilService.getLovData();
   // }
 
 
+  reloadGrid(value?:any){
+    this.getProjectExecutionDetails(this.currentPage, this.clientId);
+  }
 
   searchProjectExecution() {
 

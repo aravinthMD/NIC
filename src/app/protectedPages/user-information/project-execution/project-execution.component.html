@@ -182,7 +182,7 @@
 
                     </div>
                 </form> -->
-                <project-execution-form [btnText] = "'Request Po'" [accountName] = "accountName"></project-execution-form>
+                <project-execution-form [btnText] = "'Request Po'" [accountName] = "accountName" (submitForm) = "reloadGrid($event)"></project-execution-form>
 
             </mat-expansion-panel>
         </mat-accordion>
