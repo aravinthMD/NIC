@@ -343,7 +343,7 @@ export class TaxInvoiceComponent implements OnInit {
 
   updateGrid(taxInvoiceData: TaxInvoice) {
      const index = this.taxInvoiceList.findIndex((value) => {
-       return value.id === taxInvoiceData.id;
+       return value.id == taxInvoiceData.id;
      });
      if (index === -1) {
         this.taxInvoiceList.unshift(taxInvoiceData);
