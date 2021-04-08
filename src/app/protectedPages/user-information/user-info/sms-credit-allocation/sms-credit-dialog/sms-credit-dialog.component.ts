@@ -58,6 +58,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
   setFormData: any;
   saveForm: any;
   resetFormFlag: boolean;
+  userName: string;
   constructor(
     private dialogRef: MatDialogRef<SmsCreditDialogComponent>,
     private datePipe: DatePipe,
@@ -73,7 +74,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.currentDate = this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	');
-
+    const userData = this.utilityService.getLoginDetail();    this.userName = userData.username;
    }
 
   ngOnInit() {
@@ -202,7 +203,8 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       totalCredit: formValue.totalCredit,
       usedCredit: formValue.usedCredit,
       clientId: this.clientId,
-      id: Number(this.data.id)
+      id: Number(this.data.id),
+      requestRaisedBy: this.userName
     };
 
     console.log('smsCredit', smsCredit);

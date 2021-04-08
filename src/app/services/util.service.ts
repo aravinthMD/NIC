@@ -3,6 +3,7 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { AdminService } from './admin.service';
 import { ClientDetailsService } from './client-details.service';
 import { ToasterService } from './toaster.service';
+import { UtilityService } from './utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,10 @@ export class UtilService {
   private isCustomerModule = true;
 
   customerDetails: any;
-
+  constructor(private adminService : AdminService,
+    private toasterService : ToasterService,
+    private clientDetailService : ClientDetailsService,
+    private utilityServie: UtilityService) { }
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
@@ -201,16 +205,17 @@ getCustomerId(){
 
       return new Promise((resolve,reject)=> {
           let file = files ?  files.item(0) : null;
-          if(!file)
+          if(!file){
           return this.toasterService.showError("No File to Upload",'');
-
+          }
           const userId : string = this.clientDetailService.getClientId();
           
           const modifiedFile = Object.defineProperty(file, "name", {
             writable: true,
-            value: file["name"]
+            value: userId + "-" + new Date().getTime() + "-" 
+                    + this.utilityServie.checkFileName( file["name"])
           });
-          modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+          // modifiedFile.name= userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
         
 
@@ -249,9 +254,7 @@ getCustomerId(){
       }
 
 
-  constructor(private adminService : AdminService,
-              private toasterService : ToasterService,
-              private clientDetailService : ClientDetailsService) { }
+
 
   setLovData(data){
     this.lovData = data;    
