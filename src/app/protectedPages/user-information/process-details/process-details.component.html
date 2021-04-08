@@ -276,7 +276,10 @@
                     </div>
                 </form>
                 
-               <app-shared-profoma-invoice [isNextRequire]="true" [isBackRequire]="true" (externEmit)="extentHandle($event)" (callGetAll)="fetchAllProformaInvoice(currentPage,userId)" [accountName] ="accountName"></app-shared-profoma-invoice>
+               <app-shared-profoma-invoice [isNextRequire]="true" [isBackRequire]="true" (externEmit)="extentHandle($event)" 
+                (callGetAll)="fetchAllProformaInvoice(currentPage,userId)" 
+                [accountName] ="accountName"
+                (saveUpdateData)="saveUpdateForm($event)"></app-shared-profoma-invoice>
 
             </mat-expansion-panel>
         </mat-accordion>

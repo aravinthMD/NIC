@@ -76,6 +76,7 @@ export class ProcessDetailsComponent implements OnInit{
   dataSource = [];
   labels: any;
   form : FormGroup;
+  piForm: FormGroup;
   isDirty: boolean;
   searchForm: FormGroup;
   accountName: string;
@@ -330,12 +331,12 @@ export class ProcessDetailsComponent implements OnInit{
      if (data) {
        value = data;
      } else {
-      if (this.form.invalid) {
+      if (this.piForm.invalid) {
         this.isDirty = true;
         return;
       }
 
-      const feildControls = this.form.controls;
+      const feildControls = this.piForm.controls;
       const AccountName  = feildControls.accountName.value;
       const piNumber = feildControls.invoiceNumber.value;
       const referenceNumber  = feildControls.refNumber.value;
@@ -349,7 +350,6 @@ export class ProcessDetailsComponent implements OnInit{
       const piStatus = +feildControls.piStatus.value;
       const paymentStatus = +feildControls.paymentStatus.value;
       const remark = feildControls.remark.value;
-
       const formattedDate = this.datePipe.transform(date,'dd/MM/yyyy')
       const formattedStartDate = this.datePipe.transform(startDate,'dd/MM/yyyy')
       const formattedEndDate = this.datePipe.transform(endDate,'dd/MM/yyyy')
@@ -664,5 +664,9 @@ getCsvDataWithValidationMessage() {
   extentHandle(event: boolean){
     console.log('extent called',event);
     this.isExpand = event
+  }
+  saveUpdateForm(event){
+    this.piForm = event
+    console.log('saveForm', event)
   }
 }

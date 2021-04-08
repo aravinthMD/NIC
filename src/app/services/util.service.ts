@@ -33,6 +33,11 @@ export class UtilService {
 
   private dropDownSettings = {};
 
+  constructor(private adminService : AdminService,
+    private toasterService : ToasterService,
+    private clientDetailService : ClientDetailsService,
+    private utilityServie: UtilityService) { }
+
     getDropDownSetting(){
 
         this.dropDownSettings = {
@@ -46,6 +51,7 @@ export class UtilService {
         }
         return this.dropDownSettings;
     }
+
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
@@ -217,16 +223,17 @@ getCustomerId(){
 
       return new Promise((resolve,reject)=> {
           let file = files ?  files.item(0) : null;
-          if(!file)
+          if(!file){
           return this.toasterService.showError("No File to Upload",'');
-
+          }
           const userId : string = this.clientDetailService.getClientId();
           
           const modifiedFile = Object.defineProperty(file, "name", {
             writable: true,
-            value: this.utitlityService.checkFileName(file["name"])
+            value: userId + "-" + new Date().getTime() + "-" 
+                    + this.utilityServie.checkFileName( file["name"])
           });
-          modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+          // modifiedFile.name= userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
         
 
@@ -265,10 +272,6 @@ getCustomerId(){
       }
 
 
-  constructor(private adminService : AdminService,
-              private toasterService : ToasterService,
-              private clientDetailService : ClientDetailsService,
-              private utitlityService : UtilityService) { }
 
   setLovData(data){
     this.lovData = data;    

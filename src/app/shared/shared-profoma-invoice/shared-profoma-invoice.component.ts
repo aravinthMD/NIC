@@ -42,6 +42,7 @@ export class SharedProfomaInvoiceComponent implements OnInit {
 @Input() accountName: string;
 @Output() externEmit = new EventEmitter <boolean>();
 @Output() callGetAll = new EventEmitter();
+@Output() saveUpdateData = new EventEmitter();
 // onFileUpload= new EventEmitter();
 isDirty: boolean = false;
   constructor(private formBuilder: FormBuilder,
@@ -242,16 +243,12 @@ isDirty: boolean = false;
            }}
          } = response;
          console.log(`API response for the Create PI :${response}`)
-         if(code == '0'){
-          
-          
-           setTimeout(() => {             
-            //  this.profomaInvoiceForm.get('accountName').setValue(this.accountName);
-           })
+         if(code == '0'){         
            
            this.toasterService.showSuccess('Proforma Invoice Saved Sucessfully',''); 
-           this.isDirty = false;      
+              
            this.externEmit.emit(false); 
+          
            
           //  this.dataValue = {
           //      title : 'Proforma Invoice Saved Successfully',               
@@ -261,11 +258,15 @@ isDirty: boolean = false;
             this.documentUploadId = '';        
             this.profomaInvoiceForm.controls['piStatus'].setValue("");
             this.profomaInvoiceForm.controls['paymentStatus'].setValue("");
-            this.profomaInvoiceForm.controls['startDate'].setValue("");
+            // this.profomaInvoiceForm.controls['startDate'].setValue("");
             this.profomaInvoiceForm.controls['refNumber'].setValue("");
+            this.profomaInvoiceForm.controls['accountName'].setValue(this.accountName);
             this.callGetAll.emit();
             // this.fetchAllProformaInvoice(this.currentPage,this.userId)
           }
+          setTimeout(() =>{
+            this.isDirty = false;
+            }, 100)
           //  ;
          }else {
            this.toasterService.showError(message,'');
@@ -283,12 +284,32 @@ isDirty: boolean = false;
 // uploadFile(event) {
 //   this.onFileUpload.emit(event);
 // }
-
-async uploadFile(file : FileList){ 
+async uploadFile(file : FileList){
   this.uploadedData = await this.utilService.uploadToAppiyoDrive(file);
   if(this.uploadedData['uploadStatus'])
     this.documentUploadId = this.uploadedData['documentUploadId'];
-  }
+}
+
+
+// async uploadFile(files : FileList){
+//   this.file = files.item(0);
+//   if(this.file){
+//       const userId : string = this.clientDetailService.getClientId();
+//       const modifiedFile = Object.defineProperty(this.file, "name", {
+//         writable: true,
+//         // value: this.file["name"] //checkFileName
+//         value: this.utilityService.checkFileName(this.file["name"])
+//       });
+//       modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+//       this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
+//       if(this.uploadedData['uploadStatus']){
+//         this.documentUploadId = this.uploadedData['documentUploadId'];
+//         this.toasterService.showSuccess('File Upload Success','')
+//       }else { 
+//         this.toasterService.showError('File Upload Failed','')
+//       }
+//   }
+// }
 
 showPDF() {
   this.showPdfModal = true;
@@ -312,5 +333,8 @@ back() {
 
   this.router.navigate([`/users/smsCredit/${this.customerData.currentCustomerId}`])
 
+}
+changeForm(){
+  this.saveUpdateData.emit(this.profomaInvoiceForm)
 }
 }

@@ -170,7 +170,8 @@
                             Account</span></a>
 
                     </li> -->
-                    <li class="nav-item pl-4 border-card" [ngClass]="{'side-menu': (isLocation == '2.7')}">
+                    <li class="nav-item pl-4 border-card" 
+                        [ngClass]="{'side-menu': (isLocation == '2.7')}">
                         <a routerLink="/admin/bulk-upload" 
                             (click)="navigation('2.7','/admin/bulk-upload')" 
                             [ngClass]="{'side-menu': (isLocation == '2.7')}" 

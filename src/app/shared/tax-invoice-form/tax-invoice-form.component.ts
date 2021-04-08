@@ -64,6 +64,10 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
       this.TIForm.controls['poNumber'].setValue(value);
   }
 
+  get poNumber(){
+      return this.TIForm.controls['poNumber'].value
+  }
+
   constructor(private formBuilder : FormBuilder,
               private customDateAdapter : CustomDateAdapter,
               private taxInvoiceSevice : TaxInvoiceService,
@@ -144,6 +148,10 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
   setForm(data){
 
     if(data){
+      
+      if(data && data.piNumber){
+        this.getAutoPopulatePO(data.piNumber,Number(this.clientId));
+      }
 
       const selectedPoNumber : any[] = [
         { id : data && data['poNumber'] ? data['poNumber'] : "" ,
@@ -254,7 +262,11 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
   }
 
   onPiDeSelect(value?:any){
+    if(this.poNumber)
+    this.onPoDeSelect();
+
     this.poNumber = null;
+    this.purchaseOrderNumberList = [];
   }
 
   onPoSelect(value){
@@ -337,6 +349,9 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
             this.userName = this.accountName;
             this.invoiceStatus = "";
             this.paymentStatus = "";
+            this.piNumber = null;
+            this.poNumber = null;
+            this.purchaseOrderNumberList = [];
 
             this.updateGrid.emit(taxInvoiceData);
 

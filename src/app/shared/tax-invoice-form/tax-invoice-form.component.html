@@ -81,7 +81,7 @@
                   [data] = "purchaseOrderNumberList"
                   [settings] = "dropDownSettings"
                   (onSelect) = "onPoSelect($event)"
-                  (OnDeselect) = "onPoDeSelect($event)"
+                  (onDeSelect) = "onPoDeSelect($event)"
                   required>
                 </ng-multiselect-dropdown>
                 <div class="error-feedback" *ngIf="isDirty && TIForm.controls['poNumber'].errors?.required">
@@ -560,7 +560,9 @@
         <div class="col-4">
             <div class="form-group">
                 <label for="documentUpload">{{docAvailFlag ? labels?.uploadDoc : labels?.uploadDoc}}</label>
-                <input type="file" accept="application/pdf" class="form-control upload-choose-pad" formControlName="uploadDocument" id="documentUpload" (change) = "uploadFile($event.target.files)">
+                <input type="file" accept="application/pdf" class="form-control upload-choose-pad" 
+                    formControlName="uploadDocument" id="documentUpload" 
+                    (change) = "uploadFile($event.target.files)">
                 <small id="poBillableHelp" class="form-text text-muted"></small>
             </div>
         </div>
