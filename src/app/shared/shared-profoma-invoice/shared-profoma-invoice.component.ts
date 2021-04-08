@@ -284,25 +284,11 @@ isDirty: boolean = false;
 //   this.onFileUpload.emit(event);
 // }
 
-async uploadFile(files : FileList){
-  this.file = files.item(0);
-  if(this.file){
-      const userId : string = this.clientDetailService.getClientId();
-      const modifiedFile = Object.defineProperty(this.file, "name", {
-        writable: true,
-        // value: this.file["name"] //checkFileName
-        value: this.utilityService.checkFileName(this.file["name"])
-      });
-      modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
-      this.uploadedData = await this.utilService.uploadToAppiyoDrive(this.file);
-      if(this.uploadedData['uploadStatus']){
-        this.documentUploadId = this.uploadedData['documentUploadId'];
-        this.toasterService.showSuccess('File Upload Success','')
-      }else { 
-        this.toasterService.showError('File Upload Failed','')
-      }
+async uploadFile(file : FileList){ 
+  this.uploadedData = await this.utilService.uploadToAppiyoDrive(file);
+  if(this.uploadedData['uploadStatus'])
+    this.documentUploadId = this.uploadedData['documentUploadId'];
   }
-}
 
 showPDF() {
   this.showPdfModal = true;

@@ -615,7 +615,7 @@ updatePurchaseOrder(data) {
   
   }
 
-  getProformaInvoiceOnChangeData(piNumber : number){
+  getProformaInvoiceOnChangeData(piNumber : string){
       
     const {
       api : {

@@ -3,6 +3,7 @@ import { Observable, of, BehaviorSubject } from 'rxjs';
 import { AdminService } from './admin.service';
 import { ClientDetailsService } from './client-details.service';
 import { ToasterService } from './toaster.service';
+import { UtilityService } from './utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -223,7 +224,7 @@ getCustomerId(){
           
           const modifiedFile = Object.defineProperty(file, "name", {
             writable: true,
-            value: file["name"]
+            value: this.utitlityService.checkFileName(file["name"])
           });
           modifiedFile["name"] = userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
@@ -266,7 +267,8 @@ getCustomerId(){
 
   constructor(private adminService : AdminService,
               private toasterService : ToasterService,
-              private clientDetailService : ClientDetailsService) { }
+              private clientDetailService : ClientDetailsService,
+              private utitlityService : UtilityService) { }
 
   setLovData(data){
     this.lovData = data;    

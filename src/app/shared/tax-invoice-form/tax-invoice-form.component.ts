@@ -260,7 +260,7 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
   onPoSelect(value){
     if(!(value && value.name))
       return
-      this.getOnChangePO(value.Name)
+      this.getOnChangePO(value.name)
   }
 
   onPoDeSelect(value?:any){

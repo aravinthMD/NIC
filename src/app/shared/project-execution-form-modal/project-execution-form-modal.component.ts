@@ -173,7 +173,7 @@ export class ProjectExecutionFormModalComponent implements OnInit,OnChanges {
   }
 
   getPIAutoPopulateonChange(piNumber : any){
-    this.invoiceService.getProformaInvoiceOnChangeData(Number(piNumber)).subscribe(
+    this.invoiceService.getProformaInvoiceOnChangeData(piNumber).subscribe(
       (response) =>{
 
         const date = response['ProcessVariables']['date'];
