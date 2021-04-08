@@ -30,10 +30,28 @@ export class UtilService {
   private isCustomerModule = true;
 
   customerDetails: any;
+
+  private dropDownSettings = {};
+
   constructor(private adminService : AdminService,
     private toasterService : ToasterService,
     private clientDetailService : ClientDetailsService,
     private utilityServie: UtilityService) { }
+
+    getDropDownSetting(){
+
+        this.dropDownSettings = {
+          singleSelection: true,
+          allowSearchFilter: true,
+          clearSearchFilter : true,
+          itemsShowLimit:5,
+          enableCheckAll : true,
+          idField : "id",
+          textField : "name",
+        }
+        return this.dropDownSettings;
+    }
+
     
     setCurrentUrl(data) {
         this.detectSidNav$.next(data)
@@ -252,7 +270,6 @@ getCustomerId(){
       })
           
       }
-
 
 
 

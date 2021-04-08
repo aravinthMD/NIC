@@ -396,7 +396,7 @@ smsApprovedList: any[] = [
   }
 
   getPIAutoPopulateonChange(piNumber: any) {
-    this.invoiceService.getProformaInvoiceOnChangeData(Number(piNumber)).subscribe(
+    this.invoiceService.getProformaInvoiceOnChangeData(piNumber).subscribe(
       (response: any) => {
         const processVariables = response.ProcessVariables;
         const projectNumber = processVariables.projectNumber ||  '';
@@ -448,36 +448,42 @@ smsApprovedList: any[] = [
     this.utilService.getDownloadXlsFile(this.userList, 'PurchaseOrder');
   }
 
-  async uploadFile(files : FileList){
-      this.file = files.item(0);
-      if (this.file) {
-        const userId: string = this.clientDetailService.getClientId();
-        const modifiedFile = Object.defineProperty(this.file, "name", {
-          writable: true,
-          value: this.file["name"],
-        });
-        modifiedFile["name"] =
-          userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
-        try {
-          this.uploadedData = await this.utilService.uploadToAppiyoDrive(
-            this.file
-          );
+  // async uploadFile(files : FileList){
+  //     this.file = files.item(0);
+  //     if (this.file) {
+  //       const userId: string = this.clientDetailService.getClientId();
+  //       const modifiedFile = Object.defineProperty(this.file, "name", {
+  //         writable: true,
+  //         value: this.file["name"],
+  //       });
+  //       modifiedFile["name"] =
+  //         userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+  //       try {
+  //         this.uploadedData = await this.utilService.uploadToAppiyoDrive(
+  //           this.file
+  //         );
 
-          if (this.uploadedData["uploadStatus"]) {
-            this.documentUploadId = this.uploadedData["documentUploadId"];
-            this.toasterService.showSuccess("File Upload Success", "");
-          } else {
-            this.toasterService.showError("File Upload Failed", "");
-          }
-        } catch (e) {
-          console.log("file error", e);
-          const error = e.error;
-          if (error && error.ok === false) {
-            return this.toasterService.showError(error.message, "");
-          }
-        }
-      }
-  }
+  //         if (this.uploadedData["uploadStatus"]) {
+  //           this.documentUploadId = this.uploadedData["documentUploadId"];
+  //           this.toasterService.showSuccess("File Upload Success", "");
+  //         } else {
+  //           this.toasterService.showError("File Upload Failed", "");
+  //         }
+  //       } catch (e) {
+  //         console.log("file error", e);
+  //         const error = e.error;
+  //         if (error && error.ok === false) {
+  //           return this.toasterService.showError(error.message, "");
+  //         }
+  //       }
+  //     }
+  // }
+
+  async uploadFile(file : FileList){
+    this.uploadedData = await this.utilService.uploadToAppiyoDrive(file);
+    if(this.uploadedData['uploadStatus'])
+      this.documentUploadId = this.uploadedData['documentUploadId'];
+}
 
   detectDateKeyAction(event, type) {
 

@@ -7,6 +7,7 @@ import { InvoiceService } from '@services/invoice.service';
 import { LabelsService } from '@services/labels.service';
 import { ToasterService } from '@services/toaster.service';
 import { UtilService } from '@services/util.service';
+import { UtilityService } from '@services/utility.service';
 import { environment } from 'src/environments/environment';
 import { PreviewPopupComponent } from '../preview-popup/preview-popup.component';
 
@@ -34,6 +35,7 @@ export class ProjectExecutionFormModalComponent implements OnInit,OnChanges {
   previewUrl : any;
   host  = environment.host;
   AppiyoDrive = environment.previewDocappiyoDrive;
+  dropDownSettings : any = {}
 
   @Input() formData : any;
   @Input() btnText  = '';
@@ -54,6 +56,7 @@ export class ProjectExecutionFormModalComponent implements OnInit,OnChanges {
     private dialog  : MatDialog,
     ) {
       this.clientId = this.clientDetailService.getClientId();
+      this.dropDownSettings = this.utilService.getDropDownSetting();
       this.patchLov();
       this.InitForm();
       this.getLabel();
@@ -112,9 +115,15 @@ export class ProjectExecutionFormModalComponent implements OnInit,OnChanges {
   setForm(data){
 
     if(data){
+
+      const selectedPiNumber : any[] = [
+            { id : data && data['proformaInvoiceNumber'] ? data['proformaInvoiceNumber'] : "",
+              name : data && data['proformaInvoiceNumber'] ? data['proformaInvoiceNumber'] : ""}
+            ];
+
       this.PEForm.patchValue({
         userName : data ?  data.userName : '',
-        piNumber : data ? data.proformaInvoiceNumber : '',
+        piNumber : selectedPiNumber ? selectedPiNumber : [],
         piAmount : data ? data.amount : '',
         modeOfPayment : data ? data.paymentMode : '',
         documentNo : data ? data.documentNumber : '',
@@ -157,8 +166,14 @@ export class ProjectExecutionFormModalComponent implements OnInit,OnChanges {
     return value;
   }
 
+  onItemSelect(value){
+    if(!(value && value.name))
+      return
+    this.getPIAutoPopulateonChange(value.name);
+  }
+
   getPIAutoPopulateonChange(piNumber : any){
-    this.invoiceService.getProformaInvoiceOnChangeData(Number(piNumber)).subscribe(
+    this.invoiceService.getProformaInvoiceOnChangeData(piNumber).subscribe(
       (response) =>{
 
         const date = response['ProcessVariables']['date'];
@@ -222,6 +237,9 @@ export class ProjectExecutionFormModalComponent implements OnInit,OnChanges {
         userId: this.clientId ? Number(this.clientId) : 0,
         id
       };
+
+      const piNumberConverted = piNumber && piNumber.length != 0 ? piNumber : [];
+      Data.piNumber = piNumberConverted.map(val => val.name ? val.name : "").toString();
 
       this.invoiceService.createProjectExecution(Data).subscribe(
         (res : any) => {

@@ -209,91 +209,76 @@ export class ProformaInvoiceDialogFormComponent implements OnInit {
 
   assignToForm(data : any){
 
-    // this.form.patchValue({
+    if(data){
 
-    //   accountName : data['AccountName'] || '',
-    //   invoiceNumber : data['piNumber'] || '',
-    //   refNumber : data['referenceNumber'] || '',
-    //   piTraffic  : data['traffic'] || '',
-    //   piOwner : data['owner'] || '',
-    //   date  : data['date'] ? new Date(`${this.changeDateFormat(data['date'])}`) : '',
-    //   nicsiManager  : data['nicsiManager'] || '',
-    //   piAmount  : data['piAmount'] || '',
-    //   startDate : data['startDate'] ? new Date(`${this.changeDateFormat(data['startDate'])}`) : '',
-    //   endDate : data['endDate'] ? new Date(`${this.changeDateFormat(data['endDate'])}`) : '',
-    //   piStatus : String(data['piStatus']) || '',
-    //   paymentStatus : String(data['paymentStatus']) || '',
-    //   remark : data['remark'] || ''
+      const piStatusData = this.piStatusData.filter((value) => {
+        return value.key == data.piStatus
+      })
+  
+      const paymentStatus = this.paymentStatusData.filter((value) =>{
+        return value.key == data.paymentStatus
+      })
 
-    // })
-
-    const piStatusData = this.piStatusData.filter((value) => {
-      return value.key == this.form.controls['piStatus'].value
-    })
-
-    const paymentStatus = this.paymentStatusData.filter((value) =>{
-      return value.key == this.form.controls['paymentStatus'].value
-    })
-
-    this.viewInfoData = [
-      {
-        key: this.labels.accountName,
-        value: this.form.controls['accountName'].value
-      },
-      {
-        key: this.labels.proformaIN,
-        value: this.form.controls['invoiceNumber'].value
-      },
-      {
-        key: this.labels.refNo,
-        value: this.form.controls['refNumber'].value
-      },
-      {
-        key: this.labels.piOwner,
-        value: this.form.controls['piOwner'].value
-      },
-      {
-        key: this.labels.piAmount,
-        value: this.form.controls['piAmount'].value
-      },
-      {
-        key: this.labels.piTraffic,
-        value: this.form.controls['piTraffic'].value
-      },
-      {
-        key: this.labels.date,
-        value: this.form.controls['date'].value
-      },
-      {
-        key: 'NICSI Manager',
-        value: this.form.controls['nicsiManager'].value
-      },
-      {
-        key: 'Start Date',
-        value: this.form.controls['startDate'].value
-      },
-      {
-        key: 'End Date',
-        value: this.form.controls['endDate'].value
-      },
-      {
-        key: 'PI Status',
-        value: piStatusData.length > 0 ? piStatusData[0].value: null
-      },
-      {
-        key: 'Payment Status',
-        value: paymentStatus.length > 0? paymentStatus[0].value: null
-      },
-      {
-        key: this.labels.remark,
-        value: this.form.controls['remark'].value
-      },
-      {
-        isButton: true,
-        key: 'View PDF',
-        value: data.upload_document
-      }
-    ];
+      this.viewInfoData = [
+        {
+          key: this.labels.accountName,
+          value: (data ? data.AccountName : "")
+        },
+        {
+          key: this.labels.proformaIN,
+          value: (data ? data.piNumber : "")
+        },
+        {
+          key: this.labels.refNo,
+          value: (data ? data.referenceNumber :  "")
+        },
+        {
+          key: this.labels.piOwner,
+          value: (data ? data.owner : "")
+        },
+        {
+          key: this.labels.piAmount,
+          value: (data ? data.piAmount : "")
+        },
+        {
+          key: this.labels.piTraffic,
+          value: (data ? data.traffic : "")
+        },
+        {
+          key: this.labels.date,
+          value: (data ? data.date : "")
+        },
+        {
+          key: 'NICSI Manager',
+          value: (data ? data.nicsiManager : "")
+        },
+        {
+          key: 'Start Date',
+          value: (data ? data.startDate :  "")
+        },
+        {
+          key: 'End Date',
+          value: (data ? data.endDate : "")
+        },
+        {
+          key: 'PI Status',
+          value: piStatusData && piStatusData.length > 0 ? piStatusData[0].value: null
+        },
+        {
+          key: 'Payment Status',
+          value: paymentStatus && paymentStatus.length > 0? paymentStatus[0].value: null
+        },
+        {
+          key: this.labels.remark,
+          value: (data ? data.remark : "")
+        },
+        {
+          isButton: true,
+          key: 'View PDF',
+          value: data.upload_document
+        }
+      ];
+    }
 
   }
 

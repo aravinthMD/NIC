@@ -32,6 +32,8 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
   docAvailFlag : boolean;
   host  = environment.host;
   AppiyoDrive = environment.previewDocappiyoDrive;
+  dropDownSettings : any = {};
+  dropDownSettings1 : any = {};
 
 
   @Input() accountName : string;
@@ -54,6 +56,18 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
       this.TIForm.controls['paymentStatus'].setValue(value);
   }
 
+  set piNumber(value){
+      this.TIForm.controls['piNumber'].setValue(value)
+  }
+
+  set poNumber(value){
+      this.TIForm.controls['poNumber'].setValue(value);
+  }
+
+  get poNumber(){
+      return this.TIForm.controls['poNumber'].value
+  }
+
   constructor(private formBuilder : FormBuilder,
               private customDateAdapter : CustomDateAdapter,
               private taxInvoiceSevice : TaxInvoiceService,
@@ -62,7 +76,7 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
               private utilService : UtilService,
               private clientDetailsService : ClientDetailsService,
               private dialog  : MatDialog) {
-
+    this.dropDownSettings = this.utilService.getDropDownSetting();
     this.patchLov();
     this.initForm();
 
@@ -134,6 +148,15 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
   setForm(data){
 
     if(data){
+      
+      if(data && data.piNumber){
+        this.getAutoPopulatePO(data.piNumber,Number(this.clientId));
+      }
+
+      const selectedPoNumber : any[] = [
+        { id : data && data['poNumber'] ? data['poNumber'] : "" ,
+          name : data && data['poNumber'] ? data['poNumber'] : ""}
+      ]
 
       const purchaseOrder = this.customDateAdapter.parseToDateObj(data.poDate);
       const fromDate = this.customDateAdapter.parseToDateObj(data.fromDate);
@@ -147,7 +170,7 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
         this.TIForm.patchValue({
           userName: data.userName,
           projectNumber: data.projectNumber,
-          poNumber: data.poNumber,
+          poNumber: selectedPoNumber ? selectedPoNumber : [],
           poDate: purchaseOrder,
           billableAmount: data.billableAmount,
           invoiceAmount: data.invoiceAmount,
@@ -232,6 +255,36 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
     })
   }
 
+  onItemSelect(value){
+    if(!(value && value.name))
+      return
+      this.getAutoPopulatePO(value.name,Number(this.clientId));
+  }
+
+  onPiDeSelect(value?:any){
+    if(this.poNumber)
+    this.onPoDeSelect();
+
+    this.poNumber = null;
+    this.purchaseOrderNumberList = [];
+  }
+
+  onPoSelect(value){
+    if(!(value && value.name))
+      return
+      this.getOnChangePO(value.name)
+  }
+
+  onPoDeSelect(value?:any){
+    this.TIForm.controls['projectName'].reset();
+    this.TIForm.controls['projectNumber'].reset();
+    this.TIForm.controls['billableAmount'].reset();
+    this.TIForm.controls['toDate'].reset();
+    this.TIForm.controls['fromDate'].reset();
+    this.TIForm.controls['poDate'].reset();
+
+  }
+
   saveForm(){
 
     if(this.TIForm.invalid){
@@ -240,6 +293,9 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
     }
 
     const formValue = this.TIForm.value;
+
+    const piNumber = formValue.piNumber;
+    const poNumber = formValue.poNumber;
 
     const poDate = this.customDateAdapter.transform(formValue.poDate, 'dd/MM/yyyy');
     const fromDate = this.customDateAdapter.transform(formValue.fromDate, 'dd/MM/yyyy');
@@ -272,6 +328,12 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
       upload_document : this.documentUploadId
     };
 
+    const piNumberConverted = piNumber && piNumber.length != 0 ? piNumber : [];
+    requestData.piNumber = piNumberConverted.map(val => val.name ? val.name : "").toString();
+
+    const poNumberConverted = poNumber && poNumber.length != 0 ? poNumber : [];
+    requestData.poNumber = poNumberConverted.map(val => val.name ? val.name : "").toString();
+
     this.taxInvoiceSevice.saveOrUpdateTaxInvoiceDetails(requestData)
       .subscribe((res : any) => {
           const error = res  ? res.ProcessVariables.error : {};
@@ -287,6 +349,9 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
             this.userName = this.accountName;
             this.invoiceStatus = "";
             this.paymentStatus = "";
+            this.piNumber = null;
+            this.poNumber = null;
+            this.purchaseOrderNumberList = [];
 
             this.updateGrid.emit(taxInvoiceData);
 

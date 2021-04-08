@@ -1024,42 +1024,56 @@ export class UserInfoComponent implements OnInit, OnChanges {
   }
 
 
- async uploadFile(files  :FileList){
-      this.file = files.item(0);
-      let ext =  this.file.name.split('.').pop();
-      const size = files.item(0).size / 1024;
-      console.log('size', size);
-      if(ext !== 'pdf')
-      return this.toasterService.showError('Only Pdf is Allowed','');
+//  async uploadFile(files  :FileList){
+//       this.file = files.item(0);
+//       let ext =  this.file.name.split('.').pop();
+//       const size = files.item(0).size / 1024;
+//       console.log('size', size);
+//       if(ext !== 'pdf')
+//       return this.toasterService.showError('Only Pdf is Allowed','');
 
-      if (this.file) {
-        const userId: string = this.clientDetailService.getClientId();
-        const modifiedFile = Object.defineProperty(this.file, "name", {
-          writable: true,
-          value: this.file["name"],
-        });
-        modifiedFile["name"] =
-          userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
-        try {
-          this.uploadedData = await this.utilService.uploadToAppiyoDrive(
-            this.file
-          );
+//       if (this.file) {
+//         const userId: string = this.clientDetailService.getClientId();
+//         const modifiedFile = Object.defineProperty(this.file, "name", {
+//           writable: true,
+//           value: this.file["name"],
+//         });
+//         modifiedFile["name"] =
+//           userId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+//         try {
+//           this.uploadedData = await this.utilService.uploadToAppiyoDrive(
+//             this.file
+//           );
 
-          if (this.uploadedData["uploadStatus"]) {
-            this.documentUploadId = this.uploadedData["documentUploadId"];
-            this.toasterService.showSuccess("File Upload Success", "");
-          } else {
-            this.toasterService.showError("File Upload Failed", "");
-          }
-        } catch (e) {
-          console.log("file error", e);
-          const error = e.error;
-          if (error && error.ok === false) {
-            return this.toasterService.showError(error.message, "");
-          }
-        }
-      }
-  }
+//           if (this.uploadedData["uploadStatus"]) {
+//             this.documentUploadId = this.uploadedData["documentUploadId"];
+//             this.toasterService.showSuccess("File Upload Success", "");
+//           } else {
+//             this.toasterService.showError("File Upload Failed", "");
+//           }
+//         } catch (e) {
+//           console.log("file error", e);
+//           const error = e.error;
+//           if (error && error.ok === false) {
+//             return this.toasterService.showError(error.message, "");
+//           }
+//         }
+//       }
+//   }
+
+  async uploadFile(files : FileList){
+
+    this.file = files.item(0);
+    let ext =  this.file.name.split('.').pop();
+    const size = files.item(0).size / 1024;
+    console.log('size', size);
+    if(ext !== 'pdf')
+    return this.toasterService.showError('Only Pdf is Allowed','');
+
+    this.uploadedData = await this.utilService.uploadToAppiyoDrive(files);
+    if(this.uploadedData['uploadStatus'])
+      this.documentUploadId = this.uploadedData['documentUploadId'];
+}
 
 }
 
