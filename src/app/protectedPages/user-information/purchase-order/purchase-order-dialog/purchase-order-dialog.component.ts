@@ -26,6 +26,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
   enableFlag : boolean = true;
   isDirty : boolean;
   poStatus: any;
+  accountName : string
 
   erpData = [];
 
@@ -87,6 +88,8 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   previewDocumentId = '';
 
+  poFormData : any;
+
   constructor(
     private labelService:  LabelsService,
     private formBuilder: FormBuilder,
@@ -96,9 +99,8 @@ export class PurchaseOrderDialogComponent implements OnInit {
     private utilService: UtilService,
     private adminService: AdminService,
     private invoiceService: InvoiceService,
-    private DatePipe: DatePipe,
     private poService: POService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
     ) {
 
       const purchaseOrder = this.utilityService.getSettingsDataList('PurchaseOrder');
@@ -217,6 +219,8 @@ export class PurchaseOrderDialogComponent implements OnInit {
   }
 
  async ngOnInit() {
+  this.accountName = this.utilService.getCustomerDetails().App_name || '';
+
     this.labelService.getLabelsData().subscribe((value) =>{
     this.labels = value;
     })
@@ -244,102 +248,11 @@ export class PurchaseOrderDialogComponent implements OnInit {
   
     this.getPurchaseOrderById(this.data);
 
-// const psData = this.paymentStatus.filter((val)=> {
-
-//   return val.key == this.PurchaseOrderForm.value.paymentStatus
-// })
-
-// const poStatus = this.poStatus.filter((val)=> {
-//   return val.key == this.PurchaseOrderForm.value.poStatus
-// })
-
-// const departmentListData = this.departmentListData.filter((val)=> {
-//   return val.key == this.PurchaseOrderForm.value.departmentName
-// })
-//     this.viewInfoData = [
-//       {
-//         key: this.labels.userName,
-//         value:this.PurchaseOrderForm.value.userName
-//       },
-//       {
-//         key: this.labels.piNumber,
-//         value:this.PurchaseOrderForm.value.piNumber
-//       },
-//       {
-//         key: this.labels.poNumber,
-//         value:this.PurchaseOrderForm.value.poNumber
-//       },
-//       {
-//         key: this.labels.smsApproved,
-//         value:this.PurchaseOrderForm.value.smsApproved
-//       },
-//       {
-//         key: this.labels.projectName,
-//         value:this.PurchaseOrderForm.value.projectName
-//       },
-//       {
-//         key: this.labels.date,
-//         value:this.data.poDate
-//       },
-//       {
-//         key: this.labels.withoutTax,
-//         value:this.PurchaseOrderForm.value.withoutTax
-//       },
-//       {
-//         key: this.labels.poStatus,
-//         value: (poStatus.length > 0) ? poStatus[0].value : ''
-//       },
-//       {
-//         key: 'Valid From',
-//         value:this.data.validFrom
-//       },
-//       {
-//         key: 'Valid Upto',
-//         value:this.data.validTo
-//       },
-//       {
-//         key: this.labels.userEmail,
-//         value:this.PurchaseOrderForm.value.userEmail
-//       },
-//       {
-//         key: this.labels.poManagerEmail,
-//         value:this.PurchaseOrderForm.value.poManagerEmail
-//       },
-//       {
-//         key: this.labels.projectNo,
-//         value:this.PurchaseOrderForm.value.projectNo
-//       },
-//       {
-//         key: this.labels.poAmountWithTax,
-//         value:this.PurchaseOrderForm.value.poAmountWithTax
-//       },
-//       {
-//         key: this.labels.department,
-//         value:(departmentListData.length > 0)?departmentListData[0].value:''
-//       },
-//       {
-//         key: this.labels.paymentStatus,
-//         value: (psData.length > 0)?psData[0].value:''
-//       },
-//       {
-//         key: this.labels.remark,
-//         value:this.PurchaseOrderForm.value.remark
-//       },
-//       {
-//         isButton: true,
-//         key: 'View PDF',
-//         value: this.data.upload_document
-//       },{
-//         key :  "",
-//         value :  ""
-//       },
-//       {
-//         key :  "",
-//         value :  ""
-//       }
-//     ]
-
-    // console.log('View Info Data',this.viewInfoData)
+    this.poService.resetForm.subscribe((val) =>{
+        if(!val)
+        return
+        this.closeDialog();
+    })
 
   }
 
@@ -349,6 +262,7 @@ export class PurchaseOrderDialogComponent implements OnInit {
           const error = processVariables.error || {};
           if(error.code == '0'){
             const poData = processVariables;
+            this.poFormData = poData;
             this.poId = processVariables.id;
             if(processVariables.upload_document){
               this.previewDocumentId = processVariables.upload_document;
@@ -363,25 +277,25 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
   assignToForm(data : any){
 
-      this.PurchaseOrderForm.patchValue({
-        userName : data.userName || '',
-        piNumber : data.piNumber || '',
-        poNumber : data.poNumber || '',
-        smsApproved : data.smsApproved || '',
-        projectName : data.projectName || '',
-        date : new Date(`${this.changeDateFormat(data.poDate)}`),
-        withoutTax : data.withOutTax || '',
-        poStatus :  data.poStatus || '',
-        startDate :  new Date(`${this.changeDateFormat(data.validFrom)}`),
-        endDate :  new Date(`${this.changeDateFormat(data.validTo)}`),
-        userEmail : data.userEmail || '',
-        poManagerEmail : data.managerEmail || '',
-        projectNo : data.projectNumber || '',
-        poAmountWithTax : data.amountWithTax || '',
-        departmentName : data.department || '',
-        paymentStatus : data.paymentStatus || '',
-        remark :  data.remark || ''
-      })
+      // this.PurchaseOrderForm.patchValue({
+      //   userName : data.userName || '',
+      //   piNumber : data.piNumber || '',
+      //   poNumber : data.poNumber || '',
+      //   smsApproved : data.smsApproved || '',
+      //   projectName : data.projectName || '',
+      //   date : new Date(`${this.changeDateFormat(data.poDate)}`),
+      //   withoutTax : data.withOutTax || '',
+      //   poStatus :  data.poStatus || '',
+      //   startDate :  new Date(`${this.changeDateFormat(data.validFrom)}`),
+      //   endDate :  new Date(`${this.changeDateFormat(data.validTo)}`),
+      //   userEmail : data.userEmail || '',
+      //   poManagerEmail : data.managerEmail || '',
+      //   projectNo : data.projectNumber || '',
+      //   poAmountWithTax : data.amountWithTax || '',
+      //   departmentName : data.department || '',
+      //   paymentStatus : data.paymentStatus || '',
+      //   remark :  data.remark || ''
+      // })
 
       const erpData = data.erpData;
 
@@ -390,36 +304,36 @@ export class PurchaseOrderDialogComponent implements OnInit {
 
       const psData = this.paymentStatus.filter((val)=> {
 
-        return val.key == this.PurchaseOrderForm.value.paymentStatus
+        return val.key == data.paymentStatus
       })
       
       const poStatus = this.poStatus.filter((val)=> {
-        return val.key == this.PurchaseOrderForm.value.poStatus
+        return val.key == data.poStatus
       })
       
       const departmentListData = this.departmentListData.filter((val)=> {
-        return val.key == this.PurchaseOrderForm.value.departmentName
+        return val.key == data.department
       })
           this.viewInfoData = [
             {
               key: this.labels.userName,
-              value:this.PurchaseOrderForm.value.userName
+              value: data ? data.userName : ""
             },
             {
               key: this.labels.piNumber,
-              value:this.PurchaseOrderForm.value.piNumber
+              value: data ? data.piNumber : ""
             },
             {
               key: this.labels.poNumber,
-              value:this.PurchaseOrderForm.value.poNumber
+              value: data ? data.poNumber : ""
             },
             {
               key: this.labels.smsApproved,
-              value:this.PurchaseOrderForm.value.smsApproved
+              value: data ? data.smsApproved : ""
             },
             {
               key: this.labels.projectName,
-              value:this.PurchaseOrderForm.value.projectName
+              value: data ? data.projectName : ""
             },
             {
               key: this.labels.date,
@@ -427,11 +341,11 @@ export class PurchaseOrderDialogComponent implements OnInit {
             },
             {
               key: this.labels.withoutTax,
-              value:this.PurchaseOrderForm.value.withoutTax
+              value: data ? data.withOutTax : ""
             },
             {
               key: this.labels.poStatus,
-              value: (poStatus.length > 0) ? poStatus[0].value : ''
+              value: (poStatus && poStatus.length > 0) ? poStatus[0].value : ''
             },
             {
               key: 'Valid From',
@@ -443,31 +357,31 @@ export class PurchaseOrderDialogComponent implements OnInit {
             },
             {
               key: this.labels.userEmail,
-              value:this.PurchaseOrderForm.value.userEmail
+              value: data ? data.userEmail : ""
             },
             {
               key: this.labels.poManagerEmail,
-              value:this.PurchaseOrderForm.value.poManagerEmail
+              value: data ? data.poManagerEmail : ""
             },
             {
               key: this.labels.projectNo,
-              value:this.PurchaseOrderForm.value.projectNo
+              value: data ?  data.projectNumber :  ""
             },
             {
               key: this.labels.poAmountWithTax,
-              value:this.PurchaseOrderForm.value.poAmountWithTax
+              value: data ? data.amountWithTax : ""
             },
             {
               key: this.labels.department,
-              value:(departmentListData.length > 0)?departmentListData[0].value:''
+              value:(departmentListData && departmentListData.length > 0)?departmentListData[0].value:''
             },
             {
               key: this.labels.paymentStatus,
-              value: (psData.length > 0)?psData[0].value:''
+              value: (psData && psData.length > 0)?psData[0].value:''
             },
             {
               key: this.labels.remark,
-              value:this.PurchaseOrderForm.value.remark
+              value: data ? data.remark : ""
             },
             {
               isButton: true,
@@ -502,16 +416,11 @@ export class PurchaseOrderDialogComponent implements OnInit {
     this.showEdit = true;
   }
 
-  OnUpdate() {
-     if (this.PurchaseOrderForm.invalid) {
-       this.isDirty = true;
-       return;
-     }
+  OnUpdate(formValue : any) {
 
-     this.updateEmitter.emit({
-       ...this.PurchaseOrderForm.value,
-       id: Number(this.poId),
-     });
+    const formData  = formValue;
+    this.updateEmitter.emit(formData);
+
   }
 
   saveYes()

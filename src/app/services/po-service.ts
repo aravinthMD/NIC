@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { ApiService } from '@services/api.service';
@@ -7,6 +7,8 @@ import { HttpService } from '@services/http.service';
     providedIn: 'root'
 })
 export class POService {
+
+    resetForm = new EventEmitter<any>();
     private departmentList = [];
     private statusList = [
         { key :0, value: 'Received' },
