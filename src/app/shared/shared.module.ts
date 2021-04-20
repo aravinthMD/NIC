@@ -25,6 +25,7 @@ import { SharedProfomaInvoiceComponent } from './shared-profoma-invoice/shared-p
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SharedViewPdfComponent } from './shared-view-pdf/shared-view-pdf.component';
 import { SharedSmsCreditAllocationComponent } from './shared-sms-credit-allocation/shared-sms-credit-allocation.component';
+import { PurchaseOrderFormModalComponent } from './purchase-order-form-modal/purchase-order-form-modal.component';
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { SharedSmsCreditAllocationComponent } from './shared-sms-credit-allocati
     CustomInputComponent, CustomSelectComponent, EmailModalComponent, AccountHeaderComponent,AuditTrailDialogComponent, RemarkModalComponent,UserInfoFormComponent, DataSavedModalComponent,
      ViewInfoComponent, BorderDirective, SecurePipe,
     CsvUploadModalComponent, SideNavComponent, HeaderComponent, ProjectExecutionFormModalComponent, PreviewPopupComponent, TaxInvoiceFormComponent,
-    CsvUploadModalComponent, SideNavComponent, HeaderComponent, SharedProfomaInvoiceComponent, SharedViewPdfComponent, SharedSmsCreditAllocationComponent
+    CsvUploadModalComponent, SideNavComponent, HeaderComponent, SharedProfomaInvoiceComponent, SharedViewPdfComponent, SharedSmsCreditAllocationComponent, PurchaseOrderFormModalComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +61,8 @@ import { SharedSmsCreditAllocationComponent } from './shared-sms-credit-allocati
     ProjectExecutionFormModalComponent,
     TaxInvoiceFormComponent,
     SharedProfomaInvoiceComponent,
-    SharedSmsCreditAllocationComponent
+    SharedSmsCreditAllocationComponent,
+    PurchaseOrderFormModalComponent
   ],
   providers : [DatePipe],
   entryComponents : [AuditTrailDialogComponent,PreviewPopupComponent]

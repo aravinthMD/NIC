@@ -136,7 +136,7 @@ smsApprovedList: any[] = [
     private clientDetailService: ClientDetailsService,
     private poDataService: POService,
     private utilityService: UtilityService,
-    private activatedRoute : ActivatedRoute
+    private poService : POService
     ) {
 
       this.departmentListData = this.route.parent.snapshot.data.listOfValue['ProcessVariables']['departmentList'] || [];
@@ -579,27 +579,19 @@ next() {
         });
   }
 
-  submitFormData(formData?: any) {
+  submitFormData(formData : any) {
 
     let formValue;
-
     if (formData) {
         formValue = formData;
-    } else {
+    } 
 
-      if (this.PurchaseOrderForm.invalid) {
-        this.isDirty = true;
-        return;
-      }
+    const piNumber = formValue.piNumber;
+    const piNumberConverted = piNumber && piNumber.length != 0 ? piNumber : [];
 
-      formValue = this.PurchaseOrderForm.value;
-
-    }
-
+    formValue.piNumber = piNumberConverted.map(val => val.name ? val.name : "").toString();
     formValue.date = this.DatePipe.transform(formValue.date, 'dd/MM/yyyy');
-
     formValue.startDate = this.DatePipe.transform(formValue.startDate, 'dd/MM/yyyy');
-
     formValue.endDate = this.DatePipe.transform(formValue.endDate, 'dd/MM/yyyy');
 
     const data = {
@@ -622,7 +614,7 @@ next() {
       paymentStatus: Number(formValue.paymentStatus),
       userId: Number(this.clientId),
       id: formValue.id,
-      upload_document : this.documentUploadId
+      upload_document : formValue.upload_document
     };
 
     console.log('data', data);
@@ -642,6 +634,7 @@ next() {
 
       this.showPOModal = false;
       this.PurchaseOrderForm.reset();
+      this.poService.resetForm.emit('Success');
       this.documentUploadId = '';
       this.PurchaseOrderForm.get('paymentStatus').setValue('');
       this.PurchaseOrderForm.get('departmentName').setValue('');
@@ -654,13 +647,15 @@ next() {
       this.beheSer.setPoNumber(data.poNumber);
       this.beheSer.setSmsApproved(data.smsApproved);
       console.log('processVariables', processVariables);
-      if (formData) {
-        this.toasterService.showSuccess('Data Updated Successfully', '');
-        this.overrideGridData(processVariables);
-      } else {
-        this.toasterService.showSuccess('Data Saved Successfully', '');
-        this.updateGridData(processVariables);
-      }
+      // if (formData) {
+      //   this.toasterService.showSuccess('Data Updated Successfully', '');
+      //   this.overrideGridData(processVariables);
+      // } else {
+      //   this.toasterService.showSuccess('Data Saved Successfully', '');
+      //   this.updateGridData(processVariables);
+      // }
+      this.toasterService.showSuccess('Data Saved Successfully', '');
+      this.updateGrid(processVariables);
       this.showPOModal = true;
 
       //     // this.fetchPODetails(this.clientId);
@@ -691,6 +686,23 @@ next() {
     this.userList.unshift(data);
     this.dataSource = [...this.userList];
     this.resultsLength += 1;
+  }
+
+  updateGrid(poData : any){
+
+    const index = this.userList.findIndex((value) => {
+      return String(value.currentPOId || value.id) === String(poData.id);
+    });
+
+    if(index === -1){
+      this.userList.unshift(poData);
+      this.resultsLength += 1;
+    } else {
+      this.userList[index] = poData;
+    }
+    this.purchaseOrderId = poData.id;
+    this.dataSource = [...this.userList];
+
   }
 
   pageEventData(event) {
