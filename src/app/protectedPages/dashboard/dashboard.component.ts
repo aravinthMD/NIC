@@ -28,11 +28,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   partialBillPaidCount: string;
 
   displayedColumns: string[] = [
-    'UserID',
+    'ApplicantName',   
     'projectNo',
     'Department',
     'State',
     'Status',
+     'UserID'
+   
   ];
 
   isCustomerModuleEnabled = true;
@@ -43,6 +45,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   sortedData = [];
   isSearchApiCalled: boolean;
   csvData: any;
+  pageSize: number = 0;
+  pageLength: number = 0;
 
   constructor(
     private route: Router,
@@ -61,7 +65,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.utilService.setCustomerDetails(null);
     this.clientDetailsService.setClientId(null);
     this.newAccountService.setFlagForShowingPages('reset');
-    this.getDashboardDetails();
+    // this.getDashboardDetails();
+    this.onSearch();
   }
 
   getDashboardDetails() {
@@ -79,13 +84,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             this.partialBillPaidCount = processVariables.partialBillPaidCount;
             const dashboardList = (processVariables.ClientDataList || []).map((value) => {
               return {
-                userId: value.applicantName,
+                applicantName: value.applicantName,
                 projectNo: value.projectNumber,
                 department: value.departmentName,
                 state: value.state,
                 status: value.activeStatus ? 'Active' : 'Inactive',
                 clientId: value.id,
-                insertionFlag: value.insertionFlag
+                insertionFlag: value.insertionFlag,
+                userId:value.userId
               };
             });
             this.userList = dashboardList;
@@ -134,13 +140,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             }
             const dashboardList = (resData || []).map((value) => {
               return {
-                userId: value.accountName,
+                applicantName: value.accountName,
                 projectNo: value.projectNumber,
                 department: value.department,
                 state: value.state,
                 status: value.activeStatus ? 'Active' : 'Inactive',
                 clientId: value.id,
-                insertionFlag: value.insertionFlag
+                insertionFlag: value.insertionFlag,
+                userId:value.userId
               };
             });
             // this.userList = dashboardList;
@@ -167,7 +174,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       return;
     }
     this.isSearchApiCalled = false;
-    this.getDashboardDetails();
+    // this.getDashboardDetails();
+    this.onSearch();
   }
 
 
@@ -204,6 +212,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
+        case 'applicantName': return compare(String(a.applicantName || '').toLowerCase(), String(b.applicantName || '').toLowerCase(), isAsc);
         case 'userId': return compare(String(a.userId || '').toLowerCase(), String(b.userId || '').toLowerCase(), isAsc);
         case 'projectNo': return compare(a.projectNo , b.projectNo, isAsc);
         case 'department': return compare(a.department, b.department, isAsc);
@@ -221,14 +230,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     console.log('csv data', this.csvData);
     CsvDataService.exportToCsv(this.csvData.name, this.csvData.data);
   }
-  onSearch() {
+  onSearch(event?) {
     this.csvData = null;
     const keyword = this.searchKey || '';
     console.log('Search Value', keyword);
     const data = this.apiService.api.getAllCustomerDetails;
-
+    this.pageSize = event? event.pageSize: 10
+  
     const params = {
       searchKeyword: keyword,
+      dataPerPage : this.pageSize ,
+      currentPage : event? event.pageIndex+1: 1
       // fromDate: this.searchForm.get('searchFrom').value,//'2020-12-27T18:30:00.000Z',
       // toDate: this.searchForm.get('searchTo').value//'2021-01-05T18:30:00.000Z'
     };
@@ -238,12 +250,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .subscribe((resp) => {
         
         console.log('Response', resp);
-
-        const respError = resp['ProcessVariables']['error'];
+        const apiResponse = resp["ProcessVariables"]
+        const respError = apiResponse['error'];
 
         if (respError.code == "0") {
           this.isSearchApiCalled = true;
-          const result: any[] = resp["ProcessVariables"]["customerList"];
+          const result: any[] = apiResponse["customerList"];
+          this.pageLength = apiResponse['totalRecords'];
+          this.purchaseOrderPendingCount = apiResponse.poPendingCount;
+          this.proformaInvoicePendingCount = apiResponse.piPendingCount;
+          this.invoicePendingCount = apiResponse.invoicePendingCount;
+          this.partialBillPaidCount = apiResponse.partialBillPaidCount;
           //this.dataSource = new MatTableDataSource<any>(result);
           // console.log('result', result);
           // const DashboardList: any[] = [];
@@ -260,18 +277,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
           const dashboardList = result.map((value) => {
             return {
-              userId: value.applicantName,
+              applicantName: value.applicantName,
               projectNo: value.projectNumber,
               department: value.departmentName,
               state: value.state,
               status: value.activeStatus ? 'Active' : 'Inactive',
               clientId: value.id,
-              insertionFlag: value.insertionFlag
+              insertionFlag: value.insertionFlag,
+              userId:value.userId
             };
           });
           this.userList = dashboardList;
           this.dataSource = new MatTableDataSource<any>(dashboardList);
-          this.dataSource.paginator = this.paginator;
+          // this.paginator.length =  this.pageLength
+          // this.dataSource.paginator = this.paginator;
         } else {
           this.toasterService.showError(
             `${respError.message}`,
