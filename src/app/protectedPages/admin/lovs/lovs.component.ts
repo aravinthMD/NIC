@@ -289,7 +289,11 @@ export class LovsComponent implements OnInit {
     this.adminService.fetchLovsList().subscribe((response: any) => {
       console.log('Lov List', response);
       const processVariables = response.ProcessVariables;
-      this.initialLov = processVariables.LOVList;
+      const lovListResponse: Array<any> = processVariables.LOVList
+      // this.initialLov = processVariables.LOVList;
+      this.initialLov =  lovListResponse.filter(val =>
+        val.key != 4 && val.key != 15
+      )
       this.lovsList = [...this.initialLov];
     });
 

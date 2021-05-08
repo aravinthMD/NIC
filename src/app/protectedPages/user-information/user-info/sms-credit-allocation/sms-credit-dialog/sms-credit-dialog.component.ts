@@ -74,7 +74,8 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.currentDate = this.datePipe.transform(new Date(), 'MMM d, y, h:mm:ss a	');
-    const userData = this.utilityService.getLoginDetail();    this.userName = userData.username;
+    const userData = this.utilityService.getLoginDetail();    
+    this.userName = userData.username;
    }
 
   ngOnInit() {
@@ -156,7 +157,7 @@ export class SmsCreditDialogComponent implements OnInit, OnDestroy {
       },
       {
         key: this.labels.statusChangedBy,
-        value: localStorage.getItem('userName')
+        value: this.userName
       },
       {
         key : this.labels.timeStamp,

@@ -189,7 +189,9 @@
 
         <div class="col-4">
             <div class="form-group">
-                <label class="mb-0" for="remarks">{{labels.remark}}</label>
+                <label class="mb-0" for="remarks">{{labels.remark}}
+                    <span style="color:red">*</span>
+                </label>
                 <textarea class="form-control mb-3" maxlength="3000" style="height: 56px;" placeholder="Enter the Remark" formControlName='remark' id="remarks" rows="3"></textarea>
                 <div class="date-picker-error" *ngIf="isDirty && profomaInvoiceForm.controls['remark'].errors?.required">
                     Please Enter Remark

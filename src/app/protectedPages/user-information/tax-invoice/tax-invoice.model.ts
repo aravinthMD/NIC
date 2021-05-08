@@ -40,4 +40,5 @@ export interface TaxInvoice {
     interestOnTds?: number;
     projectCoordinator?: string;
     upload_document  ?: string
+    piNumber?: string;
 }

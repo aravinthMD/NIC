@@ -153,6 +153,7 @@ export class TaxInvoiceDialogComponent implements OnInit {
         key: this.labels.userName,
         value: this.data ? this.data.userName : ""
       },
+      
       {
         key: this.labels.projectNo,
         value: this.data ? this.data.projectNumber : ""
@@ -286,7 +287,12 @@ export class TaxInvoiceDialogComponent implements OnInit {
         isButton: true,
         key: 'View PDF',
         value: this.data ? this.data.upload_document : ""
-      }
+      },
+      {
+        key: this.labels.piNumber,
+        value: this.data ? this.data.piNumber : ""
+      },
+      
     ];
 
   }

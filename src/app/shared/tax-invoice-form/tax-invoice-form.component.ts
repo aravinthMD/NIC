@@ -166,10 +166,14 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
       const receiveDate = this.customDateAdapter.parseToDateObj(data.receiveDate);
       const dateEstimated = this.customDateAdapter.parseToDateObj(data.dateEstimated);
       const receiptDate = this.customDateAdapter.parseToDateObj(data.receiptDate);
-
+      const selectePiNumber :  any[] = [
+        { id : data && data['piNumber'] ? data['piNumber'] : "" ,
+          name : data && data['piNumber'] ? data['piNumber'] : ""}
+      ]
         this.TIForm.patchValue({
           userName: data.userName,
           projectNumber: data.projectNumber,
+          piNumber: selectePiNumber? selectePiNumber : [],
           poNumber: selectedPoNumber ? selectedPoNumber : [],
           poDate: purchaseOrder,
           billableAmount: data.billableAmount,
@@ -203,6 +207,7 @@ export class TaxInvoiceFormComponent implements OnInit,OnChanges {
           receiveDate,
           receiptDate,
           dateEstimated,
+          
         })
 
         if(data && data.upload_document){

@@ -466,7 +466,7 @@ export class ProcessDetailsComponent implements OnInit{
 
 
   sendReminder(element) {
-    if (element.paymentStatus === 6 || !this.isEnableEmail) {
+    if (element.paymentStatus == 'Received' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
@@ -483,7 +483,7 @@ export class ProcessDetailsComponent implements OnInit{
   }
 
   sendEscalation(element) {
-    if (element.paymentStatus === 6 || !this.isEnableEmail) {
+    if (element.paymentStatus == 'Received' || !this.isEnableEmail) {
       return;
     }
     this.showEmailModal = true;
